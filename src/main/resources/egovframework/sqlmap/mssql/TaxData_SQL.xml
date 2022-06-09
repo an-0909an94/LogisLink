@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="taxDataNS">	
+<select id="selectTaxInvoice" parameterType="java.util.HashMap" resultType="taxVO">
+		SELECT A.*
+		FROM (
+			SELECT
+				ROW_NUMBER() OVER(ORDER BY AA.writeDate DESC) AS number
+			  , AA.*
+			FROM 
+				(
+					SELECT
+						AAA.INV_ID					invId
+					  , AAA.BILL_KIND				billKind
+					  , CASE WHEN AAA.SUPPLIER_CUST_ID = #{loginCustId} THEN 'S' ELSE 'R' END pubType
+					  , AAA.ISSUE_DATE				issueDate
+					  , AAA.ISSUE_ID				issueId
+					  , AAA.DOC_CLASS				docClass
+					  , AAA.DOC_TYPE				docType
+					  , AAA.REMARKS		
+					  , AAA.REMARKS2
+					  , AAA.REMARKS3			  
+					  , AAA.WRITE_DATE				writeDate
+					  , AAA.PUBFORM	
+					  , AAA.SUPPLIER_BIZ_NO			supplierBizNo
+					  , AAA.SUPPLIER_BIZ_TYPE		supplierBizType
+					  , AAA.SUPPLIER_BIZ_NAME		supplierBizName
+					  , AAA.SUPPLIER_BIZ_CLASS		supplierBizClass
+					  , CASE WHEN AAA.SUPPLIER_BIZ_SUBNO = '0000' THEN '' ELSE ISNULL(AAA.SUPPLIER_BIZ_SUBNO, '') END supplierBizSubno
+					  , AAA.SUPPLIER_CEO			supplierCeo
+					  , AAA.SUPPLIER_MEM_NAME		supplierMemName
+					  , AAA.SUPPLIER_MEM_TEL		supplierMemTel
+					  , AAA.SUPPLIER_MEM_EMAIL		supplierMemEmail
+					  , AAA.SUPPLIER_ADDR			supplierAddr
+					  , AAA.SUPPLIER_CUST_ID		supplierCustId
+					  , AAA.SUPPLIER_DEPT_ID		supplierDeptId
+					  , AAA.SUPPLIER_VEHIC_ID		supplierVehicId
+					  , AAA.SUPPLIER_DRIVER_ID		supplierDriverId
+					  , AAA.BUYER_CUST_ID			buyerCustId
+					  , AAA.BUYER_DEPT_ID			buyerDeptId
+					  , AAA.BUYER_BIZ_NO			buyerBizNo
+					  , AAA.BUYER_BIZ_TYPE			buyerBizType
+					  , AAA.BUYER_BIZ_NAME			buyerBizName
+					  , AAA.BUYER_BIZ_CLASS			buyerBizClass
+					  , CASE WHEN AAA.BUYER_BIZ_SUBNO = '0000' THEN '' ELSE ISNULL(AAA.BUYER_BIZ_SUBNO, '') END	buyerBizSubno
+					  , AAA.BUYER_BIZ_NO_TYPE		buyerBizNoType
+					  , AAA.BUYER_CEO				buyerCeo
+					  , AAA.BUYER_MEM_NAME			buyerMemName
+					  , AAA.BUYER_MEM_TEL			buyerMemTel
+					  , AAA.BUYER_MEM_EMAIL			buyerMemEmail
+					  , AAA.BUYER_ADDR				buyerAddr
+					  , AAA.BROKER_CUST_ID			brokerCustId
+					  , AAA.BROKER_DEPT_ID			brokerDeptId
+					  , AAA.BROKER_BIZ_NO			brokerBizNo
+					  , AAA.BROKER_BIZ_TYPE			brokerBizType
+					  , AAA.BROKER_BIZ_NAME			brokerBizName
+					  , AAA.BROKER_BIZ_CLASS		brokerBizClass
+					  , CASE WHEN AAA.BROKER_BIZ_SUBNO = '0000' THEN '' ELSE ISNULL(AAA.BROKER_BIZ_SUBNO, '') END brokerBizSubno
+					  , AAA.BROKER_CEO				brokerCeo
+					  , AAA.BROKER_MEM_NAME			brokerMemName
+					  , AAA.BROKER_MEM_TEL			brokerMemTel
+					  , AAA.BROKER_MEM_EMAIL		brokerMemEmail
+					  , AAA.BROKER_ADDR				brokerAddr
+					  , AAA.CASH
+					  , AAA.CHEQUE
+					  , AAA.BILL
+					  , AAA.OUTSTAND
+					  , AAA.SUPPRICE
+					  , AAA.TAX
+					  , AAA.TOT_PRICE				totPrice
+					  , AAA.LOADSTATUS				loadStatus
+					  , (SELECT CNAME FROM SB_TAX_CODE WHERE GCODE = 'DTI_STATUS' AND CODE = BBB.DTI_STATUS ) 			dtiStatus
+					  , (SELECT CNAME FROM SB_TAX_CODE WHERE GCODE = 'NTS_SEND_STATUS' AND CODE = BBB.NTS_SEND_STATUS ) ntsSendStatus
+					  , BBB.NTS_SEND_DATE			ntsSendDate
+					  , AAA.REGDATE
+					  , CASE WHEN ISNULL(AAA.MNG_CUST_ID, '') = '' THEN DDD.BIZ_NAME ELSE CCC.BIZ_NAME END				mngCustName
+					  , DDD.CAR_NUM					mngCarNum
+					  , ISNULL(BBB.RESULT, 'N')		result
+					  , BBB.DETAIL resultDtl
+					FROM 
+						T_TAX_INVOICE AAA
+					  	LEFT OUTER JOIN
+					  	T_TAX_MANAGE BBB ON AAA.INV_ID = BBB.INV_ID
+					  	LEFT OUTER JOIN
+					  	T_CUST_MST CCC ON AAA.MNG_CUST_ID = CCC.CUST_ID
+					  	LEFT OUTER JOIN
+					  	T_VEHIC_MST DDD ON AAA.MNG_VEHIC_ID = DDD.VEHIC_ID  
+					WHERE 
+						AAA.WRITE_DATE BETWEEN #{fromDate} AND #{toDate}
+						AND AAA.USE_YN = 'Y'
+						<if test='pubType == "S".toString()'>
+							AND AAA.SUPPLIER_CUST_ID = #{loginCustId}
+						</if>				
+						<if test='pubType == "R".toString()'>
+							AND AAA.BUYER_CUST_ID = #{loginCustId} 
+						</if>
+						<if test="sLoadStatus != '' and sLoadStatus != null">
+							AND AAA.LOADSTATUS = #{sLoadStatus} 
+						</if>
+						<if test="s_issueId != '' and s_issueId != null">
+							AND AAA.ISSUE_ID = #{s_issueId} 
+						</if>
+						<if test="s_mngCarNum != '' and s_mngCarNum != null">
+							AND DDD.CAR_NUM LIKE '%'+ #{s_mngCarNum} +'%'
+						</if>
+				)  AA
+			) A
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+	</select>
+		
+	<select id="selectTaxInvoiceCnt" parameterType="java.util.HashMap" resultType="string">
+		SELECT
+			COUNT(*)
+		FROM 
+			T_TAX_INVOICE AAA
+		  	LEFT OUTER JOIN
+		  	T_TAX_MANAGE BBB ON AAA.INV_ID = BBB.INV_ID
+		  	LEFT OUTER JOIN
+		  	T_CUST_MST CCC ON AAA.MNG_CUST_ID = CCC.CUST_ID
+		  	LEFT OUTER JOIN
+		  	T_VEHIC_MST DDD ON AAA.MNG_VEHIC_ID = DDD.VEHIC_ID  
+		WHERE 
+			AAA.WRITE_DATE BETWEEN #{fromDate} AND #{toDate}
+			AND AAA.USE_YN = 'Y'
+			<if test='pubType == "S".toString()'>
+				AND AAA.SUPPLIER_CUST_ID = #{loginCustId}
+			</if>				
+			<if test='pubType == "R".toString()'>
+				AND AAA.BUYER_CUST_ID = #{loginCustId}
+			</if>
+			<if test="s_issueId != '' and s_issueId != null">
+				AND AAA.ISSUE_ID = #{s_issueId} 
+			</if>
+			<if test="s_mngCarNum != '' and s_mngCarNum != null">
+				AND DDD.CAR_NUM LIKE '%'+ #{s_mngCarNum} +'%'
+			</if>
+	</select> 
+	
+	
+	<select id="getTaxBizInfo" resultType="taxVO" parameterType="java.util.HashMap">
+		SELECT
+			* 
+		FROM 	
+			(
+			<if test = "custId != null and custId != '' and deptId != null and deptId != ''">
+				SELECT
+					TOP 1
+					CM.CUST_ID supplierCustId,
+					U.DEPT_ID supplierDeptId,
+					CM.BIZ_NUM supplierBizNo,
+					CM.BIZ_NUM_SUB supplierBizSubNo,
+					CM.BIZ_NAME supplierBizName,
+					CM.CEO supplierCeo,
+					U.TELNUM supplierMemTel,
+					CM.BIZ_COND supplierBizType,
+					CM.BIZ_KIND supplierBizClass,
+					CM.BIZ_ADDR supplierAddr,
+					(SELECT DEPT_NAME FROM T_CUST_DEPT WHERE DEPT_ID = #{supplierDeptId}) supplierMemDept,
+					U.EMAIL supplierMemEmail
+				FROM T_CUST_MST CM, T_USER U
+				WHERE CM.CUST_ID = U.CUST_ID
+					AND CM.CUST_ID = #{supplierCustId} AND U.DEPT_ID = #{supplierDeptId}
+			</if>
+			<if test = "vehicId != null and vehicId != '' and driverId != null and driverId != ''">
+				SELECT 
+					TOP 1
+					B.VEHIC_ID supplierVehicId,
+					A.DRIVER_ID supplierDriverId,
+					B.BIZ_NUM supplierBizNo,
+				    B.SUB_BIZ_NUM supplierBizSubNo,
+				    B.BIZ_NAME supplierBizName,
+				    B.CEO supplierCeo,
+				    A.MOBILE supplierMemTel,
+				    B.BIZ_COND supplierBizType,
+				    B.BIZ_KIND supplierBizClass,
+				    B.BIZ_ADDR supplierAddr
+				FROM T_DRIVER A
+					 INNER JOIN 
+					 T_VEHIC_MST B ON A.VEHIC_ID = B.VEHIC_ID 
+				WHERE A.DRIVER_ID = #{driverId} AND B.VEHIC_ID = #{vehicId} 
+			</if>
+			) TFR,
+			(
+			SELECT
+				TOP 1
+				CM.CUST_ID buyerCustId,
+				U.DEPT_ID buyerDeptId,
+				CM.BIZ_NUM buyerBizNo,
+				CM.BIZ_NUM_SUB buyerBizSubNo,
+				CM.BIZ_NAME buyerBizName,
+				CM.CEO buyerCeo,
+				U.TELNUM buyerMemTel,
+				CM.BIZ_COND buyerBizType,
+				CM.BIZ_KIND buyerBizClass,
+				CM.BIZ_ADDR buyerAddr,
+				(SELECT DEPT_NAME FROM T_CUST_DEPT WHERE DEPT_ID = #{buyerDeptId}) buyerMemDept,
+				U.EMAIL buyerMemEmail
+			FROM T_CUST_MST CM, T_USER U
+			WHERE CM.CUST_ID = U.CUST_ID
+				AND CM.CUST_ID = #{buyerCustId} AND U.DEPT_ID = #{buyerDeptId}
+			) TTO
+	</select>
+	
+	<select id="selectTaxSendXml" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+				SEND_XML	sendXml
+		FROM
+				T_TAX_MANAGE
+		WHERE 
+				INV_ID = #{invId} AND STATUS = 'SUCCESS'
+	</select>
+	
+	<insert id="insertTaxInvoice" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_TAX_INVOICE(
+						  #{billKind}
+						, #{docAttr}
+						, #{docClass}
+						, #{docType}
+						, #{pubType}
+						, #{pubForm}
+						, #{supplierCustId}
+						, #{supplierDeptId}
+						, #{supplierVehicId}
+						, #{supplierDriverId}
+						, #{supplierBizName}
+						, #{supplierBizNo}
+						, #{supplierBizSubNo}
+						, #{supplierCeo}
+						, #{supplierAddr}
+						, #{supplierBizType}
+						, #{supplierBizClass}
+						, #{supplierMemName}
+						, #{supplierMemTel}
+						, #{supplierMemEmail}
+						, #{buyerCustId}
+						, #{buyerDeptId}
+						, #{buyerBizName}
+						, #{buyerBizNo}
+						, #{buyerBizSubNo}
+						, #{buyerCeo}
+						, #{buyerAddr}
+						, #{buyerBizType}
+						, #{buyerBizClass}
+						, #{buyerBizNoType}
+						, #{buyerMemName}
+						, #{buyerMemTel}
+						, #{buyerMemEmail}
+						, #{brokerCustId}
+						, #{brokerDeptId}
+						, #{brokerBizNo}
+						, #{brokerBizType}
+						, #{brokerBizName}
+						, #{brokerBizClass}
+						, #{brokerBizSubNo}
+						, #{brokerCeo}
+						, #{brokerMemDept}
+						, #{brokerMemName}
+						, #{brokerMemEmail}
+						, #{brokerMemTel}
+						, #{brokerAddr}
+						, #{writeDate}
+						, #{supprice}
+						, #{tax}
+						, #{totPrice}
+						, #{remarks}
+						, #{loadStatus}
+						, #{loginCustId}
+						, #{loginDeptId}
+						, #{regId}
+						, #{invId}
+						, #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						, #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						, #{outInvId, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+   	</insert>
+   	
+   	<insert id="insertTaxInvoiceDetail" parameterType="java.util.HashMap">
+		INSERT INTO 
+					T_TAX_ITEM 
+					(
+						  INV_ID
+						, SEQ
+						, ITEM_REMARKS
+						, ITEM_SUPPRICE
+						, ITEM_QTY     
+						, ITEM_TYPE    
+						, ITEM_NAME   
+						, ITEM_DATE    
+						, ITEM_TAX     
+						, ITEM_PRICE
+						, ORDER_ID
+						, ALLOC_ID
+					)
+		VALUES			
+		<foreach collection="items" item="item" index="index" separator=",">
+					(
+						#{outInvId, jdbcType=NVARCHAR}
+					  , CONVERT(INT, #{item.seq, jdbcType=NVARCHAR})
+					  , #{item.itemRemarks, jdbcType=NVARCHAR}	
+					  , CONVERT(NUMERIC, #{item.itemSupprice, jdbcType=NVARCHAR})
+					  , CONVERT(NUMERIC, #{item.itemQty, jdbcType=NVARCHAR})
+					  , #{item.itemType, jdbcType=NVARCHAR}
+					  , #{item.itemName, jdbcType=NVARCHAR}
+					  , #{item.itemDate, jdbcType=NVARCHAR}
+					  , CONVERT(NUMERIC, #{item.itemTax, jdbcType=NVARCHAR})
+					  , CONVERT(NUMERIC, #{item.itemPrice, jdbcType=NVARCHAR})
+					  , #{item.orderId, jdbcType=NVARCHAR}
+					  , #{item.allocId, jdbcType=NVARCHAR}
+					)
+		</foreach>	
+   	</insert>
+   	
+   	<update id="updateCalcTaxinvYn" parameterType="java.util.HashMap">
+   		UPDATE T_CALC 
+   		SET
+   			TAXINV_YN = 'Y',
+   			TAXINV_DATE = GETDATE()
+   		WHERE ALLOC_ID IN
+		<foreach collection="items" item="item" index="index" separator="," open="(" close=")">
+			#{item.allocId, jdbcType=NVARCHAR}
+		</foreach>
+		AND ORDER_ID IN
+		<foreach collection="items" item="item" index="index" separator="," open="(" close=")">
+			#{item.orderId, jdbcType=NVARCHAR}
+		</foreach>
+   	</update>
+   	
+   	<update id="updateTaxInvoiceDetail" parameterType="java.util.HashMap">
+   		<foreach collection="items" item="item" index="index" separator=";" open="BEGIN" close="; END;">
+	   		UPDATE T_TAX_ITEM
+			SET 
+				ITEM_DATE = #{item.itemDate}
+			  , ITEM_NAME = #{item.itemName}
+			  , ITEM_REMARKS = #{item.itemRemarks}
+	   		WHERE INV_ID = #{invId}
+	   		AND SEQ = #{item.seq}
+		</foreach>
+   	</update>
+   	
+   	<insert id="insertTaxInvoiceMonitor" parameterType="java.util.HashMap">
+		INSERT INTO 
+					T_TAX_MONITOR 
+					(
+						  INV_ID
+						, MESG_ID
+						, SIGNAL
+						, SUPPLIER_CUST_ID
+						, SUPPLIER_BIZ_NO
+						, BUYER_CUST_ID
+						, BUYER_BIZ_NO
+						, CONVER_ID
+						, MODULE
+						, RESULT
+						, STATUS
+						, REGDATE
+						, PUB_DATE
+					)
+		SELECT			
+						INV_ID
+					  , 'LOGISLINK_' + convert(varchar, getdate(), 112) + replace(convert(varchar, getdate(), 108), ':', '') + FORMAT(CONVERT(int, RIGHT(INV_ID , 4)), '0000')
+					  , 'ARISSUE'
+					  , SUPPLIER_CUST_ID
+					  , SUPPLIER_BIZ_NO
+					  , BUYER_CUST_ID
+					  , BUYER_BIZ_NO
+					  , SUPPLIER_BIZ_NO + BUYER_BIZ_NO + convert(varchar, getdate(), 112) + FORMAT(CONVERT(int, RIGHT(INV_ID , 4)), '0000') + '006'
+					  , 'L'
+					  , 'N'
+					  , NULL
+					  , getdate()
+					  , NULL
+		FROM 
+					T_TAX_INVOICE
+		WHERE 
+					INV_ID IN 
+			   		<foreach collection="multiSelectedData" item="item" separator="," open="(" close=")">
+			   			#{item}
+			   		</foreach>
+   	</insert>
+   	
+   	<update id="updateLoadStatus" parameterType="java.util.HashMap">
+   		UPDATE T_TAX_INVOICE
+   		SET LOADSTATUS = '1'
+   		WHERE INV_ID IN 
+   		<foreach collection="multiSelectedData" item="item" separator="," open="(" close=")">
+   			#{item}
+   		</foreach>
+   	</update>
+   	
+   	<update id="taxInvoiceStatus" parameterType="java.util.HashMap">
+   		UPDATE T_TAX_INVOICE
+   		SET STATUS_REASON = #{statusReason}
+   		WHERE INV_ID = #{invId}
+   	</update>
+   	
+   	<update id="taxMonitorStatus" parameterType="java.util.HashMap">
+   		MERGE INTO 
+   			T_TAX_MONITOR A
+   		USING (
+   			SELECT
+   				AA.INV_ID
+   			  , #{statusReason} AS STATUS_REASON
+   			  , #{statusSignal} AS STATUS_SIGNAL
+			  , AA.SUPPLIER_CUST_ID 
+			  , AA.SUPPLIER_BIZ_NO
+			  , AA.BUYER_CUST_ID
+			  , AA.BUYER_BIZ_NO
+			  , BB.CONVER_ID
+			FROM T_TAX_INVOICE AA
+				 INNER JOIN
+				 T_TAX_MANAGE BB ON AA.INV_ID = BB.INV_ID
+			WHERE AA.INV_ID = #{invId}
+   		) AS B
+   		ON
+   			(A.INV_ID = B.INV_ID)
+   		WHEN MATCHED THEN 	
+	   		UPDATE SET 
+	   			SIGNAL = 'CHGSTATUS'
+	   		  , STATUS_SIGNAL = B.STATUS_SIGNAL
+	   		  , STATUS_REASON = B.STATUS_REASON
+	   	WHEN NOT MATCHED THEN
+	   		INSERT 
+	   			(
+	   				INV_ID
+				  , MESG_ID
+				  , SIGNAL
+				  , SUPPLIER_CUST_ID
+				  , SUPPLIER_BIZ_NO
+				  , BUYER_CUST_ID
+				  , BUYER_BIZ_NO
+				  , CONVER_ID
+				  , MODULE
+				  , RESULT
+				  , STATUS
+			 	  , REGDATE
+				  , PUB_DATE
+	   		  	  , STATUS_REASON
+	   		  	  , STATUS_SIGNAL
+	   			)
+	   		VALUES
+	   			(
+	   				B.INV_ID
+				  , 'LOGISLINK_' + convert(varchar, getdate(), 112) + replace(convert(varchar, getdate(), 108), ':', '') + FORMAT(CONVERT(int, RIGHT(B.INV_ID , 4)), '0000')
+				  , 'CHGSTATUS'
+				  , B.SUPPLIER_CUST_ID
+				  , B.SUPPLIER_BIZ_NO
+				  , B.BUYER_CUST_ID
+				  , B.BUYER_BIZ_NO
+				  , B.CONVER_ID
+				  , 'SMARTBILL'
+				  , 'N'
+				  , NULL
+				  , getdate()
+				  , NULL
+	   		  	  , B.STATUS_REASON
+	   		  	  , B.STATUS_SIGNAL
+	   			);
+   	</update>
+   	
+   	<update id="taxInvoiceResend" parameterType="java.util.HashMap">
+   		UPDATE T_TAX_INVOICE
+   		SET 
+   			<if test='sendSignal == "SENDMAIL".toString()'>
+   				BUYER_MEM_EMAIL = #{email}
+   			</if>
+   			<if test='sendSignal == "SUPSENDMAIL".toString()'>
+   				SUPPLIER_MEM_EMAIL = #{email}
+   			</if>
+   		WHERE INV_ID = #{invId}
+   	</update>
+   	
+	<update id="taxMonitorResend" parameterType="java.util.HashMap">
+   		MERGE INTO 
+   			T_TAX_MONITOR A
+   		USING (
+   			SELECT
+   				AA.INV_ID
+   			  , #{email} AS STATUS_REASON
+   			  , #{sendSignal} AS SIGNAL
+			  , AA.SUPPLIER_CUST_ID 
+			  , AA.SUPPLIER_BIZ_NO
+			  , AA.BUYER_CUST_ID
+			  , AA.BUYER_BIZ_NO
+			  , BB.CONVER_ID
+			FROM T_TAX_INVOICE AA
+				 INNER JOIN
+				 T_TAX_MANAGE BB ON AA.INV_ID = BB.INV_ID
+			WHERE AA.INV_ID = #{invId}
+   		) AS B
+   		ON
+   			(A.INV_ID = B.INV_ID)
+   		WHEN MATCHED THEN 	
+	   		UPDATE SET 
+	   			SIGNAL = B.SIGNAL
+	   		  , STATUS_SIGNAL = 'ARISSUE'
+	   		  , STATUS_REASON = B.STATUS_REASON
+	   	WHEN NOT MATCHED THEN
+	   		INSERT 
+	   			(
+	   				INV_ID
+				  , MESG_ID
+				  , SIGNAL
+				  , SUPPLIER_CUST_ID
+				  , SUPPLIER_BIZ_NO
+				  , BUYER_CUST_ID
+				  , BUYER_BIZ_NO
+				  , CONVER_ID
+				  , MODULE
+				  , RESULT
+				  , STATUS
+			 	  , REGDATE
+				  , PUB_DATE
+	   		  	  , STATUS_REASON
+	   		 	  , STATUS_SIGNAL
+	   			)
+	   		VALUES
+	   			(
+	   				B.INV_ID
+				  , 'LOGISLINK_' + convert(varchar, getdate(), 112) + replace(convert(varchar, getdate(), 108), ':', '') + FORMAT(CONVERT(int, RIGHT(B.INV_ID , 4)), '0000')
+				  , B.SIGNAL
+				  , B.SUPPLIER_CUST_ID
+				  , B.SUPPLIER_BIZ_NO
+				  , B.BUYER_CUST_ID
+				  , B.BUYER_BIZ_NO
+				  , B.CONVER_ID
+				  , 'L'
+				  , 'N'
+				  , NULL
+				  , getdate()
+				  , NULL
+	   		  	  , B.STATUS_REASON
+	   		  	  , 'ARISSUE'
+	   			);
+   	</update>
+	
+	<select id="viewTaxItem" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+			ROW_NUMBER() OVER(ORDER BY AA.itemDate DESC) AS number
+		  , AA.*
+		FROM (
+		SELECT INV_ID					invId
+			 , ITEM_DATE				itemDate
+			 , ISNULL(ITEM_NAME,'')		itemName
+			 , ISNULL(ITEM_TYPE,'')		itemType
+			 , ISNULL(ITEM_QTY,0)		itemQty
+			 , ISNULL(ITEM_PRICE,0) 	itemPrice
+			 , ISNULL(ITEM_SUPPRICE,0)	itemSupprice
+			 , ISNULL(ITEM_TAX,0) 		itemTax	
+			 , ISNULL(ITEM_REMARKS,'')	itemRemarks
+			 , ORDER_ID					orderId
+			 , ALLOC_ID					allocId
+		FROM 
+			T_TAX_ITEM
+		WHERE 
+			INV_ID = #{invId}
+		) AA
+	</select>
+	
+	<insert id="insertCalcTaxInvoice" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_CALC_TAX_INVOICE(
+						  #{billKind}
+						, #{docAttr}
+						, #{docClass}
+						, #{docType}
+						, #{pubType}
+						, #{pubForm}
+						, #{supplierCustId}
+						, #{supplierDeptId}
+						, #{supplierVehicId}
+						, #{supplierDriverId}
+						, #{supplierBizName}
+						, #{supplierBizNo}
+						, #{supplierBizSubNo}
+						, #{supplierCeo}
+						, #{supplierAddr}
+						, #{supplierBizType}
+						, #{supplierBizClass}
+						, #{supplierMemName}
+						, #{supplierMemTel}
+						, #{supplierMemEmail}
+						, #{buyerCustId}
+						, #{buyerDeptId}
+						, #{buyerBizName}
+						, #{buyerBizNo}
+						, #{buyerBizSubNo}
+						, #{buyerCeo}
+						, #{buyerAddr}
+						, #{buyerBizType}
+						, #{buyerBizClass}
+						, #{buyerBizNoType}
+						, #{buyerMemName}
+						, #{buyerMemTel}
+						, #{buyerMemEmail}
+						, #{brokerCustId}
+						, #{brokerDeptId}
+						, #{brokerBizNo}
+						, #{brokerBizType}
+						, #{brokerBizName}
+						, #{brokerBizClass}
+						, #{brokerBizSubNo}
+						, #{brokerCeo}
+						, #{brokerMemDept}
+						, #{brokerMemName}
+						, #{brokerMemEmail}
+						, #{brokerMemTel}
+						, #{brokerAddr}
+						, #{writeDate}
+						, #{supprice}
+						, #{tax}
+						, #{totPrice}
+						, #{remark}
+						, #{loadStatus}
+						, #{loginCustId}
+						, #{loginDeptId}
+						, #{regId}
+						, #{orderList}
+						, #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						, #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						, #{invId, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+   	</insert>
+   	
+   	<insert id="insertReceiptTaxInvoice" statementType="CALLABLE" parameterType="java.util.HashMap">
+   		{call INSERT_RECEIPT_TAX_INVOICE (
+						  #{loginCustId}
+						, #{loginDeptId}
+						, #{receiptId}
+						, #{docType}
+						, #{pubForm}
+						, #{billKind}
+						, #{tranSupplierMemName}
+						, #{tranSupplierMemTel}
+						, #{tranSupplierMemEmail}
+						, #{tranBuyerMemName}
+						, #{tranBuyerMemTel}
+						, #{tranBuyerMemEmail}
+						, #{brokerCustId}
+						, #{brokerDeptId}
+						, #{brokerBizNo}
+						, #{brokerBizType}
+						, #{brokerBizName}
+						, #{brokerBizClass}
+						, #{brokerBizSubNo}
+						, #{brokerCeo}
+						, #{brokerMemDept}
+						, #{brokerMemName}
+						, #{brokerMemEmail}
+						, #{brokerMemTel}
+						, #{brokerAddr}
+						, #{writeDate}
+						, #{remarks}
+						, #{itemTotalType}
+						, #{regId}
+						, #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						, #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+   		}
+   	</insert>
+   	
+   	<insert id="insertReceiptTaxInvoiceForDriver" statementType="CALLABLE" parameterType="java.util.HashMap">
+   		{call INSERT_RECEIPT_TAX_INVOICE_FOR_DRIVER (
+						  #{vehicId}
+						, #{driverId}
+						, #{receiptId}
+						, #{docType}
+						, #{pubForm}
+						, #{billKind}
+						, #{tranSupplierMemName}
+						, #{tranSupplierMemTel}
+						, #{tranSupplierMemEmail}
+						, #{tranBuyerMemName}
+						, #{tranBuyerMemTel}
+						, #{tranBuyerMemEmail}
+						, #{brokerCustId}
+						, #{brokerDeptId}
+						, #{brokerBizNo}
+						, #{brokerBizType}
+						, #{brokerBizName}
+						, #{brokerBizClass}
+						, #{brokerBizSubNo}
+						, #{brokerCeo}
+						, #{brokerMemDept}
+						, #{brokerMemName}
+						, #{brokerMemEmail}
+						, #{brokerMemTel}
+						, #{brokerAddr}
+						, #{writeDate}
+						, #{remarks}
+						, #{itemTotalType}
+						, #{regId}
+						, #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						, #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+   		}
+   	</insert>
+   	
+   	<insert id="insertTaxModify" statementType="CALLABLE" parameterType="java.util.HashMap">
+   		{call INSERT_TAX_MODIFY (
+						  #{invId}
+						, #{writeDate}
+						, #{regId}
+						, #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						, #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+   		}
+   	</insert>
+   	
+   	<update id="deleteTaxInvoiceDetail" parameterType="java.util.HashMap">
+   		UPDATE T_TAX_INVOICE
+   		SET USE_YN = 'N'
+   		WHERE INV_ID IN 
+   		<foreach collection="multiSelectedData" item="item" separator="," open="(" close=")">
+   			#{item}
+   		</foreach>
+   	</update>
+</mapper>

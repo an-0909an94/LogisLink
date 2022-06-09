@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="carDataNS">	
+
+	<select id="selectCarList" parameterType="java.util.HashMap" resultType="carVO">
+		SELECT AA.*
+		FROM (
+			SELECT 
+				ROW_NUMBER() OVER(ORDER BY AAA.carNum ASC, AAA.driverName ASC, AAA.deptName ASC, AAA.mobile ASC, AAA.regdate ASC) rNum
+			  , AAA.*
+			FROM (
+					SELECT A.VEHIC_ID vehicId
+						 , B.DRIVER_ID driverId
+						 , C.CUST_ID custId
+						 , C.DEPT_ID deptId
+						 , C.CAR_SCTN_CODE carSctnCode
+						 , (SELECT CNAME FROM T_CODE WHERE CODE = C.CAR_SCTN_CODE AND GCODE = 'CARGO_TRAN_CAR_SCTN_CD') carSctnName
+						 , C.MEMO memo
+						 , A.CAR_NUM carNum
+						 , (SELECT CNAME FROM T_CODE WHERE CODE = A.CAR_TYPE_CODE AND GCODE = 'CAR_TYPE_CD') carTypeName
+						 , (SELECT CNAME FROM T_CODE WHERE CODE = A.CAR_TON_CODE AND GCODE = 'CAR_TON_CD') carTonName
+						 , A.CAR_TYPE_CODE carTypeCode
+						 , A.CAR_TON_CODE carTonCode
+						 , A.BIZ_NAME bizName
+						 , A.BIZ_NUM bizNum
+						 , A.SUB_BIZ_NUM subBizNum
+						 , A.CEO ceo
+						 , A.POSTAL_POST postalPost
+						 , A.POSTAL_ADDR postalAddr
+						 , A.POSTAL_ADDR_DETAIL postalAddrDetail
+						 , A.BIZ_POST bizPost
+						 , A.BIZ_ADDR bizAddr
+						 , A.BIZ_ADDR_DETAIL bizAddrDetail
+						 , A.BIZ_COND bizCond
+						 , A.BIZ_KIND bizKind
+						 , ISNULL(A.DANGER_GOODS_YN,'N') dangerGoodsYn
+						 , ISNULL(A.CHEMICALS_YN,'N') chemicalsYn
+						 , ISNULL(A.FOREIGN_LICENSE_YN,'N') foreignLicenseYn
+						 , ISNULL(A.FORKLIFT_YN,'N') forkliftYn
+						 , B.DRIVER_NAME driverName
+						 , B.MOBILE mobile
+						 , B.TELNUM telNum
+						 , B.CID cid
+						 , B.PUSH_YN pushYn
+				 		 , B.TALK_YN talkYn
+						 , (SELECT CNAME FROM T_CODE WHERE CODE = B.BANK_CODE) bankName
+						 , B.BANK_CODE bankCode
+						 , B.BANK_CNNM bankCnnm
+						 , B.BANK_ACCOUNT bankAccount
+						 , convert(varchar, B.REGDATE, 120) regdate
+						 , convert(varchar, C.DISUSE_DATE, 120) disuseDate
+						 , C.USE_YN useYn 
+						 , B.DEVICE_MODEL deviceModel
+						 , B.DEVICE_OS deviceOs
+				 		 , B.APP_VERSION appVersion
+				 		 , C.CUST_VEHIC_SEQ custVehicSeq
+						 , C.MANAGER userId
+						 , C.CAR_MNG_CODE carMngCode
+						 , (SELECT CNAME FROM T_CODE WHERE CODE = C.CAR_MNG_CODE AND GCODE = 'CAR_MNG_CD' ) carMngName
+						 , C.CAR_MNG_MEMO carMngMemo
+						 , (SELECT DEPT_NAME FROM T_CUST_DEPT WHERE DEPT_ID = C.DEPT_ID) deptName
+						 , A.CARGO_BOX cargoBox
+						 , A.MIX_PREFER_YN mixPreferYn
+						 , C.PAY_TYPE payType
+						 , C.PAY_MEMO payMemo
+						 , B.DRIVER_EMAIL 	driverEmail
+						 , B.TAXJOIN_DATE	taxjoinDate
+						 , A.CAR_MODIFY_CODE carModifyCode
+						 , C.CAR_CONTRACT_CODE carContractCode
+					FROM T_VEHIC_MST A 
+					   	 INNER JOIN
+					   	T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID
+					   	<if test="loginAuthSeq=='100' or loginAuthSeq=='110'">
+					   		LEFT OUTER JOIN
+					   	</if> 
+					   	<if test="loginAuthSeq!='100' and loginAuthSeq != '110'">
+					   		INNER JOIN
+					   	</if>					   	 
+					   	T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId} 
+					   	<if test="deptId != null and !''.equals(deptId)">
+					   		AND C.DEPT_ID = #{deptId}
+					   	</if> 
+					WHERE 1=1
+					<if test='useYn != null and !"".equals(useYn)'>
+						AND C.USE_YN = #{useYn}
+					</if>
+					<if test='select != null and !"".equals(select) and value != null and !"".equals(value)'>
+						AND ${select} LIKE '%'+ #{value} +'%'
+					</if>
+					<if test='carNum != null and !"".equals(carNum)'>
+						AND A.CAR_NUM LIKE '%'+ #{carNum} +'%'
+					</if>
+					<if test='dangerGoodsUseYn != null and !"".equals(dangerGoodsUseYn)'>
+						AND A.DANGER_GOODS_YN = #{dangerGoodsUseYn}
+					</if>
+					<if test='chemicalsUseYn != null and !"".equals(chemicalsUseYn)'>
+						AND A.CHEMICALS_YN = #{chemicalsUseYn}
+					</if>
+					<if test='foreignLicenseUseYn != null and !"".equals(foreignLicenseUseYn)'>
+						AND A.FOREIGN_LICENSE_YN = #{foreignLicenseUseYn}
+					</if>
+					<if test='forkliftUseYn != null and !"".equals(forkliftUseYn)'>
+						AND A.FORKLIFT_YN = #{forkliftUseYn}
+					</if>
+					<if test='carMngCode != null and !"".equals(carMngCode)'>
+						AND C.CAR_MNG_CODE = #{carMngCode}
+					</if>
+					<if test='bizName != null and !"".equals(bizName)'>
+						AND A.BIZ_NAME LIKE '%' + #{bizName} + '%'
+					</if>
+					<if test='carSctnCode != null and !"".equals(carSctnCode)'>
+						AND C.CAR_SCTN_CODE = #{carSctnCode}
+					</if>
+				   	<if test="carContractCode != null and !''.equals(carContractCode)">
+				   		AND C.CAR_CONTRACT_CODE = #{carContractCode}
+				   	</if>
+					<if test='carTypeCode != null and !"".equals(carTypeCode)'>
+						AND A.CAR_TYPE_CODE = #{carTypeCode}
+					</if>
+					<if test='carTonCode != null and !"".equals(carTonCode)'>
+						AND A.CAR_TON_CODE = #{carTonCode}
+					</if>
+					<if test='payType != null and !"".equals(payType)'>
+						AND ISNULL(C.PAY_TYPE, 'N') = #{payType}
+					</if>
+					<if test='taxjoinYn != null and !"".equals(taxjoinYn)'>
+						AND CASE WHEN ISNULL(B.TAXJOIN_DATE, 'N') = 'N'  THEN 'N'  ELSE 'Y' END = #{taxjoinYn}
+					</if>
+					<if test='emailYn != null and !"".equals(emailYn)'>
+						AND CASE WHEN ISNULL(B.DRIVER_EMAIL, '') = ''  THEN 'N'  ELSE 'Y' END = #{emailYn}
+					</if>
+					<if test='accountYn != null and !"".equals(accountYn)'>
+						AND CASE WHEN ISNULL(B.BANK_ACCOUNT, '') = ''  THEN 'N'  ELSE 'Y' END = #{accountYn}
+					</if>
+				) AAA
+			) AA
+		WHERE rNum BETWEEN #{start} AND #{end}
+		ORDER BY rNum ASC
+	</select>
+	
+	<select id="selectCarCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT 
+			COUNT(1) retCnt
+		FROM T_VEHIC_MST A
+		   	 INNER JOIN
+		   	 T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID
+		   	 <if test="loginAuthSeq=='100' or loginAuthSeq=='110'">
+		   		LEFT OUTER JOIN
+		   	 </if> 
+		   	 <if test="loginAuthSeq!='100' and loginAuthSeq != '110'">
+		   		INNER JOIN
+		   	 </if>					   	 
+		   	 T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId}
+	   	 	<if test="deptId != null and !''.equals(deptId)">
+		   		AND C.DEPT_ID = #{deptId}
+		   	</if>
+		WHERE 1=1
+		<if test='useYn != null and !"".equals(useYn)'>
+			AND A.USE_YN = #{useYn}
+		</if>
+		<if test='select != null and !"".equals(select) and value != null and !"".equals(value)'>
+			AND ${select} LIKE '%'+ #{value} +'%'
+		</if>
+		<if test='carNum != null and !"".equals(carNum)'>
+			AND A.CAR_NUM LIKE '%'+ #{carNum} +'%'
+		</if>
+		<if test='dangerGoodsUseYn != null and !"".equals(dangerGoodsUseYn)'>
+			AND A.DANGER_GOODS_YN = #{dangerGoodsUseYn}
+		</if>
+		<if test='chemicalsUseYn != null and !"".equals(chemicalsUseYn)'>
+			AND A.CHEMICALS_YN = #{chemicalsUseYn}
+		</if>
+		<if test='foreignLicenseUseYn != null and !"".equals(foreignLicenseUseYn)'>
+			AND A.FOREIGN_LICENSE_YN = #{foreignLicenseUseYn}
+		</if>
+		<if test='forkliftUseYn != null and !"".equals(forkliftUseYn)'>
+			AND A.FORKLIFT_YN = #{forkliftUseYn}
+		</if>
+		<if test='carMngCode != null and !"".equals(carMngCode)'>
+			AND C.CAR_MNG_CODE = #{carMngCode}
+		</if>
+		<if test='carSctnCode != null and !"".equals(carSctnCode)'>
+			AND C.CAR_SCTN_CODE = #{carSctnCode}
+		</if>
+		<if test="carContractCode != null and !''.equals(carContractCode)">
+			AND C.CAR_CONTRACT_CODE = #{carContractCode}
+		</if>
+		<if test='carTypeCode != null and !"".equals(carTypeCode)'>
+			AND A.CAR_TYPE_CODE = #{carTypeCode}
+		</if>
+		<if test='carTonCode != null and !"".equals(carTonCode)'>
+			AND A.CAR_TON_CODE = #{carTonCode}
+		</if>
+		<if test='payType != null and !"".equals(payType)'>
+			AND ISNULL(C.PAY_TYPE, 'N') = #{payType}
+		</if>
+		<if test='taxjoinYn != null and !"".equals(taxjoinYn)'>
+			AND CASE WHEN ISNULL(B.TAXJOIN_DATE, 'N') = 'N'  THEN 'N'  ELSE 'Y' END = #{taxjoinYn}
+		</if>
+		<if test='emailYn != null and !"".equals(emailYn)'>
+			AND CASE WHEN ISNULL(B.DRIVER_EMAIL, '') = ''  THEN 'N'  ELSE 'Y' END = #{emailYn}
+		</if>
+		<if test='accountYn != null and !"".equals(accountYn)'>
+			AND CASE WHEN ISNULL(B.BANK_ACCOUNT, '') = ''  THEN 'N'  ELSE 'Y' END = #{accountYn}
+		</if>
+	</select>
+	
+	<select id="selectSearchCar" parameterType="java.util.HashMap" resultType="carVO">
+		SELECT AA.*
+		FROM (
+			SELECT 
+				ROW_NUMBER() OVER(ORDER BY AAA.carNum ASC, AAA.driverName ASC, AAA.mobile ASC) rNum
+			  , AAA.*
+			FROM (
+					SELECT	DISTINCT A.VEHIC_ID vehicId
+						 , B.DRIVER_ID driverId
+						 , A.CAR_NUM carNum
+						 , B.DRIVER_NAME driverName
+						 , B.MOBILE mobile
+					FROM T_VEHIC_MST A 
+					   	 INNER JOIN
+					   	T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID
+					   	INNER JOIN			   	 
+					   	T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId} 
+					   	<if test="deptId != null and !''.equals(deptId)">
+					   		AND C.DEPT_ID = #{deptId}
+					   	</if> 
+					WHERE C.USE_YN = 'Y'
+					<if test='carNum != null and !"".equals(carNum)'>
+						AND A.CAR_NUM LIKE '%'+ #{carNum} +'%'
+					</if>
+					<if test="carContractCode != null and !''.equals(carContractCode)">
+						AND C.CAR_CONTRACT_CODE = #{carContractCode}
+					</if>
+				) AAA
+			) AA
+		WHERE rNum BETWEEN #{start} AND #{end}
+		ORDER BY rNum ASC
+	</select>
+	
+	<select id="selectSearchCarCnt" parameterType="java.util.HashMap" resultType="string">		
+			SELECT 
+				COUNT(1) retCnt
+			FROM (
+					SELECT	DISTINCT A.VEHIC_ID vehicId
+						 , B.DRIVER_ID driverId
+						 , A.CAR_NUM carNum
+						 , B.DRIVER_NAME driverName
+						 , B.MOBILE mobile
+					FROM T_VEHIC_MST A 
+					   	 INNER JOIN
+					   	T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID
+					   	INNER JOIN			   	 
+					   	T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId} 
+					   	<if test="deptId != null and !''.equals(deptId)">
+					   		AND C.DEPT_ID = #{deptId}
+					   	</if> 
+					WHERE C.USE_YN = 'Y'
+					<if test='carNum != null and !"".equals(carNum)'>
+						AND A.CAR_NUM LIKE '%'+ #{carNum} +'%'
+					</if>
+					<if test="carContractCode != null and !''.equals(carContractCode)">
+						AND C.CAR_CONTRACT_CODE = #{carContractCode}
+					</if>
+				) AAA
+	</select>
+	
+	<select id="selectSendPushDriverList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+			DRIVER_ID AS driverId,
+			MOBILE AS mobile,
+			PUSH_ID AS pushId
+		FROM T_DRIVER
+		WHERE
+			USE_YN = 'Y' AND PUSH_YN = 'Y' AND PUSH_ID IS NOT NULL
+			<if test='driverMobileList != null and driverMobileList.size != 0'>
+				AND MOBILE IN
+				<foreach collection="driverMobileList" item="item" index="index" separator="," open="(" close=")">
+					#{item}
+				</foreach>
+			</if>
+	</select>
+	
+	<select id="selectSendTalkDriverList" parameterType="java.util.HashMap" resultType="java.util.Map">
+		SELECT
+			DRIVER_ID AS id,
+			DRIVER_NAME AS userName,
+			MOBILE AS mobile
+		FROM T_DRIVER
+		WHERE
+			USE_YN = 'Y' AND TALK_YN = 'Y' AND MOBILE IS NOT NULL
+			<if test='driverMobileList != null and driverMobileList.size != 0'>
+				AND MOBILE IN
+				<foreach collection="driverMobileList" item="item" index="index" separator="," open="(" close=")">
+					#{item}
+				</foreach>
+			</if>
+	</select>
+	
+	<insert id="insertCar" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_CAR(
+							#{custVehicSeq}
+						  ,	#{driverId}
+						  , #{vehicId}
+						  ,	#{loginCustId}
+						  , #{mngDeptId}
+						  , #{userId}
+						  , #{carSctnCode}
+						  , #{carNum}
+						  , #{carTypeCode}
+						  , #{carTonCode}
+						  , #{bizName}
+						  , #{bizNum}
+						  , #{subBizNum}
+						  , #{ceo}
+						  , #{postalPost}
+						  , #{postalAddr}
+						  , #{postalAddrDetail}
+						  , #{bizPost}
+						  , #{bizAddr}
+						  , #{bizAddrDetail}
+						  , #{bizCond}
+						  , #{bizKind}
+						  , #{driverName}
+						  , #{mobile}
+						  , #{telNum}
+						  , #{cid}
+						  , #{pushYn}
+						  , #{talkYn}
+						  , #{forkliftYn}
+						  , #{foreignLicenseYn}
+						  , #{chemicalsYn}
+						  , #{dangerGoodsYn}
+						  , #{cargoBox}
+						  , #{bankCode}
+						  , #{bankCnnm}
+						  , #{bankAccount}
+						  , #{useYn}
+						  , #{memo}
+						  , #{mode}
+						  , #{carMngCode}
+						  , #{carMngMemo}
+						  , #{mixPreferYn}
+						  , #{payType}
+						  , #{payMemo}
+						  , #{driverEmail}
+						  , #{taxjoinDate}
+						  , #{carContractCode}
+						  , #{carModifyCode}
+						  , #{regId}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</insert>
+	
+	<update id="updateCarSctnCode" parameterType="java.util.HashMap">
+		UPDATE T_CUST_VEHIC 
+		SET CAR_SCTN_CODE = #{carSctnCode}
+		WHERE VEHIC_ID = #{buyVehicId}
+		AND DRIVER_ID = #{buyDriverId}
+	</update>
+	
+	
+</mapper>

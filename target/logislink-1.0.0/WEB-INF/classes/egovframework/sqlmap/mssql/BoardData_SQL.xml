@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardDataNS">	
+
+	<select id="selectBoardList" parameterType="java.util.HashMap" resultType="boardVO">
+		SELECT AA.*
+		FROM (
+			SELECT 
+				ROW_NUMBER() OVER(ORDER BY AAA.boardSeq desc) number
+			  , AAA.*
+			  , (SELECT COUNT(1) FROM T_BOARD_FILE WHERE BOARD_SEQ = AAA.boardSeq) fileCnt
+			FROM (
+				SELECT BOARD_SEQ	boardSeq
+					 , CUST_ID		custId
+					 , READ_CNT		readCnt
+					 , USER_NAME	userName
+					 , TITLE		title
+					 , CONTENT		content
+				     , CONVERT(CHAR(19), REGDATE, 20) regdate
+					 , REGID		regid
+				     , CONVERT(CHAR(19), EDITDATE, 20) editdate
+					 , EDITID		editid
+					 , USE_YN		useYn
+					 , POP_SDATE	popSdate
+					 , POP_EDATE 	popEdate
+					 , POP_YN		popYn
+					 , BOARD_TARGET	boardTarget
+				FROM T_BOARD
+				WHERE USE_YN = 'Y'
+				<if test='custTypeCode != null and !"".equals(custTypeCode)'>
+					AND BOARD_TARGET LIKE '%' + #{custTypeCode} + '%'
+					AND GETDATE() BETWEEN POP_SDATE AND POP_EDATE + ' 23:59:59'
+				</if>
+				<if test='select != null and !"".equals(select) and value != null and !"".equals(value)'>
+					AND ${select} LIKE '%'+ #{value} +'%'
+				</if>
+			) AAA
+		) AA
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+	</select>
+	
+	<select id="selectBoardCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT COUNT(1) retCnt
+		FROM T_BOARD
+		WHERE USE_YN = 'Y'
+		<if test='custTypeCode != null and !"".equals(custTypeCode)'>
+			AND BOARD_TARGET LIKE '%' + #{custTypeCode} + '%'
+			AND GETDATE() BETWEEN POP_SDATE AND POP_EDATE + ' 23:59:59'
+		</if>
+		<if test='select != null and !"".equals(select) and value != null and !"".equals(value)'>
+			AND ${select} LIKE '%'+ #{value} +'%'
+		</if>
+	</select>
+	
+	<select id="selectBoardDetail" parameterType="java.util.HashMap" resultType="boardVO">
+		SELECT BOARD_SEQ	boardSeq
+			 , CUST_ID		custId
+			 , READ_CNT		readCnt
+			 , USER_NAME	userName
+			 , TITLE		title
+			 , CONTENT		content
+		     , CONVERT(CHAR(19), REGDATE, 20) regdate
+			 , REGID		regid
+		     , CONVERT(CHAR(19), EDITDATE, 20) editdate
+			 , EDITID		editid
+			 , USE_YN		useYn
+			 , POP_SDATE	popSdate
+			 , POP_EDATE 	popEdate
+			 , POP_YN		popYn
+			 , BOARD_TARGET	boardTarget
+		FROM T_BOARD
+		WHERE BOARD_SEQ = #{boardSeq}
+	</select>
+	
+	<insert id="boardWrite" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_BOARD(
+							#{boardSeq}
+						  , #{custId}
+						  , #{userName}
+						  , #{title}
+						  , #{content}
+						  , #{popSdate}
+						  , #{popEdate}
+						  , #{boardTarget}
+						  , #{popYn}
+						  , #{mode}
+						  , #{regId}
+						  , #{editId}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</insert>
+	
+	<update id="boardReadCount" parameterType="java.util.HashMap">
+		UPDATE T_BOARD SET
+			READ_CNT = READ_CNT+1
+		WHERE BOARD_SEQ = #{boardSeq}
+	</update>
+	
+	<select id="selectBoardFiles" parameterType="java.util.HashMap" resultType="boardFileVO">
+		WITH FILE_LIST(FILES) AS 
+			(
+			SELECT 1 
+			UNION ALL
+			SELECT FILES + 1
+			FROM FILE_LIST
+		  	WHERE FILES +1 &lt;=3
+			)
+		SELECT FILES			files
+			 , B.FILE_SEQ 		fileSeq
+			 , B.BOARD_SEQ		boardSeq
+			 , B.FILE_TYPE_CODE	fileTypeCode
+			 , B.FILE_NAME		fileName
+			 , B.FILE_PATH		filePath
+			 , B.FILE_SIZE		fileSize
+			 , B.MIME_TYPE		mimeType
+			 , B.REGDATE		regdate
+			 , B.REGID			regid
+			 , B.FILE_REAL_NAME	fileRealName
+			 , B.F_NO			fNo
+		FROM 
+		(SELECT * FROM FILE_LIST) A LEFT OUTER JOIN 
+		(SELECT * FROM T_BOARD_FILE WHERE BOARD_SEQ = #{boardSeq})
+		B ON A.FILES = B.F_NO
+	</select>
+	
+	<insert id="insertFiles" parameterType="java.util.HashMap">
+		INSERT INTO
+				T_BOARD_FILE 
+				(
+					BOARD_SEQ
+				  , FILE_NAME
+				  , FILE_REAL_NAME
+				  , FILE_PATH
+				  , FILE_SIZE
+				  , MIME_TYPE
+				  , REGID
+				  , F_NO
+				) 
+		SELECT A.*
+		FROM 
+			(
+		<foreach collection="list" item="i" separator="UNION ALL">
+			SELECT
+					#{i.boardSeq} boardSeq
+				  ,	#{i.fileName} fileName
+				  ,	#{i.fileRealName} fileRealName
+				  ,	#{i.filePath} filePath
+				  ,	#{i.fileSize, jdbcType=BIGINT} fileSize
+				  , #{i.mimeType} mineType
+				  , #{i.regid} regid
+				  , #{i.fNo} fNo
+		</foreach>
+			) A
+	</insert>
+	
+	<select id="selectFileDownload" parameterType="java.util.HashMap" resultType="boardFileVO">
+		SELECT FILE_SEQ 		fileSeq
+			 , BOARD_SEQ		boardSeq
+			 , FILE_TYPE_CODE	fileTypeCode
+			 , FILE_NAME		fileName
+			 , FILE_PATH		filePath
+			 , FILE_SIZE		fileSize
+			 , MIME_TYPE		mimeType
+			 , REGDATE			regdate
+			 , REGID			regid
+			 , FILE_REAL_NAME	fileRealName
+			 , F_NO				fNo
+		FROM
+			T_BOARD_FILE
+		WHERE
+			FILE_SEQ = #{fileSeq}
+	</select>
+	
+	<delete id="deleteFiles" parameterType="java.util.Map">
+		DELETE FROM T_BOARD_FILE
+		WHERE 1=1
+		<if test="fileSeq == null">
+		  	AND BOARD_SEQ IN
+		  	<foreach collection="codeList" item="item" separator="," open="(" close=")">
+		  		#{item, jdbcType=NVARCHAR}
+		  	</foreach>
+		</if>
+		<if test="fileSeq != null">
+			AND FILE_SEQ = #{fileSeq}
+		</if>
+	</delete>
+	
+	<select id="lastBoardSeq" parameterType="java.util.HashMap" resultType="boardVO">
+		SELECT TOP 1 WITH TIES BOARD_SEQ boardSeq FROM T_BOARD ORDER BY BOARD_SEQ DESC
+	</select>
+	
+	<update id="deleteBoard" parameterType="java.util.Map">
+		UPDATE T_BOARD
+		SET USE_YN = 'N'
+		WHERE BOARD_SEQ = #{boardSeq}
+	</update>
+</mapper>

@@ -1,0 +1,665 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="custDataNS">	
+
+	<select id="selectCustList" parameterType="java.util.HashMap" resultType="custVO">
+		SELECT A.*
+		FROM (
+			SELECT 
+				ROW_NUMBER() OVER(ORDER BY AA.custName ASC, AA.mngDeptName ASC, AA.custMngName, AA.bizNum) AS number
+			  , AA.*		
+			FROM (
+				SELECT  
+					D.*,
+					M.CUST_TYPE_CODE AS custTypeCode, 
+					(SELECT C.CNAME FROM T_CODE C WHERE C.CODE = M.CUST_TYPE_CODE AND C.GCODE = 'CUST_TYPE_CD') AS custTypeName, 
+					M.CEO AS ceo, 
+					M.BIZ_NUM AS bizNum, 
+					M.BIZ_NUM_SUB AS bizNumSub, 
+					M.BIZ_COND AS bizCond, 
+					M.BIZ_KIND AS bizKind, 
+					M.BIZ_TYPE_CODE AS bizTypeCode, 
+					(SELECT C.CNAME FROM T_CODE C WHERE C.CODE = M.BIZ_TYPE_CODE AND C.GCODE = 'BIZ_TYPE_CD') AS bizTypeName, 
+					M.BIZ_NAME AS bizName,
+					M.BANK_CODE AS bankCode, 
+					(SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = M.BANK_CODE) AS bankName,
+					M.BANK_CNNM AS bankCnnm,
+					M.BANK_ACCOUNT AS bankAccount, 
+					M.BIZ_POST AS bizPost, 
+					M.BIZ_ADDR AS bizAddr, 
+					M.BIZ_ADDR_DETAIL AS bizAddrDetail
+				FROM 
+					T_CUST_MST M,
+					(SELECT 
+						row_number() over( partition by D.CUST_SEQ order by D.DEPT_ID desc ) rn,
+						D.CUST_SEQ AS custSeq, 
+						D.MNG_CUST_ID AS mngCustId,
+						D.MNG_DEPT_ID AS mngDeptId,
+						D.SELL_BUY_SCTN AS sellBuySctn,
+						(SELECT C.CNAME FROM T_CODE C WHERE C.CODE = D.SELL_BUY_SCTN AND C.GCODE = 'SELL_BUY_SCTN') AS sellBuySctnName, 
+						D.CUST_NAME AS custName, 
+						(SELECT CD.DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.CUST_ID = D.CUST_ID AND CD.DEPT_ID = D.DEPT_ID) AS deptName, 
+						(SELECT CD.DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.CUST_ID = D.MNG_CUST_ID AND CD.DEPT_ID = D.MNG_DEPT_ID) AS mngDeptName, 
+						D.FAX AS fax, 
+						ISNULL(U.MOBILE, D.MOBILE) AS mobile, 
+						D.REGDATE AS regDate, 
+						D.CUST_ID AS custId, 
+						D.DEPT_ID AS deptId,
+						D.TELNUM AS telNum, 
+						D.TAX_EMAIL AS taxEmail, 
+						D.TAX_STAFF_NAME AS taxStaffName,
+						D.TAX_TELNUM AS taxTelNum,
+						D.USE_YN AS useYn, 
+						D.ITEM_CODE AS itemCode, 
+						D.MANAGER AS manager,  
+						(SELECT USER_NAME FROM T_USER WHERE USER_ID = D.MANAGER) AS managerName, 
+						D.CUST_MEMO	AS custMemo,
+						D.ORDER_MEMO AS orderMemo, 
+						U.USER_ID AS userId, 
+						ISNULL(U.USER_NAME, D.STAFF_NAME)	AS userName, 
+						U.GRADE AS grade, 
+						U.EMAIL AS email, 
+						U.TALK_YN AS talkYn,						
+						convert(varchar, D.DISUSE_DATE, 120) disuseDate,
+						D.CUST_MNG_CODE AS custMngCode,
+						(SELECT CNAME FROM T_CODE WHERE GCODE = 'CUST_MNG_CD' AND CODE = D.CUST_MNG_CODE) AS custMngName,
+						D.CUST_MNG_MEMO AS custMngMemo,
+						D.PAY_TYPE AS payType,
+						D.PAY_MEMO AS payMemo,
+						D.DRIVER_COMMISSION as driverCommission,
+						D.POSTAL_ADDR AS postalAddr,
+						D.POSTAL_ADDR_DETAIL AS postalAddrDetail,
+						D.POSTAL_POST AS postalPost
+					FROM T_CUST_DTL D
+						 LEFT OUTER JOIN 
+						 T_USER U ON D.CUST_ID = U.CUST_ID AND D.DEPT_ID = U.DEPT_ID
+					WHERE 
+						D.MNG_CUST_ID = #{loginCustId} 
+						<if test='deptId != null and !"".equals(deptId)'>
+							AND D.MNG_DEPT_ID = #{deptId}
+						</if>
+					) D
+				WHERE
+					M.CUST_ID = D.custId AND D.rn = 1
+					<if test='custName != null and !"".equals(custName)'>
+						AND D.custName LIKE '%' + #{custName} + '%'
+					</if>
+					<if test='bizName != null and !"".equals(bizName)'>
+						AND M.BIZ_NAME LIKE '%' + #{bizName} + '%'
+					</if>
+					<if test='bizNum != null and !"".equals(bizNum)'>
+						AND M.BIZ_NUM LIKE '%' + #{bizNum} + '%'
+					</if>
+					<if test='custTypeCode != null and !"".equals(custTypeCode)'>
+						AND M.CUST_TYPE_CODE = #{custTypeCode}
+					</if>
+					<if test='sellBuySctn != null and !"".equals(sellBuySctn)'>
+						AND D.sellBuySctn = #{sellBuySctn}
+					</if>
+					<if test='useYn != null and !"".equals(useYn)'>
+						AND D.useYn = #{useYn}
+					</if>
+					<if test='custMngCode != null and !"".equals(custMngCode)'>
+						AND D.custMngCode = #{custMngCode}
+					</if>
+					<if test='payYn != null and !"".equals(payYn)'>
+						AND D.payType = #{payYn}
+					</if>
+					<if test='userId != null and !"".equals(userId)'>
+						AND D.manager LIKE '%' + #{userId} + '%'
+					</if>
+				) AA
+			) A
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+	</select>
+	
+	<select id="selectCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT COUNT(1) retCnt
+		FROM (
+			SELECT 
+				D.*,
+				M.CUST_TYPE_CODE AS custTypeCode, 
+				M.CEO AS ceo, 
+				M.BIZ_NUM AS bizNum, 
+				M.BIZ_NUM_SUB AS bizNumSub, 
+				M.BIZ_COND AS bizCond, 
+				M.BIZ_KIND AS bizKind, 
+				M.BIZ_TYPE_CODE AS bizTypeCode, 
+				BIZ_POST AS bizPost, 
+				BIZ_ADDR AS bizAddr, 
+				BIZ_ADDR_DETAIL AS bizAddrDetail
+			FROM 
+				T_CUST_MST M, 
+				(SELECT 
+					D.CUST_SEQ AS custSeq, 
+					D.MNG_CUST_ID AS mngCustId,
+					D.MNG_DEPT_ID AS mngDeptId,
+					D.SELL_BUY_SCTN AS sellBuySctn,
+					D.CUST_NAME AS custName,  
+					D.FAX AS fax, 
+					D.MOBILE AS mobile, 
+					D.REGDATE AS regDate, 
+					D.CUST_ID AS custId, 
+					D.DEPT_ID AS deptId,
+					D.CUST_NAME AS bizName, 
+					D.TELNUM AS telNum, 
+					D.TAX_EMAIL AS taxEmail, 
+					D.TAX_STAFF_NAME AS taxStaffName,
+					D.TAX_TELNUM AS taxTelNum,
+					D.USE_YN AS useYn, 
+					D.ITEM_CODE AS itemCode, 
+					D.MANAGER AS manager, 
+					D.CUST_MEMO	AS custMemo,
+					D.ORDER_MEMO AS orderMemo,
+					D.CUST_MNG_CODE AS custMngCode,
+					D.CUST_MNG_MEMO AS custMngMemo,
+					D.PAY_TYPE AS payType,
+					D.PAY_MEMO AS payMemo
+				FROM T_CUST_DTL D 
+				WHERE  
+					D.MNG_CUST_ID = #{loginCustId} 
+					<if test='deptId != null and !"".equals(deptId)'>
+						AND D.MNG_DEPT_ID = #{deptId}
+					</if>
+				) D
+			WHERE M.CUST_ID = D.custId
+			<if test='custName != null and !"".equals(custName)'>
+				AND D.custName LIKE '%' + #{custName} + '%'
+			</if>
+			<if test='bizName != null and !"".equals(bizName)'>
+				AND M.BIZ_NAME LIKE '%' + #{bizName} + '%'
+			</if>
+			<if test='bizNum != null and !"".equals(bizNum)'>
+				AND M.BIZ_NUM LIKE '%' + #{bizNum} + '%'
+			</if>
+			<if test='custTypeCode != null and !"".equals(custTypeCode)'>
+				AND M.CUST_TYPE_CODE = #{custTypeCode}
+			</if>
+			<if test='sellBuySctn != null and !"".equals(sellBuySctn)'>
+				AND D.sellBuySctn = #{sellBuySctn}
+			</if>
+			<if test='useYn != null and !"".equals(useYn)'>
+				AND D.useYn = #{useYn}
+			</if>
+			<if test='custMngCode != null and !"".equals(custMngCode)'>
+				AND D.custMngCode = #{custMngCode}
+			</if>
+			<if test='payYn != null and !"".equals(payYn)'>
+				AND D.payType = #{payYn}
+			</if>
+			<if test='userId != null and !"".equals(userId)'>
+				AND D.manager LIKE '%' + #{userId} + '%'
+			</if>
+		) C
+	</select>
+	
+	<select id="selectSearchCust" parameterType="java.util.HashMap" resultType="custVO">
+		SELECT A.*
+		FROM (
+			SELECT 
+				ROW_NUMBER() OVER(ORDER BY AA.custName ASC) AS number
+			  , AA.*		
+			FROM (
+				SELECT  
+					DISTINCT D.*
+				FROM 
+					T_CUST_MST M,
+					(SELECT 
+						D.CUST_NAME AS custName, 
+						(SELECT CD.DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.CUST_ID = D.CUST_ID AND CD.DEPT_ID = D.DEPT_ID) AS deptName,  
+						D.CUST_ID AS custId, 
+						D.DEPT_ID AS deptId,
+						D.SELL_BUY_SCTN sellBuySctn
+					FROM T_CUST_DTL D
+					WHERE 
+						D.MNG_CUST_ID = #{loginCustId} 
+						<if test='deptId != null and !"".equals(deptId)'>
+							AND D.MNG_DEPT_ID = #{deptId}
+						</if>
+						AND D.USE_YN = 'Y'
+					) D
+				WHERE
+					M.CUST_ID = D.custId 
+					<if test='custName != null and !"".equals(custName)'>
+						AND D.custName LIKE '%' + #{custName} + '%'
+					</if>
+					<if test='sellBuySctn != null and !"".equals(sellBuySctn)'>
+						AND D.sellBuySctn = #{sellBuySctn}
+					</if>
+				) AA
+			) A
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+	</select>
+	
+	<select id="selectSearchCustCnt" parameterType="java.util.HashMap" resultType="string">
+		SELECT
+				COUNT(1) retCnt
+		FROM 
+			(			
+				SELECT  
+					DISTINCT D.*
+				FROM 
+					T_CUST_MST M,
+					(SELECT 
+						D.CUST_NAME AS custName, 
+						(SELECT CD.DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.CUST_ID = D.CUST_ID AND CD.DEPT_ID = D.DEPT_ID) AS deptName,  
+						D.CUST_ID AS custId, 
+						D.DEPT_ID AS deptId,
+						D.SELL_BUY_SCTN sellBuySctn
+					FROM T_CUST_DTL D
+					WHERE 
+						D.MNG_CUST_ID = #{loginCustId} 
+						<if test='deptId != null and !"".equals(deptId)'>
+							AND D.MNG_DEPT_ID = #{deptId}
+						</if>
+						AND D.USE_YN = 'Y'
+					) D
+				WHERE
+					M.CUST_ID = D.custId 
+					<if test='custName != null and !"".equals(custName)'>
+						AND D.custName LIKE '%' + #{custName} + '%'
+					</if>
+					<if test='sellBuySctn != null and !"".equals(sellBuySctn)'>
+						AND D.sellBuySctn = #{sellBuySctn}
+					</if>
+			) M
+	</select>
+		
+	<select id="selectCustAddrList" parameterType="java.util.HashMap" resultType="custAddrVO">
+		SELECT AA.*
+		FROM (
+			SELECT ROW_NUMBER() OVER(ORDER BY AAA.REGDATE DESC) AS number
+				 , AAA.*
+			FROM (
+				SELECT 
+					A.ADDR_SEQ AS addrSeq, 
+					A.CUST_ID AS custId,
+					A.DEPT_ID AS deptId, 
+					A.ADDR_NAME AS addrName, 
+					A.ADDR AS addr, 
+					A.ADDR_DETAIL AS addrDetail, 
+					A.LAT AS lat, 
+					A.LON AS lon, 
+					A.STAFF_NAME AS staffName, 
+					A.STAFF_TEL AS staffTel, 
+					A.ORDER_MEMO AS orderMemo, 
+					A.REGDATE AS regDate, 
+					A.USE_YN AS useYn, 
+					A.SIDO, 
+					A.GUNGU,
+					A.DONG, 
+					B.DEPT_NAME deptName
+				FROM T_CUST_ADDR A
+					 INNER JOIN
+					 T_CUST_DEPT B ON A.DEPT_ID = B.DEPT_ID AND B.USE_YN = 'Y'
+				WHERE 
+					A.CUST_ID = #{loginCustId} 
+					AND A.USE_YN = 'Y'
+					<if test='deptId != null and !"".equals(deptId)'>
+						AND A.DEPT_ID = #{deptId}
+					</if>
+					<if test='select != null and !"".equals(select) and value != null and !"".equals(value)'>
+						AND ${select} LIKE '%'+ #{value} +'%'
+					</if>					
+					<if test='addrName != null and !"".equals(addrName)'>
+						AND A.ADDR_NAME LIKE #{addrName}  + '%'
+					</if>
+				) AAA
+			) AA
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+	</select>
+	
+	<select id="selectAddrCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT 
+			COUNT(1) retCnt
+		FROM T_CUST_ADDR A 
+			 INNER JOIN
+			 T_CUST_DEPT B ON A.DEPT_ID = B.DEPT_ID AND B.USE_YN = 'Y'
+		WHERE
+			A.CUST_ID = #{loginCustId} 
+			AND A.USE_YN = 'Y'
+			<if test='deptId != null and !"".equals(deptId)'>
+				AND A.DEPT_ID = #{deptId}
+			</if>
+			<if test='select != null and !"".equals(select) and value != null and !"".equals(value)'>
+				AND ${select} LIKE '%'+ #{value} +'%'
+			</if>					
+			<if test='addrName != null and !"".equals(addrName)'>
+				AND A.ADDR_NAME LIKE #{addrName}  + '%'
+			</if>
+	</select>
+	
+	<select id="checkBizNum" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		IF EXISTS (
+			SELECT CUST_ID
+			FROM T_CUST_MST
+			WHERE BIZ_NUM = #{bizNum} 
+			<if test='bizNumSub != null and !"".equals(bizNumSub)'>
+			AND BIZ_NUM_SUB = #{bizNumSub}
+			</if>
+		)
+		BEGIN
+			SELECT TOP 1 '00' AS retCode, '' AS retMsg, CUST_ID AS custId
+			FROM T_CUST_MST
+			WHERE BIZ_NUM = #{bizNum} 
+			<if test='bizNumSub != null and !"".equals(bizNumSub)'>
+			AND BIZ_NUM_SUB = #{bizNumSub}
+			</if>
+		END
+		ELSE
+		BEGIN
+		    SELECT '99' AS retCode, '등록된 거래처가 존재하지 않습니다.\n신규 거래처를 등록해주세요.' AS retMsg
+		END
+	</select>
+	
+	<select id="getCustInfo" parameterType="java.util.HashMap" resultType="custVO">
+		SELECT
+			CUST_ID AS custId
+		  , BIZ_NAME AS bizName
+		  , BIZ_NUM AS bizNum
+		  , BIZ_NUM_SUB AS bizNumSub
+		  , BIZ_TYPE_CODE AS bizTypeCode
+		  , CUST_TYPE_CODE AS custTypeCode
+		  , CEO AS ceo
+		  , BIZ_COND AS bizCond
+		  , BIZ_KIND AS bizKind
+		  , BIZ_POST AS bizPost
+		  , BIZ_ADDR AS bizAddr
+		  , BIZ_ADDR_DETAIL AS bizAddrDetail
+		  , BANK_CODE AS bankCode
+		  , BANK_CNNM AS bankCnnm
+		  , BANK_ACCOUNT AS bankAccount
+		  , (SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = BANK_CODE) bankName
+		FROM T_CUST_MST 
+		WHERE
+			BIZ_NUM = #{bizNum}
+	</select>
+	
+	<insert id="insertCustDtl" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_CUST_DTL(
+						   	#{custSeq}
+						  , #{custId}
+						  , #{deptId}
+						  , #{loginCustId}
+						  , #{mngDeptId}
+						  , #{sellBuySctn}
+						  , #{custName}
+						  , #{telNum}
+						  , #{mobile}
+						  , #{fax}
+						  , #{taxEmail}
+						  , #{taxStaffName}
+						  , #{taxTelNum}
+						  , #{itemCode}
+						  , #{manager}
+						  , #{custMemo}
+						  , #{orderMemo}
+						  , #{userName}
+						  , #{useYn}						  
+						  , #{regId}
+						  , #{editId}
+						  , #{custMngCode}
+						  , #{custMngMemo}
+						  , #{payType}
+						  , #{payMemo}
+						  , #{driverCommission}
+						  , #{postalAddr}
+						  , #{postalAddrDetail}
+						  , #{postalPost}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</insert>
+	
+	<select id="checkDeptId" statementType="CALLABLE" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		{call CHECK_DEPT_ID(
+						   	#{deptId}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</select>
+	
+	<select id="selectCustFrtCost" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT S_SIDO sSido, S_GUNGU sGungu, E_SIDO eSido, E_GUNGU eGungu, 
+				[0.5] AS 'F0T5', [1] AS 'F1' , [1T4] AS 'F1T4' , [2T5] AS 'F2T5' , [3T5] AS 'F3T5' , [5] AS 'F5' , [5P] AS 'F5P', 
+				[5A] AS 'F5A' , [8] AS 'F8' , [9T5] AS 'F9T5' , [11] AS 'F11' , [11A] AS 'F11A' , [14] AS 'F14' , [14A] AS 'F14A',
+				[16] AS 'F16' , [16A] AS 'F16A', [18] AS 'F18', [18A] AS 'F18A' , [22] AS 'F22', [25] AS 'F25'
+		FROM (
+				SELECT S_SIDO, S_GUNGU, E_SIDO, E_GUNGU, CAR_TON_CODE, UNIT_COST 
+				FROM T_CUST_FRTCOST
+				WHERE SELL_CUST_ID = #{sellCustId} AND SELL_DEPT_ID = #{sellDeptId} AND BUY_CUST_ID = #{buyCustId} AND BUY_DEPT_ID = #{buyDeptId}
+					<if test='sSido != null and !"".equals(sSido)'>
+						AND S_SIDO = #{sSido}
+					</if>
+			) A
+		PIVOT (MAX(UNIT_COST) FOR CAR_TON_CODE IN ([0.5], [1], [1T4], [2T5], [3T5], [5], [5P], [5A], [8], [9T5], [11], [11A], 
+													[14], [14A], [16], [16A], [18], [18A], [22], [25])) P		
+	</select>
+	
+	<insert id="insertCustAddr" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_CUST_ADDR(
+						   	#{addrSeq}
+						  , #{loginCustId}
+						  , #{loginDeptId}
+						  , #{addrName}
+						  , #{addr}
+						  , #{addrDetail}
+						  , #{lat}
+						  , #{lon}
+						  , #{staffName}
+						  , #{staffTel}
+						  , #{orderMemo}
+						  , #{regId}
+						  , #{sido}
+						  , #{gungu}
+						  , #{dong}
+						  , #{mode}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</insert>
+	
+	<insert id="insertCustFrtCost" parameterType="java.util.HashMap">
+		INSERT INTO 
+					T_CUST_FRTCOST 
+					(
+						SELL_CUST_ID
+					  , SELL_DEPT_ID
+					  , BUY_CUST_ID
+					  , BUY_DEPT_ID 
+					  , S_SIDO
+					  , S_GUNGU
+					  , E_SIDO
+					  , E_GUNGU
+					  , CAR_TON_CODE
+					  , UNIT_COST
+					  , REGID
+					)
+		VALUES			
+		<foreach collection="list" item="item" index="index" separator=",">
+					(
+						#{sellCustId, jdbcType=NVARCHAR}
+					  , #{sellDeptId, jdbcType=NVARCHAR}	
+					  , #{buyCustId, jdbcType=NVARCHAR}	
+					  , #{buyDeptId, jdbcType=NVARCHAR}	
+					  , #{item.sSido, jdbcType=NVARCHAR}	
+					  , #{item.sGungu, jdbcType=NVARCHAR}	
+					  , #{item.eSido, jdbcType=NVARCHAR}	
+					  , #{item.eGungu, jdbcType=NVARCHAR}	
+					  , CASE WHEN #{item.carTonCode} = '0T5' THEN '0.5' ELSE #{item.carTonCode}	 END
+					  , #{item.unitCost, jdbcType=INTEGER}	
+					  , #{regId, jdbcType=NVARCHAR}	
+					)
+		</foreach>			
+	</insert>
+	
+	<delete id="deleteCustFrtCost" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{
+			call DELETE_CUST_FRTCOST(
+						    #{custId, jdbcType=NVARCHAR}
+						  , #{deptId, jdbcType=NVARCHAR}
+						  , #{loginCustId, jdbcType=NVARCHAR}
+						  , #{loginDeptId, jdbcType=NVARCHAR}
+						  , #{sellBuySctn, jdbcType=NVARCHAR}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</delete>
+	
+	<select id="checkAddr" statementType="CALLABLE" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		{call CHECK_ADDR(
+						#{custId, jdbcType=NVARCHAR} 
+					  ,	#{deptId, jdbcType=NVARCHAR}
+					  ,	#{addrName, jdbcType=NVARCHAR}
+					  ,	#{addr, jdbcType=NVARCHAR}
+					  ,	#{addrDetail, jdbcType=NVARCHAR}
+					  <!-- ,	#{lat, jdbcType=NVARCHAR}
+					  ,	#{lon, jdbcType=NVARCHAR} -->
+					  ,	#{sido, jdbcType=NVARCHAR}
+					  ,	#{gungu, jdbcType=NVARCHAR}
+					  ,	#{dong, jdbcType=NVARCHAR}
+					  ,	#{staffName, jdbcType=NVARCHAR}
+					  ,	#{staffTel, jdbcType=NVARCHAR}
+					  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</select>
+	
+	<delete id="deleteCustAddr" parameterType="java.util.HashMap">
+		UPDATE T_CUST_ADDR
+		SET USE_YN = 'N'
+		WHERE ADDR_SEQ = #{addrSeq}
+	</delete>
+	
+	<insert id="insertCustAddrBundle" parameterType="java.util.HashMap">
+		INSERT INTO 
+			T_CUST_ADDR 
+				(
+					CUST_ID 	  ,	DEPT_ID 	  ,	ADDR_NAME 	  ,	ADDR 
+				  ,	ADDR_DETAIL   , LAT 		  ,	LON 		  ,	STAFF_NAME 
+				  ,	STAFF_TEL	  ,	ORDER_MEMO    ,	REGDATE 	  ,	REGID 
+				  ,	USE_YN 		  ,	SIDO 		  ,	GUNGU 		  ,	DONG
+				)
+		VALUES
+		<foreach collection="addrList" item="item" index="index" separator=",">
+				(
+				    #{loginCustId, jdbcType=NVARCHAR}
+				  , #{loginDeptId, jdbcType=NVARCHAR}
+				  , #{item.addrName, jdbcType=NVARCHAR}
+				  , #{item.addr, jdbcType=NVARCHAR}
+				  , #{item.addrDetail, jdbcType=NVARCHAR}
+				  , #{item.lat, jdbcType=NVARCHAR}
+				  , #{item.lon, jdbcType=NVARCHAR}
+				  , #{item.staffName, jdbcType=NVARCHAR}
+				  , REPLACE(#{item.staffTel, jdbcType=NVARCHAR}, '-', '')
+				  , #{item.memo, jdbcType=NVARCHAR}
+				  , GETDATE()
+				  , #{regId, jdbcType=NVARCHAR}
+				  , 'Y'
+				  , #{item.sido, jdbcType=NVARCHAR}
+				  , #{item.gungu, jdbcType=NVARCHAR}
+				  , #{item.dong, jdbcType=NVARCHAR}
+			)		  
+		</foreach>		
+	</insert>
+	
+	<select id="selectBizInfo" parameterType="java.util.HashMap" resultType="custVO">
+		SELECT ISNULL(BIZ_NAME, '')					 	bizName
+			 , ISNULL(CEO, '') 							ceo
+			 , ISNULL(SUBSTRING(BIZ_COND1, 3, 40) ,'') 	bizCond
+	 		 , ISNULL(BIZ_KIND, '')						bizkind
+			 , ISNULL(ZIPCODE,'')						bizPost
+			 , ISNULL(ADDR, '')							bizAddr
+		FROM BIZ_INFO
+		WHERE BIZ_NUM = #{bizNum}
+	</select>
+	
+	<select id="joinCheckBizNum" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		IF EXISTS (
+			SELECT CUST_ID
+			FROM T_CUST_MST
+			WHERE BIZ_NUM = #{bizNum}
+		)
+		BEGIN
+			SELECT '00' AS retCode
+		    	 , '해당 사업자 번호로 등록되어있는 조직이 있습니다.' AS retMsg
+			     , CUST_ID AS custId
+			     , BIZ_NAME AS bizName
+			     , BIZ_NUM AS bizNum
+			     , BIZ_NUM_SUB AS bizNumSub
+			     , BIZ_TYPE_CODE AS bizTypeCode
+			     , CUST_TYPE_CODE AS custTypeCode
+			     , CEO AS ceo
+			     , BIZ_COND AS bizCond
+			     , BIZ_KIND AS bizKind
+			     , BIZ_POST AS bizPost
+			     , BIZ_ADDR AS bizAddr
+			     , BIZ_ADDR_DETAIL AS bizAddrDetail
+			     , BANK_CODE AS bankCode
+			     , BANK_CNNM AS bankCnnm
+			     , BANK_ACCOUNT AS bankAccount
+			     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = BANK_CODE) bankName
+			FROM T_CUST_MST 
+			WHERE
+				BIZ_NUM = #{bizNum} AND BIZ_NUM_SUB = '0000'
+		END
+		ELSE IF EXISTS (
+			SELECT BIZ_NUM 
+			FROM BIZ_INFO
+			WHERE BIZ_NUM = #{bizNum}
+		)
+		BEGIN
+		    SELECT '00' AS retCode
+		    	 , '기업정보DB에 해당 사업자 번호로 등록되어있는 조직이있습니다.' AS retMsg
+		    	 , ISNULL(BIZ_NAME, '') 					bizName
+				 , ISNULL(CEO, '')							ceo
+				 , ISNULL(SUBSTRING(BIZ_COND1, 3, 40), '') 	bizCond
+	 			 , ISNULL(BIZ_KIND, '')		   				bizkind
+			FROM BIZ_INFO
+			WHERE BIZ_NUM = #{bizNum}
+		END
+		ELSE 
+		BEGIN 
+			SELECT '99' AS retCode, '등록된 거래처가 존재하지 않습니다.' AS retMsg 
+		END
+	</select>
+	
+	<select id="searchBizinfoList" parameterType="java.util.HashMap" resultType="custVO">
+		SELECT A.*
+		FROM (
+			SELECT ROW_NUMBER() OVER(ORDER BY AA.bizSeq ASC) AS number
+				 , AA.*
+			FROM (
+				SELECT ISNULL(BIZ_NAME,'')		bizName
+					 , ISNULL(BIZ_NUM,'') 		bizNum
+					 , ISNULL(ADDR,'') 			bizAddr
+					 , ISNULL(CEO,'') 			ceo
+					 , ISNULL(BIZ_KIND,'') 		bizKind
+					 , ISNULL(MAIN_PRODUCT,'') 	mainProduct
+					 , ISNULL(BIZ_SEQ,'')		bizSeq
+				FROM BIZ_INFO
+				WHERE ${selector} LIKE '%' + #{value} + '%'
+			)AA
+		)A
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+	</select>
+	
+	<select id="searchBizinfoCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT COUNT(1) retCnt
+		FROM (
+			SELECT ISNULL(BIZ_NAME,'')		bizName
+				 , ISNULL(BIZ_NUM,'') 		bizNum
+				 , ISNULL(ADDR,'') 			bizAddr
+				 , ISNULL(CEO,'') 			ceo
+				 , ISNULL(BIZ_KIND,'') 		bizKind
+				 , ISNULL(MAIN_PRODUCT,'') 	mainProduct
+				 , ISNULL(BIZ_SEQ,'')		bizSeq
+			FROM BIZ_INFO
+				WHERE ${selector} LIKE '%' + #{value} + '%'
+		)AA
+	</select>
+</mapper>

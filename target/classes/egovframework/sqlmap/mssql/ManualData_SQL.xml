@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="menualDataNS">
+	<select id="getManualGroupList" parameterType="java.util.HashMap" resultType="manualVO">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS number
+		  , MANUAL_CODE manualCode
+		  , APP_KIND appKind
+		  , MANUAL_NAME manualName
+		  , ASORT asort
+		  , USE_YN useYn
+		FROM 
+		   T_APP_MANUAL_MST 
+		WHERE 1=1
+			<if test='appKind != null and !"".equals(appKind)'>
+			AND APP_KIND = #{appKind}
+			</if>
+			<if test='useYn != null and !"".equals(useYn)'>
+			AND USE_YN = #{useYn}
+			</if>
+		ORDER BY ASORT ASC
+	</select>
+	
+	<select id="getManualList" parameterType="java.util.HashMap" resultType="manualVO">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS number
+		  , MANUAL_SEQ 	manualSeq
+		  , MANUAL_CODE manualCode
+		  , MANUAL_TITLE manualTitle
+		  , MANUAL_VERSION manualVersion
+		  , MANUAL_TYPE manualType
+		  , MANUAL_URL manualUrl
+		  , MANUAL_ASORT manualAsort
+		  , USE_YN useYn
+		FROM 
+		   T_APP_MANUAL_DTL 
+		WHERE 1=1
+			<if test='manualCode != null and !"".equals(manualCode)'>
+			AND MANUAL_CODE = #{manualCode}
+			</if>
+			<if test='useYn != null and !"".equals(useYn)'>
+			AND USE_YN = #{useYn}
+			</if>
+		ORDER BY MANUAL_ASORT ASC
+	</select>
+	
+	<update id="insertManualGroup" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_MANUAL_GROUP(
+						   	#{appKind}
+						  , #{manualName}
+						  , #{manualCode}
+						  , #{useYn}
+						  , #{loginId}
+						  , #{mode}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+	<update id="insertManual" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_MANUAL(
+						    #{manualSeq}
+						  , #{manualName}
+						  , #{manualTitle}
+						  , #{manualVersion}
+						  , #{manualType}
+						  , #{manualUrl}
+						  , #{manualUseYn}
+						  , #{loginId}
+						  , #{mode}
+						  , #{outManualSeq, mode=OUT, jdbcType=INTEGER, javaType=int}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+	<update id="insertManualFile" parameterType="java.util.HashMap">
+		UPDATE 
+			T_APP_MANUAL_DTL
+		SET 
+			MANUAL_URL = #{manualUrl}
+		WHERE 
+			MANUAL_SEQ = #{manualSeq}
+	</update>
+</mapper>

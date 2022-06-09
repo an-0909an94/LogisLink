@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cmmDataNS">	
+
+	<select id="selectCmmCode" parameterType="java.util.HashMap" resultType="codeVO">
+		SELECT
+				CODE
+			  , CNAME
+		FROM
+				T_CODE
+		WHERE
+				GCODE = #{gcode}
+				AND USE_YN = 'Y'
+				<if test='filter1 != null and !"".equals(filter1)'>
+					AND FILTER1 LIKE '%' + #{filter1} + '%'
+				</if>
+		ORDER BY ASORT ASC
+	</select>
+	
+	<select id="selectAreaCode" parameterType="java.util.HashMap" resultType="areaVO">
+		SELECT
+				AREA_CD			areaCd
+			  , SIDO
+			  , SIGUN
+			  , SIDO_CD			sidoCd
+		FROM
+				T_CODE_AREA
+		WHERE
+				SIDO = #{sido} AND SIGUN = #{sigun}
+	</select>
+	
+	<select id="selectOpiInfoCnt" parameterType="java.util.HashMap" resultType="String">
+		SELECT
+				COUNT(1)
+		FROM
+				T_OPI_INFO
+		WHERE
+				SIDO = #{sido} AND SIGUN = #{sigun} AND BASE_DATE = CONVERT(CHAR(10), GETDATE(), 23) 
+	</select>
+	
+	<insert id="insertOpiInfo" parameterType="java.util.HashMap">
+		INSERT
+			INTO T_OPI_INFO (PREMIUM_GASOLINE, GASOLINE, DIESEL, LAMP_OIL, BUTANE, BASE_DATE, SIDO, SIGUN)
+		VALUES	(
+					#{premiumGasoline}
+				  , #{gasoline}
+				  , #{diesel}
+				  , #{lampOil}
+				  , #{butane}
+				  , CONVERT(CHAR(10), GETDATE(), 23)
+				  , #{sido}	
+				  , #{sigun}
+			  	)
+	</insert>
+	
+	<insert id="insertWeatherInfo" parameterType="java.util.HashMap">
+		INSERT
+			INTO T_ORDER_WEATHER
+				(
+					ORDER_ID
+				  , ALLOC_STATE
+				  , T1H
+				  , RN1
+				  , REH
+				  , PTY
+				  , VEC
+				  , WSD
+				  , BASE_DATE
+				  , BASE_TIME
+				  , NX
+				  , NY	
+				)
+			VALUES
+				(
+					#{orderId}
+				  , #{allocState}
+				  , #{T1H}
+				  , #{RN1}
+				  , #{REH}
+				  , #{PTY}
+				  , #{VEC}
+				  , #{WSD}
+				  , #{baseDate}
+				  , #{baseTime}
+				  , #{nx}
+				  , #{ny}
+				)
+	</insert>	
+
+	<select id="selectAreaCodeList" parameterType="java.util.HashMap" resultType="areaVO">
+		SELECT
+				AREA_CD			areaCd
+			  , SIDO
+			  , SIGUN
+			  , SIDO_CD			sidoCd
+		FROM
+				T_CODE_AREA
+		WHERE
+				SIGUN != ''
+				AND SIDO = #{sido}
+		ORDER BY SIGUN ASC
+	</select>
+</mapper>

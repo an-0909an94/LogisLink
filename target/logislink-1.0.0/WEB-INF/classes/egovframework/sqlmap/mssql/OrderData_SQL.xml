@@ -1,0 +1,1948 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="orderDataNS">	
+	<!-- 주선사/운송사 오더 리스트 -->
+   <select id="selectOrderArrange" parameterType="java.util.HashMap" resultType="orderVO">
+		SELECT AA.*
+		FROM (
+			SELECT
+					ROW_NUMBER() OVER(ORDER BY AAA.regdate desc) number
+				  , AAA.*
+			FROM
+				(
+					SELECT				   
+					       A.ORDER_ID         				orderId   
+					     , B.REQ_CUST_ID      				reqCustId
+					     , B.REQ_DEPT_ID      				reqDeptId
+					     , B.REQ_STAFF_ID    				reqStaffId
+					     , A.SELL_STAFF_TEL					reqTel
+					     , C.STAFF_NAME						reqStaffName
+					     , C.MOBILE							reqStaffTel
+					     , CASE WHEN A.SELL_CUST_ID = B.REQ_CUST_ID AND A.SELL_DEPT_ID = B.REQ_DEPT_ID THEN B.REQ_ADDR ELSE '' END reqAddr
+					     , CASE WHEN A.SELL_CUST_ID = B.REQ_CUST_ID AND A.SELL_DEPT_ID = B.REQ_DEPT_ID THEN B.REQ_ADDR_DETAIL ELSE '' END reqAddrDetail
+					     , B.S_COM_NAME     			 	sComName
+					     , B.S_SIDO         				sSido
+					     , B.S_GUNGU        				sGungu
+					     , B.S_DONG         				sDong
+					     , B.S_ADDR         				sAddr
+					     , B.S_ADDR_DETAIL         			sAddrDetail
+						 , CONVERT(CHAR(10),B.S_DATE, 23) 	sDateDay 
+						 , CONVERT(CHAR(10),B.S_DATE, 24) 	sDateTime 
+					     , B.S_STAFF         				sStaff
+					     , B.S_TEL            				sTel
+					     , B.E_COM_NAME      				eComName
+					     , B.E_SIDO         				eSido
+					     , B.E_GUNGU         				eGungu
+					     , B.E_DONG         				eDong
+					     , B.E_ADDR         				eAddr
+					     , B.E_ADDR_DETAIL         			eAddrDetail
+						 , CONVERT(CHAR(10),B.E_DATE, 23)	eDateDay 
+						 , CONVERT(CHAR(10),B.E_DATE, 24) 	eDateTime 
+					     , B.E_STAFF         				eStaff
+					     , B.E_TEL            				eTel
+					     , B.GOODS_NAME      				goodsName
+					     , CONVERT(FLOAT,B.GOODS_WEIGHT)/1000  			goodsWeight
+					     , B.MIX_YN        					mixYn
+					     , B.RETURN_YN         				returnYn
+					     , B.CAR_TON_CODE      				carTonCode
+					     , B.CAR_TYPE_CODE      			carTypeCode
+					     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_TON_CD' AND CODE = B.CAR_TON_CODE) orderCarTonName
+					     <!-- , B.CHARGE_TYPE      				chargeType -->
+					     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CHARGE_TYPE_CD' AND CODE = B.CHARGE_TYPE) chargeType
+					     , B.REGID            				regid
+					     , B.CUST_ID 						custId
+					     , B.DEPT_ID						deptId
+					     , B.ORDER_STATE					orderState
+					     , CONVERT(CHAR(19), B.REGDATE, 20) regdate
+					     , CONVERT(CHAR(19), B.ALLOC_DATE, 20) allocDate
+					     , B.MEMO
+					     , A.ALLOC_ID         				sellAllocId
+					     , A.SELL_CUST_ID      				sellCustId
+					     , A.SELL_DEPT_ID      				sellDeptId
+					     , A.SELL_STAFF_ID      			sellStaffId
+					     , A.ALLOC_CHARGE      				sellCharge
+					     , A.SELL_WEIGHT					sellWeight
+					     , A.ALLOC_FEE         				sellFee
+					     , A.LINK_YN						sellLinkYn
+					     , C.CUST_NAME         				sellCustName
+					     , D.ALLOC_ID         				allocId
+					     , D.BUY_CUST_ID      				buyCustId
+					     , D.BUY_DEPT_ID      				buyDeptId
+					     , D.BUY_STAFF_ID      				buyStaffId
+					     , D.BUY_STAFF_TEL					buyStaffTel
+					     , D.ALLOC_CHARGE      				buyCharge
+					     , D.ALLOC_FEE         				buyFee
+					     , D.DRIVER_ID      		 	 	buyDriverId
+						 , D.VEHIC_ID         				buyVehicId
+						 , D.DRIVER_NAME      				buyDriverName
+						 , D.DRIVER_TEL       				buyDriverTel
+						 , D.CAR_NUM          				buyCarNum
+						 , ISNULL(D.LINK_YN, 'N')			buyLinkYn
+					     , E.CUST_NAME        				buyCustName
+					     , ISNULL(D.ALLOC_STATE, '00')      allocState
+					     <!-- , (SELECT CNAME FROM T_CODE WHERE GCODE = 'ALLOC_STATE_CD' AND CODE = ISNULL(D.ALLOC_STATE, '00')) allocStateName -->
+					     , CASE WHEN B.ORDER_STATE = '09' THEN '취소'
+			     			WHEN ISNULL(F.ALLOC_STATE, '') = '' THEN (SELECT CNAME FROM T_CODE WHERE GCODE = 'ALLOC_STATE_CD' AND CODE = ISNULL(D.ALLOC_STATE, '00')) 
+					     	ELSE (SELECT CNAME FROM T_CODE WHERE GCODE = 'ALLOC_STATE_CD' AND CODE = F.ALLOC_STATE) 
+					     END allocStateName
+					     , CASE WHEN ISNULL(D.BUY_CUST_ID, '') = '' THEN 'D' ELSE 'C' END allocKind
+		 				 , CASE WHEN ISNULL(F.DRIVER_ID, '') = '' THEN 'N' ELSE 'Y' END driverKind
+					     , F.ALLOC_STATE       				driverState 
+					     , F.DRIVER_NAME      				driverName
+					     , F.DRIVER_TEL      				driverTel
+					     , F.CAR_NUM         				carNum 
+					     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'ALLOC_STATE_CD' AND CODE = F.ALLOC_STATE) driverStateName
+					     , ISNULL(G.STOP_COUNT, 0) stopCount
+					     , CASE WHEN ISNULL(G.STOP_COUNT, 0) = 0 THEN 'N' ELSE 'Y' END stopYn
+		 				 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'ORDER_STATE_CD' AND CODE = B.ORDER_STATE) orderStateName
+		 				 , (SELECT DEPT_NAME FROM T_CUST_DEPT WHERE DEPT_ID = A.BUY_DEPT_ID) deptName
+		 				 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'LINK_CD' AND CODE = D.LINK_CODE ) linkName
+		 				 , A.BUY_STAFF_ID					staffId
+		 				 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_MNG_CD' AND CODE = H.CAR_MNG_CODE)		carMngName
+		 				 , H.CAR_MNG_MEMO					carMngMemo
+		 				 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_MNG_CD' AND CODE = C.CUST_MNG_CODE)		custMngName
+		 				 , C.CUST_MNG_MEMO					custMngMemo
+		 				 , ISNULL(D.LINK_SETTLE_YN,'N')		linkSettleYn
+					     , I.ADD_CHARGE 					sellWayPointCharge
+					     , J.ADD_CHARGE 					sellStayCharge
+					     , K.ADD_CHARGE 					sellHandWorkCharge
+					     , L.ADD_CHARGE 					sellRoundCharge
+					     , M.ADD_CHARGE 					sellOtherAddCharge
+					     , N.ADD_CHARGE 					wayPointCharge
+					     , O.ADD_CHARGE 					stayCharge
+					     , P.ADD_CHARGE 					handWorkCharge
+					     , Q.ADD_CHARGE 					roundCharge
+					     , R.ADD_CHARGE 					otherAddCharge
+					     , B.S_LAT          				sLat
+					     , B.S_LON            				sLon
+					     , B.E_LAT            				eLat
+					     , B.E_LON            				eLon
+					     , D.PAY_TYPE						payType
+					     , S.USER_NAME						staffName
+					     , REPLACE(CONVERT(CHAR(5), D.REQ_PAY_DATE, 10), '-' ,'.') reqPayDate
+					     , ISNULL(A.ALLOC_CHARGE, 0) + ISNULL(I.ADD_CHARGE, 0) + ISNULL(J.ADD_CHARGE, 0) + ISNULL(K.ADD_CHARGE, 0) + ISNULL(L.ADD_CHARGE, 0) + ISNULL(M.ADD_CHARGE, 0) sellAmt
+					     , ISNULL(D.ALLOC_CHARGE, 0) + ISNULL(N.ADD_CHARGE, 0) + ISNULL(O.ADD_CHARGE, 0) + ISNULL(P.ADD_CHARGE, 0) + ISNULL(Q.ADD_CHARGE, 0) + ISNULL(R.ADD_CHARGE, 0) buyAmt
+					     , M.MEMO							sellOtherAddMemo
+					     , R.MEMO							otherAddMemo
+					     , T.USER_NAME						regname
+					     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CARGO_TRAN_CAR_SCTN_CD' AND CODE = H.CAR_SCTN_CODE) carSctnName
+					     , ISNULL(REPLACE(CONVERT(CHAR(5),  B.RECEIPT_DATE, 10), '-' ,'.'), 'N') + '/' + ISNULL(REPLACE(CONVERT(CHAR(5),  B.PAPER_RECEIPT_DATE, 10), '-' ,'.'), 'N') receiptYn
+		    				
+					FROM
+					   (
+					      SELECT 
+					             ORDER_ID     , ALLOC_ID      , SELL_CUST_ID   , SELL_DEPT_ID   , SELL_STAFF_ID
+					           , BUY_CUST_ID  , BUY_DEPT_ID   , BUY_STAFF_ID   , ALLOC_CHARGE   , ALLOC_FEE
+					           , SELL_STAFF_TEL , LINK_YN	  , SELL_WEIGHT	  
+					      FROM
+					            T_ORDER_ALLOC
+					      WHERE
+					            BUY_CUST_ID = #{custId} 
+					            <if test = 'deptId != null and !"".equals(deptId)'>AND BUY_DEPT_ID = #{deptId}</if>   
+					            <if test = 'userId != null and !"".equals(userId)'>AND BUY_STAFF_ID = #{userId}</if> 
+					   ) A
+					   INNER JOIN
+					   T_ORDER B ON A.ORDER_ID = B.ORDER_ID
+					   INNER JOIN
+					   (SELECT  CUST_ID , DEPT_ID, CUST_NAME, MNG_DEPT_ID, MOBILE, STAFF_NAME, CUST_MNG_CODE, CUST_MNG_MEMO
+					   FROM T_CUST_DTL 
+					   WHERE MNG_CUST_ID = #{custId}  AND SELL_BUY_SCTN = '01') C ON A.SELL_CUST_ID = C.CUST_ID AND A.SELL_DEPT_ID = C.DEPT_ID AND A.BUY_DEPT_ID = C.MNG_DEPT_ID
+					   LEFT OUTER JOIN
+					   T_ORDER_ALLOC D ON A.ORDER_ID = D.ORDER_ID AND A.BUY_CUST_ID = D.SELL_CUST_ID AND A.BUY_DEPT_ID = D.SELL_DEPT_ID
+					   LEFT OUTER JOIN 
+					   (SELECT CUST_ID, DEPT_ID, CUST_NAME, MNG_DEPT_ID
+					      FROM T_CUST_DTL
+					      WHERE MNG_CUST_ID = #{custId} AND SELL_BUY_SCTN = '02') E ON D.BUY_CUST_ID = E.CUST_ID AND D.BUY_DEPT_ID = E.DEPT_ID AND A.BUY_DEPT_ID = E.MNG_DEPT_ID
+					      LEFT OUTER JOIN 
+					   T_ORDER_ALLOC F ON A.ORDER_ID = F.ORDER_ID AND ISNULL(F.DRIVER_ID, '') != '' AND ISNULL(F.VEHIC_ID, '') != ''	
+					   LEFT OUTER JOIN
+					  (SELECT ORDER_ID, COUNT(*) STOP_COUNT
+					   FROM T_ORDER_STOP 
+					   WHERE USE_YN = 'Y'
+					   GROUP BY ORDER_ID) G ON B.ORDER_ID = G.ORDER_ID	
+					   LEFT OUTER JOIN 
+					   T_CUST_VEHIC H ON H.DRIVER_ID = F.DRIVER_ID AND H.VEHIC_ID = F.VEHIC_ID AND H.CUST_ID = F.SELL_CUST_ID AND H.DEPT_ID = F.SELL_DEPT_ID
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD I ON A.ORDER_ID = I.ORDER_ID AND A.ALLOC_ID = I.ALLOC_ID AND I.CALC_TYPE_CODE = '0023'
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD J ON A.ORDER_ID = J.ORDER_ID AND A.ALLOC_ID = J.ALLOC_ID AND J.CALC_TYPE_CODE = '0025'	
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD K ON A.ORDER_ID = K.ORDER_ID AND A.ALLOC_ID = K.ALLOC_ID AND K.CALC_TYPE_CODE = '0371'	
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD L ON A.ORDER_ID = L.ORDER_ID AND A.ALLOC_ID = L.ALLOC_ID AND L.CALC_TYPE_CODE = '0372'	
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD M ON A.ORDER_ID = M.ORDER_ID AND A.ALLOC_ID = M.ALLOC_ID AND M.CALC_TYPE_CODE = '0294'	
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD N ON D.ORDER_ID = N.ORDER_ID AND D.ALLOC_ID = N.ALLOC_ID AND N.CALC_TYPE_CODE = '0023'
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD O ON D.ORDER_ID = O.ORDER_ID AND D.ALLOC_ID = O.ALLOC_ID AND O.CALC_TYPE_CODE = '0025'
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD P ON D.ORDER_ID = P.ORDER_ID AND D.ALLOC_ID = P.ALLOC_ID AND P.CALC_TYPE_CODE = '0371'
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD Q ON D.ORDER_ID = Q.ORDER_ID AND D.ALLOC_ID = Q.ALLOC_ID AND Q.CALC_TYPE_CODE = '0372'
+					   LEFT OUTER JOIN 
+					   T_ORDER_ALLOC_ADD R ON D.ORDER_ID = R.ORDER_ID AND D.ALLOC_ID = R.ALLOC_ID AND R.CALC_TYPE_CODE = '0294'
+					   LEFT OUTER JOIN
+					   T_USER S ON D.REGID = S.USER_ID
+					   INNER JOIN
+					   T_USER T ON B.REGID = T.USER_ID
+					WHERE
+						1=1
+						<if test='reqCustId != null and !"".equals(reqCustId)'>
+							AND B.REQ_CUST_ID = #{reqCustId}
+			   				AND A.SELL_CUST_ID = #{reqCustId}
+						</if>
+						<if test='reqDeptId != null and !"".equals(reqDeptId)'>
+		  			 		AND B.REQ_DEPT_ID = #{reqDeptId}
+						</if>
+						<if test='listSSido != null and !"".equals(listSSido)'>
+		  			 		AND B.S_SIDO = #{listSSido}
+						</if>
+						<if test='listESido != null and !"".equals(listESido)'>
+		  			 		AND B.E_SIDO = #{listESido}
+						</if>
+					    <if test="sCarMngCode != null and sCarMngCode != ''">
+							AND H.CAR_MNG_CODE = #{sCarMngCode}
+						</if>
+					    <if test="sCustMngCode != null and sCustMngCode != ''">
+							AND C.CUST_MNG_CODE = #{sCustMngCode}
+						</if>
+						<if test = 'notCancel == "Y"'>
+							AND B.ORDER_STATE != '09'
+						</if> 
+						<if test="searchValue != null and searchValue != ''">
+							<choose>
+								<when test='searchColumn == "sellCustName".toString()'>
+									AND C.CUST_NAME LIKE '%' + #{searchValue} + '%'
+								</when>
+								<when test='searchColumn == "buyCustName".toString()'>
+									AND E.CUST_NAME LIKE '%' + #{searchValue} + '%'
+								</when>
+								<when test='searchColumn == "orderId".toString()'>
+									AND A.ORDER_ID = #{searchValue}
+								</when>
+								<when test='searchColumn == "sComName".toString()'>
+									AND B.S_COM_NAME LIKE '%' + #{searchValue} + '%'
+								</when>
+								<when test='searchColumn == "eComName".toString()'>
+									AND B.E_COM_NAME LIKE '%' + #{searchValue} + '%'
+								</when>
+							</choose>
+						</if>
+						<if test="driverValue != null and driverValue != ''">
+							<choose>
+								<when test='searchDriver == "carNum".toString()'>
+									AND F.CAR_NUM LIKE '%' + #{driverValue} + '%'
+								</when>
+								<when test='searchDriver == "driverName".toString()'>
+									AND F.DRIVER_NAME LIKE '%' + #{driverValue} + '%'
+								</when>
+							</choose>
+						</if>
+						<if test="allocState != null and allocState != ''">
+							AND ISNULL(B.ORDER_STATE, '00') = #{sAllocState}
+						</if>
+						<if test="driverState != null and driverState != ''">
+							AND ISNULL(F.ALLOC_STATE, '00') = #{driverState}
+						</if>
+						<if test="sMixYn != null and sMixYn != ''">
+							AND B.MIX_YN = #{sMixYn}
+						</if>
+					    <if test = "fromDate != null and fromDate != ''">
+				   			<choose>
+				   				<when test='searchDate == "regdate".toString()'>
+				   					AND B.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+					   			</when>
+					   			<when test='searchDate == "sDate".toString()'>
+					   				AND B.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'				   				
+				   				</when>
+					   		</choose> 
+					    </if>
+					    <if test = 'myOrder == "Y"'>AND B.REGID = #{loginId}</if> 
+				) AAA 		
+			WHERE 1=1
+			<if test = "orderStopYn != null and orderStopYn != ''">
+				AND stopYn = #{orderStopYn}
+			</if>
+			<if test="sLinkSettleYn != null and sLinkSettleYn != ''">
+				AND linkSettleYn = #{sLinkSettleYn}
+			</if>
+			) AA
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+   </select>
+   
+   <select id="selectOrderCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT				   
+		    COUNT(1) retCnt
+		  , ISNULL(SUM(CASE WHEN B.ORDER_STATE IN ('00') THEN 1 ELSE 0 END),'00') registerOrderCount
+		  , ISNULL(SUM(CASE WHEN B.ORDER_STATE IN ('01', '04', '05', '12') THEN 1 ELSE 0 END),'00') dispatchOrderCount
+		  , ISNULL(SUM(CASE WHEN B.ORDER_STATE IN ('09') THEN 1 ELSE 0 END),'00') cancelOrderCount
+		  , ISNULL(SUM(CASE WHEN B.ORDER_STATE IN ('01', '04', '05', '12') THEN CONVERT(BIGINT, CASE WHEN B.CHARGE_TYPE = '01' THEN A.ALLOC_CHARGE ELSE A.ALLOC_FEE END)+ISNULL(L.ADD_CHARGE,'0') ELSE 0 END),'0') sumSellCharge
+		  , ISNULL(SUM(CASE WHEN B.ORDER_STATE IN ('01', '04', '05', '12') THEN CONVERT(BIGINT, CASE WHEN B.CHARGE_TYPE = '01' THEN K.ALLOC_CHARGE ELSE 0 END)+ISNULL(N.ADD_CHARGE,'0') ELSE 0 END),'0') sumBuyCharge
+		  , ISNULL(SUM(CASE WHEN B.ORDER_STATE IN ('01', '04', '05', '12') THEN (CONVERT(BIGINT, CASE WHEN B.CHARGE_TYPE = '01' THEN A.ALLOC_CHARGE ELSE A.ALLOC_FEE END)+ISNULL(L.ADD_CHARGE,'0')) - (CONVERT(BIGINT, CASE WHEN B.CHARGE_TYPE = '01' THEN K.ALLOC_CHARGE ELSE 0 END)+ISNULL(N.ADD_CHARGE,'0')) ELSE 0 END),'0') profitAndLoss
+		FROM
+			(
+	      	SELECT 
+	             ORDER_ID     , ALLOC_ID      , SELL_CUST_ID   , SELL_DEPT_ID   , SELL_STAFF_ID
+	           , BUY_CUST_ID  , BUY_DEPT_ID   , BUY_STAFF_ID   , REGDATE      , REGID
+	           , LINK_SETTLE_YN, ALLOC_CHARGE , ALLOC_FEE
+	      	FROM
+	            T_ORDER_ALLOC
+	      	WHERE
+	            BUY_CUST_ID = #{custId}
+	            <if test = 'deptId != null and !"".equals(deptId)'>AND BUY_DEPT_ID = #{deptId}</if>   
+	            <if test = 'userId != null and !"".equals(userId)'>AND BUY_STAFF_ID = #{userId}</if> 
+	   		) A
+	   		INNER JOIN
+	   		T_ORDER B ON A.ORDER_ID = B.ORDER_ID
+		    INNER JOIN
+		   (SELECT  CUST_ID , DEPT_ID, CUST_NAME, MNG_DEPT_ID, CUST_MNG_CODE
+		    FROM T_CUST_DTL 
+		 	WHERE MNG_CUST_ID = #{custId} AND SELL_BUY_SCTN = '01') C ON A.SELL_CUST_ID = C.CUST_ID AND A.SELL_DEPT_ID = C.DEPT_ID AND A.BUY_DEPT_ID = C.MNG_DEPT_ID
+			<if test='(allocState != null and allocState != "") or (searchValue != null and searchValue != "".toString() and searchColumn == "buyCustName".toString())'>
+				INNER JOIN
+				T_ORDER_ALLOC D ON A.ORDER_ID = D.ORDER_ID AND A.BUY_CUST_ID = D.SELL_CUST_ID AND A.BUY_DEPT_ID = D.SELL_DEPT_ID 
+				<if test='allocState != null and allocState != ""'>	
+					AND ISNULL(B.ORDER_STATE, '00') = #{sAllocState}
+				</if>							
+		   		<if test='searchValue != null and searchValue != "".toString() and searchColumn == "buyCustName".toString()'>
+			   		INNER JOIN 
+			   		(SELECT CUST_ID, DEPT_ID, CUST_NAME, MNG_DEPT_ID
+			      	FROM T_CUST_DTL
+			      	WHERE MNG_CUST_ID = #{custId} AND SELL_BUY_SCTN = '02' AND CUST_NAME LIKE '%' + #{searchValue} + '%') E ON D.BUY_CUST_ID = E.CUST_ID AND D.BUY_DEPT_ID = E.DEPT_ID AND A.BUY_DEPT_ID = E.MNG_DEPT_ID
+				</if>		
+			</if>
+			<if test='(driverState != null and driverState != "") or (driverValue != null and driverValue != "" and searchDriver == "carNum".toString()) or (driverValue != null and driverValue != "" and searchDriver == "driverName".toString())'>
+		      	INNER JOIN 
+	 		    T_ORDER_ALLOC F ON A.ORDER_ID = F.ORDER_ID AND ISNULL(F.DRIVER_ID, '') != '' AND ISNULL(F.VEHIC_ID, '') != '' 
+	 		    <if test='driverState != null and driverState != ""'>
+	 		    	AND ISNULL(F.ALLOC_STATE, '00') = #{driverState}
+	 		    </if>	
+	 		    <if test='driverValue != null and driverValue != "" and searchDriver == "carNum".toString()'>
+	 		    	AND F.CAR_NUM LIKE '%' + #{driverValue} + '%'
+	 		    </if>
+	 		    <if test='driverValue != null and driverValue != "" and searchDriver == "driverName".toString()'>
+					AND F.DRIVER_NAME LIKE '%' + #{driverValue} + '%'
+				</if>
+			</if>		
+		    LEFT OUTER JOIN
+		   (SELECT ORDER_ID, COUNT(*) STOP_COUNT
+		    FROM T_ORDER_STOP 
+		    WHERE USE_YN = 'Y'
+		    GROUP BY ORDER_ID) G ON B.ORDER_ID = G.ORDER_ID	  	 
+		    <if test="sCarMngCode != null and sCarMngCode != ''">
+		    	INNER JOIN 
+	 		    T_ORDER_ALLOC H ON A.ORDER_ID = H.ORDER_ID 
+	 		    AND ISNULL(H.DRIVER_ID, '') != '' 
+	 		    AND ISNULL(H.VEHIC_ID, '') != '' 
+			    INNER JOIN 
+			    T_CUST_VEHIC I ON H.DRIVER_ID = H.DRIVER_ID 
+			    AND I.VEHIC_ID = H.VEHIC_ID 
+			    AND I.CUST_ID = H.SELL_CUST_ID 
+			    AND I.DEPT_ID = H.SELL_DEPT_ID	
+				AND I.CAR_MNG_CODE = #{sCarMngCode}
+			</if>	 	  	  
+			<if test="sLinkSettleYn != null and sLinkSettleYn != ''">
+				LEFT OUTER JOIN
+				T_ORDER_ALLOC J ON A.ORDER_ID = J.ORDER_ID 
+				AND A.BUY_CUST_ID = J.SELL_CUST_ID 
+				AND A.BUY_DEPT_ID = J.SELL_DEPT_ID 
+			</if>	 
+		    LEFT OUTER JOIN
+		    T_ORDER_ALLOC K ON A.ORDER_ID = K.ORDER_ID AND A.BUY_CUST_ID = K.SELL_CUST_ID AND A.BUY_DEPT_ID = K.SELL_DEPT_ID
+		    LEFT OUTER JOIN 
+		    (SELECT SUM(ADD_CHARGE) ADD_CHARGE, ALLOC_ID
+		    FROM T_ORDER_ALLOC_ADD
+		    GROUP BY ALLOC_ID) L ON A.ALLOC_ID = L.ALLOC_ID 
+		    LEFT OUTER JOIN 
+		    (SELECT SUM(ADD_CHARGE) ADD_CHARGE, ALLOC_ID
+		    FROM T_ORDER_ALLOC_ADD
+		    GROUP BY ALLOC_ID) N ON K.ALLOC_ID = N.ALLOC_ID
+		WHERE
+			1=1
+			<if test='reqCustId != null and !"".equals(reqCustId)'>
+				AND B.REQ_CUST_ID = #{reqCustId}
+  					AND A.SELL_CUST_ID = #{reqCustId}
+			</if>
+			<if test='reqDeptId != null and !"".equals(reqDeptId)'>
+			 		AND B.REQ_DEPT_ID = #{reqDeptId}
+			</if>
+			<if test='listSSido != null and !"".equals(listSSido)'>
+			 		AND B.S_SIDO = #{listSSido}
+			</if>
+			<if test='listESido != null and !"".equals(listESido)'>
+			 		AND B.E_SIDO = #{listESido}
+			</if>
+			<if test="sCustMngCode != null and sCustMngCode != ''">
+				AND C.CUST_MNG_CODE = #{sCustMngCode}
+			</if>
+			<if test = 'notCancel == "Y"'>
+				AND B.ORDER_STATE != '09'
+			</if> 
+			<if test="searchValue != null and searchValue != ''">
+				<choose>
+					<when test='searchColumn == "sellCustName".toString()'>
+						AND C.CUST_NAME LIKE '%' + #{searchValue} + '%'
+					</when>
+					<when test='searchColumn == "orderId".toString()'>
+						AND A.ORDER_ID = #{searchValue}
+					</when>
+					<when test='searchColumn == "sComName".toString()'>
+						AND B.S_COM_NAME LIKE '%' + #{searchValue} + '%'
+					</when>
+					<when test='searchColumn == "eComName".toString()'>
+						AND B.E_COM_NAME LIKE '%' + #{searchValue} + '%'
+					</when>
+				</choose>
+			</if>
+			<if test="sMixYn != null and sMixYn != ''">
+				AND B.MIX_YN = #{sMixYn}
+			</if>
+			<if test = "orderStopYn != null and orderStopYn != ''">
+				AND CASE WHEN ISNULL(G.STOP_COUNT, 0) = 0 THEN 'N' ELSE 'Y' END = #{orderStopYn}
+			</if>				
+			<if test="sLinkSettleYn != null and sLinkSettleYn != ''">
+				AND J.LINK_SETTLE_YN = #{sLinkSettleYn}
+			</if>
+		   	<if test = "fromDate != null and fromDate != ''">
+		   		<choose>
+	   				<when test='searchDate == "regdate".toString()'>
+	   					AND B.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+		   			</when>
+		   			<when test='searchDate == "sDate".toString()'>
+		   				AND B.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'				   				
+	   				</when>
+	   			</choose> 
+		   	</if>  
+		   	<if test = 'myOrder == "Y"'>AND B.REGID = #{loginId}</if> 
+   </select>
+   
+   <select id="selectOrderDetail" parameterType="java.util.HashMap" resultType="orderVO">
+  		SELECT				   
+		       A.ORDER_ID         				orderId   
+		     , CONVERT(CHAR(19), B.START_DATE, 20) 	startDate
+		     , CONVERT(CHAR(19), B.FINISH_DATE, 20) finishDate
+		     , CONVERT(CHAR(19), B.ENTER_DATE, 20) 	enterDate
+		     , B.REQ_CUST_ID      				reqCustId
+		     , B.REQ_DEPT_ID      				reqDeptId
+		     , B.REQ_STAFF_ID    				reqStaffId
+		     , A.SELL_STAFF_TEL					reqTel
+		     , CASE WHEN A.SELL_CUST_ID = B.REQ_CUST_ID AND A.SELL_DEPT_ID = B.REQ_DEPT_ID THEN B.REQ_ADDR ELSE '' END reqAddr
+		     , CASE WHEN A.SELL_CUST_ID = B.REQ_CUST_ID AND A.SELL_DEPT_ID = B.REQ_DEPT_ID THEN B.REQ_ADDR_DETAIL ELSE '' END reqAddrDetail
+		     , B.IN_OUT_SCTN     				inOutSctn
+		     , B.TRUCK_TYPE_CODE  				truckTypeCode
+		     , B.S_COM_NAME     			 	sComName
+		     , B.S_SIDO         				sSido
+		     , B.S_GUNGU        				sGungu
+		     , B.S_DONG         				sDong
+		     , B.S_ADDR         				sAddr
+		     , B.S_ADDR_DETAIL      			sAddrDetail
+		     , B.S_DATE 						sDate
+			 , CONVERT(CHAR(10),B.S_DATE, 23) 	sDateDay 
+			 , CONVERT(CHAR(10),B.S_DATE, 24) 	sDateTime 
+		     , B.S_STAFF         				sStaff
+		     , B.S_TEL            				sTel
+		     , B.S_MEMO         				sMemo
+		     , B.E_COM_NAME      				eComName
+		     , B.E_SIDO         				eSido
+		     , B.E_GUNGU         				eGungu
+		     , B.E_DONG         				eDong
+		     , B.E_ADDR         				eAddr
+		     , B.E_ADDR_DETAIL     				eAddrDetail
+		     , B.E_DATE 						eDate
+			 , CONVERT(CHAR(10),B.E_DATE, 23)	eDateDay 
+			 , CONVERT(CHAR(10),B.E_DATE, 24) 	eDateTime 
+		     , B.E_STAFF         				eStaff
+		     , B.E_TEL            				eTel
+		     , B.E_MEMO         				eMemo
+		     , B.S_LAT            				sLat
+		     , B.S_LON            				sLon
+		     , B.E_LAT            				eLat
+		     , B.E_LON            				eLon
+		     , B.GOODS_NAME      				goodsName
+		     , CONVERT(FLOAT,B.GOODS_WEIGHT)/1000      		goodsWeight
+		     , B.WEIGHT_UNIT_CODE   			weightUnitCode
+		     , B.GOODS_QTY         				goodsQty
+		     , B.QTY_UNIT_CODE      			qtyUnitCode
+		     , B.S_WAY_CODE      				sWayCode
+		     , B.E_WAY_CODE      				eWayCode
+		     , B.MIX_YN        					mixYn
+		     , B.MIX_SIZE				        mixSize
+		     , B.RETURN_YN         				returnYn
+		     , B.CAR_TON_CODE      				carTonCode
+		     , B.CAR_TYPE_CODE      			carTypeCode
+		     , B.CHARGE_TYPE      				chargeType
+		     , B.DISTANCE         				distance
+		     , B.TIME            				time
+		     , B.REQ_MEMO         				reqMemo
+		     , B.DRIVER_MEMO      				driverMemo
+		     , B.ITEM_CODE         				itemCode
+		     , B.REGID            				regid
+			 , B.ORDER_STATE					orderState
+		     , CONVERT(CHAR(19), B.REGDATE, 20) regdate
+		     , CONVERT(CHAR(19), B.ALLOC_DATE, 20) allocDate
+		     , A.ALLOC_ID         				sellAllocId
+		     , A.SELL_CUST_ID      				sellCustId
+		     , A.SELL_DEPT_ID      				sellDeptId
+		     , A.SELL_STAFF_ID      			sellStaffId
+		     , A.ALLOC_CHARGE      				sellCharge
+		     , A.SELL_WEIGHT					sellWeight
+		     , A.ALLOC_FEE         				sellFee
+		     , C.CUST_NAME         				sellCustName
+		     , A.BUY_DEPT_ID					deptId
+		     , D.ALLOC_ID         				allocId
+		     , D.BUY_CUST_ID      				buyCustId
+		     , D.BUY_DEPT_ID      				buyDeptId
+		     , D.BUY_STAFF_ID      				buyStaffId
+		     , D.BUY_STAFF_TEL					buyStaffTel
+		     , D.ALLOC_CHARGE      				buyCharge
+		     , D.ALLOC_FEE         				buyFee
+		     , D.DRIVER_ID      		 	 	buyDriverId
+			 , D.VEHIC_ID         				buyVehicId
+			 , D.DRIVER_NAME      				buyDriverName
+			 , D.DRIVER_TEL       				buyDriverTel
+			 , D.CAR_NUM          				buyCarNum
+			 , ISNULL(D.LINK_YN, 'N')			buyLinkYn
+			 , D.LINK_CODE						linkType
+		     , E.CUST_NAME        				buyCustName
+		     , ISNULL(D.ALLOC_STATE, '00')      allocState
+    		 , G.CAR_SCTN_CODE 					carSctnCode
+		     , (SELECT DEPT_NAME FROM T_CUST_DEPT WHERE CUST_ID = A.SELL_CUST_ID AND DEPT_ID = A.SELL_DEPT_ID) sellDeptName
+		     , (SELECT DEPT_NAME FROM T_CUST_DEPT WHERE CUST_ID = D.BUY_CUST_ID AND DEPT_ID = D.BUY_DEPT_ID) buyDeptName
+		     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'QTY_UNIT_CD' AND CODE = B.QTY_UNIT_CODE) qtyUnitName
+		     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_TON_CD' AND CODE = B.CAR_TON_CODE) carTonName
+		     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_TYPE_CD' AND CODE = B.CAR_TYPE_CODE) carTypeName
+		     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'IN_OUT_SCTN' AND CODE = B.IN_OUT_SCTN) inOutSctnName           
+		     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'TRUCK_TYPE_CD' AND CODE = B.TRUCK_TYPE_CODE) truckTypeName  
+		     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'ITEM_CD' AND CODE = B.ITEM_CODE) itemName
+		     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'ALLOC_STATE_CD' AND CODE = ISNULL(D.ALLOC_STATE, '00')) allocStateName
+		     , CASE WHEN ISNULL(D.BUY_CUST_ID, '') = '' THEN 'D' ELSE 'C' END allocKind
+			 , CASE WHEN ISNULL(F.DRIVER_ID, '') = '' THEN 'N' ELSE 'Y' END driverKind
+			 , F.ALLOC_ID						driverAllocId
+		     , F.ALLOC_STATE       				driverState           
+		     , F.DRIVER_ID         				driverId
+		     , F.VEHIC_ID         				vehicId
+		     , F.DRIVER_NAME      				driverName
+		     , F.DRIVER_TEL      				driverTel
+		     , F.CAR_NUM         				carNum 
+		     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'ALLOC_STATE_CD' AND CODE = F.ALLOC_STATE) driverStateName
+		     , (SELECT COUNT(1) FROM T_ORDER_STOP WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y') stopCount
+		     , (SELECT TOP 1 E_COM_NAME FROM T_ORDER_STOP WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' ORDER BY STOP_SEQ ASC) stopName
+			 , (SELECT USER_NAME FROM T_USER BB WHERE USER_ID = A.SELL_STAFF_ID) reqStaff
+			 , (SELECT USER_NAME FROM T_USER BB WHERE USER_ID = D.BUY_STAFF_ID) buyStaff
+			 , B.MEMO    
+			 , H.MEMO 							wayPointMemo
+			 , H.ADD_CHARGE						wayPointCharge
+			 , I.MEMO 							stayMemo
+			 , I.ADD_CHARGE						stayCharge
+			 , J.MEMO							handWorkMemo
+			 , J.ADD_CHARGE 					handWorkCharge
+			 , K.MEMO							roundMemo
+			 , K.ADD_CHARGE	 					roundCharge
+			 , L.MEMO							otherAddMemo
+			 , L.ADD_CHARGE 					otherAddCharge
+		     , M.CAR_TYPE_CODE 					buyCarTypeCode
+		     , M.CAR_TON_CODE 					buyCarTonCode
+		     , M.CARGO_BOX						buyCargoBox
+		     , N.MEMO 							sellWayPointMemo
+			 , N.ADD_CHARGE						sellWayPointCharge
+			 , O.MEMO 							sellStayMemo
+			 , O.ADD_CHARGE						sellStayCharge
+			 , P.MEMO							sellHandWorkMemo
+			 , P.ADD_CHARGE 					sellHandWorkCharge
+			 , Q.MEMO							sellRoundMemo
+			 , Q.ADD_CHARGE	 					sellRoundCharge
+			 , R.MEMO							sellOtherAddMemo
+			 , R.ADD_CHARGE 					sellOtherAddCharge
+			 , B.UNIT_PRICE_TYPE				unitPriceType
+			 , B.UNIT_CHARGE					unitCharge
+			 , G.CAR_MNG_CODE					carMngCode
+			 , G.CAR_MNG_MEMO					carMngMemo
+			 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_MNG_CD' AND CODE = C.CUST_MNG_CODE AND USE_YN = 'Y') custMngCodeName
+			 , C.CUST_MNG_MEMO					custMngMemo
+			 , C.PAY_TYPE						custPayType
+			 , G.PAY_TYPE						carPayType
+			 , D.PAY_TYPE						payType
+			 , ISNULL(B.DANGER_GOODS_YN, 'N') 	dangerGoodsYn
+			 , ISNULL(B.CHEMICALS_YN, 'N') 		chemicalsYn
+			 , ISNULL(B.FOREIGN_LICENSE_YN, 'N') foreignLicenseYn
+			 , S.BIZ_NUM						reqBizNum
+			 , S.BIZ_NAME						reqBizName
+			 , S.CEO							reqCeo
+			 , S.BIZ_ADDR						reqBizAddr
+			 , C.TAX_EMAIL						reqTaxEmail
+			 , C.TAX_STAFF_NAME 				reqTaxStaffName
+			 , C.TAX_TELNUM						reqTaxTelNum
+		FROM
+		   (
+		      SELECT 
+		             ORDER_ID     , ALLOC_ID      , SELL_CUST_ID   , SELL_DEPT_ID   , SELL_STAFF_ID
+		           , BUY_CUST_ID  , BUY_DEPT_ID   , BUY_STAFF_ID   , ALLOC_CHARGE   , ALLOC_FEE
+		           , REGDATE      , REGID		  , SELL_STAFF_TEL , SELL_WEIGHT	
+		      FROM
+		            T_ORDER_ALLOC
+		      WHERE
+		            BUY_CUST_ID = #{custId} AND ORDER_ID = #{orderId} AND ALLOC_ID = #{sellAllocId}
+		   ) A
+		   INNER JOIN
+		   T_ORDER B ON A.ORDER_ID = B.ORDER_ID
+		   INNER JOIN
+		   (SELECT CUST_ID , DEPT_ID, CUST_NAME, MNG_DEPT_ID, CUST_MNG_CODE, CUST_MNG_MEMO, PAY_TYPE, TAX_EMAIL, TAX_STAFF_NAME, TAX_TELNUM
+		   FROM T_CUST_DTL 
+		   WHERE MNG_CUST_ID = #{custId} AND SELL_BUY_SCTN = '01') C ON A.SELL_CUST_ID = C.CUST_ID AND A.SELL_DEPT_ID = C.DEPT_ID AND A.BUY_DEPT_ID = C.MNG_DEPT_ID
+		   LEFT OUTER JOIN
+		   T_ORDER_ALLOC D ON A.ORDER_ID = D.ORDER_ID AND A.BUY_CUST_ID = D.SELL_CUST_ID AND A.BUY_DEPT_ID = D.SELL_DEPT_ID
+		   LEFT OUTER JOIN 
+		   (SELECT CUST_ID, DEPT_ID, CUST_NAME, MNG_DEPT_ID
+		      FROM T_CUST_DTL
+		      WHERE MNG_CUST_ID = #{custId} AND SELL_BUY_SCTN = '02') E ON D.BUY_CUST_ID = E.CUST_ID AND D.BUY_DEPT_ID = E.DEPT_ID  AND A.BUY_DEPT_ID = E.MNG_DEPT_ID
+		   LEFT OUTER JOIN 
+		   T_ORDER_ALLOC F ON A.ORDER_ID = F.ORDER_ID AND ISNULL(F.DRIVER_ID, '') != '' AND ISNULL(F.VEHIC_ID, '') != ''
+		   LEFT OUTER JOIN
+		   T_CUST_VEHIC G ON G.DRIVER_ID = F.DRIVER_ID AND G.VEHIC_ID = F.VEHIC_ID AND G.CUST_ID = B.CUST_ID AND G.DEPT_ID = B.DEPT_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{allocId} AND CALC_TYPE_CODE = '0023') H ON D.ALLOC_ID = H.ALLOC_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{allocId} AND CALC_TYPE_CODE = '0025') I ON D.ALLOC_ID = I.ALLOC_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{allocId} AND CALC_TYPE_CODE = '0371') J ON D.ALLOC_ID = J.ALLOC_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{allocId} AND CALC_TYPE_CODE = '0372') K ON D.ALLOC_ID = K.ALLOC_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{allocId} AND CALC_TYPE_CODE = '0294') L ON D.ALLOC_ID = L.ALLOC_ID 
+		   LEFT OUTER JOIN 
+		   T_VEHIC_MST M ON M.VEHIC_ID = D.VEHIC_ID AND M.DRIVER_ID = D.DRIVER_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{sellAllocId} AND CALC_TYPE_CODE = '0023') N ON A.ALLOC_ID = N.ALLOC_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{sellAllocId} AND CALC_TYPE_CODE = '0025') O ON A.ALLOC_ID = O.ALLOC_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{sellAllocId} AND CALC_TYPE_CODE = '0371') P ON A.ALLOC_ID = P.ALLOC_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{sellAllocId} AND CALC_TYPE_CODE = '0372') Q ON A.ALLOC_ID = Q.ALLOC_ID 
+		   LEFT OUTER JOIN 
+		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
+		   FROM T_ORDER_ALLOC_ADD 
+		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{sellAllocId} AND CALC_TYPE_CODE = '0294') R ON A.ALLOC_ID = R.ALLOC_ID
+		   INNER JOIN 
+		   (SELECT CUST_ID, BIZ_NUM, BIZ_NAME, CEO, BIZ_ADDR
+		   FROM T_CUST_MST) S ON A.SELL_CUST_ID = S.CUST_ID
+   </select>
+   
+   <select id="selectOrderStop" parameterType="java.util.HashMap" resultType="orderStopVO">
+	   	SELECT
+					A.STOP_SEQ			stopSeq
+				  , A.ORDER_ID			orderId
+				  , A.STOP_NO				stopNo
+				  , A.E_COM_NAME			eComName
+				  , A.E_ADDR				eAddr
+				  , A.E_ADDR_DETAIL		eAddrDetail
+				  , A.E_STAFF				eStaff
+				  , A.E_TEL				eTel
+				  , CASE B.ORDER_STATE WHEN '00' THEN '' WHEN '09' THEN '' ELSE A.FINISH_YN END	finishYn
+				  , CONVERT(CHAR(19), A.FINISH_DATE, 20)	finishDate
+				  , A.E_LAT				eLat
+				  , A.E_LON				eLon
+				  , A.WEIGHT_UNIT_CODE	weightUnitCode
+				  , A.GOODS_QTY			goodsQty
+				  , A.QTY_UNIT_CODE		qtyUnitCode
+				  , A.GOODS_NAME			goodsName
+				  , CONVERT(float, A.GOODS_WEIGHT) / 1000 goodsWeight
+	  			  , A.STOP_SE			stopSe
+			FROM 
+					T_ORDER_STOP A
+					INNER JOIN
+					T_ORDER B ON A.ORDER_ID = B.ORDER_ID
+			WHERE
+					A.USE_YN = 'Y'
+					AND A.ORDER_ID = #{orderId}
+			ORDER BY
+					A.STOP_NO ASC
+   </select>
+   
+	<select id="selectOrderLBS" parameterType="java.util.HashMap" resultType="drvLocVO">
+			SELECT
+					B.DRIVER_ID 	driverId
+				  ,	B.ALLOC_ID		allocId
+				  , C.LAT	
+				  , C.LON
+				  , CONVERT(CHAR(19), C.REGDATE, 20) regdate
+			FROM 
+				(
+					SELECT ORDER_ID
+					FROM T_ORDER
+					WHERE ORDER_ID = #{orderId}
+				) A
+				INNER JOIN
+				T_ORDER_ALLOC B ON A.ORDER_ID = B.ORDER_ID AND B.ALLOC_STATE IN ('04', '05', '11')
+				INNER JOIN
+				T_DRIVER_LOC_HISTORY C ON B.ALLOC_ID = C.ALLOC_ID AND B.DRIVER_ID = C.DRIVER_ID
+			ORDER BY
+					REGDATE ASC	
+	</select>
+	
+	<insert id="insertOrderStop" parameterType="java.util.HashMap">
+   		MERGE INTO
+   			T_ORDER_STOP T 
+   		USING (
+   		<foreach collection="list" item="item" index="index" separator=" union ">
+   			SELECT
+		   			#{orderId}				AS ORDER_ID
+		   		  , #{item.stopSeq, jdbcType=INTEGER}		AS STOP_SEQ
+		   		  , (#{index} + 1)			AS STOP_NO
+		   		  , #{item.eComName}		AS E_COM_NAME
+		   		  , #{item.eAddr}			AS E_ADDR
+		   		  , #{item.eAddrDetail}		AS E_ADDR_DETAIL
+		   		  , #{item.eStaff}			AS E_STAFF
+		   		  , REPLACE(#{item.eTel}, '-', '')			AS E_TEL
+		   		  , CONVERT(float, #{item.goodsWeight}) * 1000		AS GOODS_WEIGHT
+		   		  , #{item.eLat, jdbcType=VARCHAR}			AS E_LAT
+		   		  , #{item.eLon, jdbcType=VARCHAR}			AS E_LON
+		   		  , #{item.weightUnitCode} 	AS WEIGHT_UNIT_CODE
+		   		  , #{item.goodsQty, jdbcType=INTEGER}		AS GOODS_QTY
+		   		  , #{item.qtyUnitCode}		AS QTY_UNIT_CODE
+		   		  , #{item.goodsName}		AS GOODS_NAME
+		   		  , #{item.stopSe}			AS STOP_SE
+		   		  , CASE WHEN #{item.useYn} = 'N' THEN 'N' ELSE 'Y' END AS USE_YN
+   		</foreach>
+   		) AS S
+   		ON
+   			(T.STOP_SEQ = S.STOP_SEQ)
+   		WHEN MATCHED THEN
+   			UPDATE SET
+   				T.STOP_NO 			= S.STOP_NO
+   			  , T.E_COM_NAME		= S.E_COM_NAME
+   			  , T.E_ADDR			= S.E_ADDR
+   			  , T.E_ADDR_DETAIL		= S.E_ADDR_DETAIL
+   			  , T.E_STAFF			= S.E_STAFF
+   			  , T.E_TEL				= S.E_TEL
+   			  , T.GOODS_WEIGHT		= S.GOODS_WEIGHT
+   			  , T.E_LAT				= S.E_LAT
+   			  , T.E_LON				= S.E_LON
+   			  , T.WEIGHT_UNIT_CODE	= S.WEIGHT_UNIT_CODE
+   			  , T.GOODS_QTY			= S.GOODS_QTY
+   			  , T.QTY_UNIT_CODE		= S.QTY_UNIT_CODE
+   			  , T.GOODS_NAME		= S.GOODS_NAME
+   			  , T.STOP_SE			= S.STOP_SE		
+   			  , T.USE_YN			= S.USE_YN
+   		WHEN NOT MATCHED THEN
+   			INSERT 
+   					(
+   						ORDER_ID			, STOP_NO		, E_COM_NAME		, E_ADDR		, E_ADDR_DETAIL
+   					  , E_STAFF				, E_TEL			, E_LAT				, E_LON			, GOODS_WEIGHT
+   					  , WEIGHT_UNIT_CODE	, GOODS_QTY		, QTY_UNIT_CODE		, GOODS_NAME	, STOP_SE
+   					)
+   			VALUES
+   					(
+   						S.ORDER_ID			, S.STOP_NO		, S.E_COM_NAME		, S.E_ADDR		, S.E_ADDR_DETAIL
+   					  , S.E_STAFF			, S.E_TEL		, S.E_LAT			, S.E_LON		, S.GOODS_WEIGHT
+   					  , S.WEIGHT_UNIT_CODE	, S.GOODS_QTY	, S.QTY_UNIT_CODE	, S.GOODS_NAME	, S.STOP_SE
+   					);
+   	</insert>
+   
+	<update id="updateOrderStopFinish" parameterType="java.util.HashMap">
+		UPDATE
+				T_ORDER_STOP
+		SET
+				FINISH_YN = 'Y'
+			  , FINISH_DATE = GETDATE()
+		WHERE
+				ORDER_ID = #{orderId}
+				AND STOP_SEQ = #{stopSeq}	   
+   	</update>
+   
+   	<update id="orderWrite" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_ORDER(
+						    #{mode}
+						  , #{sellCustId}
+						  , #{orderId}
+						  , #{allocId}
+						  , #{sellAllocId}
+						  , #{sellDeptId}	
+						  , #{sellStaffId}	
+						  , #{reqTel}			
+						  , #{reqAddr}		
+						  , #{reqAddrDetail}	
+						  , #{custId}			
+						  , #{deptId}			
+						  , #{inOutSctn}		
+						  , #{truckTypeCode}	
+						  , #{sComName}		
+						  , #{sSido}			
+						  , #{sGungu}			
+						  , #{sDong}			
+						  , #{sAddr}			
+						  , #{sAddrDetail}	
+						  , #{sDate}			
+						  , #{sDateDay}	
+						  , #{sDateTime}		
+						  , #{sStaff}			
+						  , #{sTel}			
+						  , #{sMemo}			  
+						  , #{eComName}		
+						  , #{eSido}			
+						  , #{eGungu}			
+						  , #{eDong}			
+						  , #{eAddr}			
+						  , #{eAddrDetail}
+						  , #{eDate}
+						  , #{eDateDay}
+						  , #{eDateTime}
+						  , #{eStaff}
+						  , #{eTel}
+						  , #{eMemo}
+						  , #{sLat}
+						  , #{sLon}
+						  , #{eLat}
+						  , #{eLon}
+						  , #{goodsName}		
+						  , #{goodsWeight}	
+						  , #{weightUnitCode}	
+						  , #{goodsQty}		  
+						  , #{qtyUnitCode}	
+						  , #{sWayCode}		
+						  , #{eWayCode}		
+						  , #{mixYn}			
+						  , #{mixSize}		
+						  , #{returnYn}		
+						  , #{carTonCode}		
+						  , #{carTypeCode}	
+						  , #{chargeType}		
+						  , #{distance}		
+						  , #{time}			
+						  , #{reqMemo}		
+						  , #{driverMemo}		
+						  , #{itemCode}
+						  , #{sellCharge}
+						  , #{buyCharge}
+						  , #{sellFee}
+ 						  , #{buyFee}
+						  , #{buyCustId}
+						  , #{buyDeptId}
+						  , #{buyStaffId}
+						  , #{buyStaffTel}
+						  , #{buyVehicId}
+						  , #{buyDriverId}
+						  , #{buyCarNum}
+						  , #{buyDriverName}
+						  , #{buyDriverTel}
+						  , #{carSctnCode}
+						  , #{regId}
+						  , #{editId}	
+						  , #{loginId}
+						  , #{allocDate}
+						  , #{memo}
+						  , #{buyCarTypeCode}
+						  , #{buyCarTonCode}
+						  , #{buyCargoBox}
+						  , #{sellWeight}
+						  , #{sellCustId}
+						  , #{sellDeptId}
+						  , #{unitPriceType}
+						  , #{unitCharge}
+						  , #{carMngCode}
+						  , #{carMngMemo}
+						  , #{linkSelect}
+						  , #{payType}
+						  , #{dangerGoodsYn}
+						  , #{chemicalsYn}
+						  , #{foreignLicenseYn}
+						  , #{outBuyTaxCnt, mode=OUT, jdbcType=INTEGER, javaType=int}
+						  , #{outSellTaxCnt, mode=OUT, jdbcType=INTEGER, javaType=int}
+						  , #{buyAllocId, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  , #{sellOutAllocId, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  , #{retId, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+	<select id="getAvgFare" resultType="string" parameterType="java.util.HashMap">
+		IF EXISTS
+		(
+			SELECT
+				ISNULL( AVG_FARE, 0) fare
+			FROM
+				T_LINK_FARE
+			WHERE
+				S_SIDO = #{sSido} AND
+				S_GUNGU = #{sGungu} AND
+				E_SIDO = #{eSido} AND
+				E_GUNGU = #{eGungu} AND
+				TON_CODE = #{carTonCode}
+		)
+		BEGIN
+			SELECT
+				ISNULL( AVG_FARE, 0) fare
+			FROM
+				T_LINK_FARE
+			WHERE
+				S_SIDO = #{sSido} AND
+				S_GUNGU = #{sGungu} AND
+				E_SIDO = #{eSido} AND
+				E_GUNGU = #{eGungu} AND
+				TON_CODE = #{carTonCode}
+		END
+		ELSE
+		BEGIN
+			SELECT 0 fare
+		END
+   	</select>
+   	
+   	<select id="selectAllocCharge" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+   		SELECT A.ALLOC_CHARGE  + ISNULL(B.ADD_CHARGE, 0) AS charge
+		FROM T_ORDER_ALLOC A 
+			LEFT OUTER JOIN
+		   (SELECT ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE 
+		    FROM T_ORDER_ALLOC_ADD
+		    WHERE ALLOC_ID = #{allocId}
+		    GROUP BY ALLOC_ID) B ON A.ALLOC_ID  = B.ALLOC_ID
+		WHERE A.ALLOC_ID = #{allocId}
+   	</select>
+   
+   	<update id="linkWrite" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_LINK(
+						    #{linkTypes}
+						  , #{linkStatus}
+						  , #{fare}
+						  , #{fee}
+						  , #{allocId}
+						  , #{orderId}
+						  , #{command}	
+						  , #{payPlanMd}	
+						  , #{chargeTypeCode}
+						  , #{cargoDsc}
+						  , #{regId}
+						  , #{loginCustId}
+						  , #{loginDeptId}
+						  , #{oAllocId, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+	<select id="getLinkList" resultType="java.util.HashMap" parameterType="java.util.HashMap">
+		SELECT
+		    ROW_NUMBER() OVER(ORDER BY (select 1)) number,
+		    ALLOC_ID allocId, 
+		    SEQ seq, 
+		    ORDER_ID orderId,
+		    LINK_TYPE linkType,
+		    (SELECT CNAME FROM T_CODE WHERE CODE = LINK_TYPE AND GCODE = 'LINK_CD') linkTypeName, 
+		    LINK_STATUS linkStatus, 
+		    <!-- (SELECT CNAME FROM T_CODE WHERE CODE = LINK_STATUS AND GCODE = 'ALLOC_STATE_CD') linkStatusName, --> 
+		    CASE WHEN LINK_STATUS = '11' THEN '미전송' WHEN LINK_STATUS= '25' THEN '실패' ELSE '성공' END linkStatusName,
+		    FARE fare, 
+		    FEE fee, 
+		    CONVERT(DATE, PAYPLANYMD, 23) payPlanMd,
+		    ISNULL(ORDSTATUS, '') ordStatus,
+		    ORDSTATUS ordStatusName,
+		    FAREPAYTYPE chargeTypeCode,
+		    CARGODSC cargoDsc,
+		    REG_DATE regDate,
+		    REG_ID regId
+		FROM T_LINK
+		WHERE 
+		    ORDER_ID = #{orderId}
+   	</select>
+	
+	<select id="getLinkListCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT COUNT(*) retCnt
+		FROM T_LINK
+		WHERE 
+		    ORDER_ID = #{orderId}
+   	</select>
+   
+   	<select id="getCharge" resultType="biginteger" parameterType="java.util.HashMap">
+   		IF EXISTS
+		(
+			SELECT
+			    UNIT_COST charge
+			FROM T_CUST_FRTCOST
+			WHERE 
+			    SELL_CUST_ID = #{sellCustId} AND
+			    SELL_DEPT_ID = #{sellDeptId} AND
+			    BUY_CUST_ID = #{buyCustId} AND
+			    BUY_DEPT_ID = #{buyDeptId} AND
+			    S_SIDO = #{sSido} AND
+			    S_GUNGU = #{sGungu} AND
+			    E_SIDO = #{eSido} AND
+			    E_GUNGU = #{eGungu} AND
+			    CAR_TON_CODE = #{carTonCode}
+		)
+		BEGIN
+			SELECT
+			    UNIT_COST charge
+			FROM T_CUST_FRTCOST
+			WHERE 
+			    SELL_CUST_ID = #{sellCustId} AND
+			    SELL_DEPT_ID = #{sellDeptId} AND
+			    BUY_CUST_ID = #{buyCustId} AND
+			    BUY_DEPT_ID = #{buyDeptId} AND
+			    S_SIDO = #{sSido} AND
+			    S_GUNGU = #{sGungu} AND
+			    E_SIDO = #{eSido} AND
+			    E_GUNGU = #{eGungu} AND
+			    CAR_TON_CODE = #{carTonCode}
+		END
+		ELSE
+		BEGIN
+			SELECT 0 charge
+		END
+   	</select>
+   	
+   	<update id="updateOrderAlloc" statementType="CALLABLE" parameterType="java.util.HashMap">
+   		{call UPDATE_ORDER_ALLOC(
+   									#{orderId}
+   							 	  ,	#{allocId}
+   								  , #{custId}
+   								  , #{deptId}
+   								  , #{staffId}
+   								  , #{staffTel}
+   								  , #{buyCustId}
+   								  , #{buyDeptId}
+   								  , #{buyStaff}
+   								  , #{buyStaffTel}
+   								  , #{allocCharge, jdbcType=INTEGER}
+   								  , #{allocFee, jdbcType=INTEGER}
+   								  , #{vehicId}
+   								  , #{driverId}
+   								  , #{carNum}
+   								  , #{carTonCode}
+   								  , #{carTypeCode}
+   								  , #{driverName}
+   								  , #{driverTel}
+   								  , #{regid}
+   								  , #{cargoBox}
+   								  , #{sellWeight}
+   								  , #{linkSelect}
+   								  , #{payType}
+							  	  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+							      ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})   		
+   		}
+   	</update>
+   
+	<update id="updateOrderState" statementType="CALLABLE" parameterType="java.util.HashMap">
+	   	{call UPDATE_ORDER_STATE(
+							    #{orderId}
+							  , #{orderState}	
+							  , #{regid}
+							  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+							  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+	<update id="updateAllocState" statementType="CALLABLE" parameterType="java.util.HashMap">
+	   	{call UPDATE_ALLOC_STATE(
+							    #{orderId}
+							  , #{allocId}	
+							  , #{allocState}	
+							  , #{regid}
+							  , #{enterDate}
+							  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+							  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+   	<insert id="multOrderAllocAddInsert" parameterType="java.util.HashMap">
+   		MERGE INTO
+   			T_ORDER_ALLOC_ADD A
+   		USING (
+   			<foreach collection="addList" item="item" index="index" separator=" union ">
+   				SELECT 
+   				    #{orderId}			AS ORDER_ID
+	   			  , #{allocId}			AS ALLOC_ID
+	   			  , #{item.code, jdbcType=NVARCHAR}	AS CALC_TYPE_CODE
+	   			  , #{item.charge, jdbcType=NVARCHAR} AS ADD_CHARGE
+	   			  , REPLACE(#{item.memo, jdbcType=NVARCHAR}, '　', '') AS MEMO
+	   			  , GETDATE()			AS GETDATE
+	   			  , #{loginId} 			AS LOGIN_USER
+   			</foreach>
+   		) AS B
+   		ON
+   			(A.ALLOC_ID = B.ALLOC_ID AND A.CALC_TYPE_CODE = B.CALC_TYPE_CODE)
+   		WHEN MATCHED THEN 
+   			UPDATE SET
+   				A.CALC_TYPE_CODE = B.CALC_TYPE_CODE
+   			  ,	A.ADD_CHARGE = B.ADD_CHARGE
+   			  , A.MEMO = B.MEMO
+   			  , A.EDITDATE = B.GETDATE
+   			  , A.EDITID = B.LOGIN_USER
+   			  , A.ALLOC_ID = B.ALLOC_ID
+   		WHEN NOT MATCHED AND B.ADD_CHARGE != 0 THEN
+	   		INSERT
+				(
+				    ORDER_ID
+				  , ALLOC_ID
+				  , CALC_TYPE_CODE
+				  , ADD_CHARGE
+				  , MEMO
+				  , REGDATE
+				  , REGID
+				)
+	   		VALUES
+	   			(
+	   			    B.ORDER_ID
+	   			  , B.ALLOC_ID
+	   			  , B.CALC_TYPE_CODE	
+	   			  , B.ADD_CHARGE	
+	   			  , B.MEMO
+				  , B.GETDATE
+				  , B.LOGIN_USER
+	   			);
+   	</insert>
+
+	<!-- 추가 운임 등록 시 ,기존 시퀀스와 충돌 발생하는 경우 있음. (ID 앞자리 C->Q 변경) -->
+   	<insert id="insertAllocAddToCalc" parameterType="java.util.HashMap">
+		<selectKey keyProperty="timestamp" resultType="String" order="BEFORE">
+			<if test='sellBuySctn != "01" and !"01".equals(sellBuySctn)'>  
+				SELECT convert(varchar, getDate(), 112) + replace(convert(varchar, getDate(), 108), ':', '') + '02'
+			</if>
+   			<if test='sellBuySctn != "02" and !"02".equals(sellBuySctn)'>  
+				SELECT convert(varchar, getDate(), 112) + replace(convert(varchar, getDate(), 108), ':', '') + '01'
+			</if>
+		</selectKey>
+   		MERGE INTO
+   					T_CALC A
+   		USING (
+   			<foreach collection="addList" item="item" index="index" separator=" union ">
+   				SELECT
+   					('Q' + #{timestamp} + CONVERT(VARCHAR(1),(#{index}+1))) 	AS CALC_ID 
+   				  , #{orderId}			AS ORDER_ID
+	   			  , #{allocId}			AS ALLOC_ID
+	   			  , SELL_CUST_ID		AS MNG_CUST_ID
+	   			  , SELL_DEPT_ID		AS MNG_DEPT_ID
+	   			  , BUY_CUST_ID			AS CUST_ID
+	   			  , BUY_DEPT_ID			AS DEPT_ID
+	   			  , VEHIC_ID			AS VEHIC_ID
+	   			  , DRIVER_ID			AS DRIVER_ID
+	   			  , #{item.code, jdbcType=NVARCHAR}	AS CALC_TYPE_CODE
+	   			  , #{item.charge, jdbcType=NVARCHAR} AS CHARGE
+	   			  , REPLACE(#{item.memo, jdbcType=NVARCHAR}, '　', '') AS MEMO
+	   			  , GETDATE()			AS GETDATE
+	   			  , #{loginId} 			AS LOGIN_USER
+	   			  , #{sellBuySctn}		AS SELL_BUY_SCTN
+	   			FROM
+	   				T_ORDER_ALLOC 
+	   			WHERE
+	   				ALLOC_ID = #{allocId}	  
+   			</foreach>
+   		) AS B
+   		ON
+   			(A.ALLOC_ID = B.ALLOC_ID AND A.CALC_TYPE_CODE = B.CALC_TYPE_CODE)
+   		WHEN MATCHED THEN
+   			<if test='sellBuySctn != "01" and !"01".equals(sellBuySctn)'>  
+	   			UPDATE SET
+	   			  	A.PAYABLE_AMT = B.CHARGE
+	   			  , A.MEMO = B.MEMO
+	   			  , A.USE_YN = (CASE WHEN B.CHARGE = 0 THEN 'N' ELSE 'Y' END)
+	   			  , A.DRIVER_ID = B.DRIVER_ID
+	   			  , A.VEHIC_ID = B.VEHIC_ID
+   			</if>
+   			<if test='sellBuySctn != "02" and !"02".equals(sellBuySctn)'>  
+	   			UPDATE SET
+	   			  	A.UNPAID_AMT = B.CHARGE
+	   			  , A.MEMO = B.MEMO
+	   			  , A.USE_YN = (CASE WHEN B.CHARGE = 0 THEN 'N' ELSE 'Y' END)
+   			</if>
+   		WHEN NOT MATCHED AND B.CHARGE != 0 THEN
+   			<if test='sellBuySctn != "02" and !"02".equals(sellBuySctn)'>
+	   		INSERT
+				(
+					CALC_ID
+				  , ORDER_ID
+				  , ALLOC_ID
+				  , SELL_BUY_SCTN
+				  , CALC_TYPE_CODE
+				  , UNPAID_AMT
+				  , MEMO
+				  , CUST_ID
+				  , DEPT_ID
+				  , VEHIC_ID
+				  , DRIVER_ID
+				  , MNG_CUST_ID
+				  , MNG_DEPT_ID
+				  , USE_YN
+				  , REGDATE
+				  , REGID
+				  , CALC_STATE
+				)
+	   		VALUES
+	   			(
+	   				B.CALC_ID
+	   			  , B.ORDER_ID
+	   			  , B.ALLOC_ID
+	   			  , B.SELL_BUY_SCTN
+	   			  , B.CALC_TYPE_CODE	
+	   			  , B.CHARGE	
+	   			  , B.MEMO
+	   			  , B.MNG_CUST_ID
+	   			  , B.MNG_DEPT_ID
+	   			  , B.VEHIC_ID
+	   			  , B.DRIVER_ID
+	   			  , B.CUST_ID
+	   			  , B.DEPT_ID
+	   			  , (CASE WHEN B.CHARGE = 0 THEN 'N' ELSE 'Y' END)
+				  , B.GETDATE
+				  , B.LOGIN_USER
+				  , '00'
+	   			)
+	   		</if>
+	   		<if test='sellBuySctn != "01" and !"01".equals(sellBuySctn)'>
+	   		INSERT
+				(
+					CALC_ID
+				  , ORDER_ID
+				  , ALLOC_ID
+				  , SELL_BUY_SCTN
+				  , CALC_TYPE_CODE
+				  , PAYABLE_AMT
+				  , MEMO
+				  , CUST_ID
+				  , DEPT_ID
+				  , VEHIC_ID
+				  , DRIVER_ID
+				  , MNG_CUST_ID
+				  , MNG_DEPT_ID
+				  , USE_YN
+				  , REGDATE
+				  , REGID
+				  , CALC_STATE
+				)
+	   		VALUES
+	   			(
+	   				B.CALC_ID
+	   			  , B.ORDER_ID
+	   			  , B.ALLOC_ID
+	   			  , B.SELL_BUY_SCTN
+	   			  , B.CALC_TYPE_CODE	
+	   			  , B.CHARGE
+	   			  , B.MEMO
+	   			  , B.CUST_ID
+	   			  , B.DEPT_ID
+	   			  , B.VEHIC_ID
+	   			  , B.DRIVER_ID
+	   			  , B.MNG_CUST_ID
+	   			  , B.MNG_DEPT_ID
+	   			  , (CASE WHEN B.CHARGE = 0 THEN 'N' ELSE 'Y' END)
+				  , B.GETDATE
+				  , B.LOGIN_USER
+				  , '00'
+	   			)
+	   		</if>
+	   		;
+   	</insert>
+   		
+	<select id="linkCarTypeChk" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		IF EXISTS (
+			SELECT A.CNAME, B.CODE
+			FROM T_CODE A
+			INNER JOIN T_CODE B ON A.CODE = B.CODE 
+			INNER JOIN T_ORDER C ON A.CODE = C.CAR_TYPE_CODE 
+			WHERE A.GCODE = 'CAR_TYPE_CD'
+			AND B.GCODE = (SELECT FILTER1 FROM T_CODE WHERE GCODE = 'LINK_CD' AND CODE = #{linkTypes}) 
+			AND C.ORDER_ID = #{orderId}
+		)
+		BEGIN
+			SELECT TOP 1 '00' AS retCode, '' AS retMsg
+		END
+		ELSE
+		BEGIN
+		    SELECT '99' AS retCode, '현재 오더 차종은 정보망에 등록되지 않은 차종입니다.' AS retMsg
+		END
+	</select>
+	
+	<select id="linkCarTonChk" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		IF EXISTS (
+			SELECT A.CNAME, B.CODE
+			FROM T_CODE A
+			INNER JOIN T_CODE B ON A.CODE = B.CODE
+			INNER JOIN T_ORDER C ON A.CODE = C.CAR_TON_CODE 
+			WHERE A.GCODE = 'CAR_TON_CD'
+			AND B.GCODE = (SELECT FILTER2 FROM T_CODE WHERE GCODE = 'LINK_CD' AND CODE = #{linkTypes}) 
+			AND C.ORDER_ID = #{orderId}
+		)
+		BEGIN
+			SELECT TOP 1 '00' AS retCode, '' AS retMsg
+		END
+		ELSE
+		BEGIN
+		    SELECT '99' AS retCode, '현재 오더 톤수는 정보망에 등록되지 않은 톤수입니다.' AS retMsg
+		END
+	</select>
+	
+	<select id="linkDateChk" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<!-- 상차 일, 시 까지 체크
+		 IF EXISTS(
+			SELECT S_DATE, E_DATE
+			FROM T_ORDER 
+			WHERE ORDER_ID = #{orderId}
+			AND S_DATE &lt;= E_DATE 
+			AND GETDATE() &lt;= S_DATE
+		)
+			BEGIN 
+				SELECT TOP 1 '00' AS retCode, '' AS retMsg
+			END
+		ELSE 
+			BEGIN
+				SELECT '99' AS retCode, '상차일시가 현재 시간보다 빠를 수 없습니다.' AS retMsg
+			END 
+		-->
+		<!-- 상차일 까지만 체크 -->
+		IF EXISTS(
+			SELECT CONVERT(CHAR(10), S_DATE, 23), CONVERT(CHAR(10), E_DATE, 23)
+			FROM T_ORDER 
+			WHERE ORDER_ID = #{orderId}
+			AND CONVERT(CHAR(10), S_DATE, 23) &lt;= CONVERT(CHAR(10), E_DATE, 23) 
+			AND CONVERT(CHAR(10), GETDATE(), 23) &lt;= CONVERT(CHAR(10), S_DATE, 23)
+		)
+			BEGIN 
+				SELECT TOP 1 '00' AS retCode, '' AS retMsg
+			END
+		ELSE 
+			BEGIN
+				SELECT '99' AS retCode, '상차일시가 현재 시간보다 빠를 수 없습니다.' AS retMsg
+			END
+	</select>
+	
+	<update id="linkDriverChange" parameterType="java.util.HashMap">
+		IF EXISTS(
+			SELECT A.ORDER_ID , B.LINK_YN 
+			FROM T_LINK A
+			INNER JOIN T_ORDER_ALLOC B ON A.ORDER_ID = B.ORDER_ID 
+			WHERE A.ALLOC_ID = B.ALLOC_ID 
+			AND A.ORDER_ID = #{orderId}
+		)
+			BEGIN 
+				UPDATE T_LINK SET
+					LINK_STATUS = '취소'
+				WHERE ORDER_ID = #{orderId}
+				AND ALLOC_ID = #{allocId}
+				UPDATE T_ORDER_ALLOC SET
+				    LINK_YN = 'N'
+				  , LINK_CODE = '99'
+				  , ALLOC_STATE = #{allocState}
+			   WHERE ORDER_ID = #{orderId} 
+			   AND ALLOC_ID = #{allocId}
+			   AND LINK_YN ='Y'
+			END
+	</update>
+	
+	<update id="linkCancelOrder" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call CANCEL_LINK(
+				    #{orderId}
+				  , #{regId}
+				  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+				  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+	<update id="linkSettle" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call LINK_SETTLE(
+				    #{orderId}
+				  , #{allocId}
+				  , #{regId}
+				  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+				  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+	<select id="getDriverOrderHistoryList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT *
+		FROM (
+			SELECT
+					ROW_NUMBER() OVER(ORDER BY AA.mCount DESC) number 
+				  , AA.*
+				  , BB.yearCount	
+				  , BB.halfCount
+			FROM (
+					SELECT 
+							AAA.DRIVER_ID			driverId
+						  , AAA.VEHIC_ID			vehicId
+						  , AAA.CAR_SCTN_CODE		carSctnCode
+						  , ISNULL(AAA.CAR_MNG_CODE, '01')		carMngCode
+						  , AAA.CAR_MNG_MEMO		carMngMemo
+						  , BBB.CAR_NUM 			carNum
+						  , BBB.CAR_TYPE_CODE 		carTypeCode
+						  , BBB.CAR_TON_CODE 		carTonCode
+						  , ISNULL(BBB.DANGER_GOODS_YN, 'N') 	dangerGoodsYn
+						  , ISNULL(BBB.CHEMICALS_YN, 'N') 		chemicalsYn
+						  , ISNULL(BBB.FOREIGN_LICENSE_YN, 'N') foreignLicenseYn
+						  , ISNULL(BBB.FORKLIFT_YN, 'N') 		forkliftYn
+						  , BBB.CARGO_BOX 			cargoBox
+						  , CCC.DRIVER_NAME			driverName
+						  , CCC.MOBILE 				driverTel
+						  , EEE.DEFAULT_VALUE		
+						  , EEE.CNAME				carTonName
+						  , DDD.mCount
+					FROM 
+						(
+							SELECT DRIVER_ID, VEHIC_ID, CAR_SCTN_CODE, CAR_MNG_CODE, CAR_MNG_MEMO
+							FROM T_CUST_VEHIC 
+							WHERE CUST_ID = #{custId} AND DEPT_ID = #{deptId} AND USE_YN = 'Y'
+						) AAA 
+						INNER JOIN 
+						T_VEHIC_MST BBB ON AAA.DRIVER_ID = BBB.DRIVER_ID AND AAA.VEHIC_ID = BBB.VEHIC_ID
+							<if test='mixYn == "Y"'>
+								AND BBB.MIX_PREFER_YN = 'Y'
+							</if>
+						INNER JOIN 
+						T_DRIVER CCC ON AAA.DRIVER_ID = CCC.DRIVER_ID 
+						INNER JOIN 
+					   (SELECT AAA.VEHIC_ID, AAA.DRIVER_ID, COUNT(1) mCount
+					    FROM 
+					    	(
+					    		SELECT ORDER_ID, ALLOC_ID, VEHIC_ID, DRIVER_ID
+								FROM T_ORDER_ALLOC
+								WHERE SELL_CUST_ID = #{custId} AND SELL_DEPT_ID = #{deptId}
+									AND ALLOC_DATE > CONVERT(VARCHAR(10), DATEADD(MONTH, -3, GETDATE()), 112)
+					    	) AAA 
+					    	INNER JOIN 
+					    	T_ORDER BBB ON AAA.ORDER_ID = BBB.ORDER_ID 
+					    WHERE  
+					    	BBB.ORDER_STATE IN ('01', '04', '05')				    	
+							<choose>
+								<when test = "carTypeCode == '11'">
+									AND BBB.CAR_TYPE_CODE IN ('08','06')
+								</when>
+								<otherwise>
+									AND BBB.CAR_TYPE_CODE = #{carTypeCode}
+								</otherwise>
+							</choose>
+							AND BBB.S_SIDO = #{sSido} AND BBB.E_SIDO = #{eSido}
+							<if test="sGungu != null and !''.equals(sGungu)">
+								AND BBB.S_GUNGU LIKE #{sGungu} +'%'
+							</if>
+							<if test="eGungu != null and !''.equals(eGungu)">
+								AND BBB.E_GUNGU LIKE #{eGungu} +'%'
+							</if>
+						GROUP BY AAA.VEHIC_ID, AAA.DRIVER_ID) DDD ON AAA.DRIVER_ID = DDD.DRIVER_ID AND AAA.VEHIC_ID = DDD.VEHIC_ID
+					   INNER JOIN 
+					  (SELECT CODE, CNAME, DEFAULT_VALUE 
+					   FROM T_CODE 
+					   WHERE GCODE = 'CAR_TON_CD') EEE ON BBB.CAR_TON_CODE = EEE.CODE
+					WHERE 
+						EEE.DEFAULT_VALUE IN (SELECT DEFAULT_VALUE FROM T_CODE WHERE GCODE = 'CAR_TON_CD' AND CODE = #{carTonCode})
+						OR 
+						BBB.CAR_TON_CODE IN (SELECT TOP 1 CODE FROM T_CODE WHERE GCODE = 'CAR_TON_CD' 
+												AND DEFAULT_VALUE > (SELECT CAST(DEFAULT_VALUE AS INT) FROM T_CODE WHERE GCODE = 'CAR_TON_CD' AND CODE = #{carTonCode}) 
+												ORDER BY CAST(DEFAULT_VALUE AS INT) ASC )   
+				) AA
+				INNER JOIN 
+			  	(
+				  	SELECT AAA.VEHIC_ID, AAA.DRIVER_ID, SUM(YEAR_COUNT) yearCount, SUM(HALF_COUNT) halfCOUNT
+				    FROM 
+				    	(
+				    		SELECT ORDER_ID, ALLOC_ID, VEHIC_ID, DRIVER_ID,
+				    			CASE WHEN ALLOC_DATE > CONVERT(VARCHAR(10), DATEADD(MONTH, -12, GETDATE()), 112) THEN 1 ELSE 0 END YEAR_COUNT,
+				    			CASE WHEN ALLOC_DATE > CONVERT(VARCHAR(10), DATEADD(MONTH, -6, GETDATE()), 112) THEN 1 ELSE 0 END HALF_COUNT
+							FROM T_ORDER_ALLOC
+							WHERE SELL_CUST_ID = #{custId} AND SELL_DEPT_ID = #{deptId}
+								AND ALLOC_DATE > CONVERT(VARCHAR(10), DATEADD(MONTH, -12, GETDATE()), 112)
+				    	) AAA 
+				    	INNER JOIN 
+				    	T_ORDER BBB ON AAA.ORDER_ID = BBB.ORDER_ID 
+				    WHERE  
+				    	BBB.ORDER_STATE IN ('01', '04', '05')
+					GROUP BY AAA.VEHIC_ID, AAA.DRIVER_ID	
+			  	) BB ON AA.vehicId = BB.VEHIC_ID AND AA.driverId = BB.DRIVER_ID  
+		) A	
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+	</select>
+	
+	<select id="getDriverOrderHistoryCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT 
+				COUNT(*) retCnt
+		FROM 
+			(
+				SELECT DRIVER_ID, VEHIC_ID, CAR_SCTN_CODE, CAR_MNG_CODE, CAR_MNG_MEMO
+				FROM T_CUST_VEHIC 
+				WHERE CUST_ID = #{custId} AND DEPT_ID = #{deptId} AND USE_YN = 'Y'
+			) AAA 
+			INNER JOIN 
+			T_VEHIC_MST BBB ON AAA.DRIVER_ID = BBB.DRIVER_ID AND AAA.VEHIC_ID = BBB.VEHIC_ID 
+				<if test='mixYn == "Y"'>
+					AND BBB.MIX_PREFER_YN = 'Y'
+				</if>
+			INNER JOIN 
+			T_DRIVER CCC ON AAA.DRIVER_ID = CCC.DRIVER_ID 
+			INNER JOIN 
+		   (SELECT AAA.VEHIC_ID, AAA.DRIVER_ID, COUNT(1) mCount
+		    FROM 
+		    	(
+		    		SELECT ORDER_ID, ALLOC_ID, VEHIC_ID, DRIVER_ID
+					FROM T_ORDER_ALLOC
+					WHERE SELL_CUST_ID = #{custId} AND SELL_DEPT_ID = #{deptId}
+						AND ALLOC_DATE > CONVERT(VARCHAR(10), DATEADD(MONTH, -3, GETDATE()), 112)
+		    	) AAA 
+		    	INNER JOIN 
+		    	T_ORDER BBB ON AAA.ORDER_ID = BBB.ORDER_ID 
+		    WHERE  
+		    	BBB.ORDER_STATE IN ('01', '04', '05')				    	
+				<choose>
+					<when test = "carTypeCode == '11'">
+						AND BBB.CAR_TYPE_CODE IN ('08','06')
+					</when>
+					<otherwise>
+						AND BBB.CAR_TYPE_CODE = #{carTypeCode}
+					</otherwise>
+				</choose>
+				AND BBB.S_SIDO = #{sSido} AND BBB.E_SIDO = #{eSido}
+				<if test="sGungu != null and !''.equals(sGungu)">
+					AND BBB.S_GUNGU LIKE #{sGungu} +'%'
+				</if>
+				<if test="eGungu != null and !''.equals(eGungu)">
+					AND BBB.E_GUNGU LIKE #{eGungu} +'%'
+				</if>
+			GROUP BY AAA.VEHIC_ID, AAA.DRIVER_ID ) DDD ON AAA.DRIVER_ID = DDD.DRIVER_ID AND AAA.VEHIC_ID = DDD.VEHIC_ID
+		   INNER JOIN 
+		  (SELECT CODE, CNAME, DEFAULT_VALUE 
+		   FROM T_CODE 
+		   WHERE GCODE = 'CAR_TON_CD') EEE ON BBB.CAR_TON_CODE = EEE.CODE
+		WHERE 
+			EEE.DEFAULT_VALUE IN (SELECT DEFAULT_VALUE FROM T_CODE WHERE GCODE = 'CAR_TON_CD' AND CODE = #{carTonCode})
+			OR 
+			BBB.CAR_TON_CODE IN (SELECT TOP 1 CODE FROM T_CODE WHERE GCODE = 'CAR_TON_CD' 
+									AND DEFAULT_VALUE > (SELECT CAST(DEFAULT_VALUE AS INT) FROM T_CODE WHERE GCODE = 'CAR_TON_CD' AND CODE = #{carTonCode}) 
+									ORDER BY CAST(DEFAULT_VALUE AS INT) ASC )   
+	</select>
+   
+   <update id="updateLinkDriver" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call UPDATE_LINK_DRIVER(
+				    #{allocId}
+				  , #{orderId}
+				  , #{driverTel}
+				  , #{driverName}
+				  , #{carNum}
+				  , #{regId}
+				  , #{loginCustId}
+				  , #{loginDeptId}
+				  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+				  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+	<select id="priceDetail" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT ISNULL(MAX(MIN_FARE),'0') minFare
+		     , ISNULL(MAX(MAX_FARE),'0') maxFare
+		     , ISNULL(MAX((AVG_FARE / CNT)),'0') avgFare
+		FROM T_LINK_FARE 
+		WHERE S_SIDO = #{sSido}
+		AND S_GUNGU = #{sGungu}
+		AND E_SIDO = #{eSido}
+		AND E_GUNGU = #{eGungu}
+		AND TON_CODE = #{carTonCode}
+	</select>
+	
+	
+	<select id="getOrderSituation" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY AAA.carNum ASC) number 
+		  , AAA.*
+	  	  , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_TON_CD' AND CODE = AAA.CAR_TON_CODE) carTonName
+		  , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_TYPE_CD' AND CODE = AAA.CAR_TYPE_CODE) carTypeName
+	  	  , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CARGO_TRAN_CAR_SCTN_CD' AND CODE = AAA.CAR_SCTN_CODE) carSctnName
+		FROM 
+			(
+			SELECT B.CAR_NUM carNum, C.MOBILE driverTel , C.DRIVER_NAME driverName
+					  , B.CAR_TON_CODE, B.CAR_TYPE_CODE, A.CAR_SCTN_CODE,
+						STUFF((SELECT '!@' + BB.S_SIDO+' '+BB.S_GUNGU + '|' + BB.E_SIDO+' '+BB.E_GUNGU + '|'+ EE.CUST_NAME +'|' + CONVERT(CHAR(10), BB.S_DATE, 23) + '|' + CONVERT(CHAR(2),  BB.S_DATE, 8)
+						+ '|' + CONVERT(CHAR(10), BB.E_DATE, 23) + '|' + CONVERT(CHAR(2),  BB.E_DATE, 8) + '|' +  BB.ORDER_STATE + '|' + EE.CUST_NAME + '|' + BB.ORDER_ID + '|' + BB.DATE_CHK + '|' + BB.RETURN_CHK
+						+ '|' + CASE WHEN DD.LINK_CODE != '99' THEN (SELECT CNAME FROM T_CODE WHERE GCODE = 'LINK_CD' AND CODE = DD.LINK_CODE) ELSE '' END
+					FROM 
+						(SELECT ORDER_ID, ALLOC_ID, SELL_CUST_ID, SELL_DEPT_ID, DRIVER_ID, VEHIC_ID 
+						 FROM T_ORDER_ALLOC 
+						 WHERE SELL_CUST_ID = #{custId} AND ALLOC_STATE IN ('01', '12', '04', '05')) AA 
+						 INNER JOIN 
+						(SELECT ORDER_ID, S_SIDO, S_GUNGU, E_SIDO, E_GUNGU, S_DATE, E_DATE, ORDER_STATE, S_COM_NAME, E_COM_NAME, 
+								CASE WHEN CONVERT(CHAR(8), S_DATE, 112) = CONVERT(CHAR(8), E_DATE, 112) THEN '당착' ELSE '익착' END DATE_CHK,
+								CASE WHEN RETURN_YN = 'Y' THEN '왕복' ELSE '편도' END RETURN_CHK
+						 FROM T_ORDER 
+						 WHERE  (S_DATE BETWEEN CONVERT(CHAR(10), GETDATE(), 23) AND CONVERT(CHAR(10), GETDATE(), 23) + ' 23:59:59')
+								OR (E_DATE BETWEEN CONVERT(CHAR(10), GETDATE(), 23) AND CONVERT(CHAR(10), GETDATE(), 23) + ' 23:59:59')) BB ON AA.ORDER_ID = BB.ORDER_ID AND AA.DRIVER_ID = A.DRIVER_ID AND AA.VEHIC_ID = A.VEHIC_ID
+						 INNER JOIN 
+						 T_ORDER_ALLOC CC ON AA.SELL_CUST_ID = CC.BUY_CUST_ID AND AA.SELL_DEPT_ID = CC.BUY_DEPT_ID AND AA.ORDER_ID = CC.ORDER_ID 
+						 INNER JOIN
+						 T_ORDER_ALLOC DD ON BB.ORDER_ID = DD.ORDER_ID AND ISNULL(DD.DRIVER_ID, '') != '' AND ISNULL(DD.VEHIC_ID, '') != ''	
+						 INNER JOIN 
+						 T_CUST_DTL EE ON CC.SELL_CUST_ID = EE.CUST_ID AND CC.SELL_DEPT_ID = EE.DEPT_ID AND CC.BUY_CUST_ID  = EE.MNG_CUST_ID AND CC.BUY_DEPT_ID = EE.MNG_DEPT_ID
+					ORDER BY BB.S_DATE ASC	 
+					FOR XML PATH('')
+				), 1, 2, '') AS orderInfo
+			FROM (
+					SELECT CUST_ID, VEHIC_ID, DRIVER_ID, MIN(CAR_SCTN_CODE) CAR_SCTN_CODE
+					FROM T_CUST_VEHIC 
+					WHERE CUST_ID = #{custId} AND USE_YN = 'Y'
+						 AND CAR_SCTN_CODE IN 
+						 <foreach collection="addList" item="item" index="index" separator="," open="(" close=")">
+						 	#{item.carSctnCode}
+						 </foreach>
+						 <if test="deptId != null and !''.equals(deptId)">
+						 	AND DEPT_ID = #{deptId}
+						 </if>
+						 <if test="userId != null and !''.equals(userId)">
+						 	AND MANAGER = #{userId} 
+						 </if>
+					GROUP BY CUST_ID, VEHIC_ID, DRIVER_ID				 
+				) A
+				INNER JOIN 
+				T_VEHIC_MST B ON A.VEHIC_ID = B.VEHIC_ID AND A.DRIVER_ID = B.DRIVER_ID
+				INNER JOIN 
+				T_DRIVER C ON B.DRIVER_ID = C.DRIVER_ID
+			) AAA
+		ORDER BY AAA.carNum ASC	
+	</select>
+	
+	<select id="getOrderHistory" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT CONVERT(CHAR(19),MOD_DATE, 20) modDate
+			 , MOD_DESC modDesc
+			 , (SELECT USER_NAME FROM T_USER WHERE USER_ID = MOD_ID) modId
+		FROM T_ORDER_HISTORY
+		WHERE ORDER_ID = #{orderId}
+		ORDER BY HISTORY_SEQ DESC
+   </select>
+   
+   <select id="getOrderHistoryCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT COUNT(*) retCnt
+		FROM T_ORDER_HISTORY
+		WHERE ORDER_ID = #{orderId}
+   </select>
+	
+   <select id="getFreightControlList" parameterType="java.util.HashMap" resultType="orderVO">
+   		SELECT AAA.*
+   		FROM (
+	   		SELECT
+				ROW_NUMBER() OVER(ORDER BY AA.sDate DESC, AA.eDate DESC, AA.orderId) number
+			  , AA.*
+			FROM
+				(
+				SELECT CASE WHEN ISNULL(C.FINISH_YN,'N') = 'N' THEN ISNULL(C.FINISH_YN,'N') ELSE REPLACE(CONVERT(CHAR(5), C.CALC_DATE, 10), '-' ,'.') END sellFinishDate
+					 , CASE WHEN ISNULL(D.FINISH_YN,'N') = 'N' THEN ISNULL(D.FINISH_YN,'N') ELSE REPLACE(CONVERT(CHAR(5), D.CALC_DATE, 10), '-' ,'.') END buyFinishDate
+					 , B.S_DATE sDate
+					 , REPLACE(CONVERT(CHAR(5), B.S_DATE, 10),'-','.') sDateDay
+					 , B.E_DATE eDate
+					 , REPLACE(CONVERT(CHAR(5), B.E_DATE, 10),'-','.') eDateDay
+					 , E.CUST_NAME reqCustName 
+					 , B.S_ADDR sAddr
+					 , B.E_ADDR eAddr
+					 , ISNULL(F.STOP_COUNT, 0) stopCount
+					 , (SELECT TOP 1 E_COM_NAME FROM T_ORDER_STOP WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' ORDER BY STOP_SEQ ASC) stopName
+					 , CASE WHEN ISNULL(B.RETURN_YN,'N') = 'N' THEN '편도' ELSE '왕복' END returnYn
+					 , ISNULL(ISNULL(A.ALLOC_CHARGE, 0) + ISNULL(H.ADD_CHARGE, 0) + ISNULL(I.ADD_CHARGE, 0) + ISNULL(J.ADD_CHARGE, 0) + ISNULL(K.ADD_CHARGE, 0) + ISNULL(L.ADD_CHARGE, 0),0) sellAmt
+					 , ISNULL(G.ALLOC_CHARGE, 0) + ISNULL(M.ADD_CHARGE, 0) + ISNULL(N.ADD_CHARGE, 0) + ISNULL(O.ADD_CHARGE, 0) + ISNULL(P.ADD_CHARGE, 0) + ISNULL(Q.ADD_CHARGE, 0) buyAmt
+					 , ISNULL(A.ALLOC_CHARGE, 0) sellCharge
+					 , ISNULL(H.ADD_CHARGE, 0) sellWayPointCharge
+					 , ISNULL(I.ADD_CHARGE, 0) sellStayCharge
+					 , ISNULL(J.ADD_CHARGE, 0) sellHandWorkCharge
+					 , ISNULL(K.ADD_CHARGE, 0) sellRoundCharge
+					 , ISNULL(L.ADD_CHARGE, 0) sellOtherAddCharge
+					 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'UNIT_PRICE_TYPE' AND CODE = B.UNIT_PRICE_TYPE) unitPriceType
+					 , ISNULL(B.UNIT_CHARGE, 0) unitCharge
+					 , ISNULL(A.SELL_WEIGHT, '') sellWeight
+					 , REPLACE(CONVERT(CHAR(5), G.REQ_PAY_DATE, 10), '-' ,'.') reqPayDate
+					 , ISNULL(G.ALLOC_CHARGE, 0) buyCharge
+					 , ISNULL(M.ADD_CHARGE, 0) wayPointCharge
+					 , ISNULL(N.ADD_CHARGE, 0) stayCharge
+					 , ISNULL(O.ADD_CHARGE, 0) handWorkCharge
+					 , ISNULL(P.ADD_CHARGE, 0) roundCharge
+					 , ISNULL(Q.ADD_CHARGE, 0) otherAddCharge
+					 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CARGO_TRAN_CAR_SCTN_CD' AND CODE = R.CAR_SCTN_CODE) carSctnName
+					 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CHARGE_TYPE_CD' AND CODE = B.CHARGE_TYPE) chargeType
+					 , U.CAR_NUM carNum
+					 , U.DRIVER_NAME driverName
+					 , U.DRIVER_TEL driverTel
+					 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_TON_CD' AND CODE = G.CAR_TON_CODE) carTonName
+			 		 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_TYPE_CD' AND CODE = G.CAR_TYPE_CODE) carTypeName
+					 , S.CUST_NAME buyCustName
+					 , T.INV_ID invId
+					 , ISNULL(B.RECEIPT_YN, 'N') receiptYn
+					 , ISNULL(REPLACE(CONVERT(CHAR(5),  B.RECEIPT_DATE, 10), '-' ,'.'), '-') + '/' + ISNULL(REPLACE(CONVERT(CHAR(5),  B.PAPER_RECEIPT_DATE, 10), '-' ,'.'), '-') receiptDate
+					 , ISNULL(D.TAXINV_YN, 'N') taxinvYn
+					 , CASE WHEN D.TAXINV_YN = 'P' THEN '-/'+ REPLACE(CONVERT(CHAR(5), D.TAXINV_DATE, 10), '-', '.') WHEN D.TAXINV_YN = 'Y' THEN REPLACE(CONVERT(CHAR(5), D.TAXINV_DATE, 10), '-', '.')+'/-' ELSE '-/-' END taxinvDate
+					 , CASE WHEN B.ORDER_STATE = '09' THEN '취소' 
+			 			WHEN ISNULL(U.ALLOC_STATE, '') = '' THEN (SELECT CNAME FROM T_CODE WHERE GCODE = 'ALLOC_STATE_CD' AND CODE = ISNULL(U.ALLOC_STATE, '00')) 
+				     	ELSE (SELECT CNAME FROM T_CODE WHERE GCODE = 'ALLOC_STATE_CD' AND CODE = U.ALLOC_STATE) 
+				     END allocStateName
+					 , B.ORDER_ID orderId
+					 , A.ALLOC_ID sellAllocId
+					 , G.ALLOC_ID allocId
+			 		 , CASE WHEN G.ALLOC_STATE != '10' THEN G.CAR_NUM ELSE U.CAR_NUM END buyCarNum
+			 		 , A.SELL_CUST_ID sellCustId
+			 		 , A.SELL_DEPT_ID sellDeptId
+					 , A.BUY_CUST_ID buyCustId
+					 , A.BUY_DEPT_ID buyDeptId
+				FROM
+				   (
+				      SELECT 
+				             ORDER_ID     , ALLOC_ID      , SELL_CUST_ID   , SELL_DEPT_ID   , SELL_STAFF_ID
+				           , BUY_CUST_ID  , BUY_DEPT_ID   , BUY_STAFF_ID   , ALLOC_CHARGE   , ALLOC_FEE
+				           , SELL_STAFF_TEL , LINK_YN	  , SELL_WEIGHT
+				      FROM
+				            T_ORDER_ALLOC
+				      WHERE
+				            BUY_CUST_ID = #{custId} 
+							<if test="deptId != null and !''.equals(deptId)"> AND BUY_DEPT_ID = #{deptId}</if>
+				            <if test = 'userId != null and !"".equals(userId)'> AND BUY_STAFF_ID = #{userId}</if>				            
+				   			<if test='sCustId != null and !"".equals(sCustId)'>
+	 			 	  			AND SELL_CUST_ID = #{sCustId}
+				   			</if>
+				   ) A
+				   INNER JOIN 
+				   T_ORDER B ON A.ORDER_ID = B.ORDER_ID AND B.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+					<if test="driverState != null and driverState != ''">
+						AND B.ORDER_STATE = #{driverState}
+					</if>		   
+				   INNER JOIN
+				   T_ORDER_ALLOC G ON A.ORDER_ID = G.ORDER_ID AND A.BUY_CUST_ID = G.SELL_CUST_ID AND A.BUY_DEPT_ID = G.SELL_DEPT_ID
+					<if test="allocState != null and allocState != ''">
+							AND G.ALLOC_STATE = #{sAllocState}
+					</if>
+				   INNER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, FINISH_YN, CALC_DATE, TAXINV_DATE, CUST_ID, DEPT_ID, MNG_CUST_ID, MNG_DEPT_ID
+				   FROM T_CALC 
+				   WHERE MNG_CUST_ID = #{custId}
+				   		<if test="deptId != null and !''.equals(deptId)">AND MNG_DEPT_ID = #{deptId}</if>
+				   		AND SELL_BUY_SCTN = '01' AND USE_YN = 'Y' AND CALC_TYPE_CODE = '0002'
+					   	<if test="sellFinishYn != null and sellFinishYn != ''">
+					    	 AND ISNULL(FINISH_YN, 'N') = #{sellFinishYn}
+					   	</if>
+				   ) C ON A.ALLOC_ID = C.ALLOC_ID AND A.SELL_CUST_ID  = C.CUST_ID AND A.SELL_DEPT_ID = C.DEPT_ID
+				   																				AND A.BUY_CUST_ID = C.MNG_CUST_ID AND A.BUY_DEPT_ID = C.MNG_DEPT_ID  
+				   INNER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, FINISH_YN, CALC_DATE, TAXINV_DATE, TAXINV_YN, VEHIC_ID, MNG_CUST_ID, MNG_DEPT_ID, CUST_ID, DEPT_ID
+				   FROM T_CALC 
+				   WHERE MNG_CUST_ID = #{custId}
+				   		<if test="deptId != null and !''.equals(deptId)">AND MNG_DEPT_ID = #{deptId}</if> 
+				   		AND SELL_BUY_SCTN = '02' AND USE_YN = 'Y' AND CALC_TYPE_CODE = '0002') D ON G.ALLOC_ID = D.ALLOC_ID AND G.SELL_CUST_ID = D.MNG_CUST_ID AND G.SELL_DEPT_ID = D.MNG_DEPT_ID
+				   INNER JOIN
+				   (SELECT  CUST_ID , DEPT_ID, CUST_NAME, MNG_CUST_ID, MNG_DEPT_ID
+				   FROM T_CUST_DTL 
+				   WHERE MNG_CUST_ID = #{custId}  AND SELL_BUY_SCTN = '01') E ON A.SELL_CUST_ID = E.CUST_ID AND A.SELL_DEPT_ID = E.DEPT_ID AND A.BUY_CUST_ID = E.MNG_CUST_ID AND A.BUY_DEPT_ID = E.MNG_DEPT_ID
+				   LEFT OUTER JOIN
+				   (SELECT ORDER_ID, COUNT(*) STOP_COUNT
+				   FROM T_ORDER_STOP 
+				   WHERE USE_YN = 'Y'
+				   GROUP BY ORDER_ID) F ON B.ORDER_ID = F.ORDER_ID
+				   LEFT OUTER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0023') H ON B.ORDER_ID = H.ORDER_ID AND A.ALLOC_ID = H.ALLOC_ID
+				   LEFT OUTER JOIN  
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0025') I ON B.ORDER_ID = I.ORDER_ID AND A.ALLOC_ID = I.ALLOC_ID
+				   LEFT OUTER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0371') J ON B.ORDER_ID = J.ORDER_ID AND A.ALLOC_ID = J.ALLOC_ID
+				   LEFT OUTER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0372') K ON B.ORDER_ID = K.ORDER_ID AND A.ALLOC_ID = K.ALLOC_ID
+				   LEFT OUTER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0294') L ON B.ORDER_ID = L.ORDER_ID AND A.ALLOC_ID = L.ALLOC_ID
+				   LEFT OUTER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0023') M ON B.ORDER_ID = M.ORDER_ID AND G.ALLOC_ID = M.ALLOC_ID
+				   LEFT OUTER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0025') N ON B.ORDER_ID = N.ORDER_ID AND G.ALLOC_ID = N.ALLOC_ID
+				   LEFT OUTER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0371') O ON B.ORDER_ID = O.ORDER_ID AND G.ALLOC_ID = O.ALLOC_ID
+				   LEFT OUTER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0372') P ON B.ORDER_ID = P.ORDER_ID AND G.ALLOC_ID = P.ALLOC_ID
+				   LEFT OUTER JOIN 
+				   (SELECT ORDER_ID, ALLOC_ID, ADD_CHARGE
+				   FROM T_ORDER_ALLOC_ADD
+				   WHERE CALC_TYPE_CODE = '0294') Q ON B.ORDER_ID = Q.ORDER_ID AND G.ALLOC_ID = Q.ALLOC_ID
+				   LEFT OUTER JOIN 
+				   (SELECT CAR_SCTN_CODE, DRIVER_ID, VEHIC_ID, CUST_ID, DEPT_ID
+				   FROM T_CUST_VEHIC
+				   WHERE CUST_ID = #{custId}
+						<if test="deptId != null and !''.equals(deptId)"> AND DEPT_ID = #{deptId}</if>
+					) R ON R.DRIVER_ID = G.DRIVER_ID AND R.VEHIC_ID = G.VEHIC_ID AND R.CUST_ID = G.SELL_CUST_ID AND R.DEPT_ID = G.SELL_DEPT_ID
+				   LEFT OUTER JOIN
+				   (SELECT CUST_ID, DEPT_ID, CUST_NAME, MNG_CUST_ID, MNG_DEPT_ID
+				   FROM T_CUST_DTL
+			       WHERE MNG_CUST_ID = #{custId} AND SELL_BUY_SCTN = '02') S ON G.BUY_CUST_ID = S.CUST_ID AND G.BUY_DEPT_ID = S.DEPT_ID AND A.BUY_CUST_ID = S.MNG_CUST_ID AND A.BUY_DEPT_ID = S.MNG_DEPT_ID
+			       LEFT OUTER JOIN 
+			       (SELECT INV_ID, ORDER_ID, ALLOC_ID
+			       FROM T_TAX_ITEM
+			       GROUP BY INV_ID, ORDER_ID, ALLOC_ID) T ON G.ORDER_ID = T.ORDER_ID AND G.ALLOC_ID = T.ALLOC_ID
+			       LEFT OUTER JOIN 
+			       (SELECT CAR_NUM, DRIVER_NAME, DRIVER_TEL, ORDER_ID, DRIVER_ID, VEHIC_ID, ALLOC_STATE
+			       FROM T_ORDER_ALLOC) U ON A.ORDER_ID = U.ORDER_ID AND ISNULL(U.DRIVER_ID, '') != '' AND ISNULL(U.VEHIC_ID, '') != ''
+			       LEFT OUTER JOIN 
+		   		   T_VEHIC_MST V ON G.VEHIC_ID = V.VEHIC_ID AND G.DRIVER_ID = V.DRIVER_ID 
+			WHERE 1=1
+				   <if test="buyFinishYn != null and buyFinishYn != ''">
+				      AND ISNULL(D.FINISH_YN, 'N') = #{buyFinishYn}
+				   </if>
+		           <if test='reqPayYn != null and !"".equals(reqPayYn)'>
+		           	  AND ISNULL(G.REQ_PAY_YN, 'N') = #{reqPayYn}
+		           </if>
+		           <if test='driverId != null and !"".equals(driverId) and vehicId != null and !"".equals(vehicId)'>
+		           	  AND G.DRIVER_ID = #{driverId} AND G.VEHIC_ID = #{vehicId} 
+		           </if>
+				   <if test='listSSido != null and !"".equals(listSSido)'>
+	 			 	  AND B.S_SIDO = #{listSSido}
+				   </if>
+				   <if test='listESido != null and !"".equals(listESido)'>
+	 			 	  AND B.E_SIDO = #{listESido}
+				   </if>
+				   <choose>
+					  <when test='orderStopYn == "Y" and "Y".equals(orderStopYn)'>
+		 			 	 AND ISNULL(F.STOP_COUNT, 0) != '0'
+					  </when>
+					  <when test='orderStopYn == "N" and "N".equals(orderStopYn)'>
+					     AND ISNULL(F.STOP_COUNT, 0) = '0'
+					  </when>
+				   </choose>
+				   	<if test='sTax != null and !"".equals(sTax)'>
+				   		AND V.BIZ_NAME LIKE '%' + #{sTax} + '%'
+				   	</if>
+			) AA
+		) AAA
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+   </select>
+   
+   <select id="getFreightControlCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT COUNT(*) retCnt
+		FROM
+		   (
+		      SELECT 
+		             ORDER_ID     , ALLOC_ID      , SELL_CUST_ID   , SELL_DEPT_ID   , SELL_STAFF_ID
+		           , BUY_CUST_ID  , BUY_DEPT_ID   , BUY_STAFF_ID   , ALLOC_CHARGE   , ALLOC_FEE
+		           , SELL_STAFF_TEL , LINK_YN	  , SELL_WEIGHT
+		      FROM
+		            T_ORDER_ALLOC
+		      WHERE
+		            BUY_CUST_ID = #{custId} 
+					<if test="deptId != null and !''.equals(deptId)">AND BUY_DEPT_ID = #{deptId}</if>
+		            <if test = 'userId != null and !"".equals(userId)'>AND BUY_STAFF_ID = #{userId}</if>
+				   <if test='sCustId != null and !"".equals(sCustId)'>
+					 	  AND SELL_CUST_ID = #{sCustId}
+				   </if>
+		   ) A
+		   INNER JOIN 
+		   T_ORDER B ON A.ORDER_ID = B.ORDER_ID AND B.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+			<if test="driverState != null and driverState != ''">
+				AND B.ORDER_STATE = #{driverState}
+			</if>	   
+		   INNER JOIN
+		   T_ORDER_ALLOC G ON A.ORDER_ID = G.ORDER_ID AND A.BUY_CUST_ID = G.SELL_CUST_ID AND A.BUY_DEPT_ID = G.SELL_DEPT_ID
+			<if test="allocState != null and allocState != ''">
+				AND G.ALLOC_STATE = #{sAllocState}
+			</if>
+		   INNER JOIN 
+		   (SELECT ORDER_ID, ALLOC_ID, FINISH_YN, CALC_DATE, TAXINV_DATE, APP_NAME, CUST_ID, DEPT_ID, MNG_CUST_ID, MNG_DEPT_ID
+		   FROM T_CALC 
+		   WHERE MNG_CUST_ID = #{custId}
+		   		<if test="deptId != null and !''.equals(deptId)">AND MNG_DEPT_ID = #{deptId}</if>
+		   		AND SELL_BUY_SCTN = '01' AND USE_YN = 'Y' AND CALC_TYPE_CODE = '0002'
+		   		<if test="sellFinishYn != null and sellFinishYn != ''">
+		      		AND ISNULL(FINISH_YN, 'N') = #{sellFinishYn}
+		   		</if>
+		   	) C ON A.ALLOC_ID = C.ALLOC_ID AND A.SELL_CUST_ID  = C.CUST_ID AND A.SELL_DEPT_ID = C.DEPT_ID
+		   																				AND A.BUY_CUST_ID = C.MNG_CUST_ID AND A.BUY_DEPT_ID = C.MNG_DEPT_ID  
+		   INNER JOIN 
+		   (SELECT ORDER_ID, ALLOC_ID, FINISH_YN, CALC_DATE, TAXINV_DATE, TAXINV_YN, VEHIC_ID, MNG_CUST_ID, MNG_DEPT_ID, APP_NAME, CUST_ID, DEPT_ID
+		   FROM T_CALC 
+		   WHERE MNG_CUST_ID = #{custId}
+				<if test="deptId != null and !''.equals(deptId)">AND MNG_DEPT_ID = #{deptId}</if>  
+		   		AND SELL_BUY_SCTN = '02' AND USE_YN = 'Y' AND CALC_TYPE_CODE = '0002') D ON G.ALLOC_ID = D.ALLOC_ID AND G.SELL_CUST_ID = D.MNG_CUST_ID AND G.SELL_DEPT_ID = D.MNG_DEPT_ID
+		   INNER JOIN
+		   (SELECT  CUST_ID , DEPT_ID, CUST_NAME, MNG_CUST_ID, MNG_DEPT_ID
+		   FROM T_CUST_DTL 
+		   WHERE MNG_CUST_ID = #{custId}  AND SELL_BUY_SCTN = '01') E ON A.SELL_CUST_ID = E.CUST_ID AND A.SELL_DEPT_ID = E.DEPT_ID AND A.BUY_CUST_ID = E.MNG_CUST_ID AND A.BUY_DEPT_ID = E.MNG_DEPT_ID
+		   LEFT OUTER JOIN
+		   (SELECT ORDER_ID, COUNT(*) STOP_COUNT
+		   FROM T_ORDER_STOP 
+		   WHERE USE_YN = 'Y'
+		   GROUP BY ORDER_ID) F ON B.ORDER_ID = F.ORDER_ID
+		   LEFT OUTER JOIN 
+		   (SELECT CAR_SCTN_CODE, DRIVER_ID, VEHIC_ID, CUST_ID, DEPT_ID
+		   FROM T_CUST_VEHIC
+		   WHERE CUST_ID = #{custId}
+				<if test="deptId != null and !''.equals(deptId)"> AND DEPT_ID = #{deptId}</if>) R ON R.DRIVER_ID = G.DRIVER_ID AND R.VEHIC_ID = G.VEHIC_ID AND R.CUST_ID = G.SELL_CUST_ID AND R.DEPT_ID = G.SELL_DEPT_ID		   
+	       LEFT OUTER JOIN 
+	       (SELECT CAR_NUM, DRIVER_NAME, DRIVER_TEL, ORDER_ID, DRIVER_ID, VEHIC_ID, ALLOC_STATE
+	       FROM T_ORDER_ALLOC) U ON A.ORDER_ID = U.ORDER_ID AND ISNULL(U.DRIVER_ID, '') != '' AND ISNULL(U.VEHIC_ID, '') != ''
+		   LEFT OUTER JOIN 
+		   T_VEHIC_MST V ON G.VEHIC_ID = V.VEHIC_ID AND G.DRIVER_ID = V.DRIVER_ID 
+		WHERE 1=1 
+		   <if test="buyFinishYn != null and buyFinishYn != ''">
+		      AND ISNULL(D.FINISH_YN, 'N') = #{buyFinishYn}
+		   </if>
+           <if test='reqPayYn != null and !"".equals(reqPayYn)'>
+           	  AND ISNULL(G.REQ_PAY_YN, 'N') = #{reqPayYn}
+           </if>
+           <if test='driverId != null and !"".equals(driverId) and vehicId != null and !"".equals(vehicId)'>
+           	  AND G.DRIVER_ID = #{driverId} AND G.VEHIC_ID = #{vehicId} 
+           </if>
+		   <if test='listSSido != null and !"".equals(listSSido)'>
+			 	  AND B.S_SIDO = #{listSSido}
+		   </if>
+		   <if test='listESido != null and !"".equals(listESido)'>
+			 	  AND B.E_SIDO = #{listESido}
+		   </if>
+		   <choose>
+			  <when test='orderStopYn == "Y" and "Y".equals(orderStopYn)'>
+ 			 	 AND ISNULL(F.STOP_COUNT, 0) != '0'
+			  </when>
+			  <when test='orderStopYn == "N" and "N".equals(orderStopYn)'>
+			     AND ISNULL(F.STOP_COUNT, 0) = '0'
+			  </when>
+		   </choose>
+		   	<if test='sTax != null and !"".equals(sTax)'>
+		   		AND V.BIZ_NAME LIKE '%' + #{sTax} + '%'
+		   	</if>
+   </select>
+   
+   <update id="multOrderAllocUpdate" statementType="CALLABLE" parameterType="java.util.HashMap">
+   		{call UPDATE_MULT_ORDER_ALLOC(
+   									#{orderId}
+   							 	  ,	#{allocId}
+   							 	  ,	#{sellCharge}
+   							 	  ,	#{buyCharge}
+   							 	  ,	#{sellWeight}
+   							 	  ,	#{buyCustId}
+   							 	  ,	#{buyDeptId}
+   							 	  , #{loginId}
+							  	  , #{newAllocId, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+							  	  , #{outTaxCnt, mode=OUT, jdbcType=INTEGER, javaType=int}
+							  	  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+							      ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})   		
+   		}
+   </update>
+</mapper>

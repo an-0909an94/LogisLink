@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="default" template="/WEB-INF/jsp/layout/def_layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/layout/header.jsp" />
+		<put-attribute name="left" value="/WEB-INF/jsp/layout/left.jsp" />
+		<put-attribute name="body"/>
+		<put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp" />
+	</definition>
+	<definition name="contents/*/*" extends="default">
+		<put-attribute name="header" value="/WEB-INF/jsp/layout/header.jsp" />
+		<put-attribute name="left" value="/WEB-INF/jsp/layout/left.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/contents/{1}/{2}.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp" />
+	</definition>
+	<definition name="popup" template="/WEB-INF/jsp/layout/pop_layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/layout/pop_header.jsp" />
+		<put-attribute name="body"/>
+	</definition>
+	<definition name="contents/*/*/*" extends="popup">
+		<put-attribute name="header" value="/WEB-INF/jsp/layout/pop_header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/contents/{1}/{2}/{3}.jsp"/>
+	</definition>
+	
+	<definition name="oms" template="/WEB-INF/jsp/oms/layout/def_layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/oms/layout/header.jsp" />
+		<put-attribute name="left" value="/WEB-INF/jsp/oms/layout/left.jsp" />
+		<put-attribute name="body"/>
+		<put-attribute name="footer" value="/WEB-INF/jsp/oms/layout/footer.jsp" />
+	</definition>
+	<definition name="oms/*/*" extends="oms">
+		<put-attribute name="header" value="/WEB-INF/jsp/oms/layout/header.jsp" />
+		<put-attribute name="left" value="/WEB-INF/jsp/oms/layout/left.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/oms/{1}/{2}.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/jsp/oms/layout/footer.jsp" />
+	</definition>
+	<definition name="omsPopup" template="/WEB-INF/jsp/oms/layout/pop_layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/oms/layout/pop_header.jsp" />
+		<put-attribute name="body"/>
+	</definition>
+	<definition name="oms/*/*/*" extends="omsPopup">
+		<put-attribute name="header" value="/WEB-INF/jsp/oms/layout/pop_header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/oms/{1}/{2}/{3}.jsp"/>
+	</definition>
+</tiles-definitions>

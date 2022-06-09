@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="authDataNS">
+
+	<select id="selectUserList" parameterType="java.util.HashMap" resultType="authVO">
+		SELECT ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS rNum
+			 , AUTH_SEQ authSeq 
+		     ,AUTH_NAME authName
+		FROM 
+		   T_AUTH 
+		ORDER BY rNum ASC
+	</select>
+	
+	<select id="selectAuthList" parameterType="java.util.HashMap" resultType="authVO">
+		WITH MENU_AUTH_LIST AS 
+			(
+			SELECT B.MENU_SEQ               menuSeq
+				 , #{authSeq, jdbcType=INTEGER} authSeq
+				 , (SELECT MENU_NAME FROM T_MENU WHERE MENU_SEQ = B.PARENT_SEQ) parentName
+				 , B.MENU_NAME              menuName
+				 , ISNULL(A.READ_YN, 'N')   readYn
+				 , ISNULL(A.WRITE_YN, 'N')  writeYn
+				 , ISNULL(A.EDIT_YN, 'N')   editYn
+				 , ISNULL(A.DELETE_YN, 'N') deleteYn
+				 , ISNULL(A.PRINT_YN, 'N')  printYn
+				 , B.PARENT_SEQ             parentSeq
+				 , B.DEPTH
+				 , convert(varchar(255), B.MENU_SEQ) sort
+			FROM (SELECT MENU_SEQ, MENU_NAME, DEPTH, PARENT_SEQ, ASORT 
+				  FROM T_MENU
+				  WHERE USE_YN = 'Y' AND PARENT_SEQ = 0
+				  <if test="authSeq != null and authSeq == 210">
+				  		AND (MENU_CODE LIKE 'Z%' )
+				  </if>
+				  <if test="authSeq != null and authSeq != 210">
+				  		AND (MENU_CODE NOT LIKE 'Z%' )
+				  </if>
+				  ) B 
+				  LEFT OUTER JOIN 
+				  (SELECT MENU_SEQ, AUTH_SEQ, READ_YN, WRITE_YN, EDIT_YN, DELETE_YN, PRINT_YN
+				  FROM T_AUTH_MENU 
+				  WHERE AUTH_SEQ = #{authSeq, jdbcType=INTEGER}) A ON B.MENU_SEQ = A.MENU_SEQ
+		UNION ALL
+			SELECT B.MENU_SEQ               menuSeq
+				 , #{authSeq, jdbcType=INTEGER} authSeq
+				 , (SELECT MENU_NAME FROM T_MENU WHERE MENU_SEQ = B.PARENT_SEQ) parentName
+				 , B.MENU_NAME              menuName
+				 , ISNULL(A.READ_YN, 'N')   readYn
+				 , ISNULL(A.WRITE_YN, 'N')  writeYn
+				 , ISNULL(A.EDIT_YN, 'N')   editYn
+				 , ISNULL(A.DELETE_YN, 'N') deleteYn
+				 , ISNULL(A.PRINT_YN, 'N')  printYn
+				 , B.PARENT_SEQ             parentSeq
+				 , B.DEPTH
+				 , convert(varchar(255), convert(nvarchar,B.PARENT_SEQ) + ' - ' + convert(varchar(255), B.MENU_SEQ))  sort
+			FROM (SELECT MENU_SEQ, MENU_NAME, DEPTH, PARENT_SEQ, ASORT 
+				  FROM T_MENU
+				  WHERE USE_YN = 'Y' AND PARENT_SEQ != 0
+				  <if test="authSeq != null and authSeq == 210">
+				  		AND (MENU_CODE LIKE 'Z%' )
+				  </if>
+				  <if test="authSeq != null and authSeq != 210">
+				  		AND (MENU_CODE NOT LIKE 'Z%' )
+				  </if>
+				  ) B 
+				  LEFT OUTER JOIN 
+				  (SELECT MENU_SEQ, AUTH_SEQ, READ_YN, WRITE_YN, EDIT_YN, DELETE_YN, PRINT_YN
+				  FROM T_AUTH_MENU 
+				  WHERE AUTH_SEQ = #{authSeq, jdbcType=INTEGER}) A ON B.MENU_SEQ = A.MENU_SEQ
+			) 
+		SELECT sort
+		     , menuSeq
+		     , authSeq
+		     , parentName
+		     , menuName
+		     , readYn
+		     , writeYn
+		     , editYn
+		     , deleteYn
+		     , printYn
+		     , parentSeq
+		     , DEPTH 
+		FROM MENU_AUTH_LIST
+		ORDER BY SORT
+	</select>
+	
+	<update id="insertUserAuth" parameterType="java.util.HashMap">
+		MERGE INTO	T_AUTH_MENU A
+			USING (
+					<foreach collection="list" item="item" open="" close="" separator="union">
+						SELECT
+								#{item.menuSeq, jdbcType=INTEGER}	         MENU_SEQ
+							  , #{item.authSeq, jdbcType=INTEGER}		     AUTH_SEQ
+							  ,	#{item.authType, jdbcType=VARCHAR}		     AUTH_TYPE
+							  , #{item.asort, jdbcType=INTEGER}			     ASORT
+							  , ISNULL(#{item.readYn, jdbcType=VARCHAR}, 'N')	 READ_YN
+							  , ISNULL(#{item.writeYn, jdbcType=VARCHAR}, 'N')	 WRITE_YN
+							  , ISNULL(#{item.editYn, jdbcType=VARCHAR}, 'N')	 EDIT_YN
+							  , ISNULL(#{item.deleteYn, jdbcType=VARCHAR}, 'N') DELETE_YN
+							  , ISNULL(#{item.printYn, jdbcType=VARCHAR}, 'N')	 PRINT_YN
+					</foreach>
+				  ) DATA
+			ON
+				(A.AUTH_SEQ = DATA.AUTH_SEQ AND A.MENU_SEQ = DATA.MENU_SEQ)
+			WHEN MATCHED THEN
+				UPDATE
+				<set>
+						A.AUTH_TYPE = DATA.AUTH_TYPE
+					  , A.READ_YN = DATA.READ_YN
+					  , A.WRITE_YN = DATA.WRITE_YN
+					  , A.EDIT_YN = DATA.EDIT_YN
+					  , A.DELETE_YN = DATA.DELETE_YN
+					  , A.PRINT_YN = DATA.PRINT_YN
+				</set>
+			WHEN NOT MATCHED THEN
+				INSERT
+				<trim prefix="(" suffix=")" suffixOverrides=",">
+						MENU_SEQ
+					  , AUTH_SEQ
+					  , AUTH_TYPE
+					  , READ_YN
+					  , WRITE_YN
+					  , EDIT_YN
+					  , DELETE_YN
+					  , PRINT_YN
+				</trim>
+				<trim prefix="values (" suffix=")" suffixOverrides=",">
+                        DATA.MENU_SEQ
+                      , DATA.AUTH_SEQ
+					  , DATA.AUTH_TYPE
+					  , DATA.READ_YN
+					  , DATA.WRITE_YN
+					  , DATA.EDIT_YN
+					  , DATA.DELETE_YN
+					  , DATA.PRINT_YN
+				</trim>
+				;
+	</update>
+	
+	<delete id="deleteAuth" parameterType="java.util.HashMap">
+		DELETE T_AUTH
+		WHERE AUTH_SEQ = #{authSeq}
+	</delete>
+	
+	<delete id="deleteAuthMenu" parameterType="java.util.HashMap">
+		DELETE T_AUTH_MENU
+		WHERE AUTH_SEQ = #{authSeq}
+	</delete>
+	
+	<insert id="insertAuth" parameterType="java.util.HashMap">
+		INSERT INTO T_AUTH(
+		AUTH_SEQ, AUTH_NAME, ASORT, REGID)
+		VALUES(#{authSeq}, #{authName}, NULL, NULL)
+	</insert>
+ 
+	<select id="selectAllAuthList" parameterType="java.util.HashMap" resultType="authVO">
+		SELECT AAA.AUTH_SEQ     authSeq
+             , AAA.AUTH_NAME    authName 
+        FROM 
+               T_AUTH AAA
+        ORDER BY AAA.AUTH_SEQ DESC
+	</select>
+	
+	<select id="selectUserAuthList" parameterType="java.util.HashMap" resultType="authVO">
+		IF (#{loginAuthSeq} = 100)
+		BEGIN 
+			SELECT AUTH_SEQ authSeq, AUTH_NAME authName
+			FROM T_AUTH 
+			<!-- WHERE AUTH_SEQ = #{loginAuthSeq} 
+			<if test='custAuthSeq != null and custAuthSeq != 0'>
+				OR AUTH_SEQ = #{custAuthSeq}
+			</if> -->
+		END 
+		ELSE 
+		BEGIN 
+			SELECT AUTH_SEQ authSeq, AUTH_NAME authName
+			FROM T_AUTH 
+			WHERE AUTH_SEQ = #{custAuthSeq}
+				<if test="authSeq != null and authSeq != ''">
+					OR AUTH_SEQ = #{authSeq}
+				</if>
+			 
+		END
+	</select>
+	
+	<select id="checkAuthSeq" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		IF EXISTS (
+			SELECT AUTH_SEQ FROM T_AUTH WHERE AUTH_SEQ = #{authSeq}
+		)
+			BEGIN
+				SELECT '99' AS retCode, '중복된 권한코드 입니다.' AS retMsg
+			END
+		ELSE 
+			BEGIN
+				SELECT '00' AS retCode, '' AS retMsg
+			END
+	</select>
+</mapper>

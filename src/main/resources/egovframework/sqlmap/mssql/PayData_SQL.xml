@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="payDataNS">	
+	
+	<select id="selectPayList" parameterType="java.util.HashMap" resultType="payVO">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY AA.regDate DESC) AS number
+		  , AA.*	
+		FROM (
+			SELECT REPLACE(CONVERT(CHAR(5), A.FINISH_DATE, 110),'-','.') finishDate			
+				 , A.finishId			finishId		
+				 , REPLACE(CONVERT(CHAR(5), A.PAY_APPRO_DATE, 110),'-','.') payApproDate	
+				 , A.payApproId			payApproId											
+				 , REPLACE(CONVERT(CHAR(5), A.OUTREQ_DATE, 110),'-','.') outreqDate			
+				 , A.outreqId			outreqId											
+				 , A.OUT_KIND 			outKind												
+				 , REPLACE(CONVERT(CHAR(5), A.OUT_DATE, 110),'-','.') outDate				
+				 , CASE WHEN A.OUT_ID = 'SYSTEM' THEN '펌뱅킹(실시간)' ELSE A.outId END outId												
+				 , A.BUY_AMT 			buyAmt												
+				 , A.PAYABLE_AMT 		payableAmt											
+				 , A.WITHDRAWAL_AMT		withdrawalAmt										
+				 , F.REQ_PAY_YN			reqPayYn											
+				 , REPLACE(CONVERT(CHAR(5), F.REQ_PAY_DATE, 110),'-','.') reqPayDate		
+				 , H.BIZ_NAME 			taxOwnerBizName
+				 , I.BIZ_NAME 			taxDriverBizName
+				 , G.BANK_CNNM 			bankCnnm				
+		 		 , G.bankCode 			bankCode									
+				 , G.BANK_ACCOUNT 		bankAccount											
+				 , REPLACE(CONVERT(CHAR(8), G.BANKCHK_DATE, 2),'-','.') bankChkDate			
+				 , A.CAR_NUM 			carNum												
+				 , A.DRIVER_NAME		driverName											
+				 , A.DRIVER_TEL 		driverTel											
+				 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'UNIT_PRICE_TYPE' AND CODE = B.UNIT_PRICE_TYPE) unitPriceType 
+				 , REPLACE(CONVERT(CHAR(5), F.ALLOC_DATE, 110),'-','.') allocDate			
+				 , REPLACE(CONVERT(CHAR(5), B.E_DATE, 110),'-','.') eDate			
+				 , B.S_SIDO +' '+ B.S_GUNGU sComName
+				 , B.E_SIDO +' '+ B.E_GUNGU eComName									
+				 , C.STOP_COM_NAME		stopComName											
+				 , ISNULL(C.STOP_COUNT,'0') stopCount										
+				 , F.SELL_WEIGHT		sellWeight											
+				 , CONVERT(FLOAT,B.GOODS_WEIGHT)/1000	goodsWeight											
+				 , E.USER_NAME			userName											
+				 , A.MEMO1 				memo1												
+				 , A.MEMO2 				memo2												
+				 , A.MEMO3 				memo3												
+				 , B.GOODS_NAME			goodsName											
+			     , (SELECT DEPT_NAME FROM T_CUST_DEPT WHERE DEPT_ID = A.MNG_DEPT_ID) mngDeptName 
+			     , A.ORDER_ID 			orderId												
+			     , A.REGDATE			regdate
+			     , A.MNG_CUST_ID		mngCustId
+			     , A.MNG_DEPT_ID		mngDeptId
+			     , A.CUST_ID			custId
+			     , A.DEPT_ID			deptId
+			     , A.DRIVER_ID			driverId
+			     , A.VEHIC_ID			vehicId
+			     , A.ALLOC_ID			allocId
+			     , A.PAY_SEQ			paySeq
+			     , A.PAY_STATE_CODE		payStateCode
+			FROM 
+				(SELECT FINISH_DATE, PAY_APPRO_DATE, OUTREQ_DATE, OUT_KIND,
+						OUT_DATE, OUT_ID, BUY_AMT, PAYABLE_AMT, WITHDRAWAL_AMT, CUST_ID, DEPT_ID, VEHIC_ID, DRIVER_ID, CAR_NUM,
+						DRIVER_NAME, DRIVER_TEL, MEMO1, MEMO2, MEMO3, MNG_CUST_ID, MNG_DEPT_ID, ORDER_ID,
+						REGDATE, ALLOC_ID, PAY_SEQ, PAY_STATE_CODE,
+						(SELECT USER_NAME FROM T_USER WHERE USER_ID = PAY_APPRO_ID) payApproId, 
+						(SELECT USER_NAME FROM T_USER WHERE USER_ID = FINISH_ID) finishId,
+						(SELECT USER_NAME FROM T_USER WHERE USER_ID = OUTREQ_ID) outreqId,
+						(SELECT USER_NAME FROM T_USER WHERE USER_ID = OUT_ID) outId
+				 FROM T_CALC_PAY
+				 WHERE USE_YN = 'Y' AND MNG_CUST_ID = #{loginCustId}
+				  	AND FINISH_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+					<if test="payApproYn != null and payApproYn != ''">
+						AND CASE WHEN PAY_APPRO_DATE IS NULL THEN 'N' ELSE 'Y' END = #{payApproYn}
+					</if>
+					<if test="sOutKind != null and sOutKind != ''">
+						AND OUT_KIND = #{sOutKind}
+					</if>
+					<if test="outYn != null and outYn != ''">
+						AND CASE WHEN OUT_DATE IS NULL THEN 'N' ELSE 'Y' END = #{outYn}
+					</if>
+					<if test="sSerach1 == 'bankCnnm' and sValue1 != null and sValue1 != ''">
+						AND BANK_CNNM LIKE '%'+ #{sValue1} +'%'
+					</if>
+					<if test="sSerach2 == 'driverName' and sValue2 != null and sValue2 != ''">
+						AND DRIVER_NAME LIKE '%'+ #{sValue2} +'%'
+					</if>
+					<if test="sSerach2 == 'carNum' and sValue2 != null and sValue2 != ''">
+						AND CAR_NUM LIKE '%'+ #{sValue2} +'%'
+					</if>
+				) A
+				 INNER JOIN
+				 T_ORDER B ON A.ORDER_ID = B.ORDER_ID
+				 LEFT OUTER JOIN 
+				 (SELECT (SELECT TOP 1 SUBSTRING(E_ADDR, 1, CHARINDEX(' ', E_ADDR, CHARINDEX(' ', E_ADDR) + 1)) FROM T_ORDER_STOP WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y') STOP_COM_NAME, COUNT(*) STOP_COUNT, ORDER_ID
+				 FROM T_ORDER_STOP A
+				 WHERE USE_YN = 'Y'
+				 GROUP BY ORDER_ID) C ON A.ORDER_ID = C.ORDER_ID 
+				 LEFT OUTER JOIN 
+				 T_ORDER_ALLOC D ON A.ORDER_ID = D.ORDER_ID AND ISNULL(D.DRIVER_ID, '') != '' AND ISNULL(D.VEHIC_ID, '') != ''
+			     LEFT OUTER JOIN 
+			     (SELECT USER_NAME, USER_ID
+			     FROM T_USER) E ON D.REGID = E.USER_ID 
+				 INNER JOIN
+				 (SELECT ALLOC_ID, REQ_PAY_YN, REQ_PAY_DATE, ALLOC_DATE, SELL_WEIGHT
+				 FROM T_ORDER_ALLOC
+				 <if test="payreqYn != null and payreqYn != ''">
+					WHERE REQ_PAY_YN = #{payreqYn}
+				 </if>
+				 ) F ON A.ALLOC_ID = F.ALLOC_ID
+				 LEFT OUTER JOIN
+				 (SELECT BANK_CNNM, BANK_ACCOUNT, DRIVER_ID, BANKCHK_DATE, (SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = BANK_CODE) bankCode
+				 FROM T_DRIVER) G ON D.DRIVER_ID = G.DRIVER_ID
+				 LEFT OUTER JOIN 
+				 T_CUST_MST H ON A.CUST_ID = H.CUST_ID
+				 LEFT OUTER JOIN
+		 		 T_VEHIC_MST I ON A.VEHIC_ID = I.VEHIC_ID
+			WHERE 1=1
+				<if test="sFinishId != null and sFinishId != ''">
+					AND A.finishId LIKE '%'+ #{sFinishId} +'%'
+				</if>
+				<if test="outreqId != null and outreqId != ''">
+					AND A.outreqId LIKE '%'+ #{outreqId} +'%'
+				</if>		 
+				<if test="sSerach1 == 'tax' and sValue1 != null and sValue1 != ''">
+					AND (H.BIZ_NAME LIKE '%'+ #{sValue1} +'%' OR I.BIZ_NAME LIKE '%'+ #{sValue1} +'%')
+				</if>
+				<if test="sSerach2 == 'ceo' and sValue2 != null and sValue2 != ''">
+				 	AND I.CEO LIKE '%'+ #{sValue2} +'%'
+				</if>
+		) AA
+	</select>
+	
+	<select id="selectPayCalcList" parameterType="java.util.HashMap" resultType="calcVO">
+		SELECT 
+			ROW_NUMBER() OVER(ORDER BY AA.regDate DESC) AS number
+		  , AA.*		
+		FROM (
+			SELECT 
+				A.CALC_ID calcId
+			  ,	A.FINISH_YN finishYn
+	          , REPLACE(CONVERT(CHAR(5), A.CALC_DATE, 10), '-' ,'.') calcDate
+	  		  , REPLACE(CONVERT(CHAR(5), O.ALLOC_DATE, 10), '-', '.') allocDate
+			  ,	REPLACE(CONVERT(CHAR(5), O.E_DATE, 10), '-', '.')  eDateDay
+			  ,	O.S_SIDO +' '+ O.S_GUNGU sComName
+			  ,	O.E_SIDO +' '+ O.E_GUNGU eComName
+			  ,	ISNULL(O.STOP_COUNT,'0') stopCount
+			  , O.STOP_COM_NAME stopComName
+	          ,	ISNULL(A.UNPAID_AMT, 0) unpaidAmt
+			  ,	ISNULL(A.DEPOSIT_AMT, 0) depositAmt
+			  ,	A.RECEIPT_YN tranYn
+			  ,	REPLACE(CONVERT(CHAR(5), A.RECEIPT_DATE, 10), '-' ,'.') tranDate
+			  ,	O.CAR_NUM carNum
+			  , O.DRIVER_NAME driverName
+			  , O.DRIVER_TEL driverTel
+	 		  , (SELECT CNAME FROM T_CODE WHERE GCODE = 'UNIT_PRICE_TYPE' AND CODE = O.UNIT_PRICE_TYPE) unitPriceType
+			  ,	O.SELL_WEIGHT sellWeight
+			  , CONVERT(NVARCHAR(20), O.GOODS_WEIGHT) goodsWeight
+			  ,	(SELECT CNAME FROM T_CODE WHERE CODE = A.CALC_TYPE_CODE AND GCODE = 'CALC_TYPE_CD') calcTypeName
+			  ,	ISNULL(A.PAYABLE_AMT, 0) payableAmt
+			  ,	ISNULL(A.WITHDRAWAL_AMT, 0) withdrawalAmt
+			  , O.REQ_PAY_YN reqPayYn
+			  , O.REQ_PAY_DATE reqPayDate
+			  ,	O.RECEIPT_YN receiptYn
+			  ,	O.receiptDate
+			  ,	O.paperReceiptDate
+			  ,	A.TAXINV_YN taxinvYn
+	          , REPLACE(CONVERT(CHAR(5), A.TAXINV_DATE, 10), '-' ,'.') taxinvDate
+			  ,	O.CUST_NAME custName
+	  		  , (SELECT BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = A.MNG_CUST_ID) reqBizName
+	  		  , (SELECT BIZ_NAME FROM T_VEHIC_MST WHERE VEHIC_ID = A.VEHIC_ID) driverBizName
+	  		  , A.APP_NAME appName
+			  ,	O.CARRIER_NAME carrierName
+			  , O.USER_NAME userName
+			  , A.FINISH_MEMO finishMemo
+			  , A.REF_CONTENT1 refContent1
+			  , A.REF_CONTENT2 refContent2
+			  , A.REPORT_BIZ_NUM reportBizNum
+			  , A.REPORT_BIZ_NAME reportBizName
+			  ,	O.GOODS_NAME goodsName
+			  ,	(SELECT DEPT_NAME FROM T_CUST_DEPT WHERE DEPT_ID = A.MNG_DEPT_ID) mngDeptName 
+			  ,	A.ORDER_ID orderId
+			  , A.FINISH_USER_ID finishUserId
+	 		  , (SELECT USER_NAME FROM T_USER WHERE USER_ID = A.FINISH_USER_ID) finishUserName
+			  , A.ALLOC_ID allocId
+			  ,	A.CALC_TYPE_CODE calcTypeCode
+			  ,	A.SELL_BUY_SCTN sellBuySctn
+			  ,	(SELECT CNAME FROM T_CODE WHERE CODE = A.SELL_BUY_SCTN AND GCODE = 'SELL_BUY_SCTN') sellBuySctnName
+			  ,	0 prePayment
+			  ,	A.CALC_STATE calcState
+			  ,	A.MEMO memo
+			  ,	A.MNG_CUST_ID mngCustId
+			  ,	A.MNG_DEPT_ID mngDeptId
+			  ,	A.CUST_ID custId
+			  ,	A.DEPT_ID deptId
+			  ,	A.REGID regId
+			  ,	A.VEHIC_ID vehicId
+			  ,	A.DRIVER_ID driverId
+			  ,	A.USE_YN useYn
+			  , A.REGDATE regDate
+	  		  , O.INV_ID invId
+			FROM T_CALC A
+				 INNER JOIN
+				(SELECT
+						A.ALLOC_ID,
+						A.ORDER_ID,
+						C.CUST_NAME,
+						E.CUST_NAME CARRIER_NAME,
+						F.CAR_NUM,
+						B.S_GUNGU,
+						B.E_GUNGU,
+						B.GOODS_NAME,
+						CONVERT(FLOAT,B.GOODS_WEIGHT)/1000 GOODS_WEIGHT,
+						B.WEIGHT_UNIT_CODE, 
+						B.RECEIPT_YN,
+	    				REPLACE(CONVERT(CHAR(5),  B.RECEIPT_DATE, 10), '-' ,'.') receiptDate,
+	    				REPLACE(CONVERT(CHAR(5),  B.PAPER_RECEIPT_DATE, 10), '-' ,'.') paperReceiptDate,
+				  	  	B.S_SIDO,
+				  	  	B.E_SIDO,
+				  	  	A.SELL_WEIGHT,
+				  	  	A.ALLOC_DATE,
+				  	  	B.E_DATE,
+				  	  	F.DRIVER_NAME,
+				  	  	F.DRIVER_TEL,
+				  	  	B.UNIT_PRICE_TYPE,
+				  	  	F.REQ_PAY_YN,
+				  	  	F.REQ_PAY_DATE,
+				  	  	F.ALLOC_ID test,
+					  	H.STOP_COUNT,
+					    H.E_COM_NAME STOP_COM_NAME,
+					    I.USER_NAME,
+			    		J.INV_ID
+				FROM
+				   (
+				      SELECT 
+				             ORDER_ID     , ALLOC_ID      , SELL_CUST_ID   , SELL_DEPT_ID   , SELL_STAFF_ID
+				           , BUY_CUST_ID  , BUY_DEPT_ID   , BUY_STAFF_ID   , ALLOC_CHARGE   , ALLOC_FEE
+				           , REGDATE      , REGID		  , SELL_WEIGHT	   , ALLOC_DATE
+				      FROM
+				            T_ORDER_ALLOC
+				      WHERE
+				            BUY_CUST_ID = #{custId}
+							AND ALLOC_DATE IS NOT NULL
+		           		 	AND BUY_DEPT_ID = #{deptId} 			
+		           		 	AND ORDER_ID = #{orderId}
+				   ) A
+				   INNER JOIN
+				   T_ORDER B ON A.ORDER_ID = B.ORDER_ID
+				   INNER JOIN
+				   (SELECT  CUST_ID , DEPT_ID, CUST_NAME, MNG_DEPT_ID
+				   FROM T_CUST_DTL 
+				   WHERE MNG_CUST_ID = #{custId} AND SELL_BUY_SCTN = '01') C ON A.SELL_CUST_ID = C.CUST_ID AND A.SELL_DEPT_ID = C.DEPT_ID AND A.BUY_DEPT_ID = C.MNG_DEPT_ID
+				   LEFT OUTER JOIN
+				   T_ORDER_ALLOC D ON A.ORDER_ID = D.ORDER_ID AND A.BUY_CUST_ID = D.SELL_CUST_ID AND A.BUY_DEPT_ID = D.SELL_DEPT_ID
+				   LEFT OUTER JOIN 
+				   (SELECT CUST_ID, DEPT_ID, CUST_NAME, MNG_DEPT_ID 
+				    FROM T_CUST_DTL
+				    WHERE MNG_CUST_ID = #{custId} AND SELL_BUY_SCTN = '02') E ON D.BUY_CUST_ID = E.CUST_ID AND D.BUY_DEPT_ID = E.DEPT_ID AND A.BUY_DEPT_ID = E.MNG_DEPT_ID
+				   LEFT OUTER JOIN 
+				   T_ORDER_ALLOC F ON A.ORDER_ID = F.ORDER_ID AND ISNULL(F.DRIVER_ID, '') != '' AND ISNULL(F.VEHIC_ID, '') != '' 
+				   LEFT OUTER JOIN
+				   (SELECT (SELECT TOP 1 SUBSTRING(E_ADDR, 1, CHARINDEX(' ', E_ADDR, CHARINDEX(' ', E_ADDR) + 1)) FROM T_ORDER_STOP WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y') E_COM_NAME, COUNT(*) STOP_COUNT, ORDER_ID 
+				   FROM T_ORDER_STOP A
+				   WHERE USE_YN = 'Y'
+				   GROUP BY ORDER_ID) H ON B.ORDER_ID = H.ORDER_ID 
+				   LEFT OUTER JOIN 
+				   T_USER I ON F.REGID = I.USER_ID
+				   LEFT OUTER JOIN 
+				   (SELECT TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID
+				   FROM T_TAX_ITEM TA 
+				   INNER JOIN
+				   T_TAX_INVOICE TB ON TA.INV_ID = TB.INV_ID 
+				   WHERE ISNULL(TB.USE_YN, 'Y') = 'Y' AND TB.LOADSTATUS = '1' AND TB.DOC_ATTR != 'D'
+				   GROUP BY TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID) J ON J.ORDER_ID = A.ORDER_ID AND J.ALLOC_ID = #{allocId}
+				) O ON A.ORDER_ID = O.ORDER_ID
+			WHERE MNG_CUST_ID = #{custId} 				
+			AND MNG_DEPT_ID = #{deptId}  
+			AND A.ALLOC_ID = #{allocId}
+			AND A.USE_YN = 'Y'
+			AND A.FINISH_YN = 'Y'
+		) AA
+	</select>
+	
+	<select id="payApproUpdate" parameterType="java.util.HashMap">
+		UPDATE 
+			T_CALC_PAY
+		SET
+			PAY_APPRO_DATE = GETDATE(),
+			PAY_APPRO_ID = #{loginId} 
+		WHERE 
+			PAY_SEQ IN 
+		<foreach collection="paySeqList" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="outreqUpdate" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call UPDATE_OUTREQ_PAY(
+							#{outKind}
+						  , #{paySeqList}
+						  , #{loginId}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</select>
+	
+	<select id="outUpdate" parameterType="java.util.HashMap">
+		UPDATE 
+			T_CALC_PAY
+		SET
+			OUT_DATE = GETDATE(),
+			OUT_ID = #{loginId}, 
+			WITHDRAWAL_AMT = PAYABLE_AMT,
+			PAYABLE_AMT = 0
+		WHERE 
+			PAY_SEQ IN 
+		<foreach collection="paySeqList" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<update id="payReturn" parameterType="java.util.HashMap">
+		UPDATE 
+			T_CALC_PAY
+		SET
+			USE_YN = 'N'
+		WHERE 
+			PAY_SEQ IN 
+		<foreach collection="paySeqList" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<update id="calcReturn" parameterType="java.util.HashMap">
+		UPDATE 
+			T_CALC
+		SET
+			FINISH_YN = 'N',
+			UNPAID_AMT = DEPOSIT_AMT,
+			PAYABLE_AMT = WITHDRAWAL_AMT,
+			FINISH_USER_ID = NULL,
+			DEPOSIT_AMT = 0,
+			WITHDRAWAL_AMT = 0,
+			CALC_DATE = NULL,
+			PAY_RETURN_MEMO = #{payReturnMemo}
+		WHERE 
+			ORDER_ID IN 
+		<foreach collection="orderIdList" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+		AND ALLOC_ID IN 
+		<foreach collection="allocIdList" item="item" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</update>
+	
+	<insert id="insertVacs" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_VACS_SEND(
+							#{module} 
+						  ,	#{trAmt} 
+						  ,	#{custId} 
+						  ,	#{deptId} 
+						  ,	#{driverId} 
+						  ,	#{vehicId} 
+						  ,	#{trCd}
+						  ,	#{mngCustId}
+						  ,	#{mngDeptId}
+						  ,	#{paySeq}
+						  , #{loginId} 
+						  ,	#{retTrNo, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</insert>
+	
+	<select id="selectVacsSendRlt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT 
+				INP_CD
+			  , IACCT_NM
+			  , TR_NO
+		FROM
+				VACS_SEND
+		WHERE 
+				TR_CD = '2001'
+				AND TR_NO = #{retTrNo}			  	   
+	</select>
+	
+	<update id="bankChkDateupdate" parameterType="java.util.HashMap">
+		UPDATE 
+			T_DRIVER
+		SET
+			BANKCHK_DATE = GETDATE()
+		WHERE DRIVER_ID = #{driverId}
+	</update>
+</mapper>

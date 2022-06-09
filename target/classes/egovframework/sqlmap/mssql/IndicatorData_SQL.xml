@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="indicatorDataNS">
+	
+	<select id="selectKpiDaily" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		SELECT CONVERT(VARCHAR(10), A.S_DATE, 120) sDate,
+			 COUNT(1)	allocCnt,
+			 SUM(CASE WHEN CONVERT(VARCHAR(8), A.REGDATE, 112) < CONVERT(VARCHAR(8), A.S_DATE, 112) THEN 1 ELSE 0 END) preOrder,
+			 SUM(CASE WHEN CONVERT(VARCHAR(8), A.REGDATE, 112) >= CONVERT(VARCHAR(8), A.S_DATE, 112) THEN 1 ELSE 0 END) postOrder,
+			 SUM(CASE WHEN CONVERT(VARCHAR(8), A.REGDATE, 112) >= CONVERT(VARCHAR(8), A.S_DATE, 112) THEN 
+			 	CASE WHEN CONVERT(VARCHAR(8), A.S_DATE, 112) = CONVERT(VARCHAR(8), A.E_DATE, 112) THEN 1
+			 	ELSE 0 END 
+			 ELSE 0 END) todayFinish,
+		 	 SUM(CASE WHEN CONVERT(VARCHAR(8), A.REGDATE, 112) >= CONVERT(VARCHAR(8), A.S_DATE, 112) THEN 
+			 	CASE WHEN CONVERT(VARCHAR(8), A.S_DATE, 112) != CONVERT(VARCHAR(8), A.E_DATE, 112) THEN 1
+			 	ELSE 0 END 
+			 ELSE 0 END) tomorrowFinish,
+			 SUM(CASE WHEN CONVERT(VARCHAR(8), A.FINISH_DATE , 112) > CONVERT(VARCHAR(8), A.E_DATE, 112) THEN 1 ELSE 0 END) allocDelay,
+			 SUM(CASE WHEN CONVERT(VARCHAR(13), A.ENTER_DATE , 20) > CONVERT(VARCHAR(13), A.S_DATE, 20) THEN 1 ELSE 0 END) enterDelay,	 
+			 SUM(CASE WHEN CONVERT(VARCHAR(13), A.FINISH_DATE , 20) > CONVERT(VARCHAR(13), A.E_DATE, 20) THEN 1 ELSE 0 END) finishDelay
+		]]>	
+		FROM T_ORDER A
+		WHERE A.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+			AND A.REQ_CUST_ID = #{loginCustId}
+			<if test='reqDeptId != null and !"".equals(reqDeptId)'>
+				AND REQ_DEPT_ID = #{reqDeptId}
+			</if>
+			<if test='custId != null and !"".equals(custId)'>
+				AND CUST_ID = #{custId}
+			</if>
+			<if test='deptId != null and !"".equals(deptId)'>
+				AND DEPT_ID = #{deptId}
+			</if>
+			<if test='stateList != null and !"".equals(stateList)'>
+				AND ORDER_STATE IN
+				<foreach collection="stateList" item="item" index="index" separator="," open="(" close=")">
+					#{item}
+				</foreach>
+			</if>
+			AND ORDER_STATE != '09'
+		GROUP BY CONVERT(VARCHAR(10), A.S_DATE, 120)
+	</select>
+	
+	<select id="selectKpiMonthly" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		<![CDATA[
+		SELECT CONVERT(VARCHAR(7), A.S_DATE, 120) sDate,
+			 COUNT(1) allocCnt,
+			 SUM(CASE WHEN CONVERT(VARCHAR(8), A.REGDATE, 112) < CONVERT(VARCHAR(8), A.S_DATE, 112) THEN 1 ELSE 0 END) preOrder,
+			 SUM(CASE WHEN CONVERT(VARCHAR(8), A.REGDATE, 112) >= CONVERT(VARCHAR(8), A.S_DATE, 112) THEN 1 ELSE 0 END) postOrder,
+			 SUM(CASE WHEN CONVERT(VARCHAR(8), A.REGDATE, 112) >= CONVERT(VARCHAR(8), A.S_DATE, 112) THEN 
+				 	CASE WHEN CONVERT(VARCHAR(8), A.S_DATE, 112) = CONVERT(VARCHAR(8), A.E_DATE, 112) THEN 1
+				 	ELSE 0 END 
+			 	ELSE 0 END) todayFinish,
+		 	 SUM(CASE WHEN CONVERT(VARCHAR(8), A.REGDATE, 112) >= CONVERT(VARCHAR(8), A.S_DATE, 112) THEN 
+				 	CASE WHEN CONVERT(VARCHAR(8), A.S_DATE, 112) != CONVERT(VARCHAR(8), A.E_DATE, 112) THEN 1
+				 	ELSE 0 END 
+			 	ELSE 0 END) tomorrowFinish,
+			 SUM(CASE WHEN CONVERT(VARCHAR(8), A.FINISH_DATE , 112) > CONVERT(VARCHAR(8), A.E_DATE, 112) THEN 1 ELSE 0 END) allocDelay,
+			 SUM(CASE WHEN CONVERT(VARCHAR(13), A.ENTER_DATE , 20) > CONVERT(VARCHAR(13), A.S_DATE, 20) THEN 1 ELSE 0 END) enterDelay,	 
+			 SUM(CASE WHEN CONVERT(VARCHAR(13), A.FINISH_DATE , 20) > CONVERT(VARCHAR(13), A.E_DATE, 20) THEN 1 ELSE 0 END) finishDelay
+		]]>	
+		FROM T_ORDER A
+		WHERE A.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+			AND A.REQ_CUST_ID = #{loginCustId}
+			<if test='reqDeptId != null and !"".equals(reqDeptId)'>
+				AND REQ_DEPT_ID = #{reqDeptId}
+			</if>
+			<if test='custId != null and !"".equals(custId)'>
+				AND CUST_ID = #{custId}
+			</if>
+			<if test='deptId != null and !"".equals(deptId)'>
+				AND DEPT_ID = #{deptId}
+			</if>
+			<if test='stateList != null and !"".equals(stateList)'>
+				AND ORDER_STATE IN
+				<foreach collection="stateList" item="item" index="index" separator="," open="(" close=")">
+					#{item}
+				</foreach>
+			</if>
+			AND ORDER_STATE != '09'
+		GROUP BY CONVERT(VARCHAR(7), A.S_DATE, 120)
+		
+	</select>
+	
+	<select id="selectChargeDaily" parameterType="java.util.HashMap" resultType="java.util.HashMap">	
+	  	 SELECT CONVERT(VARCHAR(10), A.S_DATE, 120) sDate,
+	  	 		COUNT(1) orderCnt,
+	  	 		SUM(CASE WHEN A.ORDER_STATE = '00' THEN 1 ELSE 0 END) notAllocCnt,
+	  	 		SUM(CASE WHEN A.ORDER_STATE != '00' THEN 1 ELSE 0 END) allocCnt,
+	  	 		SUM(CASE WHEN D.FILTER3 = '1T' THEN 1 ELSE 0 END) cnt1T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '2T5' THEN 1 ELSE 0 END) cnt2T5,
+	  	 		SUM(CASE WHEN D.FILTER3 = '3T5' THEN 1 ELSE 0 END) cnt3T5,
+	  	 		SUM(CASE WHEN D.FILTER3 = '5T' THEN 1 ELSE 0 END) cnt5T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '5A' THEN 1 ELSE 0 END) cnt5A,
+	  	 		SUM(CASE WHEN D.FILTER3 = '11T' THEN 1 ELSE 0 END) cnt11T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '15T' THEN 1 ELSE 0 END) cnt15T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '25T' THEN 1 ELSE 0 END) cnt25T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '20FT' THEN 1 ELSE 0 END) cnt20FT,
+	  	 		SUM(CASE WHEN D.FILTER3 = '40FT' THEN 1 ELSE 0 END) cnt40FT,
+	  	 		SUM(CASE WHEN D.FILTER3 = 'ETC' THEN 1 ELSE 0 END) cntETC,
+		 		SUM(CASE WHEN D.FILTER3 = '1T' THEN B.ALLOC_CHARGE ELSE 0 END) amt1T,
+		 		SUM(CASE WHEN D.FILTER3 = '2T5' THEN B.ALLOC_CHARGE ELSE 0 END) amt2T5,
+		 		SUM(CASE WHEN D.FILTER3 = '3T5' THEN B.ALLOC_CHARGE ELSE 0 END) amt3T5,
+		 		SUM(CASE WHEN D.FILTER3 = '5T' THEN B.ALLOC_CHARGE ELSE 0 END) amt5T,
+		 		SUM(CASE WHEN D.FILTER3 = '5A' THEN B.ALLOC_CHARGE ELSE 0 END) amt5A,
+		 		SUM(CASE WHEN D.FILTER3 = '11T' THEN B.ALLOC_CHARGE ELSE 0 END) amt11T,
+		 		SUM(CASE WHEN D.FILTER3 = '15T' THEN B.ALLOC_CHARGE ELSE 0 END) amt15T,
+		 		SUM(CASE WHEN D.FILTER3 = '25T' THEN B.ALLOC_CHARGE ELSE 0 END) amt25T,
+		 		SUM(CASE WHEN D.FILTER3 = '20FT' THEN B.ALLOC_CHARGE ELSE 0 END) amt20FT,
+		 		SUM(CASE WHEN D.FILTER3 = '40FT' THEN B.ALLOC_CHARGE ELSE 0 END) amt40FT,
+		 		SUM(CASE WHEN D.FILTER3 = 'ETC' THEN B.ALLOC_CHARGE ELSE 0 END) amtETC
+	  	 FROM (
+	  	 		SELECT ORDER_ID, REQ_CUST_ID, REQ_DEPT_ID, ORDER_STATE, S_DATE
+ 	  	 	  	FROM T_ORDER 
+ 	  	 	  	WHERE S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+					AND REQ_CUST_ID = #{loginCustId}
+					<if test='reqDeptId != null and !"".equals(reqDeptId)'>
+						AND REQ_DEPT_ID = #{reqDeptId}
+					</if>
+					<if test='custId != null and !"".equals(custId)'>
+						AND CUST_ID = #{custId}
+					</if>
+					<if test='deptId != null and !"".equals(deptId)'>
+						AND DEPT_ID = #{deptId}
+					</if>
+					<if test='stateList != null and !"".equals(stateList)'>
+						AND ORDER_STATE IN
+						<foreach collection="stateList" item="item" index="index" separator="," open="(" close=")">
+							#{item}
+						</foreach>
+					</if>
+					AND ORDER_STATE != '09'
+				) A
+				INNER JOIN 	
+	  	 		T_ORDER_ALLOC B ON A.ORDER_ID = B.ORDER_ID AND A.REQ_CUST_ID = B.SELL_CUST_ID AND A.REQ_DEPT_ID = B.SELL_DEPT_ID 
+			  	LEFT OUTER JOIN 
+			   (SELECT ORDER_ID, CAR_TON_CODE 
+			  	FROM T_ORDER_ALLOC 
+			  	WHERE ALLOC_STATE IN ('01', '04', '05', '12')) C ON A.ORDER_ID = C.ORDER_ID
+			  	LEFT OUTER JOIN 
+			  (SELECT CODE, FILTER3 
+			   FROM T_CODE 
+			   WHERE GCODE = 'CAR_TON_CD') D ON C.CAR_TON_CODE = D.CODE
+		GROUP BY CONVERT(VARCHAR(10), A.S_DATE, 120)
+	</select>
+	
+	<select id="selectChargeMonthly" parameterType="java.util.HashMap" resultType="java.util.HashMap">	
+	  	 SELECT CONVERT(VARCHAR(7), A.S_DATE, 120) sDate,
+	  	 		COUNT(1) orderCnt,
+	  	 		SUM(CASE WHEN A.ORDER_STATE = '00' THEN 1 ELSE 0 END) notAllocCnt,
+	  	 		SUM(CASE WHEN A.ORDER_STATE != '00' THEN 1 ELSE 0 END) allocCnt,
+	  	 		SUM(CASE WHEN D.FILTER3 = '1T' THEN 1 ELSE 0 END) cnt1T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '2T5' THEN 1 ELSE 0 END) cnt2T5,
+	  	 		SUM(CASE WHEN D.FILTER3 = '3T5' THEN 1 ELSE 0 END) cnt3T5,
+	  	 		SUM(CASE WHEN D.FILTER3 = '5T' THEN 1 ELSE 0 END) cnt5T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '5A' THEN 1 ELSE 0 END) cnt5A,
+	  	 		SUM(CASE WHEN D.FILTER3 = '11T' THEN 1 ELSE 0 END) cnt11T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '15T' THEN 1 ELSE 0 END) cnt15T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '25T' THEN 1 ELSE 0 END) cnt25T,
+	  	 		SUM(CASE WHEN D.FILTER3 = '20FT' THEN 1 ELSE 0 END) cnt20FT,
+	  	 		SUM(CASE WHEN D.FILTER3 = '40FT' THEN 1 ELSE 0 END) cnt40FT,
+	  	 		SUM(CASE WHEN D.FILTER3 = 'ETC' THEN 1 ELSE 0 END) cntETC,
+		 		SUM(CASE WHEN D.FILTER3 = '1T' THEN B.ALLOC_CHARGE ELSE 0 END) amt1T,
+		 		SUM(CASE WHEN D.FILTER3 = '2T5' THEN B.ALLOC_CHARGE ELSE 0 END) amt2T5,
+		 		SUM(CASE WHEN D.FILTER3 = '3T5' THEN B.ALLOC_CHARGE ELSE 0 END) amt3T5,
+		 		SUM(CASE WHEN D.FILTER3 = '5T' THEN B.ALLOC_CHARGE ELSE 0 END) amt5T,
+		 		SUM(CASE WHEN D.FILTER3 = '5A' THEN B.ALLOC_CHARGE ELSE 0 END) amt5A,
+		 		SUM(CASE WHEN D.FILTER3 = '11T' THEN B.ALLOC_CHARGE ELSE 0 END) amt11T,
+		 		SUM(CASE WHEN D.FILTER3 = '15T' THEN B.ALLOC_CHARGE ELSE 0 END) amt15T,
+		 		SUM(CASE WHEN D.FILTER3 = '25T' THEN B.ALLOC_CHARGE ELSE 0 END) amt25T,
+		 		SUM(CASE WHEN D.FILTER3 = '20FT' THEN B.ALLOC_CHARGE ELSE 0 END) amt20FT,
+		 		SUM(CASE WHEN D.FILTER3 = '40FT' THEN B.ALLOC_CHARGE ELSE 0 END) amt40FT,
+		 		SUM(CASE WHEN D.FILTER3 = 'ETC' THEN B.ALLOC_CHARGE ELSE 0 END) amtETC
+	  	 FROM (
+	  	 		SELECT ORDER_ID, REQ_CUST_ID, REQ_DEPT_ID, ORDER_STATE, S_DATE
+ 	  	 	  	FROM T_ORDER 
+ 	  	 	  	WHERE S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+					AND REQ_CUST_ID = #{loginCustId}
+					<if test='reqDeptId != null and !"".equals(reqDeptId)'>
+						AND REQ_DEPT_ID = #{reqDeptId}
+					</if>
+					<if test='custId != null and !"".equals(custId)'>
+						AND CUST_ID = #{custId}
+					</if>
+					<if test='deptId != null and !"".equals(deptId)'>
+						AND DEPT_ID = #{deptId}
+					</if>
+					<if test='stateList != null and !"".equals(stateList)'>
+						AND ORDER_STATE IN
+						<foreach collection="stateList" item="item" index="index" separator="," open="(" close=")">
+							#{item}
+						</foreach>
+					</if>
+					AND ORDER_STATE != '09'
+				) A
+				INNER JOIN 	
+	  	 		T_ORDER_ALLOC B ON A.ORDER_ID = B.ORDER_ID AND A.REQ_CUST_ID = B.SELL_CUST_ID AND A.REQ_DEPT_ID = B.SELL_DEPT_ID 
+			  	LEFT OUTER JOIN 
+			   (SELECT ORDER_ID, CAR_TON_CODE 
+			  	FROM T_ORDER_ALLOC 
+			  	WHERE ALLOC_STATE IN ('01', '04', '05', '12')) C ON A.ORDER_ID = C.ORDER_ID
+			  	LEFT OUTER JOIN 
+			  (SELECT CODE, FILTER3 
+			   FROM T_CODE 
+			   WHERE GCODE = 'CAR_TON_CD') D ON C.CAR_TON_CODE = D.CODE
+		GROUP BY CONVERT(VARCHAR(7), A.S_DATE, 120)
+	</select>
+</mapper>

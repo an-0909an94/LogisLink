@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="menuDataNS">
+
+	<select id="selectMenuList" parameterType="java.util.HashMap" resultType="menuVO">
+		WITH MENU_LIST AS (
+			SELECT MENU_SEQ		menuSeq
+				 , ISNULL(PARENT_SEQ, 0)	parentSeq
+				 , ISNULL((SELECT MENU_NAME FROM T_MENU WHERE MENU_SEQ = A.PARENT_SEQ), '') parentName
+				 , MENU_NAME		menuName
+				 , MENU_CODE		menuCode
+				 , DEPTH
+				 , AUTH_TYPE		authType
+				 , ASORT
+				 , PAGE_URL		pageUrl
+				 , convert(varchar, REGDATE, 120) regdate
+			     , convert(varchar(255), ASORT) sort
+			     , MANUAL1_TYPE										manual1Type 
+			     , REPLACE(MANUAL1_URL, '/NAS/upload/guide/', '')	manual1Url
+			     , MANUAL2_TYPE 									manual2Type
+			     , REPLACE(MANUAL2_URL, '/NAS/upload/guide/', '') 	manual2Url
+			     , MANUAL3_TYPE 									manual3Type
+			     , REPLACE(MANUAL3_URL, '/NAS/upload/guide/', '') 	manual3Url
+			     , TUTORIAL1_TYPE									tutorial1Type
+			     , REPLACE(TUTORIAL1_URL, '/NAS/upload/guide/', '') tutorial1Url
+			     , TUTORIAL2_TYPE									tutorial2Type
+			     , REPLACE(TUTORIAL2_URL, '/NAS/upload/guide/', '') tutorial2Url
+			     , TUTORIAL3_TYPE 									tutorial3Type
+			     , REPLACE(TUTORIAL3_URL, '/NAS/upload/guide/', '') tutorial3Url
+			FROM T_MENU A
+			WHERE PARENT_SEQ = 0
+			AND USE_YN = 'Y'
+		UNION ALL 
+			SELECT B.MENU_SEQ		menuSeq
+				 , ISNULL(B.PARENT_SEQ, 0)	parentSeq
+				 , ISNULL((SELECT MENU_NAME FROM T_MENU WHERE MENU_SEQ = B.PARENT_SEQ), 0) parentName
+				 , B.MENU_NAME		menuName
+				 , B.MENU_CODE		menuCode
+				 , B.DEPTH
+				 , B.AUTH_TYPE		authType
+				 , B.ASORT
+				 , B.PAGE_URL		pageUrl
+				 , convert(varchar, B.REGDATE, 120) regdate
+				 , convert(varchar(255), convert(nvarchar,C.sort) + ' - ' + convert(varchar(255), B.ASORT)) sort 
+			     , MANUAL1_TYPE										manual1Type 
+			     , REPLACE(MANUAL1_URL, '/NAS/upload/guide/', '')	manual1Url
+			     , MANUAL2_TYPE 									manual2Type
+			     , REPLACE(MANUAL2_URL, '/NAS/upload/guide/', '') 	manual2Url
+			     , MANUAL3_TYPE 									manual3Type
+			     , REPLACE(MANUAL3_URL, '/NAS/upload/guide/', '') 	manual3Url
+			     , TUTORIAL1_TYPE									tutorial1Type
+			     , REPLACE(TUTORIAL1_URL, '/NAS/upload/guide/', '') tutorial1Url
+			     , TUTORIAL2_TYPE									tutorial2Type
+			     , REPLACE(TUTORIAL2_URL, '/NAS/upload/guide/', '') tutorial2Url
+			     , TUTORIAL3_TYPE 									tutorial3Type
+			     , REPLACE(TUTORIAL3_URL, '/NAS/upload/guide/', '') tutorial3Url
+			FROM T_MENU B, MENU_LIST C
+			WHERE B.PARENT_SEQ = C.menuSeq
+			AND USE_YN = 'Y'
+			<if test="depth != null">
+		  		AND B.DEPTH = 1
+		    </if>
+		)
+		SELECT menuSeq
+			 , parentSeq
+			 , parentName
+			 , menuName
+			 , menuCode
+			 , DEPTH
+			 , authType
+			 , ASORT
+			 , pageUrl
+			 , regdate
+			 , manual1Type 
+			 , manual1Url
+			 , manual2Type 
+			 , manual2Url
+			 , manual3Type 
+			 , manual3Url
+			 , tutorial1Type 
+			 , tutorial1Url
+			 , tutorial2Type 
+			 , tutorial2Url
+			 , tutorial3Type 
+			 , tutorial3Url
+		FROM MENU_LIST
+		ORDER BY SORT
+	</select>
+
+
+	<insert id="insertMenu" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_MENU(
+						   	#{menuSeq}
+						  , #{parentSeq}
+						  , #{menuName}
+						  , #{menuCode}
+						  , #{depth}
+						  , #{authType}
+						  , #{pageUrl}
+						  , #{mode}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</insert>
+	
+	<update id="updateMenuSort" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call UPDATE_MENU_SORT(
+						   	#{menuSeq}
+						  , #{parentSeq}
+						  , #{gbn}
+						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+		}
+	</update>
+	
+	<update id="updateMenuGuide" parameterType="java.util.HashMap">
+		UPDATE 
+				T_MENU 
+		SET
+				MANUAL1_TYPE = #{manual1Type}
+			  , MANUAL1_URL = CASE WHEN #{manual1Type} = 'F' AND #{manual1Url} = '' THEN MANUAL1_URL ELSE #{manual1Url} END
+			  , MANUAL2_TYPE = #{manual2Type}
+			  , MANUAL2_URL = CASE WHEN #{manual2Type} = 'F' AND #{manual2Url} = '' THEN MANUAL2_URL ELSE #{manual2Url} END
+			  , MANUAL3_TYPE = #{manual3Type}
+			  , MANUAL3_URL =  CASE WHEN #{manual3Type} = 'F' AND #{manual3Url} = '' THEN MANUAL3_URL ELSE #{manual3Url} END
+			  , TUTORIAL1_TYPE = #{tutorial1Type}
+			  , TUTORIAL1_URL = CASE WHEN #{tutorial1Type} = 'F' AND #{tutorial1Url} = '' THEN TUTORIAL1_URL ELSE #{tutorial1Url} END
+			  , TUTORIAL2_TYPE = #{tutorial2Type}
+			  , TUTORIAL2_URL = CASE WHEN #{tutorial2Type} = 'F' AND #{tutorial2Url} = '' THEN TUTORIAL2_URL ELSE #{tutorial2Url} END
+			  , TUTORIAL3_TYPE = #{tutorial3Type}
+			  , TUTORIAL3_URL = CASE WHEN #{tutorial3Type} = 'F' AND #{tutorial3Url} = '' THEN TUTORIAL3_URL ELSE #{tutorial3Url} END
+			  , EDITID = #{regId}
+			  , EDITDATE = GETDATE()
+		WHERE 
+				MENU_SEQ = #{menuSeq}	  
+	</update>
+
+</mapper>
