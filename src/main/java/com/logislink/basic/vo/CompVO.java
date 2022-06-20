@@ -27,6 +27,11 @@ public class CompVO {
   	private String bankAccount;
   	private String oapiYn;
   	private String oapiToken;
+  	// 22.06.17 이건욱 T5 > J13, J14추가
+  	private String dlineDay;
+  	private String dlineDayCode;
+  	private String dlinePoint;
+  	private String dlinePointCode;
 	
 	public int getNumber() {
 		return number;
@@ -183,6 +188,30 @@ public class CompVO {
 	}
 	public void setOapiToken(String oapiToken) {
 		this.oapiToken = oapiToken;
+	}
+	public String getDlineDay() {
+		return dlineDay;
+	}
+	public void setDlineDay(String dlineDay) {
+		this.dlineDay = dlineDay;
+	}
+	public String getDlinePoint() {
+		return dlinePoint;
+	}
+	public void setDlinePoint(String dlinePoint) {
+		this.dlinePoint = dlinePoint;
+	}
+	public String getDlineDayCode() {
+		return dlineDayCode;
+	}
+	public void setDlineDayCode(String dlineDayCode) {
+		this.dlineDayCode = dlineDayCode;
+	}
+	public String getDlinePointCode() {
+		return dlinePointCode;
+	}
+	public void setDlinePointCode(String dlinePointCode) {
+		this.dlinePointCode = dlinePointCode;
 	}
 	
 }

@@ -135,6 +135,8 @@
 						  , #{bankCode} 
 						  , #{bankCnnm} 
 						  , #{bankAccount}
+						  , #{dlineDayCode}
+						  , #{dlinePointCode}
 						  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
 						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String}
 						  , #{custId, mode=OUT, jdbcType=NVARCHAR, javaType=String})

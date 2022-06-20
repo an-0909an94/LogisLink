@@ -184,6 +184,9 @@ var columns = [
 	{ field: "regDate", title: "등록일자", width: 175 },
 	{ field: "custMemo", title: "거래처메모", width: 120 },
 	{ field: "orderMemo", title: "배차메모", width: 120 },
+	// 22.06.17 이건욱 T5 > J13, J14추가
+	{ field: "dlineDay", title: "마감기준일", width: 100 },
+	{ field: "dlinePoint", title: "마감기준점", width: 100 },
 ];
 
 var headerTitle = ($("#headerTitle").text());
