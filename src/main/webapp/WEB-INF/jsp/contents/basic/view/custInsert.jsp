@@ -121,11 +121,11 @@
                                 <div class="form-group row">
                                 	<label class="col-form-label"></label>
                                     <div class="input-group input-group-sm col middle-name form-group">
-                                    <strong class="required">마감기준일</strong>
+                                    <strong>마감기준일</strong>
                                         <select class="custom-select col-10" id="dlineDayCode" name="dlineDayCode"></select>
                                     </div>
                                     <div class="input-group input-group-sm col middle-name form-group">
-                                    <strong class="required">마감기준점</strong>
+                                    <strong>마감기준점</strong>
                                         <select class="custom-select col-12" id="dlinePointCode" name="dlinePointCode"></select>
                                     </div>
                                 </div>
@@ -394,8 +394,8 @@ function init_pop(mode, data) {
     Util.setCmmCode("select", "bankCode", "BANK_CD", "", "선택하세요");
     Util.setCmmCode("select", "payType", "PAY_TYPE_CD", "Y", "선택하세요");
     // 22.06.07 이건욱 T5 > J13, J14추가
-    Util.setCmmCode("select", "dlineDayCode", "DLINE_DAY_CD", "", "선택하세요");
-    Util.setCmmCode("select", "dlinePointCode", "DLINE_POINT_CD", "", "선택하세요");
+    Util.setCmmCode("select", "dlineDayCode", "DLINE_DAY_CD", "99", "");
+    Util.setCmmCode("select", "dlinePointCode", "DLINE_POINT_CD", "1", "");
     // End
     g_idx.custSeq = data.custSeq;
     g_idx.custId = data.custId;
