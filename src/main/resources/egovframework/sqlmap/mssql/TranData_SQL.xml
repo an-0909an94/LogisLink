@@ -86,7 +86,17 @@
 					)
 				) 
 				<!--AND TR.TO_CUST_ID = #{custId} AND TR.TO_DEPT_ID = #{deptId}-->
-				<if test = "fromDate != null and fromDate != ''"> AND CONVERT(CHAR(10), TR.REGDATE, 23) BETWEEN #{fromDate} AND #{toDate} </if>
+				<if test = "fromDate != null and fromDate != ''">
+					AND CONVERT(CHAR(10), TR.REGDATE, 23) BETWEEN #{fromDate} AND #{toDate}
+				</if>
+				<!-- 22.06.21 이건욱 T11 > J39 추가 -->
+				<if test = "frBizName != null and frBizName != ''">
+					AND TR.FR_CUST_ID = #{frBizName}
+				</if>
+				<if test = "toBizName != null and toBizName != ''">
+					AND TR.TO_CUST_ID = #{toBizName}
+				</if>
+				<!-- End -->
 		) AA
 		ORDER BY number ASC
 	<!-- 	UNION ALL

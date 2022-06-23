@@ -49,12 +49,21 @@
                    		<span>30일</span>
                    	</label>
                 </div>
+                <!-- 22.06.21 이건욱 T11 > J39 추가 -->
+				<div class="input-group input-group-sm col-2 middle-name">
+					<strong>공급자</strong>
+				    <input type="text" id="frBizName" name="frBizName" style="width:100%;">
+				</div>
+				<div class="input-group input-group-sm col-2 middle-name">
+					<strong>공급받는자</strong>
+				    <input type="text" id="toBizName" name="toBizName" style="width:100%;">
+				</div>
+				<!-- End -->
 				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
+					<strong>　</strong>
 				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
 				</div>
                 <div style="padding: 1em;" class="input-group input-group-sm col-1"></div>
-                
 			</div>
 			</form>
 			<!--  -->
@@ -106,6 +115,10 @@ $(document).ready(function(){
  	$("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
 	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true}); 
 	Util.setSearchDateForm();
+	
+	// 22.06.21 이건욱 T11 > J39 추가
+	Util.setBizName("frBizName", "");
+	Util.setBizName("toBizName", "");
 	
 	goList();
 	/* 
@@ -215,7 +228,10 @@ function goList() {
 	var param = {};
 	param["fromDate"] = $("#fromDate").val();
 	param["toDate"] = $("#toDate").val();
-	
+	// 22.06.21 이건욱 T11 > J39 추가
+	param["frBizName"] = $("#frBizName").val();
+	param["toBizName"] = $("#toBizName").val();
+	// End
 	oGrid.setSearchData(param);
 	if(grid == null) {
 		oGrid.setGrid(columns);
