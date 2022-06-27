@@ -53,6 +53,10 @@ public class UserController {
 			model.addAttribute("authChk", true);
 			model.addAttribute("custId", "");
 			model.addAttribute("custAuthSeq", custAuthSeq);
+			// 22.06.24 이건욱 전역변수 추가 (T11 > J41)
+			model.addAttribute("adminChk", true);
+			model.addAttribute("custName", "");
+			model.addAttribute("deptId", loginUserInfo.getDeptId());
 		} else {
 			model.addAttribute("authChk", false);
 			model.addAttribute("custId", loginUserInfo.getCustId());
@@ -75,6 +79,12 @@ public class UserController {
 			}
 
 			model.addAttribute("custAuthSeq", custAuthSeq);
+			
+			// 22.06.24 이건욱 전역변수 추가 (T11 > J41)
+			// 로그인한 유저의 권한이 999일 경우 해당 조직의 슈퍼관리자
+			model.addAttribute("adminChk", loginUserInfo.getAuthSeq() == 999 ? true : false);
+			model.addAttribute("custName", loginUserInfo.getBizName());
+			model.addAttribute("deptId", loginUserInfo.getDeptId());
 		}
 
 		model.put("mainCustId", mainCustId);
@@ -205,8 +215,8 @@ public class UserController {
 			String deptId = login.getDeptId();
 			
 			param.put("deptId", deptId);
-				
 		}
+		
 		List<UserVO> list = userService.getUserNameList(param);
 		
 		map.put("result", Boolean.TRUE);

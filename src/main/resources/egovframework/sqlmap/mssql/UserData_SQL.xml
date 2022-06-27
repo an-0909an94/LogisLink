@@ -41,9 +41,19 @@
 					<if test='custId != null and !"".equals(custId)'>
 						AND CUST_ID = #{custId}
 					</if>
-					<if test='userId != null and !"".equals(userId)'>
-						AND USER_ID LIKE '%' + #{userId} + '%'
+					<!-- 22.06.27 이건욱 T11 > J41 추가 -->
+					<if test='searchUserValue != null and !searchUserValue.equals("")'>
+						<if test='searchUserType == "userId"'>
+							AND USER_ID LIKE '%' + #{searchUserValue} + '%'
+						</if>
+						<if test='searchUserType == "userName"'>
+							AND USER_NAME LIKE '%' + #{searchUserValue} + '%'
+						</if>
+						<if test='searchUserType == "userMobile"'>
+							AND MOBILE LIKE '%' + #{searchUserValue} + '%'
+						</if>
 					</if>
+					<!-- End -->
 					<if test='authSeq != null and !"".equals(authSeq)'>
 						AND AUTH_SEQ = #{authSeq}
 					</if>
@@ -123,7 +133,14 @@
 			 , GRADE
 		FROM T_USER
 		WHERE USE_YN = 'Y'
-			 AND DEPT_ID = #{deptId}
+		<!-- 22.06.23 이건욱 사용자 검색 시 deptId가 있으면 deptId로 검색 custId가 있으면 custId로 검색 -->
+		<if test='custId != null and !"".equals(custId)'>
+			AND CUST_ID = #{custId}
+		</if>
+		<if test='deptId != null and !"".equals(deptId)'>
+			AND DEPT_ID = #{deptId}
+		</if>
+		<!-- End -->
 	</select>
 	
 	<select id="getUserInfo" parameterType="java.util.HashMap" resultType="userVO">

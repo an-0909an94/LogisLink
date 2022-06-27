@@ -7,7 +7,6 @@
 	<jsp:include page="./view/userInsert.jsp" />
 </div>
 <div class="header">
-	
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<P id="headerTitle">사용자관리</P>
@@ -16,43 +15,52 @@
 	<div class="contents">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
-			<div class="form-group row">
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="searchColumn" name="searchColumn">
-						<option value="s_userId">--아이디--</option>
-				    </select>
+				<div class="form-group row">
+					<!-- 22.06.24 이건욱 T11 > J41 추가 -->
+					<div class="input-group input-group-sm col-2 middle-name">
+						<strong>조직</strong>
+						<input type="text" id="c_custName" name="custName" style="width:100%;">
+					</div>
+					<div class="input-group input-group-sm col-2 middle-name">
+						<strong>&nbsp;</strong>
+						<select id="s_deptName" name="deptName" class="custom-select col-12 form-control">
+							<option value="">--부서--</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+						<strong>&nbsp;</strong>
+					    <select id="s_searchUserType" name="searchUserType" class="custom-select col-12 form-control">
+					    	<option value="">--사용자--</option>
+					    	<option value="userId">아이디</option>
+					    	<option value="userName">이름</option>
+					    	<option value="userMobile">핸드폰</option>
+					    </select>
+					</div>
+					<div class="input-group input-group-sm col-2 middle-name">
+						<strong>&nbsp;</strong>
+				    	<input type="text" id="t_searchUserValue" name="searchUserValue" class="form-control form-control-sm searchValue">
+					</div>
+					<!-- End -->
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+						<strong>&nbsp;</strong>
+					    <select id="s_authSeq" name="s_authSeq" class="custom-select col-12 form-control">
+					    	<option value="">--권한--</option>
+					    </select>
+					</div>
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+						<strong>&nbsp;</strong>
+					    <select id="s_useYn" name="s_useYn" class="custom-select col-12 form-control">
+					    	<option value="">--사용여부--</option>
+	                        <option value='Y'>사용</option>
+	                        <option value='N'>미사용</option>
+	                        <option value='W'>대기</option>
+					    </select>
+					</div>
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
+						<strong>&nbsp;</strong>
+					    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
+					</div>
 				</div>
-				<div class="input-group input-group-sm col-2 middle-name">
-				<strong>　</strong>
-				    <input type="text" id="searchValue" name="searchValue" class="form-control form-control-sm searchValue">
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="form-control" class="custom-select col-12" id="s_authSeq" name="s_authSeq">
-				    	<option>--권한--</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="form-control" class="custom-select col-12" id="s_dept" name="s_dept">
-				    	<option>--부서명--</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="form-control" class="custom-select col-12" id="s_useYn" name="s_useYn">
-				    	<option value="">--사용여부--</option>
-                        <option value='Y'>사용</option>
-                        <option value='N'>미사용</option>
-                        <option value='W'>대기</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
-				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-				</div>
-			</div>
 			</form>   
 			
 			<!--  -->
@@ -92,11 +100,31 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function(){ 	
-	if(${authChk}) {
+$(document).ready(function() { 	
+	// 22.06.24 이건욱 T11 > J41 추가
+	var authChk = ${authChk};
+	var adminChk = ${adminChk};
+	var custId = '${custId}';
+	var custName = '${custName}';
+	var deptId = '${deptId}';
+	
+	var custInfo = Util.setBizName("c_custName", "");
+	
+	if (!authChk) {
+		custInfo.value(custName);
+		custInfo.readonly(true);
+		
+		if (adminChk) {
+			Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", { custId: custId, useYn: 'Y' }, "deptId", "deptName", "", "--부서--");
+		} else {
+			Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", { custId: custId, useYn: 'Y' }, "deptId", "deptName", deptId, "");
+		}
+	} else {
+		// 슈퍼관리자의 경우 권한별 조회도 함께 제공
 		Util.setSelectBox("/contents/basic/data/allAuthList.do", "s_authSeq", {}, "authSeq", "authName", "", "--권한--");
 	}
-	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", {custId:'${custId}', useYn :'Y'}, "deptId", "deptName", "", "--부서명--");
+	// End
+	
  	goList();
 });
 
@@ -126,22 +154,31 @@ oGrid.setSelectable(true);
 oGrid.setExcelFile(headerTitle+"(" + new Date().yyyymmdd() + ").xlsx");
 
 function goList() {
-	var id = $("#searchColumn").val().split('_')[1];
-	var data = $("#searchValue").val();
+	// 22.06.27 이건욱 T11 > J41 추가
+	var authChk = ${authChk};
+	var custId = $("#c_custName").val();
+	var deptId = $("#s_deptName").val();
+	var searchUserType = $("#s_searchUserType").val();
+	var searchUserValue = $("#t_searchUserValue").val();
+	var useYn = $("#s_useYn").val();
 	
 	var param = {};
-	param[id] = data;
-	if(${authChk}) {
+	
+	param["custId"] = custId;
+	param["deptId"] = deptId;
+	param["searchUserType"] = searchUserType;
+	param["searchUserValue"] = searchUserValue;
+	param["useYn"] = useYn;
+	
+	// 슈퍼관리자의 경우 권한별 조회 기능도 제공
+	if(authChk) {
 		param["authSeq"] = $("#s_authSeq").val();
 	}
-	
-	param["userId"] = $("#searchValue").val();
-	param["deptId"] = $("#s_dept").val();
-	param["useYn"] = $("#fSearch select[name=s_useYn] option:selected").val();
-	
-	var grid = $("#user_list").data("kendoGrid");
+	// End
 	
 	oGrid.setSearchData(param);
+	
+	var grid = $("#user_list").data("kendoGrid");
 	if(grid == null) {
 		oGrid.setGrid(columns);
 		grid = $("#user_list").data("kendoGrid");
@@ -153,7 +190,6 @@ function goList() {
 	} else {
 		grid.setDataSource(oGrid.gridOption.dataSource);
 	}
-
 }
 
 /* function onChange(e){
@@ -184,4 +220,16 @@ function goExcel(){
 	var grid = $("#user_list").data("kendoGrid");
 	grid.saveAsExcel();
 }
+
+//22.06.24 이건욱 T11 > J41 추가
+$("#c_custName").change(function() {
+	var custId = $(this).val();
+	
+	if (custId == null || custId == "") {
+		Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", "", "deptId", "deptName", "", "--부서--");
+	} else {
+		Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", { custId: custId, useYn: 'Y' }, "deptId", "deptName", "", "--부서--");
+	}
+});
+// End
 </script>
