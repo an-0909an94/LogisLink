@@ -987,6 +987,9 @@ $(document).ready(function(){
 
 var columns = [
 	{ field: "number", title: "No", width: 50 },
+	// 22.06.29 이건욱 T5 > J20 컬럼 순서 변경
+	{ field: "orderId", title: "오더ID", width: 160 },
+	// End
 	{ field: "sellBuySctnName", title: "구분", width: 70 },
 	{ field: "finishYn", title: "마감일", width: 80,
 		template: "#if(finishYn == 'Y') {# #=calcDate# #} else {# N #} #"
@@ -1099,7 +1102,6 @@ var columns = [
 	{ field: "goodsName", title: "화물명", width: 120 },
 	{ field: "mngDeptName", title: "담당부서", width: 120 },
 	{ field: "finishUserName", title: "마감원", width: 100 },
-	{ field: "orderId", title: "오더ID", width: 160 },
 	{ field: "payReturnMemo", title: "지급반려사유", width: 160 },
 	{ field: "allocId", hidden: true },
 	{ field: "invId", hidden: true }

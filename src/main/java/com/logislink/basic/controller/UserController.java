@@ -224,7 +224,29 @@ public class UserController {
 		map.put("msg", "");
 		
 		return "jsonView";
+	}
+	
+	/*
+	 * 22.06.23 이건욱 거래처별 담당자 조회
+	 * 거래처별 (CUST_ID)로 담당자를 조회한다.
+	 */
+	@PostMapping(value="/contents/basic/data/userNameListCust.do")
+	public String getUserNameListCust(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+										@RequestParam Map<String, Object> param) throws Exception {
+		if (param.get("custId") == null || param.get("custId").equals("")) {
+			LoginVO login = (LoginVO) session.getAttribute("userInfo");
+			String custId = login.getCustId();
+			
+			param.put("custId", custId);
+		}
 		
+		List<UserVO> list = userService.getUserNameList(param);
+		
+		map.put("result", Boolean.TRUE);
+		map.put("data", list);
+		map.put("msg", "");
+		
+		return "jsonView";
 	}
 	
 	@PostMapping(value="/contents/basic/data/userMainPage.do")

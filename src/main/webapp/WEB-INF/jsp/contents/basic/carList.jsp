@@ -246,7 +246,6 @@ var columns = [
 	{ field: "deptId", hidden:true },
 	{ field: "custVehicSeq", hidden:true},
 	{ field: "carMngCode", hidden:true},
-	
 ];
 
 var headerTitle = ($("#headerTitle").text());

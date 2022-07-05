@@ -432,22 +432,40 @@
 				</div>
 				
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="min-width: 100px; max-width: 100px">
-					<strong>승인번호</strong>
+				<strong>승인번호</strong>
 				    <input type="text" id="s_issueId" name="s_issueId" class="form-control form-control-sm">
 				</div>
 				
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="min-width: 100px; max-width: 100px">
-					<strong>차량번호</strong>
+				<strong>차량번호</strong>
 				    <input type="text" id="s_mngCarNum" name="s_mngCarNum" class="form-control form-control-sm">
 				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
+			</div>
+			<!-- 22.06.22 이건욱 T11 > J40 추가 -->
+			<div class="form-group row">
+				<div class="input-group input-group-sm col-2 middle-name">
+					<strong>공급자</strong>
+				    <input type="text" id="supplierName" name="supplierName" style="width:100%;">
+				</div>
+				<div class="input-group input-group-sm col-2 middle-name">
+					<strong>공급받는자</strong>
+				    <input type="text" id="buyerName" name="buyerName" style="width:100%;">
+				</div>
+				<div class="input-group input-group-sm col-2 middle-name">
+					<strong>발행업체</strong>
+				    <input type="text" id="regCustName" name="regCustName" style="width:100%;">
+				</div>
+				<div class="input-group input-group-sm col-2 middle-name">
+					<strong>발행자</strong>
+				    <select class="form-control custom-select col-12" id="regName" name="regName"></select>
+				</div>
+				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
+					<strong>&nbsp;</strong>
 				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
 				</div>
-                <div style="padding: 1em;" class="input-group input-group-sm col-1"></div>
-                
+                <!-- <div style="padding: 1em;" class="input-group input-group-sm col-1"></div> -->
 			</div>
+			<!-- End -->
 			</form>
 			<!--  -->
 			<div class="cont-body">
@@ -487,11 +505,24 @@ var supplierBizList;
 var buyerBizList;
 var itemTaxList = new Array();
 
-$(document).ready(function(){
- 	
+$(document).ready(function() {
  	$("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
 	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true}); 
 	Util.setSearchDateForm();
+	
+	// 22.06.22 이건욱 T11 > J40 추가
+	// 공급자
+	Util.setBizName("supplierName", "");
+	// 공급받는자
+	Util.setBizName("buyerName", "");
+	// 발행업체
+	Util.setBizName("regCustName", "");
+	// 발행자
+	Util.setSelectBox("/contents/basic/data/userNameListCust.do", "regName", { custId:$("#regCustName").val() }, "userId", "userName", "", "--발행자--");
+	$("#regCustName").on("change", function(){ 
+		Util.setSelectBox("/contents/basic/data/userNameListCust.do", "regName", { custId:$("#regCustName").val() }, "userId", "userName", "", "--발행자--");
+	});
+	// End
 	
 	goList();
 	/* 
@@ -684,6 +715,19 @@ function goList() {
 	var grid = $("#taxList").data("kendoGrid");
 	
 	var param = $("#fSearch").serializeObject();
+	
+	// 22.06.22 이건욱 T11 > J40 추가
+	param["supplierId"] = $("#supplierName").val();
+	param["buyerId"] = $("#buyerName").val();
+	param["regCustId"] = $("#regCustName").val();
+	param["regId"] = $("#regName").val();
+	
+	// test
+	console.log("supplierId: " + param["supplierId"]);
+	console.log("buyerId: " + param["buyerId"]);
+	console.log("regCustId: " + param["regCustId"]);
+	console.log("regId: " + param["regId"]);
+	// End
 	
 	oGrid.setSearchData(param);
 	if(grid == null) {

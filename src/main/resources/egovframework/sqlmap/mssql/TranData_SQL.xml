@@ -90,6 +90,7 @@
 					AND CONVERT(CHAR(10), TR.REGDATE, 23) BETWEEN #{fromDate} AND #{toDate}
 				</if>
 				<!-- 22.06.21 이건욱 T11 > J39 추가 -->
+				<!-- 변경 해야 함... -->
 				<if test = "frBizName != null and frBizName != ''">
 					AND TR.FR_CUST_ID = #{frBizName}
 				</if>

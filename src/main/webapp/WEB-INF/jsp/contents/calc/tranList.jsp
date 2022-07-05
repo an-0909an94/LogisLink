@@ -52,11 +52,11 @@
                 <!-- 22.06.21 이건욱 T11 > J39 추가 -->
 				<div class="input-group input-group-sm col-2 middle-name">
 					<strong>공급자</strong>
-				    <input type="text" id="frBizName" name="frBizName" style="width:100%;">
+				    <input type="text" id="supplierName" name="supplierName" style="width:100%;">
 				</div>
 				<div class="input-group input-group-sm col-2 middle-name">
 					<strong>공급받는자</strong>
-				    <input type="text" id="toBizName" name="toBizName" style="width:100%;">
+				    <input type="text" id="buyerName" name="buyerName" style="width:100%;">
 				</div>
 				<!-- End -->
 				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
@@ -117,8 +117,9 @@ $(document).ready(function(){
 	Util.setSearchDateForm();
 	
 	// 22.06.21 이건욱 T11 > J39 추가
-	Util.setBizName("frBizName", "");
-	Util.setBizName("toBizName", "");
+	Util.setBizName("supplierName", "");
+	Util.setBizName("buyerName", "");
+	// End
 	
 	goList();
 	/* 
@@ -229,8 +230,8 @@ function goList() {
 	param["fromDate"] = $("#fromDate").val();
 	param["toDate"] = $("#toDate").val();
 	// 22.06.21 이건욱 T11 > J39 추가
-	param["frBizName"] = $("#frBizName").val();
-	param["toBizName"] = $("#toBizName").val();
+	param["supplierId"] = $("#supplierName").val();
+	param["buyerId"] = $("#buyerName").val();
 	// End
 	oGrid.setSearchData(param);
 	if(grid == null) {

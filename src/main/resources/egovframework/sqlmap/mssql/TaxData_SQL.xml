@@ -13,7 +13,11 @@
 					SELECT
 						AAA.INV_ID					invId
 					  , AAA.BILL_KIND				billKind
-					  , CASE WHEN AAA.SUPPLIER_CUST_ID = #{loginCustId} THEN 'S' ELSE 'R' END pubType
+					  , CASE
+					  		WHEN AAA.SUPPLIER_CUST_ID = #{loginCustId}
+					  		THEN 'S'
+					  		ELSE 'R'
+					  	END pubType
 					  , AAA.ISSUE_DATE				issueDate
 					  , AAA.ISSUE_ID				issueId
 					  , AAA.DOC_CLASS				docClass
@@ -89,12 +93,34 @@
 					WHERE 
 						AAA.WRITE_DATE BETWEEN #{fromDate} AND #{toDate}
 						AND AAA.USE_YN = 'Y'
+						<!-- 22.06.23 이건욱 T11 > J40 추가  -->
 						<if test='pubType == "S".toString()'>
-							AND AAA.SUPPLIER_CUST_ID = #{loginCustId}
+							<choose>
+								<when test="supplierId != null and supplierId != ''">
+									AND AAA.SUPPLIER_CUST_ID = #{supplierId}
+								</when>
+								<otherwise>
+									AND AAA.SUPPLIER_CUST_ID = #{loginCustId}
+								</otherwise>
+							</choose>
 						</if>				
 						<if test='pubType == "R".toString()'>
-							AND AAA.BUYER_CUST_ID = #{loginCustId} 
+							<choose>
+								<when test="buyerId != null and buyerId != ''">
+									AND AAA.BUYER_CUST_ID = #{buyerId}
+								</when>
+								<otherwise>
+									AND AAA.BUYER_CUST_ID = #{loginCustId}
+								</otherwise>
+							</choose>
 						</if>
+						<if test="regCustId != null and regCustId != ''">
+							<!-- AND AAA.BUYER_CUST_ID = #{buyerId} -->
+						</if>
+						<if test="regId != null and regId != ''">
+						</if>
+						<!-- End -->
+						
 						<if test="sLoadStatus != '' and sLoadStatus != null">
 							AND AAA.LOADSTATUS = #{sLoadStatus} 
 						</if>

@@ -121,12 +121,12 @@
                                 <div class="form-group row">
                                 	<label class="col-form-label"></label>
                                     <div class="input-group input-group-sm col middle-name form-group">
-                                    <strong>마감기준일</strong>
-                                        <select class="custom-select col-10" id="dlineDayCode" name="dlineDayCode"></select>
+	                                    <strong>마감기준일</strong>
+	                                        <select class="custom-select col-12" id="dlineDayCode" name="dlineDayCode"></select>
                                     </div>
                                     <div class="input-group input-group-sm col middle-name form-group">
-                                    <strong>마감기준점</strong>
-                                        <select class="custom-select col-12" id="dlinePointCode" name="dlinePointCode"></select>
+	                                    <strong>마감기준점</strong>
+	                                        <select class="custom-select col-12" id="dlinePointCode" name="dlinePointCode"></select>
                                     </div>
                                 </div>
                                 <!-- End -->
