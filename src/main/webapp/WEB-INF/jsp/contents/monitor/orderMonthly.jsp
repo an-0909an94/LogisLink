@@ -84,7 +84,7 @@
 // 22.07.04 이건욱 모니터링 > 배차운송 (월) 조회조건 변경 (배차 담당자 외 제외)
 $(document).ready(function() {
 	var custId = '${custId}';
-	var deptId = '${deptId}';
+	var deptId = '${sessionScope.userInfo.deptId}';
 	
 	$("#searchMonth").kendoDatePicker({
 		start: "year",

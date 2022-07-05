@@ -9,9 +9,9 @@
 		SELECT B.USER_ID userId, B.USER_NAME userName, C.DEPT_ID deptId, C.DEPT_NAME deptName
         FROM T_ORDER_ALLOC A
           INNER JOIN
-            T_USER B ON B.USER_ID = A.BUY_STAFF_ID
+            T_USER B ON B.USER_ID = A.BUY_STAFF_ID AND B.DEPT_ID = A.BUY_DEPT_ID AND B.CUST_ID = A.BUY_CUST_ID
           INNER JOIN
-            T_CUST_DEPT C ON C.DEPT_ID = A.BUY_DEPT_ID
+            T_CUST_DEPT C ON C.CUST_ID = A.BUY_CUST_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.USE_YN = 'Y'
         WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
         	AND A.BUY_CUST_ID = #{loginCustId}
         	<if test="deptId != null and !''.equals(deptId)">
@@ -21,6 +21,7 @@
               AND A.BUY_STAFF_ID = #{userId}
             </if>
         GROUP BY B.USER_ID, B.USER_NAME, C.DEPT_ID, C.DEPT_NAME
+        ORDER BY C.DEPT_NAME ASC, B.USER_NAME ASC
 	</select>
   
 	<!-- 배차운송(월)-->
@@ -30,9 +31,9 @@
           INNER JOIN
             T_ORDER B ON B.ORDER_ID = A.ORDER_ID
           INNER JOIN
-            T_USER C ON C.USER_ID = A.BUY_STAFF_ID
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
           INNER JOIN
-            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
         WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
           AND A.BUY_CUST_ID = #{loginCustId}
           <if test="deptId != null and !''.equals(deptId)">
@@ -49,9 +50,9 @@
           INNER JOIN
             T_ORDER B ON B.ORDER_ID = A.ORDER_ID
           INNER JOIN
-            T_USER C ON C.USER_ID = A.BUY_STAFF_ID
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
           INNER JOIN
-            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
         WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
           AND A.BUY_CUST_ID = #{loginCustId}
           <if test="deptId != null and !''.equals(deptId)">
@@ -70,12 +71,12 @@
         UNION ALL
         SELECT C.USER_ID userId, C.USER_NAME userName, D.DEPT_ID deptId, D.DEPT_NAME deptName, CONVERT(VARCHAR(10), A.REGDATE, 23) regDate, '입력지연' orderState, COUNT(1) orderCount 
         FROM T_ORDER_ALLOC A
-        INNER JOIN
-          T_ORDER B ON B.ORDER_ID = A.ORDER_ID
-        INNER JOIN
-          T_USER C ON C.USER_ID = A.BUY_STAFF_ID
-        INNER JOIN
-          T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID
+          INNER JOIN
+            T_ORDER B ON B.ORDER_ID = A.ORDER_ID
+          INNER JOIN
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
+          INNER JOIN
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
         WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
           AND A.BUY_CUST_ID = #{loginCustId}
           <if test="deptId != null and !''.equals(deptId)">
@@ -96,9 +97,9 @@
           INNER JOIN
             T_ORDER B ON B.ORDER_ID = A.ORDER_ID
           INNER JOIN
-            T_USER C ON C.USER_ID = A.BUY_STAFF_ID
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
           INNER JOIN
-            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
         WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
           AND A.BUY_CUST_ID = #{loginCustId}
           <if test="deptId != null and !''.equals(deptId)">
@@ -115,9 +116,9 @@
           INNER JOIN
             T_ORDER B ON B.ORDER_ID = A.ORDER_ID
           INNER JOIN
-            T_USER C ON C.USER_ID = A.BUY_STAFF_ID
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
           INNER JOIN
-            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
         WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
           AND A.BUY_CUST_ID = #{loginCustId}
           <if test="deptId != null and !''.equals(deptId)">
@@ -136,12 +137,12 @@
         UNION ALL
         SELECT CONVERT(VARCHAR(10), A.REGDATE, 23) regDate, '99' orderState, COUNT(1) orderCount
         FROM T_ORDER_ALLOC A
-        INNER JOIN
-          T_ORDER B ON B.ORDER_ID = A.ORDER_ID
-        INNER JOIN
-          T_USER C ON C.USER_ID = A.BUY_STAFF_ID
-        INNER JOIN
-          T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID
+          INNER JOIN
+            T_ORDER B ON B.ORDER_ID = A.ORDER_ID
+          INNER JOIN
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
+          INNER JOIN
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
         WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
           AND A.BUY_CUST_ID = #{loginCustId}
           <if test="deptId != null and !''.equals(deptId)">
@@ -155,155 +156,136 @@
         GROUP BY CONVERT(VARCHAR(10), A.REGDATE, 23)
 	</select>
 
-	<!-- 배차운송(년) -->
+	<!-- 배차운송(년)-->
 	<select id="selectOrderMonitorYear" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT A.USER_ID userId, A.USER_NAME userName, B.DEPT_NAME deptName, CONVERT(VARCHAR(7), D.REGDATE, 23) regdate, '전체' orderState, COUNT(1) orderCount 
-		FROM (
-				SELECT CUST_ID, DEPT_ID, USER_ID, USER_NAME 
-				FROM T_USER
-				WHERE CUST_ID = #{loginCustId}
-					 <if test="deptId != null and !''.equals(deptId)">
-					 	AND DEPT_ID = #{deptId}
-					 </if>
-					 <if test="userId != null and !''.equals(userId)">
-					 	AND USER_ID = #{userId}
-					 </if>
-			) A
-			INNER JOIN
-			T_CUST_DEPT B ON A.DEPT_ID = B.DEPT_ID
-			LEFT OUTER JOIN 
-			T_ORDER_ALLOC C ON A.CUST_ID = C.BUY_CUST_ID AND A.DEPT_ID = C.BUY_DEPT_ID AND A.USER_ID = C.BUY_STAFF_ID 
-			LEFT OUTER JOIN 
-			T_ORDER D ON C.ORDER_ID = D.ORDER_ID  
-		WHERE D.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'	AND D.ORDER_STATE != '09'
-		GROUP BY A.USER_ID,  A.USER_NAME, B.DEPT_NAME, CONVERT(VARCHAR(7), D.REGDATE, 23)
-		UNION ALL 
-		SELECT A.USER_ID userId, A.USER_NAME userName, B.DEPT_NAME deptName, CONVERT(VARCHAR(7), D.REGDATE, 23) regdate,
-			 <!-- , CASE WHEN D.ORDER_STATE IN ('00', '05', '09') THEN D.ORDER_STATE ELSE '01' END orderState -->
-			 CASE D.ORDER_STATE WHEN '09' THEN '취소' WHEN '00' THEN '접수' WHEN '05' THEN '도착' ELSE '진행' END 
-			 , COUNT(1) orderCount 
-		FROM (
-				SELECT CUST_ID, DEPT_ID, USER_ID, USER_NAME 
-				FROM T_USER 
-				WHERE CUST_ID = #{loginCustId}
-					 <if test="deptId != null and !''.equals(deptId)">
-					 	AND DEPT_ID = #{deptId}
-					 </if>
-					 <if test="userId != null and !''.equals(userId)">
-					 	AND USER_ID = #{userId}
-					 </if>
-			) A
-			INNER JOIN 
-			T_CUST_DEPT B ON A.DEPT_ID = B.DEPT_ID
-			LEFT OUTER JOIN 
-			T_ORDER_ALLOC C ON A.CUST_ID = C.BUY_CUST_ID AND A.DEPT_ID = C.BUY_DEPT_ID AND A.USER_ID = C.BUY_STAFF_ID 
-			LEFT OUTER JOIN 
-			T_ORDER D ON C.ORDER_ID = D.ORDER_ID  
-		WHERE D.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
-			<if test="stateList != null and !''.equals(stateList)">
-				AND D.ORDER_STATE IN
-				<foreach collection="stateList" item="item" index="index" separator="," open="(" close=")">
-					#{item}
-				</foreach>
-			</if>
-		GROUP BY  A.USER_ID, A.USER_NAME, B.DEPT_NAME, CONVERT(VARCHAR(7), D.REGDATE, 23), D.ORDER_STATE 
-		UNION ALL
-		SELECT A.USER_ID, A.USER_NAME, B.DEPT_NAME, CONVERT(VARCHAR(7), D.REGDATE, 23) regdate, '입력지연', COUNT(1) 
-		FROM (
-				SELECT CUST_ID, DEPT_ID, USER_ID, USER_NAME 
-				FROM T_USER 
-				WHERE CUST_ID = #{loginCustId}
-					 <if test="deptId != null and !''.equals(deptId)">
-					 	AND DEPT_ID = #{deptId}
-					 </if>
-					 <if test="userId != null and !''.equals(userId)">
-					 	AND USER_ID = #{userId}
-					 </if>
-			) A
-			INNER JOIN 
-			T_CUST_DEPT B ON A.DEPT_ID = B.DEPT_ID
-			LEFT OUTER JOIN 
-			T_ORDER_ALLOC C ON A.CUST_ID = C.BUY_CUST_ID AND A.DEPT_ID = C.BUY_DEPT_ID AND A.USER_ID = C.BUY_STAFF_ID 
-			LEFT OUTER JOIN 
-			T_ORDER D ON C.ORDER_ID = D.ORDER_ID  
-		WHERE D.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'	AND D.ORDER_STATE != '09'
-			AND DATEADD(HOUR, 1, D.S_DATE) &lt; D.REGDATE 
-		GROUP BY A.USER_ID,  A.USER_NAME, B.DEPT_NAME, CONVERT(VARCHAR(7), D.REGDATE, 23)
+		SELECT C.USER_ID userId, C.USER_NAME userName, D.DEPT_ID deptId, D.DEPT_NAME deptName, CONVERT(VARCHAR(7), A.REGDATE, 23) regDate, '전체' orderState, COUNT(1) orderCount 
+        FROM T_ORDER_ALLOC A
+          INNER JOIN
+            T_ORDER B ON B.ORDER_ID = A.ORDER_ID
+          INNER JOIN
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
+          INNER JOIN
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
+        WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+          AND A.BUY_CUST_ID = #{loginCustId}
+          <if test="deptId != null and !''.equals(deptId)">
+            AND A.BUY_DEPT_ID = #{deptId}
+          </if>
+          <if test="userId != null and !''.equals(userId)">
+            AND A.BUY_STAFF_ID = #{userId}
+          </if>
+          AND B.ORDER_STATE != '09'
+        GROUP BY C.USER_ID, C.USER_NAME, D.DEPT_ID, D.DEPT_NAME, CONVERT(VARCHAR(7), A.REGDATE, 23)
+        UNION ALL
+        SELECT C.USER_ID userId, C.USER_NAME userName, D.DEPT_ID deptId, D.DEPT_NAME deptName, CONVERT(VARCHAR(7), A.REGDATE, 23) regDate, CASE B.ORDER_STATE WHEN '09' THEN '취소' WHEN '00' THEN '접수' WHEN '05' THEN '도착' ELSE '진행' END orderState, COUNT(1) orderCount 
+        FROM T_ORDER_ALLOC A
+          INNER JOIN
+            T_ORDER B ON B.ORDER_ID = A.ORDER_ID
+          INNER JOIN
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
+          INNER JOIN
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
+        WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+          AND A.BUY_CUST_ID = #{loginCustId}
+          <if test="deptId != null and !''.equals(deptId)">
+            AND A.BUY_DEPT_ID = #{deptId}
+          </if>
+          <if test="userId != null and !''.equals(userId)">
+            AND A.BUY_STAFF_ID = #{userId}
+          </if>
+          <if test="stateList != null and !''.equals(stateList)">
+            AND B.ORDER_STATE IN
+            <foreach collection="stateList" item="item" index="index" separator="," open="(" close=")">
+              #{item}
+            </foreach>
+          </if>
+        GROUP BY C.USER_ID, C.USER_NAME, D.DEPT_ID, D.DEPT_NAME, CONVERT(VARCHAR(7), A.REGDATE, 23), B.ORDER_STATE
+        UNION ALL
+        SELECT C.USER_ID userId, C.USER_NAME userName, D.DEPT_ID deptId, D.DEPT_NAME deptName, CONVERT(VARCHAR(7), A.REGDATE, 23) regDate, '입력지연' orderState, COUNT(1) orderCount 
+        FROM T_ORDER_ALLOC A
+          INNER JOIN
+            T_ORDER B ON B.ORDER_ID = A.ORDER_ID
+          INNER JOIN
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
+          INNER JOIN
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
+        WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+          AND A.BUY_CUST_ID = #{loginCustId}
+          <if test="deptId != null and !''.equals(deptId)">
+            AND A.BUY_DEPT_ID = #{deptId}
+          </if>
+          <if test="userId != null and !''.equals(userId)">
+            AND A.BUY_STAFF_ID = #{userId}
+          </if>
+          AND A.REGDATE > DATEADD(HOUR, 1, B.S_DATE)
+          AND B.ORDER_STATE != '09'
+        GROUP BY C.USER_ID, C.USER_NAME, D.DEPT_ID, D.DEPT_NAME, CONVERT(VARCHAR(7), A.REGDATE, 23)
 	</select>
 
-	<!-- 배차운송(년 합계) -->
+	<!-- 배차운송(년 합계)-->
 	<select id="selectOrderMonitorYearSum" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT CONVERT(VARCHAR(7), D.REGDATE, 23) regdate, '100' orderState, COUNT(1) orderCount 
-		FROM (
-				SELECT CUST_ID, DEPT_ID, USER_ID, USER_NAME 
-				FROM T_USER 
-				WHERE CUST_ID = #{loginCustId}
-					 <if test="deptId != null and !''.equals(deptId)">
-					 	AND DEPT_ID = #{deptId}
-					 </if>
-					 <if test="userId != null and !''.equals(userId)">
-					 	AND USER_ID = #{userId}
-					 </if>
-			) A
-			INNER JOIN 
-			T_CUST_DEPT B ON A.DEPT_ID = B.DEPT_ID
-			LEFT OUTER JOIN 
-			T_ORDER_ALLOC C ON A.CUST_ID = C.BUY_CUST_ID AND A.DEPT_ID = C.BUY_DEPT_ID AND A.USER_ID = C.BUY_STAFF_ID 
-			LEFT OUTER JOIN 
-			T_ORDER D ON C.ORDER_ID = D.ORDER_ID  
-		WHERE D.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59' AND D.ORDER_STATE != '09'
-		GROUP BY CONVERT(VARCHAR(7), D.REGDATE, 23)
-		UNION ALL 
-		SELECT CONVERT(VARCHAR(7), D.REGDATE, 23) regdate
-			 , CASE WHEN D.ORDER_STATE IN ('00', '05', '09') THEN D.ORDER_STATE ELSE '01' END orderState
-			 , COUNT(1) orderCount 
-		FROM (
-				SELECT CUST_ID, DEPT_ID, USER_ID, USER_NAME 
-				FROM T_USER 
-				WHERE CUST_ID = #{loginCustId}
-					 <if test="deptId != null and !''.equals(deptId)">
-					 	AND DEPT_ID = #{deptId}
-					 </if>
-					 <if test="userId != null and !''.equals(userId)">
-					 	AND USER_ID = #{userId}
-					 </if>
-			) A
-			INNER JOIN 
-			T_CUST_DEPT B ON A.DEPT_ID = B.DEPT_ID
-			LEFT OUTER JOIN 
-			T_ORDER_ALLOC C ON A.CUST_ID = C.BUY_CUST_ID AND A.DEPT_ID = C.BUY_DEPT_ID AND A.USER_ID = C.BUY_STAFF_ID 
-			LEFT OUTER JOIN 
-			T_ORDER D ON C.ORDER_ID = D.ORDER_ID  
-		WHERE D.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
-			<if test='stateList != null and !"".equals(stateList)'>
-				AND D.ORDER_STATE IN
-				<foreach collection="stateList" item="item" index="index" separator="," open="(" close=")">
-					#{item}
-				</foreach>
-			</if>
-		GROUP BY CONVERT(VARCHAR(7), D.REGDATE, 23), D.ORDER_STATE 
-		UNION ALL
-		SELECT CONVERT(VARCHAR(7), D.REGDATE, 23) regdate, '99', COUNT(1) 
-		FROM (
-				SELECT CUST_ID, DEPT_ID, USER_ID, USER_NAME 
-				FROM T_USER 
-				WHERE CUST_ID = #{loginCustId}
-					 <if test="deptId != null and !''.equals(deptId)">
-					 	AND DEPT_ID = #{deptId}
-					 </if>
-					 <if test="userId != null and !''.equals(userId)">
-					 	AND USER_ID = #{userId}
-					 </if>
-			) A
-			INNER JOIN 
-			T_CUST_DEPT B ON A.DEPT_ID = B.DEPT_ID
-			LEFT OUTER JOIN 
-			T_ORDER_ALLOC C ON A.CUST_ID = C.BUY_CUST_ID AND A.DEPT_ID = C.BUY_DEPT_ID AND A.USER_ID = C.BUY_STAFF_ID 
-			LEFT OUTER JOIN 
-			T_ORDER D ON C.ORDER_ID = D.ORDER_ID  
-		WHERE D.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'	AND D.ORDER_STATE != '09'
-			AND DATEADD(HOUR, 1, D.S_DATE) &lt; D.REGDATE 
-		GROUP BY CONVERT(VARCHAR(7), D.REGDATE, 23)
+		SELECT CONVERT(VARCHAR(7), A.REGDATE, 23) regDate, '100' orderState, COUNT(1) orderCount 
+        FROM T_ORDER_ALLOC A
+          INNER JOIN
+            T_ORDER B ON B.ORDER_ID = A.ORDER_ID
+          INNER JOIN
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
+          INNER JOIN
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
+        WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+          AND A.BUY_CUST_ID = #{loginCustId}
+          <if test="deptId != null and !''.equals(deptId)">
+            AND A.BUY_DEPT_ID = #{deptId}
+          </if>
+          <if test="userId != null and !''.equals(userId)">
+            AND A.BUY_STAFF_ID = #{userId}
+          </if>
+          AND B.ORDER_STATE != '09'
+        GROUP BY CONVERT(VARCHAR(7), A.REGDATE, 23)
+        UNION ALL
+        SELECT CONVERT(VARCHAR(7), A.REGDATE, 23) regDate, CASE WHEN B.ORDER_STATE IN ('00', '05', '09') THEN B.ORDER_STATE ELSE '01' END orderState, COUNT(1) orderCount  
+        FROM T_ORDER_ALLOC A
+          INNER JOIN
+            T_ORDER B ON B.ORDER_ID = A.ORDER_ID
+          INNER JOIN
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
+          INNER JOIN
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
+        WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+          AND A.BUY_CUST_ID = #{loginCustId}
+          <if test="deptId != null and !''.equals(deptId)">
+            AND A.BUY_DEPT_ID = #{deptId}
+          </if>
+          <if test="userId != null and !''.equals(userId)">
+            AND A.BUY_STAFF_ID = #{userId}
+          </if>
+          <if test="stateList != null and !''.equals(stateList)">
+            AND B.ORDER_STATE IN
+            <foreach collection="stateList" item="item" index="index" separator="," open="(" close=")">
+              #{item}
+            </foreach>
+          </if>
+        GROUP BY CONVERT(VARCHAR(7), A.REGDATE, 23), B.ORDER_STATE
+        UNION ALL
+        SELECT CONVERT(VARCHAR(7), A.REGDATE, 23) regDate, '99' orderState, COUNT(1) orderCount
+        FROM T_ORDER_ALLOC A
+          INNER JOIN
+            T_ORDER B ON B.ORDER_ID = A.ORDER_ID
+          INNER JOIN
+            T_USER C ON C.USER_ID = A.BUY_STAFF_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.CUST_ID = A.BUY_CUST_ID
+          INNER JOIN
+            T_CUST_DEPT D ON D.DEPT_ID = C.DEPT_ID AND D.CUST_ID = A.BUY_CUST_ID AND D.USE_YN = 'Y'
+        WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+          AND A.BUY_CUST_ID = #{loginCustId}
+          <if test="deptId != null and !''.equals(deptId)">
+            AND A.BUY_DEPT_ID = #{deptId}
+          </if>
+          <if test="userId != null and !''.equals(userId)">
+            AND A.BUY_STAFF_ID = #{userId}
+          </if>
+          AND A.REGDATE > DATEADD(HOUR, 1, B.S_DATE)
+          AND B.ORDER_STATE != '09'
+        GROUP BY CONVERT(VARCHAR(7), A.REGDATE, 23)
 	</select>
 	
 	<!-- 거래처손익(거래처) -->
@@ -415,24 +397,26 @@
 	</select>
 	
 	<!-- 부서별 손익 -->
+    <!-- 22.07.04 이건욱 사용자 조회 시 User 테이블을 보지 않음. -->
 	<select id="selectProfitDeptId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		SELECT A.USER_NAME userName, A.USER_ID userId, B.DEPT_ID deptId, B.DEPT_NAME deptName, 1 as sort
-		FROM T_USER A
-			 INNER JOIN
-			 T_CUST_DEPT B ON A.DEPT_ID = B.DEPT_ID AND A.USE_YN = 'Y' AND B.USE_YN = 'Y'
-		WHERE A.CUST_ID = #{loginCustId}
-		<if test="deptId != null and !''.equals(deptId)">
-		 	AND A.DEPT_ID = #{deptId}
-		</if>
-		UNION ALL 
-		SELECT '소계' AS userName, '소계' userId, DEPT_ID AS deptId, DEPT_NAME AS deptName, 2 as sort
-		FROM T_CUST_DEPT
-		WHERE CUST_ID = #{loginCustId}
-	 	<if test="deptId != null and !''.equals(deptId)">
-	 		AND DEPT_ID = #{deptId}
-	 	</if>
-		AND USE_YN = 'Y'
-		ORDER BY B.DEPT_NAME ASC, sort ASC, userName ASC
+      SELECT userId, userName, deptId, deptName, sort
+      FROM (
+		SELECT B.USER_ID userId, B.USER_NAME userName, C.DEPT_ID deptId, C.DEPT_NAME deptName, 1 as sort
+        FROM T_ORDER_ALLOC A
+          INNER JOIN
+            T_USER B ON B.USER_ID = A.BUY_STAFF_ID AND B.DEPT_ID = A.BUY_DEPT_ID AND B.CUST_ID = A.BUY_CUST_ID
+          INNER JOIN
+            T_CUST_DEPT C ON C.CUST_ID = A.BUY_CUST_ID AND C.DEPT_ID = A.BUY_DEPT_ID AND C.USE_YN = 'Y'
+        WHERE A.REGDATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+          AND A.BUY_CUST_ID = #{loginCustId}
+          <if test="deptId != null and !''.equals(deptId)">
+            AND A.BUY_DEPT_ID = #{deptId}
+          </if>
+        GROUP BY B.USER_ID, B.USER_NAME, C.DEPT_ID, C.DEPT_NAME
+        UNION ALL
+        SELECT '소계' userName, '소계' userId, '' deptId, '' deptName, 2 as sort
+      ) A
+      ORDER BY sort, deptName, userName
 	</select>
 	
 	<select id="selectProfitDeptMonth" parameterType="java.util.HashMap" resultType="java.util.HashMap">
