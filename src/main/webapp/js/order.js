@@ -100,7 +100,6 @@ var MultiColumnComboBox = {
 				filter: "contains",
 				minLength: 2,
 				autoBind: true,
-				dropDownWidth: 400,
 				dataSource: {
 					serverFiltering: true,
 					transport: {
@@ -127,8 +126,8 @@ var MultiColumnComboBox = {
 					}
 				},
 				columns: [
-					{ field: "custName", title: "거래처명", width: 180 },
-					{ field: "deptName", title: "부서명", width: 140 },
+					{ field: "custName", title: "거래처명", width: 200 },
+					{ field: "deptName", title: "부서명", width: 120 },
 					{ field: "ceo", title: "대표자명", width: 80 }
 				]
 			}).data("kendoMultiColumnComboBox");	
