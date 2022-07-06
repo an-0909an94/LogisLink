@@ -39,9 +39,8 @@ var MultiColumnComboBox = {
 				},
 				
 				columns: [
-					{field: "custName", title: "거래처명", width: 'auto'},
-					{field: "deptName", title: "부서명", width: 'auto'}
-					
+					{ field: "custName", title: "거래처명", width: 'auto' },
+					{ field: "deptName", title: "부서명", width: 'auto' }
 				]
 			}).data("kendoMultiColumnComboBox");	
 			
@@ -83,11 +82,54 @@ var MultiColumnComboBox = {
 						}
 					}
 				},
-				
 				columns: [
 					{field: "custName", title: "거래처명", width: 'auto'},
 					{field: "deptName", title: "부서명", width: 'auto'}
-					
+				]
+			}).data("kendoMultiColumnComboBox");	
+			
+			return custName;
+		},
+		/*
+		 * 22.07.05 이건욱 T1 > 거래처 조회시 부서명 제외하고 대표명으로 조회 (화주용)
+		 */
+		setCustNameWithCeoName: function(gbn, sellBuySctn) {
+			var custName =  $("#" + gbn + "CustName").kendoMultiColumnComboBox({
+				dataTextField: "custName",
+				dataValueField: "custId",
+				filter: "contains",
+				minLength: 2,
+				autoBind: true,
+				dropDownWidth: 400,
+				dataSource: {
+					serverFiltering: true,
+					transport: {
+						read: {
+							url: "/contents/basic/data/custList.do",
+							dataType: "json",
+							type: "post",
+							data: {
+								useYn: "Y",
+								sellBuySctn: sellBuySctn
+							},
+							beforeSend: function(req) {
+								req.setRequestHeader("AJAX", true);
+							}
+						}
+					},
+					schema: {
+						data: function(response) {
+							return response.data;
+						},
+						total: function(response) {
+							return response.total;
+						}
+					}
+				},
+				columns: [
+					{ field: "custName", title: "거래처명", width: 180 },
+					{ field: "deptName", title: "부서명", width: 140 },
+					{ field: "ceo", title: "대표자명", width: 80 }
 				]
 			}).data("kendoMultiColumnComboBox");	
 			
@@ -331,7 +373,7 @@ var MultiColumnComboBox = {
 								{field: "mobile", title: "휴대전화", width:120}
 								
 							]
-						}).data("kendoMultiColumnComboBox");
+			}).data("kendoMultiColumnComboBox");
 			
 			return carNum;
 		}
@@ -731,6 +773,6 @@ function orderHistory() {
 		} else {
 			viewLocation.refresh({url: "/contents/order/view/orderHistory.do?orderId=" + orderId});
 		} 
-		viewLocation.center().open();	
+		viewLocation.center().open();
 	}
 }
