@@ -141,18 +141,44 @@ public class CmmController {
 	@PostMapping(value="/cmm/excelToJson.do")
 	public String excelToJson(HttpServletRequest request, HttpServletResponse response, Model model, ModelMap map,
 								@RequestParam Map<String, Object> param, HttpSession session) throws Exception {
-		
-		
 		FileUtil fileUtil = new FileUtil();
 		
 		String filePath = globalProperties.getProperty("Globals.filepath");
 		String fileName = String.valueOf(param.get("fileName"));
+		String fileFullPath = filePath + "temp/" + fileName;
 		
-		JSONArray excelData = ExcelUtil.getExcelData(filePath + "temp/" + fileName); 
-				
-		map.put("data", excelData);
+		/**
+		 * 22.07.08 이건욱
+		 * 	- 매개변수 "className"에 따라 Call function 다르게 설정.
+		 * 	- 결과값 반환 시 추가 정보 설정
+		 * 	- View단에서 상태값에 따라 사용자 메시지 처리.
+		 */
+		map.put("sender", this.getClass().getSimpleName());
 		
-		fileUtil.DelFile(filePath + "temp/" + fileName);
+		JSONArray excelData = null;
+		try {
+			String className = String.valueOf(param.get("className"));
+			if (className.equals("orderBundle"))
+				excelData = ExcelUtil.getOrderBundleExcelData(fileFullPath);
+			else
+				excelData = ExcelUtil.getExcelData(fileFullPath);
+			
+			map.put("status", 0);
+			map.put("dataType", "json");
+		} catch(Exception e) {
+			map.put("status", -1);
+			map.put("message", e.getMessage());
+			map.put("detailMessage", e.getStackTrace().toString());
+		} finally {
+			map.put("data", excelData);
+		}
+		
+		// 22.07.08 이건욱 임시파일 제거에 실패시 별도의 에러메시지 출력하지 않음.
+		try {
+			fileUtil.DelFile(fileFullPath);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return "jsonView";
 	}

@@ -30,7 +30,7 @@ public class DateUtil {
 
 		return time;
 	}
-
+	
 	/**
 	 * date의 어제 날짜
 	 */
@@ -154,4 +154,27 @@ public class DateUtil {
 		return getDate(".")+" "+getHHmmss();
 	}
 	
+	// 22.07.14 이건욱 T1 > J5, J6 배차일괄등록 기능 개선 -> Date validation check
+	public static boolean checkDate(String date, String dateFormat) {
+		try {
+			SimpleDateFormat dateFormatParser = new SimpleDateFormat(dateFormat);
+	        dateFormatParser.setLenient(false);
+	        dateFormatParser.parse(date);
+	        return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	// 22.07.14 이건욱 T1 > J5, J6 배차일괄등록 기능 개선 -> Time validation check
+	public static boolean checkTime(String time, String timeFormat) {
+		try {
+			SimpleDateFormat dateFormatParser = new SimpleDateFormat(timeFormat);
+	        dateFormatParser.setLenient(false);
+	        dateFormatParser.parse(time);
+	        return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }

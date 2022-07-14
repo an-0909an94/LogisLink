@@ -62,8 +62,7 @@
     <!--  -->
     <!-- content -->
 </div>
-<div id="errDriverInfo"></div>
-<div id="errReqInfo"></div>
+<div id="popValidation"></div>
 <script type="text/javascript">
 	var validator = $("#grid").kendoValidator().data("kendoValidator");
 
@@ -71,29 +70,46 @@
 	var carTonData = Util.getComCode("CAR_TON_CD");
 	var wayTypeData = Util.getComCode("WAY_TYPE_CD");
 	var mixSizeData = Util.getComCode("MIX_SIZE_CD");
-	var errDriverData = new Array();
-	var errReqData = new Array();
+	// 22.07.06 이건욱 T1 > J5, J6 배차관리 기능개선
+	var chargeTypeData = Util.getComCode("CHARGE_TYPE_CD");
+	var inOutSctnData = Util.getComCode("IN_OUT_SCTN");
+	var truckTypeData = Util.getComCode("TRUCK_TYPE_CD");
+	var validationErrorData = new Array();
 
+	// 22.07.07 이건욱 T1 > J6 배차관리 기능개선 (필수입력 항목 강조)
 	var columns = [
+			// 22.07.09 이건욱 T1 > J6 Row number 추가
+			{
+				field : "no",
+				title : "번호",
+				width : 50,
+				editable : function(e) {
+					return false;
+				}
+			},
 			{
 				field : "reqCustName",
-				title : "거래처명",
-				width : 100
+				title : "화주거래처명",
+				width : 120,
+				headerTemplate : '<label class="requireHeader">화주거래처명</label>'
 			},
 			{
 				field : "reqDeptName",
-				title : "담당부서",
-				width : 100
+				title : "화주담당부서",
+				width : 120,
+				headerTemplate : '<label class="requireHeader">화주담당부서</label>'
 			},
 			{
 				field : "sComName",
 				title : "상차지명",
-				width : 100
+				width : 100,
+				headerTemplate : '<label class="requireHeader">상차지명</label>'
 			},
 			{
 				field : "sAddr",
 				title : "상차지주소",
-				width : 200
+				width : 200,
+				headerTemplate : '<label class="requireHeader">상차지주소</label>'
 			},
 			{
 				field : "sAddrDetail",
@@ -102,12 +118,13 @@
 			},
 			{
 				field : "sDate",
-				title : "상차일시",
+				title : "상차일자",
 				width : 100,
 				template : function(dataItem) {
 					var sDate = dataItem.sDate + "";
 					return Util.formatDate(sDate);
-				}
+				},
+				headerTemplate : '<label class="requireHeader">상차일자</label>'
 			},
 			{
 				field : "sTime",
@@ -126,11 +143,7 @@
 			{
 				field : "sTel",
 				title : "상차지연락처",
-				width : 120,
-				template : function(dataItem) {
-					var sTel = dataItem.sTel;
-					return Util.formatPhone(sTel);
-				}
+				width : 120
 			},
 			{
 				field : "sMemo",
@@ -140,12 +153,14 @@
 			{
 				field : "eComName",
 				title : "하차지명",
-				width : 100
+				width : 100,
+				headerTemplate : '<label class="requireHeader">하차지명</label>'
 			},
 			{
 				field : "eAddr",
 				title : "하차지주소",
-				width : 200
+				width : 200,
+				headerTemplate : '<label class="requireHeader">하차지주소</label>'
 			},
 			{
 				field : "eAddrDetail",
@@ -154,12 +169,13 @@
 			},
 			{
 				field : "eDate",
-				title : "하차일시",
+				title : "하차일자",
 				width : 100,
 				template : function(dataItem) {
 					var eDate = dataItem.eDate + "";
 					return Util.formatDate(eDate);
-				}
+				},
+				headerTemplate : '<label class="requireHeader">하차일자</label>'
 			},
 			{
 				field : "eTime",
@@ -178,11 +194,7 @@
 			{
 				field : "eTel",
 				title : "하차지연락처",
-				width : 120,
-				template : function(dataItem) {
-					var eTel = dataItem.eTel;
-					return Util.formatPhone(eTel);
-				}
+				width : 120
 			},
 			{
 				field : "eMemo",
@@ -192,16 +204,38 @@
 			{
 				field : "inOutSctn",
 				title : "수출입구분",
-				width : 100
+				width : 100,
+				editor : function(container) {
+					var input = $("<input id='inOutSctn' name='inOutSctn'>");
+					input.appendTo(container);
+					input.kendoDropDownList({
+						dataTextField : "cname",
+						dataValueField : "cname",
+						autoBind : true,
+						dataSource : inOutSctnData
+					}).appendTo(container);
+				},
+				headerTemplate : '<label class="requireHeader">수출입구분</label>'
 			},
 			{
 				field : "truckTypeName",
 				title : "운송유형",
-				width : 100
+				width : 100,
+				editor : function(container) {
+					var input = $("<input id='truckTypeName' name='truckTypeName'>");
+					input.appendTo(container);
+					input.kendoDropDownList({
+						dataTextField : "cname",
+						dataValueField : "cname",
+						autoBind : true,
+						dataSource : truckTypeData
+					}).appendTo(container);
+				},
+				headerTemplate : '<label class="requireHeader">운송유형</label>'
 			},
 			{
 				field : "carTypeName",
-				title : "차종",
+				title : "요청차종",
 				width : 100,
 				editor : function(container) {
 					var input = $("<input id='carTypeName' name='carTypeName'>");
@@ -212,11 +246,12 @@
 						autoBind : true,
 						dataSource : carTypeData
 					}).appendTo(container);
-				}
+				},
+				headerTemplate : '<label class="requireHeader">요청차종</label>'
 			},
 			{
 				field : "carTonName",
-				title : "톤수",
+				title : "요청톤수",
 				width : 100,
 				editor : function(container) {
 					var input = $("<input id='carTonName' name='carTonName' required>");
@@ -227,7 +262,8 @@
 						autoBind : true,
 						dataSource : carTonData
 					}).appendTo(container);
-				}
+				},
+				headerTemplate : '<label class="requireHeader">요청톤수</label>'
 			},
 			{
 				field : "goodsName",
@@ -237,7 +273,8 @@
 			{
 				field : "goodsWeight",
 				title : "중량",
-				width : 100
+				width : 100,
+				headerTemplate : '<label class="requireHeader">중량</label>'
 			},
 			{
 				field : "allocCharge",
@@ -249,7 +286,8 @@
 				},
 				attributes : {
 					style : "text-align: right"
-				}
+				},
+				headerTemplate : '<label class="requireHeader">청구운임</label>'
 			},
 			{
 				field : "buyCharge",
@@ -266,7 +304,7 @@
 			{
 				field : "carNum",
 				title : "차량번호",
-				width : 100
+				width : 120
 			},
 			{
 				field : "driverName",
@@ -275,12 +313,8 @@
 			},
 			{
 				field : "driverTel",
-				title : "연락처",
-				width : 100,
-				template : function(dataItem) {
-					var driverTel = dataItem.driverTel;
-					return Util.formatPhone(driverTel);
-				}
+				title : "차주연락처",
+				width : 120
 			},
 			{
 				field : "allocDate",
@@ -338,11 +372,27 @@
 				editable : function(e) {
 					return false;
 				}
-			} ]
+			},
+			// 22.07.06 이건욱 T1 > J5, J6 배차관리 기능개선 (운임구분 추가)
+			{
+				field : "chargeType",
+				title : "운임구분",
+				width : 100,
+				editor : function(container) {
+					var input = $("<input id='chargeType' name='chargeType'>");
+					input.appendTo(container);
+					input.kendoDropDownList({
+						dataTextField : "cname",
+						dataValueField : "cname",
+						autoBind : true,
+						dataSource : chargeTypeData
+					}).appendTo(container);
+				},
+				headerTemplate : '<label class="requireHeader">운임구분</label>'
+			} ];
 
 	$(document).ready(
 			function() {
-
 				$("#grid").kendoGrid({
 					columns : columns,
 					//dataSource : dataSource,
@@ -365,6 +415,7 @@
 					} else {
 						filename = "파일을 선택해 주세요."
 					}
+
 					// 추출한 파일명 삽입
 					$(this).siblings('.upload-name').val(filename);
 				});
@@ -376,18 +427,25 @@
 			return;
 		}
 
-		$("#f").ajaxForm({
-			url : "/cmm/excelUpload.do",
-			contentType : false,
-			dataType : "json",
-			success : function(data) {
-				getExcelData(data.uploadFile);
-			}
-		});
+		$("#f")
+				.ajaxForm(
+						{
+							url : "/cmm/excelUpload.do",
+							contentType : false,
+							dataType : "json",
+							success : function(data) {
+								getExcelData(data.uploadFile);
+							},
+							// 22.07.09 이건욱 파일 업로드시 최초 등록된 파일이 외부에서 변경됐을 경우 ERR_UPLOAD_FILE_CHANGED 에러에 대한 처리
+							error : function(e) {
+								alert("배차 엑셀파일을 업로드 할 수 없습니다.\n등록된 파일이 외부에서 변경 되었을 수 있습니다.\n해당 페이지를 새로고침 (F5)하고 다시 시도해주세요.");
+							}
+						});
 
 		$("#f").submit();
 	}
 
+	// 22.07.08 이건욱 T1 > J5 배차일괄등록 편의성 개선
 	function getExcelData() {
 		var filename = arguments[0];
 
@@ -395,25 +453,37 @@
 			url : "/cmm/excelToJson.do",
 			type : "POST",
 			dataType : "json",
-			data : "fileName=" + filename,
+			data : {
+				fileName : filename,
+				className : "orderBundle"
+			},
 			beforeSend : function(xmlHttpRequest) {
 				xmlHttpRequest.setRequestHeader("AJAX", "true");
 				$("#loading").show();
 			},
 			success : function(data) {
-				setGridData(data.data);
+				// 22.07.08 이건욱 Excel to json 변환 실패 시 처리 내용 기술
+				if (data.status == 0) {
+					setGridData(data.data);
+				} else {
+					alert(data.message);
+				}
 			},
 			complete : function() {
 				$("#loading").hide();
+			},
+			error : function(request) {
+				//alert("배차양식 엑셀 파일을 처리하는데 문제가 발생했습니다.\n올바른 배차양식 엑셀 파일을 업로드 해주세요.");
 			}
 		});
 	}
 
 	function setGridData(data) {
 		var tmpData = [];
-		if (data.length > 1) {
-			for (var i = 1; i < data.length; i++) {
-				tmpData[i - 1] = {
+		// 22.07.13 이건욱 T1 > J5 배차일괄등록 편의성 개선 -> data 자체에 헤더가 빠져있으므로 0부터 순환
+		if (data.length > 0) {
+			for (var i = 0; i < data.length; i++) {
+				tmpData[i] = {
 					"reqCustName" : data[i][0],
 					"reqDeptName" : data[i][1],
 					"sComName" : data[i][2],
@@ -447,7 +517,11 @@
 					"sWayName" : data[i][30],
 					"eWayName" : data[i][31],
 					"mixYn" : data[i][32],
-					"returnYn" : data[i][33]
+					"returnYn" : data[i][33],
+					// 22.07.06 이건욱 T1 > J5, J6, J7 배차관리 기능개선
+					"chargeType" : data[i][34],
+					// 22.07.06 이건욱 T1 > J6 Row number 추가
+					"no" : data[i][35]
 				}
 			}
 		}
@@ -627,8 +701,15 @@
 						},
 						returnYn : {
 							type : "string"
+						},
+						// 22.07.06 이건욱 T1 > J5, J6 배차관리 기능개선
+						chargeType : {
+							type : "string",
+							validation : {
+								required : true,
+								validationMessage : "운임구분을 입력해 주세요."
+							}
 						}
-
 					}
 				}
 			}
@@ -656,10 +737,11 @@
 					dataItem = grid.dataItem($(e.target).closest("tr"));
 					dataItem.returnYn = checked ? "Y" : "N";
 				});
-
 	}
 
+	// 22.07.09 이건욱 T1 > J5, J6 배차관리 기능개선
 	function insertData() {
+		// 기본 유효성 체크
 		var validator = $("#grid").kendoValidator().data("kendoValidator");
 		if (validator.validate()) {
 			var grid = $("#grid").data("kendoGrid");
@@ -670,27 +752,29 @@
 					url : "/contents/order/data/orderBundleWrite.do",
 					type : "POST",
 					dataType : "json",
-					data : "gridData=" + encodeURIComponent(gridData),
+					data : {
+						sender : "orderBundle",
+						dataType : "json",
+						data : gridData
+					},
 					beforeSend : function(xmlHttpRequest) {
 						xmlHttpRequest.setRequestHeader("AJAX", "true");
 						$("#loading").show();
 					},
 					success : function(data) {
-						if (data.result) {
-							alert(data.msg);
+						if (data.linkMessage.status == 0) {
+							// 요청 성공시 내용 기술
+							alert(data.linkMessage.message);
 							location.reload();
+						} else if (data.linkMessage.status == 1){
+							// Validation 체크 실패 시 팝업 출력
+							data.linkMessage.data.data
+							alert(data.linkMessage.message);
+							validationErrorData = data.linkMessage.data.data;
+							popValidation();
 						} else {
-							alert(data.msg);
-							//차량정보가 일치하지 않을때 modal띄워서 화면에 뿌려주기
-							if (data.errDriverInfo != null) {
-								errDriverData = data.errDriverInfo;
-								viewErrDriverInfo();
-							}
-							//거래처정보가 일치하지 않을때 modal띄워서 화면에 뿌러주기
-							if (data.errReqInfo != null) {
-								errReqData = data.errReqInfo;
-								viewErrReqInfo();
-							}
+							// 기타 에러 출력
+							alert(data.linkMessage.message);
 						}
 					},
 					complete : function() {
@@ -698,10 +782,9 @@
 					}
 				});
 			} else {
-				alert("엑셀 파일을 업로드 해주세요.");
+				alert("올바른 배차 엑셀 파일을 업로드 해주세요.\n데이터가 없는 파일은 저장이 안됩니다.");
 			}
 		}
-
 	}
 
 	//공통코드 데이터 가져온다.
@@ -724,43 +807,34 @@
 		location.href = "/cmm/fileDownloadEtc.do?fileName=배차업로드양식파일.xlsx";
 	}
 
-	function viewErrDriverInfo() {
-		errDriverInfo = $("#errDriverInfo").data("kendoWindow");
-		if (errDriverInfo == null) {
-			errDriverInfo = $("#errDriverInfo").kendoWindow({
-				width : 550,
+	/**
+	 * 22.07.13 이건욱 T1 > J5, J6 배차관리 기능개선 -> Validation check error 레포트 뷰
+	 */
+	function popValidation() {
+		var popup = $("#popValidation").data("kendoWindow");
+		if (popup == null) {
+			popup = $("#popValidation").kendoWindow({
+				width : 1492,
 				height : 623,
 				content : {
-					url : "/contents/order/errDriverInfo.do"
+					url : "/contents/order/popValidation.do"
 				},
 				iframe : true,
 				visible : false
 			}).data("kendoWindow");
 		} else {
-			errDriverInfo.refresh({
-				url : "/contents/order/errDriverInfo.do"
+			// 이미 출력되어 있는 경우 새로고침
+			popup.refresh({
+				url : "/contents/order/popValidation.do"
 			});
 		}
-		errDriverInfo.center().open();
-	}
-
-	function viewErrReqInfo() {
-		errReqInfo = $("#errReqInfo").data("kendoWindow");
-		if (errReqInfo == null) {
-			errReqInfo = $("#errReqInfo").kendoWindow({
-				width : 550,
-				height : 623,
-				content : {
-					url : "/contents/order/errReqInfo.do"
-				},
-				iframe : true,
-				visible : false
-			}).data("kendoWindow");
-		} else {
-			errReqInfo.refresh({
-				url : "/contents/order/errReqInfo.do"
-			});
-		}
-		errReqInfo.center().open();
+		popup.center().open();
 	}
 </script>
+<style>
+.requireHeader {
+	color: blue;
+	display: inline;
+	font-size: 14px !important;
+}
+</style>
