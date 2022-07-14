@@ -93,7 +93,7 @@ var MultiColumnComboBox = {
 		/*
 		 * 22.07.05 이건욱 T1 > 거래처 조회시 부서명 제외하고 대표명으로 조회 (화주용)
 		 */
-		setCustNameWithCeoName: function(gbn, sellBuySctn) {
+		setCustNameWithCeoName: function(gbn, sellBuySctn, deptId) {
 			var custName =  $("#" + gbn + "CustName").kendoMultiColumnComboBox({
 				dataTextField: "custName",
 				dataValueField: "custId",
@@ -109,7 +109,8 @@ var MultiColumnComboBox = {
 							type: "post",
 							data: {
 								useYn: "Y",
-								sellBuySctn: sellBuySctn
+								sellBuySctn: sellBuySctn,
+								deptId: deptId
 							},
 							beforeSend: function(req) {
 								req.setRequestHeader("AJAX", true);

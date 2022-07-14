@@ -1417,7 +1417,7 @@ $(document).ready(function(){
 
 	// 22.07.05 이건욱 T1 > 거래처 조회시 부서명 제외하고 대표명으로 조회 (화주용)
 	//거래처 자동완성
-	sellCustName = MultiColumnComboBox.setCustNameWithCeoName("sell", "01");
+	sellCustName = MultiColumnComboBox.setCustNameWithCeoName("sell", "01", lastDeptSeleted);
 	sellCustName.bind("select", changeSellCust);
 	sellCustName.bind("change", searchSellCustSelectTrigger);
 	sellCustName.bind("select", payTypeChk);
@@ -1481,7 +1481,7 @@ $(document).ready(function(){
 		// 22.07.05 이건욱 T1 > 거래처 조회시 부서명 제외하고 대표명으로 조회 (화주용)
 		// 거래처 자동완성
 		sellCustName.destroy();
-		sellCustName = MultiColumnComboBox.setCustNameWithCeoName("sell", "01");
+		sellCustName = MultiColumnComboBox.setCustNameWithCeoName("sell", "01", lastDeptSeleted);
 		sellCustName.bind("select", changeSellCust);
 		sellCustName.bind("change", searchSellCustSelectTrigger);
 

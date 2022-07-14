@@ -804,7 +804,8 @@
 	}
 
 	function sampleDownload() {
-		location.href = "/cmm/fileDownloadEtc.do?fileName=배차업로드양식파일.xlsx";
+		// 22.07.14 이건욱 T1 > J6 배차관리 기능개선 -> 양식파일 변경
+		location.href = "/cmm/fileDownloadEtc.do?fileName=배차업로드양식파일_v3.0.xlsx";
 	}
 
 	/**
