@@ -165,7 +165,7 @@ public class OrderBundleController {
 			
 			/**
 			 * 유효성 체크
-			 * 	- 필수 입력항목 (화주거래처명, 화주담당부서, 상차지명, 상차지주소, 상차일자, 하차지명, 하차지주소, 하차일자, 수출입구분, 운송유형, 요청차종, 요청톤수, 중량, 청구운임, 운임구분)
+			 * 	- 필수 입력항목 (화주거래처명, 화주담당부서, 상차지명, 상차지주소, 상차일자, 하차지명, 하차지주소, 하차일자, 수출입구분, 운송유형, 요청차종, 요청톤수, 중량, 청구운임, 상차방법, 하차방법, 운임구분)
 			 * 	- 로그인한 조직과 부서로 관리되는 등록된 거래처 (화주거래처명)
 			 * 	- 거래처에 명시된 담당부서 (화주담당부서)
 			 * 	- 로그인한 조직에 등록된 차량 (차량번호, 차주명, 차주연락처)
@@ -631,6 +631,28 @@ public class OrderBundleController {
 						errorDetail.setMessage("차량번호가 입력되지 않았습니다.\n차량번호를 입력하거나 차주연락처를 비워야 합니다.");
 						errorList.add(errorDetail);
 					}
+				}
+				
+				// 상차방법
+				if (row.get("sWayName") == null && row.get("sWayName") == "") {
+					// 필수 입력 필드
+					OrderBundleErrorVo errorDetail = new OrderBundleErrorVo();
+					errorDetail.setRowNum(rowNum);
+					errorDetail.setColName("상차방법");
+					errorDetail.setColValue("");
+					errorDetail.setMessage("필수 입력항목 입니다.");
+					errorList.add(errorDetail);
+				}
+				
+				// 하차방법
+				if (row.get("eWayName") == null && row.get("eWayName") == "") {
+					// 필수 입력 필드
+					OrderBundleErrorVo errorDetail = new OrderBundleErrorVo();
+					errorDetail.setRowNum(rowNum);
+					errorDetail.setColName("하차방법");
+					errorDetail.setColValue("");
+					errorDetail.setMessage("필수 입력항목 입니다.");
+					errorList.add(errorDetail);
 				}
 				
 				// 운임구분

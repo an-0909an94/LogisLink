@@ -338,7 +338,8 @@
 						autoBind : true,
 						dataSource : wayTypeData
 					}).appendTo(container);
-				}
+				},
+				headerTemplate : '<label class="requireHeader">상차방법</label>'
 			},
 			{
 				field : "eWayName",
@@ -353,7 +354,8 @@
 						autoBind : true,
 						dataSource : wayTypeData
 					}).appendTo(container);
-				}
+				},
+				headerTemplate : '<label class="requireHeader">하차방법</label>'
 			},
 			{
 				field : "mixYn",
@@ -691,10 +693,18 @@
 							type : "string"
 						},
 						sWayName : {
-							type : "string"
+							type : "string",
+							validation : {
+								required : true,
+								validationMessage : "상차방법을 입력해 주세요."
+							}
 						},
 						eWayName : {
-							type : "string"
+							type : "string",
+							validation : {
+								required : true,
+								validationMessage : "하차방법을 입력해 주세요."
+							}
 						},
 						mixYn : {
 							type : "string"

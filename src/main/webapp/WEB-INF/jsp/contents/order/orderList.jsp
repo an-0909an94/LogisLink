@@ -50,7 +50,7 @@
 				<strong>등록일자</strong>
 				    <select class="custom-select col-12" name="searchDate" id="searchDate">
 				        <option value="sDate" selected>상차일자</option>
-				        <option value="regdate">둥록일자</option>
+				        <option value="regdate">등록일자</option>
 				    </select>
 				</div>
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
