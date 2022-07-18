@@ -250,3 +250,68 @@ button {
 	margin-top : -1rem;
 	/*z-index:1000;*/
 }
+
+/* 22.07.15 이건욱 그리드 개인화 설정 */
+.privateRightPanel {
+	width: 50%;
+	height: 70%;
+	position: fixed;
+	border: 1px solid #797474;
+	right: 0;
+	bottom: 2%;
+	background: rgb(11 11 11/ 90%);
+	z-index: 999;
+	color: white;
+	overflow-y: scroll;
+}
+
+.privateClosePanel {
+	width: 50%;
+	text-align: right;
+    position: fixed;
+    right: 0;
+    bottom: 72%;
+    background: #495057;
+    padding: 6px;
+    font-size: 0.8rem;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+
+.privateTbl input[type=number] {
+	width: 70px;
+    height: 26px;
+    font-size: 13px;
+}
+.privateTbl select {
+	width: 70px;
+    height: 26px;
+    font-size: 10px;
+}
+
+.privateTbl > thead th {
+	background: #eee;
+    color: black;
+    padding: 10px;
+    border-right: 1px solid gray;
+    position: sticky;
+	top: 0;
+	z-index: 99;
+}
+
+.privateTbl > tbody td {
+	background: #6c757d;
+    padding: 10px;
+    border-right: 1px solid gray;
+    border-bottom: 1px solid gray;
+    text-align: center;
+}
+
+.k-grid-content-sticky {
+	background: white;
+}
+
+.pNone {
+	display: none;
+}
+/* 22.07.15 이건욱 그리드 개인화 설정 -> End */

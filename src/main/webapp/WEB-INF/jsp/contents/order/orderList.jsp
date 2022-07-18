@@ -247,6 +247,13 @@
 						</div><!-- /toolbar -->
 						<div style="min-width: 500px;">
 							<div style="height:calc(100vh - 409px);" id="grid"></div>
+                            
+                            <!-- 22.07.15 이건욱 그리드 개인화 설정 -->
+                            <ul id="gridContextMenu">
+                                <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
+                                <li class="k-separator privateRClick"></li>
+                                <li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
+                            </ul>
 							<!-- /table -->
 						</div>
 					</div>
@@ -263,6 +270,17 @@
 </div>
 <script type="text/javascript">
 var viewLocation = null;
+
+// 22.07.15 이건욱 그리드 개인화 설정 -> 접속 사용자 아이디 세션 get
+var userId = '${sessionScope.userInfo.userId}';
+
+$("#gridContextMenu").kendoContextMenu({
+	target: "#grid",
+	filter: "tr[role='row']"
+});
+
+var contextMenu = $("#gridContextMenu").data("kendoContextMenu");
+contextMenu.bind("select", onContextMenuSelect);
 
 var headerTitle = ($("#headerTitle").text());
 
@@ -322,6 +340,7 @@ $(document).ready(function(){
 	});
 });
 
+// 22.07.18 이건욱 그리드 개인화 설정 -> 숫자 형태의 컬럼 타입을 Number로 바꿔 정렬 시 올바르게 정렬 되도록 추가
 var columns = [
 	{ field: "number", title: "No", width: 50 },
 	{ field: "allocStateName", title: "상태", width: 120},
@@ -345,7 +364,7 @@ var columns = [
 	{ field: "goodsWeight", title: "중량", width: 70 },
 	{ field: "goodsName", title: "화물정보", width: 120 },
 	{ field: "chargeType", title: "운임구분", width: 120 },
-	{ field: "sellAmt", title: "청구운임(소계)", width: 120,
+	{ field: "sellAmt", title: "청구운임(소계)", width: 120, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellAmt);
 		},
@@ -353,7 +372,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "buyAmt", title: "지불운임(소계)", width: 120,
+	{ field: "buyAmt", title: "지불운임(소계)", width: 120, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.buyAmt);
 		},
@@ -361,7 +380,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "sellCharge", title: "기본운임(청구)", width: 120,
+	{ field: "sellCharge", title: "기본운임(청구)", width: 120, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellCharge);
 		},
@@ -369,7 +388,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "sellWayPointCharge", title: "경유비(청구)", width: 130,
+	{ field: "sellWayPointCharge", title: "경유비(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellWayPointCharge);
 		},
@@ -377,7 +396,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "sellStayCharge", title: "대기료(청구)", width: 130,
+	{ field: "sellStayCharge", title: "대기료(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellStayCharge);
 		},
@@ -385,7 +404,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "sellHandWorkCharge", title: "수작업비(청구)", width: 130,
+	{ field: "sellHandWorkCharge", title: "수작업비(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellHandWorkCharge);
 		},
@@ -393,7 +412,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "sellRoundCharge", title: "회차비(청구)", width: 130,
+	{ field: "sellRoundCharge", title: "회차비(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellRoundCharge);
 		},
@@ -401,7 +420,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "sellOtherAddCharge", title: "기타추가비(청구)", width: 130,
+	{ field: "sellOtherAddCharge", title: "기타추가비(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellOtherAddCharge);
 		},
@@ -412,7 +431,7 @@ var columns = [
 	{ field: "sellWeight", title: "청구중량", width: 100 },
 	{ field: "payType", title: "빠른지급대상", width: 120 },
 	{ field: "reqPayDate", title: "빠른지급신청", width: 120 },
-	{ field: "buyCharge", title: "기본운임(지불)", width: 130,
+	{ field: "buyCharge", title: "기본운임(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.buyCharge);
 		},
@@ -420,7 +439,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "wayPointCharge", title: "경유비(지불)", width: 130,
+	{ field: "wayPointCharge", title: "경유비(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.wayPointCharge);
 		},
@@ -428,7 +447,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "stayCharge", title: "대기료(지불)", width: 130,
+	{ field: "stayCharge", title: "대기료(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.stayCharge);
 		},
@@ -436,7 +455,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "handWorkCharge", title: "수작업비(지불)", width: 130,
+	{ field: "handWorkCharge", title: "수작업비(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.handWorkCharge);
 		},
@@ -444,7 +463,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "roundCharge", title: "회차비(지불)", width: 130,
+	{ field: "roundCharge", title: "회차비(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.roundCharge);
 		},
@@ -452,7 +471,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},
-	{ field: "otherAddCharge", title: "기타추가비(지불)", width: 130,
+	{ field: "otherAddCharge", title: "기타추가비(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.otherAddCharge);
 		},
@@ -517,6 +536,9 @@ var columns = [
 ];
 
 function goList() {
+	// 22.07.15 이건욱 그리드 개인화 설정 -> 메뉴코드, 그리드아이디, 접속사용자아이디, 기존 컬럼정보 전달
+	columns = setPrivateData("B2110", "grid", userId, columns);
+	
  	$("#grid").text("");
 	$("#grid").kendoGrid({
 		dataSource : {
@@ -579,14 +601,25 @@ function goList() {
     	noRecords: true,
 	  	messages: {
 			noRecords: "조회된 데이터가 없습니다."
-	  	}
+	  	},
+	  	// 22.07.15 이건욱 그리드 개인화 설정
+	  	reorderable: true, // 컬럼 위치 변경
+        columnReorder: onReorderEnd, // 컬럼 위치 변경 이벤트
+        columnResize: onResizeEnd, // 컬럼 사이즈 변경 이벤트
 	});
+	
+	// 22.07.15 이건욱 그리드 개인화 설정 -> 그리드 옵션 활성화 여부 처리
+	// 추가로 페이지에서 적용되는 이벤트가 있는 경우 
+	// 그 이벤트 앞에 아래 함수 호출 부분이 적용되어야 함
+	setOptionActive("B2110", "grid", userId);
+	
 	var grid = $("#grid").data("kendoGrid");
 	grid.bind("change", onChange);
 	grid.tbody.delegate('tr', 'dblclick', function(){
 		var dataItem = grid.dataItem($(this));
 		form_popup("E", dataItem);
-	});	
+	});
+	
 	grid.bind("dataBound", grid_dataBound);
 }
 
@@ -792,4 +825,32 @@ function stopInterval() {
 	clearInterval(autoRefresh);
 }
 
+// 22.07.15 이건욱 그리드 개인화 설정
+function onContextMenuSelect(e) {
+	var rCookie = $.cookie("autoRefresh");
+
+	if(rCookie != "0") {
+		alert("자동새로고침 기능 해제 후 사용하시기 바랍니다.");
+		return;
+	}
+	
+	var grid = $("#grid").data("kendoGrid");
+	var data = grid.dataItem(e.target);
+	var row = grid.select();
+	var multiSelectedData = [];
+	var item = e.item.id;
+	
+	for(var i = 0; i < row.length; i++) {
+		multiSelectedData.push(grid.dataItem(row[i]));
+	}
+	
+	switch (item) {
+	case "cSave" : // 리스트 현재설정 저장 버튼 이벤트
+		setPrivateSaveData("B2110", "grid", userId);
+		break;
+	case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
+		setPrivatePanel("B2110", "grid", userId);
+		break;
+	}
+}
 </script>

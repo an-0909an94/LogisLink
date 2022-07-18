@@ -101,4 +101,143 @@
 				AND SIDO = #{sido}
 		ORDER BY SIGUN ASC
 	</select>
+  
+    <!-- 22.07.15 이건욱 그리드 개인화 설정 -->
+    <select id="selectPrivateColInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+      SELECT COL_ID
+           , COL_NAME
+         , COL_IDX
+         , FIX_YN
+         , SHOW_YN 
+         , COL_WIDTH 
+         , TEXT_ALIGN 
+         , FONT_SIZE
+         , COLOR
+         , FONT_WEIGHT
+         , FONT_STYLE
+         , FIELD_USE_YN
+         , USE_YN
+        FROM dbo.T_PRIVATE_COL_DETAIL 
+       WHERE 1=1
+         AND USER_ID = #{userId}
+         AND MENU_CODE = #{pageId}
+         AND GRID_ID = #{gridId}
+         AND USE_YN = 'Y'
+       ORDER BY COL_IDX
+    </select>
+    
+    <update id="savePrivateColList" parameterType="java.util.HashMap">
+      UPDATE dbo.T_PRIVATE_COL_DETAIL
+         SET COL_IDX    = COL_IDX_OUT
+           , FIX_YN     = FIX_YN_OUT
+           , SHOW_YN    = SHOW_YN_OUT
+           , COL_WIDTH  = COL_WIDTH_OUT
+           , TEXT_ALIGN   = TEXT_ALIGN_OUT
+           , FONT_SIZE  = FONT_SIZE_OUT
+           , COLOR    = COLOR_OUT
+           , FONT_WEIGHT  = FONT_WEIGHT_OUT
+           , FONT_STYLE   = FONT_STYLE_OUT
+           , EDITID     = #{userId}
+           , EDITDATE   = getdate()
+        FROM (
+           <foreach item="item" index="index" collection="list" open="" separator="union" close="">
+            SELECT #{item.userId, jdbcType=VARCHAR} USER_ID_OUT 
+                 , #{item.menuCode, jdbcType=VARCHAR} MENU_CODE_OUT 
+                 , #{item.gridId, jdbcType=VARCHAR} GRID_ID_OUT 
+                 , #{item.colId, jdbcType=VARCHAR}  COL_ID_OUT  
+                 , #{item.colName, jdbcType=VARCHAR}  COL_NAME_OUT  
+                 , #{item.colIdx, jdbcType=INTEGER} COL_IDX_OUT 
+                 , #{item.fixYn, jdbcType=VARCHAR}  FIX_YN_OUT  
+                 , #{item.showYn, jdbcType=VARCHAR} SHOW_YN_OUT 
+                 , #{item.colWidth, jdbcType=INTEGER} COL_WIDTH_OUT 
+                 , #{item.textAlign, jdbcType=INTEGER}  TEXT_ALIGN_OUT  
+                 , #{item.fontSize, jdbcType=INTEGER} FONT_SIZE_OUT 
+                 , #{item.color, jdbcType=VARCHAR}  COLOR_OUT 
+                 , #{item.fontWeight, jdbcType=VARCHAR} FONT_WEIGHT_OUT 
+                 , #{item.fontStyle, jdbcType=VARCHAR}  FONT_STYLE_OUT  
+           </foreach>
+        ) SUB 
+       WHERE dbo.T_PRIVATE_COL_DETAIL.USER_ID = SUB.USER_ID_OUT
+         AND dbo.T_PRIVATE_COL_DETAIL.MENU_CODE = SUB.MENU_CODE_OUT
+         AND dbo.T_PRIVATE_COL_DETAIL.GRID_ID = SUB.GRID_ID_OUT
+         AND dbo.T_PRIVATE_COL_DETAIL.COL_ID = SUB.COL_ID_OUT
+    </update>
+    
+    <select id="selectPrivateTblInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+      SELECT  MENU_CODE
+            , GRID_ID
+            , MOVE_USE_YN
+            , SHOW_USE_YN
+            , FIX_USE_YN
+            , WIDTH_USE_YN
+            , SORT_USE_YN
+            , FONT_SIZE_USE_YN
+            , COLOR_USE_YN
+            , FONT_BOLD_USE_YN
+            , FONT_STYLE_USE_YN
+            , MULTI_SORT_USE_YN
+            , PAGING_USE_YN
+          , USE_YN
+            , EDITID
+            , EDITDATE
+        FROM dbo.T_PRIVATE_TBL_MASTER
+       WHERE 1=1
+         AND MENU_CODE = #{pageId}
+         AND GRID_ID = #{gridId}
+    </select>
+    
+    <select id="selectPrivateTblCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+      SELECT  MENU_CODE
+            , GRID_ID
+            , PAGING_CNT
+        FROM dbo.T_PRIVATE_TBL_DETAIL
+       WHERE 1=1
+         AND USER_ID = #{userId}
+         AND MENU_CODE = #{pageId}
+         AND GRID_ID = #{gridId}
+    </select>
+    
+    <delete id="savePrivateColRemove" parameterType="java.util.HashMap">
+      DELETE
+        FROM dbo.T_PRIVATE_COL_DETAIL 
+       WHERE 1=1
+         AND USER_ID = #{userId}
+         AND MENU_CODE = #{pageId}
+         AND GRID_ID = #{gridId}
+    </delete>
+    
+    <insert id="savePrivateColReset" parameterType="java.util.HashMap">
+      INSERT INTO dbo.T_PRIVATE_COL_DETAIL 
+      SELECT  #{userId}
+            , MENU_CODE 
+          , GRID_ID 
+          , COL_ID
+          , COL_NAME
+          , COL_IDX
+          , FIX_YN 
+          , SHOW_YN
+          , COL_WIDTH 
+          , TEXT_ALIGN 
+          , FONT_SIZE
+          , COLOR
+          , FONT_WEIGHT
+          , FONT_STYLE
+          , FIELD_USE_YN
+          , USE_YN 
+          , #{userId} 
+          , getdate()
+        FROM dbo.T_PRIVATE_COL_MASTER
+       WHERE 1=1
+         AND MENU_CODE = #{pageId}
+         AND GRID_ID = #{gridId}
+    </insert>
+    
+    <update id="savePrivateTblCnt" parameterType="java.util.HashMap">
+      UPDATE dbo.T_PRIVATE_TBL_DETAIL
+         SET PAGING_CNT = #{pagingCnt}
+       WHERE 1=1
+         AND USER_ID = #{userId}
+         AND MENU_CODE = #{pageId}
+         AND GRID_ID = #{gridId}
+    </update>
 </mapper>

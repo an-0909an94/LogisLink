@@ -1,6 +1,5 @@
 package com.logislink.cmm.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.logislink.basic.vo.CodeVO;
 import com.logislink.cmm.helper.RestApiHelper;
 import com.logislink.cmm.service.CmmService;
@@ -35,7 +34,6 @@ import com.logislink.cmm.util.ExcelUtil;
 import com.logislink.cmm.util.FileUtil;
 import com.logislink.cmm.vo.AreaVO;
 import com.logislink.cmm.vo.FileVO;
-import com.logislink.notice.vo.BoardFileVO;
 
 @Controller
 public class CmmController {
@@ -247,6 +245,105 @@ public class CmmController {
 		
 		map.put("result", Boolean.TRUE);
 		map.put("data", gunguList);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 22.07.15 이건욱 그리드 개인화 설정 -> 화면, 사용자별 개인화 설정 컬럼 정보 조회 (공통 사용)
+	 */
+	@PostMapping(value="/cmm/getPrivateColList.do")
+	public String privateColList(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+			@RequestParam Map<String, Object> param ) throws Exception {
+
+		List<Map<String, Object>> list = cmmService.getPrivateColInfo(param);
+		map.put("result", Boolean.TRUE);
+		map.put("colInfo", list);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 22.07.15 이건욱 그리드 개인화 설정 -> 화면, 사용자별 개인화 설정 컬럼 정보 일괄 저장 (공통 사용)
+	 */
+	@PostMapping(value="/cmm/savePrivateColList.do")
+	public String savePrivateColList(HttpServletRequest request, HttpServletResponse response, Model model,
+								ModelMap map, @RequestParam Map<String, Object> param) throws Exception {
+		
+		String jsonParam = String.valueOf(param.get("list"));
+		
+		ObjectMapper objectMapper = new ObjectMapper(); 
+		List<Map<String, Object>> readValue = objectMapper.readValue(jsonParam, new TypeReference<List<Map<String, Object>>>(){});
+		
+		Map<String, Object> inMap = new HashMap<String, Object>();
+		inMap.put("list", readValue);
+		inMap.put("userId", readValue.get(0).get("userId"));
+		cmmService.savePrivateColList(inMap);
+		
+		param.put("userId", readValue.get(0).get("userId"));
+		param.put("pageId", readValue.get(0).get("menuCode"));
+		param.put("gridId", readValue.get(0).get("gridId"));
+		List<Map<String, Object>> list = cmmService.getPrivateColInfo(param);
+		map.put("result", Boolean.TRUE);
+		map.put("colInfo", list);
+		
+		return "jsonView";
+	}	
+	
+	/**
+	 * 22.07.15 이건욱 그리드 개인화 설정 -> 화면 그리드별 개인화 설정 사용여부 정보 조회 (공통 사용)
+	 */
+	@PostMapping(value="/cmm/getPrivateTblList.do")
+	public String privateTblList(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+			@RequestParam Map<String, Object> param ) throws Exception {
+
+		List<Map<String, Object>> list = cmmService.getPrivateTblInfo(param);
+		map.put("result", Boolean.TRUE);
+		map.put("tblInfo", list);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 22.07.15 이건욱 그리드 개인화 설정 -> 화면 그리드별 개인별 페이징 카운트 조회 (공통 사용)
+	 */
+	@PostMapping(value="/cmm/getPrivateTblCnt.do")
+	public String getPrivateTblCnt(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+			@RequestParam Map<String, Object> param ) throws Exception {
+
+		List<Map<String, Object>> list = cmmService.getPrivateTblCnt(param);
+		map.put("result", Boolean.TRUE);
+		map.put("tblInfo", list);
+		
+		return "jsonView";
+	}
+	
+	/**
+	 * 22.07.15 이건욱 그리드 개인화 설정 -> 화면, 사용자별 개인화 설정 컬럼 정보 초기화 (공통 사용)
+	 */
+	@PostMapping(value="/cmm/savePrivateColReset.do")
+	public String savePrivateColReset(HttpServletRequest request, HttpServletResponse response, Model model,
+								ModelMap map, @RequestParam Map<String, Object> param) throws Exception {
+		
+		cmmService.savePrivateColReset(param);
+		
+		List<Map<String, Object>> list = cmmService.getPrivateColInfo(param);
+		map.put("result", Boolean.TRUE);
+		map.put("colInfo", list);
+		
+		return "jsonView";
+	}	
+	
+	/**
+	 * 22.07.15 이건욱 그리드 개인화 설정 -> (화면, 사용자별 페이징 카운트 변경 시 저장 (공통 사용)
+	 */
+	@PostMapping(value="/cmm/savePrivateTblCnt.do")
+	public String savePrivateTblCnt(HttpServletRequest request, HttpServletResponse response, Model model,
+								ModelMap map, @RequestParam Map<String, Object> param) throws Exception {
+		
+		cmmService.savePrivateTblCnt(param);
+		
+		map.put("result", Boolean.TRUE);
 		
 		return "jsonView";
 	}

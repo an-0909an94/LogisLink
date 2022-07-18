@@ -53,5 +53,37 @@ public class CmmServiceImpl implements CmmService {
 		// TODO Auto-generated method stub
 		return cmmDao.selectAreaCodeList(map);
 	}
-
+	
+	// 22.07.15 이건욱 그리드 개인화 설정
+	@Override
+	public List<Map<String, Object>> getPrivateColInfo(Map<String, Object> map) {
+		return cmmDao.selectPrivateColInfo(map);
+	}
+	
+	@Override
+	public void savePrivateColList(Map<String, Object> map) throws Exception {
+		cmmDao.savePrivateColList(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getPrivateTblInfo(Map<String, Object> map) {
+		return cmmDao.selectPrivateTblInfo(map);
+	}
+	
+	@Override
+	public List<Map<String, Object>> getPrivateTblCnt(Map<String, Object> map) {
+		return cmmDao.selectPrivateTblCnt(map);
+	}
+	
+	@Override
+	public void savePrivateColReset(Map<String, Object> map) throws Exception {
+		cmmDao.savePrivateColRemove(map);
+		cmmDao.savePrivateColReset(map);
+	}
+	
+	@Override
+	public void savePrivateTblCnt(Map<String, Object> map) throws Exception {
+		cmmDao.savePrivateTblCnt(map);
+	}
+	// 22.07.15 이건욱 그리드 개인화 설정 -> End
 }

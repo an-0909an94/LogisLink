@@ -750,6 +750,12 @@
 							<div style="height:calc(100vh - 409px)" id="calcList"></div>
 							
 							<ul id="calcListContextMenu">
+                                <!-- 22.07.15 이건욱 그리드 개인화 설정 -->
+                                <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
+                                <li class="k-separator privateRClick"></li>
+                                <li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
+                                <li class="k-separator privateRClick"></li>
+                                
 						    	<li id="vCopyId">오더아이디복사</li>
 								<li class="k-separator"></li>
 						    	<li id="vChangeReq">화주변경</li>
@@ -787,6 +793,9 @@ var bizName;
 var calcId;
 var taxData;
 var errChk = false;
+
+// 22.07.15 이건욱 그리드 개인화 설정 -> 접속 사용자 아이디 세션 get 
+var userId = '${sessionScope.userInfo.userId}';
 
 $("#calcListContextMenu").kendoContextMenu({
 	target: "#calcList",
@@ -989,7 +998,6 @@ var columns = [
 	{ field: "number", title: "No", width: 50 },
 	// 22.06.29 이건욱 T5 > J20 컬럼 순서 변경
 	{ field: "orderId", title: "오더ID", width: 160 },
-	// End
 	{ field: "sellBuySctnName", title: "구분", width: 70 },
 	{ field: "finishYn", title: "마감일", width: 80,
 		template: "#if(finishYn == 'Y') {# #=calcDate# #} else {# N #} #"
@@ -1013,7 +1021,7 @@ var columns = [
 		}
 	},
 	{ field: "chargeType", title: "청구구분", width: 100 },
-	{ field: "unpaidAmt", title: "매출액", width: 100, 
+	{ field: "unpaidAmt", title: "매출액", width: 100, type: 'number',
 		template: function(dataItem) {
 		   return Util.formatNumber(dataItem.unpaidAmt);
 		},
@@ -1021,7 +1029,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},  
-	{ field: "allocFee", title: "수수료", width: 100, 
+	{ field: "allocFee", title: "수수료", width: 100, type: 'number',
 		template: function(dataItem) {
 		       return Util.formatNumber(dataItem.allocFee);
 		    },
@@ -1029,7 +1037,7 @@ var columns = [
 				style: "text-align: right" 
 			}
 		},  
-	{ field: "depositAmt", title: "입금액", width: 100, 
+	{ field: "depositAmt", title: "입금액", width: 100, type: 'number',
 		template: function(dataItem) {
 	       return Util.formatNumber(dataItem.depositAmt);
 	    },
@@ -1052,7 +1060,7 @@ var columns = [
 	{ field: "sellWeight", title: "청구중량", width: 100 },
 	{ field: "goodsWeight", title: "중량", width: 100 },
 	{ field: "calcTypeName", title: "정산항목", width: 100 },
-	{ field: "payableAmt", title: "매입액", width: 100, 
+	{ field: "payableAmt", title: "매입액", width: 100, type: 'number',
 		template: function(dataItem) {
 	    	return Util.formatNumber(dataItem.payableAmt);
 	    },
@@ -1060,7 +1068,7 @@ var columns = [
 			style: "text-align: right" 
 		}
 	},  
-	{ field: "withdrawalAmt", title: "지급액", width: 100, 
+	{ field: "withdrawalAmt", title: "지급액", width: 100, type: 'number',
 		template: function(dataItem) {
 		   return Util.formatNumber(dataItem.withdrawalAmt);
 		},
@@ -1195,6 +1203,9 @@ function getSearchBiz() {
 }
 
 function goList() {
+	// 22.07.15 이건욱 그리드 개인화 설정 -> 메뉴코드, 그리드아이디, 접속사용자아이디, 기존 컬럼정보 전달
+	columns = setPrivateData("C3110", "calcList", userId, columns);
+	
 	$("#calcList").text("");
 	$("#calcList").kendoGrid({
 		dataSource : {
@@ -1238,8 +1249,6 @@ function goList() {
 		},
 		navigatable: true,
         selectable: 'multiple',
-		sortable : true,
-        resizable: true,
         editable : false,
 		columns : columns,
     	noRecords: true,
@@ -1247,11 +1256,16 @@ function goList() {
             endless: true
         },
         pageable : false,
-// 		pageable : true,
 	  	messages: {
 			noRecords: "조회된 데이터가 없습니다."
 	  	}
 	});
+	
+	// 22.07.15 이건욱 그리드 개인화 설정 -> 그리드 옵션 활성화 여부 처리
+	// 추가로 페이지에서 적용되는 이벤트가 있는 경우 
+	// 그 이벤트 앞에 아래 함수 호출 부분이 적용되어야 함
+	setOptionActive("C3110", "calcList", userId);
+	
 	var grid = $("#calcList").data("kendoGrid");
 	grid.bind("change", onChange);
 	grid.tbody.delegate('tr', 'dblclick', function(){
@@ -1326,6 +1340,13 @@ function onContextMenuSelect(e) {
 	}
 	
 	switch (item) {
+	// 22.07.15 이건욱 그리드 개인화 설정
+	case "cSave" : // 리스트 현재설정 저장 버튼 이벤트
+		setPrivateSaveData("C3110", "calcList", userId);
+		break;
+	case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
+		setPrivatePanel("C3110", "calcList", userId);
+		break;
 	case "vCopyId" :
 		if(row.length != 1) {
 			alert("하나의 정산내역을 선택해주세요."); 
