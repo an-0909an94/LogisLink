@@ -114,11 +114,8 @@ $(document).ready(function() {
 		custInfo.value(custName);
 		custInfo.readonly(true);
 		
-		if (adminChk) {
-			Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", { custId: custId, useYn: 'Y' }, "deptId", "deptName", "", "--부서--");
-		} else {
-			Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", { custId: custId, useYn: 'Y' }, "deptId", "deptName", deptId, "");
-		}
+		// 22.07.18 이건욱 소속 조직의 전체 부서 조회 권한은 기존의 Master 권한을 따라감. 
+		Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", { custId: custId, deptId: deptId, useYn: 'Y' }, "deptId", "deptName", deptId, "");
 	} else {
 		// 슈퍼관리자의 경우 권한별 조회도 함께 제공
 		Util.setSelectBox("/contents/basic/data/allAuthList.do", "s_authSeq", {}, "authSeq", "authName", "", "--권한--");
