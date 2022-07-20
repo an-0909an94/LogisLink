@@ -102,29 +102,33 @@
 		ORDER BY SIGUN ASC
 	</select>
   
-    <!-- 22.07.15 이건욱 그리드 개인화 설정 -->
+    <!-- 22.07.20 이건욱 그리드 개인화 설정 -> 컬럼명을 Master 테이블에서 가져옴. -->
     <select id="selectPrivateColInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-      SELECT COL_ID
-           , COL_NAME
-         , COL_IDX
-         , FIX_YN
-         , SHOW_YN 
-         , COL_WIDTH 
-         , TEXT_ALIGN 
-         , FONT_SIZE
-         , COLOR
-         , FONT_WEIGHT
-         , FONT_STYLE
-         , FIELD_USE_YN
-         , USE_YN
-        FROM dbo.T_PRIVATE_COL_DETAIL 
-       WHERE 1=1
-         AND USER_ID = #{userId}
-         AND MENU_CODE = #{pageId}
-         AND GRID_ID = #{gridId}
-         AND USE_YN = 'Y'
-       ORDER BY COL_IDX
-    </select>
+		 SELECT A.COL_ID
+		     , B.COL_NAME
+			 , A.COL_IDX
+			 , A.FIX_YN
+			 , A.SHOW_YN 
+			 , A.COL_WIDTH 
+			 , A.TEXT_ALIGN 
+			 , A.FONT_SIZE
+			 , A.COLOR
+			 , A.FONT_WEIGHT
+			 , A.FONT_STYLE
+			 , A.FIELD_USE_YN
+			 , A.USE_YN
+		  FROM dbo.T_PRIVATE_COL_DETAIL A
+		  LEFT OUTER JOIN dbo.T_PRIVATE_COL_MASTER B
+		    ON A.MENU_CODE = B.MENU_CODE
+	       AND A.GRID_ID = B.GRID_ID
+		   AND A.COL_ID = B.COL_ID 
+		 WHERE 1=1
+		   AND A.USER_ID = #{userId}
+		   AND A.MENU_CODE = #{pageId}
+		   AND A.GRID_ID = #{gridId}
+		   AND A.USE_YN = 'Y'
+		 ORDER BY A.COL_IDX
+	</select>
     
     <update id="savePrivateColList" parameterType="java.util.HashMap">
       UPDATE dbo.T_PRIVATE_COL_DETAIL

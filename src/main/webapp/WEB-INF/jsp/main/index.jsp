@@ -98,7 +98,7 @@ input:focus {outline: none;}
 
 <!-- 카피라이트 / 기존소스  -->
 <div style="position:absolute; width:100%; padding:30px; text-align:center; bottom:0px; text-shadow: 1px 1px 1px #000000;">
-	<span style="color:#fbfbfc; font-size:14px;">(주)로지스마일 | 전화 : 1600-1495 | 메일: logis-link@daum.net | (c) 2021 Logismile Co.,Ltd. All Rights Reserved</span>
+	<span style="color:#fbfbfc; font-size:14px;">로지스링크 | 전화 : 02-783-1436 | 메일: logis-link@daum.net | 서울시 영등포구 국회대로 70길 12 대산빌딩 4층 | (c) 2021 Logislink All Rights Reserved</span>
 </div>
 
 <div id="divFindUserInfo"></div>

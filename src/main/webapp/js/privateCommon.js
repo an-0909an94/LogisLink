@@ -21,14 +21,14 @@ function getKeyValue(source, inKey) {
 	return outValue;
 }
 
-// THEVALUE> 컬럼 위치 변경 시 이벤트 캐치
+// 컬럼 위치 변경 시 이벤트 캐치
 function onReorderEnd(arg) {
 	var gridId = $(this)[0].wrapper[0].id;
     var orgColInfo = $("#" + gridId).data("kendoGrid").columns;
     CHANGED_GRID_INFO = true;
 }
 
-// THEVALUE> 컬럼 사이즈 변경 시 이벤트 캐치
+// 컬럼 사이즈 변경 시 이벤트 캐치
 function onResizeEnd(e) {
 	var gridId = $(this)[0].wrapper[0].id;
 	var orgColInfo = $("#" + gridId).data("kendoGrid").columns;
@@ -85,6 +85,7 @@ function setPrivateData(inPageId, inGridId, inUserId, inOrgColInfo) {
 	var colList = JSON.parse(sessionStorage.getItem(stoId));
 	
 	if(colList == null) {
+		
 		$.ajax({
 			url: "/cmm/getPrivateColList.do",
 			type: "POST",
@@ -93,8 +94,31 @@ function setPrivateData(inPageId, inGridId, inUserId, inOrgColInfo) {
 			async: false,
 			success: function(data){
 				if(data.result == true) {
-					sessionStorage.setItem(stoId, JSON.stringify(data.colInfo));
-					colList = data.colInfo;
+					// 20220720 개인화 컬럼 정보 테이블에 현재 접속한 유저의 정보가 있는지 체크 
+					if(data.colInfo.length == 0) {
+						// 없는 경우 마스터 정보의 컬럼 정보를 가져와서 디폴트 초기화  
+						$.ajax({
+							url: "/cmm/savePrivateColReset.do",
+							type: "POST",
+							dataType: "json",
+							data: param,
+							async: false,
+							success: function(data){
+								if(data.result) {
+									CHANGED_GRID_INFO = false;
+									sessionStorage.clear();
+									sessionStorage.setItem(stoId, JSON.stringify(data.colInfo));
+									colList = data.colInfo;
+								} else {
+									alert("오류가 발생했습니다. 관리자에게 문의하세요.");
+									return;
+								}
+							}
+						});
+					} else {
+						sessionStorage.setItem(stoId, JSON.stringify(data.colInfo));
+						colList = data.colInfo;
+					}
 				}
 			}
 		});
