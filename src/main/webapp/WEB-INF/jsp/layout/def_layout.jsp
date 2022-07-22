@@ -34,7 +34,6 @@ response.setHeader ("Cache-Control", "no-cache");
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/left.css?v=2'/>">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
-<!-- 22.07.15 이건욱 그리드 개인화 설정  -->
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/jquery-ui.css'/>">
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/bcPicker.css'/>">
 
@@ -50,10 +49,9 @@ response.setHeader ("Cache-Control", "no-cache");
 <script type="text/javascript" src="<c:url value='/js/order.js?v=13'/>" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<!-- 22.07.15 이건욱 그리드 개인화 설정  -->
 <script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>" ></script>
 <script type="text/javascript" src="<c:url value='/js/bcPicker.js'/>" ></script>
-<script type="text/javascript" src="<c:url value='/js/privateCommon.js'/>" ></script>
+<script type="text/javascript" src="<c:url value='/js/privateCommon.js?v=2'/>" ></script>
 
 <!-- validator JS -->
 <script src="/js/validator.min.js"></script>

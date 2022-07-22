@@ -1,4 +1,5 @@
 var CHANGED_GRID_INFO = false;
+var SHOW_YN = false;
 
 function toCamelCase(str) {
 	return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
@@ -255,11 +256,11 @@ function setOptionActive(inPageId, inGridId, inUserId) {
 		var options = grid.getOptions();
 		options["reorderable"] = tblInfo["MOVE_USE_YN"] == "Y" ? true : false;
 		if(tblInfo["MOVE_USE_YN"] == "Y") {
-			options["columnReorder"] = onReorderEnd; // THEVALUE> 컬럼 위치 변경 이벤트
+			options["columnReorder"] = onReorderEnd; // 컬럼 위치 변경 이벤트
 		}
 		options["resizable"] = tblInfo["WIDTH_USE_YN"] == "Y" ? true : false;
 		if(tblInfo["WIDTH_USE_YN"] == "Y") {
-			options["columnResize"] = onResizeEnd; // THEVALUE> 컬럼 사이즈 변경 이벤트
+			options["columnResize"] = onResizeEnd; // 컬럼 사이즈 변경 이벤트
 		}
 		if(tblInfo["MULTI_SORT_USE_YN"] == "Y") {
 			options["sortable"] = {
@@ -358,32 +359,32 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 	var headerHtml = "";
 	headerHtml += "<tr>";
 	if(tblInfo.MOVE_USE_YN == "Y") {
-		headerHtml += "<th style='width: 30px'>&nbsp;</th>";
+		headerHtml += "<th style='width: 5%'>&nbsp;</th>";
 	}
 	if(tblInfo.SHOW_USE_YN == "Y") {
-		headerHtml += "<th style='width: 45px'>노출</th>";
+		headerHtml += "<th style='width: 5%'>노출</th>";
 	}
-	headerHtml += "<th style='width: 200px'>항목명</th>";
+	headerHtml += "<th style='width: 15%'>항목명</th>";
 	if(tblInfo.FIX_USE_YN == "Y") {
-		headerHtml += "<th style='width: 45px'>고정</th>";
+		headerHtml += "<th style='width: 5%'>고정</th>";
 	}
 	if(tblInfo.WIDTH_USE_YN == "Y") {
-		headerHtml += "<th style='width: 95px'>넓이</th>";
+		headerHtml += "<th style='width: 10%'>넓이</th>";
 	}
 	if(tblInfo.SORT_USE_YN == "Y") {
-		headerHtml += "<th style='width: 80px'>정렬</th>";
+		headerHtml += "<th style='width: 10%'>정렬</th>";
 	}
 	if(tblInfo.FONT_SIZE_USE_YN == "Y") {
-		headerHtml += "<th style='width: 95px'>폰트사이즈</th>";
+		headerHtml += "<th style='width: 10%'>폰트사이즈</th>";
 	}
 	if(tblInfo.COLOR_USE_YN == "Y") {
-		headerHtml += "<th style='width: 95px'>폰트컬러</th>";
+		headerHtml += "<th style='width: 10%'>폰트컬러</th>";
 	}
 	if(tblInfo.FONT_BOLD_USE_YN == "Y") {
-		headerHtml += "<th style='width: 95px'>폰트Bold</th>";
+		headerHtml += "<th style='width: 10%'>폰트Bold</th>";
 	}
 	if(tblInfo.FONT_STYLE_USE_YN == "Y") {
-		headerHtml += "<th style='width: 95px'>폰트스타일</th>";
+		headerHtml += "<th style='width: 10%'>폰트스타일</th>";
 	}
 	headerHtml += "</tr>";
 	
@@ -407,28 +408,28 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 		}
 		
 		html += "<tr id='" + idx + "' class='sortable'>";
-		html += "<td style='width: 30px' class='" + (tblInfo.MOVE_USE_YN != "Y" ? "pNone" : "") + "'><img src='/images/handle.png'></td>";
-		html += "<td style='width: 45px' class='" + (tblInfo.SHOW_USE_YN != "Y" ? "pNone" : "") + "'><input id='" + node.orgField + "' type='checkbox' " + (node.hidden ? "" : "checked") + " class='chkShowYn'></td>";
-		html += "<td style='width: 200px'>" + (node.title || node.orgField) + "</td>";
-		html += "<td style='width: 45px' class='" + (tblInfo.FIX_USE_YN != "Y" ? "pNone" : "") + "'><input id='" + node.orgField + "' type='checkbox' " + (node.sticky ? "checked" : "") + " class='chkFixYn'></td>";
-		html += "<td style='width: 95px' class='" + (tblInfo.WIDTH_USE_YN != "Y" ? "pNone" : "") + "'><input type='number' min='20' class='form-control form-control-sm changeWidth' value='" + node.width + "'></td>";
-		html += "<td style='width: 80px' class='" + (tblInfo.SORT_USE_YN != "Y" ? "pNone" : "") + "'>";
+		html += "<td style='width: 5%' class='" + (tblInfo.MOVE_USE_YN != "Y" ? "pNone" : "") + "'><img src='/images/handle.png'></td>";
+		html += "<td style='width: 5%' class='" + (tblInfo.SHOW_USE_YN != "Y" ? "pNone" : "") + "'><input id='" + node.orgField + "' type='checkbox' " + (node.hidden ? "" : "checked") + " class='chkShowYn'></td>";
+		html += "<td style='width: 15%'>" + (node.title || node.orgField) + "</td>";
+		html += "<td style='width: 5%' class='" + (tblInfo.FIX_USE_YN != "Y" ? "pNone" : "") + "'><input id='" + node.orgField + "' type='checkbox' " + (node.sticky ? "checked" : "") + " class='chkFixYn'></td>";
+		html += "<td style='width: 10%' class='" + (tblInfo.WIDTH_USE_YN != "Y" ? "pNone" : "") + "'><input type='number' min='20' class='form-control form-control-sm changeWidth' value='" + node.width + "'></td>";
+		html += "<td style='width: 10%' class='" + (tblInfo.SORT_USE_YN != "Y" ? "pNone" : "") + "'>";
 		html += "	<select id='" + node.orgField + "' class='custom-select cmb1'>";
 		html += "		<option id='1' " + (textAlign == "center" ? "selected" : "") + ">center</option>";
 		html += "		<option id='2' " + (textAlign == "left" ? "selected" : "") + ">left</option>";
 		html += "		<option id='3' " + (textAlign == "right" ? "selected" : "") + ">right</option>";
 		html += "	</select>";
 		html += "</td>";
-		html += "<td style='width: 95px' class='" + (tblInfo.FONT_SIZE_USE_YN != "Y" ? "pNone" : "") + "'><input id='" + node.orgField + "' type='number' min='10' class='form-control form-control-sm changeFontSize' value='" + fontSize + "'></td>";
-		html += "<td style='width: 95px' class='" + (tblInfo.COLOR_USE_YN != "Y" ? "pNone" : "") + "'><div id='bcPicker_" + node.orgField + "' class='bcPicker'></div>";
+		html += "<td style='width: 10%' class='" + (tblInfo.FONT_SIZE_USE_YN != "Y" ? "pNone" : "") + "'><input id='" + node.orgField + "' type='number' min='10' class='form-control form-control-sm changeFontSize' value='" + fontSize + "'></td>";
+		html += "<td style='width: 10%' class='" + (tblInfo.COLOR_USE_YN != "Y" ? "pNone" : "") + "'><div id='bcPicker_" + node.orgField + "' class='bcPicker'></div>";
 		html += "</td>";
-		html += "<td style='width: 95px' class='" + (tblInfo.FONT_BOLD_USE_YN != "Y" ? "pNone" : "") + "'>";
+		html += "<td style='width: 10%' class='" + (tblInfo.FONT_BOLD_USE_YN != "Y" ? "pNone" : "") + "'>";
 		html += "	<select id='" + node.orgField + "' class='custom-select cmb2'>";
 		html += "		<option id='normal' " + (fontWeight == "normal" ? "selected" : "") + ">normal</option>";
 		html += "		<option id='bold' " + (fontWeight == "bold" ? "selected" : "") + ">bold</option>";
 		html += "	</select>";
 		html += "</td>";
-		html += "<td style='width: 95px' class='" + (tblInfo.FONT_STYLE_USE_YN != "Y" ? "pNone" : "") + "'>";
+		html += "<td style='width: 10%' class='" + (tblInfo.FONT_STYLE_USE_YN != "Y" ? "pNone" : "") + "'>";
 		html += "	<select id='" + node.orgField + "' class='custom-select cmb3'>";
 		html += "		<option id='normal' " + (fontStyle == "normal" ? "selected" : "") + ">normal</option>";
 		html += "		<option id='italic' " + (fontStyle == "italic" ? "selected" : "") + ">italic</option>";
@@ -438,14 +439,6 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 	});
 	
 	$("#privateTbody").html(html);
-	
-	// 외부영역 클릭 시 팝업 닫기
-	$(document).mouseup(function (e){
-		var layer = $(".privateRightPanel");
-		if(layer.has(e.target).length == 0){
-			$(".privateRightPanel").hide();
-		}
-	});
 	
 	// EVENT 
 	// color picker
@@ -665,7 +658,20 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 	});
 	
 	// 레이어 오픈
-	$(".privateRightPanel").slideToggle();
+	$(".privateRightPanel").show(500, function() {
+		SHOW_YN = true;
+	});
+	
+	// 외부영역 클릭 시 팝업 닫기
+	$(document).click(function (e){
+		if(SHOW_YN) {
+			var target = $(".privateRightPanel");
+	        if(target.has(e.target).length==0) {
+	        	$(".privateRightPanel").hide();
+				SHOW_YN = false;
+	        } 
+		}
+    });
 	
 	// 레이어 닫기 버튼 클릭 이벤트
 	$(".privateClose").off("click");
