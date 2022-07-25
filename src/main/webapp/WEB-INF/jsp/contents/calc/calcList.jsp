@@ -1130,6 +1130,8 @@ function setSearchForm () {
 	searchCustName.destroy();
 	$("#orderId").val("")
 	$(".hiddenValue").val("");
+	// 22.07.25 코리아로지스 정산관리내 검색항목 [담당부서명] 변경 시, hiddenValue 모든 값이 초기화되면서 디폴트 01 값 사라짐. 
+	$("#bizTypeCd").val("01");
 	$("#sSubName").val("");
 	var sellBuySctn = $("#custType").val();
 	if(sellBuySctn == "99") {	//차량번호 선택
