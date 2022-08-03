@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<style>
+.requireHeader {
+    color: blue;
+    display: inline;
+    font-size: 14px !important;
+}
+</style>
+
 <div class="header">
     <div class="summary p30">
         <div class="hdr-tit">
@@ -776,7 +784,7 @@
 							// 요청 성공시 내용 기술
 							alert(data.linkMessage.message);
 							location.reload();
-						} else if (data.linkMessage.status == 1){
+						} else if (data.linkMessage.status == 1) {
 							// Validation 체크 실패 시 팝업 출력
 							data.linkMessage.data.data
 							alert(data.linkMessage.message);
@@ -842,10 +850,3 @@
 		popup.center().open();
 	}
 </script>
-<style>
-.requireHeader {
-	color: blue;
-	display: inline;
-	font-size: 14px !important;
-}
-</style>

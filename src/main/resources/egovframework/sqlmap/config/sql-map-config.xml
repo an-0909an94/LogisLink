@@ -37,6 +37,7 @@
 		<typeAlias	alias="talkTemplateVO"	type="com.logislink.notice.vo.TalkTemplateVO" />
 		<typeAlias	alias="payVO"		type="com.logislink.calc.vo.PayVO" />
 		<typeAlias	alias="fileVO"		type="com.logislink.cmm.vo.FileVO" />
-		<typeAlias	alias="manualVO"	type="com.logislink.basic.vo.ManualVO" />	
+		<typeAlias	alias="manualVO"	type="com.logislink.basic.vo.ManualVO" />
+        <typeAlias  alias="sellCalcVO"  type="com.logislink.calc.vo.SellCalcVO" />
 	</typeAliases>
 </configuration>

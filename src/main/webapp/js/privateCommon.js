@@ -152,6 +152,10 @@ function setPrivateData(inPageId, inGridId, inUserId, inOrgColInfo) {
 					node["field"] = node.COL_ID;
 				}
 				node["template"] = subNode.template;
+				// 추가
+				node["headerTemplate"] = subNode.headerTemplate;
+				if (subNode.editable != null)
+					node["editable"] = subNode.editable;
 			}
 		});
 	});
@@ -392,6 +396,9 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 	
 	var html = "";
 	$.each(colInfo, function(idx, node) {
+		// 컬럼명이 "chaeck"된 항목은 개인화 패널에 노출시키지 않음. 
+		if (node.orgField == "check")
+			return true;
 		
 		var str = "";
     	var textAlign = "center";
