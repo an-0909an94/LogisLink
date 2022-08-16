@@ -2862,7 +2862,7 @@ function payTypeChk(){
 		//신규차량 등록시 빠른지급여부 미지급으로 
 		if(buyDriverId == '' && buyVehicId == ''){
 			$("#payType option[value*='Y']").prop('disabled',false);
-			$("#payType").val('N').prop("selected", true);
+			$("#payType").val('Y').prop("selected", true);
 		}
 	}else{
 		$("#payType option[value*='Y']").prop('disabled',true);

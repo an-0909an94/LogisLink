@@ -78,6 +78,8 @@
 	<div class="contents">
 		<div class="box">
         	<form id="f" data-toggle="validator" role="form">
+                <input type="hidden" id="dlineDayCode" name="dlineDayCode">
+                <input type="hidden" id="dlinePointCode" name="dlinePointCode">
 				<div id="group-list" class="cont-wrapper">
 					<!--  -->
 						<div class="cont-b-head">

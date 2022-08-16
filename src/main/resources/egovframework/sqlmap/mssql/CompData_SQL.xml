@@ -24,6 +24,8 @@
 			, #{deptId}	  deptId
 			, ISNULL(OAPI_YN, 'N') oapiYn
 			, ISNULL(OAPI_TOKEN, '') oapiToken
+            , DLINE_DAY_CODE dlineDayCode
+            , DLINE_POINT_CODE dlinePointCode
 		FROM
 			T_CUST_MST
 		WHERE 
