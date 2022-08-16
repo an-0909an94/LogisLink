@@ -78,8 +78,8 @@
 	<div class="contents">
 		<div class="box">
         	<form id="f" data-toggle="validator" role="form">
-                <input type="hidden" id="dlineDayCode" name="dlineDayCode">
-                <input type="hidden" id="dlinePointCode" name="dlinePointCode">
+                <input type="hidden" id="dLineDayCode" name="dlineDayCode">
+                <input type="hidden" id="dLinePointCode" name="dlinePointCode">
 				<div id="group-list" class="cont-wrapper">
 					<!--  -->
 						<div class="cont-b-head">
@@ -303,9 +303,10 @@ $('#f').validator().on('submit', function (e) {
 			bizTypeCode: $("#bizTypeCode").val(),
 			bankCode : $("#bankCode").val(),
 			bankCnnm : $("#bankCnnm").val(),
-			bankAccount : $("#bankAccount").val()
+			bankAccount : $("#bankAccount").val(),
+			dlineDayCode : $("#dLineDayCode").val(),
+			dlinePointCode : $("#dLinePointCode").val()
 		};
-	
 	//console.log(param)
 	if (e.isDefaultPrevented()) {
 	    alert("항목을 입력해 주세요.")
