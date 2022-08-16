@@ -1,7 +1,9 @@
 package com.logislink.calc.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -21,8 +24,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.logislink.calc.service.SellCalcService;
+import com.logislink.calc.service.TaxService;
+import com.logislink.calc.service.TranService;
 import com.logislink.cmm.LinkMessage;
 import com.logislink.cmm.LinkMessageData;
+import com.logislink.cmm.util.DateUtil;
 import com.logislink.cmm.util.EtcUtil;
 import com.logislink.login.vo.LoginMenuVO;
 import com.logislink.login.vo.LoginVO;
@@ -34,6 +40,37 @@ public class SellCalcController {
 
 	@Resource(name = "sellCalcService")
 	private SellCalcService sellCalcService;
+	@Resource(name = "tranService")
+	private TranService tranService;
+	@Resource(name = "taxService")
+	private TaxService taxService;
+	
+	@Value("#{globalProperties['Globals.brokerCustId']}")
+    private String brokerCustId;
+	@Value("#{globalProperties['Globals.brokerDeptId']}")
+	private String brokerDeptId;
+	@Value("#{globalProperties['Globals.brokerBizNo']}")
+	private String brokerBizNo;
+	@Value("#{globalProperties['Globals.brokerBizType']}")
+	private String brokerBizType;
+	@Value("#{globalProperties['Globals.brokerBizName']}")
+	private String brokerBizName;
+	@Value("#{globalProperties['Globals.brokerBizClass']}")
+	private String brokerBizClass;
+	@Value("#{globalProperties['Globals.brokerBizSubNo']}")
+	private String brokerBizSubNo;
+	@Value("#{globalProperties['Globals.brokerCeo']}")
+	private String brokerCeo;
+	@Value("#{globalProperties['Globals.brokerMemDept']}")
+	private String brokerMemDept;
+	@Value("#{globalProperties['Globals.brokerMemName']}")
+	private String brokerMemName;
+	@Value("#{globalProperties['Globals.brokerMemEmail']}")
+	private String brokerMemEmail;
+	@Value("#{globalProperties['Globals.brokerMemTel']}")
+	private String brokerMemTel;
+	@Value("#{globalProperties['Globals.brokerAddr']}")
+	private String brokerAddr;
 
 	@GetMapping(value = "/contents/calc/sellCalcList.do")
 	public String sellCalcList(HttpServletRequest request, HttpSession session, ModelMap model) {
@@ -49,7 +86,7 @@ public class SellCalcController {
 			@RequestParam Map<String, Object> param) throws Exception {
 
 		LoginVO login = (LoginVO) session.getAttribute("userInfo");
-		if ("N".equals(login.getMasterYn())) {
+		if (login.getMasterYn().equals("N")) {
 			param.put("mngDeptId", login.getDeptId());
 		} else {
 			param.put("mngDeptId", param.get("sDeptId"));
@@ -58,99 +95,127 @@ public class SellCalcController {
 		// param.put("mngDeptId", login.getDeptId());
 
 		List<com.logislink.calc.vo.SellCalcVO> sellCalcList = sellCalcService.getSellCalcList(param);
-		int count = sellCalcService.getSellCalcListCnt(param);
+		Map<String, Object> sellCalcListCnt = sellCalcService.getSellCalcListCnt(param);
 
 		map.put("result", Boolean.TRUE);
 		map.put("data", sellCalcList);
-		map.put("total", count);
+		map.put("total", sellCalcListCnt.get("sellCalcListCnt"));
+		map.put("sumUnpaidAmt", sellCalcListCnt.get("sumUnpaidAmt"));
+		map.put("sumDepositAmt", sellCalcListCnt.get("sumDepositAmt"));
 		
-		/*
-		SellCalcVO sellCalcVo1 = new SellCalcVO();
-		sellCalcVo1.number = 1;
-		sellCalcVo1.orderId = "O20220315130322724";
-		sellCalcVo1.allocId = "A20220315130322413";
-		sellCalcVo1.finishYn = "N";
-		sellCalcVo1.allocDate = "03.15";
-		sellCalcVo1.eDate = "03.15";
-		sellCalcVo1.sAddr = "전라북도 군산시 소룡동 1669-2 이스턴물류";
-		sellCalcVo1.eAddr = "전라북도 군산시 오식도동 806-3 한성필하우스";
-		sellCalcVo1.unpaidAmt = 3200;
-		sellCalcVo1.sellCharge = 200;
-		sellCalcVo1.sellWayPointCharge = 3000;
-		sellCalcVo1.sellStayCharge = 0;
-		sellCalcVo1.sellHandWorkCharge = 0;
-		sellCalcVo1.sellRoundCharge = 0;
-		sellCalcVo1.sellOtherAddCharge = 0;
-		sellCalcVo1.goodsName = "테스트화물3.14.1번";
-		sellCalcVo1.unitPriceTypeName = "대당단가";
-		sellCalcVo1.unitPrice = 0;
-		sellCalcVo1.goodsWeight = 0;
-		sellCalcVo1.chargeTypeName = "인수증";
-		sellCalcVo1.allocFee = 0;
-		sellCalcVo1.tranReceiptYn = "Y";
-		sellCalcVo1.tranReceiptDate = "03.15";
-		sellCalcVo1.payableAmt = 8865;
-		sellCalcVo1.carNum = "인천99아9999";
-		sellCalcVo1.carSctnName = "외부용차";
-		sellCalcVo1.driverName = "김진";
-		sellCalcVo1.driverMobile = "01000000000";
-		sellCalcVo1.reqPayYn = "N";
-		sellCalcVo1.mngDeptName = "[관리팀]";
-		sellCalcVo1.mngUserName = "김진";
-		sellCalcVo1.taxInvYn = "Y";
-		sellCalcVo1.taxInvDate = "03.15";
+		return "jsonView";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/getTaxBizInfo.do")
+	public String getTaxBizInfo(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			
+			Map<String, Object> supplierTaxBizInfo = sellCalcService.selectTaxBizInfo(param);
+			
+			// 결과값
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			LinkMessageData linkMessageData = new LinkMessageData();
+			linkMessageData.setData(supplierTaxBizInfo);
+			linkMessageData.setDataType("Map");
+			linkMessage.setData(linkMessageData);
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage(e.getMessage());
+		}
 		
-		SellCalcVO sellCalcVo2 = new SellCalcVO();
-		sellCalcVo2.number = 2;
-		sellCalcVo2.orderId = "O20220325094351656";
-		sellCalcVo2.allocId = "A20220325094351536";
-		sellCalcVo2.finishYn = "N";
-		sellCalcVo2.allocDate = "03.15";
-		sellCalcVo2.eDate = "03.15";
-		sellCalcVo2.sAddr = "전라북도 군산시 소룡동 1669-2 이스턴물류";
-		sellCalcVo2.eAddr = "전라북도 군산시 오식도동 806-3 한성필하우스";
-		sellCalcVo2.unpaidAmt = 3200;
-		sellCalcVo2.sellCharge = 200;
-		sellCalcVo2.sellWayPointCharge = 3000;
-		sellCalcVo2.sellStayCharge = 0;
-		sellCalcVo2.sellHandWorkCharge = 0;
-		sellCalcVo2.sellRoundCharge = 0;
-		sellCalcVo2.sellOtherAddCharge = 0;
-		sellCalcVo2.goodsName = "테스트화물3.14.1번";
-		sellCalcVo2.unitPriceTypeName = "대당단가";
-		sellCalcVo2.unitPrice = 0;
-		sellCalcVo2.goodsWeight = 0;
-		sellCalcVo2.chargeTypeName = "인수증";
-		sellCalcVo2.allocFee = 0;
-		sellCalcVo2.tranReceiptYn = "Y";
-		sellCalcVo2.tranReceiptDate = "03.15";
-		sellCalcVo2.payableAmt = 8865;
-		sellCalcVo2.carNum = "인천99아9999";
-		sellCalcVo2.carSctnName = "외부용차";
-		sellCalcVo2.driverName = "김진";
-		sellCalcVo2.driverMobile = "01000000000";
-		sellCalcVo2.reqPayYn = "N";
-		sellCalcVo2.mngDeptName = "[관리팀]";
-		sellCalcVo2.mngUserName = "김진";
-		sellCalcVo2.taxInvYn = "E";
-		sellCalcVo2.taxInvDate = "03.16";
+		map.clear();
+		map.put("linkMessage", linkMessage);
 		
-		List<SellCalcVO> sellCalcList = new ArrayList<>();
-		sellCalcList.add(sellCalcVo1);
-		sellCalcList.add(sellCalcVo2);
-		int count = calcService.getCnt(param);
-
-		map.put("result", Boolean.TRUE);
-		map.put("data", sellCalcList);
-		map.put("total", count);
-		*/
+		return "jsonView";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/getSupplierTaxBizInfo.do")
+	public String getSupplierTaxBizInfo(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			
+			Map<String, Object> supplierTaxBizInfo = sellCalcService.selectSupplierTaxBizInfo(param);
+			
+			// 결과값
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			LinkMessageData linkMessageData = new LinkMessageData();
+			linkMessageData.setData(supplierTaxBizInfo);
+			linkMessageData.setDataType("Map");
+			linkMessage.setData(linkMessageData);
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage(e.getMessage());
+		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
+		
+		return "jsonView";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/getBuyerTaxBizInfo.do")
+	public String getBuyerTaxBizInfo(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			
+			Map<String, Object> buyerTaxBizInfo = sellCalcService.selectBuyerTaxBizInfo(param);
+			
+			// 결과값
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			LinkMessageData linkMessageData = new LinkMessageData();
+			linkMessageData.setData(buyerTaxBizInfo);
+			linkMessageData.setDataType("Map");
+			linkMessage.setData(linkMessageData);
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage(e.getMessage());
+		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
+		
+		return "jsonView";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/getSupplierTaxDriverInfo.do")
+	public String getSupplierTaxDriverInfo(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			
+			Map<String, Object> supplierTaxDriverInfo = sellCalcService.selectSupplierTaxDriverInfo(param);
+			
+			// 결과값
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			LinkMessageData linkMessageData = new LinkMessageData();
+			linkMessageData.setData(supplierTaxDriverInfo);
+			linkMessageData.setDataType("Map");
+			linkMessage.setData(linkMessageData);
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage(e.getMessage());
+		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
 		
 		return "jsonView";
 	}
 	
 	@PostMapping(value = "/contents/calc/data/updatePostSendYn.do")
 	public String updatePostSendYn(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
-			@RequestParam Map<String, Object> param) throws Exception {
+			@RequestParam Map<String, Object> param) {
 		
 		// 권한 체크???
 		
@@ -167,7 +232,7 @@ public class SellCalcController {
 			// 결과값
 			linkMessage.setSender(this.getClass().getName());
 			linkMessage.setStatus(0);
-			linkMessage.setMessage(resultCnt + " 건에 대해 우편발송 처리를 완료했습니다.");
+			linkMessage.setMessage("우편발송 처리를 완료했습니다.");
 		} catch (Exception e) {
 			linkMessage.setSender(this.getClass().getName());
 			linkMessage.setStatus(-1);
@@ -183,7 +248,7 @@ public class SellCalcController {
 	
 	@PostMapping(value = "/contents/calc/data/updateDeleteYn.do")
 	public String updateDeleteYn(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
-			@RequestParam Map<String, Object> param) throws Exception {
+			@RequestParam Map<String, Object> param) {
 		
 		// 권한 체크???
 		
@@ -201,7 +266,7 @@ public class SellCalcController {
 			// 결과값
 			linkMessage.setSender(this.getClass().getName());
 			linkMessage.setStatus(0);
-			linkMessage.setMessage(resultCnt + " 건에 대해 삭제 처리를 완료했습니다.");
+			linkMessage.setMessage("삭제 처리를 완료했습니다.");
 		} catch (Exception e) {
 			linkMessage.setSender(this.getClass().getName());
 			linkMessage.setStatus(-1);
@@ -217,7 +282,7 @@ public class SellCalcController {
 	
 	@PostMapping(value="/contents/calc/data/updateSellChangeReq.do")
 	public String updateSellChangeReq(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
-								@RequestParam Map<String, Object> param ) throws Exception {
+								@RequestParam Map<String, Object> param ) {
 		
 		// 권한 체크???
 		
@@ -227,7 +292,7 @@ public class SellCalcController {
 			sellCalcService.updateSellChangeReq(param);
 			
 			// 결과값
-			if (param.get("retCode") != null && param.get("retCode") == "00") {
+			if (param.get("retCode") != null && param.get("retCode").equals("00")) {
 				// 처리성공
 				linkMessage.setSender(this.getClass().getName());
 				linkMessage.setStatus(0);
@@ -245,14 +310,14 @@ public class SellCalcController {
 			linkMessage.setDetailMessage(e.getMessage());
 		}
 		
-		
+		map.clear();
+		map.put("linkMessage", linkMessage);
 		
 		return "jsonView";
 	}
 	
 	@PostMapping(value="/contents/calc/data/upsertCalcCharge.do")
-	public String upsertCalcCharge(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
-								@RequestParam Map<String, Object> param ) throws Exception {
+	public String upsertCalcCharge(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
 		
 		// 권한 체크???
 		
@@ -262,6 +327,35 @@ public class SellCalcController {
 		
 	    List<LinkMessage> linkMessages = new ArrayList<>();
 		for (Map<String, Object> item : editedList) {
+//			String calcTypeCode = (String) item.get("chargeCode");
+//			if (calcTypeCode.equals("0002")) {
+//				// 내수운송료의 경우 T_ORDER_ALLOC 테이블 정보도 업데이트
+//				Map<String, Object> parameter = new HashMap<String, Object>();
+//				parameter.put("allocId", item.get("allocId"));
+//				parameter.put("allocCharge", item.get("value"));
+//				
+//				LinkMessage linkMessage = new LinkMessage();
+//				try {
+//					int resultCnt = sellCalcService.updateAllocCharge(parameter);
+//					
+//					// 별도 메시지 출력 안함.
+//					System.out.println(parameter.get("retCode").toString());
+//					System.out.println(parameter.get("retMsg").toString());
+//				} catch (Exception e) {
+//					linkMessage.setSender(this.getClass().getName());
+//					linkMessage.setStatus(-1);
+//					linkMessage.setMessage("오더ID: " + item.get("orderId") + "에 대한 내수운송료 변경 처리에 실패했습니다.\n다시 확인하세요.");
+//					linkMessage.setDetailMessage(e.getMessage());
+//					
+//					LinkMessageData linkMesasgeData = new LinkMessageData();
+//					linkMesasgeData.setData(item);
+//					linkMesasgeData.setDataType("Map<String, Object>");
+//					linkMessage.setData(linkMesasgeData);
+//					
+//					linkMessages.add(linkMessage);
+//				}
+//			}
+			
 			// 서비스로 넘길 파라미터 항목을 매핑한다.
 			Map<String, Object> parameter = new HashMap<String, Object>();
 			parameter.put("orderId", item.get("orderId"));
@@ -274,10 +368,10 @@ public class SellCalcController {
 			
 			if ((boolean)item.get("insert")) {
 				parameter.put("sellBuySctn", "01");
-				parameter.put("mode", "N");
+				parameter.put("mode", "C");
 			} else {
 				parameter.put("sellBuySctn", "01");
-				parameter.put("mode", "E");
+				parameter.put("mode", "U");
 			}
 			
 			LinkMessage linkMessage = new LinkMessage();
@@ -310,33 +404,166 @@ public class SellCalcController {
 		return "jsonView";
 	}
 	
-//	@PostMapping(value="/contents/calc/data/sellFinishCalc.do")
-//	public String multiFinishCalc(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
-//								@RequestParam Map<String, Object> param ) throws Exception {
-//		
-//		// 권한 체크???
-//
+	@PostMapping(value="/contents/calc/data/updateSellCalcFinish.do")
+	public String updateSellCalcFinish(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		// 권한 체크???
+
+		// mngDeptId 조건 반드시 확인 필! -> 기존 항목에 mngDeptId를 따라야 함?
 //		LoginVO login = (LoginVO) session.getAttribute("userInfo");
 //		if("N".equals(login.getMasterYn())) {
 //			param.put("mngDeptId", login.getDeptId());
 //		} else {
 //			param.put("mngDeptId", param.get("sDeptId"));
 //		}
+		
+		param.put("editId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+		
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			sellCalcService.updateSellCalcFinish(param);
+			
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			linkMessage.setMessage(param.get("retMsg").toString());
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage("마감처리에 실패했습니다.\n시스템 관리자에게 문의하세요.");
+			linkMessage.setDetailMessage(e.getMessage());
+		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
+		
+		return "jsonView";
+	}
+	
+//	@PostMapping(value="/contents/calc/data/setTranReceipt.do")
+//	public String setTranReceipt(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
 //		
-//		
-//		/*List<String> calcIdList = Arrays.asList(((String)param.get("calcIdArr")).split(","));
-//		param.put("calcIdList", calcIdList);*/
-////		calcService.multiFinishCalc(param);
-//
-//		if(!"00".equals(param.get("retCode"))) {
-//			map.put("result", Boolean.FALSE);
-//			map.put("msg", param.get("retMsg"));
+//		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+//		if(login.getMasterYn().equals("N")) {
+//			param.put("mngDeptId", login.getDeptId());
 //		} else {
-//			map.put("result", Boolean.TRUE);
-//			map.put("msg", param.get("retMsg"));
+//			param.put("mngDeptId", param.get("mngDeptId"));
 //		}
 //		
 //		return "jsonView";
-//		
 //	}
+	
+	@PostMapping(value="/contents/calc/data/setTranReceiptWithTaxinv.do")
+	public String setTranReceiptWithTaxinv(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		// 마스터 권한의 유저인지 체크 (???)
+		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+		if (login.getMasterYn().equals("N")) {
+			param.put("mngDeptId", login.getDeptId());
+		} else {
+			param.put("mngDeptId", param.get("mngDeptId"));
+		}
+		
+		String taxYn = param.get("taxYn").toString();
+		String tranMode = param.get("tranMode").toString();
+		String writeDate = DateUtil.dateYYYYmmdd(param.get("taxDate").toString(), "");
+		param.put("writeDate", writeDate);
+		
+		try {
+			// 오더리스트
+			String json = param.get("orderList").toString();
+			ObjectMapper mapper = new ObjectMapper();
+			List<Map<String, Object>> orderList = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});
+			for (Map<String, Object> item : orderList) {
+				String sDate = item.get("sDateFull").toString().substring(0, 10);
+				String eDate = item.get("eDateFull").toString().substring(0, 10);
+				param.put("fromDate", sDate);
+				param.put("toDate", eDate);
+				
+				// INSERT_TRAN_RECEIPT DB프로시저 영향으로 fromDate, toDate, orderId를 하나로 처리 -> orderList -> orderId
+				param.put("orderList", item.get("orderId").toString());
+				
+				// 세금계산서 연계 발행
+				if (taxYn.equals("Y")) {
+					// 인수증
+					if (tranMode.equals("R")) {
+						// 거래명세서 발행
+						tranService.regTranReceipt(param);
+						// 결과
+						if (param.get("retCode").equals("00")) {
+							// 세금계산서 발행
+							param.put("receiptId", param.get("retId"));
+							
+							//공급자와 위탁자 사업자가 같으면 일반세금계산서, 다르면 위수탁
+							String supplierCustId = param.get("supplierCustId").toString();
+							if (supplierCustId.equals(brokerCustId)) {
+								// 1: 일반
+								param.put("billKind", "1");
+								// 01: 일반
+								param.put("docType", "01");
+							} else {
+								// 3: 위수탁
+								param.put("billKind", "3");
+								// 03: 위수탁
+								param.put("docType", "03");
+							}
+							
+							param.put("brokerCustId", brokerCustId);
+							param.put("brokerDeptId", brokerDeptId);
+							param.put("brokerBizNo", brokerBizNo);
+							param.put("brokerBizType", brokerBizType);
+							param.put("brokerBizName", brokerBizName);
+							param.put("brokerBizClass", brokerBizClass);
+							param.put("brokerBizSubNo", brokerBizSubNo);
+							param.put("brokerCeo", brokerCeo);
+							param.put("brokerMemDept", brokerMemDept);
+							param.put("brokerMemName", brokerMemName);
+							param.put("brokerMemEmail", brokerMemEmail);
+							param.put("brokerMemTel", brokerMemTel);
+							param.put("brokerAddr", brokerAddr);
+							
+							taxService.insertReceiptTaxInvoice(param);
+							// 결과
+							if (param.get("retCode").equals("00")) {
+								
+							} else {
+								
+							}
+						} else {
+							
+						}
+					} else {
+						// 거래명세서 발행
+						tranService.regTranReceiptForDriver(param);
+						
+						// 세금계산서 발행
+						taxService.insertReceiptTaxInvoiceForDriver(param);
+					}
+				} else {
+					if (tranMode.equals("R")) {
+						// 인수증
+						tranService.regTranReceipt(param);
+						// 결과
+						if (param.get("retCode").equals("00")) {
+							
+						} else {
+							
+						}
+					} else {
+						// 기사발행
+						tranService.regTranReceiptForDriver(param);
+						// 결과
+						if (param.get("retCode").equals("00")) {
+							
+						} else {
+							
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			
+		}
+		
+		return "jsonView";
+	}
 }

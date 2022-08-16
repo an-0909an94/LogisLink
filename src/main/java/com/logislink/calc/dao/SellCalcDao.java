@@ -17,9 +17,29 @@ public class SellCalcDao extends EgovAbstractMapper{
 		return sellCalcList;
 	}
 	
-	public int getSellCalcListCnt(Map<String, Object> map) {
-		String sellCalcListCnt = selectOne("sellCalcDataNS.selectSellCalcListCnt", map);
-		return Integer.valueOf(sellCalcListCnt);
+	public Map<String, Object> getSellCalcListCnt(Map<String, Object> map) {
+		Map<String, Object> sellCalcListCnt = selectOne("sellCalcDataNS.selectSellCalcListCnt", map);
+		return sellCalcListCnt;
+	}
+	
+	public Map<String, Object> selectTaxBizInfo(Map<String, Object> map) {
+		Map<String, Object> taxBizInfo = selectOne("sellCalcDataNS.selectTaxBizInfo", map);
+		return taxBizInfo;
+	}
+	
+	public Map<String, Object> selectSupplierTaxBizInfo(Map<String, Object> map) {
+		Map<String, Object> supplierTaxBizInfo = selectOne("sellCalcDataNS.selectSupplierTaxBizInfo", map);
+		return supplierTaxBizInfo;
+	}
+	
+	public Map<String, Object> selectBuyerTaxBizInfo(Map<String, Object> map) {
+		Map<String, Object> buyerTaxBizInfo = selectOne("sellCalcDataNS.selectBuyerTaxBizInfo", map);
+		return buyerTaxBizInfo;
+	}
+	
+	public Map<String, Object> selectSupplierTaxDriverInfo(Map<String, Object> map) {
+		Map<String, Object> supplierTaxDriverInfo = selectOne("sellCalcDataNS.selectSupplierTaxDriverInfo", map);
+		return supplierTaxDriverInfo;
 	}
 	
 	public int updatePostSendYn(Map<String, Object> map) {
@@ -38,5 +58,14 @@ public class SellCalcDao extends EgovAbstractMapper{
 	
 	public void upsertCalcCharge(Map<String, Object> map) {
 		insert("sellCalcDataNS.upsertCalcCharge", map);
+	}
+	
+	public int updateAllocCharge(Map<String, Object> map) {
+		int resultCnt = update("sellCalcDataNS.updateAllocCharge", map);
+		return resultCnt;
+	}
+	
+	public void updateSellCalcFinish(Map<String, Object> map) {
+		update("sellCalcDataNS.sellCalcFinish", map);
 	}
 }

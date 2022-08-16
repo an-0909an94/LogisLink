@@ -15,38 +15,49 @@
 
 <!-- 거래명세서 발행 Modal -->
 <div id="divTranReceipt" class="editor_wrap p-0">
-    <form class="modalEditor" id="fTranReceipt" data-toggle="validator" role="form" autocomplete="off">
-        <input type="hidden" name="tranMode" id="tranMode" class="hiddenValue">
-        <input type="hidden" name="tranCustId" id="tranCustId" class="hiddenValue">
-        <input type="hidden" name="tranDeptId" id="tranDeptId" class="hiddenValue">
-        <input type="hidden" name="tranSupplierCustId" id="tranSupplierCustId" class="hiddenValue">
-        <input type="hidden" name="tranSupplierDeptId" id="tranSupplierDeptId" class="hiddenValue">
-        <input type="hidden" name="tranSupplierVehicId" id="tranSupplierVehicId" class="hiddenValue">
-        <input type="hidden" name="tranSupplierDriverId" id="tranSupplierDriverId" class="hiddenValue">
-        <input type="hidden" name="tranSupplierBizName" id="tranSupplierBizName" class="hiddenValue">
-        <input type="hidden" name="tranSupplierBizNo" id="tranSupplierBizNo" class="hiddenValue">
-        <input type="hidden" name="tranSupplierBizSubNo" id="tranSupplierBizSubNo" class="hiddenValue">
-        <input type="hidden" name="tranSupplierCeo" id="tranSupplierCeo" class="hiddenValue">
-        <input type="hidden" name="tranSupplierAddr" id="tranSupplierAddr" class="hiddenValue">
-        <input type="hidden" name="tranSupplierBizType" id="tranSupplierBizType" class="hiddenValue">
-        <input type="hidden" name="tranSupplierBizClass" id="tranSupplierBizClass" class="hiddenValue">
-        <input type="hidden" name="tranBuyerCustId" id="tranBuyerCustId" class="hiddenValue">
-        <input type="hidden" name="tranBuyerDeptId" id="tranBuyerDeptId" class="hiddenValue">
-        <input type="hidden" name="tranBuyerVehicId" id="tranSupplierVehicId" class="hiddenValue">
-        <input type="hidden" name="tranBuyerDriverId" id="tranSupplierDriverId" class="hiddenValue">
-        <input type="hidden" name="tranBuyerBizName" id="tranBuyerBizName" class="hiddenValue">
-        <input type="hidden" name="tranBuyerBizNo" id="tranBuyerBizNo" class="hiddenValue">
-        <input type="hidden" name="tranBuyerBizSubNo" id="tranBuyerBizSubNo" class="hiddenValue">
-        <input type="hidden" name="tranBuyerCeo" id="tranBuyerCeo" class="hiddenValue">
-        <input type="hidden" name="tranBuyerAddr" id="tranBuyerAddr" class="hiddenValue">
-        <input type="hidden" name="tranBuyerBizType" id="tranBuyerBizType" class="hiddenValue">
-        <input type="hidden" name="tranBuyerBizClass" id="tranBuyerBizClass" class="hiddenValue">
-        <input type="hidden" name="tranRemarksDefault" id="tranRemarksDefault" class="hiddenValue">
+    <form id="fTranReceipt" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
+        <!-- 청구구분 = D: 기사발행, R: 인수증 -->
+        <input type="hidden" id="tranMode" name="tranMode" class="hiddenValue">
+        <input type="hidden" id="tranCustId" name="tranCustId" class="hiddenValue">
+        <input type="hidden" id="tranDeptId" name="tranDeptId" class="hiddenValue">
+        <input type="hidden" id="tranOrderList" name="tranOrderList" class="hiddenValue">
+        <!-- 공급자 -->
+        <input type="hidden" id="tranSupplierCustId" name="tranSupplierCustId" class="hiddenValue">
+        <input type="hidden" id="tranSupplierDeptId" name="tranSupplierDeptId" class="hiddenValue">
+        <input type="hidden" id="tranSupplierVehicId" name="tranSupplierVehicId" class="hiddenValue">
+        <input type="hidden" id="tranSupplierDriverId" name="tranSupplierDriverId" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBizName" name="tranSupplierBizName" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBizType" name="tranSupplierBizType" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBizNo" name="tranSupplierBizNo" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBizSubNo" name="tranSupplierBizSubNo" class="hiddenValue">
+        <input type="hidden" id="tranSupplierCeo" name="tranSupplierCeo" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBizCond" name="tranSupplierBizCond" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBizKind" name="tranSupplierBizKind" class="hiddenValue">
+        <input type="hidden" id="tranSupplierPost" name="tranSupplierPost" class="hiddenValue">
+        <input type="hidden" id="tranSupplierAddr" name="tranSupplierAddr" class="hiddenValue">
+        <input type="hidden" id="tranSupplierAddrDetail" name="tranSupplierAddrDetail" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBankCode" name="tranSupplierBankCode" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBankCnnm" name="tranSupplierBankCnnm" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBankAccount" name="tranSupplierBankAccount" class="hiddenValue">
+        <input type="hidden" id="tranSupplierBankName" name="tranSupplierBankName" class="hiddenValue">
+        <!-- 공급받는자 -->
+        <input type="hidden" id="tranBuyerCustId" name="tranBuyerCustId" class="hiddenValue">
+        <input type="hidden" id="tranBuyerDeptId" name="tranBuyerDeptId" class="hiddenValue">
+        <input type="hidden" id="tranBuyerBizName" name="tranBuyerBizName" class="hiddenValue">
+        <input type="hidden" id="tranBuyerBizType" name="tranBuyerBizType" class="hiddenValue">
+        <input type="hidden" id="tranBuyerBizNo" name="tranBuyerBizNo" class="hiddenValue">
+        <input type="hidden" id="tranBuyerBizSubNo" name="tranBuyerBizSubNo" class="hiddenValue">
+        <input type="hidden" id="tranBuyerCeo" name="tranBuyerCeo" class="hiddenValue">
+        <input type="hidden" id="tranBuyerBizCond" name="tranBuyerBizCond" class="hiddenValue">
+        <input type="hidden" id="tranBuyerBizKind" name="tranBuyerBizKind" class="hiddenValue">
+        <input type="hidden" id="tranBuyerPost" name="tranBuyerPost" class="hiddenValue">
+        <input type="hidden" id="tranBuyerAddr" name="tranBuyerAddr" class="hiddenValue">
+        <input type="hidden" id="tranBuyerAddrDetail" name="tranBuyerAddrDetail" class="hiddenValue">
         <div class="modalHeader">
             <div style="width: 50%; float: left;" class="form-group row">
                 <label class="col-form-label modal-big-name">발행 구분</label>
                 <div class="input-group input-group-sm col middle-name form-group">
-                    <select name="tranBizTypeCd" id="tranBizTypeCd" class="custom-select col-12">
+                    <select id="tranBizTypeCd" name="tranBizTypeCd" class="custom-select col-12">
                         <option value="01" selected="selected">과세(부가세별도)</option>
                         <option value="02">비과세</option>
                     </select>
@@ -64,7 +75,7 @@
             <div style="width: 50%; float: left;" class="form-group row">
                 <label class="col-form-label modal-big-name">청구 구분</label>
                 <div class="input-group input-group-sm col middle-name form-group">
-                    <select name="tranPubForm" id="tranPubForm" class="custom-select col-12" disabled="disabled">
+                    <select id="tranPubForm" name="tranPubForm" class="custom-select col-12" disabled="disabled">
                         <option value="01">영수</option>
                         <option value="02" selected="selected">청구</option>
                     </select>
@@ -82,7 +93,7 @@
                     <div class="form-group row">
                         <label class="col-form-label big-name">다중표시</label>
                         <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-                            <select name="itemTotalType" id="itemTotalType" class="custom-select col-12" disabled="disabled">
+                            <select id="tranItemTotalType" name="tranItemTotalType" class="custom-select col-12" disabled="disabled">
                                 <option value="0" selected="selected">단건</option>
                                 <option value="1">다중</option>
                             </select>
@@ -93,12 +104,12 @@
                         <label class="col-form-label big-name">공급자</label>
                         <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
                         <strong class="required">담당자</strong>
-                            <input type="text" name="tranSupplierMemName" id="tranSupplierMemName" class="form-control form-control-sm" disabled="disabled">
+                            <input type="text" id="tranSupplierMemName" name="tranSupplierMemName" class="form-control form-control-sm" disabled="disabled">
                             <div  class="help-block with-errors"></div>
                         </div>
                         <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
                         <strong class="required">연락처</strong>
-                            <input type="text" name="tranSupplierMemTel" id="tranSupplierMemTel" class="form-control form-control-sm" disabled="disabled" maxlength="13">
+                            <input type="text" id="tranSupplierMemTel" name="tranSupplierMemTel" class="form-control form-control-sm" disabled="disabled" maxlength="13">
                             <div  class="help-block with-errors"></div>
                         </div>
                     </div>
@@ -231,14 +242,20 @@
         <div id="group-list" class="cont-wrapper-page-grid">
             <!-- 검색 조건 영역 -->
             <form id="fSearch" class="date-bnt" method="post">
-                <input type="hidden" name="hCustId" id="custId" class="hiddenValue">
-                <input type="hidden" name="hDeptId" id="deptId" class="hiddenValue">
+                <!-- 화주명 -->
+                <input type="hidden" id="hCustId" name="custId" class="hiddenValue">
+                <!-- 담당부서 -->
+                <input type="hidden" id="hDeptId" name="custDeptId" class="hiddenValue">
+                <!-- 거래처명 -->
+                <input type="hidden" id="hBizId" name="bizId" class="hiddenValue">
+                <!-- 담당부서 -->
+                <input type="hidden" id="hBizDeptId" name="bizDeptId" class="hiddenValue">
 
                 <!-- 검색 1라인 -->
                 <div class="form-group row">
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>정산마감여부</strong>
-                        <select class="custom-select col-12" id="sFinishYn" name="finishYn">
+                        <select id="sFinishYn" name="finishYn" class="custom-select col-12">
                             <option value="">--전체--</option>
                             <option value="Y">Y</option>
                             <option value="N" selected>N</option>
@@ -247,58 +264,58 @@
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>거래처검색</strong>
-                        <select class="custom-select col-12" id="custType" name="custType">
+                        <select id="searchCustType" name="searchCustType" class="custom-select col-12">
                             <!-- 공통코드로 구분함. -->
-                            <option value="01">화주명</option>
+                            <option value="custName" selected>화주명</option>
                             <option value="orderId">오더ID</option>
                         </select>
                     </div>
-                    <div id="searchDiv" class="input-group input-group-sm col-2 middle-name">
+                    <div id="searchCustName" class="input-group input-group-sm col-2 middle-name">
                         <strong>&nbsp;</strong>
                         <input type="text" id="sCustName" name="custName" style="width: 100%;">
                     </div>
-                    <div style="display: none;" id="orderSearch" class="input-group input-group-sm col-2 middle-name">
+                    <div id="searchOrderId" class="input-group input-group-sm col-2 middle-name" style="display: none;">
                         <strong>&nbsp;</strong>
-                        <input type="text" id="orderId" name="orderId" class="form-control form-control-sm">
+                        <input type="text" id="sOrderId" name="orderId" class="form-control form-control-sm">
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>&nbsp;</strong>
-                        <input type="text" name="sSubName" id="subName" class="form-control form-control-sm" readonly>
+                        <input type="text" id="sCustDeptName" name="custDeptName" class="form-control form-control-sm" readonly>
                     </div>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>사업자검색</strong>
-                        <select class="custom-select col-12" id="searchType" name="searchType">
-                            <option value="bizName">사업자상호</option>
+                        <select id="searchBizType" name="searchBizType" class="custom-select col-12">
+                            <option value="bizName" selected>사업자상호</option>
                             <option value="bizNum">사업자번호</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-2 middle-name">
                         <strong>&nbsp;</strong>
-                        <input type="text" id="bizName" name="bizName" style="width: 100%;">
+                        <input type="text" id="sBizName" name="bizName" style="width: 100%;">
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>&nbsp;</strong>
-                        <select name="sSubDept" id="sSubDept" class="custom-select"></select>
+                        <select id="sBizDeptName" name="bizDeptName" class="custom-select"></select>
                     </div>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>청구구분</strong>
-                        <select class="form-control" class="custom-select col-12" id="sChargeType" name="chargeType">
+                        <select id="sChargeType" name="chargeType" class="form-control custom-select col-12">
                             <option>--전체--</option>
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>담당부서명</strong>
-                        <select class="form-control" class="custom-select col-12" id="sDeptId" name="deptId">
+                        <select id="sDeptId" name="deptId" class="form-control custom-select col-12">
                             <option>--전체--</option>
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>배차담당자</strong>
-                        <select class="form-control" class="custom-select col-12" id="sUserId" name="userId">
+                        <select id="sUserId" name="userId" class="form-control custom-select col-12">
                             <option>--전체--</option>
                         </select>
                     </div>
@@ -345,22 +362,25 @@
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>우편발송여부</strong>
-                        <select class="custom-select col-12" id="sPostYn" name="postYn">
-                            <option value="">--전체--</option>
+                        <select id="sPostYn" name="postYn" class="custom-select col-12">
+                            <option value="" selected>--전체--</option>
                             <option value="Y">Y</option>
                             <option value="N">N</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                        <strong>삭제여부</strong>
+                        <select id="sDeleteYn" name="deleteYn" class="custom-select col-12">
+                            <option value="">--전체--</option>
+                            <option value="Y">Y</option>
+                            <option value="N" selected>N</option>
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm col radio-or-checkBox ">
                         <input id="carryOverYn" name="carryOver" type="checkbox" value="Y" onClick="searchChecked(this)">
                         <label for="carryOverYn" class="label-margin"> <span>미처리 이월건 포함</span>
-                        </label>
-                    </div>
-
-                    <div class="input-group input-group-sm col radio-or-checkBox " hidden="true">
-                        <input id="deleteCalcYn" name="deleteCalc" type="checkbox" value="N" onClick="searchChecked(this)">
-                        <label for="deleteCalcYn" class="label-margin"> <span>삭제건 포함</span>
                         </label>
                     </div>
 
@@ -414,17 +434,17 @@
                                                             </a>
                                                         </c:if>
                                                         <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="tranReceiptComp" onClick="pubTranReceiptOpen()" disabled>
+                                                            <a href="#" class="k-pager-refresh k-button" id="tranReceiptComp" onClick="pubTranReceiptOpen()">
                                                                 <b class="btn-b"> <i class="k-icon k-i-paste-plain-text"></i>거래명세서발행
                                                                 </b>
                                                             </a>
                                                         </c:if>
-                                                        <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="taxinvComp" disabled>
-                                                                <b class="btn-b"> <i class="k-icon k-i-txt"> </i>세금계산서발행
-                                                                </b>
-                                                            </a>
-                                                        </c:if>
+<%--                                                         <c:if test="${menuAuth.printYn eq 'Y'}"> --%>
+<!--                                                             <a href="#" class="k-pager-refresh k-button" id="taxinvComp" onclick="pubTaxinvOpen()"> -->
+<!--                                                                 <b class="btn-b"> <i class="k-icon k-i-txt"> </i>세금계산서발행 -->
+<!--                                                                 </b> -->
+<!--                                                             </a> -->
+<%--                                                         </c:if> --%>
                                                         <c:if test="${menuAuth.printYn eq 'Y'}">
                                                             <a href="#" class="k-pager-refresh k-button" id="taxinvPostSend" onClick="taxinvPostSend()">
                                                                 <b class="btn-b"> <i class="k-icon k-i-txt"> </i>우편발송처리
@@ -432,7 +452,7 @@
                                                             </a>
                                                         </c:if>
                                                         <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="finishCalc" disabled>
+                                                            <a href="#" class="k-pager-refresh k-button" id="finishCalc" onClick="calcFinish()">
                                                                 <b class="btn-b"> <i class="k-icon k-i-edit"> </i>마감처리
                                                                 </b>
                                                             </a>
@@ -484,7 +504,8 @@
 
 <script type="text/javascript">
     var searchCustName;
-    var bizName;
+    var searchBizName;
+    var searchBizDeptName;
     var calcId;
     var taxData;
     var errChk = false;
@@ -494,6 +515,13 @@
     
     var selectedList = new Map();
     var editedList = [];
+    var tranReceiptWithtaxinvList = [];
+    
+    var sellCalcListCnt;
+    var sumUnpaidAmt;
+    var sumDepositAmt;
+    
+    var headerTitle = ($("#headerTitle").text());
    	
     $("#calcListContextMenu").kendoContextMenu({
         target : "#grid",
@@ -511,6 +539,7 @@
         }
         $("#fromDate").kendoDatePicker(dateOption);
         $("#toDate").kendoDatePicker(dateOption);
+        $("#taxDate").kendoDatePicker(dateOption);
 
         // 담당부서 셀렉트 박스
         var deptOption = {
@@ -533,68 +562,165 @@
         Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "01", "--전체--");
         
         // 컨트롤 기본값 설정
-        $("#sFinishYn").val("N");
-        $("#sChargeType").val("01");
+//         $("#sFinishYn").val("N");
+//         $("#sChargeType").val("01");
         $("input:checkbox[id='carryOverYn']").prop("checked", true);
+//         $("#sDeleteYn").val("N");
         
-     	// 거래처 자동완성
-        searchCustName = MultiColumnComboBox.setCustName("s", $("#custType").val(), $("#sDeptId").val());
-        searchCustName.bind("select", changeSearchCust);
-        searchCustName.bind("change", searchCustSelectTrigger);
+     	// 거래처 검색 콤보박스
+     	searchCustName = setSearchCustName();
+     	
+     	// 거래처 검색 조건 셀렉트 박스 이벤트 핸들러
+        $("#searchCustType").on("change", function(e) {
+        	if ($(this).val() == "custName") {
+        		// 화주명 검색
+        		searchCustName = setSearchCustName();
+        		
+        		$("#searchCustName").show();
+                $("#searchOrderId").hide();
+        	} else {
+        		// 오더ID 검색
+        		searchCustName.value("");
+        		searchCustName.destroy();
+        		
+        		$("#searchCustName").hide();
+                $("#searchOrderId").show();
+        	}
+        	
+        	$("#sCustDeptName").val("");
+        });
         
-        // 사업자 자동완성
-        bizName = getSearchBiz();
+        // 사업자 검색 콤보박스
+        searchBizName = setSearchBizName();
+        
+     	// 사업자 검색 조건 셀렉트 박스 이벤트 핸들러
+		$("#searchBizType").on("change", function() {
+			searchBizName.value("");
+			searchBizName.destroy();
+			
+			searchBizName = setSearchBizName();
+        });
         
         // 담당부서 컨트롤 이벤트
         $("#sDeptId").on("change", function() {
-            setSearchForm();
+			// 담당부서 변경시 거래처 검색, 사업자 검색 콤보 초기화
+			searchCustName.value("");
+        	searchCustName.destroy();
+        	searchCustName = setSearchCustName();
+        	
+        	searchBizName.value("");
+			searchBizName.destroy();
+			searchBizName = setSearchBizName();
+			
+			$(".hiddenValue").val("");
+			// 22.07.25 코리아로지스 정산관리내 검색항목 [담당부서명] 변경 시, hiddenValue 모든 값이 초기화되면서 디폴트 01 값 사라짐. 
+			$("#bizTypeCd").val("01");
+			$("#sCustDeptName").val("");
         });
         
-        // 사업자 컨트롤 이벤트
-        $("#searchType").on("change", function() {
-            bizName.destroy();
-            bizName = getSearchBiz();
-            bizName.value('');
+        // 거래명세서 발행 모달 세금계산서 발행 컨트롤 이벤트
+        $("#taxYn").on("change", function() {
+        	if($("#taxYn option:selected").val() == 'Y') {
+        		$('#tranPubForm').removeAttr('disabled'); 
+        		$('#tranRemarks').removeAttr('disabled'); 
+        		$("#fTranReceipt input[name*='Mem']").removeAttr('disabled');
+        		$("#itemTotalType").removeAttr('disabled');
+        		$("#fTranReceipt input[name*='Mem']").attr('required', 'true');
+        	} else {
+        		$('#tranPubForm').attr('disabled', 'true');
+        		$('#tranRemarks').attr('disabled', 'true');
+        		$("#fTranReceipt input[name*='Mem']").attr('disabled', 'true');
+        		$("#itemTotalType").attr('disabled', 'true');
+        		$("#fTranReceipt input[name*='Mem']").removeAttr('required');
+        	}
+        	
+        	$("#fTranReceipt").validator('validate');
         });
+        
+     	// 거래명세서 발행 모달 발행일자 컨트롤 이벤트
+        $("#taxDateYn").on("change", function() {
+    		var taxDate = $("#taxDate").data("kendoDatePicker");
+    		if ($(this).is(":checked")) {
+    			taxDate.enable(true);
+    		} else {
+    			taxDate.enable(false);			
+    		}
+    	});
         
         // 리스트 출력
        	getCalcList();
     });
     
-    function setSearchForm() {
-        searchCustName = $("#sCustName").data("kendoMultiColumnComboBox");
-        searchCustName.value("");
-        searchCustName.refresh();
-        searchCustName.destroy();
-        
-        $("#orderId").val("")
-        $(".hiddenValue").val("");
-        $("#sSubName").val("");
-        
-        var sellBuySctn = $("#custType").val();
-        
-        if (sellBuySctn == "orderId") {
-            // 오더ID 선택
-            searchCustName = $("#sCustName").kendoMultiColumnComboBox({});
-            $("#searchDiv").hide();
-            $("#orderSearch").show();
-        } else {
-            // 화주명 선택
-            searchCustName = MultiColumnComboBox.setCustName("s", sellBuySctn, $("#sDeptId").val());
-            searchCustName.bind("select", changeSearchCust);
-            searchCustName.bind("change", searchCustSelectTrigger);
-            $("#searchDiv").show();
-            $("#orderSearch").hide();
-        }
-        
-        bizName.destroy();
-        bizName = getSearchBiz();
-        bizName.value('');
-        $("#sSubDept").val("");
+    // 거래처 검색 콤보박스 생성 (화주)
+    function setSearchCustName() {
+    	var searchCustName =  $("#sCustName").kendoMultiColumnComboBox({
+            dataTextField: "custName",
+            dataValueField: "custId",
+            filter: "contains",
+            minLength: 2,
+            autoBind: true,
+            dataSource: {
+            	serverFiltering: true,
+            	transport: {
+            		read : {
+            			url: "/contents/basic/data/custList.do",
+            			dataType: "json",
+            			type: "post",
+            			data: {
+            				useYn : "Y",
+            				sellBuySctn : "01",
+            				deptId: $("#sDeptId").val()
+            			},
+            			beforeSend: function(req) {
+            				req.setRequestHeader("AJAX", true);
+            			}
+            		}
+            	},
+            	schema : {
+            		data : function(response) {
+            			return response.data;
+            		},
+            		total : function(response) {
+            			return response.total;
+            		}
+            	}
+            },
+            columns: [
+            	{ field: "custName", title: "거래처명", width: 'auto' },
+            	{ field: "deptName", title: "부서명", width: 'auto' }
+            ]
+		}).data("kendoMultiColumnComboBox");
+    	
+    	// 거래처 검색 콤보박스 이벤트 핸들러
+    	searchCustName.bind("change", function(e) {
+    		if (this.value() == "") {
+    			$("#hCustId").val("");
+    			$("#hCustDeptId").val("");
+    			
+    			$("#sCustDeptName").val("");
+    		} else {
+    			var dataItem = $("#sCustName").data("kendoMultiColumnComboBox").dataItem();
+    			
+    			if (dataItem != null) {
+        			$("#hCustId").val(dataItem.custId);
+        			$("#hCustDeptId").val(dataItem.deptId);
+        			
+        			$("#sCustDeptName").val(dataItem.deptName);
+    			}
+    		}
+    	});
+		
+		return searchCustName;
     }
     
-    function getSearchBiz() {
-        var searchBiz = $("#bizName").kendoMultiColumnComboBox({
+    // 사업자 검색 콤보박스 생성
+    function setSearchBizName() {
+    	$("#hBizId").val("");
+		$("#hBizDeptId").val("");
+		
+		$("select#sBizDeptName option").remove();
+    	
+    	var searchBizName = $("#sBizName").kendoMultiColumnComboBox({
             dataTextField: "bizName",
             dataValueField: "custId",
             filter: "contains",
@@ -603,12 +729,12 @@
             dataSource: {
                 serverFiltering: true,
                 transport: {
-                    read : {
+                    read: {
                         url: "/contents/calc/data/custList.do",
                         dataType: "json",
                         type: "post",
                         data: {
-                            searchType : $("#searchType").val(),
+                            searchType: $("#searchBizType").val(),
                             sDeptId: $("#sDeptId").val()
                         },
                         beforeSend: function(req) {
@@ -616,30 +742,44 @@
                         }
                     }
                 },
-                schema : {
-                    data : function(response) {
+                schema: {
+                    data: function(response) {
                         return response.data;
                     },
-                    total : function(response) {
+                    total: function(response) {
                         return response.total;
                     }
                 }
             },
-            
             columns: [
                 { field: "bizName", title: "사업자명", width:100 },
                 { field: "bizNum", title: "사업자번호", width:100 }
             ]
-        }).data("kendoMultiColumnComboBox");    
-
-        searchBiz.bind("select", changeBizName);
-        $("#custType").on("change", function(){
-            setSearchForm();
-        }); 
+        }).data("kendoMultiColumnComboBox");
+    	
+    	// 사업자 검색 콤보박스 이벤트 핸들러
+    	searchBizName.bind("change", function(e) {
+			if (this.value() == "") {
+				$("#hBizId").val("");
+    			$("#hBizDeptId").val("");
+    			
+    			$("select#sBizDeptName option").remove();
+    		} else {
+				var dataItem = $("#sBizName").data("kendoMultiColumnComboBox").dataItem();
+    			
+				if (dataItem != null) {
+        			$("#hBizId").val(dataItem.custId);
+    				$("#hBizDeptId").val("");
+        			
+    				Util.setSelectBox("/contents/calc/data/deptList.do", "sBizDeptName", { custId : dataItem.custId, sDeptId : $("#sDeptId").val() }, "deptId", "deptName", "", "--부서명--");
+				}
+    		}
+    	});
         
-        return searchBiz;
+        return searchBizName;
     }
     
+    // 그리드 리스트
     function getCalcList() {
     	// 선택된 항목 리스트 초기화
     	selectedList.clear();
@@ -668,6 +808,8 @@
                         return response.data;
                     },
                     total: function(response) {
+                    	// Total 반영 시 Summary 항목도 함께 표시
+                    	getSummary(response.total, response.sumUnpaidAmt, response.sumDepositAmt);
                         return response.total;
                     },
                     model: {
@@ -702,6 +844,7 @@
             edit: function(e) {
             	// 에디트 타입 변경
 //             	$(".k-textbox").prop("type", "number");
+            	console.log(e);
         	},
         	save: onEditSave,
             columns: columns,
@@ -935,29 +1078,17 @@
     		$("#hDeptId").val(dataItem.deptId);
     		$("#sSubName").val(dataItem.deptName);
     		taxData = dataItem;
-    	} else {
-    		if (e.sender.selectedIndex != -1) {
-    			searchCustName.select(e.sender.selectedIndex);
-    			
-    			var data = e.sender.listView._view[e.sender.selectedIndex];
-    			$("#hCustId").val(data.item.custId);
-    			$("#hDeptId").val(data.item.deptId);
-    			$("#sSubName").val(data.item.deptName);
-    			
-    			taxData = data.item;
-    		}
     	}
     }
     
-    // 거래처 콤보 변경 이벤트 처리
     function searchCustSelectTrigger(e) {
-    	if (this.value() != "") {
+    	if(this.value() != ""){
     		searchCustName.trigger("select");
-    	} else {
-    		$("#hCustId").val("");
-    		$("#hDeptId").val("");
-    		$("#sSubName").val("");
-    		
+    	}else{
+    		$("#custId").val("");
+    		$("#deptId").val("");
+    		$("#hCustName").val("");
+    		$("#sSubName").val("");	
     		bizName.value('');
     	}
     }
@@ -966,44 +1097,34 @@
     function changeBizName(e){
     	var dataItem = e.dataItem;	
 
-    	if (dataItem == null) {
-    		$(".hiddenValue").val("");
-    	} else {
-    		$("#hCustId").val(dataItem.custId);
-    		$("#hDeptId").val("");
-    		$("#sSubName").val("");
+//     	if (dataItem == null) {
+//     		$(".hiddenValue").val("");
+//     	} else {
+//     		$("#hCustId").val(dataItem.custId);
+//     		$("#hDeptId").val("");
+//     		$("#sSubName").val("");
     		
-    		searchCustName.value("");
+//     		searchCustName.value("");
     		
-    		Util.setSelectBox("/contents/calc/data/deptList.do", "sSubDept", { custId : dataItem.custId, sDeptId: $("#sDeptId").val() }, "deptId", "deptName", "", "--부서명--");
-    	}
+//     		Util.setSelectBox("/contents/calc/data/deptList.do", "sSubDept", { custId : dataItem.custId, sDeptId: $("#sDeptId").val() }, "deptId", "deptName", "", "--부서명--");
+//     	}
     }
     
     // 초기화 버튼 이벤트 처리
     function fReset() {
     	$("#fSearch")[0].reset();
     	$(".hiddenValue").val("");
+    	
+    	$("input:checkbox[id='carryOverYn']").prop("checked", true);
     }
     
-    // 헤더에 요약정보 표시
-    function getSummary() {
-    	var param = $("#fSearch").serializeObject();
-    	
-    	$.ajax({
-    		url: "/contents/calc/data/calcSummary.do",
-    		type: "POST",
-    		dataType: "json",
-    		data: param,
-    		success: function(data){
-    			if(data.result == true) {
-    				var groupCount = 
-    					"<i style=\"color: #3f75c1\">매출 : " + Util.nvl(Util.formatNumber(data.data.sellCnt), '0') + "건 / " + 
-    					Util.nvl(Util.formatNumber(data.data.unpaidAmt), '0') + "원 / " + Util.nvl(Util.formatNumber(data.data.depositAmt), '0') + "원</i> | "
-    				
-    				$("#groupCount").html(groupCount);	
-    			}	
-    		}
-    	});
+ 	// 헤더에 요약정보 표시
+    function getSummary(total, sumUnpaidAmt, sumDepositAmt) {
+    	var groupCount = 
+			"<i style=\"color: #3f75c1\">매출 : " + Util.nvl(Util.formatNumber(total), '0') + "건 / " + 
+			Util.nvl(Util.formatNumber(sumUnpaidAmt), '0') + "원 / " + Util.nvl(Util.formatNumber(sumDepositAmt), '0') + "원</i>"
+		
+		$("#groupCount").html(groupCount);
     }
     
  	// 우편발송 처리
@@ -1256,87 +1377,138 @@
 				});
  			}
  		} else {
- 			alert("변경할 청구운송비 항목을 선택해 주세요.");
+ 			alert("변경된 청구운송비 항목이 없습니다.");
  		}
  	}
  	
  	// 마감처리
  	function calcFinish() {
+ 		// 청구운송비 변경 건이 존재하는지 체크
+ 		if (editedList.length > 0) {
+ 			var messsage = "청구운송비 변경을 하지 않은 건이 존재합니다.\n변경된 건에 대해 청구운송비 변경을 하지 않으면 기존 금액으로 마감처리 됩니다.\n계속 하시겠습니까?";
+ 			if (!confirm(message))
+ 				return;
+ 		}
+ 		
  		if (selectedList.size > 0) {
     		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?\n이미 처리된 건은 제외됩니다.";
     		if (confirm(message)) {
-//     			var orderIdList = [];
-//     			var allocIdList = [];
-//         		for (var [key, value] of selectedList) {
-//         			if (value.deleteYn != "" && value.deleteYn != "N") {
-//         				orderIdList.push(value.orderId);
-//             			allocIdList.push(value.sellAllocId);	
-//         			}
-//             	}
-        		
-//         		$.ajax({
-//         			url: "/contents/calc/data/updateDeleteYn.do",
-//         			type: "POST",
-//         			dataType: "json",
-//         			data: {
-//         				orderIdList: orderIdList.toString(),
-//         				allocIdList: allocIdList.toString(),
-//         				deleteYn: 'N'
-//         			},
-//         			success: function(data){
-//         				if (data.linkMessage.status == 0) {
-//         					// 요청 성공시 내용 기술
-// 							alert(data.linkMessage.message);
-// 							getCalcList();
-// 							contextMenu.close();
-//         				} else {
-//         					alert(data.linkMessage.message);
-//         				}
-//         			}
-//         		});
+    			var calcIdList = [];
+    			for (var [key, value] of selectedList) {
+    				if ((value.deleteYn == "" || value.deleteYn == "N") &&
+    					(value.finishYn == "" || value.finishYn == "N")) {
+    					/*
+    						sellChargeId
+    						sellWaypointChargeId
+    						sellStayChargeId
+    						sellHandworkChargeId
+    						sellRoundChargeId
+    						sellOtheraddChargeId
+    					*/
+    					if (value.sellChargeId != null && value.sellChargeId != "")
+    						calcIdList.push(value.sellChargeId);
+    					
+    					if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
+    						calcIdList.push(value.sellWaypointChargeId);
+    					
+    					if (value.sellStayChargeId != null && value.sellStayChargeId != "")
+    						calcIdList.push(value.sellStayChargeId);
+    					
+    					if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
+    						calcIdList.push(value.sellHandworkChargeId);
+    					
+    					if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
+    						calcIdList.push(value.sellRoundChargeId);
+    					
+    					if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
+    						calcIdList.push(value.sellOtheraddChargeId);
+    				}
+    			}
+    			
+    			$.ajax({
+        			url: "/contents/calc/data/updateSellCalcFinish.do",
+        			type: "POST",
+        			dataType: "json",
+        			data: {
+        				mode: "Y",
+        				calcIdList: calcIdList.toString()
+        			},
+        			success: function(data){
+        				if (data.linkMessage.status == 0) {
+        					// 요청 성공시 내용 기술
+							alert(data.linkMessage.message);
+							getCalcList();
+							//contextMenu.close();
+        				} else {
+        					alert(data.linkMessage.message);
+        				}
+        			}
+        		});
     		}
     	} else {
-    		alert("삭제 처리할 항목을 선택해 주세요.");
+    		alert("마감처리할 항목을 선택해 주세요.");
     	}
  	}
  	
  	// 마감취소
  	function calcFinishCancel() {
  		if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 취소 처리를 하시겠습니까?\n마감되지 않은 건은 제외됩니다.";
+    		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 취소를 하시겠습니까?\n이미 처리된 건은 제외됩니다.";
     		if (confirm(message)) {
-//     			var orderIdList = [];
-//     			var allocIdList = [];
-//         		for (var [key, value] of selectedList) {
-//         			if (value.deleteYn != "" && value.deleteYn != "N") {
-//         				orderIdList.push(value.orderId);
-//             			allocIdList.push(value.sellAllocId);	
-//         			}
-//             	}
-        		
-//         		$.ajax({
-//         			url: "/contents/calc/data/updateDeleteYn.do",
-//         			type: "POST",
-//         			dataType: "json",
-//         			data: {
-//         				orderIdList: orderIdList.toString(),
-//         				allocIdList: allocIdList.toString(),
-//         				deleteYn: 'N'
-//         			},
-//         			success: function(data){
-//         				if (data.linkMessage.status == 0) {
-//         					// 요청 성공시 내용 기술
-// 							alert(data.linkMessage.message);
-// 							getCalcList();
-// 							contextMenu.close();
-//         				} else {
-//         					alert(data.linkMessage.message);
-//         				}
-//         			}
-//         		});
+    			var calcIdList = [];
+    			for (var [key, value] of selectedList) {
+    				if ((value.deleteYn == "" || value.deleteYn == "N") &&
+    					(value.finishYn != "" || value.finishYn != "N")) {
+    					/*
+    						sellChargeId
+    						sellWaypointChargeId
+    						sellStayChargeId
+    						sellHandworkChargeId
+    						sellRoundChargeId
+    						sellOtheraddChargeId
+    					*/
+    					if (value.sellChargeId != null && value.sellChargeId != "")
+    						calcIdList.push(value.sellChargeId);
+    					
+    					if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
+    						calcIdList.push(value.sellWaypointChargeId);
+    					
+    					if (value.sellStayChargeId != null && value.sellStayChargeId != "")
+    						calcIdList.push(value.sellStayChargeId);
+    					
+    					if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
+    						calcIdList.push(value.sellHandworkChargeId);
+    					
+    					if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
+    						calcIdList.push(value.sellRoundChargeId);
+    					
+    					if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
+    						calcIdList.push(value.sellOtheraddChargeId);
+    				}
+    			}
+    			
+    			$.ajax({
+        			url: "/contents/calc/data/updateSellCalcFinish.do",
+        			type: "POST",
+        			dataType: "json",
+        			data: {
+        				mode: "N",
+        				calcIdList: calcIdList.toString()
+        			},
+        			success: function(data){
+        				if (data.linkMessage.status == 0) {
+        					// 요청 성공시 내용 기술
+							alert(data.linkMessage.message);
+							getCalcList();
+							//contextMenu.close();
+        				} else {
+        					alert(data.linkMessage.message);
+        				}
+        			}
+        		});
     		}
     	} else {
-    		alert("삭제 처리할 항목을 선택해 주세요.");
+    		alert("마감처리할 항목을 선택해 주세요.");
     	}
  	}
  	
@@ -1381,7 +1553,9 @@
  		$("#modalOrderList").val(orderIdList);
  		
  		searchModalCustName = $("#sModalCustName").data("kendoMultiColumnComboBox");
- 		searchModalCustName = MultiColumnComboBox.setCustName("sModal", $("#custType").val(), $("#sDeptId").val());
+ 		// 기존코드 : 검색조건의 거래처 구분으로 되어 있음. 화주 검색으로 조건 변경
+//  		searchModalCustName = MultiColumnComboBox.setCustName("sModal", $("#custType").val(), $("#sDeptId").val());
+ 		searchModalCustName = MultiColumnComboBox.setCustName("sModal", "01", $("#sDeptId").val());
  		searchModalCustName.bind("select", onChangeSearchModalCust);
     }
     
@@ -1435,7 +1609,7 @@
     		memo: $("#modalOrderMemo").val(),
     	};
     	
-    	if(confirm("화주를 변경하시겠습니까?\n삭제된 정산에 대해서는 화주변경을 할 수 없습니다.")) {
+    	if (confirm("화주를 변경하시겠습니까?\n삭제된 정산에 대해서는 화주변경을 할 수 없습니다.")) {
     		// 이벤트 초기화 (submit 동작 중단)
 			e.preventDefault();
 			$.ajax({
@@ -1471,15 +1645,405 @@
  		modal: true
  	});
     
+ 	/*
+     * 거래명세서 창 Open
+     */
     function pubTranReceiptOpen() {
+    	/*
+    	 * 거래명세서 발행 시 체크 항목
+    	 * 	선택된 항목들이 모두 동일한 화주인지.
+    	 *	기사발행건은 별도 처리 (uniqueChargeType.indexOf('03')???)
+    	 *	매출만.
+    	 *	이미 발행한 거래명세서, 세금계산서건은 제외
+    	 */
+    	if (selectedList.size <= 0) {
+    		alert("거래명세서를 발행할 항목을 선택해 주세요.");
+    		return;
+    	}
+    	
+//     	var targetList = [];
+		tranReceiptWithtaxinvList.splice(0, tranReceiptWithtaxinvList.length);
+    	
+    	// 유효성 체크 및 타겟 리스트 설정
+    	var beforeCustId = "";
+    	var beforeDeptId = "";
+    	var beforeMngCustId = "";
+    	var beforeMngDeptId = "";
+    	var beforeChargeTypeCode = "";
+    	var beforeDriverId = "";
+    	var beforeCarNum = "";
+    	for (var [key, value] of selectedList) {
+    		var afterCustId = value.bizId;
+			var afterDeptId = value.deptId;
+			var afterMngCustId = value.mngCustId;
+			var afterMngDeptId = value.mngDeptId;
+			var afterChargeTypeCode = value.chargeTypeCode;
+			var afterDriverId = value.driverId;
+			var afterCarNum = value.carNum;
+			
+			// 체크 항목이 동일한 화주만 처리
+			if (beforeCustId != "" && beforeCustId != afterCustId) {
+    			alert("동일한 화주 건에 대해서만 거래명세서 일괄발행이 가능합니다.");
+    			return;
+    		} else {
+    			beforeCustId = afterCustId;
+    			beforeDeptId = afterDeptId;
+    			beforeMngCustId = afterMngCustId;
+    			beforeMngDeptId = afterMngDeptId;
+    		}
+			
+			// 체크 항목이 동일한 운임구분만 처리
+			if (beforeChargeTypeCode != "" && beforeChargeTypeCode != afterChargeTypeCode) {
+				alert("동일한 운임구분 건에 대해서만 거래명세서 일괄발행이 가능합니다.");
+				return;
+			} else {
+				beforeChargeTypeCode = afterChargeTypeCode;
+				// 기사 발행건에서 동일한 기사건만 처리
+				if (beforeChargeTypeCode == "03") {
+					if (beforeDriverId != "" && beforeDriverId != afterDriverId) {
+						alert("기사발행의 경우 동일한 차주 건에 대해서만 거래명세서 일괄발행이 가능합니다.");
+						return;
+					} else {
+						beforeDriverId = afterDriverId;
+						beforeCarNum = afterCarNum;
+					}
+				} else if (beforeChargeTypeCode == "02") {
+					// 선착불의 경우 처리하지 않음.
+					alert("선착불의 경우 거래명세서 발행이 불가능합니다.");
+					return;
+				}
+			}
+			
+			// 이미 발행된 건 제외
+    		if (value.tranReceiptYn == "N" && value.sellTaxinvYn == "N") {
+    			tranReceiptWithtaxinvList.push(value);
+    		}
+    	}
+    	
+    	var custId = beforeCustId;
+    	var deptId = beforeDeptId;
+    	var mngCustId = beforeMngCustId;
+    	var mngDeptId = beforeMngDeptId;
+    	var chargeTypeCode = beforeChargeTypeCode;
+    	var driverId = beforeDriverId;
+    	var carNum = beforeCarNum;
+    	
+    	var loginCustId = "${sessionScope.userInfo.custId}";
+    	var loginDeptId = "${sessionScope.userInfo.deptId}";
+    	
+    	// 거래처 상세를 조회하여 모달 항목 입력
+    	if (chargeTypeCode == "01") {
+    		// 인수증
+    		setTaxBizInfo(custId, deptId, loginCustId, loginDeptId);
+    	} else if (chargeTypeCode == "03") {
+    		// 기사발행
+//     		setTaxDriverInfo(custId, deptId, loginCustId, loginDeptId, driverId);
+    		setTaxDriverInfo(custId, deptId, mngCustId, mngDeptId, driverId);
+    	}
+    	
     	tranReceiptModal.data("kendoDialog").open();
     }
     
+ 	/*
+     * 거래명세서 창 Close
+     */
     function pubTranReceiptClose() {
     	tranReceiptModal.data("kendoDialog").close();
     }
- 	
-  	
+    
+    /*
+     * 거래명세서 발행 버튼 클릭 이벤트
+     */
+    $('#fTranReceipt').validator().on('submit', function(e) {
+    	if (e.isDefaultPrevented()) {
+    		alert("항목을 입력해 주세요.");
+    		e.preventDefault();
+    		return;
+    	}
+    	
+    	// 세금계산서 연계 발행
+    	if ($("#taxYn option:selected").val() == 'Y') {
+    		// 이메일 유효성 체크
+    		var emailRule = /^([\w\.\_\-])*[a-zA-Z0-9]+([\w\.\_\-])*([a-zA-Z0-9])+([\w\.\_\-])+@([a-zA-Z0-9]+\.)+[a-zA-Z0-9]{2,8}$/i;
+			if (!emailRule.test($("#tranSupplierMemEmail").val())) {
+				alert("공급자 이메일이 형식에 맞지 않습니다.");
+				e.preventDefault();
+				return;
+			}
+			if (!emailRule.test($("#tranBuyerMemEmail").val())) {
+				alert("공급받는자 이메일이 형식에 맞지 않습니다.");
+				e.preventDefault();
+				return;
+			}
+			
+			// 발행일자 유효성 체크
+			var toDay = new Date().yyyymmdd();
+			var pubTaxinvDay = $("#taxDate").data("kendoDatePicker").value().yyyymmdd();
+			if (toDay < pubTaxinvDay) {
+				alert("발행일자를 미래일자로 설정하면 세금계산서를 발행할 수 없습니다.");
+				e.preventDefault();
+				return;
+			}
+    	}
+    	
+    	// 거래명세서 및 세금계산서 발행건이 없음.
+		if (tranReceiptWithtaxinvList.length <= 0) {
+			alert("새로 발행될 거래명세서, 세금계산서건이 없습니다.\n이미 처리된 건인지 확인하세요.");
+			e.preventDefault();
+			return;
+		}
+    	
+    	if (confirm("거래명세서를 발행하시겠습니까?\n이미 발행한 거래명세서, 세금계산서는 발행되지 않습니다.")) {
+    		e.preventDefault();
+    		
+    		var param = {};
+    		if ($("#taxYn option:selected").val() == 'Y') {
+    			// 세금계산서 연계 발행
+    			param.taxYn = "Y";
+    			
+				if ($("#tranMode").val() == "R") {
+    				// 인수증
+					param.supplierCustId = $("#tranSupplierCustId").val();
+        			param.supplierDeptId = $("#tranSupplierDeptId").val();
+        			
+        			param.supplierMemName = $("#tranSupplierMemName").val();
+        			param.supplierMemTel = $("#tranSupplierMemTel").val();
+        			param.supplierMemEmail = $("#tranSupplierMemEmail").val();
+        			
+        			// 계좌정보 설정
+        			var bankName = $("#tranSupplierBankName").val();
+        			var bankAccount = $("#tranSupplierBankAccount").val();
+        			var bankCnnm = $("#tranSupplierBankCnnm").val();
+        			var bizname = $("#tranSupplierBizName").val();
+        			if (bankName != "" && bankAccount != "" && bankCnnm != "" && bizname != "") {
+        				param.tranRemarksDefault = bankName + " " + bankAccount + " " + bankCnnm + " " + bizname;
+        			} else {
+        				param.tranRemarksDefault = "";
+        			}
+    			} else {
+    				// 기사발행
+    				param.driverId = $("#tranSupplierDriverId").val();
+        			param.vehicId = $("#tranSupplierVehicId").val();
+    				
+    				param.supplierMemName = $("#tranSupplierMemName").val();
+    				param.supplierMemTel = $("#tranSupplierMemTel").val();
+    				param.supplierMemEmail = $("#tranSupplierMemEmail").val();
+    				
+    				// 계좌정보 설정
+        			var bankName = $("#tranSupplierBankName").val();
+        			var bankAccount = $("#tranSupplierBankAccount").val();
+        			var bankCnnm = $("#tranSupplierBankCnnm").val();
+        			var bizName = $("#tranSupplierBizName").val();
+        			if (bankName != "" && bankAccount != "" && bankCnnm != "" && bizName != "") {
+        				param.tranRemarksDefault = bankName + " " + bankAccount + " " + bankCnnm + " " + bizName;
+        			} else {
+        				param.tranRemarksDefault = "";
+        			}
+    			}
+				
+				// 공급받는자
+				param.custId = $("#tranBuyerCustId").val();
+    			param.deptId = $("#tranBuyerDeptId").val();
+    			param.bizTypeCd = $("#tranBuyerBizType").val();
+    			
+    			param.buyerMemName = $("#tranBuyerMemName").val();
+    			param.buyerMemTel = $("#tranBuyerMemTel").val();
+    			param.buyerMemEmail = $("#tranBuyerMemEmail").val();
+    			
+    			// 단건, 다중
+    			param.itemTotalType = $("#tranItemTotalType").val();
+    			
+    		} else {
+    			// 거래명세서만 발행
+    			param.taxYn = "N";
+    			
+    			if ($("#tranMode").val() == "R") {
+    				// 공급자 (인수증)
+        			param.supplierCustId = $("#tranSupplierCustId").val();
+        			param.supplierDeptId = $("#tranSupplierDeptId").val();
+    			} else {
+    				// 공급자 (기사발행)
+    				param.driverId = $("#tranSupplierDriverId").val();
+        			param.vehicId = $("#tranSupplierVehicId").val();
+    			}
+    			
+    			// 공급받는자
+    			param.custId = $("#tranBuyerCustId").val();
+    			param.deptId = $("#tranBuyerDeptId").val();
+    			param.bizTypeCd = $("#tranBuyerBizType").val();
+    		}
+    		
+    		// 발행인 정보
+    		param.loginCustId = "${sessionScope.userInfo.custId}";
+			param.loginDeptId = "${sessionScope.userInfo.deptId}";
+			param.loginUserId = "${sessionScope.userInfo.userId}";
+			
+    		param.tranMode = $("#tranMode").val();
+    		param.sellBuySctn = "01";
+    		param.taxDate = $("#taxDate").val();
+    		param.orderList = JSON.stringify(tranReceiptWithtaxinvList);
+    		
+    		setTranReceiptWithTaxinv(param);
+    	}
+    });
+    
+    /*
+     * 거래처정보 조회
+     */
+    function setTaxBizInfo(custId, deptId, mngCustId, mngDeptId) {
+		$.ajax({
+			url: "/contents/calc/data/getTaxBizInfo.do",
+			type: "POST",
+			dataType: "json",
+			data: {
+				custId: custId,
+				deptId: deptId,
+				mngCustId: mngCustId,
+				mngDeptId: mngDeptId
+			},
+			success: function(data){
+				if(data.linkMessage.status == 0) {
+					$("#tranMode").val("R");
+					$("#tranCustId").val(data.linkMessage.data.data.buyerCustId);
+					$("#tranDeptId").val(data.linkMessage.data.data.buyerDeptId);
+					
+					// 공급자 정보
+					$("#tranSupplierCustId").val(data.linkMessage.data.data.supplierCustId);
+					$("#tranSupplierDeptId").val(data.linkMessage.data.data.supplierDeptId);
+					$("#tranSupplierBizName").val(data.linkMessage.data.data.supplierBizName);
+					$("#tranSupplierBizType").val(data.linkMessage.data.data.supplierBizTypeCode);
+    				$("#tranSupplierMemName").val(data.linkMessage.data.data.supplierMemName);
+    				$("#tranSupplierMemTel").val(Util.formatPhone(data.linkMessage.data.data.supplierMemTel));
+    				$("#tranSupplierMemEmail").val(data.linkMessage.data.data.supplierMemEmail);
+    				$("#tranSupplierBankName").val(data.linkMessage.data.data.supplierBankName);
+					$("#tranSupplierBankCnnm").val(data.linkMessage.data.data.supplierBankCnnm);
+					$("#tranSupplierBankAccount").val(data.linkMessage.data.data.supplierBankAccount);
+    				
+    				// 공급받는자 정보
+    				$("#tranBuyerCustId").val(data.linkMessage.data.data.buyerCustId);
+					$("#tranBuyerDeptId").val(data.linkMessage.data.data.buyerDeptId);
+					$("#tranBuyerBizName").val(data.linkMessage.data.data.buyerBizName);
+					$("#tranBuyerBizType").val(data.linkMessage.data.data.buyerBizTypeCode);
+    				$("#tranBuyerMemName").val(data.linkMessage.data.data.buyerMemName);
+    				$("#tranBuyerMemTel").val(Util.formatPhone(data.linkMessage.data.data.buyerMemTel));
+    				$("#tranBuyerMemEmail").val(data.linkMessage.data.data.buyerMemEmail);
+    				
+    				// 공급받는자 주소
+    				$("#tranBuyerPostalPost").val(data.linkMessage.data.data.buyerPostalPost);
+    				$("#tranBuyerPostalAddr").val(data.linkMessage.data.data.buyerPostalAddr);
+    				$("#tranBuyerPostalAddrDetail").val(data.linkMessage.data.data.buyerPostalAddrDetail);
+				}
+			}
+		});
+    }
+    
+    // 기사정보 조회
+    function setTaxDriverInfo(custId, deptId, mngCustId, mngDeptId, driverId) {
+    	$.ajax({
+			url: "/contents/calc/data/getSupplierTaxDriverInfo.do",	
+			type: "POST",
+			dataType: "json",
+			data: {
+				driverId: driverId
+			},
+			success: function(data){
+				if(data.linkMessage.status == 0) {
+					$("#tranMode").val("E");
+					
+					// 공급자 정보
+					$("#tranSupplierDriverId").val(data.linkMessage.data.data.supplierDriverId);
+    				$("#tranSupplierVehicId").val(Util.formatPhone(data.linkMessage.data.data.supplierVehicId));
+    				$("#tranSupplierMemName").val(data.linkMessage.data.data.supplierDriverName);
+    				$("#tranSupplierMemTel").val(Util.formatPhone(data.linkMessage.data.data.supplierDriverTel));
+    				$("#tranSupplierMemEmail").val(data.linkMessage.data.data.supplierDriverEmail);
+    				$("#tranSupplierBankName").val(data.linkMessage.data.data.supplierDriverBankName);
+					$("#tranSupplierBankCnnm").val(data.linkMessage.data.data.supplierDriverBankCnnm);
+					$("#tranSupplierBankAccount").val(data.linkMessage.data.data.supplierDriverBankAccount);
+				}
+			}
+		});
+
+// 		$.ajax({
+//     		url: "/contents/basic/data/carList.do",	
+//     		type: "POST",
+//     		dataType: "json",
+//     		data: {
+//     			useYn: "Y",
+//     			carNum : carNum,
+//     		},
+//     		success: function(data){
+//     			if(data.result) {
+//     				$("#tranSupplierDriverId").val(data.data[0].driverId);
+//     				$("#tranSupplierVehicId").val(data.data[0].vehicId);
+//     				$("#tranSupplierMemName").val(data.data[0].driverName);
+//     				$("#tranSupplierMemTel").val(data.data[0].mobile);
+//     				$("#tranSupplierMemEmail").val(data.data[0].driverEmail);
+//     				$("#tranSupplierBankName").val(data.data[0].bankName);
+// 					$("#tranSupplierBankCnnm").val(data.data[0].bankCnnm);
+// 					$("#tranSupplierBankAccount").val(data.data[0].bankAccount);
+					
+//     				if(data.data[0].bankName != '' && data.data[0].bankAccount != '' && data.data[0].bankCnnm != '' && data.data[0].bizName != ''){
+//     	 				$("#tranRemarksDefault").val(data.data[0].bankName+' '+data.data[0].bankAccount+' '+data.data[0].bankCnnm+' '+data.data[0].bizName);
+//     				}else{
+//     					$("#tranRemarksDefault").val('');
+//     				}
+//     			}
+//     		}
+//     	});
+    	
+    	$.ajax({
+			url: "/contents/calc/data/getTaxBizInfo.do",	
+			type: "POST",
+			dataType: "json",
+			data: {
+				custId: custId,
+				deptId: deptId,
+				mngCustId: mngCustId,
+				mngDeptId: mngDeptId
+			},
+			success: function(data){
+				if(data.linkMessage.status == 0) {
+					$("#tranMode").val("E");
+					$("#tranCustId").val(data.linkMessage.data.data.buyerCustId);
+					$("#tranDeptId").val(data.linkMessage.data.data.buyerDeptId);
+					
+					// 공급받는자 정보
+    				$("#tranBuyerCustId").val(data.linkMessage.data.data.buyerCustId);
+					$("#tranBuyerDeptId").val(data.linkMessage.data.data.buyerDeptId);
+					$("#tranBuyerBizName").val(data.linkMessage.data.data.buyerBizName);
+					$("#tranBuyerBizType").val(data.linkMessage.data.data.buyerBizTypeCode);
+    				$("#tranBuyerMemName").val(data.linkMessage.data.data.buyerMemName);
+    				$("#tranBuyerMemTel").val(Util.formatPhone(data.linkMessage.data.data.buyerMemTel));
+    				$("#tranBuyerMemEmail").val(data.linkMessage.data.data.buyerMemEmail);
+    				
+    				// 공급받는자 주소
+    				$("#tranBuyerPostalPost").val(data.linkMessage.data.data.buyerPostalPost);
+    				$("#tranBuyerPostalAddr").val(data.linkMessage.data.data.buyerPostalAddr);
+    				$("#tranBuyerPostalAddrDetail").val(data.linkMessage.data.data.buyerPostalAddrDetail);
+				}
+			}
+		});
+    }
+    
+    function setTranReceiptWithTaxinv(param) {
+    	$.ajax({
+    		url: "/contents/calc/data/setTranReceiptWithTaxinv.do",
+    		type: "POST",
+    		dataType: "json",
+    		data: param,
+    		async: false,
+    		success: function(data){
+    			if (data.result) {
+    				alert(data.msg);
+    				pubTranReceiptClose();
+    				getCalcList();
+    			} else {
+    				alert(data.msg);
+    			}
+    		}
+    	}); 
+    }
+    
  	// 그리드 컨택스트 메뉴 처리
     function onContextMenuSelect(e) {
     	var item = e.item.id;
@@ -1506,6 +2070,7 @@
         	taxInvPostSendCancel();
         	break;
         case "cancelCalc":
+        	calcFinishCancel();
         	break;
         case "cancelDeleteCalc":
         	cancelDeleteCalc();
@@ -1640,39 +2205,9 @@
 		{ field: "sellTaxinvUserName", title: "발행원", width: 100 },
 		{ field: "postsendYn", title: "우편발송", width: 80, editable: function (dataItem){} },
 		{ field: "postsendUserName", title: "발송원", width: 100 },
-		{ field: "payableAmt", title: "매입액(소계)", width: 100, type: 'number',
-			template: function(dataItem) {
-		    	return Util.formatNumber(dataItem.payableAmt);
-		    },
-			attributes: {
-				style: "text-align: right" 
-			},
-			editable: function (dataItem){}
-		},
-		{ field: "carSctnName", title: "차량구분", width: 90, editable: function (dataItem){} },
-		{ field: "buyCustName", title: "차량번호(또는 운송사)", width: 160, editable: function (dataItem){} },
-		{ field: "buyCustManager", title: "차주명(또는 담당자)", width: 160, editable: function (dataItem){} },
-		{ field: "buyCustMobile", title: "전화번호", width: 130,
-			template: function(dataItem) {
-				return Util.formatPhone(dataItem.buyCustMobile);
-			},
-			editable: function (dataItem){}
-		},
-		{ field: "reqPayYn", title: "빠른지급", width: 100, editable: function (dataItem){} },
-		{ field: "receiptYn", title: "인수증", width: 130, editable: function (dataItem){} },
-		{ field: "taxinvYn", title: "계산서", width: 130, editable: function (dataItem){} },
-		{ field: "appName", title: "어플명", width: 100, editable: function (dataItem){} },
-		{ field: "driverCarrierName", title: "소속운송사", width: 100, editable: function (dataItem){} },
 		{ field: "finishMemo", title: "마감 시 메모", width: 160, editable: function (dataItem){} },
 		{ field: "refContent1", title: "참고 내용1", width: 160, editable: function (dataItem){} },
 		{ field: "refContent2", title: "참고 내용2", width: 160, editable: function (dataItem){} },
-		{ field: "reportBizNum", title: "신고용사업자번호", width: 160,
-			template: function(dataItem) {
-				return Util.formatBizNum(dataItem.reportBizNum);
-			},
-			editable: function (dataItem){}
-		},
-		{ field: "reportBizName", title: "신고용사업자명", width: 160, editable: function (dataItem){} },
 		{ field: "mngDeptName", title: "담당부서", width: 120, editable: function (dataItem){} },
 		{ field: "mngUserName", title: "배차원", width: 100, editable: function (dataItem){} },
 		{ field: "deleteYn", title: "삭제일", width: 80, editable: function (dataItem){} },
@@ -1682,7 +2217,6 @@
 		{ field: "mngCustId", hidden: true, editable: function (dataItem){} },
 		{ field: "mngDeptId", hidden: true, editable: function (dataItem){} },
 		{ field: "sellAllocId", hidden: true, editable: function (dataItem){} },
-		{ field: "buyAllocId", hidden: true, editable: function (dataItem){} },
 		{ field: "custId", hidden: true, editable: function (dataItem){} },
 		{ field: "bizId", hidden: true, editable: function (dataItem){} },
 		{ field: "sellChargeId", hidden: true, editable: function (dataItem){} },
@@ -1691,12 +2225,5 @@
 		{ field: "sellHandworkChargeId", hidden: true, editable: function (dataItem){} },
 		{ field: "sellRoundChargeId", hidden: true, editable: function (dataItem){} },
 		{ field: "sellOtheraddChargeId", hidden: true, editable: function (dataItem){} },
-		{ field: "buyChargeId", hidden: true, editable: function (dataItem){} },
-		{ field: "buyWaypointChargeId", hidden: true, editable: function (dataItem){} },
-		{ field: "buyStayChargeId", hidden: true, editable: function (dataItem){} },
-		{ field: "buyHandworkChargeId", hidden: true, editable: function (dataItem){} },
-		{ field: "buyRoundChargeId", hidden: true, editable: function (dataItem){} },
-		{ field: "buyOtheraddChargeId", hidden: true, editable: function (dataItem){} },
-		{ field: "buyAllocfeeChargeId", hidden: true, editable: function (dataItem){} }
 	];
 </script>

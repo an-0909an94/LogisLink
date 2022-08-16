@@ -22,8 +22,28 @@ public class SellCalcServiceImpl implements SellCalcService {
 	}
 	
 	@Override
-	public int getSellCalcListCnt(Map<String, Object> map) {
+	public Map<String, Object> getSellCalcListCnt(Map<String, Object> map) {
 		return sellCalcDao.getSellCalcListCnt(map);
+	}
+	
+	@Override
+	public Map<String, Object> selectTaxBizInfo(Map<String, Object> map) {
+		return sellCalcDao.selectTaxBizInfo(map);
+	}
+	
+	@Override
+	public Map<String, Object> selectSupplierTaxBizInfo(Map<String, Object> map) {
+		return sellCalcDao.selectSupplierTaxBizInfo(map);
+	}
+	
+	@Override
+	public Map<String, Object> selectBuyerTaxBizInfo(Map<String, Object> map) {
+		return sellCalcDao.selectBuyerTaxBizInfo(map);
+	}
+
+	@Override
+	public Map<String, Object> selectSupplierTaxDriverInfo(Map<String, Object> map) {
+		return sellCalcDao.selectSupplierTaxDriverInfo(map);
 	}
 	
 	@Override
@@ -44,5 +64,15 @@ public class SellCalcServiceImpl implements SellCalcService {
 	@Override
 	public void upsertCalcCharge(Map<String, Object> map) {
 		sellCalcDao.upsertCalcCharge(map);
+	}
+	
+	@Override
+	public int updateAllocCharge(Map<String, Object> map) {
+		return sellCalcDao.updateAllocCharge(map);
+	}
+
+	@Override
+	public void updateSellCalcFinish(Map<String, Object> map) {
+		sellCalcDao.updateSellCalcFinish(map);
 	}
 }
