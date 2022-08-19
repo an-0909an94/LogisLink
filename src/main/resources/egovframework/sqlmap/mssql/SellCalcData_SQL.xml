@@ -655,19 +655,20 @@
   <!-- 거래명세서, 세금계산서 발행용 공급자 정보 조회 (기사발행) -->
   <select id="selectSupplierTaxDriverInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
     SELECT
-      DRIVER_ID AS supplierDriverId
-      , ISNULL(VEHIC_ID, '') AS supplierVehicId
-      , ISNULL(DRIVER_NAME, '') AS supplierDriverName
-      , ISNULL(DRIVER_EMAIL, '') AS supplierDriverEmail
-      , ISNULL(MOBILE, '') AS supplierDriverTel
-      , ISNULL(BANK_CODE, '') AS supplierDriverBankCode
-      , ISNULL(BANK_CNNM, '') AS supplierDriverBankCnnm
-      , ISNULL(BANK_ACCOUNT, '') AS supplierDriverBankAccount
-      , ISNULL((SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = BANK_CODE), '') AS supplierDriverBankName
-    FROM T_DRIVER
+      TD.DRIVER_ID AS supplierDriverId
+      , ISNULL(TVM.VEHIC_ID, '') AS supplierVehicId
+      , ISNULL(TD.DRIVER_NAME, '') AS supplierDriverName
+      , ISNULL(TD.DRIVER_EMAIL, '') AS supplierDriverEmail
+      , ISNULL(TD.MOBILE, '') AS supplierDriverTel
+      , ISNULL(TD.BANK_CODE, '') AS supplierDriverBankCode
+      , ISNULL(TD.BANK_CNNM, '') AS supplierDriverBankCnnm
+      , ISNULL(TD.BANK_ACCOUNT, '') AS supplierDriverBankAccount
+      , ISNULL((SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = TD.BANK_CODE), '') AS supplierDriverBankName
+    FROM T_DRIVER TD
+      INNER JOIN T_VEHIC_MST TVM ON TD.DRIVER_ID = TVM.DRIVER_ID
     WHERE 1=1
-    AND USE_YN = 'Y'
-    AND DRIVER_ID = #{driverId}
+      AND TD.USE_YN = 'Y'
+      AND TD.DRIVER_ID = #{driverId}
   </select>
   
   <update id="updatePostSendYn" parameterType="java.util.HashMap">

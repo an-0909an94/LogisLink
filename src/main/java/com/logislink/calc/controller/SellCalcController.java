@@ -465,104 +465,232 @@ public class SellCalcController {
 		
 		String taxYn = param.get("taxYn").toString();
 		String tranMode = param.get("tranMode").toString();
-		String writeDate = DateUtil.dateYYYYmmdd(param.get("taxDate").toString(), "");
+		String writeDate = param.get("taxDate").toString();
 		param.put("writeDate", writeDate);
 		
+		LinkMessage linkMessage = new LinkMessage();
 		try {
+			// 거래명세서 발행용 리스트 -> 이미 완료된 건은 제외
+			String tranReceiptOrderList = "";
+			
+			// 거래명세서 발행 기간 설정
+			Date minAllocDate = null;
+			Date maxAllocDate = null;
+			
 			// 오더리스트
 			String json = param.get("orderList").toString();
 			ObjectMapper mapper = new ObjectMapper();
 			List<Map<String, Object>> orderList = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});
 			for (Map<String, Object> item : orderList) {
-				String sDate = item.get("sDateFull").toString().substring(0, 10);
-				String eDate = item.get("eDateFull").toString().substring(0, 10);
+				// 이미 완료된 건 제외
+//				if (item.get("tranReceiptYn").equals("N")) {
+//					tranReceiptOrderList += item.get("orderId").toString() + ",";
+//				}
+				tranReceiptOrderList += item.get("orderId").toString() + ",";
+				
+				// 배차일자로 검색 범위 설정 
+				String sAllocDate = item.get("allocDateFull").toString();
+				if (sAllocDate != null && sAllocDate != "") {
+					Date dAllocDate = new SimpleDateFormat("yyyy-MM-dd").parse(sAllocDate);
+					if (minAllocDate == null || maxAllocDate == null) {
+						minAllocDate = dAllocDate;
+						maxAllocDate = dAllocDate;
+					} else {
+						if (dAllocDate.compareTo(minAllocDate) < 0)
+							minAllocDate = dAllocDate;
+						if (dAllocDate.compareTo(maxAllocDate) > 0)
+							maxAllocDate = dAllocDate;
+					}
+				}
+			}
+			
+			// fromDate, toDate 설정
+			if (minAllocDate != null && maxAllocDate != null) {
+				String sDate = new SimpleDateFormat("yyyy-MM-dd").format(minAllocDate);
+				String eDate = new SimpleDateFormat("yyyy-MM-dd").format(maxAllocDate);
 				param.put("fromDate", sDate);
 				param.put("toDate", eDate);
-				
-				// INSERT_TRAN_RECEIPT DB프로시저 영향으로 fromDate, toDate, orderId를 하나로 처리 -> orderList -> orderId
-				param.put("orderList", item.get("orderId").toString());
-				
-				// 세금계산서 연계 발행
-				if (taxYn.equals("Y")) {
-					// 인수증
-					if (tranMode.equals("R")) {
-						// 거래명세서 발행
-						tranService.regTranReceipt(param);
+			} else {
+				// 검색 범위를 임의로 설정
+				String sDate = "2020-01-01";
+				String eDate = "2025-12-30";
+				param.put("fromDate", sDate);
+				param.put("toDate", eDate);
+			}
+			
+			tranReceiptOrderList = tranReceiptOrderList.substring(0, tranReceiptOrderList.length() - 1);
+			param.put("orderList", tranReceiptOrderList);
+			
+			// 세금계산서 연계 발행
+			if (taxYn.equals("Y")) {
+				// 인수증
+				if (tranMode.equals("R")) {
+					// 거래명세서 발행
+					tranService.regTranReceipt(param);
+					// 결과
+					if (param.get("retCode").equals("00")) {
+						// 세금계산서 발행
+						param.put("receiptId", param.get("retId"));
+						
+						//공급자와 위탁자 사업자가 같으면 일반세금계산서, 다르면 위수탁
+//						String supplierCustId = param.get("supplierCustId").toString();
+						String supplierCustId = login.getCustId();
+						if (supplierCustId.equals(brokerCustId)) {
+							// 1: 일반
+							param.put("billKind", "1");
+							// 01: 일반
+							param.put("docType", "01");
+						} else {
+							// 3: 위수탁
+							param.put("billKind", "3");
+							// 03: 위수탁
+							param.put("docType", "03");
+						}
+						
+						param.put("brokerCustId", brokerCustId);
+						param.put("brokerDeptId", brokerDeptId);
+						param.put("brokerBizNo", brokerBizNo);
+						param.put("brokerBizType", brokerBizType);
+						param.put("brokerBizName", brokerBizName);
+						param.put("brokerBizClass", brokerBizClass);
+						param.put("brokerBizSubNo", brokerBizSubNo);
+						param.put("brokerCeo", brokerCeo);
+						param.put("brokerMemDept", brokerMemDept);
+						param.put("brokerMemName", brokerMemName);
+						param.put("brokerMemEmail", brokerMemEmail);
+						param.put("brokerMemTel", brokerMemTel);
+						param.put("brokerAddr", brokerAddr);
+						
+						// 세금계산서 발행 시 작성일 포맷 변경 
+						writeDate = writeDate.replace("-", "");
+						param.put("writeDate", writeDate);
+						
+						taxService.insertReceiptTaxInvoice(param);
 						// 결과
 						if (param.get("retCode").equals("00")) {
-							// 세금계산서 발행
-							param.put("receiptId", param.get("retId"));
-							
-							//공급자와 위탁자 사업자가 같으면 일반세금계산서, 다르면 위수탁
-							String supplierCustId = param.get("supplierCustId").toString();
-							if (supplierCustId.equals(brokerCustId)) {
-								// 1: 일반
-								param.put("billKind", "1");
-								// 01: 일반
-								param.put("docType", "01");
-							} else {
-								// 3: 위수탁
-								param.put("billKind", "3");
-								// 03: 위수탁
-								param.put("docType", "03");
-							}
-							
-							param.put("brokerCustId", brokerCustId);
-							param.put("brokerDeptId", brokerDeptId);
-							param.put("brokerBizNo", brokerBizNo);
-							param.put("brokerBizType", brokerBizType);
-							param.put("brokerBizName", brokerBizName);
-							param.put("brokerBizClass", brokerBizClass);
-							param.put("brokerBizSubNo", brokerBizSubNo);
-							param.put("brokerCeo", brokerCeo);
-							param.put("brokerMemDept", brokerMemDept);
-							param.put("brokerMemName", brokerMemName);
-							param.put("brokerMemEmail", brokerMemEmail);
-							param.put("brokerMemTel", brokerMemTel);
-							param.put("brokerAddr", brokerAddr);
-							
-							taxService.insertReceiptTaxInvoice(param);
-							// 결과
-							if (param.get("retCode").equals("00")) {
-								
-							} else {
-								
-							}
+							linkMessage.setSender(this.getClass().getName());
+							linkMessage.setStatus(0);
+							linkMessage.setMessage(param.get("retMsg").toString());
 						} else {
-							
+							// 세금계산서 발행 실패
+							linkMessage.setSender(this.getClass().getName());
+							linkMessage.setStatus(-1);
+							linkMessage.setMessage("세금계산서 발행에 실패했습니다.");
+							linkMessage.setDetailMessage(param.get("retMsg").toString());
 						}
 					} else {
-						// 거래명세서 발행
-						tranService.regTranReceiptForDriver(param);
-						
-						// 세금계산서 발행
-						taxService.insertReceiptTaxInvoiceForDriver(param);
+						// 거래명세서 발행 실패
+						linkMessage.setSender(this.getClass().getName());
+						linkMessage.setStatus(-1);
+						linkMessage.setMessage("거래명세서 발행에 실패했습니다.");
+						linkMessage.setDetailMessage(param.get("retMsg").toString());
 					}
 				} else {
-					if (tranMode.equals("R")) {
-						// 인수증
-						tranService.regTranReceipt(param);
+					// 거래명세서 발행
+					tranService.regTranReceiptForDriver(param);
+					// 결과
+					if (param.get("retCode").equals("00")) {
+						// 세금계산서 발행
+						param.put("receiptId", param.get("retId"));
+						
+						//공급자와 위탁자 사업자가 같으면 일반세금계산서, 다르면 위수탁
+//						String supplierCustId = param.get("supplierCustId").toString();
+						String supplierCustId = login.getCustId();
+						if (supplierCustId.equals(brokerCustId)) {
+							// 1: 일반
+							param.put("billKind", "1");
+							// 01: 일반
+							param.put("docType", "01");
+						} else {
+							// 3: 위수탁
+							param.put("billKind", "3");
+							// 03: 위수탁
+							param.put("docType", "03");
+						}
+						
+						param.put("brokerCustId", brokerCustId);
+						param.put("brokerDeptId", brokerDeptId);
+						param.put("brokerBizNo", brokerBizNo);
+						param.put("brokerBizType", brokerBizType);
+						param.put("brokerBizName", brokerBizName);
+						param.put("brokerBizClass", brokerBizClass);
+						param.put("brokerBizSubNo", brokerBizSubNo);
+						param.put("brokerCeo", brokerCeo);
+						param.put("brokerMemDept", brokerMemDept);
+						param.put("brokerMemName", brokerMemName);
+						param.put("brokerMemEmail", brokerMemEmail);
+						param.put("brokerMemTel", brokerMemTel);
+						param.put("brokerAddr", brokerAddr);
+						
+						// 세금계산서 발행 시 작성일 포맷 변경 
+						writeDate = writeDate.replace("-", "");
+						param.put("writeDate", writeDate);
+						
+						taxService.insertReceiptTaxInvoiceForDriver(param);
 						// 결과
 						if (param.get("retCode").equals("00")) {
-							
+							linkMessage.setSender(this.getClass().getName());
+							linkMessage.setStatus(0);
+							linkMessage.setMessage(param.get("retMsg").toString());
 						} else {
-							
+							// 세금계산서 발행 실패
+							linkMessage.setSender(this.getClass().getName());
+							linkMessage.setStatus(-1);
+							linkMessage.setMessage("세금계산서 발행에 실패했습니다.");
+							linkMessage.setDetailMessage(param.get("retMsg").toString());
 						}
 					} else {
-						// 기사발행
-						tranService.regTranReceiptForDriver(param);
-						// 결과
-						if (param.get("retCode").equals("00")) {
-							
-						} else {
-							
-						}
+						// 거래명세서 발행 실패
+						linkMessage.setSender(this.getClass().getName());
+						linkMessage.setStatus(-1);
+						linkMessage.setMessage("거래명세서 발행에 실패했습니다.");
+						linkMessage.setDetailMessage(param.get("retMsg").toString());
+					}
+				}
+			} else {
+				if (tranMode.equals("R")) {
+					// 인수증
+					tranService.regTranReceipt(param);
+					
+					// 결과
+					if (param.get("retCode").equals("00")) {
+						linkMessage.setSender(this.getClass().getName());
+						linkMessage.setStatus(0);
+						linkMessage.setMessage(param.get("retMsg").toString());
+					} else {
+						// 거래명세서 발행 실패
+						linkMessage.setSender(this.getClass().getName());
+						linkMessage.setStatus(-1);
+						linkMessage.setMessage("거래명세서 발행에 실패했습니다.");
+						linkMessage.setDetailMessage(param.get("retMsg").toString());
+					}
+				} else {
+					// 기사발행
+					tranService.regTranReceiptForDriver(param);
+					
+					// 결과
+					if (param.get("retCode").equals("00")) {
+						linkMessage.setSender(this.getClass().getName());
+						linkMessage.setStatus(0);
+						linkMessage.setMessage(param.get("retMsg").toString());
+					} else {
+						// 거래명세서 발행 실패
+						linkMessage.setSender(this.getClass().getName());
+						linkMessage.setStatus(-1);
+						linkMessage.setMessage("거래명세서 발행에 실패했습니다.");
+						linkMessage.setDetailMessage(param.get("retMsg").toString());
 					}
 				}
 			}
 		} catch (Exception e) {
-			
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage("알수없는 오류입니다.\n시스템 관리자에게 문의하세요.");
+			linkMessage.setDetailMessage(e.getMessage());
 		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
 		
 		return "jsonView";
 	}

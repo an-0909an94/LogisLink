@@ -23,7 +23,16 @@ function getKeyValue(source, inKey) {
 }
 
 // 컬럼 위치 변경 시 이벤트 캐치
-function onReorderEnd(arg) {
+function onReorderEnd(e) {
+	// 개인화 설정이 적용되지 않는 컬럼은 컬럼 위치 변경 불가
+	if (nonPrivateColumnCheck != null && e.column == nonPrivateColumnCheck) {
+		var grid = e.sender;
+	    setTimeout(function (e) {
+	        grid.reorderColumn(0, nonPrivateColumnCheck);
+	        return;
+	    }, 1);
+	}
+	
 	var gridId = $(this)[0].wrapper[0].id;
     var orgColInfo = $("#" + gridId).data("kendoGrid").columns;
     CHANGED_GRID_INFO = true;
@@ -31,6 +40,16 @@ function onReorderEnd(arg) {
 
 // 컬럼 사이즈 변경 시 이벤트 캐치
 function onResizeEnd(e) {
+	// 개인화 설정이 적용되지 않는 컬럼은 컬럼 사이즈 변경 불가
+	if (nonPrivateColumnCheck != null && e.column == nonPrivateColumnCheck) {
+		var grid = e.sender;
+		var defaultWidth = e.oldWidth
+		setTimeout(function (e) {
+			grid.resizeColumn(nonPrivateColumnCheck, defaultWidth);
+	        return;
+	    }, 1);
+	}
+	
 	var gridId = $(this)[0].wrapper[0].id;
 	var orgColInfo = $("#" + gridId).data("kendoGrid").columns;
     CHANGED_GRID_INFO = true;
@@ -509,6 +528,11 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 			update: function(event, ui) {
 				var startPos = ui.item.data('startPos');
 	            var updatePos = ui.item.index();
+	            
+	            // 체크박스 컬럼으로 인해 위치 인덱스를 1씩 늘림.
+	            startPos += 1;
+            	updatePos += 1;
+            	
 	            grid.reorderColumn(updatePos, grid.columns[startPos]);
 	            CHANGED_GRID_INFO = true;
 	            

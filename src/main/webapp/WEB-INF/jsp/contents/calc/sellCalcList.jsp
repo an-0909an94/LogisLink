@@ -386,7 +386,7 @@
 
                     <div class="input-group input-group-sm col-1 middle-name" style="max-width: 90px; min-width: 90px;">
                         <strong>&nbsp;</strong>
-                        <button onclick="getCalcList()" type="button" style="border-radius: 4px" class="form-control form-control-sm middle-button-dark">
+                        <button onclick="goList()" type="button" style="border-radius: 4px" class="form-control form-control-sm middle-button-dark">
                             <i class="k-icon k-i-search"></i>검색
                         </button>
                     </div>
@@ -439,6 +439,7 @@
                                                                 </b>
                                                             </a>
                                                         </c:if>
+                                                        <!-- 세금계산서 발행 버튼 숨김 -> 거래명세서 발행시 함께 발행 함. -->
 <%--                                                         <c:if test="${menuAuth.printYn eq 'Y'}"> --%>
 <!--                                                             <a href="#" class="k-pager-refresh k-button" id="taxinvComp" onclick="pubTaxinvOpen()"> -->
 <!--                                                                 <b class="btn-b"> <i class="k-icon k-i-txt"> </i>세금계산서발행 -->
@@ -530,6 +531,9 @@
 
     var contextMenu = $("#calcListContextMenu").data("kendoContextMenu");
     contextMenu.bind("select", onContextMenuSelect);
+    
+    // 개인화 그리드 설정에서 제외되는 컬럼
+    var nonPrivateColumnCheck;
 
     $(document).ready(function() {
         var dateOption = {
@@ -646,9 +650,14 @@
     			taxDate.enable(false);			
     		}
     	});
+     	
+     	// 편집 가능한 항목 포커스 이벤트 핸들러
+     	$("#sellCharge").on("focus", function() {
+     		
+     	});
         
         // 리스트 출력
-       	getCalcList();
+       	goList();
     });
     
     // 거래처 검색 콤보박스 생성 (화주)
@@ -780,7 +789,7 @@
     }
     
     // 그리드 리스트
-    function getCalcList() {
+    function goList() {
     	// 선택된 항목 리스트 초기화
     	selectedList.clear();
     	// 에디트 항목 리스트 초기화
@@ -820,14 +829,17 @@
                 serverPaging: true,
                 serverFiltering: true,
                 error: function(e) {
-                    if(e.xhr.status == "400") {
+                    if (e.xhr.status == "400") {
                         alert("세션값이 존재하지 않습니다. 로그인 페이지로 이동합니다.");
                         location.href = "/";
                     }
                 }
             },
+            dataBound: function(e) {
+            	nonPrivateColumnCheck = e.sender.columns[0];
+            },
             excel: {
-                fileName: headerTitle+"(" + new Date().yyyymmdd() + ").xlsx",
+                fileName: headerTitle + "(" + new Date().yyyymmdd() + ").xlsx",
                 proxyURL: "/cmm/saveGrid.do",
                 filterable: false,
                 allPages: true
@@ -844,7 +856,12 @@
             edit: function(e) {
             	// 에디트 타입 변경
 //             	$(".k-textbox").prop("type", "number");
-            	console.log(e);
+            	
+            	// 에디트 컬럼 선택 시 텍스트 전체 선택
+				var editColumn = e.container.find("input");
+				setTimeout(function() {
+					editColumn.select();
+             	}, 1);
         	},
         	save: onEditSave,
             columns: columns,
@@ -854,6 +871,7 @@
             },
             pageable: false,
             change: onChange,
+            sort: onSortEnd,
             messages: {
                 noRecords: "조회된 데이터가 없습니다."
             }
@@ -921,7 +939,7 @@
     		alert("이미 마감된 정산 항목의 경우 운송비를 변경할 수 없습니다.");
     		e.preventDefault();
     		return;
-    	}	
+    	}
     	
     	// Charge 항목 에디팅의 경우 에디트 완료 후 매출액 항목 업데이트 (변경전 값을 빼고 입력된 값으로.)
 		var unpaidAmtVal = Number(e.model.get("unpaidAmt"));
@@ -1021,6 +1039,23 @@
 		}
     }
     
+    // 정렬 이벤트 핸들러
+    function onSortEnd(e) {
+    	// 정렬 이벤트 발생 시 "check" 컬럼 항목이면 check 이벤트로 처리
+       	if (e.sort.field == "check") {
+    		e.preventDefault();
+			var orderAllChecked = $("#orderAllCheck").is(":checked");
+			if (orderAllChecked) {
+				$("#orderAllCheck").prop("checked", false).trigger('click');
+			} else {
+				$("#orderAllCheck").prop("checked", true).trigger('click');
+			}
+    	} else {
+    		// 그 외 항목의 경우 allCheck를 풀어줌. -> MultiSorting 기능이 활성화 된 경우
+    		$("#orderAllCheck").prop("checked", false);
+    	}
+    }
+    
     // 에디트 리스트 중복값 체크
     function editListInsertItem(orderId, allocId, calcId, chargeCode, value, insert) {
     	// 에디트된 항목 리스트에서 중복된 데이터를 찾고 없으면 신규 항목, 있으면 업데이트 한다.
@@ -1088,7 +1123,7 @@
     		$("#custId").val("");
     		$("#deptId").val("");
     		$("#hCustName").val("");
-    		$("#sSubName").val("");	
+    		$("#sSubName").val("");
     		bizName.value('');
     	}
     }
@@ -1152,7 +1187,7 @@
         				if (data.linkMessage.status == 0) {
         					// 요청 성공시 내용 기술
 							alert(data.linkMessage.message);
-							getCalcList();
+							goList();
 							contextMenu.close();
         				} else {
         					alert(data.linkMessage.message);
@@ -1190,7 +1225,7 @@
         				if (data.linkMessage.status == 0) {
         					// 요청 성공시 내용 기술
 							alert(data.linkMessage.message);
-							getCalcList();
+							goList();
 							contextMenu.close();
         				} else {
         					alert(data.linkMessage.message);
@@ -1232,7 +1267,7 @@
         				if (data.linkMessage.status == 0) {
         					// 요청 성공시 내용 기술
 							alert(data.linkMessage.message);
-							getCalcList();
+							goList();
 							contextMenu.close();
         				} else {
         					alert(data.linkMessage.message);
@@ -1272,7 +1307,7 @@
         				if (data.linkMessage.status == 0) {
         					// 요청 성공시 내용 기술
 							alert(data.linkMessage.message);
-							getCalcList();
+							goList();
 							contextMenu.close();
         				} else {
         					alert(data.linkMessage.message);
@@ -1372,7 +1407,7 @@
     	  					alert(data.linkMessages.length + "건 중 " + failCnt + "건이 실패했습니다.\n상세 내역은 로그를 확인하세요.");
     	  				}
 						
-						getCalcList();
+						goList();
 					}
 				});
  			}
@@ -1437,7 +1472,7 @@
         				if (data.linkMessage.status == 0) {
         					// 요청 성공시 내용 기술
 							alert(data.linkMessage.message);
-							getCalcList();
+							goList();
 							//contextMenu.close();
         				} else {
         					alert(data.linkMessage.message);
@@ -1499,7 +1534,7 @@
         				if (data.linkMessage.status == 0) {
         					// 요청 성공시 내용 기술
 							alert(data.linkMessage.message);
-							getCalcList();
+							goList();
 							//contextMenu.close();
         				} else {
         					alert(data.linkMessage.message);
@@ -1620,7 +1655,7 @@
 				success: function(data) {
 					if (data.linkMessage.status == 0) {
 						alert(data.linkMessage.message);
-						getCalcList();
+						goList();
 						reqChangeModalClose();
 					} else if (data.linkMessage.status == 1) {
 						alert(data.linkMessage.message);
@@ -1715,9 +1750,10 @@
 			}
 			
 			// 이미 발행된 건 제외
-    		if (value.tranReceiptYn == "N" && value.sellTaxinvYn == "N") {
-    			tranReceiptWithtaxinvList.push(value);
-    		}
+//     		if (value.tranReceiptYn == "N" && value.sellTaxinvYn == "N") {
+//     			tranReceiptWithtaxinvList.push(value);
+//     		}
+			tranReceiptWithtaxinvList.push(value);
     	}
     	
     	var custId = beforeCustId;
@@ -1786,7 +1822,7 @@
 			}
     	}
     	
-    	// 거래명세서 및 세금계산서 발행건이 없음.
+    	// 거래명세서 및 세금계산서 발행건이 없음. -> 이미 발행된 건인지 뒤에서 확인
 		if (tranReceiptWithtaxinvList.length <= 0) {
 			alert("새로 발행될 거래명세서, 세금계산서건이 없습니다.\n이미 처리된 건인지 확인하세요.");
 			e.preventDefault();
@@ -1806,9 +1842,11 @@
 					param.supplierCustId = $("#tranSupplierCustId").val();
         			param.supplierDeptId = $("#tranSupplierDeptId").val();
         			
-        			param.supplierMemName = $("#tranSupplierMemName").val();
-        			param.supplierMemTel = $("#tranSupplierMemTel").val();
-        			param.supplierMemEmail = $("#tranSupplierMemEmail").val();
+        			param.tranSupplierMemName = $("#tranSupplierMemName").val();
+        			param.tranSupplierMemTel = $("#tranSupplierMemTel").val();
+        			param.tranSupplierMemEmail = $("#tranSupplierMemEmail").val();
+        			
+        			param.pubForm = $("#tranPubForm").val();
         			
         			// 계좌정보 설정
         			var bankName = $("#tranSupplierBankName").val();
@@ -1816,18 +1854,20 @@
         			var bankCnnm = $("#tranSupplierBankCnnm").val();
         			var bizname = $("#tranSupplierBizName").val();
         			if (bankName != "" && bankAccount != "" && bankCnnm != "" && bizname != "") {
-        				param.tranRemarksDefault = bankName + " " + bankAccount + " " + bankCnnm + " " + bizname;
+        				param.remarks = bankName + " " + bankAccount + " " + bankCnnm + " " + bizname;
         			} else {
-        				param.tranRemarksDefault = "";
+        				param.remarks = "";
         			}
     			} else {
     				// 기사발행
     				param.driverId = $("#tranSupplierDriverId").val();
         			param.vehicId = $("#tranSupplierVehicId").val();
     				
-    				param.supplierMemName = $("#tranSupplierMemName").val();
-    				param.supplierMemTel = $("#tranSupplierMemTel").val();
-    				param.supplierMemEmail = $("#tranSupplierMemEmail").val();
+    				param.tranSupplierMemName = $("#tranSupplierMemName").val();
+    				param.tranSupplierMemTel = $("#tranSupplierMemTel").val();
+    				param.tranSupplierMemEmail = $("#tranSupplierMemEmail").val();
+    				
+    				param.pubForm = $("#tranPubForm").val();
     				
     				// 계좌정보 설정
         			var bankName = $("#tranSupplierBankName").val();
@@ -1835,9 +1875,9 @@
         			var bankCnnm = $("#tranSupplierBankCnnm").val();
         			var bizName = $("#tranSupplierBizName").val();
         			if (bankName != "" && bankAccount != "" && bankCnnm != "" && bizName != "") {
-        				param.tranRemarksDefault = bankName + " " + bankAccount + " " + bankCnnm + " " + bizName;
+        				param.remarks = bankName + " " + bankAccount + " " + bankCnnm + " " + bizName;
         			} else {
-        				param.tranRemarksDefault = "";
+        				param.remarks = "";
         			}
     			}
 				
@@ -1846,13 +1886,12 @@
     			param.deptId = $("#tranBuyerDeptId").val();
     			param.bizTypeCd = $("#tranBuyerBizType").val();
     			
-    			param.buyerMemName = $("#tranBuyerMemName").val();
-    			param.buyerMemTel = $("#tranBuyerMemTel").val();
-    			param.buyerMemEmail = $("#tranBuyerMemEmail").val();
+    			param.tranBuyerMemName = $("#tranBuyerMemName").val();
+    			param.tranBuyerMemTel = $("#tranBuyerMemTel").val();
+    			param.tranBuyerMemEmail = $("#tranBuyerMemEmail").val();
     			
     			// 단건, 다중
     			param.itemTotalType = $("#tranItemTotalType").val();
-    			
     		} else {
     			// 거래명세서만 발행
     			param.taxYn = "N";
@@ -1873,6 +1912,10 @@
     			param.bizTypeCd = $("#tranBuyerBizType").val();
     		}
     		
+    		/*
+    		 * 거래명세서, 세금계산서 발행 공통항목
+    		 */
+    		 
     		// 발행인 정보
     		param.loginCustId = "${sessionScope.userInfo.custId}";
 			param.loginDeptId = "${sessionScope.userInfo.deptId}";
@@ -1904,34 +1947,36 @@
 			success: function(data){
 				if(data.linkMessage.status == 0) {
 					$("#tranMode").val("R");
-					$("#tranCustId").val(data.linkMessage.data.data.buyerCustId);
-					$("#tranDeptId").val(data.linkMessage.data.data.buyerDeptId);
-					
-					// 공급자 정보
-					$("#tranSupplierCustId").val(data.linkMessage.data.data.supplierCustId);
-					$("#tranSupplierDeptId").val(data.linkMessage.data.data.supplierDeptId);
-					$("#tranSupplierBizName").val(data.linkMessage.data.data.supplierBizName);
-					$("#tranSupplierBizType").val(data.linkMessage.data.data.supplierBizTypeCode);
-    				$("#tranSupplierMemName").val(data.linkMessage.data.data.supplierMemName);
-    				$("#tranSupplierMemTel").val(Util.formatPhone(data.linkMessage.data.data.supplierMemTel));
-    				$("#tranSupplierMemEmail").val(data.linkMessage.data.data.supplierMemEmail);
-    				$("#tranSupplierBankName").val(data.linkMessage.data.data.supplierBankName);
-					$("#tranSupplierBankCnnm").val(data.linkMessage.data.data.supplierBankCnnm);
-					$("#tranSupplierBankAccount").val(data.linkMessage.data.data.supplierBankAccount);
-    				
-    				// 공급받는자 정보
-    				$("#tranBuyerCustId").val(data.linkMessage.data.data.buyerCustId);
-					$("#tranBuyerDeptId").val(data.linkMessage.data.data.buyerDeptId);
-					$("#tranBuyerBizName").val(data.linkMessage.data.data.buyerBizName);
-					$("#tranBuyerBizType").val(data.linkMessage.data.data.buyerBizTypeCode);
-    				$("#tranBuyerMemName").val(data.linkMessage.data.data.buyerMemName);
-    				$("#tranBuyerMemTel").val(Util.formatPhone(data.linkMessage.data.data.buyerMemTel));
-    				$("#tranBuyerMemEmail").val(data.linkMessage.data.data.buyerMemEmail);
-    				
-    				// 공급받는자 주소
-    				$("#tranBuyerPostalPost").val(data.linkMessage.data.data.buyerPostalPost);
-    				$("#tranBuyerPostalAddr").val(data.linkMessage.data.data.buyerPostalAddr);
-    				$("#tranBuyerPostalAddrDetail").val(data.linkMessage.data.data.buyerPostalAddrDetail);
+					if (data.linkMessage.data.data != null && data.linkMessage.data.data != "") {
+    					$("#tranCustId").val(data.linkMessage.data.data.buyerCustId);
+    					$("#tranDeptId").val(data.linkMessage.data.data.buyerDeptId);
+    					
+    					// 공급자 정보
+    					$("#tranSupplierCustId").val(data.linkMessage.data.data.supplierCustId);
+    					$("#tranSupplierDeptId").val(data.linkMessage.data.data.supplierDeptId);
+    					$("#tranSupplierBizName").val(data.linkMessage.data.data.supplierBizName);
+    					$("#tranSupplierBizType").val(data.linkMessage.data.data.supplierBizTypeCode);
+        				$("#tranSupplierMemName").val(data.linkMessage.data.data.supplierMemName);
+        				$("#tranSupplierMemTel").val(Util.formatPhone(data.linkMessage.data.data.supplierMemTel));
+        				$("#tranSupplierMemEmail").val(data.linkMessage.data.data.supplierMemEmail);
+        				$("#tranSupplierBankName").val(data.linkMessage.data.data.supplierBankName);
+    					$("#tranSupplierBankCnnm").val(data.linkMessage.data.data.supplierBankCnnm);
+    					$("#tranSupplierBankAccount").val(data.linkMessage.data.data.supplierBankAccount);
+        				
+        				// 공급받는자 정보
+        				$("#tranBuyerCustId").val(data.linkMessage.data.data.buyerCustId);
+    					$("#tranBuyerDeptId").val(data.linkMessage.data.data.buyerDeptId);
+    					$("#tranBuyerBizName").val(data.linkMessage.data.data.buyerBizName);
+    					$("#tranBuyerBizType").val(data.linkMessage.data.data.buyerBizTypeCode);
+        				$("#tranBuyerMemName").val(data.linkMessage.data.data.buyerMemName);
+        				$("#tranBuyerMemTel").val(Util.formatPhone(data.linkMessage.data.data.buyerMemTel));
+        				$("#tranBuyerMemEmail").val(data.linkMessage.data.data.buyerMemEmail);
+        				
+        				// 공급받는자 주소
+        				$("#tranBuyerPostalPost").val(data.linkMessage.data.data.buyerPostalPost);
+        				$("#tranBuyerPostalAddr").val(data.linkMessage.data.data.buyerPostalAddr);
+        				$("#tranBuyerPostalAddrDetail").val(data.linkMessage.data.data.buyerPostalAddrDetail);
+					}
 				}
 			}
 		});
@@ -1949,16 +1994,17 @@
 			success: function(data){
 				if(data.linkMessage.status == 0) {
 					$("#tranMode").val("E");
-					
-					// 공급자 정보
-					$("#tranSupplierDriverId").val(data.linkMessage.data.data.supplierDriverId);
-    				$("#tranSupplierVehicId").val(Util.formatPhone(data.linkMessage.data.data.supplierVehicId));
-    				$("#tranSupplierMemName").val(data.linkMessage.data.data.supplierDriverName);
-    				$("#tranSupplierMemTel").val(Util.formatPhone(data.linkMessage.data.data.supplierDriverTel));
-    				$("#tranSupplierMemEmail").val(data.linkMessage.data.data.supplierDriverEmail);
-    				$("#tranSupplierBankName").val(data.linkMessage.data.data.supplierDriverBankName);
-					$("#tranSupplierBankCnnm").val(data.linkMessage.data.data.supplierDriverBankCnnm);
-					$("#tranSupplierBankAccount").val(data.linkMessage.data.data.supplierDriverBankAccount);
+					if (data.linkMessage.data.data != null && data.linkMessage.data.data != "") {
+    					// 공급자 정보
+    					$("#tranSupplierDriverId").val(data.linkMessage.data.data.supplierDriverId);
+        				$("#tranSupplierVehicId").val(data.linkMessage.data.data.supplierVehicId);
+        				$("#tranSupplierMemName").val(data.linkMessage.data.data.supplierDriverName);
+        				$("#tranSupplierMemTel").val(Util.formatPhone(data.linkMessage.data.data.supplierDriverTel));
+        				$("#tranSupplierMemEmail").val(data.linkMessage.data.data.supplierDriverEmail);
+        				$("#tranSupplierBankName").val(data.linkMessage.data.data.supplierDriverBankName);
+    					$("#tranSupplierBankCnnm").val(data.linkMessage.data.data.supplierDriverBankCnnm);
+    					$("#tranSupplierBankAccount").val(data.linkMessage.data.data.supplierDriverBankAccount);
+					}
 				}
 			}
 		});
@@ -2004,22 +2050,24 @@
 			success: function(data){
 				if(data.linkMessage.status == 0) {
 					$("#tranMode").val("E");
-					$("#tranCustId").val(data.linkMessage.data.data.buyerCustId);
-					$("#tranDeptId").val(data.linkMessage.data.data.buyerDeptId);
-					
-					// 공급받는자 정보
-    				$("#tranBuyerCustId").val(data.linkMessage.data.data.buyerCustId);
-					$("#tranBuyerDeptId").val(data.linkMessage.data.data.buyerDeptId);
-					$("#tranBuyerBizName").val(data.linkMessage.data.data.buyerBizName);
-					$("#tranBuyerBizType").val(data.linkMessage.data.data.buyerBizTypeCode);
-    				$("#tranBuyerMemName").val(data.linkMessage.data.data.buyerMemName);
-    				$("#tranBuyerMemTel").val(Util.formatPhone(data.linkMessage.data.data.buyerMemTel));
-    				$("#tranBuyerMemEmail").val(data.linkMessage.data.data.buyerMemEmail);
-    				
-    				// 공급받는자 주소
-    				$("#tranBuyerPostalPost").val(data.linkMessage.data.data.buyerPostalPost);
-    				$("#tranBuyerPostalAddr").val(data.linkMessage.data.data.buyerPostalAddr);
-    				$("#tranBuyerPostalAddrDetail").val(data.linkMessage.data.data.buyerPostalAddrDetail);
+					if (data.linkMessage.data.data != null && data.linkMessage.data.data != "") {
+    					$("#tranCustId").val(data.linkMessage.data.data.buyerCustId);
+    					$("#tranDeptId").val(data.linkMessage.data.data.buyerDeptId);
+    					
+    					// 공급받는자 정보
+        				$("#tranBuyerCustId").val(data.linkMessage.data.data.buyerCustId);
+    					$("#tranBuyerDeptId").val(data.linkMessage.data.data.buyerDeptId);
+    					$("#tranBuyerBizName").val(data.linkMessage.data.data.buyerBizName);
+    					$("#tranBuyerBizType").val(data.linkMessage.data.data.buyerBizTypeCode);
+        				$("#tranBuyerMemName").val(data.linkMessage.data.data.buyerMemName);
+        				$("#tranBuyerMemTel").val(Util.formatPhone(data.linkMessage.data.data.buyerMemTel));
+        				$("#tranBuyerMemEmail").val(data.linkMessage.data.data.buyerMemEmail);
+        				
+        				// 공급받는자 주소
+        				$("#tranBuyerPostalPost").val(data.linkMessage.data.data.buyerPostalPost);
+        				$("#tranBuyerPostalAddr").val(data.linkMessage.data.data.buyerPostalAddr);
+        				$("#tranBuyerPostalAddrDetail").val(data.linkMessage.data.data.buyerPostalAddrDetail);
+					}
 				}
 			}
 		});
@@ -2033,12 +2081,12 @@
     		data: param,
     		async: false,
     		success: function(data){
-    			if (data.result) {
-    				alert(data.msg);
+    			if (data.linkMessage.status == 0) {
+    				alert(data.linkMessage.message);
     				pubTranReceiptClose();
-    				getCalcList();
+    				goList();
     			} else {
-    				alert(data.msg);
+    				alert(data.linkMessage.message + "\n" + "(" + data.linkMessage.detailMessage + ")");
     			}
     		}
     	}); 
