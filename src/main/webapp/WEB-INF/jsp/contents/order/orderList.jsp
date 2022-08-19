@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-	.cancel {color:#e54524 !important;} 
-	.accept {color:#0065bd !important;} 
+	.cancel {color:#e54524 !important;}
+	.accept {color:#0065bd !important;}
 	.myOrder {background: #FAFAD2}
 	.isMemo {background: #f08080}
-	
+
 	#grid .k-grid-content {max-height:calc(100vh - 471px)}
 	.width6_5{
 	    width: 6.5%;
@@ -13,7 +13,7 @@
 	    padding: 0.3em;
 	}
 </style>
-<div class="insert_pop">
+<div class="insert_pop" style="display: none;">
 	<%@ include file="./view/orderInsert.jsp" %>
 </div>
 
@@ -62,7 +62,7 @@
 				<strong>　</strong>
 				    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
 				</div>
-				
+
 				<div class="input-group input-group-sm col radio-or-checkBox">
                    	<input type="radio" name="dateChk" id="today" value="0" checked/>
                    	<label for="today" class="label-margin">
@@ -87,14 +87,14 @@
                    		<span>30일</span>
                    	</label>
                 </div>
-                
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>독차/혼적</strong>
 				    <select class="form-control" class="custom-select col-12" id="sMixYn" name="sMixYn">
 				    	<option value="">--독차/혼적--</option>
 				    	<option value="N">독차</option>
 				    	<option value="Y">혼적</option>
-				    </select> 
+				    </select>
 				</div>
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>배차상태</strong>
@@ -112,7 +112,7 @@
 				<strong>배차담당자</strong>
 				    <select class="form-control" class="custom-select col-12" id="userId" name="userId"></select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col radio-or-checkBox ">
                 	<input id="notCancel" name="notCancel" type="checkbox" onclick="btnChk(this)" value="N">
                 	<label for="notCancel" class="label-margin">
@@ -146,21 +146,21 @@
 				<strong>　</strong>
 				    <input type="text" id="driverValue" name="driverValue" class="form-control form-control-sm searchValue">
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>상차지</strong>
 				    <select class="form-control" class="custom-select col-12" id="listSSido" name="listSSido">
 				    	<option>상차지</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>하차지</strong>
 				    <select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
 				    	<option>하차지</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>경유지 여부</strong>
 				    <select class="custom-select col-12" id="orderStopYn" name="orderStopYn">
@@ -169,17 +169,17 @@
 				        <option value="N">없음</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>거래처 등급</strong>
 				    <select class="custom-select col-12" id="sCustMngCode" name="sCustMngCode"></select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>차주 등급</strong>
 				    <select class="custom-select col-12" id="sCarMngCode" name="sCarMngCode"></select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>정보망확정여부</strong>
 				    <select class="custom-select col-12" id="sLinkSettleYn" name="sLinkSettleYn">
@@ -188,14 +188,14 @@
 				    	<option value="N">미확정</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col radio-or-checkBox ">
                 	<input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
                 	<label for="myOrder" class="label-margin">
                 		<span>내거래 보기</span>
                 	</label>
                 </div>
-                
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
 				<strong>　</strong>
 				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
@@ -205,7 +205,7 @@
 				    <button onclick="searchReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
 				</div>
 			</div>
-			</form>                
+			</form>
 			<!--  -->
 			<div class="cont-body">
 				<!-- f-wrap -->
@@ -232,7 +232,7 @@
 											<a href="#" class="k-pager-refresh k-button" onclick="openSendLinkPop();"><b class="btn-b"><i class="k-icon k-i-hyperlink-globe"></i>정보망 전송</b></a>
 											</c:if>
 											<!-- <a href="#" class="k-pager-refresh k-button" onclick="openTalkPop();"><b class="btn-b"><i class="k-icon k-i-email"></i>알림톡 전송</b></a> -->
-											<a href="#" class="k-pager-refresh k-button" onclick="popOrderViewLocation();"><b class="btn-b"><i class="k-icon k-i-marker-pin-target"></i>위치관제</b></a>											
+											<a href="#" class="k-pager-refresh k-button" onclick="popOrderViewLocation();"><b class="btn-b"><i class="k-icon k-i-marker-pin-target"></i>위치관제</b></a>
 											<a href="#" class="k-pager-refresh k-button" onclick="orderHistory();"><b class="btn-b"><i class="k-icon k-i-clock"></i>수정이력</b></a>
 											<c:if test="${menuAuth.printYn eq 'Y'}">
 											<a href="#" class="k-pager-refresh k-button" onclick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
@@ -247,7 +247,7 @@
 						</div><!-- /toolbar -->
 						<div style="min-width: 500px;">
 							<div style="height:calc(100vh - 409px);" id="grid"></div>
-                            
+
                             <!-- 22.07.15 이건욱 그리드 개인화 설정 -->
                             <ul id="gridContextMenu">
                                 <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
@@ -287,6 +287,7 @@ var headerTitle = ($("#headerTitle").text());
 var refresh_timer;
 var autoRefresh;
 $(document).ready(function(){
+
     Util.setCmmCode("select", "listSSido", "SIDO", "", "--상차지--");
     Util.setCmmCode("select", "listESido", "SIDO", "", "--하차지--");
     Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "--오더상태--");
@@ -294,40 +295,40 @@ $(document).ready(function(){
 	Util.setCmmCode("select", "sCarMngCode", "CAR_MNG_CD", "", "--차주등급--");
 	Util.setCmmCode("select", "sCustMngCode", "CAR_MNG_CD", "", "--거래처등급--");
 	$("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
-	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true}); 
+	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
 	Util.setSearchDateForm();
-	
+
 	Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "전체");
 	$('#sDeptId').on('change', function() {
 		Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "전체");
 	});
-	
+
 	Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서명--");
-    
+
 	var $options = $("#sDeptId > option").clone();
 	$('#deptId').append($options);
 	$("#deptId option[value='']").remove();
-	
+
 	var $options2 = $("#sCarMngCode > option").clone();
 	$('#carMngCode').append($options2);
 	$("#carMngCode option[value='']").remove();
-	
+
 	goList();
-	
-	//자동 새로고침 기본 10초	
+
+	//자동 새로고침 기본 10초
  	var rCookie = $.cookie("autoRefresh");
 	if(rCookie == null) {
 		$.cookie("autoRefresh", 30000, {expires:10000,path:"/"});
 		rCookie = $.cookie("autoRefresh");
 	}
-	
+
 	if(rCookie != "0") {
 		startInterval();
 		$("#autoRefresh").prop("checked", true);
 	} else {
 		$("#autoRefresh").prop("checked", false);
 	}
-	
+
 	//자동 새로고침 기능 on/off
 	$("#autoRefresh").on("click", function(){
 		if($(this).is(":checked")) {
@@ -368,64 +369,64 @@ var columns = [
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellAmt);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "buyAmt", title: "지불운임(소계)", width: 120, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.buyAmt);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "sellCharge", title: "기본운임(청구)", width: 120, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "sellWayPointCharge", title: "경유비(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellWayPointCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "sellStayCharge", title: "대기료(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellStayCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "sellHandWorkCharge", title: "수작업비(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellHandWorkCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "sellRoundCharge", title: "회차비(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellRoundCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "sellOtherAddCharge", title: "기타추가비(청구)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.sellOtherAddCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "sellWeight", title: "청구중량", width: 100 },
@@ -435,50 +436,50 @@ var columns = [
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.buyCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "wayPointCharge", title: "경유비(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.wayPointCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "stayCharge", title: "대기료(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.stayCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "handWorkCharge", title: "수작업비(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.handWorkCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "roundCharge", title: "회차비(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.roundCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "otherAddCharge", title: "기타추가비(지불)", width: 130, type: 'number',
 		template: function(dataItem) {
 			return Util.formatNumber(dataItem.otherAddCharge);
 		},
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
-	},	
+	},
 	{ field: "receiptYn", title: "인수증(전/실)", width: 120 },
 	{ field: "carSctnName", title: "차량구분", width: 100 },
 	{ field: "driverName", title: "차주명", width: 100 },
@@ -538,7 +539,7 @@ var columns = [
 function goList() {
 	// 22.07.15 이건욱 그리드 개인화 설정 -> 메뉴코드, 그리드아이디, 접속사용자아이디, 기존 컬럼정보 전달
 	columns = setPrivateData("B2110", "grid", userId, columns);
-	
+
  	$("#grid").text("");
 	$("#grid").kendoGrid({
 		dataSource : {
@@ -607,19 +608,19 @@ function goList() {
         columnReorder: onReorderEnd, // 컬럼 위치 변경 이벤트
         columnResize: onResizeEnd, // 컬럼 사이즈 변경 이벤트
 	});
-	
+
 	// 22.07.15 이건욱 그리드 개인화 설정 -> 그리드 옵션 활성화 여부 처리
-	// 추가로 페이지에서 적용되는 이벤트가 있는 경우 
+	// 추가로 페이지에서 적용되는 이벤트가 있는 경우
 	// 그 이벤트 앞에 아래 함수 호출 부분이 적용되어야 함
 	setOptionActive("B2110", "grid", userId);
-	
+
 	var grid = $("#grid").data("kendoGrid");
 	grid.bind("change", onChange);
 	grid.tbody.delegate('tr', 'dblclick', function(){
 		var dataItem = grid.dataItem($(this));
 		form_popup("E", dataItem);
 	});
-	
+
 	grid.bind("dataBound", grid_dataBound);
 }
 
@@ -648,33 +649,38 @@ function grid_dataBound(e) {
 	for (var j = 0; j < row_len; j++) {
 	    var row = $(rows[j]);
 	    var dataItem = e.sender.dataItem(row);
-	  	var cells = row.children();	  	
-	  	
+	  	var cells = row.children();
+
 	    if (dataItem.get("orderState") == "09") {
 	    	cells.each(function(i){
 	    		cells.addClass("cancel");
-	    	}); 
+	    	});
 	    } else if (dataItem.get("driverStateName") == null){
 	    	cells.each(function(i){
 	    		cells.addClass("accept");
 	    	});
-	    } 
-	    
+	    }
+
 	    if (dataItem.get("regid") == userId){
 	    	cells.each(function(i){
 	    		cells.addClass("myOrder");
 	    	});
 	    }
-	    
+
 	    if (dataItem.get("memo") != "" && dataItem.get("memo") != null){
 	    	var col = cells.eq(0);
 	    	col.addClass("isMemo");
 	    }
 	}
-    
+
 }
 
 function form_popup(mode, data) {
+	/*20220819 popDiv 수정*/
+	if ($('.insert_pop').css('display') == 'none') {
+		$('.insert_pop').css('display', 'block');
+	}
+
 	//Util.insertCloseButton();
 	$('#mixYn').val("N");
 	$('#returnYn').val("N");
@@ -686,10 +692,10 @@ function form_popup(mode, data) {
 	$('.insertClose').addClass("block");
 	$("#buyDriverName,#buyDriverTel").removeAttr("readonly");
 	$("#buyDriverName,#buyDriverTel").removeClass("noColorReadonly");
-	
+
 	$("#btnSubmit").show();
 	$("#orderDelete").css("display","none");
-	if(mode == "E" ) {		
+	if(mode == "E" ) {
  		$("#order_legend").text("오더 수정");
 		$("#btn_save").html($("#btn_save").html().replace('저장', '적용'));
 		$("#orderCopy").css("display","");
@@ -703,7 +709,7 @@ function form_popup(mode, data) {
 		}
 		$("#sAreaSave").parent(".radio-or-checkBox").css("display", "none");
 		$("#eAreaSave").parent(".radio-or-checkBox").css("display", "none");
-		
+
 		//수정 모드로 변경
 		$("#mode").val("E");
 		$(".openCloseDiv").hide();
@@ -716,11 +722,11 @@ function form_popup(mode, data) {
 		$("#allocD").html("배차추가열기");
 		$("#allocC").html("배차추가열기");
 		$("#other").html("기타추가열기");
-		getOrderData(data.orderId, data.sellAllocId, data.allocId);	
+		getOrderData(data.orderId, data.sellAllocId, data.allocId);
  	} else {
  		$("#order_legend").text("오더 등록");
  		$("#btn_save").html($("#btn_save").html().replace('적용', '저장'));
- 		$("#orderCopy").css("display","none"); 		
+ 		$("#orderCopy").css("display","none");
  		$("#sAreaSave").parent(".radio-or-checkBox").css("display", "contents");
  		$("#eAreaSave").parent(".radio-or-checkBox").css("display", "contents");
  		$("#mode").val("N");
@@ -738,7 +744,7 @@ function form_popup(mode, data) {
 		$("#other").html("기타추가열기");
 		init();
 	}
-	
+
 }
 
 function form_popup_close() {
@@ -762,9 +768,9 @@ function openSendLinkPop() {
 		return
 	}
 	var selectedItem = chkSelectedOrder();
-	
+
 	if(selectedItem.isSelected){
-		
+
 		var sSido = selectedItem.item.sSido;
 		var sGungu = selectedItem.item.sGungu;
 		var eSido = selectedItem.item.eSido;
@@ -776,7 +782,7 @@ function openSendLinkPop() {
 		var goodsName = selectedItem.item.goodsName;
 		var goodsWeight = selectedItem.item.goodsWeight;
 		var eDateDay = selectedItem.item.eDateDay;
-		
+
 		/* if(allocState != '00') {
 			alert("접수상태가 아닌 배차는 정보망 전송을 할 수 없습니다.");
 			return;
@@ -792,16 +798,16 @@ function openSendLinkPop() {
 	            iframe:true,
 	            modal:true
 	        }).data("kendoWindow");
-	
+
 		popupModal.center().open();
 	}
 }
 
 function openTalkPop() {
 	var selectedItem = chkSelectedOrder();
-	
+
 	if(selectedItem.isSelected){
-		
+
 	}
 }
 
@@ -833,17 +839,17 @@ function onContextMenuSelect(e) {
 		alert("자동새로고침 기능 해제 후 사용하시기 바랍니다.");
 		return;
 	}
-	
+
 	var grid = $("#grid").data("kendoGrid");
 	var data = grid.dataItem(e.target);
 	var row = grid.select();
 	var multiSelectedData = [];
 	var item = e.item.id;
-	
+
 	for(var i = 0; i < row.length; i++) {
 		multiSelectedData.push(grid.dataItem(row[i]));
 	}
-	
+
 	switch (item) {
 	case "cSave" : // 리스트 현재설정 저장 버튼 이벤트
 		setPrivateSaveData("B2110", "grid", userId);
