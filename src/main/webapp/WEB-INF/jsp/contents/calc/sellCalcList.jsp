@@ -415,55 +415,34 @@
                                             <div class="btn-row">
                                                 <div class="tool_group">
                                                     <div class="padding">
-                                                        <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="deleteCalc" onClick="deleteCalc()">
-                                                                <b class="btn-r"> <i class="k-icon k-i-txt"></i>삭제처리
-                                                                </b>
-                                                            </a>
-                                                        </c:if>
-                                                        <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="changeReqCust" onClick="reqChangeModalOpen()">
-                                                                <b class="btn-b"> <i class="k-icon k-i-user"></i>화주변경
-                                                                </b>
-                                                            </a>
-                                                        </c:if>
-                                                        <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="changeSellCharge" onClick="changeSellCharge()">
-                                                                <b class="btn-b"> <i class="k-icon k-i-dollar"></i>청구운송비변경
-                                                                </b>
-                                                            </a>
-                                                        </c:if>
-                                                        <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="tranReceiptComp" onClick="pubTranReceiptOpen()">
-                                                                <b class="btn-b"> <i class="k-icon k-i-paste-plain-text"></i>거래명세서발행
-                                                                </b>
-                                                            </a>
-                                                        </c:if>
-                                                        <!-- 세금계산서 발행 버튼 숨김 -> 거래명세서 발행시 함께 발행 함. -->
-<%--                                                         <c:if test="${menuAuth.printYn eq 'Y'}"> --%>
-<!--                                                             <a href="#" class="k-pager-refresh k-button" id="taxinvComp" onclick="pubTaxinvOpen()"> -->
-<!--                                                                 <b class="btn-b"> <i class="k-icon k-i-txt"> </i>세금계산서발행 -->
-<!--                                                                 </b> -->
-<!--                                                             </a> -->
-<%--                                                         </c:if> --%>
-                                                        <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="taxinvPostSend" onClick="taxinvPostSend()">
-                                                                <b class="btn-b"> <i class="k-icon k-i-txt"> </i>우편발송처리
-                                                                </b>
-                                                            </a>
-                                                        </c:if>
-                                                        <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="finishCalc" onClick="calcFinish()">
-                                                                <b class="btn-b"> <i class="k-icon k-i-edit"> </i>마감처리
-                                                                </b>
-                                                            </a>
-                                                        </c:if>
-                                                        <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                            <a href="#" class="k-pager-refresh k-button" id="excelDownload" onClick="excelDownload()">
-                                                                <b class="btn-x"> <i class="k-icon k-i-file-excel"> </i>엑셀출력
-                                                                </b>
-                                                            </a>
-                                                        </c:if>
+                                                        <a href="#" class="k-pager-refresh k-button" id="deleteCalc" onClick="deleteCalc()">
+                                                            <b class="btn-r"> <i class="k-icon k-i-trash"></i>삭제처리
+                                                            </b>
+                                                        </a>
+                                                        <a href="#" class="k-pager-refresh k-button" id="changeReqCust" onClick="reqChangeModalOpen()">
+                                                            <b class="btn-b"> <i class="k-icon k-i-user"></i>화주변경
+                                                            </b>
+                                                        </a>
+                                                        <a href="#" class="k-pager-refresh k-button" id="changeSellCharge" onClick="changeSellCharge()">
+                                                            <b class="btn-b"> <i class="k-icon k-i-dollar"></i>청구운송비변경
+                                                            </b>
+                                                        </a>
+                                                        <a href="#" class="k-pager-refresh k-button" id="tranReceiptComp" onClick="pubTranReceiptOpen()">
+                                                            <b class="btn-b"> <i class="k-icon k-i-paste-plain-text"></i>거래명세서발행
+                                                            </b>
+                                                        </a>
+                                                        <a href="#" class="k-pager-refresh k-button" id="taxinvPostSend" onClick="taxinvPostSend()">
+                                                            <b class="btn-b"> <i class="k-icon k-i-txt"> </i>우편발송처리
+                                                            </b>
+                                                        </a>
+                                                        <a href="#" class="k-pager-refresh k-button" id="finishCalc" onClick="calcFinish()">
+                                                            <b class="btn-b"> <i class="k-icon k-i-edit"> </i>마감처리
+                                                            </b>
+                                                        </a>
+                                                        <a href="#" class="k-pager-refresh k-button" id="excelDownload" onClick="excelDownload()">
+                                                            <b class="btn-x"> <i class="k-icon k-i-file-excel"> </i>엑셀출력
+                                                            </b>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -483,8 +462,6 @@
                                 <li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
                                 <li class="k-separator privateRClick"></li>
                                 <li id="copyOrderId">오더아이디 복사</li>
-                                <li class="k-separator"></li>
-                                <li id="vReceipt">인수증보기</li>
                                 <li class="k-separator"></li>
                                 <li id="taxinvPostSendCancel">우편발송 취소</li>
                                 <li class="k-separator"></li>
@@ -651,11 +628,6 @@
     		}
     	});
      	
-     	// 편집 가능한 항목 포커스 이벤트 핸들러
-     	$("#sellCharge").on("focus", function() {
-     		
-     	});
-        
         // 리스트 출력
        	goList();
     });
@@ -870,7 +842,6 @@
                 endless: true
             },
             pageable: false,
-            change: onChange,
             sort: onSortEnd,
             messages: {
                 noRecords: "조회된 데이터가 없습니다."
@@ -943,8 +914,8 @@
     	
     	// Charge 항목 에디팅의 경우 에디트 완료 후 매출액 항목 업데이트 (변경전 값을 빼고 입력된 값으로.)
 		var unpaidAmtVal = Number(e.model.get("unpaidAmt"));
-		
-		if (e.values.sellCharge) {
+    	
+		if (typeof e.values.sellCharge == "number") {
 			unpaidAmtVal -= Number(e.model.get("sellCharge"));
 			unpaidAmtVal += Number(e.values.sellCharge);
 			
@@ -957,7 +928,7 @@
 			
 			editListInsertItem(orderId, allocId, calcId, chargeCode, value, insert);
 		}
-		else if (e.values.sellWaypointCharge) {
+		else if (typeof e.values.sellWaypointCharge == "number") {
 			unpaidAmtVal -= Number(e.model.get("sellWaypointCharge"));
 			unpaidAmtVal += Number(e.values.sellWaypointCharge);
 			
@@ -970,7 +941,7 @@
 			
 			editListInsertItem(orderId, allocId, calcId, chargeCode, value, insert);
 		}
-		else if (e.values.sellStayCharge) {
+		else if (typeof e.values.sellStayCharge == "number") {
 			unpaidAmtVal -= Number(e.model.get("sellStayCharge"));
 			unpaidAmtVal += Number(e.values.sellStayCharge);
 			
@@ -983,7 +954,7 @@
 			
 			editListInsertItem(orderId, allocId, calcId, chargeCode, value, insert);
 		}
-		else if (e.values.sellHandworkCharge) {
+		else if (typeof e.values.sellHandworkCharge == "number") {
 			unpaidAmtVal -= Number(e.model.get("sellHandworkCharge"));
 			unpaidAmtVal += Number(e.values.sellHandworkCharge);
 			
@@ -996,7 +967,7 @@
 			
 			editListInsertItem(orderId, allocId, calcId, chargeCode, value, insert);
 		}
-		else if (e.values.sellRoundCharge) {
+		else if (typeof e.values.sellRoundCharge == "number") {
 			unpaidAmtVal -= Number(e.model.get("sellRoundCharge"));
 			unpaidAmtVal += Number(e.values.sellRoundCharge);
 			
@@ -1009,7 +980,7 @@
 			
 			editListInsertItem(orderId, allocId, calcId, chargeCode, value, insert);
 		}
-		else if (e.values.sellOtheraddCharge) {
+		else if (typeof e.values.sellOtheraddCharge == "number") {
 			unpaidAmtVal -= Number(e.model.get("sellOtheraddCharge"));
 			unpaidAmtVal += Number(e.values.sellOtheraddCharge);
 			
@@ -1080,69 +1051,6 @@
 			insert: insert
 		}
 		editedList.push(item);
-    }
-    
-    // 그리드 변경 이벤트 처리
-    // ??? selection 옵션 제거시 이벤트 수신 못함.
-    function onChange(e) {
-    	var grid = $("#grid").data("kendoGrid");
-    	var data = grid.dataItem(e.target);
-    	var row = grid.select();
-//     	var multiSelectedData = [];
-    	
-//     	for(var i = 0; i < row.length; i++) {
-//     		multiSelectedData.push(grid.dataItem(row[i]));
-//     	}
-    	
-//     	if(multiSelectedData.length != '1'){
-//     		/* 인수증, 세금계산서 버튼 숨기기 */
-//     		$("#taxView").hide();
-//     		$("#receiptView").hide();
-//     	}else{
-//     		/* 인수증, 세금계산서 버튼 표시 */
-//     		$("#taxView").show();
-//     		$("#receiptView").show();
-//     	}
-    }
-    
-    // 거래처 콤보 선택 이벤트 처리
-    function changeSearchCust(e) {
-    	var dataItem = e.dataItem;
-    	if (dataItem != null) {
-    		$("#hCustId").val(dataItem.custId);
-    		$("#hDeptId").val(dataItem.deptId);
-    		$("#sSubName").val(dataItem.deptName);
-    		taxData = dataItem;
-    	}
-    }
-    
-    function searchCustSelectTrigger(e) {
-    	if(this.value() != ""){
-    		searchCustName.trigger("select");
-    	}else{
-    		$("#custId").val("");
-    		$("#deptId").val("");
-    		$("#hCustName").val("");
-    		$("#sSubName").val("");
-    		bizName.value('');
-    	}
-    }
-    
-    // 사업자 콤보 선택 이벤트 처리
-    function changeBizName(e){
-    	var dataItem = e.dataItem;	
-
-//     	if (dataItem == null) {
-//     		$(".hiddenValue").val("");
-//     	} else {
-//     		$("#hCustId").val(dataItem.custId);
-//     		$("#hDeptId").val("");
-//     		$("#sSubName").val("");
-    		
-//     		searchCustName.value("");
-    		
-//     		Util.setSelectBox("/contents/calc/data/deptList.do", "sSubDept", { custId : dataItem.custId, sDeptId: $("#sDeptId").val() }, "deptId", "deptName", "", "--부서명--");
-//     	}
     }
     
     // 초기화 버튼 이벤트 처리
@@ -1255,7 +1163,7 @@
             	}
         		
         		$.ajax({
-        			url: "/contents/calc/data/updateDeleteYn.do",
+        			url: "/contents/calc/data/updateSellCalcDeleteYn.do",
         			type: "POST",
         			dataType: "json",
         			data: {
@@ -1295,7 +1203,7 @@
             	}
         		
         		$.ajax({
-        			url: "/contents/calc/data/updateDeleteYn.do",
+        			url: "/contents/calc/data/updateSellCalcDeleteYn.do",
         			type: "POST",
         			dataType: "json",
         			data: {
@@ -1362,19 +1270,6 @@
   			$(e).val("Y")
   		else
   			$(e).val("N")
-  	}
-  	
-  	// 인수증보기
-  	function viewReceipt(receiptYn, orderId) {
-  		if (receiptYn == "N") {
-  			alert("등록된 인수증이 없습니다.");
-  			return;
-  		} else if (!receiptYn.includes("전자")) {
-  			alert(receiptYn + "으로 등록된 인수증입니다.");
-  			return;
-  		}
-  		
-  		window.open("/contents/calc/view/orderFile.do?orderId=" + orderId, "PopupPost", "width=620, height=707");
   	}
   	
  	// 청구운송비 변경
@@ -1926,6 +1821,7 @@
     		param.taxDate = $("#taxDate").val();
     		param.orderList = JSON.stringify(tranReceiptWithtaxinvList);
     		
+    		// 거래명세서, 세금게산서 발행
     		setTranReceiptWithTaxinv(param);
     	}
     });
@@ -2073,6 +1969,7 @@
 		});
     }
     
+    // 거래명세서, 세금계산서 발행 
     function setTranReceiptWithTaxinv(param) {
     	$.ajax({
     		url: "/contents/calc/data/setTranReceiptWithTaxinv.do",
@@ -2108,11 +2005,6 @@
         	var grid = $("#grid").data("kendoGrid");
         	var dataItem = grid.dataItem(e.target);
         	copyOrderId(dataItem.orderId);
-        	break;
-        case "vReceipt":
-        	var grid = $("#grid").data("kendoGrid");
-        	var dataItem = grid.dataItem(e.target);
-        	viewReceipt(dataItem.receiptYn, dataItem.orderId);
         	break;
         case "taxinvPostSendCancel":
         	taxInvPostSendCancel();
@@ -2154,7 +2046,7 @@
 		{ field: "wayPoint", title: "2착지", width: 160, editable: function (dataItem){} 	},
 		{ field: "unpaidAmt", title: "매출액(소계)", width: 100, type: 'number',
 			template: function(dataItem) {
-			   return Util.formatNumber(dataItem.unpaidAmt);
+			   return Util.formatNumber(Util.nvl(dataItem.unpaidAmt, "0"));
 			},
 			attributes: { 
 				style: "text-align: right" 
@@ -2163,7 +2055,7 @@
 		},
 		{ field: "sellCharge", title: "내수운송료", width: 100, type: 'number',
 			template: function(dataItem) {
-			   return Util.formatNumber(dataItem.sellCharge);
+			   return Util.formatNumber(Util.nvl(dataItem.sellCharge, "0"));
 			},
 			attributes: {
 				style: "text-align: right"
@@ -2172,7 +2064,7 @@
 		},
 		{ field: "sellWaypointCharge", title: "경유비", width: 100, type: 'number',
 			template: function(dataItem) {
-			   return Util.formatNumber(dataItem.sellWaypointCharge);
+			   return Util.formatNumber(Util.nvl(dataItem.sellWaypointCharge, "0"));
 			},
 			attributes: { 
 				style: "text-align: right" 
@@ -2181,7 +2073,7 @@
 		},
 		{ field: "sellStayCharge", title: "대기료", width: 100, type: 'number',
 			template: function(dataItem) {
-			   return Util.formatNumber(dataItem.sellStayCharge);
+			   return Util.formatNumber(Util.nvl(dataItem.sellStayCharge, "0"));
 			},
 			attributes: { 
 				style: "text-align: right" 
@@ -2190,7 +2082,7 @@
 		},
 		{ field: "sellHandworkCharge", title: "수작업비", width: 100, type: 'number',
 			template: function(dataItem) {
-			   return Util.formatNumber(dataItem.sellHandworkCharge);
+			   return Util.formatNumber(Util.nvl(dataItem.sellHandworkCharge, "0"));
 			},
 			attributes: { 
 				style: "text-align: right" 
@@ -2199,7 +2091,7 @@
 		},
 		{ field: "sellRoundCharge", title: "회차료", width: 100, type: 'number',
 			template: function(dataItem) {
-			   return Util.formatNumber(dataItem.sellRoundCharge);
+			   return Util.formatNumber(Util.nvl(dataItem.sellRoundCharge, "0"));
 			},
 			attributes: { 
 				style: "text-align: right" 
@@ -2208,7 +2100,7 @@
 		},
 		{ field: "sellOtheraddCharge", title: "기타추가비", width: 100, type: 'number',
 			template: function(dataItem) {
-			   return Util.formatNumber(dataItem.sellOtheraddCharge);
+			   return Util.formatNumber(Util.nvl(dataItem.sellOtheraddCharge, "0"));
 			},
 			attributes: { 
 				style: "text-align: right" 
@@ -2219,7 +2111,7 @@
 		{ field: "unitPriceTypeName", title: "단가구분", width: 100, editable: function (dataItem){} },
 		{ field: "unitPrice", title: "단가", width: 100, type: 'number',
 			template: function(dataItem) {
-			   return Util.formatNumber(dataItem.unitPrice);
+			   return Util.formatNumber(Util.nvl(dataItem.unitPrice, "0"));
 			},
 			attributes: { 
 				style: "text-align: right" 
@@ -2231,7 +2123,7 @@
 		{ field: "chargeTypeName", title: "청구구분", width: 100, editable: function (dataItem){} },
 		{ field: "allocFee", title: "수수료", width: 100, type: 'number',
 			template: function(dataItem) {
-		       return Util.formatNumber(dataItem.allocFee);
+		       return Util.formatNumber(Util.nvl(dataItem.allocFee, "0"));
 		    },
 			attributes: { 
 				style: "text-align: right" 
@@ -2240,13 +2132,13 @@
 		},
 		{ field: "depositAmt", title: "입금액", width: 100, type: 'number',
 			template: function(dataItem) {
-		       return Util.formatNumber(dataItem.depositAmt);
+		       return Util.formatNumber(Util.nvl(dataItem.depositAmt, "0"));
 		    },
 			attributes: { 
 				style: "text-align: right" 
 			},
 			editable: function (dataItem){}
-		},  
+		},
 		{ field: "tranReceiptYn", title: "명세서", width: 80, editable: function (dataItem){} },
 		{ field: "tranReceiptUserName", title: "발행원", width: 100 },
 		{ field: "sellTaxinvYn", title: "계산서", width: 80, editable: function (dataItem){} },

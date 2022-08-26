@@ -25,12 +25,26 @@ function getKeyValue(source, inKey) {
 // 컬럼 위치 변경 시 이벤트 캐치
 function onReorderEnd(e) {
 	// 개인화 설정이 적용되지 않는 컬럼은 컬럼 위치 변경 불가
-	if (nonPrivateColumnCheck != null && e.column == nonPrivateColumnCheck) {
+	if (typeof nonPrivateColumnCheck != 'undefined' && nonPrivateColumnCheck != null && e.column == nonPrivateColumnCheck) {
 		var grid = e.sender;
 	    setTimeout(function (e) {
 	        grid.reorderColumn(0, nonPrivateColumnCheck);
 	        return;
 	    }, 1);
+	} else {
+		// 개인화 설정이 적용되지 않는 컬럼 외 다른 컬럼이 Index:0 변경 불가
+		if (e.newIndex == 0) {
+			// 개인화 설정이 적용되지 않는 컬럼이 존재하는 페이지의 경우만 해당
+			if (typeof nonPrivateColumnCheck != 'undefined' && nonPrivateColumnCheck != null) {
+				var grid = e.sender;
+				var oldIndex = e.oldIndex;
+				var column = e.column;
+			    setTimeout(function (e) {
+			        grid.reorderColumn(oldIndex, column);
+			        return;
+			    }, 1);
+			}
+		}
 	}
 	
 	var gridId = $(this)[0].wrapper[0].id;
@@ -41,7 +55,7 @@ function onReorderEnd(e) {
 // 컬럼 사이즈 변경 시 이벤트 캐치
 function onResizeEnd(e) {
 	// 개인화 설정이 적용되지 않는 컬럼은 컬럼 사이즈 변경 불가
-	if (nonPrivateColumnCheck != null && e.column == nonPrivateColumnCheck) {
+	if (typeof nonPrivateColumnCheck != 'undefined' && nonPrivateColumnCheck != null && e.column == nonPrivateColumnCheck) {
 		var grid = e.sender;
 		var defaultWidth = e.oldWidth
 		setTimeout(function (e) {

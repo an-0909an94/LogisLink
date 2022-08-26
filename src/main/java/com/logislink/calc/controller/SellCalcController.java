@@ -26,9 +26,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.logislink.calc.service.SellCalcService;
 import com.logislink.calc.service.TaxService;
 import com.logislink.calc.service.TranService;
+import com.logislink.calc.vo.SellCalcVO;
 import com.logislink.cmm.LinkMessage;
 import com.logislink.cmm.LinkMessageData;
-import com.logislink.cmm.util.DateUtil;
 import com.logislink.cmm.util.EtcUtil;
 import com.logislink.login.vo.LoginMenuVO;
 import com.logislink.login.vo.LoginVO;
@@ -94,7 +94,7 @@ public class SellCalcController {
 
 		// param.put("mngDeptId", login.getDeptId());
 
-		List<com.logislink.calc.vo.SellCalcVO> sellCalcList = sellCalcService.getSellCalcList(param);
+		List<SellCalcVO> sellCalcList = sellCalcService.getSellCalcList(param);
 		Map<String, Object> sellCalcListCnt = sellCalcService.getSellCalcListCnt(param);
 
 		map.put("result", Boolean.TRUE);
@@ -246,7 +246,7 @@ public class SellCalcController {
 		return "jsonView";
 	}
 	
-	@PostMapping(value = "/contents/calc/data/updateDeleteYn.do")
+	@PostMapping(value = "/contents/calc/data/updateSellCalcDeleteYn.do")
 	public String updateDeleteYn(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
 			@RequestParam Map<String, Object> param) {
 		
