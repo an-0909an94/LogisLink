@@ -245,7 +245,7 @@
                 <!-- 화주명 -->
                 <input type="hidden" id="hCustId" name="custId" class="hiddenValue">
                 <!-- 담당부서 -->
-                <input type="hidden" id="hDeptId" name="custDeptId" class="hiddenValue">
+                <input type="hidden" id="hCustDeptId" name="custDeptId" class="hiddenValue">
                 <!-- 거래처명 -->
                 <input type="hidden" id="hBizId" name="bizId" class="hiddenValue">
                 <!-- 담당부서 -->
@@ -543,19 +543,28 @@
         Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "01", "--전체--");
         
         // 컨트롤 기본값 설정
-//         $("#sFinishYn").val("N");
-//         $("#sChargeType").val("01");
         $("input:checkbox[id='carryOverYn']").prop("checked", true);
-//         $("#sDeleteYn").val("N");
         
      	// 거래처 검색 콤보박스
      	searchCustName = setSearchCustName();
      	
      	// 거래처 검색 조건 셀렉트 박스 이벤트 핸들러
         $("#searchCustType").on("change", function(e) {
+        	$(".hiddenValue").val("");
+        	
+			$("#sCustName").val("");
+			$("#sOrderId").val("");
+			$("#sCustDeptName").val("");
+			
+			searchBizName.destroy();
+			searchBizName = setSearchBizName();
+			searchBizName.value("");
+        	
+			// 화주명 검색
         	if ($(this).val() == "custName") {
-        		// 화주명 검색
+        		searchCustName.destroy();
         		searchCustName = setSearchCustName();
+        		searchCustName.value("");
         		
         		$("#searchCustName").show();
                 $("#searchOrderId").hide();
@@ -567,8 +576,6 @@
         		$("#searchCustName").hide();
                 $("#searchOrderId").show();
         	}
-        	
-        	$("#sCustDeptName").val("");
         });
         
         // 사업자 검색 콤보박스
@@ -576,27 +583,41 @@
         
      	// 사업자 검색 조건 셀렉트 박스 이벤트 핸들러
 		$("#searchBizType").on("change", function() {
-			searchBizName.value("");
-			searchBizName.destroy();
+			$(".hiddenValue").val("");
 			
+			$("#sCustName").val("");
+			$("#sOrderId").val("");
+			$("#sCustDeptName").val("");
+			
+			// 사업자 검색 조건 변경시 거래처 검색
+        	searchCustName.destroy();
+        	searchCustName = setSearchCustName();
+        	searchCustName.value("");
+			
+			searchBizName.destroy();
 			searchBizName = setSearchBizName();
+			searchBizName.value("");
         });
         
         // 담당부서 컨트롤 이벤트
         $("#sDeptId").on("change", function() {
-			// 담당부서 변경시 거래처 검색, 사업자 검색 콤보 초기화
-			searchCustName.value("");
+        	$(".hiddenValue").val("");
+        	
+			$("#sCustName").val("");
+			$("#sOrderId").val("");
+			$("#sCustDeptName").val("");
+			
+			// 담당부서 검색 조건 변경시 거래처 검색, 사업자 검색 콤보 초기화
         	searchCustName.destroy();
         	searchCustName = setSearchCustName();
+        	searchCustName.value("");
         	
-        	searchBizName.value("");
 			searchBizName.destroy();
 			searchBizName = setSearchBizName();
+			searchBizName.value("");
 			
-			$(".hiddenValue").val("");
 			// 22.07.25 코리아로지스 정산관리내 검색항목 [담당부서명] 변경 시, hiddenValue 모든 값이 초기화되면서 디폴트 01 값 사라짐. 
 			$("#bizTypeCd").val("01");
-			$("#sCustDeptName").val("");
         });
         
         // 거래명세서 발행 모달 세금계산서 발행 컨트롤 이벤트
@@ -605,13 +626,13 @@
         		$('#tranPubForm').removeAttr('disabled'); 
         		$('#tranRemarks').removeAttr('disabled'); 
         		$("#fTranReceipt input[name*='Mem']").removeAttr('disabled');
-        		$("#itemTotalType").removeAttr('disabled');
+        		$("#tranItemTotalType").removeAttr('disabled');
         		$("#fTranReceipt input[name*='Mem']").attr('required', 'true');
         	} else {
         		$('#tranPubForm').attr('disabled', 'true');
         		$('#tranRemarks').attr('disabled', 'true');
         		$("#fTranReceipt input[name*='Mem']").attr('disabled', 'true');
-        		$("#itemTotalType").attr('disabled', 'true');
+        		$("#tranItemTotalType").attr('disabled', 'true');
         		$("#fTranReceipt input[name*='Mem']").removeAttr('required');
         	}
         	
