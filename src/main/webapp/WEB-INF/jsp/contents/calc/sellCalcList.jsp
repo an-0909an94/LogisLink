@@ -1600,6 +1600,9 @@
      * 거래명세서 창 Open
      */
     function pubTranReceiptOpen() {
+ 		// 기존 세팅값 초기화
+    	$("#fTranReceipt")[0].reset();
+    	
     	/*
     	 * 거래명세서 발행 시 체크 항목
     	 * 	선택된 항목들이 모두 동일한 화주인지.
@@ -1689,8 +1692,8 @@
     		setTaxBizInfo(custId, deptId, loginCustId, loginDeptId);
     	} else if (chargeTypeCode == "03") {
     		// 기사발행
-//     		setTaxDriverInfo(custId, deptId, loginCustId, loginDeptId, driverId);
-    		setTaxDriverInfo(custId, deptId, mngCustId, mngDeptId, driverId);
+    		setTaxDriverInfo(custId, deptId, loginCustId, loginDeptId, driverId);
+//     		setTaxDriverInfo(custId, deptId, mngCustId, mngDeptId, driverId);
     	}
     	
     	tranReceiptModal.data("kendoDialog").open();
@@ -1836,6 +1839,9 @@
     		param.loginCustId = "${sessionScope.userInfo.custId}";
 			param.loginDeptId = "${sessionScope.userInfo.deptId}";
 			param.loginUserId = "${sessionScope.userInfo.userId}";
+			
+			// 관리부서
+			param.mngDeptId = $("#sDeptId").val()
 			
     		param.tranMode = $("#tranMode").val();
     		param.sellBuySctn = "01";
