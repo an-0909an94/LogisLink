@@ -1300,11 +1300,11 @@
  			if (confirm(message)) {
  				
  				var params = {
-				   "params" : JSON.stringify(editedList)
+				   "params": JSON.stringify(editedList)
 				}
  				
  				$.ajax({
-					url: "/contents/calc/data/upsertCalcCharge.do",
+					url: "/contents/calc/data/setSellCalcCharge.do",
 					type: "POST",
 					dataType: "json",
 					data: params,
@@ -1336,7 +1336,7 @@
  	function calcFinish() {
  		// 청구운송비 변경 건이 존재하는지 체크
  		if (editedList.length > 0) {
- 			var messsage = "청구운송비 변경을 하지 않은 건이 존재합니다.\n변경된 건에 대해 청구운송비 변경을 하지 않으면 기존 금액으로 마감처리 됩니다.\n계속 하시겠습니까?";
+ 			var message = "청구운송비 변경을 하지 않은 건이 존재합니다.\n변경된 건에 대해 청구운송비 변경을 하지 않으면 기존 금액으로 마감처리 됩니다.\n계속 하시겠습니까?";
  			if (!confirm(message))
  				return;
  		}

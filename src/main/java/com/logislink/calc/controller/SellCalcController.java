@@ -322,8 +322,8 @@ public class SellCalcController {
 		return "jsonView";
 	}
 	
-	@PostMapping(value="/contents/calc/data/upsertCalcCharge.do")
-	public String upsertCalcCharge(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
+	@PostMapping(value="/contents/calc/data/setSellCalcCharge.do")
+	public String setSellCalcCharge(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
 		
 		// 권한 체크???
 		
