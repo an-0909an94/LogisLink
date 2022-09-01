@@ -775,7 +775,7 @@ var columns = [
 
 function goList() {
 	if($("#driverId").val() == "" && $("#sCustId").val() == ""){
-		alert("\"거래처\", \"차량번호\"\n중 하나 이상 입력, 선택해 주세요.");
+		alert("\"거래처\", \"차량번호\"\n중 하나 이상 입력, 선택해 주세요. ");
 		return;
 	}
  	$("#grid").text("");
