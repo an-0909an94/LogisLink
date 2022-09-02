@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+	#purchDeadstyle .k-grid-content {max-height:calc(100vh - 452px)}
+</style>
+
 <div id="divTaxInvoice" class="editor-warp p-0">
 	<form class="modalEditor" id="fTaxInvoice" data-toggle="validator" role="form" autocomplete="off">
        <div class="enter_form" style="padding: 1.875em;">
@@ -14,7 +18,7 @@
 	                 	<input class="form-control form-control-sm" id="supplierBizName" name="supplierBizName" type="text" readonly>
 	                 </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -26,7 +30,7 @@
 		                 <input type="text" name="supplierBizSubNo" id="supplierBizSubNo" class="form-control form-control-sm" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -34,7 +38,7 @@
 		                 <input type="text" name="supplierCeo" id="supplierCeo" class="form-control form-control-sm" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 	                 <div class="input-group input-group-sm col middle-name form-group">
@@ -42,7 +46,7 @@
 	                 	<input id="supplierAddr" name="supplierAddr" type="text" class="form-control form-control-sm" readonly>
 	                 </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -54,7 +58,7 @@
 		                 <input type="text" name="supplierBizClass" id="supplierBizClass" class="form-control form-control-sm" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -66,7 +70,7 @@
 		                 <input type="text" name="supplierMemTel" id="supplierMemTel" class="form-control form-control-sm" maxlength="13" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -75,7 +79,7 @@
 		             </div>
 	              </div>
 	          </div>
-	          
+
 	          <div style="width: 50%; float: right;">
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name">공급받는자</label>
@@ -84,7 +88,7 @@
 	                 	<input class="form-control form-control-sm" id="buyerBizName" name="buyerBizName" type="text" style="width:100%;" readonly>
 	                 </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -96,7 +100,7 @@
 		                 <input type="text" name="buyerBizSubNo" id="buyerBizSubNo" class="form-control form-control-sm" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -104,7 +108,7 @@
 		                 <input type="text" name="buyerCeo" id="buyerCeo" class="form-control form-control-sm" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 	                 <div class="input-group input-group-sm col middle-name form-group">
@@ -112,7 +116,7 @@
 	                 	<input id="buyerAddr" name="buyerAddr" type="text" class="form-control form-control-sm" readonly>
 	                 </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -124,7 +128,7 @@
 		                 <input type="text" name="buyerBizClass" id="buyerBizClass" class="form-control form-control-sm" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -136,7 +140,7 @@
 		                 <input type="text" name="buyerMemTel" id="buyerMemTel" class="form-control form-control-sm" maxlength="13" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
@@ -230,7 +234,7 @@
 				<strong>　</strong>
 				    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
 				</div>
-				
+
 				<div class="input-group input-group-sm col radio-or-checkBox">
                    	<input type="radio" name="dateChk" id="today" value="0"/>
                    	<label for="today" class="label-margin">
@@ -255,26 +259,26 @@
                    		<span>30일</span>
                    	</label>
                 </div>
-                
+
                 <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>배차상태</strong>
 				    <select class="form-control" class="custom-select col-12" id="sAllocState" name="sAllocState">
 				    	<option value="">--배차상태--</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>배차부서명</strong>
 				    <select class="form-control" class="custom-select col-12" id="sDeptId" name="sDeptId">
 				    	<option value="">--부서명--</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>배차담당자</strong>
 				    <select class="form-control" class="custom-select col-12" id="userId" name="userId"></select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>매출마감여부</strong>
 				    <select class="form-control" class="custom-select col-12" id="sellFinishYn" name="sellFinishYn">
@@ -283,7 +287,7 @@
 				    	<option value="N">N</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>매입마감여부</strong>
 				    <select class="form-control" class="custom-select col-12" id="buyFinishYn" name="buyFinishYn">
@@ -292,7 +296,7 @@
 				    	<option value="N">N</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>빠른지급여부</strong>
 				    <select class="form-control" class="custom-select col-12" id="reqPayYn" name="reqPayYn">
@@ -302,7 +306,7 @@
 				    </select>
 				</div>
 			</div>
-				
+
 			<div class="form-group row">
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>차주계약유형</strong>
@@ -312,31 +316,31 @@
 				<strong>차량번호</strong>
 				    <input type="text" id="driverValue" name="driverValue" style="width:100%;">
 				</div>
-			
+
 				<div class="input-group input-group-sm col-2 middle-name">
 				<strong>거래처(화주)</strong>
 				    <input type="text" id="sCustName" name="sCustName" style="width:100%;">
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name">
 				<strong>계산서발행지</strong>
 				    <input type="text" id="sTax" name="sTax" style="width:100%;" class="form-control form-control-sm searchValue">
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>상차지</strong>
 				    <select class="form-control" class="custom-select col-12" id="listSSido" name="listSSido">
 				    	<option>상차지</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>하차지</strong>
 				    <select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
 				    	<option>하차지</option>
 				    </select>
 				</div>
-				
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>경유지 여부</strong>
 				    <select class="custom-select col-12" id="orderStopYn" name="orderStopYn">
@@ -345,7 +349,7 @@
 				        <option value="N">없음</option>
 				    </select>
 				</div>
-                
+
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
 				<strong>　</strong>
 				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
@@ -355,7 +359,7 @@
 				    <button onclick="fReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
 				</div>
 			</div>
-			</form>                
+			</form>
 			<!--  -->
 			<div class="cont-body">
 				<!-- f-wrap -->
@@ -367,7 +371,7 @@
 								<div class="btn-row">
 									<div class="tool_group">
 										<div class="padding">
-											<a href="#" class="k-pager-refresh k-button" id="receiptView" style="display: none;"><b class="btn-b"><i class="k-icon k-i-txt"></i>인수증 보기</b></a>											
+											<a href="#" class="k-pager-refresh k-button" id="receiptView" style="display: none;"><b class="btn-b"><i class="k-icon k-i-txt"></i>인수증 보기</b></a>
 											<a href="#" class="k-pager-refresh k-button" id="taxView" style="display: none;"><b class="btn-b"><i class="k-icon k-i-txt"></i>세금계산서 보기</b></a>
 											<a href="#" class="k-pager-refresh k-button" onClick="goPurchaseDivision()"><b class="btn-b"><i class="k-icon k-i-paste-plain-text"></i>매입액 배부계산</b></a>
 											<a href="#" class="k-pager-refresh k-button" onClick="saveAll();"><b class="btn-b"><i class="k-icon k-i-paste-plain-text"></i>배부액 일괄저장</b></a>
@@ -385,7 +389,7 @@
 								<div class="btn-row" style="float:left;">
 									<div class="tool_group">
 										<div style="width:400px;">
-											※ 조회되는 금액은 배차 관리 기준 금액입니다.<br>최종 마감 금액은 정산관리에서 확인해주세요.											
+											※ 조회되는 금액은 배차 관리 기준 금액입니다.<br>최종 마감 금액은 정산관리에서 확인해주세요.
 										</div>
 									</div>
 								</div>
@@ -408,11 +412,22 @@
 						</div>
 						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 472px);">
 							<div class="top-pane">
-								<div style="height: 100%;" id="grid"></div>
+								<div style="height: 100%;" id="purchDead"></div>
 							</div>
 							<div class="bottom-pane">
 								<div style="height: 100%" id="subGrid"></div>
 							</div>
+						</div>
+						<div style="min-width: 500px;">
+							<div style="height:calc(100vh - 409px);" id="purchDeadstyle"></div>
+
+							<!-- 22.08.29 황정환 기존 그리드 개인화 설정 응용 -->
+							<ul id="purchDeadContextMenu">
+								<li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
+								<li class="k-separator privateRClick"></li>
+								<li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
+							</ul>
+							<!-- /table -->
 						</div>
 					</div>
 				</div>
@@ -428,6 +443,17 @@ var headerTitle = ($("#headerTitle").text());
 var searchCustName;
 var searchCar;
 var submitChk = true;
+
+var userId='${sessionScope.userInfo.userId}';
+
+$("#purchDeadContextMenu").kendoContextMenu({
+	target: "#purchDead",
+	filter: "tr[role='row']"
+});
+
+var contextMenu = $("#purchDeadContextMenu").data("kendoContextMenu");
+contextMenu.bind("select", onContextMenuSelect);
+
 $(document).ready(function(){
  	$("#splitter").kendoSplitter({
         orientation: "vertical",
@@ -440,31 +466,31 @@ $(document).ready(function(){
     Util.setCmmCode("select", "carContractCode", "CAR_CONTRACT_CD", "03", "--차주계약유형--");
 	Util.setCmmCode("select", "sCarMngCode", "CAR_MNG_CD", "", "--차주등급--");
 	Util.setCmmCode("select", "sCustMngCode", "CAR_MNG_CD", "", "--거래처등급--");
-	
+
 	var toDay = new Date();
 	var year = toDay.getFullYear();
 	var month = toDay.getMonth();
 	var day = toDay.getDate();
 	var fromDate = new Date(year, month-1, 1);
 	var minDate =  new Date(year, month-3, day);
-	
+
 	$("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : fromDate, dateInput: true, min : minDate, max : new Date()});
-	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true, min : minDate, max : new Date()}); 
+	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true, min : minDate, max : new Date()});
 	Util.setSearchDateForm();
-	
+
 	Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "전체");
 	$('#sDeptId').on('change', function() {
 		Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "전체");
 	});
-	
+
 	Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "", "--부서명--");
-    	
+
 	var $options2 = $("#sCarMngCode > option").clone();
 	$('#carMngCode').append($options2);
 	$("#carMngCode option[value='']").remove();
 
 	taxModal = $("#divTaxInvoice");
-	
+
 	taxModal.kendoDialog({
 		width: "1200px",
 		height: "620px",
@@ -476,7 +502,7 @@ $(document).ready(function(){
 			$("#fTaxInvoice")[0].reset();
 		}
 	});
-	
+
 	searchCustName = MultiColumnComboBox.setSearchCustName("s", '01', $("#sDeptId").val());
 	searchCustName.bind("select", selectSearchCust);
 	searchCustName.bind("change", searchCustSelectTrigger);
@@ -484,7 +510,7 @@ $(document).ready(function(){
 	searchCar = MultiColumnComboBox.setSearchCarNum("driverValue", $("#sDeptId").val(), $("#carContractCode").val());
 	searchCar.bind("select", selectSearchCarNum);
 	searchCar.bind("change", searchCarNumSelectTrigger);
-	
+
 	$("#sDeptId").on("change", function(){
 		setSearchForm();
 	});
@@ -492,24 +518,25 @@ $(document).ready(function(){
 	$("#carContractCode").on("change", function(){
 		setSearchForm();
 	});
-	
+
 	$("#simpleDataRow").kendoGrid({
         height: 0,
         sortable: false,
        	scrollable: false
     });
-	
+
 	function preventPost(e) {
     	if (e.keyCode === 13) {
     		goList();
     	}
     }
-	
+
 	searchCustName.input.keydown(preventPost);
 	searchCar.input.keydown(preventPost);
 	//goList();
+	columns = setPrivateData("C3710","purchDead",userId,columns);
 
-	$("#grid").kendoGrid({
+	$("#purchDead").kendoGrid({
 		excel: {
 			fileName: headerTitle+"(" + new Date().yyyymmdd() + ").xlsx",
 			proxyURL: "/cmm/saveGrid.do",
@@ -529,7 +556,13 @@ $(document).ready(function(){
 	  	messages: {
 			noRecords: "조회된 데이터가 없습니다."
 	  	},
-	});
+		dataBound: function(e) {
+			nonPrivateColumnCheck = e.sender.columns[0];
+		},
+		sort: onSortEnd
+	})
+	setOptionActive("C3710", "purchDead", userId);
+
 });
 
 function setSearchForm () {
@@ -605,14 +638,14 @@ function searchCarNumSelectTrigger(e) {
 }
 
 var columns = [
-		{ width: 70, editable:function(e) {return false;}, 
+		{ field: "check" , width: 70, editable:function(e) {return false;},
 		    headerTemplate: '<div class="auth-radio-or-checkBox">'
 			 + 					'<input style="width: 13px;height: 13px;" type="checkbox" name="orderAllCheck" id="orderAllCheck" class="orderAllCheck"/>'
 		     + 					'<label style="display: inline;font-size: 14px;" for="orderAllCheck">선택</label>'
 		     + 				'</div>',
-		    
+
 			template: '<div class="auth-radio-or-checkBox">'
-			 + 		      '<input style="width: 13px;height: 13px;" type="checkbox" name="chkOrderId" id="#=orderId#" value="#=orderId#" class="orderId"/>'
+			 + 		      '<input style="width: 13px;height: 13px;" type="checkbox" name="chkOrderId" id="#=orderId#" value="#=orderId#" class="orderCheck"/>'
 			 + 			  '<label for="#=orderId#"></label>'
 		     + 		  '</div>'
 		},
@@ -632,24 +665,24 @@ var columns = [
 				if(comName != "")
 					return Util.nvl(comName,"");
 			}
-		},	
+		},
 		{ field: "returnYn", title: "왕복", width: 70, editable: function (dataItem){}},
 		{ field: "sellAmt", title: "매출액(소계)", width: 150, editable: function (dataItem){},
 			template: function(dataItem) {
 				return Util.formatNumber(dataItem.sellAmt);
 			},
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			}
-		},	
+		},
 		{ field: "buyAmt", title: "매입액(소계)", width: 150, editable: function (dataItem){},
 			template: function(dataItem) {
 				return Util.formatNumber(dataItem.buyAmt);
 			},
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			}
-		},	
+		},
 		{ field: "divisionCharge", title: "배부액(조정)", width: 150, type: "string",
 			attributes: {
 				"class" : "#: orderId # divisionCharge",
@@ -658,13 +691,13 @@ var columns = [
 			},
 			template: function(dataItem) {
 				var divisionCharge = Util.nvl(Util.formatNumber(dataItem.divisionCharge),"0");
-				var regex = /[^0-9]/g;	
+				var regex = /[^0-9]/g;
 				var result = divisionCharge.replace(regex, "");
 				return Util.formatNumber(result);
 			},
 		},
 		/* { field: "", title: "지급액(소계)", width: 150, editable: function (dataItem){}}, */
-		{ field: "", title: "명세서", width: 150, editable: function (dataItem){}},
+		{ field: "tranYn", title: "명세서", width: 150, editable: function (dataItem){}},
 		{ field: "unitPriceType", title: "운임구분", width: 150, editable: function (dataItem){}},
 		{ field: "carSctnName", title: "차량구분", width: 100, editable: function (dataItem){}},
 		{ field: "chargeType", title: "지불마감기준", width: 130, editable: function (dataItem){}},
@@ -716,28 +749,33 @@ var subColumns = [
 	{ field: "orderId", title: "오더ID", width: 150},
 	{ field: "calcTypeName", title: "정산항목", width: 100},
 	{ field: "sellCharge", title: "매출액", width: 100,
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	},
 	{ field: "buyCharge", title: "매입액", width: 100,
-		attributes: { 
-			style: "text-align: right" 
+		attributes: {
+			style: "text-align: right"
 		}
 	}
 ]
 var sellAmt = 0;
 
+var nonPrivateColumnCheck;
+
 function goList() {
-	
+
 	if(!$("#driverId").val() && !$("#vehicId").val()) {
 		alert("조회할 차량번호를 선택해주세요.");
 		return;
 	}
-	
+
+	// 22.08.29 황정환 기존 그리드 개인화 설정 응용 -> 메뉴코드, 그리드아이디, 접속사용자아이디, 기존 컬럼정보 전달
+	columns = setPrivateData("C3710","purchDead",userId,columns);
+
 	$("#divisionAmt").html("");
-	$("#grid").text("");
-	$("#grid").kendoGrid({
+	$("#purchDead").text("");
+	var grid = $("#purchDead").kendoGrid({
 		dataSource : {
 			transport : {
 				read : {
@@ -776,6 +814,9 @@ function goList() {
 				}
 			}
 		},
+		dataBound: function(e) {
+			nonPrivateColumnCheck = e.sender.columns[0];
+		},
 		excel: {
 			fileName: headerTitle+"(" + new Date().yyyymmdd() + ").xlsx",
 			proxyURL: "/cmm/saveGrid.do",
@@ -790,9 +831,10 @@ function goList() {
 		sortable : false,
         resizable: true,
         scrollable: true,
-		columns : columns,		
+		columns : columns,
     	noRecords: true,
     	change : onChange,
+		sort: onSortEnd,
     	editable: true,
     	edit: function(e) {
     		var prevCharge = $("#divisionCharge").val();
@@ -822,23 +864,33 @@ function goList() {
 	  	messages: {
 			noRecords: "조회된 데이터가 없습니다."
 	  	},
-	});
-	
-	changeEvent("chkOrderId");
-	changeEvent("orderAllCheck");
+
+	}).data("kendoGrid");
+
+	// 22.08.29 황정환 기존 그리드 개인화 설정 응용 -> 그리드 옵션 활성화 여부 처리
+	// 추가로 페이지에서 적용되는 이벤트가 있는 경우
+	// 그 이벤트 앞에 아래 함수 호출 부분이 적용되어야 함
+	setOptionActive("C3710", "purchDead", userId);
+
+	grid.thead.on("click", "#orderAllCheck", orderAllCheckHandler);
+	grid.table.on("click", ".orderCheck", orderCheckHandler);
+
+	//changeEvent("chkOrderId");
+	//changeEvent("orderAllCheck");
 }
 
 //매입액 일괄계산
 function goPurchaseDivision() {
+
 	var purchase = $("#purchase").val().replace(/[^0-9]/g, "");
 	if(!purchase) {
 		alert("배부대상총매입액을 입력해주세요.");
 		return;
 	}
-	var grid = $("#grid").data("kendoGrid");
+	var grid = $("#purchDead").data("kendoGrid");
 	var data = grid.dataSource._data;
 	//var gridData = JSON.stringify(grid.dataSource._data);
-	
+
 	if(data.length == 0) {
 		alert("데이터를 조회해주세요.");
 		return;
@@ -853,30 +905,33 @@ function goPurchaseDivision() {
 	}
 
 	$("#divisionAmt").html(Util.formatNumber(divisionAmt));
+
 	var dataSource = new kendo.data.DataSource({
-		data: grid.dataSource._data
+		data: grid.dataSource._data,
 	});
-	
+
 	grid.setDataSource(dataSource);
+
 }
 
 function onChange(e){
-	var grid = $("#grid").data("kendoGrid");
+
+	var grid = $("#purchDead").data("kendoGrid");
 	var data = grid.dataItem(e.target);
 	var row = grid.select();
 	var multiSelectedData = [];
-	
+
 	for(var i = 0; i < row.length; i++) {
 		multiSelectedData.push(grid.dataItem(row[i]));
 	}
-	
+
 	var selectedData = grid.dataItem(row[row.length-1]);
 	var orderId = selectedData.orderId;
 	var allocId = selectedData.allocId;
 	var sellCharge = Util.formatNumber(selectedData.sellCharge);
 	var buyCharge = Util.formatNumber(selectedData.buyCharge);
 	var sellAllocId = selectedData.sellAllocId;
-	
+
 	if(multiSelectedData.length != '1'){
 		/* 인수증, 세금계산서 버튼 숨기기 */
 		$("#taxView").hide();
@@ -886,7 +941,6 @@ function onChange(e){
 		$("#taxView").show();
 		$("#receiptView").show();
 	}
-		
 
 	$("#subGrid").text("");
 	$("#subGrid").kendoGrid({
@@ -911,7 +965,7 @@ function onChange(e){
 					var handWorkData = {"orderId" : orderId, "calcTypeName" : "수작업비", "buyCharge" : 0, "sellCharge" : 0};
 					var roundData = {"orderId" : orderId, "calcTypeName" : "회차료", "buyCharge" : 0, "sellCharge" : 0};
 					var otherAddData = {"orderId" : orderId, "calcTypeName" : "기타추가비", "buyCharge" : 0, "sellCharge" : 0};
-					
+
 					for(var i=0, item; item=response.data[i]; i++) {
 						switch(item.calcTypeCode) {
 						case "0023" :
@@ -965,12 +1019,17 @@ function onChange(e){
 	  	messages: {
 			noRecords: "조회된 데이터가 없습니다."
 	  	},
+		// 22.08.29 황정환 기존 그리드 개인화 설정 응용
+		reorderable: true, // 컬럼 위치 변경
+		columnReorder: onReorderEnd, // 컬럼 위치 변경 이벤트
+		columnResize: onResizeEnd, // 컬럼 사이즈 변경 이벤트
 	});
-	
+
 }
 
 $('#taxView, #receiptView').click(function(){
-	var grid = $("#grid").data("kendoGrid");
+
+	var grid = $("#purchDead").data("kendoGrid");
 	var row = grid.select();
 	var data = grid.dataItem(row);
 	if(this.id == 'taxView'){
@@ -988,12 +1047,12 @@ function saveAll(){
 	if(!confirm("배부액(조정)은 마감 건을 제외하고 저장됩니다. 이미 마감된 건은 기존 금액이 그대로 유지됩니다.")) {
 		return;
 	}
-	
+
 	if(!submitChk){
 		alert("\"배부액\"을 확인해 주세요.");
 		return;
 	}
-	
+
 	$("input[name=chkOrderId]").each(function(){
 		if($(this).is(":checked")) {
 			editOrderId.push($(this).val());
@@ -1007,9 +1066,9 @@ function saveAll(){
 			order.divisionCharge = $("."+editOrderId[l])[0].innerText.replace(/,/g, "");
 			order.allocId = $("."+editOrderId[l])[1].innerText;
 			order.addCharge = $("."+editOrderId[l])[2].innerText;
-		    ordersArray.push(order); 
+		    ordersArray.push(order);
 		}
-		
+
 		$.ajax({
 			url: "/contents/calc/data/updateCharge.do",
 			type: "POST",
@@ -1076,7 +1135,7 @@ function viewTax(invId, taxinvYn, orderId, allocId){
 			$('#taxDtlTbl tr:gt(0)').remove();
 			for(var i=0; i<data.data2.length; i++){
 				var str = "";
-				str += "<tr>" + 
+				str += "<tr>" +
 			        "<td><input type='text' class='col' id='itemDate'       name='itemDate'     value='" + data.data2[i].itemDate + "'		readonly></td>" +
 			        "<td><input type='text' class='col' id='itemName'       name='itemName'     value='" + data.data2[i].itemName + "'		readonly></td>" +
 			        "<td><input type='text' class='col' id='itemType'       name='itemType'     value='" + data.data2[i].itemType + "'		readonly></td>" +
@@ -1104,16 +1163,18 @@ function viewTax(invId, taxinvYn, orderId, allocId){
 }
 
 function changeEvent(name){
-	$("#grid").on("change", "input." + name , function(e) {
+
+	$("#purchDead").on("change", "input." + name , function(e) {
 		if(name == "orderAllCheck"){
 			if($("#orderAllCheck").is(":checked")){
 				$("input[name=chkOrderId]").prop("checked", true);
-		    }else{
-		    	$("input[name=chkOrderId]").prop("checked", false);
-		    }
+			}else{
+				$("input[name=chkOrderId]").prop("checked", false);
+			}
 		}else{
 			var total = $("input[name=chkOrderId]").length;
 			var checked = $("input[name=chkOrderId]:checked").length;
+
 			if(total != checked){
 				$("#orderAllCheck").prop("checked", false);
 			} else {
@@ -1133,12 +1194,99 @@ function fReset(){
 
 function goExcel(){
 	$("#loading").show();
-	var grid = $("#grid").data("kendoGrid");
+
+	var grid = $("#purchDead").data("kendoGrid");
 	grid.saveAsExcel();
 }
 
 $("#purchase").on("input", function(){
 	$(this).val(Util.formatNumberInput($(this).val()));
 });
+
+function onContextMenuSelect(e) {
+
+	var grid = $("#purchDead").data("kendoGrid");
+	var data = grid.dataItem(e.target);
+	var row = grid.select();
+	var multiSelectedData = [];
+	var item = e.item.id;
+
+	for(var i = 0; i < row.length; i++) {
+		multiSelectedData.push(grid.dataItem(row[i]));
+	}
+
+	switch (item) {
+		case "cSave" : // 리스트 현재설정 저장 버튼 이벤트
+			setPrivateSaveData("C3710", "purchDead", userId);
+			break;
+		case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
+			setPrivatePanel("C3710", "purchDead", userId);
+			break;
+	}
+}
+
+// 정렬 이벤트 핸들러
+function onSortEnd(e) {
+	// 정렬 이벤트 발생 시 "check" 컬럼 항목이면 check 이벤트로 처리
+	if (e.sort.field == "check") {
+		e.preventDefault();
+		var orderAllChecked = $("#orderAllCheck").is(":checked");
+		if (orderAllChecked) {
+			$("#orderAllCheck").prop("checked", false).trigger('click');
+		} else {
+			$("#orderAllCheck").prop("checked", true).trigger('click');
+		}
+	} else {
+		// 그 외 항목의 경우 allCheck를 풀어줌. -> MultiSorting 기능이 활성화 된 경우
+		$("#orderAllCheck").prop("checked", false);
+	}
+}
+
+// 전체 선택 이벤트 핸들러
+function orderAllCheckHandler(e) {
+	var grid = $("#purchDead").data("kendoGrid");
+	var checked = this.checked;
+
+	//debugger;
+
+	if (checked) {
+		// 체크 해제하고 click 트리거 발생
+		$(".orderCheck").prop("checked", false).trigger('click');
+	} else {
+		// 체크 하고 click 트리거 발생
+		$(".orderCheck").prop("checked", true).trigger('click');
+	}
+}
+
+// 부분 선택 이벤트 핸들러
+function orderCheckHandler(e) {
+	var row = $(this).closest("tr")
+	orderCheck(row);
+}
+
+// row selection
+function orderCheck(row) {
+	var grid = $("#purchDead").data("kendoGrid");
+	var dataItem = grid.dataItem(row);
+	var checked = $("#" + dataItem.orderId).is(":checked");
+
+	var checkedIds = {};
+	checkedIds[dataItem.id] = checked;
+
+	if (checked) {
+		row.addClass("k-state-selected");
+
+		// 체크 상태의 경우 전체선택도 체크해줌.
+		var total = $(".orderCheck").length;
+		var checked = $(".orderCheck:checked").length;
+		if (total == checked)
+			$("#orderAllCheck").prop("checked", true);
+	} else {
+		row.removeClass("k-state-selected");
+
+		// 체크 해제상태의 경우 전체선택도 풀어줌.
+		$("#orderAllCheck").prop("checked", false);
+	}
+}
 
 </script>

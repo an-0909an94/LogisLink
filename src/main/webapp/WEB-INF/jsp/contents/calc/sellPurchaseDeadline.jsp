@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+	#sellPurchDeadstyle .k-grid-content {max-height:calc(100vh - 452px)}
+</style>
+
+
 <div id="divTaxInvoice" class="editor-warp p-0">
 	<form class="modalEditor" id="fTaxInvoice" data-toggle="validator" role="form" autocomplete="off">
        <div class="enter_form" style="padding: 1.875em;">
@@ -407,11 +412,22 @@
 						</div>
 						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 472px);">
 							<div class="top-pane">
-								<div style="height: 100%;" id="grid"></div>
+								<div style="height: 100%;" id="selPurDead"></div>
 							</div>
 							<div class="bottom-pane">
 								<div style="height: 100%" id="subGrid"></div>
 							</div>
+						</div>
+						<div style="min-width: 500px;">
+							<div style="height:calc(100vh - 409px);" id="sellPurchDeadstyle"></div>
+
+							<!-- 22.08.29 황정환 기존 그리드 개인화 설정 응용 -->
+							<ul id="sellPurchDeadContextMenu">
+								<li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
+								<li class="k-separator privateRClick"></li>
+								<li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
+							</ul>
+							<!-- /table -->
 						</div>
 					</div>
 				</div>
@@ -428,6 +444,17 @@ var searchCustName;
 var searchTax;
 var searchCar;
 var submitChk = true;
+
+var userId='${sessionScope.userInfo.userId}';
+
+$("#sellPurchDeadContextMenu").kendoContextMenu({
+	target: "#selPurDead",
+	filter: "tr[role='row']"
+});
+
+var contextMenu = $("#sellPurchDeadContextMenu").data("kendoContextMenu");
+contextMenu.bind("select", onContextMenuSelect);
+
 $(document).ready(function(){
  	$("#splitter").kendoSplitter({
         orientation: "vertical",
@@ -480,14 +507,14 @@ $(document).ready(function(){
 		}
 	});
 
-	searchCar = MultiColumnComboBox.setSearchCarNum("driverValue", $("#sDeptId").val(), "02");
-	searchCar.bind("select", selectSearchCarNum);
-	searchCar.bind("change", searchCarNumSelectTrigger);
-	
 	searchCustName = MultiColumnComboBox.setSearchCustName("s", '01', $("#sDeptId").val());
 	searchCustName.bind("select", selectSearchCust);
 	searchCustName.bind("change", searchCustSelectTrigger);
 	
+	searchCar = MultiColumnComboBox.setSearchCarNum("driverValue", $("#sDeptId").val(), "02");
+	searchCar.bind("select", selectSearchCarNum);
+	searchCar.bind("change", searchCarNumSelectTrigger);
+
 	$("#sDeptId").on("change", function(){
 		setSearchForm();
 	});
@@ -507,7 +534,7 @@ $(document).ready(function(){
 	searchCustName.input.keydown(preventPost);
 	//goList();
 
-	$("#grid").kendoGrid({
+	$("#selPurDead").kendoGrid({
 		excel: {
 			fileName: headerTitle+"(" + new Date().yyyymmdd() + ").xlsx",
 			proxyURL: "/cmm/saveGrid.do",
@@ -622,14 +649,14 @@ function searchCarNumSelectTrigger(e) {
 }
 
 var columns = [
-		{ width: 70, editable:function(e) {return false;}, 
+		{ field: "check" , width: 70, editable:function(e) {return false;},
 		    headerTemplate: '<div class="auth-radio-or-checkBox">'
 			 + 					'<input style="width: 13px;height: 13px;" type="checkbox" name="orderAllCheck" id="orderAllCheck" class="orderAllCheck"/>'
 		     + 					'<label style="display: inline;font-size: 14px;" for="orderAllCheck">선택</label>'
 		     + 				'</div>',
 		    
 			template: '<div class="auth-radio-or-checkBox">'
-			 + 		      '<input style="width: 13px;height: 13px;" type="checkbox" name="chkOrderId" id="#=orderId#" value="#=orderId#" class="orderId"/>'
+			 + 		      '<input style="width: 13px;height: 13px;" type="checkbox" name="chkOrderId" id="#=orderId#" value="#=orderId#" class="orderCheck"/>'
 			 + 			  '<label for="#=orderId#"></label>'
 		     + 		  '</div>'
 		},
@@ -681,7 +708,7 @@ var columns = [
 			},
 		},
 		/* { field: "", title: "지급액(소계)", width: 150, editable: function (dataItem){}}, */
-		{ field: "", title: "명세서", width: 150, editable: function (dataItem){}},
+		{ field: "tranYn", title: "명세서", width: 150, editable: function (dataItem){}},
 		{ field: "unitPriceType", title: "운임구분", width: 150, editable: function (dataItem){}},
 		{ field: "carSctnName", title: "차량구분", width: 100, editable: function (dataItem){}},
 		{ field: "chargeType", title: "지불마감기준", width: 130, editable: function (dataItem){}},
@@ -748,15 +775,20 @@ var subColumns = [
 	}
 ]
 
+var nonPrivateColumnCheck;
+
 function goList() {
 
 	if(!$("#sCustId").val() && !$("#driverId").val() && !$("#vehicId").val()) {
 		alert("조회할 차량번호나 거래처를 선택해주세요.");
 		return;
 	}
-	
-	$("#grid").text("");
-	$("#grid").kendoGrid({
+
+	// 22.08.29 황정환 기존 그리드 개인화 설정 응용 -> 메뉴코드, 그리드아이디, 접속사용자아이디, 기존 컬럼정보 전달
+	columns = setPrivateData("C3810","selPurDead",userId,columns);
+
+	$("#selPurDead").text("");
+	var grid = $("#selPurDead").kendoGrid({
 		excel: {
 			fileName: headerTitle+"(" + new Date().yyyymmdd() + ").xlsx",
 			proxyURL: "/cmm/saveGrid.do",
@@ -817,8 +849,12 @@ function goList() {
 			}
 		},
     	noRecords: true,
-    	change : onChange,
     	editable: true,
+		dataBound: function(e) {
+			nonPrivateColumnCheck = e.sender.columns[0];
+		},
+		change : onChange,
+		sort: onSortEnd,
     	edit: function(e) {
     		var prevCharge = $("#divisionCharge").val();
 			$('#divisionCharge').on("blur", function() {
@@ -846,10 +882,19 @@ function goList() {
 	  	messages: {
 			noRecords: "조회된 데이터가 없습니다."
 	  	},
-	});
-	
-	changeEvent("orderId");
-	changeEvent("orderAllCheck");
+	}).data("kendoGrid");
+
+	// 22.08.29 황정환 기존 그리드 개인화 설정 응용 -> 그리드 옵션 활성화 여부 처리
+	// 추가로 페이지에서 적용되는 이벤트가 있는 경우
+	// 그 이벤트 앞에 아래 함수 호출 부분이 적용되어야 함
+	setOptionActive("C3810", "selPurDead", userId);
+
+
+	grid.thead.on("click", "#orderAllCheck", orderAllCheckHandler);
+	grid.table.on("click", ".orderCheck", orderCheckHandler);
+
+	//changeEvent("orderId");
+	//changeEvent("orderAllCheck");
 }
 
 function goPurchaseDivision(type) {
@@ -859,7 +904,7 @@ function goPurchaseDivision(type) {
 		alert("배부대상총매입액을 입력해주세요.");
 		return;
 	}
-	var grid = $("#grid").data("kendoGrid");
+	var grid = $("#selPurDead").data("kendoGrid");
 	var data = grid.dataSource._data;
 	
 	if(data.length == 0) {
@@ -975,7 +1020,7 @@ function saveAll(type){
 }
 
 function onChange(e){
-	var grid = $("#grid").data("kendoGrid");
+	var grid = $("#selPurDead").data("kendoGrid");
 	var data = grid.dataItem(e.target);
 	var row = grid.select();
 	var multiSelectedData = [];
@@ -987,10 +1032,10 @@ function onChange(e){
 	var selectedData = grid.dataItem(row[row.length-1]);
 	var orderId = selectedData.orderId;
 	var allocId = selectedData.allocId;
-	var sellAllocId = selectedData.sellAllocId;
 	var sellCharge = Util.formatNumber(selectedData.sellCharge);
 	var buyCharge = Util.formatNumber(selectedData.buyCharge);
-	
+	var sellAllocId = selectedData.sellAllocId;
+
 	if(multiSelectedData.length != '1'){
 		/* 인수증, 세금계산서 버튼 숨기기 */
 		$("#taxView").hide();
@@ -1075,16 +1120,20 @@ function onChange(e){
         scrollable: true,
 		columns : subColumns,
     	noRecords: true,
-    	editable: false,
+    	editable: true,
 	  	messages: {
 			noRecords: "조회된 데이터가 없습니다."
 	  	},
+		// 22.08.29 황정환 기존 그리드 개인화 설정 응용
+		reorderable: true, // 컬럼 위치 변경
+		columnReorder: onReorderEnd, // 컬럼 위치 변경 이벤트
+		columnResize: onResizeEnd, // 컬럼 사이즈 변경 이벤트
 	});
 	
 }
 
 $('#taxView, #receiptView').click(function(){
-	var grid = $("#grid").data("kendoGrid");
+	var grid = $("#selPurDead").data("kendoGrid");
 	var row = grid.select();
 	var data = grid.dataItem(row);
 	if(this.id == 'taxView'){
@@ -1161,7 +1210,7 @@ function viewTax(invId, taxinvYn, orderId, allocId){
 }
 
 function changeEvent(name){
-	$("#grid").on("change", "input." + name , function(e) {
+	$("#selPurDead").on("change", "input." + name , function(e) {
 		if(name == "orderAllCheck"){
 			if($("#orderAllCheck").is(":checked")){
 				$("input[name=chkOrderId]").prop("checked", true);
@@ -1190,7 +1239,92 @@ function fReset(){
 
 function goExcel(){
 	$("#loading").show();
-	var grid = $("#grid").data("kendoGrid");
+	var grid = $("#selPurDead").data("kendoGrid");
 	grid.saveAsExcel();
 }
+
+function onContextMenuSelect(e) {
+
+	var grid = $("#selPurDead").data("kendoGrid");
+	var data = grid.dataItem(e.target);
+	var row = grid.select();
+	var multiSelectedData = [];
+	var item = e.item.id;
+
+	for(var i = 0; i < row.length; i++) {
+		multiSelectedData.push(grid.dataItem(row[i]));
+	}
+
+	switch (item) {
+		case "cSave" : // 리스트 현재설정 저장 버튼 이벤트
+			setPrivateSaveData("C3810", "selPurDead", userId);
+			break;
+		case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
+			setPrivatePanel("C3810", "selPurDead", userId);
+			break;
+	}
+}
+
+// 정렬 이벤트 핸들러
+function onSortEnd(e) {
+	// 정렬 이벤트 발생 시 "check" 컬럼 항목이면 check 이벤트로 처리
+	if (e.sort.field == "check") {
+		e.preventDefault();
+		var orderAllChecked = $("#orderAllCheck").is(":checked");
+		if (orderAllChecked) {
+			$("#orderAllCheck").prop("checked", false).trigger('click');
+		} else {
+			$("#orderAllCheck").prop("checked", true).trigger('click');
+		}
+	} else {
+		// 그 외 항목의 경우 allCheck를 풀어줌. -> MultiSorting 기능이 활성화 된 경우
+		$("#orderAllCheck").prop("checked", false);
+	}
+}
+
+// 전체 선택 이벤트 핸들러
+function orderAllCheckHandler(e) {
+	var grid = $("#selPurDead").data("kendoGrid");
+	var checked = this.checked;
+
+	if (checked) {
+		// 체크 해제하고 click 트리거 발생
+		$(".orderCheck").prop("checked", false).trigger('click');
+	} else {
+		// 체크 하고 click 트리거 발생
+		$(".orderCheck").prop("checked", true).trigger('click');
+	}
+}
+
+// 부분 선택 이벤트 핸들러
+function orderCheckHandler(e) {
+	var row = $(this).closest("tr")
+	orderCheck(row);
+}
+
+// row selection
+function orderCheck(row) {
+	var grid = $("#selPurDead").data("kendoGrid");
+	var dataItem = grid.dataItem(row);
+	var checked = $("#" + dataItem.orderId).is(":checked");
+
+	var checkedIds = {};
+	checkedIds[dataItem.id] = checked;
+
+	if (checked) {
+		row.addClass("k-state-selected");
+
+		// 체크 상태의 경우 전체선택도 체크해줌.
+		var total = $(".orderCheck").length;
+		var checked = $(".orderCheck:checked").length;
+		if (total == checked)
+			$("#orderAllCheck").prop("checked", true);
+	} else {
+		row.removeClass("k-state-selected");
+
+		// 체크 해제상태의 경우 전체선택도 풀어줌.
+		$("#orderAllCheck").prop("checked", false);
+	}
+}
+
 </script>
