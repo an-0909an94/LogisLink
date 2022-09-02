@@ -911,6 +911,8 @@ function goPurchaseDivision() {
 	});
 
 	grid.setDataSource(dataSource);
+	grid.thead.on("click", "#orderAllCheck", orderAllCheckHandler);
+	grid.table.on("click", ".orderCheck", orderCheckHandler);
 
 }
 
