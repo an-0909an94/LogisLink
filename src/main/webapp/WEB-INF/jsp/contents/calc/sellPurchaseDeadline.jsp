@@ -533,6 +533,7 @@ $(document).ready(function(){
 	
 	searchCustName.input.keydown(preventPost);
 	//goList();
+	columns = setPrivateData("C3810","selPurDead",userId,columns);
 
 	$("#selPurDead").kendoGrid({
 		excel: {
@@ -554,7 +555,13 @@ $(document).ready(function(){
 	  	messages: {
 			noRecords: "조회된 데이터가 없습니다."
 	  	},
+		dataBound: function(e) {
+			nonPrivateColumnCheck = e.sender.columns[0];
+		},
+		sort: onSortEnd
 	});
+
+	setOptionActive("C3810", "selPurDead", userId);
 });
 
 function setSearchForm () {
