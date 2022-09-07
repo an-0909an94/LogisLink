@@ -1485,7 +1485,7 @@
  		
  		if (selectedList.size <= 0) {
  			alert("화주를 변경할 항목을 선택해 주세요.");
-			return; 			
+			return;
  		}
  		
  		if (selectedList.size > 0) {

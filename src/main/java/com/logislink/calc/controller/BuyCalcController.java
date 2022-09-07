@@ -1,0 +1,288 @@
+package com.logislink.calc.controller;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.logislink.calc.service.BuyCalcService;
+import com.logislink.calc.vo.BuyCalcVO;
+import com.logislink.cmm.LinkMessage;
+import com.logislink.cmm.LinkMessageData;
+import com.logislink.cmm.util.EtcUtil;
+import com.logislink.login.vo.LoginMenuVO;
+import com.logislink.login.vo.LoginVO;
+
+@Controller
+public class BuyCalcController {
+	private Logger log = Logger.getLogger(this.getClass());
+	private String menuCode = "C3130";
+	
+	@Resource(name = "buyCalcService")
+	private BuyCalcService buyCalcService;
+	
+	@GetMapping(value = "/contents/calc/buyCalcList.do")
+	public String buyCalcList(HttpServletRequest request, HttpSession session, ModelMap model) throws Exception {
+
+		LoginMenuVO loginMenu = EtcUtil.checkAuth(request, menuCode);
+		model.put("menuAuth", loginMenu);
+
+		return "contents/calc/buyCalcList";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/buyCalcList.do")
+	public String buyCalcListData(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
+		
+		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+		if (login.getMasterYn().equals("N")) {
+			param.put("mngDeptId", login.getDeptId());
+		} else {
+			param.put("mngDeptId", param.get("sDeptId"));
+		}
+		
+		List<BuyCalcVO> buyCalcList = buyCalcService.getBuyCalcList(param);
+		Map<String, Object> buyCalcListCnt = buyCalcService.getBuyCalcListCnt(param);
+		
+		map.put("result", Boolean.TRUE);
+		map.put("data", buyCalcList);
+		map.put("total", buyCalcListCnt.get("buyCalcListCnt"));
+		map.put("sumPayableAmt", buyCalcListCnt.get("sumPayableAmt"));
+		map.put("sumWithdrawalAmt", buyCalcListCnt.get("sumWithdrawalAmt"));
+		
+		return "jsonView";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/getTaxinv.do")
+	public String getTaxinv(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		map.clear();
+		
+		try {
+			Map<String, Object> taxinv = buyCalcService.selectTaxinv(param);
+			List<Map<String, Object>> taxinvDetailList = buyCalcService.selectTaxinvDetailList(param);
+			
+			map.put("result", Boolean.TRUE);
+			map.put("taxinv", taxinv);
+			map.put("taxinvDetailList", taxinvDetailList);
+		} catch (Exception e) {
+			map.put("result", Boolean.FALSE);
+			map.put("msg", "세금계산서 내역을 가져올 수 없습니다.\n선택된 오더의 정산 내역을 확인해 주세요.");
+		}
+		
+		return "jsonView";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/getTaxinvDetailList.do")
+	public String getTaxinvDetail(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		return "jsonView";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/setReceiptSub.do")
+	public String setReceiptSub(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			List<String> orderIdList = Arrays.asList(((String)param.get("orderIdList")).split(","));
+			
+			param.put("orderIdList", orderIdList);
+			
+			int resultCnt = buyCalcService.updateReceiptSub(param);
+			
+			// 결과값
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			if (!param.get("mode").equals("N"))
+				linkMessage.setMessage("(" + resultCnt + ")건의 인수증 처리를 완료했습니다.");
+			else
+				linkMessage.setMessage("(" + resultCnt + ")건의 인수증 취소 처리를 완료했습니다.");
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage("인수증 처리에 실패했습니다.\n시스템 관리자에게 문의하세요.");
+			linkMessage.setDetailMessage(e.getMessage());
+		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
+		
+		return "jsonView";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/setTaxinvSub.do")
+	public String setTaxinvSub(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			List<String> allocIdList = Arrays.asList(((String)param.get("allocIdList")).split(","));
+			
+			param.put("allocIdList", allocIdList);
+			
+			int resultCnt = buyCalcService.updateTaxinvSub(param);
+			
+			// 결과값
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			if (!param.get("mode").equals("N"))
+				linkMessage.setMessage("(" + resultCnt + ")건의 계산서 처리를 완료했습니다.");
+			else
+				linkMessage.setMessage("(" + resultCnt + ")건의 계산서 취소 처리를 완료했습니다.");
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage("계산서 처리에 실패했습니다.\n시스템 관리자에게 문의하세요.");
+			linkMessage.setDetailMessage(e.getMessage());
+		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
+		
+		return "jsonView";
+	}
+	
+	@PostMapping(value = "/contents/calc/data/setBuyCalcDeleteYn.do")
+	public String updateDeleteYn(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		// 권한 체크???
+		
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			// String -> Iterator로 변환
+			List<String> orderIdList = Arrays.asList(((String)param.get("orderIdList")).split(","));
+			List<String> allocIdList = Arrays.asList(((String)param.get("allocIdList")).split(","));
+			
+			param.put("orderIdList", orderIdList);
+			param.put("allocIdList", allocIdList);
+			
+			int resultCnt = buyCalcService.updateDeleteYn(param);
+			
+			// 결과값
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			if (param.get("deleteYn").equals("Y"))
+				linkMessage.setMessage("삭제 처리를 완료했습니다.");
+			else
+				linkMessage.setMessage("삭제 취소 처리를 완료했습니다.");
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage("삭제 처리에 실패했습니다.\n시스템 관리자에게 문의하세요.");
+			linkMessage.setDetailMessage(e.getMessage());
+		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
+		
+		return "jsonView";
+	}
+	
+	@PostMapping(value="/contents/calc/data/setBuyCalcCharge.do")
+	public String setBuyCalcCharge(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
+		
+		// 권한 체크???
+
+		String json = param.get("params").toString();
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<Map<String, Object>> editedList = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});
+
+	    List<LinkMessage> linkMessages = new ArrayList<>();
+		for (Map<String, Object> item : editedList) {
+			
+			// 서비스로 넘길 파라미터 항목을 매핑한다.
+			Map<String, Object> parameter = new HashMap<String, Object>();
+			parameter.put("orderId", item.get("orderId"));
+			parameter.put("allocId", item.get("allocId"));
+			parameter.put("calcId", item.get("calcId"));
+			parameter.put("calcTypeCode", item.get("chargeCode"));
+			parameter.put("calcCharge", item.get("value"));
+			
+			parameter.put("regId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+			
+			if ((boolean)item.get("insert")) {
+				parameter.put("sellBuySctn", "02");
+				parameter.put("mode", "C");
+			} else {
+				parameter.put("sellBuySctn", "02");
+				parameter.put("mode", "U");
+			}
+			
+			LinkMessage linkMessage = new LinkMessage();
+			try {
+				buyCalcService.upsertCalcCharge(parameter);
+				
+				linkMessage.setSender(this.getClass().getName());
+				linkMessage.setStatus(0);
+				linkMessage.setMessage(parameter.get("retMsg").toString());
+				
+				linkMessages.add(linkMessage);
+			} catch (Exception e) {
+				linkMessage.setSender(this.getClass().getName());
+				linkMessage.setStatus(-1);
+				linkMessage.setMessage("오더ID: " + item.get("orderId") + "에 대한 청구 운송비 변경 처리에 실패했습니다.\n다시 확인하세요.");
+				linkMessage.setDetailMessage(e.getMessage());
+				
+				LinkMessageData linkMesasgeData = new LinkMessageData();
+				linkMesasgeData.setData(item);
+				linkMesasgeData.setDataType("Map<String, Object>");
+				linkMessage.setData(linkMesasgeData);
+				
+				linkMessages.add(linkMessage);
+			}
+		}
+		
+		map.clear();
+		map.put("linkMessages", linkMessages);
+		
+		return "jsonView";
+	}
+	
+	@PostMapping(value="/contents/calc/data/setBuyCalcFinish.do")
+	public String setBuyCalcFinish(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		// 권한 체크???
+
+		// mngDeptId 조건 반드시 확인 필! -> 기존 항목에 mngDeptId를 따라야 함?
+//		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+//		if("N".equals(login.getMasterYn())) {
+//			param.put("mngDeptId", login.getDeptId());
+//		} else {
+//			param.put("mngDeptId", param.get("sDeptId"));
+//		}
+		
+		param.put("editId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+		
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			buyCalcService.updateBuyCalcFinish(param);
+			
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			linkMessage.setMessage(param.get("retMsg").toString());
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage("마감처리에 실패했습니다.\n시스템 관리자에게 문의하세요.");
+			linkMessage.setDetailMessage(e.getMessage());
+		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
+		
+		return "jsonView";
+	}
+}

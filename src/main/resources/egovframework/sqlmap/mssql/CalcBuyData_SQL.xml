@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="buyCalcDataNS">
+  <!-- 매입정산 리스트 조회 -->
+  <select id="selectBuyCalcList" parameterType="java.util.HashMap" resultType="buyCalcVO">
+    SELECT
+      T_BUY_CALC.*
+    FROM (
+      SELECT
+        ROW_NUMBER() OVER(ORDER BY ALLOC_DATE, ORDER_ID DESC) AS number
+        -- 오더ID
+		, ORDER_ID AS orderId
+		-- 마감일
+		, FINISH_YN AS finishYn
+		-- 마감원
+		, FINISH_USER_NAME AS finishUserName
+		-- 배차일
+		, ALLOC_DATE AS allocDate
+		-- 하차일
+		, E_DATE AS eDate
+		/* 매입처 정보 -> 운송사 지정시 운송사 정보, 직접 배차시 기사 정보 (ALLOC_STATE == '10' -> 운송사지정) */
+		-- 소속운송사
+		, DRIVER_CARRIER_NAME AS driverCarrierName
+		-- 차량번호(또는 운송사)
+		, IIF(ALLOC_STATE = '10', CARRIER_NAME, CAR_NUM) AS buyCustName
+		-- 차주명(또는 담당자)
+		, IIF(ALLOC_STATE = '10', CARRIER_STAFF_NAME, DRIVER_NAME) AS buyManagerName
+		-- 전화번호
+		, IIF(ALLOC_STATE = '10', CARRIER_MOBILE, DRIVER_TEL) AS buyManagerTel
+		-- 차량구분
+		, CAR_SCTN_NAME AS carSctnName
+		-- 빠른지급 -> 차주가 직접 신청한 건
+		, REQ_PAY_DATE AS fastPayYn
+		-- 인수증(전자/종이)
+    	, RECEIPT_YN AS receiptYn
+    	-- 계산서(전자/종이/타사)
+    	, TAXINV_YN AS taxinvYn
+		-- 상차지
+		, S_ADDR AS sAddr
+		-- 하차지
+		, E_ADDR AS eAddr
+		-- 경유지
+		, IIF(STOP_NAME != '', STOP_NAME + '포함 총' + STOP_COUNT + '곳', '') AS wayPoint
+		-- 매입액(소계)
+		, PAYABLE_AMT AS payableAmt
+		-- 내수운송료
+		, BUY_CHARGE AS buyCharge
+		-- 경유비
+		, BUY_WAYPOINT_CHARGE AS buyWaypointCharge
+		-- 대기료
+		, BUY_STAY_CHARGE AS buyStayCharge
+		-- 수작업비
+		, BUY_HANDWORK_CHARGE AS buyHandworkCharge
+		-- 회차료
+		, BUY_ROUND_CHARGE AS buyRoundCharge
+		-- 기타추가비
+		, BUY_OTHERADD_CHARGE AS buyOtheraddCharge
+		-- 서비스수수료
+		, BUY_SERVICE_FEE_CHARGE AS buyServiceFeeCharge
+		-- 청구구분
+		, CHARGE_TYPE_NAME AS chargeTypeName
+		-- 수수료
+		, ALLOC_FEE AS allocFee
+		-- 지급액
+		, WITHDRAWAL_AMT AS withdrawallAmt
+		-- 화물명
+		, GOODS_NAME AS goodsName
+		-- 단가구분
+		, UNIT_PRICE_TYPE_NAME AS unitPriceTypeName
+		-- 단가
+		, UNIT_CHARGE AS unitPrice
+		-- 청구중량(톤)
+		, SELL_WEIGHT AS sellWeight
+		-- 중량(톤)
+		, GOODS_WEIGHT AS goodsWeight
+        -- 거래처(화주)
+        , IIF(CUST_NAME != '', CUST_NAME, CUST_NAME_EXCEPT) AS custName
+        -- 거래처(계산서발행지)
+        , IIF(CUST_NAME != '', BIZ_NAME, BIZ_NAME_EXCEPT) AS bizName
+		-- 어플명
+		, APP_NAME AS appName
+		-- 마감시 메모
+		, FINISH_MEMO AS finishMemo
+		-- 참고내용1
+		, REF_CONTENT1 AS refContent1
+		-- 참고내용2
+		, REF_CONTENT2 AS refContent2
+		-- 신고용사업자번호
+		, REPORT_BIZ_NUM AS reportBizNum
+		-- 신고용사업자명
+		, REPORT_BIZ_NAME AS reportBizName
+		-- 담당부서
+		, ALLOC_DEPT_NAME AS mngDeptName
+		-- 배차원
+		, ALLOC_USER_NAME AS mngUserName
+		-- 삭제일
+		, DELETE_DATE AS deleteYn
+		-- 삭제자
+		, DELETE_USER_NAME AS deleteUserName
+        
+        -- 숨김항목
+        , MNG_CUST_ID AS mngCustId
+        , MNG_DEPT_ID AS mngDeptId
+        , CUST_ID AS custId
+        , DEPT_ID AS deptId
+        , REQ_CUST_ID AS reqCustId
+        , REQ_DEPT_ID AS reqDeptId
+        
+        , BUY_ALLOC_ID AS buyAllocId
+        , BUY_CHARGE_ID AS buyChargeId
+        , BUY_WAYPOINT_CHARGE_ID AS buyWaypointChargeId
+        , BUY_STAY_CHARGE_ID AS buyStayChargeId
+        , BUY_HANDWORK_CHARGE_ID AS buyHandworkChargeId
+        , BUY_ROUND_CHARGE_ID AS buyRoundChargeId
+        , BUY_OTHERADD_CHARGE_ID AS buyOtheraddChargeId
+        , BUY_SERVICE_FEE_CHARGE_ID AS buyServiceFeeChargeId
+            
+        , ALLOC_STATE AS allocState
+    	, ALLOC_DATE_FULL AS allocDateFull
+        , S_DATE_FULL AS sDateFull
+        , E_DATE_FULL AS eDateFull
+        , INV_ID AS taxinvId
+      FROM (
+        SELECT
+          TC2.ORDER_ID AS ORDER_ID
+          , IIF(TC2.BUY_CALC_DATE != '', TC2.BUY_CALC_DATE, 'N') AS FINISH_YN
+          , ISNULL((SELECT USER_NAME FROM T_USER WHERE USER_ID = TC2.FINISH_USER_ID), '') AS FINISH_USER_NAME
+          , ISNULL(CONVERT(VARCHAR, TO2.ALLOC_DATE, 2), '') AS ALLOC_DATE
+          , ISNULL(CONVERT(VARCHAR, TO2.E_DATE, 2), '') AS E_DATE
+          , TO2.ALLOC_DATE AS ALLOC_DATE_FULL
+          , TO2.S_DATE AS S_DATE_FULL
+          , TO2.E_DATE AS E_DATE_FULL
+          -- 거래처
+          , ISNULL((SELECT CUST_NAME FROM T_CUST_DTL WHERE CUST_ID = TO2.REQ_CUST_ID AND DEPT_ID = TO2.REQ_DEPT_ID AND MNG_CUST_ID = TC2.MNG_CUST_ID AND MNG_DEPT_ID = TC2.MNG_DEPT_ID), '') AS CUST_NAME
+          -- 거래처 예외
+          , ISNULL((SELECT CUST_NAME FROM T_CUST_DTL WHERE CUST_ID = TO2.CUST_ID AND DEPT_ID = TO2.DEPT_ID AND MNG_CUST_ID = TC2.MNG_CUST_ID AND MNG_DEPT_ID = TC2.MNG_DEPT_ID), '') AS CUST_NAME_EXCEPT
+          -- 거래처(계산서발행지)
+          , ISNULL((SELECT BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = TO2.REQ_CUST_ID), '') AS BIZ_NAME 
+          -- 거래처(계산서발행지) 예외
+          , ISNULL((SELECT BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = TO2.CUST_ID), '') AS BIZ_NAME_EXCEPT
+          -- 상차지
+          , (TO2.S_SIDO + ' ' + TO2.S_GUNGU) AS S_ADDR
+          -- 하차지
+          , (TO2.E_SIDO + ' ' + TO2.E_GUNGU) AS E_ADDR
+          -- 2착지
+          , ISNULL((SELECT TOP 1 SUBSTRING(E_ADDR, 1, CHARINDEX(' ', E_ADDR, CHARINDEX(' ', E_ADDR) + 1)) FROM T_ORDER_STOP WHERE ORDER_ID = TC2.ORDER_ID AND USE_YN = 'Y'), '') AS STOP_NAME
+          , CAST((SELECT COUNT(*) FROM T_ORDER_STOP WHERE ORDER_ID = TC2.ORDER_ID AND USE_YN = 'Y') AS VARCHAR) AS STOP_COUNT
+      
+          -- 매입처 정보
+          , ISNULL((SELECT CNAME FROM T_CODE WHERE GCODE = 'CARGO_TRAN_CAR_SCTN_CD' AND CODE = TCV.CAR_SCTN_CODE), '') AS CAR_SCTN_NAME
+          , ISNULL(TOA.CAR_NUM, '') AS CAR_NUM
+          , ISNULL(TOA.DRIVER_NAME, '') AS DRIVER_NAME
+          , ISNULL(TOA.DRIVER_TEL, '') AS DRIVER_TEL
+          , ISNULL((SELECT TVM.BIZ_NAME FROM T_VEHIC_MST TVM WHERE VEHIC_ID = TOA.VEHIC_ID), '') AS DRIVER_CARRIER_NAME 
+          , ISNULL((SELECT TCD.CUST_NAME FROM T_CUST_DTL TCD WHERE TCD.CUST_ID = TOA.BUY_CUST_ID AND TCD.DEPT_ID = TOA.BUY_DEPT_ID AND TCD.MNG_CUST_ID = TC2.MNG_CUST_ID AND TCD.MNG_DEPT_ID = TC2.MNG_DEPT_ID AND SELL_BUY_SCTN = '02' AND USE_YN = 'Y'), '') AS CARRIER_NAME 
+          , ISNULL((SELECT TCD.STAFF_NAME FROM T_CUST_DTL TCD WHERE TCD.CUST_ID = TOA.BUY_CUST_ID AND TCD.DEPT_ID = TOA.BUY_DEPT_ID AND TCD.MNG_CUST_ID = TC2.MNG_CUST_ID AND TCD.MNG_DEPT_ID = TC2.MNG_DEPT_ID AND SELL_BUY_SCTN = '02' AND USE_YN = 'Y'), '') AS CARRIER_STAFF_NAME 
+          , ISNULL((SELECT TCD.MOBILE FROM T_CUST_DTL TCD WHERE TCD.CUST_ID = TOA.BUY_CUST_ID AND TCD.DEPT_ID = TOA.BUY_DEPT_ID AND TCD.MNG_CUST_ID = TC2.MNG_CUST_ID AND TCD.MNG_DEPT_ID = TC2.MNG_DEPT_ID AND SELL_BUY_SCTN = '02' AND USE_YN = 'Y'), '') AS CARRIER_MOBILE 
+          -- 빠른지급
+          , ISNULL(CONVERT(VARCHAR, TOA.REQ_PAY_DATE, 2), 'N') AS REQ_PAY_DATE
+    
+          -- 매입액
+          , (TC2.BUY_CHARGE + TC2.BUY_WAYPOINT_CHARGE + TC2.BUY_STAY_CHARGE + TC2.BUY_HANDWORK_CHARGE + TC2.BUY_ROUND_CHARGE + TC2.BUY_OTHERADD_CHARGE + TC2.BUY_SERVICE_FEE_CHARGE) AS PAYABLE_AMT
+          , TC2.BUY_CHARGE AS BUY_CHARGE
+          , TC2.BUY_WAYPOINT_CHARGE AS BUY_WAYPOINT_CHARGE
+          , TC2.BUY_STAY_CHARGE AS BUY_STAY_CHARGE
+          , TC2.BUY_HANDWORK_CHARGE AS BUY_HANDWORK_CHARGE
+          , TC2.BUY_ROUND_CHARGE AS BUY_ROUND_CHARGE
+          , TC2.BUY_OTHERADD_CHARGE AS BUY_OTHERADD_CHARGE
+          , TC2.BUY_SERVICE_FEE_CHARGE AS BUY_SERVICE_FEE_CHARGE
+          -- 출금액
+          , (TC2.BUY_CHARGE_WITHDRAWAL + TC2.BUY_WAYPOINT_CHARGE_WITHDRAWAL + TC2.BUY_STAY_CHARGE_WITHDRAWAL + TC2.BUY_HANDWORK_CHARGE_WITHDRAWAL + TC2.BUY_ROUND_CHARGE_WITHDRAWAL + TC2.BUY_OTHERADD_CHARGE_WITHDRAWAL) AS WITHDRAWAL_AMT
+          , TO2.GOODS_NAME AS GOODS_NAME
+          , ISNULL((SELECT CNAME FROM T_CODE WHERE GCODE = 'UNIT_PRICE_TYPE' AND CODE = TO2.UNIT_PRICE_TYPE), '') AS UNIT_PRICE_TYPE_NAME
+          , ISNULL(TO2.UNIT_CHARGE, 0) AS UNIT_CHARGE
+          , ISNULL((SELECT SELL_WEIGHT FROM T_ORDER_ALLOC WHERE ORDER_ID = TC2.ORDER_ID AND BUY_CUST_ID = TC2.MNG_CUST_ID AND BUY_DEPT_ID = TC2.MNG_DEPT_ID), '') AS SELL_WEIGHT
+          , CONVERT(FLOAT, ISNULL(TO2.GOODS_WEIGHT, 0)) / 1000 AS GOODS_WEIGHT
+          , ISNULL((SELECT CNAME FROM T_CODE WHERE GCODE = 'CHARGE_TYPE_CD' AND CODE = TO2.CHARGE_TYPE), '') AS CHARGE_TYPE_NAME
+          , ISNULL((SELECT ALLOC_FEE FROM T_ORDER_ALLOC WHERE ORDER_ID = TC2.ORDER_ID AND BUY_CUST_ID = TC2.MNG_CUST_ID AND BUY_DEPT_ID = TC2.MNG_DEPT_ID), 0) AS ALLOC_FEE
+      
+          -- 인수증, 세금계산서
+          , CASE WHEN TC2.RECEIPT_YN = 'Y' THEN '전자(' + TC2.RECEIPT_DATE + ')' WHEN TC2.RECEIPT_YN = 'P' THEN '종이(' + TC2.PAPER_RECEIPT_DATE + ')' ELSE 'N' END AS RECEIPT_YN
+  		  , CASE WHEN TC2.TAXINV_YN = 'Y' THEN '전자(' + TC2.TAXINV_DATE + ')' WHEN TC2.TAXINV_YN = 'P' THEN '종이(' + TC2.TAXINV_DATE + ')' WHEN TC2.TAXINV_YN = 'E' THEN '타사(' + TC2.TAXINV_DATE + ')' ELSE 'N' END AS TAXINV_YN
+    
+          -- 매입 추가 정보
+          , TC2.APP_NAME AS APP_NAME
+          , TC2.FINISH_MEMO AS FINISH_MEMO
+          , TC2.REF_CONTENT1 AS REF_CONTENT1
+          , TC2.REF_CONTENT2 AS REF_CONTENT2
+          -- 사업자번호 및 사업자명(신고용)
+          , TC2.REPORT_BIZ_NAME AS REPORT_BIZ_NAME
+          , TC2.REPORT_BIZ_NUM AS REPORT_BIZ_NUM
+          , ISNULL((SELECT MAX(DEPT_NAME) FROM T_CUST_DEPT WHERE TOA.SELL_CUST_ID = CUST_ID AND TOA.SELL_DEPT_ID = DEPT_ID), '') AS ALLOC_DEPT_NAME
+          , ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TOA.REGID = USER_ID), '') AS ALLOC_USER_NAME
+          , IIF(TC2.DELETE_DATE != '', TC2.DELETE_DATE, 'N') AS DELETE_DATE
+          , ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TC2.DELETE_USER_ID = USER_ID), '') AS DELETE_USER_NAME
+    
+          -- 숨김항목
+          , TC2.MNG_CUST_ID
+          , TC2.MNG_DEPT_ID
+          , TC2.CUST_ID
+          , TC2.DEPT_ID
+          , TC2.REQ_CUST_ID
+          , TC2.REQ_DEPT_ID
+      
+          , TC2.BUY_ALLOC_ID
+          , TC2.BUY_CHARGE_ID
+          , TC2.BUY_WAYPOINT_CHARGE_ID
+          , TC2.BUY_STAY_CHARGE_ID
+          , TC2.BUY_HANDWORK_CHARGE_ID
+          , TC2.BUY_ROUND_CHARGE_ID
+          , TC2.BUY_OTHERADD_CHARGE_ID
+          , TC2.BUY_SERVICE_FEE_CHARGE_ID
+    
+          , TOA.ALLOC_STATE
+          , TTI.INV_ID
+        FROM (
+          SELECT
+            T_CALC.ORDER_ID
+            , MAX(T_CALC.MNG_CUST_ID) AS MNG_CUST_ID
+            , MAX(T_CALC.MNG_DEPT_ID) AS MNG_DEPT_ID
+            , MAX(T_CALC.CUST_ID) AS CUST_ID
+            , MAX(T_CALC.DEPT_ID) AS DEPT_ID
+            , MAX(T_CALC.REQ_CUST_ID) AS REQ_CUST_ID
+            , MAX(T_CALC.REQ_DEPT_ID) AS REQ_DEPT_ID
+            , MAX(T_CALC.BUY_ALLOC_ID) AS BUY_ALLOC_ID
+            , MAX(T_CALC.FINISH_YN) AS FINISH_YN
+            , MAX(T_CALC.FINISH_USER_ID) AS FINISH_USER_ID
+            , MAX(T_CALC.BUY_CALC_DATE) AS BUY_CALC_DATE
+            , MAX(T_CALC.BUY_CHARGE_ID) AS BUY_CHARGE_ID
+            , SUM(T_CALC.BUY_CHARGE) AS BUY_CHARGE
+            , MAX(T_CALC.BUY_WAYPOINT_CHARGE_ID) AS BUY_WAYPOINT_CHARGE_ID
+            , SUM(T_CALC.BUY_WAYPOINT_CHARGE) AS BUY_WAYPOINT_CHARGE
+            , MAX(T_CALC.BUY_STAY_CHARGE_ID) AS BUY_STAY_CHARGE_ID
+            , SUM(T_CALC.BUY_STAY_CHARGE) AS BUY_STAY_CHARGE
+            , MAX(T_CALC.BUY_HANDWORK_CHARGE_ID) AS BUY_HANDWORK_CHARGE_ID
+            , SUM(T_CALC.BUY_HANDWORK_CHARGE) AS BUY_HANDWORK_CHARGE
+            , MAX(T_CALC.BUY_ROUND_CHARGE_ID) AS BUY_ROUND_CHARGE_ID
+            , SUM(T_CALC.BUY_ROUND_CHARGE) AS BUY_ROUND_CHARGE
+            , MAX(T_CALC.BUY_OTHERADD_CHARGE_ID) AS BUY_OTHERADD_CHARGE_ID
+            , SUM(T_CALC.BUY_OTHERADD_CHARGE) AS BUY_OTHERADD_CHARGE
+            , MAX(T_CALC.BUY_SERVICE_FEE_CHARGE_ID) AS BUY_SERVICE_FEE_CHARGE_ID
+            , SUM(T_CALC.BUY_SERVICE_FEE_CHARGE) AS BUY_SERVICE_FEE_CHARGE
+            , SUM(T_CALC.BUY_CHARGE_WITHDRAWAL) AS BUY_CHARGE_WITHDRAWAL
+            , SUM(T_CALC.BUY_WAYPOINT_CHARGE_WITHDRAWAL) AS BUY_WAYPOINT_CHARGE_WITHDRAWAL
+            , SUM(T_CALC.BUY_STAY_CHARGE_WITHDRAWAL) AS BUY_STAY_CHARGE_WITHDRAWAL
+            , SUM(T_CALC.BUY_HANDWORK_CHARGE_WITHDRAWAL) AS BUY_HANDWORK_CHARGE_WITHDRAWAL
+            , SUM(T_CALC.BUY_ROUND_CHARGE_WITHDRAWAL) AS BUY_ROUND_CHARGE_WITHDRAWAL
+            , SUM(T_CALC.BUY_OTHERADD_CHARGE_WITHDRAWAL) AS BUY_OTHERADD_CHARGE_WITHDRAWAL
+            , MAX(T_CALC.RECEIPT_YN) AS RECEIPT_YN
+            , MAX(T_CALC.RECEIPT_DATE) AS RECEIPT_DATE
+            , MAX(T_CALC.PAPER_RECEIPT_DATE) AS PAPER_RECEIPT_DATE
+            , MAX(T_CALC.TAXINV_YN) AS TAXINV_YN
+            , MAX(T_CALC.TAXINV_DATE) AS TAXINV_DATE
+            , MAX(T_CALC.APP_NAME) AS APP_NAME
+            , MAX(T_CALC.FINISH_MEMO) AS FINISH_MEMO
+            , MAX(T_CALC.REF_CONTENT1) AS REF_CONTENT1
+            , MAX(T_CALC.REF_CONTENT2) AS REF_CONTENT2
+            , MAX(T_CALC.REPORT_BIZ_NAME) AS REPORT_BIZ_NAME
+            , MAX(T_CALC.REPORT_BIZ_NUM) AS REPORT_BIZ_NUM
+            , MAX(T_CALC.DELETE_DATE) AS DELETE_DATE
+            , MAX(T_CALC.DELETE_USER_ID) AS DELETE_USER_ID
+          FROM (
+            SELECT
+              TC1.ORDER_ID
+              , TC1.MNG_CUST_ID
+              , TC1.MNG_DEPT_ID
+              , ISNULL(TC1.CUST_ID, '') AS CUST_ID
+              , ISNULL(TC1.DEPT_ID, '') AS DEPT_ID
+              , ISNULL(TO1.REQ_CUST_ID, '') AS REQ_CUST_ID
+              , ISNULL(TO1.REQ_DEPT_ID, '') AS REQ_DEPT_ID
+              -- 매입
+              , TC1.ALLOC_ID AS BUY_ALLOC_ID
+              , ISNULL(TC1.FINISH_YN, 'N') AS FINISH_YN
+              , ISNULL(TC1.FINISH_USER_ID, '') AS FINISH_USER_ID
+              , ISNULL(CONVERT(VARCHAR, TC1.CALC_DATE, 2), '') AS BUY_CALC_DATE 
+              -- 내수운송료(매입)
+              , IIF(TC1.CALC_TYPE_CODE = '0002', TC1.CALC_ID, '') AS BUY_CHARGE_ID
+              , IIF(TC1.CALC_TYPE_CODE = '0002', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_CHARGE
+              -- 경유비(매입)
+              , IIF(TC1.CALC_TYPE_CODE = '0023', TC1.CALC_ID, '') AS BUY_WAYPOINT_CHARGE_ID
+              , IIF(TC1.CALC_TYPE_CODE = '0023', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_WAYPOINT_CHARGE
+              -- 대기료(매입)
+              , IIF(TC1.CALC_TYPE_CODE = '0025', TC1.CALC_ID, '') AS BUY_STAY_CHARGE_ID
+              , IIF(TC1.CALC_TYPE_CODE = '0025', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_STAY_CHARGE
+              -- 수작업비(매입)
+              , IIF(TC1.CALC_TYPE_CODE = '0371', TC1.CALC_ID, '') AS BUY_HANDWORK_CHARGE_ID
+              , IIF(TC1.CALC_TYPE_CODE = '0371', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_HANDWORK_CHARGE
+              -- 회차료(매입)
+              , IIF(TC1.CALC_TYPE_CODE = '0372', TC1.CALC_ID, '') AS BUY_ROUND_CHARGE_ID
+              , IIF(TC1.CALC_TYPE_CODE = '0372', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_ROUND_CHARGE
+              -- 기타추가비(매입)
+              , IIF(TC1.CALC_TYPE_CODE = '0294', TC1.CALC_ID, '') AS BUY_OTHERADD_CHARGE_ID
+              , IIF(TC1.CALC_TYPE_CODE = '0294', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_OTHERADD_CHARGE
+              -- 서비스수수료(매입)
+              , IIF(TC1.CALC_TYPE_CODE = '0901', TC1.CALC_ID, '') AS BUY_SERVICE_FEE_CHARGE_ID
+              , IIF(TC1.CALC_TYPE_CODE = '0901', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_SERVICE_FEE_CHARGE
+              -- 출금금액
+              , IIF(TC1.CALC_TYPE_CODE = '0002', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_CHARGE_WITHDRAWAL
+              , IIF(TC1.CALC_TYPE_CODE = '0023', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_WAYPOINT_CHARGE_WITHDRAWAL
+              , IIF(TC1.CALC_TYPE_CODE = '0025', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_STAY_CHARGE_WITHDRAWAL
+              , IIF(TC1.CALC_TYPE_CODE = '0371', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_HANDWORK_CHARGE_WITHDRAWAL
+              , IIF(TC1.CALC_TYPE_CODE = '0372', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_ROUND_CHARGE_WITHDRAWAL
+              , IIF(TC1.CALC_TYPE_CODE = '0294', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_OTHERADD_CHARGE_WITHDRAWAL
+    
+              -- 인수증(T_ORDER), 세금계산서(T_CALC)
+              , ISNULL(TO1.RECEIPT_YN, 'N') AS RECEIPT_YN
+              , ISNULL(CONVERT(VARCHAR, TO1.RECEIPT_DATE, 2), '') AS RECEIPT_DATE
+              , ISNULL(CONVERT(VARCHAR, TO1.PAPER_RECEIPT_DATE, 2), '') AS PAPER_RECEIPT_DATE
+              , ISNULL(TC1.TAXINV_YN, 'N') AS TAXINV_YN
+              , ISNULL(CONVERT(VARCHAR, TC1.TAXINV_DATE, 2), '') AS TAXINV_DATE
+    
+              , ISNULL(TC1.APP_NAME, '') AS APP_NAME
+              , ISNULL(TC1.FINISH_MEMO, '') AS FINISH_MEMO
+              , ISNULL(TC1.REF_CONTENT1, '') AS REF_CONTENT1
+              , ISNULL(TC1.REF_CONTENT2, '') AS REF_CONTENT2
+              , ISNULL(TC1.REPORT_BIZ_NAME, '') AS REPORT_BIZ_NAME
+              , ISNULL(TC1.REPORT_BIZ_NUM, '') AS REPORT_BIZ_NUM
+              -- 삭제
+              , ISNULL(CONVERT(VARCHAR, TC1.DELETE_DATE, 2), '') AS DELETE_DATE
+              , ISNULL(TC1.DELETE_USER_ID, '') AS DELETE_USER_ID
+            FROM T_CALC TC1, T_ORDER TO1
+            WHERE 1=1
+              AND TC1.ORDER_ID = TO1.ORDER_ID
+              AND TC1.SELL_BUY_SCTN = '02'
+              AND TC1.USE_YN = 'Y'
+              --AND TO1.ORDER_STATE IN ('00','01','04','05','12')
+              AND TC1.MNG_CUST_ID = #{loginCustId}
+              -- 담당부서 검색
+              <if test = 'deptId != null and deptId != ""'>
+                AND TC1.MNG_DEPT_ID = #{deptId}
+              </if>
+              -- 배차일자 검색 -> 미처리이월건 포함 검색 시 배차일자검색 제외
+              <if test = 'carryOver != "Y"'>
+                AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+              </if>
+              -- 거래처(화주) 검색
+              <if test = 'custId != null and custId != ""'>
+                AND TO1.REQ_CUST_ID = #{custId}
+              </if>
+              <if test = 'custDeptId != null and custDeptId != ""'>
+                AND TO1.REQ_DEPT_ID = #{custDeptId}
+              </if>
+              -- 오더ID 검색
+              <if test = 'orderId != null and orderId != ""'>
+                AND TO1.ORDER_ID = #{orderId}
+              </if>
+              -- 청구구분 검색
+              <if test = 'chargeType != null and chargeType != ""'>
+                AND TO1.CHARGE_TYPE = #{chargeType}
+              </if>
+              -- 정산 마감 여부
+              <if test = 'finishYn == "Y" and carryOver != "Y"'>
+                AND TC1.FINISH_YN = 'Y'
+              </if>
+              <if test = 'finishYn == "N"'>
+                AND TC1.FINISH_YN = 'N'
+              </if>
+              -- 삭제건 조회 여부
+              <if test = 'deleteYn != null and deleteYn != ""'>
+                <choose>
+                  <when test = 'deleteYn == "Y"'>
+                    AND TC1.DELETE_DATE IS NOT NULL
+                  </when>
+                  <otherwise>
+                    AND TC1.DELETE_DATE IS NULL
+                  </otherwise>
+                </choose>
+              </if>
+            ) AS T_CALC
+            WHERE 1=1
+            GROUP BY T_CALC.ORDER_ID
+          ) TC2
+          LEFT OUTER JOIN T_ORDER TO2 ON TC2.ORDER_ID = TO2.ORDER_ID
+          LEFT OUTER JOIN T_ORDER_ALLOC TOA ON TC2.ORDER_ID = TOA.ORDER_ID AND TC2.MNG_CUST_ID = TOA.SELL_CUST_ID AND TC2.MNG_DEPT_ID = TOA.SELL_DEPT_ID
+          LEFT OUTER JOIN T_CUST_MST TCM ON TC2.REQ_CUST_ID = TCM.CUST_ID
+          LEFT OUTER JOIN T_CUST_VEHIC TCV ON TOA.SELL_CUST_ID = TCV.CUST_ID AND TOA.SELL_DEPT_ID = TCV.DEPT_ID AND TOA.VEHIC_ID = TCV.VEHIC_ID AND TOA.DRIVER_ID = TCV.DRIVER_ID
+          LEFT OUTER JOIN (SELECT TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID FROM T_TAX_ITEM TA INNER JOIN T_TAX_INVOICE TB ON TA.INV_ID = TB.INV_ID WHERE 1=1 AND ISNULL(TB.USE_YN, 'Y') = 'Y' AND TB.LOADSTATUS = '1' AND TB.DOC_ATTR != 'D' GROUP BY TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID) TTI ON TO2.ORDER_ID = TTI.ORDER_ID AND TC2.BUY_ALLOC_ID = TTI.ALLOC_ID
+          WHERE 1=1
+          -- 배차담당자검색
+          <if test = 'userId != null and userId != ""'>
+            AND TOA.REGID = #{userId}
+          </if>
+          -- 사업자명 검색
+          <if test = 'bizName != null and bizName != ""'>
+            AND TCM.CUST_ID = #{bizName}
+          </if>
+          -- 사업자번호 검색
+<!--           <if test = 'searchBizType == "bizNum" and bizNum != null and bizNum != ""'> -->
+<!--             AND TCM.BIZ_NUM = #{bizNum} -->
+<!--           </if> -->
+          -- 빠른지급 여부
+          <if test = 'fastPayYn != null and fastPayYn != ""'>
+            AND TOA.REQ_PAY_YN = #{fastPayYn}
+          </if>
+        ) A
+        WHERE 1=1
+      ) T_BUY_CALC
+    WHERE 1=1
+    AND number BETWEEN #{start} AND #{end}
+    ORDER BY number ASC
+  </select>
+  
+  <!-- 매입정산 리스트 카운트 조회 -->
+  <select id="selectBuyCalcListCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT
+      COUNT(1) AS buyCalcListCnt
+        , ISNULL(SUM(PAYABLE_AMT), 0) sumPayableAmt
+        , ISNULL(SUM(WITHDRAWAL_AMT), 0) sumWithdrawalAmt
+    FROM (
+      SELECT
+        TC2.ORDER_ID AS ORDER_ID
+        , IIF(TC2.BUY_CALC_DATE != '', TC2.BUY_CALC_DATE, 'N') AS FINISH_YN
+        , ISNULL((SELECT USER_NAME FROM T_USER WHERE USER_ID = TC2.FINISH_USER_ID), '') AS FINISH_USER_NAME
+        , ISNULL(CONVERT(VARCHAR, TOA.ALLOC_DATE, 2), '') AS ALLOC_DATE
+        , ISNULL(CONVERT(VARCHAR, TO2.E_DATE, 2), '') AS E_DATE
+        , TOA.ALLOC_DATE AS ALLOC_DATE_FULL
+        , TO2.S_DATE AS S_DATE_FULL
+        , TO2.E_DATE AS E_DATE_FULL
+        -- 거래처
+        , ISNULL((SELECT CUST_NAME FROM T_CUST_DTL WHERE CUST_ID = TO2.REQ_CUST_ID AND DEPT_ID = TO2.REQ_DEPT_ID AND MNG_CUST_ID = TC2.MNG_CUST_ID AND MNG_DEPT_ID = TC2.MNG_DEPT_ID), '') AS CUST_NAME
+        -- 거래처 예외
+        , ISNULL((SELECT CUST_NAME FROM T_CUST_DTL WHERE CUST_ID = TO2.CUST_ID AND DEPT_ID = TO2.DEPT_ID AND MNG_CUST_ID = TC2.MNG_CUST_ID AND MNG_DEPT_ID = TC2.MNG_DEPT_ID), '') AS CUST_NAME_EXCEPT
+        -- 거래처(계산서발행지)
+        , ISNULL((SELECT BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = TO2.REQ_CUST_ID), '') AS BIZ_NAME 
+        -- 거래처(계산서발행지) 예외
+        , ISNULL((SELECT BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = TO2.CUST_ID), '') AS BIZ_NAME_EXCEPT
+        -- 상차지
+        , (TO2.S_SIDO + ' ' + TO2.S_GUNGU) AS S_ADDR
+        -- 하차지
+        , (TO2.E_SIDO + ' ' + TO2.E_GUNGU) AS E_ADDR
+        -- 2착지
+        , ISNULL((SELECT TOP 1 SUBSTRING(E_ADDR, 1, CHARINDEX(' ', E_ADDR, CHARINDEX(' ', E_ADDR) + 1)) FROM T_ORDER_STOP WHERE ORDER_ID = TC2.ORDER_ID AND USE_YN = 'Y'), '') AS STOP_NAME
+        , CAST((SELECT COUNT(*) FROM T_ORDER_STOP WHERE ORDER_ID = TC2.ORDER_ID AND USE_YN = 'Y') AS VARCHAR) AS STOP_COUNT
+      
+        -- 매입처 정보
+        , ISNULL((SELECT CNAME FROM T_CODE WHERE GCODE = 'CARGO_TRAN_CAR_SCTN_CD' AND CODE = TCV.CAR_SCTN_CODE), '') AS CAR_SCTN_NAME
+        , ISNULL(TOA.CAR_NUM, '') AS CAR_NUM
+        , ISNULL(TOA.DRIVER_NAME, '') AS DRIVER_NAME
+        , ISNULL(TOA.DRIVER_TEL, '') AS DRIVER_TEL
+        , ISNULL((SELECT TVM.BIZ_NAME FROM T_VEHIC_MST TVM WHERE VEHIC_ID = TOA.VEHIC_ID), '') AS DRIVER_CARRIER_NAME 
+        , ISNULL((SELECT TCD.CUST_NAME FROM T_CUST_DTL TCD WHERE TCD.CUST_ID = TOA.BUY_CUST_ID AND TCD.DEPT_ID = TOA.BUY_DEPT_ID AND TCD.MNG_CUST_ID = TC2.MNG_CUST_ID AND TCD.MNG_DEPT_ID = TC2.MNG_DEPT_ID AND SELL_BUY_SCTN = '02' AND USE_YN = 'Y'), '') AS CARRIER_NAME 
+        , ISNULL((SELECT TCD.STAFF_NAME FROM T_CUST_DTL TCD WHERE TCD.CUST_ID = TOA.BUY_CUST_ID AND TCD.DEPT_ID = TOA.BUY_DEPT_ID AND TCD.MNG_CUST_ID = TC2.MNG_CUST_ID AND TCD.MNG_DEPT_ID = TC2.MNG_DEPT_ID AND SELL_BUY_SCTN = '02' AND USE_YN = 'Y'), '') AS CARRIER_STAFF_NAME 
+        , ISNULL((SELECT TCD.MOBILE FROM T_CUST_DTL TCD WHERE TCD.CUST_ID = TOA.BUY_CUST_ID AND TCD.DEPT_ID = TOA.BUY_DEPT_ID AND TCD.MNG_CUST_ID = TC2.MNG_CUST_ID AND TCD.MNG_DEPT_ID = TC2.MNG_DEPT_ID AND SELL_BUY_SCTN = '02' AND USE_YN = 'Y'), '') AS CARRIER_MOBILE 
+        -- 빠른지급
+        , ISNULL(CONVERT(VARCHAR, TOA.REQ_PAY_DATE, 2), 'N') AS REQ_PAY_DATE
+    
+        -- 매입액
+        , (TC2.BUY_CHARGE + TC2.BUY_WAYPOINT_CHARGE + TC2.BUY_STAY_CHARGE + TC2.BUY_HANDWORK_CHARGE + TC2.BUY_ROUND_CHARGE + TC2.BUY_OTHERADD_CHARGE + TC2.BUY_SERVICE_FEE_CHARGE) AS PAYABLE_AMT
+        , TC2.BUY_CHARGE AS BUY_CHARGE
+        , TC2.BUY_WAYPOINT_CHARGE AS BUY_WAYPOINT_CHARGE
+        , TC2.BUY_STAY_CHARGE AS BUY_STAY_CHARGE
+        , TC2.BUY_HANDWORK_CHARGE AS BUY_HANDWORK_CHARGE
+        , TC2.BUY_ROUND_CHARGE AS BUY_ROUND_CHARGE
+        , TC2.BUY_OTHERADD_CHARGE AS BUY_OTHERADD_CHARGE
+        , TC2.BUY_SERVICE_FEE_CHARGE AS BUY_SERVICE_FEE_CHARGE
+        -- 출금액
+        , (TC2.BUY_CHARGE_WITHDRAWAL + TC2.BUY_WAYPOINT_CHARGE_WITHDRAWAL + TC2.BUY_STAY_CHARGE_WITHDRAWAL + TC2.BUY_HANDWORK_CHARGE_WITHDRAWAL + TC2.BUY_ROUND_CHARGE_WITHDRAWAL + TC2.BUY_OTHERADD_CHARGE_WITHDRAWAL) AS WITHDRAWAL_AMT
+        , TO2.GOODS_NAME AS GOODS_NAME
+        , ISNULL((SELECT CNAME FROM T_CODE WHERE GCODE = 'UNIT_PRICE_TYPE' AND CODE = TO2.UNIT_PRICE_TYPE), '') AS UNIT_PRICE_TYPE_NAME
+        , ISNULL(TO2.UNIT_CHARGE, 0) AS UNIT_CHARGE
+        , ISNULL((SELECT SELL_WEIGHT FROM T_ORDER_ALLOC WHERE ORDER_ID = TC2.ORDER_ID AND BUY_CUST_ID = TC2.MNG_CUST_ID AND BUY_DEPT_ID = TC2.MNG_DEPT_ID), '') AS SELL_WEIGHT
+        , CONVERT(FLOAT, ISNULL(TO2.GOODS_WEIGHT, 0)) / 1000 AS GOODS_WEIGHT
+        , ISNULL((SELECT CNAME FROM T_CODE WHERE GCODE = 'CHARGE_TYPE_CD' AND CODE = TO2.CHARGE_TYPE), '') AS CHARGE_TYPE_NAME
+        , ISNULL((SELECT ALLOC_FEE FROM T_ORDER_ALLOC WHERE ORDER_ID = TC2.ORDER_ID AND BUY_CUST_ID = TC2.MNG_CUST_ID AND BUY_DEPT_ID = TC2.MNG_DEPT_ID), 0) AS ALLOC_FEE
+      
+        -- 인수증, 세금계산서
+        , CASE WHEN TC2.RECEIPT_YN = 'Y' THEN '전자(' + TC2.RECEIPT_DATE + ')' WHEN TC2.RECEIPT_YN = 'P' THEN '종이(' + TC2.PAPER_RECEIPT_DATE + ')' ELSE 'N' END AS RECEIPT_YN
+		, CASE WHEN TC2.TAXINV_YN = 'Y' THEN '전자(' + TC2.TAXINV_DATE + ')' WHEN TC2.TAXINV_YN = 'P' THEN '종이(' + TC2.TAXINV_DATE + ')' WHEN TC2.TAXINV_YN = 'E' THEN '타사(' + TC2.TAXINV_DATE + ')' ELSE 'N' END AS TAXINV_YN
+    
+        -- 매입 추가 정보
+        , TC2.APP_NAME AS APP_NAME
+        , TC2.FINISH_MEMO AS FINISH_MEMO
+        , TC2.REF_CONTENT1 AS REF_CONTENT1
+        , TC2.REF_CONTENT2 AS REF_CONTENT2
+        -- 사업자번호 및 사업자명(신고용)
+        , TC2.REPORT_BIZ_NAME AS REPORT_BIZ_NAME
+        , TC2.REPORT_BIZ_NUM AS REPORT_BIZ_NUM
+        , ISNULL((SELECT MAX(DEPT_NAME) FROM T_CUST_DEPT WHERE TOA.SELL_CUST_ID = CUST_ID AND TOA.SELL_DEPT_ID = DEPT_ID), '') AS ALLOC_DEPT_NAME
+        , ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TOA.REGID = USER_ID), '') AS ALLOC_USER_NAME
+        , IIF(TC2.DELETE_DATE != '', TC2.DELETE_DATE, 'N') AS DELETE_DATE
+        , ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TC2.DELETE_USER_ID = USER_ID), '') AS DELETE_USER_NAME
+      FROM (
+        SELECT
+          T_CALC.ORDER_ID
+          , MAX(T_CALC.MNG_CUST_ID) AS MNG_CUST_ID
+          , MAX(T_CALC.MNG_DEPT_ID) AS MNG_DEPT_ID
+          , MAX(T_CALC.CUST_ID) AS CUST_ID
+          , MAX(T_CALC.DEPT_ID) AS DEPT_ID
+          , MAX(T_CALC.REQ_CUST_ID) AS REQ_CUST_ID
+          , MAX(T_CALC.REQ_DEPT_ID) AS REQ_DEPT_ID
+          , MAX(T_CALC.BUY_ALLOC_ID) AS BUY_ALLOC_ID
+          , MAX(T_CALC.FINISH_YN) AS FINISH_YN
+          , MAX(T_CALC.FINISH_USER_ID) AS FINISH_USER_ID
+          , MAX(T_CALC.BUY_CALC_DATE) AS BUY_CALC_DATE
+          , MAX(T_CALC.BUY_CHARGE_ID) AS BUY_CHARGE_ID
+          , SUM(T_CALC.BUY_CHARGE) AS BUY_CHARGE
+          , MAX(T_CALC.BUY_WAYPOINT_CHARGE_ID) AS BUY_WAYPOINT_CHARGE_ID
+          , SUM(T_CALC.BUY_WAYPOINT_CHARGE) AS BUY_WAYPOINT_CHARGE
+          , MAX(T_CALC.BUY_STAY_CHARGE_ID) AS BUY_STAY_CHARGE_ID
+          , SUM(T_CALC.BUY_STAY_CHARGE) AS BUY_STAY_CHARGE
+          , MAX(T_CALC.BUY_HANDWORK_CHARGE_ID) AS BUY_HANDWORK_CHARGE_ID
+          , SUM(T_CALC.BUY_HANDWORK_CHARGE) AS BUY_HANDWORK_CHARGE
+          , MAX(T_CALC.BUY_ROUND_CHARGE_ID) AS BUY_ROUND_CHARGE_ID
+          , SUM(T_CALC.BUY_ROUND_CHARGE) AS BUY_ROUND_CHARGE
+          , MAX(T_CALC.BUY_OTHERADD_CHARGE_ID) AS BUY_OTHERADD_CHARGE_ID
+          , SUM(T_CALC.BUY_OTHERADD_CHARGE) AS BUY_OTHERADD_CHARGE
+          , MAX(T_CALC.BUY_SERVICE_FEE_CHARGE_ID) AS BUY_SERVICE_FEE_CHARGE_ID
+          , SUM(T_CALC.BUY_SERVICE_FEE_CHARGE) AS BUY_SERVICE_FEE_CHARGE
+          , SUM(T_CALC.BUY_CHARGE_WITHDRAWAL) AS BUY_CHARGE_WITHDRAWAL
+          , SUM(T_CALC.BUY_WAYPOINT_CHARGE_WITHDRAWAL) AS BUY_WAYPOINT_CHARGE_WITHDRAWAL
+          , SUM(T_CALC.BUY_STAY_CHARGE_WITHDRAWAL) AS BUY_STAY_CHARGE_WITHDRAWAL
+          , SUM(T_CALC.BUY_HANDWORK_CHARGE_WITHDRAWAL) AS BUY_HANDWORK_CHARGE_WITHDRAWAL
+          , SUM(T_CALC.BUY_ROUND_CHARGE_WITHDRAWAL) AS BUY_ROUND_CHARGE_WITHDRAWAL
+          , SUM(T_CALC.BUY_OTHERADD_CHARGE_WITHDRAWAL) AS BUY_OTHERADD_CHARGE_WITHDRAWAL
+          , MAX(T_CALC.RECEIPT_YN) AS RECEIPT_YN
+          , MAX(T_CALC.RECEIPT_DATE) AS RECEIPT_DATE
+          , MAX(T_CALC.PAPER_RECEIPT_DATE) AS PAPER_RECEIPT_DATE
+          , MAX(T_CALC.TAXINV_YN) AS TAXINV_YN
+          , MAX(T_CALC.TAXINV_DATE) AS TAXINV_DATE
+          , MAX(T_CALC.APP_NAME) AS APP_NAME
+          , MAX(T_CALC.FINISH_MEMO) AS FINISH_MEMO
+          , MAX(T_CALC.REF_CONTENT1) AS REF_CONTENT1
+          , MAX(T_CALC.REF_CONTENT2) AS REF_CONTENT2
+          , MAX(T_CALC.REPORT_BIZ_NAME) AS REPORT_BIZ_NAME
+          , MAX(T_CALC.REPORT_BIZ_NUM) AS REPORT_BIZ_NUM
+          , MAX(T_CALC.DELETE_DATE) AS DELETE_DATE
+          , MAX(T_CALC.DELETE_USER_ID) AS DELETE_USER_ID
+        FROM (
+          SELECT
+            TC1.ORDER_ID
+            , TC1.MNG_CUST_ID
+            , TC1.MNG_DEPT_ID
+            , ISNULL(TC1.CUST_ID, '') AS CUST_ID
+            , ISNULL(TC1.DEPT_ID, '') AS DEPT_ID
+            , ISNULL(TO1.REQ_CUST_ID, '') AS REQ_CUST_ID
+            , ISNULL(TO1.REQ_DEPT_ID, '') AS REQ_DEPT_ID
+            -- 매입
+            , TC1.ALLOC_ID AS BUY_ALLOC_ID
+            , ISNULL(TC1.FINISH_YN, 'N') AS FINISH_YN
+            , ISNULL(TC1.FINISH_USER_ID, '') AS FINISH_USER_ID
+            , ISNULL(CONVERT(VARCHAR, TC1.CALC_DATE, 2), '') AS BUY_CALC_DATE 
+            -- 내수운송료(매입)
+            , IIF(TC1.CALC_TYPE_CODE = '0002', TC1.CALC_ID, '') AS BUY_CHARGE_ID
+            , IIF(TC1.CALC_TYPE_CODE = '0002', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_CHARGE
+            -- 경유비(매입)
+            , IIF(TC1.CALC_TYPE_CODE = '0023', TC1.CALC_ID, '') AS BUY_WAYPOINT_CHARGE_ID
+            , IIF(TC1.CALC_TYPE_CODE = '0023', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_WAYPOINT_CHARGE
+            -- 대기료(매입)
+            , IIF(TC1.CALC_TYPE_CODE = '0025', TC1.CALC_ID, '') AS BUY_STAY_CHARGE_ID
+            , IIF(TC1.CALC_TYPE_CODE = '0025', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_STAY_CHARGE
+            -- 수작업비(매입)
+            , IIF(TC1.CALC_TYPE_CODE = '0371', TC1.CALC_ID, '') AS BUY_HANDWORK_CHARGE_ID
+            , IIF(TC1.CALC_TYPE_CODE = '0371', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_HANDWORK_CHARGE
+            -- 회차료(매입)
+            , IIF(TC1.CALC_TYPE_CODE = '0372', TC1.CALC_ID, '') AS BUY_ROUND_CHARGE_ID
+            , IIF(TC1.CALC_TYPE_CODE = '0372', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_ROUND_CHARGE
+            -- 기타추가비(매입)
+            , IIF(TC1.CALC_TYPE_CODE = '0294', TC1.CALC_ID, '') AS BUY_OTHERADD_CHARGE_ID
+            , IIF(TC1.CALC_TYPE_CODE = '0294', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_OTHERADD_CHARGE
+            -- 서비스수수료(매입)
+            , IIF(TC1.CALC_TYPE_CODE = '0901', TC1.CALC_ID, '') AS BUY_SERVICE_FEE_CHARGE_ID
+            , IIF(TC1.CALC_TYPE_CODE = '0901', ISNULL(TC1.PAYABLE_AMT, 0), 0) AS BUY_SERVICE_FEE_CHARGE
+            -- 출금금액
+            , IIF(TC1.CALC_TYPE_CODE = '0002', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_CHARGE_WITHDRAWAL
+            , IIF(TC1.CALC_TYPE_CODE = '0023', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_WAYPOINT_CHARGE_WITHDRAWAL
+            , IIF(TC1.CALC_TYPE_CODE = '0025', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_STAY_CHARGE_WITHDRAWAL
+            , IIF(TC1.CALC_TYPE_CODE = '0371', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_HANDWORK_CHARGE_WITHDRAWAL
+            , IIF(TC1.CALC_TYPE_CODE = '0372', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_ROUND_CHARGE_WITHDRAWAL
+            , IIF(TC1.CALC_TYPE_CODE = '0294', ISNULL(TC1.WITHDRAWAL_AMT, 0), 0) AS BUY_OTHERADD_CHARGE_WITHDRAWAL
+            
+            -- 인수증(T_ORDER), 세금계산서(T_CALC)
+            , ISNULL(TO1.RECEIPT_YN, 'N') AS RECEIPT_YN
+            , ISNULL(CONVERT(VARCHAR, TO1.RECEIPT_DATE, 2), '') AS RECEIPT_DATE
+            , ISNULL(CONVERT(VARCHAR, TO1.PAPER_RECEIPT_DATE, 2), '') AS PAPER_RECEIPT_DATE
+            , ISNULL(TC1.TAXINV_YN, 'N') AS TAXINV_YN
+            , ISNULL(CONVERT(VARCHAR, TC1.TAXINV_DATE, 2), '') AS TAXINV_DATE
+    
+            , ISNULL(TC1.APP_NAME, '') AS APP_NAME
+            , ISNULL(TC1.FINISH_MEMO, '') AS FINISH_MEMO
+            , ISNULL(TC1.REF_CONTENT1, '') AS REF_CONTENT1
+            , ISNULL(TC1.REF_CONTENT2, '') AS REF_CONTENT2
+            , ISNULL(TC1.REPORT_BIZ_NAME, '') AS REPORT_BIZ_NAME
+            , ISNULL(TC1.REPORT_BIZ_NUM, '') AS REPORT_BIZ_NUM
+            -- 삭제
+            , ISNULL(CONVERT(VARCHAR, TC1.DELETE_DATE, 2), '') AS DELETE_DATE
+            , ISNULL(TC1.DELETE_USER_ID, '') AS DELETE_USER_ID
+          FROM T_CALC TC1, T_ORDER TO1
+          WHERE 1=1
+            AND TC1.ORDER_ID = TO1.ORDER_ID
+            AND TC1.SELL_BUY_SCTN = '02'
+            AND TC1.USE_YN = 'Y'
+            --AND TO1.ORDER_STATE IN ('00','01','04','05','12')
+            AND TC1.MNG_CUST_ID = 'C20210802130835001'
+            -- 담당부서 검색
+            <if test = 'deptId != null and deptId != ""'>
+              AND TC1.MNG_DEPT_ID = #{deptId}
+            </if>
+            -- 배차일자 검색 -> 미처리이월건 포함 검색 시 배차일자검색 제외
+            <if test = 'carryOver != "Y"'>
+              AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+            </if>
+            -- 거래처(화주) 검색
+            <if test = 'custId != null and custId != ""'>
+              AND TO1.REQ_CUST_ID = #{custId}
+            </if>
+            <if test = 'custDeptId != null and custDeptId != ""'>
+              AND TO1.REQ_DEPT_ID = #{custDeptId}
+            </if>
+            -- 오더ID 검색
+            <if test = 'orderId != null and orderId != ""'>
+              AND TO1.ORDER_ID = #{orderId}
+            </if>
+            -- 청구구분 검색
+            <if test = 'chargeType != null and chargeType != ""'>
+              AND TO1.CHARGE_TYPE = #{chargeType}
+            </if>
+            -- 정산 마감 여부
+            <if test = 'finishYn == "Y" and carryOver != "Y"'>
+              AND TC1.FINISH_YN = 'Y'
+            </if>
+            <if test = 'finishYn == "N"'>
+              AND TC1.FINISH_YN = 'N'
+            </if>
+            -- 삭제건 조회 여부
+            <if test = 'deleteYn != null and deleteYn != ""'>
+              <choose>
+                <when test = 'deleteYn == "Y"'>
+                  AND TC1.DELETE_DATE IS NOT NULL
+                </when>
+                <otherwise>
+                  AND TC1.DELETE_DATE IS NULL
+                </otherwise>
+              </choose>
+            </if>
+          ) AS T_CALC
+          WHERE 1=1
+          GROUP BY T_CALC.ORDER_ID
+        ) TC2
+        LEFT OUTER JOIN T_ORDER TO2 ON TC2.ORDER_ID = TO2.ORDER_ID
+        LEFT OUTER JOIN T_ORDER_ALLOC TOA ON TC2.ORDER_ID = TOA.ORDER_ID AND TC2.MNG_CUST_ID = TOA.SELL_CUST_ID AND TC2.MNG_DEPT_ID = TOA.SELL_DEPT_ID
+        LEFT OUTER JOIN T_CUST_MST TCM ON TC2.REQ_CUST_ID = TCM.CUST_ID
+        LEFT OUTER JOIN T_CUST_VEHIC TCV ON TOA.SELL_CUST_ID = TCV.CUST_ID AND TOA.SELL_DEPT_ID = TCV.DEPT_ID AND TOA.VEHIC_ID = TCV.VEHIC_ID AND TOA.DRIVER_ID = TCV.DRIVER_ID
+        LEFT OUTER JOIN (SELECT TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID FROM T_TAX_ITEM TA INNER JOIN T_TAX_INVOICE TB ON TA.INV_ID = TB.INV_ID WHERE 1=1 AND ISNULL(TB.USE_YN, 'Y') = 'Y' AND TB.LOADSTATUS = '1' AND TB.DOC_ATTR != 'D' GROUP BY TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID) TTI ON TO2.ORDER_ID = TTI.ORDER_ID AND TC2.BUY_ALLOC_ID = TTI.ALLOC_ID
+        WHERE 1=1
+        -- 배차담당자검색
+        <if test = 'userId != null and userId != ""'>
+          AND TOA.REGID = #{userId}
+        </if>
+        -- 사업자명 검색
+        <if test = 'bizName != null and bizName != ""'>
+          AND TCM.CUST_ID = #{bizName}
+        </if>
+          -- 사업자번호 검색
+<!--           <if test = 'searchBizType == "bizNum" and bizNum != null and bizNum != ""'> -->
+<!--             AND TCM.BIZ_NUM = #{bizNum} -->
+<!--           </if> -->
+        -- 빠른지급 여부
+        <if test = 'fastPayYn != null and fastPayYn != ""'>
+          AND TOA.REQ_PAY_YN = #{fastPayYn}
+        </if>
+      ) A
+  </select>
+  
+  <select id="selectTaxinv" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT
+  	  INV_ID AS taxinvId
+      , SUPPLIER_BIZ_NAME AS supplierBizName
+      , SUPPLIER_BIZ_NO AS supplierBizNo
+      , CASE WHEN SUPPLIER_BIZ_SUBNO = '0000' THEN '' ELSE ISNULL(SUPPLIER_BIZ_SUBNO, '') END AS supplierBizSubno
+      , SUPPLIER_CEO AS supplierCeo
+      , SUPPLIER_ADDR AS supplierAddr
+      , SUPPLIER_BIZ_TYPE AS supplierBizType
+      , SUPPLIER_BIZ_CLASS AS supplierBizClass
+      , SUPPLIER_MEM_NAME AS supplierMemName
+      , SUPPLIER_MEM_TEL AS supplierMemTel
+      , SUPPLIER_MEM_EMAIL AS supplierMemEmail
+      , BUYER_BIZ_NAME AS buyerBizName
+      , BUYER_BIZ_NO AS buyerBizNo
+      , CASE WHEN BUYER_BIZ_SUBNO = '0000' THEN '' ELSE ISNULL(BUYER_BIZ_SUBNO, '') END AS buyerBizSubno
+      , BUYER_CEO AS buyerCeo
+      , BUYER_ADDR AS buyerAddr
+      , BUYER_BIZ_TYPE AS buyerBizType
+      , BUYER_BIZ_CLASS AS buyerBizClass
+      , BUYER_MEM_NAME AS buyerMemName
+      , BUYER_MEM_TEL AS buyerMemTel
+      , BUYER_MEM_EMAIL AS buyerMemEmail
+      , BROKER_CUST_ID AS brokerCustId
+      , BROKER_DEPT_ID AS brokerDeptId
+      , BROKER_BIZ_NO AS brokerBizNo
+      , BROKER_BIZ_TYPE AS brokerBizType
+      , BROKER_BIZ_NAME AS brokerBizName
+      , BROKER_BIZ_CLASS AS brokerBizClass
+      , CASE WHEN BROKER_BIZ_SUBNO = '0000' THEN '' ELSE ISNULL(BROKER_BIZ_SUBNO, '') END AS brokerBizSubno
+      , BROKER_CEO AS brokerCeo
+      , BROKER_MEM_NAME AS brokerMemName
+      , BROKER_MEM_TEL AS brokerMemTel
+      , BROKER_MEM_EMAIL AS brokerMemEmail
+      , BROKER_ADDR AS brokerAddr
+      , WRITE_DATE AS writeDate
+      , ISNULL(REMARKS, '') AS remarks
+      , PUBFORM AS pubForm
+    FROM
+      T_TAX_INVOICE
+    WHERE 1=1
+      AND INV_ID = #{taxinvId}
+  </select>
+  
+  <select id="selectTaxinvDetailList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+    SELECT
+      ROW_NUMBER() OVER(ORDER BY ITEM_DATE DESC) AS number
+      , INV_ID AS taxinvId
+      , ITEM_DATE AS itemDate
+      , ITEM_NAME AS itemName
+      , ISNULL(ITEM_TYPE, '') AS itemType
+      , ITEM_QTY AS itemQty
+      , ITEM_PRICE AS itemPrice
+      , ITEM_SUPPRICE AS itemSupprice
+      , ITEM_TAX AS itemTax 
+      , ISNULL(ITEM_REMARKS, '') AS itemRemarks
+    FROM 
+      T_TAX_ITEM
+    WHERE 1=1
+      AND INV_ID = #{taxinvId}
+      AND ORDER_ID = #{orderId}
+      AND ALLOC_ID = #{allocId}
+  </select>
+  
+  <!-- 인수증 업데이트 -->
+  <update id="updateReceiptSub" parameterType="java.util.HashMap">
+    <!-- 22.08.30 이건욱 기존 트랜젝션이 아닌 직접 쿼리로 변경 -->
+    UPDATE T_ORDER
+    <choose>
+      <when test='mode == "N"'>
+        SET
+          RECEIPT_YN = 'N'
+          , RECEIPT_DATE = NULL
+          , PAPER_RECEIPT_DATE = NULL
+      </when>
+      <when test='mode == "Y"'>
+        SET
+          RECEIPT_YN = 'Y'
+          , RECEIPT_DATE = GETDATE()
+          , PAPER_RECEIPT_DATE = NULL
+      </when>
+      <otherwise>
+        SET
+          RECEIPT_YN = 'P'
+          , RECEIPT_DATE = NULL
+          , PAPER_RECEIPT_DATE = GETDATE()
+      </otherwise>
+    </choose>
+    WHERE 1=1
+    AND ORDER_ID IN
+    <foreach collection="orderIdList" item="item" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </update>
+  
+  <!-- 세금계산서 업데이트 -->
+  <update id="updateTaxinvSub" parameterType="java.util.HashMap">
+    <!-- 22.08.30 이건욱 기존 트랜젝션이 아닌 직접 쿼리로 변경 -->
+    UPDATE T_CALC
+    <choose>
+      <when test='mode == "N"'>
+        SET
+          TAXINV_YN = 'N'
+          , TAXINV_DATE = NULL
+      </when>
+      <otherwise>
+        SET
+          TAXINV_YN = #{mode}
+          , TAXINV_DATE = GETDATE()
+      </otherwise>
+    </choose>
+    WHERE 1=1
+    AND USE_YN = 'Y'
+    AND SELL_BUY_SCTN = '02'
+    <!-- 22.08.30 이건욱 OrderId 고려치 않음. 추후 이슈 발생 시 Where 조건 포함. -->
+<!--     AND ORDER_ID IN -->
+<!--     <foreach collection="orderIdList" item="item" separator="," open="(" close=")"> -->
+<!--       #{item} -->
+<!--     </foreach> -->
+    AND ALLOC_ID IN
+    <foreach collection="allocIdList" item="item" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+    <!-- 22.08.30 이건욱 Manager 고려치 않음. 추후 이슈 발생 시 Where 조건 포함. -->
+<!--     AND MNG_CUST_ID = #{mngCustId} -->
+<!--     AND MNG_DEPT_ID = #{mngDeptId} -->
+  </update>
+  
+  <update id="updateDeleteYn" parameterType="java.util.HashMap">
+    UPDATE T_CALC
+    <choose>
+      <when test='deleteYn == "Y"'>
+        SET
+          DELETE_DATE = GETDATE()
+          , DELETE_USER_ID = #{loginId}
+      </when>
+      <otherwise>
+        SET
+          DELETE_DATE = null
+          , DELETE_USER_ID = null
+      </otherwise>
+    </choose>
+    WHERE 1=1
+    AND SELL_BUY_SCTN = '02'
+    AND ORDER_ID IN
+    <foreach collection="orderIdList" item="item" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+    AND ALLOC_ID IN
+    <foreach collection="allocIdList" item="item" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </update>
+  
+  <!-- 지불운송비 변경 프로시저 mode: 'N' (insert) -->
+  <insert id="upsertCalcCharge" statementType="CALLABLE" parameterType="java.util.HashMap">
+    { call INSERT_CALC_CHARGE_V2 (
+              #{calcId}
+            , #{calcTypeCode}
+            , #{calcCharge}
+            , #{memo}
+            , #{sellBuySctn}
+            , #{orderId}
+            , #{allocId}
+            , #{mode}
+            , #{regId}
+            , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+            , #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+    }
+  </insert>
+  
+  <!-- 내수운송료 변경 프로시저 -> 내수운송료의 경우 T_ORDER_ALLOC 테이블도 업데이트 -->
+  <update id="updateAllocCharge" parameterType="java.util.HashMap">
+    UPDATE
+      T_ORDER_ALLOC
+    SET
+      ALLOC_CHARGE = #{allocCharge}
+    WHERE 1=1
+    AND ALLOC_ID = #{allocId}
+  </update>
+  
+  <!-- 매입정산마감 프로시저 -->
+  <update id="updateBuyCalcFinish" statementType="CALLABLE" parameterType="java.util.HashMap">
+    { call UPDATE_BUY_CALC_FINISH (
+              #{mode}
+            , #{editId}
+            , #{calcIdList}
+            , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+            , #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+    }
+  </update>
+  
+</mapper>
