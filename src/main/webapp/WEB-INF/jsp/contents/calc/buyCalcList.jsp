@@ -16,10 +16,10 @@
 <!-- 매입처 변경 Modal -->
 <div id="divChangeRes" class="editor-warp p-0">
     <form id="fChangeRes" class="modalEditor" role="form" autocomplete="off" data-toggle="validator">
-        <div class="modalHeader">
-            <input type="hidden" id="changeResModalOrderIdList" name="changeResModalOrderIdList" class="hiddenValue">
-            <input type="hidden" id="changeResModalAllocIdList" name="changeResModalAllocIdList" class="hiddenValue">
+        <input type="hidden" id="changeResModalOrderList" name="changeResModalOrderList" class="hiddenValue">
+        <input type="hidden" id="changeResModalAllocList" name="changeResModalAllocList" class="hiddenValue">
         
+        <div class="modalHeader">
             <div class="form-group row">
                 <div class="input-group input-group-sm col middle-name form-group">
                 
@@ -328,6 +328,10 @@
                 <input type="hidden" id="hBizId" name="bizId" class="hiddenValue">
                 <!-- 담당부서 -->
                 <input type="hidden" id="hBizDeptId" name="bizDeptId" class="hiddenValue">
+                <!-- 차량ID -->
+                <input type="hidden" id="hVehicId" name="vehicId" class="hiddenValue">
+                <!-- 차주ID -->
+                <input type="hidden" id="hDriverId" name="driverId" class="hiddenValue">
             
                 <!-- 검색 1라인 -->
                 <div class="form-group row">
@@ -341,10 +345,11 @@
                     </div>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>거래처검색</strong>
+                        <strong>매입처검색</strong>
                         <select id="searchCustType" name="searchCustType" class="custom-select col-12">
                             <!-- 공통코드로 구분함. -->
-                            <option value="custName" selected>화주명</option>
+                            <option value="carNum" selected>차량번호</option>
+                            <option value="custName">운송/주선사명</option>
                             <option value="orderId">오더ID</option>
                         </select>
                     </div>
@@ -630,10 +635,10 @@
      	// 컨트롤 기본값 설정
      	$("input:checkbox[id='carryOverYn']").prop("checked", true);
      	
-     	// 거래처 검색 콤보박스
+     	// 매입처 검색 콤보박스
      	searchCustName = setSearchCustName();
      	
-     	// 거래처 검색 조건 셀렉트 박스 이벤트 핸들러
+     	// 매입처 검색 조건 셀렉트 박스 이벤트 핸들러
         $("#searchCustType").on("change", function(e) {
 			$(".hiddenValue").val("");
         	
@@ -645,21 +650,22 @@
 			searchBizName = setSearchBizName();
 			searchBizName.value("");
 			
-        	if ($(this).val() == "custName") {
-        		searchCustName.destroy();
-        		searchCustName = setSearchCustName();
-        		searchCustName.value("");
-        		
-        		$("#searchCustName").show();
-                $("#searchOrderId").hide();
-        	} else {
-        		// 오더ID 검색
+			if ($(this).val() == "orderId") {
+				// 오더ID 검색
         		searchCustName.value("");
         		searchCustName.destroy();
         		
         		$("#searchCustName").hide();
                 $("#searchOrderId").show();
-        	}
+			} else {
+				// 그 외 조건
+				searchCustName.destroy();
+        		searchCustName = setSearchCustName();
+        		searchCustName.value("");
+        		
+        		$("#searchCustName").show();
+                $("#searchOrderId").hide();
+			}
         });
         
         // 사업자 검색 콤보박스
@@ -764,67 +770,105 @@
        	goList();
     });
     
- 	// 거래처 검색 콤보박스 생성 (화주)
+ 	// 매입처 검색 콤보박스 생성
     function setSearchCustName() {
-    	var searchCustName =  $("#sCustName").kendoMultiColumnComboBox({
-            dataTextField: "custName",
-            dataValueField: "custId",
-            filter: "contains",
-            minLength: 2,
-            autoBind: true,
-            dataSource: {
-            	serverFiltering: true,
-            	transport: {
-            		read : {
-            			url: "/contents/basic/data/custList.do",
-            			dataType: "json",
-            			type: "post",
-            			data: {
-            				useYn : "Y",
-            				sellBuySctn : "01",
-            				deptId: $("#sDeptId").val()
-            			},
-            			beforeSend: function(req) {
-            				req.setRequestHeader("AJAX", true);
-            			}
-            		}
-            	},
-            	schema : {
-            		data : function(response) {
-            			return response.data;
-            		},
-            		total : function(response) {
-            			return response.total;
-            		}
-            	}
-            },
-            columns: [
-            	{ field: "custName", title: "거래처명", width: 'auto' },
-            	{ field: "deptName", title: "부서명", width: 'auto' }
-            ]
-		}).data("kendoMultiColumnComboBox");
-    	
-    	// 거래처 검색 콤보박스 이벤트 핸들러
-    	searchCustName.bind("change", function(e) {
-    		if (this.value() == "") {
-    			$("#hCustId").val("");
-    			$("#hCustDeptId").val("");
-    			
-    			$("#sCustDeptName").val("");
-    		} else {
-    			var dataItem = $("#sCustName").data("kendoMultiColumnComboBox").dataItem();
-    			
-    			if (dataItem != null) {
-        			$("#hCustId").val(dataItem.custId);
-        			$("#hCustDeptId").val(dataItem.deptId);
-        			
-        			$("#sCustDeptName").val(dataItem.deptName);
-    			}
-    		}
-    	});
+    	var searchCustName;
+    	var searchCustType = $("#searchCustType").val();
+    	if (searchCustType == "carNum")
+    		searchCustName = setComboCarNum();
+    	else
+    		searchCustName = setComboCustName();
 		
 		return searchCustName;
     }
+ 	
+ 	// 거래처 검색 콤보박스 생성 (주선/운송사)
+ 	function setComboCustName() {
+ 		var comboCustName =  $("#sCustName").kendoMultiColumnComboBox({
+ 			dataTextField: "custName",
+ 			dataValueField: "custId",
+ 			filter: "contains",
+ 			minLength: 2,
+ 			autoBind: true,
+ 			dataSource: {
+ 				serverFiltering: true,
+ 				transport: {
+ 					read: {
+ 						url: "/contents/basic/data/custList.do",
+ 						dataType: "json",
+ 						type: "post",
+ 						data: {
+ 							useYn : "Y",
+ 							sellBuySctn : "02",
+ 							deptId: $("#sDeptId").val()
+ 						},
+ 						beforeSend: function(req) {
+ 							req.setRequestHeader("AJAX", true);
+ 						}
+ 					}
+ 				},
+ 				schema : {
+ 					data : function(response) {
+ 						return response.data;
+ 					},
+ 					total : function(response) {
+ 						return response.total;
+ 					}
+ 				}
+ 			},
+ 			columns: [
+ 				{ field: "custName", title: "거래처명", width: 'auto' },
+ 				{ field: "deptName", title: "부서명", width: 'auto' }
+ 			]
+ 		}).data("kendoMultiColumnComboBox");
+ 		
+ 		// 거래처 검색 콤보박스 이벤트 핸들러
+ 		comboCustName.bind("change", function(e) {
+ 			if (this.value() == "") {
+ 				$("#hCustId").val("");
+ 				$("#hCustDeptId").val("");
+ 				
+ 				$("#sCustDeptName").val("");
+ 			} else {
+ 				var dataItem = $("#sCustName").data("kendoMultiColumnComboBox").dataItem();
+ 				
+ 				if (dataItem != null) {
+ 					$("#hCustId").val(dataItem.custId);
+ 					$("#hCustDeptId").val(dataItem.deptId);
+ 					
+ 					$("#sCustDeptName").val(dataItem.deptName);
+ 				}
+ 			}
+ 		});
+ 		
+ 		return comboCustName;
+ 	}
+ 	
+ 	// 차량 검색 콤보박스 생성 
+ 	function setComboCarNum() {
+ 		var comboCarNum = MultiColumnComboBox.setSearchCarNum("sCustName", $("#sDeptId").val(), "");
+ 		
+ 		// 거래처 검색 콤보박스 이벤트 핸들러
+ 		comboCarNum.bind("change", function(e) {
+ 			if (this.value() == "") {
+ 				$("#hVehicId").val("");
+ 				$("#hDriverId").val("");
+ 				
+ 				$("#sCustDeptName").val("");
+ 			} else {
+ 				var dataItem = $("#sCustName").data("kendoMultiColumnComboBox").dataItem();
+ 				
+ 				if (dataItem != null) {
+ 					$("#hVehicId").val(dataItem.vehicId);
+ 					$("#hDriverId").val(dataItem.driverId);
+ 					
+ 					$("#sCustDeptName").val(dataItem.driverName);
+ 				}
+ 			}
+ 		});
+ 		
+ 		return comboCarNum;
+ 	}
  
  	// 사업자 검색 콤보박스 생성
     function setSearchBizName() {
@@ -1121,6 +1165,11 @@
 			editListInsertItem(orderId, allocId, calcId, chargeCode, value, insert);
 		}
 		else if (typeof e.values.buyServiceFeeCharge == "number") {
+			// Validation 체크 (입력된 값이 0이상(+)일 경우 0으로 재설정 -> 이후 계산하지 않음.)
+			if (Number(e.values.buyServiceFeeCharge) > 0) {
+				e.preventDefault();
+			}
+			
 			payableAmtVal -= Number(e.model.get("buyServiceFeeCharge"));
 			payableAmtVal += Number(e.values.buyServiceFeeCharge);
 			
@@ -1570,12 +1619,14 @@
     // 실물 인수증 수령
     function paperReceiptSub() {
     	if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 실물 인수증 수령을 처리 하시겠습니까?";
+    		var message = "선택된 (" + selectedList.size + ")건에 대한 실물 인수증 수령을 처리 하시겠습니까?\n전자 인수증 처리된 경우 제외됩니다.";
     		if (confirm(message)) {
     			var mode = "P";
     			var orderIdList = [];
     			for (var [key, value] of selectedList) {
-    				orderIdList.push(value.orderId);
+    				// 전자 인수증 수령 건 제외
+    				if (!value.receiptYn.includes("전자"))
+    					orderIdList.push(value.orderId);
     			}
     			
     			$.ajax({
@@ -1647,7 +1698,9 @@
     			for (var [key, value] of selectedList) {
     				// CalcId 건별로 처리하는게 아닌 AllocId로 한번에 처리함.
     				// * 기존에는 CalcId 건별로 처리하는 방식
-    				allocIdList.push(value.buyAllocId);
+    				// 전자 계산서 수령 건 제외
+    				if (!value.taxinvYn.includes("전자"))
+    					allocIdList.push(value.buyAllocId);
     				
     				// CalcId로 처리 시. 
 //     				if (typeof value.buyChargeId != "ubdefined" && value.buyChargeId != null && value.buyChargeId != "")
@@ -1730,7 +1783,9 @@
     			for (var [key, value] of selectedList) {
     				// CalcId 건별로 처리하는게 아닌 AllocId로 한번에 처리함.
     				// * 기존에는 CalcId 건별로 처리하는 방식
-    				allocIdList.push(value.buyAllocId);
+    				// 전자 계산서 수령 건 제외
+    				if (!value.taxinvYn.includes("전자"))
+    					allocIdList.push(value.buyAllocId);
     				
     				// CalcId로 처리 시. 
 //     				if (typeof value.buyChargeId != "ubdefined" && value.buyChargeId != null && value.buyChargeId != "")
@@ -1865,6 +1920,7 @@
     		 var orderIdList = [];
     		 var allocIdList = [];
     		 for (var [key, value] of selectedList) {
+    			 // 마감처리된 건은 제외 추가?
     			 if (value.deleteYn != "" && value.deleteYn != "Y") {
     				 orderIdList.push(value.orderId);
     				 allocIdList.push(value.buyAllocId);
@@ -1872,8 +1928,8 @@
     		 }
     	 }
     	 
-    	 $("#changeResModalOrderIdList").val(orderIdList);
-    	 $("#changeResModalAllocIdList").val(allocIdList);
+    	 $("#changeResModalOrderList").val(orderIdList);
+    	 $("#changeResModalAllocList").val(allocIdList);
     	 
     	 changeResModal.data("kendoDialog").open();
      }
@@ -1884,7 +1940,6 @@
     	 $(".hiddenValue").val("");
     	 
     	 $("#changeResModalDriverName").val("");
-    	 $("#changeResModalDriverName").val("");
     	 $("#changeResModalDriverMobile").val("");
     	 
     	 $("#changeResModalManagerName").val("");
@@ -1893,7 +1948,7 @@
     	 changeResModal.data("kendoDialog").close();
      }
      
-     $('#fChangeRes').validator().on('submit', function (e) {
+     $('#fChangeRes').validator().on('submit', function(e) {
     	 if (e.isDefaultPrevented()) {
     		 alert("항목을 입력해 주세요.");
     		 e.preventDefault();
@@ -1986,7 +2041,7 @@
 			editable: function (dataItem){}
 		},
 		{ field: "carSctnName", title: "차량구분", width: 90, editable: function (dataItem){} },
-		{ field: "fastPayYn", title: "빠른지급", width: 100, editable: function (dataItem){} },
+		{ field: "fastPayYn", title: "빠른지급신청", width: 120, editable: function (dataItem){} },
 		{ field: "receiptYn", title: "인수증", width: 130, editable: function (dataItem){} },
 		{ field: "taxinvYn", title: "계산서", width: 130, editable: function (dataItem){} },
 		{ field: "sAddr", title: "상차지", width: 120, editable: function (dataItem){} },
@@ -2055,14 +2110,14 @@
 			},
 			headerTemplate : '<label class="editHeader">기타추가비</label>'
 		},
-		{ field: "buyServiceFeeCharge", title: "서비스수수료", width: 120, type: 'number',
+		{ field: "buyServiceFeeCharge", title: "서비스수수료(-)", width: 120, type: 'number',
 			template: function(dataItem) {
 			   return Util.formatNumber(Util.nvl(dataItem.buyServiceFeeCharge, "0"));
 			},
 			attributes: { 
 				style: "text-align: right" 
 			},
-			headerTemplate : '<label class="editHeader">서비스수수료</label>'
+			headerTemplate : '<label class="editHeader">서비스수수료(-)</label>'
 		},
 		{ field: "chargeTypeName", title: "청구구분", width: 100, editable: function (dataItem){} },
 		{ field: "allocFee", title: "수수료", width: 100, type: 'number',

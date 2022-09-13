@@ -87,12 +87,15 @@ public class BuyCalcController {
 		return "jsonView";
 	}
 	
-	@PostMapping(value = "/contents/calc/data/getTaxinvDetailList.do")
-	public String getTaxinvDetail(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
-		
-		return "jsonView";
-	}
-	
+	/**
+	 * 인수증 처리
+	 * @param request
+	 * @param model
+	 * @param map
+	 * @param session
+	 * @param param
+	 * @return
+	 */
 	@PostMapping(value = "/contents/calc/data/setReceiptSub.do")
 	public String setReceiptSub(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
 		
@@ -124,6 +127,15 @@ public class BuyCalcController {
 		return "jsonView";
 	}
 	
+	/**
+	 * 실물/타사 계산서 수령
+	 * @param request
+	 * @param model
+	 * @param map
+	 * @param session
+	 * @param param
+	 * @return
+	 */
 	@PostMapping(value = "/contents/calc/data/setTaxinvSub.do")
 	public String setTaxinvSub(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
 		
@@ -133,7 +145,10 @@ public class BuyCalcController {
 			
 			param.put("allocIdList", allocIdList);
 			
+			// 22.09.07 이건욱 Calc 단위가 아닌 Alloc 단위로 처리방법을 변경하여 결과 카운트가 다름.
 			int resultCnt = buyCalcService.updateTaxinvSub(param);
+			// 쿼리 처리 결과가 아닌 전달받은 Alloc 단위 카운트로 변경
+			resultCnt = allocIdList.size();
 			
 			// 결과값
 			linkMessage.setSender(this.getClass().getName());

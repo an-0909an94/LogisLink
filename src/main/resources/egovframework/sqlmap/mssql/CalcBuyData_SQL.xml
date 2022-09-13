@@ -334,12 +334,19 @@
               <if test = 'carryOver != "Y"'>
                 AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
               </if>
-              -- 거래처(화주) 검색
+              -- 거래처(주선/운송사) 검색
               <if test = 'custId != null and custId != ""'>
-                AND TO1.REQ_CUST_ID = #{custId}
+                AND TC1.CUST_ID = #{custId}
               </if>
               <if test = 'custDeptId != null and custDeptId != ""'>
-                AND TO1.REQ_DEPT_ID = #{custDeptId}
+                AND TC1.DEPT_ID = #{custDeptId}
+              </if>
+              -- 차량 검색
+              <if test = 'vehicId != null and vehicId != ""'>
+                AND TC1.VEHIC_ID = #{vehicId}
+              </if>
+              <if test = 'driverId != null and driverId != ""'>
+                AND TC1.DRIVER_ID = #{driverId}
               </if>
               -- 오더ID 검색
               <if test = 'orderId != null and orderId != ""'>
@@ -373,7 +380,7 @@
           ) TC2
           LEFT OUTER JOIN T_ORDER TO2 ON TC2.ORDER_ID = TO2.ORDER_ID
           LEFT OUTER JOIN T_ORDER_ALLOC TOA ON TC2.ORDER_ID = TOA.ORDER_ID AND TC2.MNG_CUST_ID = TOA.SELL_CUST_ID AND TC2.MNG_DEPT_ID = TOA.SELL_DEPT_ID
-          LEFT OUTER JOIN T_CUST_MST TCM ON TC2.REQ_CUST_ID = TCM.CUST_ID
+          LEFT OUTER JOIN T_CUST_MST TCM ON TC2.CUST_ID = TCM.CUST_ID
           LEFT OUTER JOIN T_CUST_VEHIC TCV ON TOA.SELL_CUST_ID = TCV.CUST_ID AND TOA.SELL_DEPT_ID = TCV.DEPT_ID AND TOA.VEHIC_ID = TCV.VEHIC_ID AND TOA.DRIVER_ID = TCV.DRIVER_ID
           LEFT OUTER JOIN (SELECT TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID FROM T_TAX_ITEM TA INNER JOIN T_TAX_INVOICE TB ON TA.INV_ID = TB.INV_ID WHERE 1=1 AND ISNULL(TB.USE_YN, 'Y') = 'Y' AND TB.LOADSTATUS = '1' AND TB.DOC_ATTR != 'D' GROUP BY TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID) TTI ON TO2.ORDER_ID = TTI.ORDER_ID AND TC2.BUY_ALLOC_ID = TTI.ALLOC_ID
           WHERE 1=1
@@ -600,12 +607,19 @@
             <if test = 'carryOver != "Y"'>
               AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
             </if>
-            -- 거래처(화주) 검색
+            -- 거래처(주선/운송사) 검색
             <if test = 'custId != null and custId != ""'>
-              AND TO1.REQ_CUST_ID = #{custId}
+              AND TC1.CUST_ID = #{custId}
             </if>
             <if test = 'custDeptId != null and custDeptId != ""'>
-              AND TO1.REQ_DEPT_ID = #{custDeptId}
+              AND TC1.DEPT_ID = #{custDeptId}
+            </if>
+            -- 차량 검색
+            <if test = 'vehicId != null and vehicId != ""'>
+              AND TC1.VEHIC_ID = #{vehicId}
+            </if>
+            <if test = 'driverId != null and driverId != ""'>
+              AND TC1.DRIVER_ID = #{driverId}
             </if>
             -- 오더ID 검색
             <if test = 'orderId != null and orderId != ""'>
@@ -639,7 +653,7 @@
         ) TC2
         LEFT OUTER JOIN T_ORDER TO2 ON TC2.ORDER_ID = TO2.ORDER_ID
         LEFT OUTER JOIN T_ORDER_ALLOC TOA ON TC2.ORDER_ID = TOA.ORDER_ID AND TC2.MNG_CUST_ID = TOA.SELL_CUST_ID AND TC2.MNG_DEPT_ID = TOA.SELL_DEPT_ID
-        LEFT OUTER JOIN T_CUST_MST TCM ON TC2.REQ_CUST_ID = TCM.CUST_ID
+        LEFT OUTER JOIN T_CUST_MST TCM ON TC2.CUST_ID = TCM.CUST_ID
         LEFT OUTER JOIN T_CUST_VEHIC TCV ON TOA.SELL_CUST_ID = TCV.CUST_ID AND TOA.SELL_DEPT_ID = TCV.DEPT_ID AND TOA.VEHIC_ID = TCV.VEHIC_ID AND TOA.DRIVER_ID = TCV.DRIVER_ID
         LEFT OUTER JOIN (SELECT TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID FROM T_TAX_ITEM TA INNER JOIN T_TAX_INVOICE TB ON TA.INV_ID = TB.INV_ID WHERE 1=1 AND ISNULL(TB.USE_YN, 'Y') = 'Y' AND TB.LOADSTATUS = '1' AND TB.DOC_ATTR != 'D' GROUP BY TA.INV_ID, TA.ORDER_ID, TA.ALLOC_ID) TTI ON TO2.ORDER_ID = TTI.ORDER_ID AND TC2.BUY_ALLOC_ID = TTI.ALLOC_ID
         WHERE 1=1
