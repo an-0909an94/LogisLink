@@ -817,8 +817,8 @@
  				}
  			},
  			columns: [
- 				{ field: "custName", title: "거래처명", width: 'auto' },
- 				{ field: "deptName", title: "부서명", width: 'auto' }
+ 				{ field: "custName", title: "거래처명", width: '220' },
+ 				{ field: "deptName", title: "부서명", width: '120' }
  			]
  		}).data("kendoMultiColumnComboBox");
  		
@@ -909,8 +909,8 @@
                 }
             },
             columns: [
-                { field: "bizName", title: "사업자명", width:100 },
-                { field: "bizNum", title: "사업자번호", width:100 }
+                { field: "bizName", title: "사업자명", width: "100" },
+                { field: "bizNum", title: "사업자번호", width: "100" }
             ]
         }).data("kendoMultiColumnComboBox");
     	

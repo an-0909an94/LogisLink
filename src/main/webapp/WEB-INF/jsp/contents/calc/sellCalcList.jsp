@@ -688,8 +688,8 @@
             	}
             },
             columns: [
-            	{ field: "custName", title: "거래처명", width: 'auto' },
-            	{ field: "deptName", title: "부서명", width: 'auto' }
+            	{ field: "custName", title: "거래처명", width: "220" },
+            	{ field: "deptName", title: "부서명", width: "120" }
             ]
 		}).data("kendoMultiColumnComboBox");
     	
