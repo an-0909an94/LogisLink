@@ -502,7 +502,7 @@
                                                             <b class="btn-r"> <i class="k-icon k-i-trash"></i>삭제처리
                                                             </b>
                                                         </a>
-                                                        <a href="#" class="k-pager-refresh k-button" id="resChange" onClick="changeResModalOpen()">
+                                                        <a href="#" class="k-pager-refresh k-button" id="resChange" onClick="changeResModalOpen()" style="display: none;">
                                                             <b class="btn-b"> <i class="k-icon k-i-user"></i>매입처변경
                                                             </b>
                                                         </a>
@@ -1402,61 +1402,41 @@
  		if (selectedList.size > 0) {
     		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?\n이미 처리된 건은 제외됩니다.";
     		if (confirm(message)) {
-    			var calcIdList = [];
+    			
+    			// object -> Json 
+    			var param = [];
     			for (var [key, value] of selectedList) {
-    				if ((value.deleteYn == "" || value.deleteYn == "N") &&
-    					(value.finishYn == "" || value.finishYn == "N")) {
-    					/*
-    						buyChargeId
-    						buyWaypointChargeId
-    						buyStayChargeId
-    						buyHandworkChargeId
-    						buyRoundChargeId
-    						buyOtheraddChargeId
-    						buyServiceFeeChargeId
-    					*/
-    					if (value.buyChargeId != null && value.buyChargeId != "")
-    						calcIdList.push(value.buyChargeId);
-    					
-    					if (value.buyWaypointChargeId != null && value.buyWaypointChargeId != "")
-    						calcIdList.push(value.buyWaypointChargeId);
-    					
-    					if (value.buyStayChargeId != null && value.buyStayChargeId != "")
-    						calcIdList.push(value.buyStayChargeId);
-    					
-    					if (value.buyHandworkChargeId != null && value.buyHandworkChargeId != "")
-    						calcIdList.push(value.buyHandworkChargeId);
-    					
-    					if (value.buyRoundChargeId != null && value.buyRoundChargeId != "")
-    						calcIdList.push(value.buyRoundChargeId);
-    					
-    					if (value.buyOtheraddChargeId != null && value.buyOtheraddChargeId != "")
-    						calcIdList.push(value.buyOtheraddChargeId);
-    					
-    					if (value.buyServiceFeeChargeId != null && value.buyServiceFeeChargeId != "")
-    						calcIdList.push(value.buyServiceFeeChargeId);
-    				}
+    				param.push(value);
     			}
     			
+    			var params = {
+				   "param": JSON.stringify(param),
+				   "mode": "Y"
+				}
+    			
     			$.ajax({
-        			url: "/contents/calc/data/setBuyCalcFinish.do",
-        			type: "POST",
-        			dataType: "json",
-        			data: {
-        				mode: "Y",
-        				calcIdList: calcIdList.toString()
-        			},
-        			success: function(data){
-        				if (data.linkMessage.status == 0) {
-        					// 요청 성공시 내용 기술
-							alert(data.linkMessage.message);
-							goList();
-							//contextMenu.close();
-        				} else {
-        					alert(data.linkMessage.message);
-        				}
-        			}
-        		});
+    				url: "/contents/calc/data/setBuyCalcFinish.do",
+    				type: "POST",
+    				dataType: "json",
+    				data: params,
+    				success: function(data) {
+    					// 결과 출력
+    					var failCnt = 0;
+    	  				for (var i = 0; i < data.linkMessages.length; i++) {
+    	  					linkMessage = data.linkMessages[i];
+    	  					if (linkMessage.status < 0) {
+    	  						failCnt++;
+    	  					}
+    	  				}
+    	  				if (failCnt <= 0) {
+    	  					alert(data.linkMessages.length + "건의 마감처리가 되었습니다.");
+    	  				} else {
+    	  					alert(data.linkMessages.length + "건 중 " + failCnt + "건이 실패했습니다.\n상세 내역은 로그를 확인하세요.");
+    	  				}
+						
+						goList();
+    				}
+    			});
     		}
     	} else {
     		alert("마감처리할 항목을 선택해 주세요.");
@@ -1468,61 +1448,49 @@
  		if (selectedList.size > 0) {
     		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 취소를 하시겠습니까?\n이미 처리된 건은 제외됩니다.";
     		if (confirm(message)) {
-    			var calcIdList = [];
+    			
+    			// object -> Json 
+    			var param = [];
     			for (var [key, value] of selectedList) {
-    				if ((value.deleteYn == "" || value.deleteYn == "N") &&
-    					(value.finishYn != "" || value.finishYn != "N")) {
-    					/*
-    						buyChargeId
-    						buyWaypointChargeId
-    						buyStayChargeId
-    						buyHandworkChargeId
-    						buyRoundChargeId
-    						buyOtheraddChargeId
-    						buyServiceFeeChargeId
-    					*/
-    					if (value.buyChargeId != null && value.buyChargeId != "")
-    						calcIdList.push(value.buyChargeId);
-    					
-    					if (value.buyWaypointChargeId != null && value.buyWaypointChargeId != "")
-    						calcIdList.push(value.buyWaypointChargeId);
-    					
-    					if (value.buyStayChargeId != null && value.buyStayChargeId != "")
-    						calcIdList.push(value.buyStayChargeId);
-    					
-    					if (value.buyHandworkChargeId != null && value.buyHandworkChargeId != "")
-    						calcIdList.push(value.buyHandworkChargeId);
-    					
-    					if (value.buyRoundChargeId != null && value.buyRoundChargeId != "")
-    						calcIdList.push(value.buyRoundChargeId);
-    					
-    					if (value.buyOtheraddChargeId != null && value.buyOtheraddChargeId != "")
-    						calcIdList.push(value.buyOtheraddChargeId);
-    					
-    					if (value.buyServiceFeeChargeId != null && value.buyServiceFeeChargeId != "")
-    						calcIdList.push(value.buyServiceFeeChargeId);
-    				}
+    				param.push(value);
     			}
     			
+    			var params = {
+				   "param": JSON.stringify(param),
+				   "mode": "N"
+				}
+    			
     			$.ajax({
-        			url: "/contents/calc/data/setBuyCalcFinish.do",
-        			type: "POST",
-        			dataType: "json",
-        			data: {
-        				mode: "N",
-        				calcIdList: calcIdList.toString()
-        			},
-        			success: function(data){
-        				if (data.linkMessage.status == 0) {
-        					// 요청 성공시 내용 기술
-							alert(data.linkMessage.message);
-							goList();
-							//contextMenu.close();
-        				} else {
-        					alert(data.linkMessage.message);
-        				}
-        			}
-        		});
+    				url: "/contents/calc/data/setBuyCalcFinish.do",
+    				type: "POST",
+    				dataType: "json",
+    				data: params,
+    				success: function(data) {
+    					// 결과 출력
+						var failCnt = 0;
+						var cancelCnt = 0;
+						for (var i = 0; i < data.linkMessages.length; i++) {
+							linkMessage = data.linkMessages[i];
+							if (linkMessage.status < 0) {
+								failCnt++;
+							} else if (linkMessage.status > 0) {
+								cancelCnt++;
+							}
+						}
+						
+						if (cancelCnt > 0) {
+							alert(data.linkMessages.length + "건 중 " + cancelCnt + "건은 지급 진행중이므로 마감 취소를 할 수 없습니다.");
+						}
+						
+						if (failCnt <= 0) {
+							alert((data.linkMessages.length - cancelCnt) + "건의 마감 취소 처리가 되었습니다.");
+						} else {
+							alert(data.linkMessages.length + "건 중 " + failCnt + "건이 실패했습니다.\n상세 내역은 로그를 확인하세요.");
+						}
+						
+						goList();
+    				}
+    			});
     		}
     	} else {
     		alert("마감처리할 항목을 선택해 주세요.");
@@ -1950,12 +1918,14 @@
      
      $('#fChangeRes').validator().on('submit', function(e) {
     	 if (e.isDefaultPrevented()) {
-    		 alert("항목을 입력해 주세요.");
+//     		 alert("항목을 입력해 주세요.");
     		 e.preventDefault();
     		 return;
     	 }
+    	 
+    	 
      });
-    
+     
  	// 그리드 컨택스트 메뉴 처리
     function onContextMenuSelect(e) {
     	var item = e.item.id;

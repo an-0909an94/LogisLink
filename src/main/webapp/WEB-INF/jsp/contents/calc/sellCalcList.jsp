@@ -1541,7 +1541,7 @@
         $(".list-unstyled").remove();
     }
     
-    $('#fChangeReq').validator().on('submit', function (e) {
+    $('#fChangeReq').validator().on('submit', function(e) {
     	if (e.isDefaultPrevented()) {
     		alert("항목을 입력해 주세요.");
     		e.preventDefault();

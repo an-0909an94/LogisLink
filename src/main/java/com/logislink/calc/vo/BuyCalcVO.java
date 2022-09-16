@@ -72,6 +72,8 @@ public class BuyCalcVO {
 	public String deptId;
 	public String reqCustId;
 	public String reqDeptId;
+	public String vehicId;
+	public String driverId;
 	
 	public String buyAllocId;
 	public String buyChargeId;
@@ -87,4 +89,6 @@ public class BuyCalcVO {
 	public String sDateFull;
 	public String eDateFull;
 	public String taxinvId;
+	
+	public String calcTypeCode;
 }

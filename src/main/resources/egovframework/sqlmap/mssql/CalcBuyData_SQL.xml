@@ -106,6 +106,8 @@
         , DEPT_ID AS deptId
         , REQ_CUST_ID AS reqCustId
         , REQ_DEPT_ID AS reqDeptId
+        , VEHIC_ID AS vehicId
+        , DRIVER_ID AS driverId
         
         , BUY_ALLOC_ID AS buyAllocId
         , BUY_CHARGE_ID AS buyChargeId
@@ -121,6 +123,8 @@
         , S_DATE_FULL AS sDateFull
         , E_DATE_FULL AS eDateFull
         , INV_ID AS taxinvId
+        
+        , CHARGE_TYPE AS calcTypeCode
       FROM (
         SELECT
           TC2.ORDER_ID AS ORDER_ID
@@ -212,8 +216,13 @@
           , TC2.BUY_OTHERADD_CHARGE_ID
           , TC2.BUY_SERVICE_FEE_CHARGE_ID
     
+          , TOA.VEHIC_ID
+          , TOA.DRIVER_ID
           , TOA.ALLOC_STATE
+          
           , TTI.INV_ID
+          
+          , TO2.CHARGE_TYPE
         FROM (
           SELECT
             T_CALC.ORDER_ID
@@ -861,7 +870,12 @@
   <update id="updateBuyCalcFinish" statementType="CALLABLE" parameterType="java.util.HashMap">
     { call UPDATE_BUY_CALC_FINISH (
               #{mode}
-            , #{editId}
+            , #{regId}
+            , #{custId}
+            , #{deptId}
+            , #{vehicId}
+            , #{driverId}
+            , #{allocId}
             , #{calcIdList}
             , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
             , #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})

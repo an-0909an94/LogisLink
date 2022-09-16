@@ -30,7 +30,7 @@ import com.logislink.login.vo.LoginVO;
 
 @Controller
 public class BuyCalcController {
-	private Logger log = Logger.getLogger(this.getClass());
+	private Logger logger = Logger.getLogger(this.getClass());
 	private String menuCode = "C3130";
 	
 	@Resource(name = "buyCalcService")
@@ -251,6 +251,9 @@ public class BuyCalcController {
 				linkMessage.setMessage("오더ID: " + item.get("orderId") + "에 대한 청구 운송비 변경 처리에 실패했습니다.\n다시 확인하세요.");
 				linkMessage.setDetailMessage(e.getMessage());
 				
+				logger.error("오더ID: " + item.get("orderId") + "에 대한 청구 운송비 변경 처리에 실패했습니다.");
+				logger.error(e.getStackTrace().toString());
+				
 				LinkMessageData linkMesasgeData = new LinkMessageData();
 				linkMesasgeData.setData(item);
 				linkMesasgeData.setDataType("Map<String, Object>");
@@ -267,7 +270,7 @@ public class BuyCalcController {
 	}
 	
 	@PostMapping(value="/contents/calc/data/setBuyCalcFinish.do")
-	public String setBuyCalcFinish(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+	public String setBuyCalcFinish(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
 		
 		// 권한 체크???
 
@@ -279,24 +282,88 @@ public class BuyCalcController {
 //			param.put("mngDeptId", param.get("sDeptId"));
 //		}
 		
-		param.put("editId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+		String finishMode = param.get("mode").toString();
+		String json = param.get("param").toString();
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<Map<String, Object>> calcFinishList = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});
 		
-		LinkMessage linkMessage = new LinkMessage();
-		try {
-			buyCalcService.updateBuyCalcFinish(param);
+	    List<LinkMessage> linkMessages = new ArrayList<>();
+	    for (Map<String, Object> item : calcFinishList) {
+	    	
+	    	// 서비스로 넘길 파라미터 항목을 매핑한다.
+			Map<String, Object> parameter = new HashMap<String, Object>();
+			parameter.put("custId", item.get("custId"));
+			parameter.put("deptId", item.get("deptId"));
+			parameter.put("vehicId", item.get("vehicId"));
+			parameter.put("driverId", item.get("driverId"));
+			parameter.put("allocId", item.get("buyAllocId"));
 			
-			linkMessage.setSender(this.getClass().getName());
-			linkMessage.setStatus(0);
-			linkMessage.setMessage(param.get("retMsg").toString());
-		} catch (Exception e) {
-			linkMessage.setSender(this.getClass().getName());
-			linkMessage.setStatus(-1);
-			linkMessage.setMessage("마감처리에 실패했습니다.\n시스템 관리자에게 문의하세요.");
-			linkMessage.setDetailMessage(e.getMessage());
-		}
-		
-		map.clear();
-		map.put("linkMessage", linkMessage);
+			String calcIdList = "";
+			String buyChargeId = item.get("buyChargeId").toString();
+			if (buyChargeId != "")
+				calcIdList += buyChargeId;
+				
+			String buyWaypointChargeId = item.get("buyWaypointChargeId").toString();
+			if (buyWaypointChargeId != "")
+				calcIdList += ", " + buyWaypointChargeId;
+			
+			String buyStayChargeId = item.get("buyStayChargeId").toString();
+			if (buyStayChargeId != "")
+				calcIdList += ", " + buyStayChargeId;
+			
+			String buyHandworkChargeId = item.get("buyHandworkChargeId").toString();
+			if (buyHandworkChargeId != "")
+				calcIdList += ", " + buyHandworkChargeId;
+			
+			String buyRoundChargeId = item.get("buyRoundChargeId").toString();
+			if (buyRoundChargeId != "")
+				calcIdList += ", " + buyRoundChargeId;
+			
+			String buyOtheraddChargeId = item.get("buyOtheraddChargeId").toString();
+			if (buyOtheraddChargeId != "")
+				calcIdList += ", " + buyOtheraddChargeId;
+			
+			String buyServiceFeeChargeId = item.get("buyServiceFeeChargeId").toString();
+			if (buyServiceFeeChargeId != "")
+				calcIdList += ", " + buyServiceFeeChargeId;
+			parameter.put("calcIdList", calcIdList);
+			
+			parameter.put("mode", finishMode);
+			parameter.put("regId", ((LoginVO)session.getAttribute("userInfo")).getUserId());
+			
+			LinkMessage linkMessage = new LinkMessage();
+			try {
+				buyCalcService.updateBuyCalcFinish(parameter);
+				
+				if (parameter.get("retCode").toString().equals("00")) {
+					linkMessage.setStatus(0);
+				} else {
+					linkMessage.setStatus(1);
+				}
+				linkMessage.setSender(this.getClass().getName());
+				linkMessage.setMessage(parameter.get("retMsg").toString());
+				
+				linkMessages.add(linkMessage);
+			} catch (Exception e) {
+				linkMessage.setSender(this.getClass().getName());
+				linkMessage.setStatus(-1);
+				linkMessage.setMessage("오더ID: " + item.get("orderId") + "에 대한 마감 처리에 실패했습니다.\n다시 확인하세요.");
+				linkMessage.setDetailMessage(e.getMessage());
+				
+				logger.error("오더ID: " + item.get("orderId") + "에 대한 마감 처리에 실패했습니다.");
+				logger.error(e.getStackTrace().toString());
+				
+				LinkMessageData linkMesasgeData = new LinkMessageData();
+				linkMesasgeData.setData(item);
+				linkMesasgeData.setDataType("Map<String, Object>");
+				linkMessage.setData(linkMesasgeData);
+				
+				linkMessages.add(linkMessage);
+			}
+	    }
+	    
+	    map.clear();
+		map.put("linkMessages", linkMessages);
 		
 		return "jsonView";
 	}
