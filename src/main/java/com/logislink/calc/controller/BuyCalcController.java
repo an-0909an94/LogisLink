@@ -305,27 +305,27 @@ public class BuyCalcController {
 				
 			String buyWaypointChargeId = item.get("buyWaypointChargeId").toString();
 			if (buyWaypointChargeId != "")
-				calcIdList += ", " + buyWaypointChargeId;
+				calcIdList += "," + buyWaypointChargeId;
 			
 			String buyStayChargeId = item.get("buyStayChargeId").toString();
 			if (buyStayChargeId != "")
-				calcIdList += ", " + buyStayChargeId;
+				calcIdList += "," + buyStayChargeId;
 			
 			String buyHandworkChargeId = item.get("buyHandworkChargeId").toString();
 			if (buyHandworkChargeId != "")
-				calcIdList += ", " + buyHandworkChargeId;
+				calcIdList += "," + buyHandworkChargeId;
 			
 			String buyRoundChargeId = item.get("buyRoundChargeId").toString();
 			if (buyRoundChargeId != "")
-				calcIdList += ", " + buyRoundChargeId;
+				calcIdList += "," + buyRoundChargeId;
 			
 			String buyOtheraddChargeId = item.get("buyOtheraddChargeId").toString();
 			if (buyOtheraddChargeId != "")
-				calcIdList += ", " + buyOtheraddChargeId;
+				calcIdList += "," + buyOtheraddChargeId;
 			
 			String buyServiceFeeChargeId = item.get("buyServiceFeeChargeId").toString();
 			if (buyServiceFeeChargeId != "")
-				calcIdList += ", " + buyServiceFeeChargeId;
+				calcIdList += "," + buyServiceFeeChargeId;
 			parameter.put("calcIdList", calcIdList);
 			
 			parameter.put("mode", finishMode);
