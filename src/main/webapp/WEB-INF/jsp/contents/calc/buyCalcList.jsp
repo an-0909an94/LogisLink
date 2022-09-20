@@ -1446,7 +1446,7 @@
  	// 마감취소
  	function calcFinishCancel() {
  		if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 취소를 하시겠습니까?\n이미 처리된 건은 제외됩니다.";
+    		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 취소를 하시겠습니까?\n마감 처리된 건만 취소됩니다.";
     		if (confirm(message)) {
     			
     			// object -> Json 

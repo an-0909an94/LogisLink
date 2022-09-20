@@ -290,6 +290,21 @@ public class BuyCalcController {
 	    List<LinkMessage> linkMessages = new ArrayList<>();
 	    for (Map<String, Object> item : calcFinishList) {
 	    	
+	    	// 모드에 따라 취소 시 마감 처리안된 건 제외 / 삭제건 제외, 마감 시 마감 처리된 건 제외 / 삭제건 제외
+	    	if (finishMode.equals("Y")) {
+	    		// 마감 처리
+	    		if (!item.get("finishYn").equals("N"))
+	    			continue;
+	    	} else {
+	    		// 마감 취소
+	    		if (item.get("finishYn").equals("N"))
+	    			continue;
+	    	}
+	    	
+	    	// 삭제건 제외
+	    	if (!item.get("deleteYn").equals("N"))
+	    		continue;
+	    	
 	    	// 서비스로 넘길 파라미터 항목을 매핑한다.
 			Map<String, Object> parameter = new HashMap<String, Object>();
 			parameter.put("custId", item.get("custId"));
