@@ -506,6 +506,7 @@
 			 , D.CAR_NUM          				buyCarNum
 			 , ISNULL(D.LINK_YN, 'N')			buyLinkYn
 			 , D.LINK_CODE						linkType
+			 , D.TALK_YN						talkYn
 		     , E.CUST_NAME        				buyCustName
 		     , ISNULL(D.ALLOC_STATE, '00')      allocState
     		 , G.CAR_SCTN_CODE 					carSctnCode
@@ -580,7 +581,7 @@
 		      SELECT 
 		             ORDER_ID     , ALLOC_ID      , SELL_CUST_ID   , SELL_DEPT_ID   , SELL_STAFF_ID
 		           , BUY_CUST_ID  , BUY_DEPT_ID   , BUY_STAFF_ID   , ALLOC_CHARGE   , ALLOC_FEE
-		           , REGDATE      , REGID		  , SELL_STAFF_TEL , SELL_WEIGHT	
+		           , REGDATE      , REGID		  , SELL_STAFF_TEL , SELL_WEIGHT
 		      FROM
 		            T_ORDER_ALLOC
 		      WHERE
@@ -772,7 +773,7 @@
    	</update>
    
    	<update id="orderWrite" statementType="CALLABLE" parameterType="java.util.HashMap">
-		{call INSERT_ORDER(
+		{call INSERT_ORDER1(
 						    #{mode}
 						  , #{sellCustId}
 						  , #{orderId}
@@ -867,6 +868,7 @@
 						  , #{dangerGoodsYn}
 						  , #{chemicalsYn}
 						  , #{foreignLicenseYn}
+						  , #{chkTalk}
 						  , #{outBuyTaxCnt, mode=OUT, jdbcType=INTEGER, javaType=int}
 						  , #{outSellTaxCnt, mode=OUT, jdbcType=INTEGER, javaType=int}
 						  , #{buyAllocId, mode=OUT, jdbcType=NVARCHAR, javaType=String}
@@ -1012,7 +1014,7 @@
    	</select>
    	
    	<update id="updateOrderAlloc" statementType="CALLABLE" parameterType="java.util.HashMap">
-   		{call UPDATE_ORDER_ALLOC(
+   		{call UPDATE_ORDER_ALLOC1(
    									#{orderId}
    							 	  ,	#{allocId}
    								  , #{custId}
@@ -1037,6 +1039,7 @@
    								  , #{sellWeight}
    								  , #{linkSelect}
    								  , #{payType}
+								  , #{chkTalkYN}
 							  	  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
 							      ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})   		
    		}
@@ -1053,12 +1056,13 @@
 	</update>
 	
 	<update id="updateAllocState" statementType="CALLABLE" parameterType="java.util.HashMap">
-	   	{call UPDATE_ALLOC_STATE(
+	   	{call UPDATE_ALLOC_STATE1(
 							    #{orderId}
 							  , #{allocId}	
 							  , #{allocState}	
 							  , #{regid}
 							  , #{enterDate}
+						 	  , #{chkTalkYN}
 							  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
 							  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
 		}

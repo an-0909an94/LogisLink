@@ -196,6 +196,8 @@ public class OrderVO {
 	   private String taxinvYn;
 	   private String taxinvDate;
 	   private String invId;
+	   //알림톡 사용여부 추가
+	   private String talkYn;
 	   
 	public String getOrderId() {
 		return orderId;
@@ -1296,5 +1298,8 @@ public class OrderVO {
 	public void setReqTaxTelNum(String reqTaxTelNum) {
 		this.reqTaxTelNum = reqTaxTelNum;
 	}
-	
+
+	public String getTalkYn() {	return talkYn;	}
+
+	public void setTalkYn(String talkYn) {	this.talkYn = talkYn;	}
 }

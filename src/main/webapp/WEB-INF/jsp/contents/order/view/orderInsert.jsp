@@ -734,6 +734,16 @@
                                     <div class="input-group input-group-sm col" id="driverProposal" style="align-self: flex-end;">
                                         <a id="driverProposalBtn" class="k-button">추천차주</a>
                                     </div>
+                                    <div id="chkTalkYDiv" class="input-group input-group-sm col radio-or-checkBox">
+                                        <input id="chkTalkY" name="chkTalk" type="radio" value="Y" checked="checked">
+                                        <label for="chkTalkY" class="label-margin"> <span>알림</span>
+                                        </label>
+                                    </div>
+                                    <div id="chkTalkNDiv" class="input-group input-group-sm col radio-or-checkBox">
+                                        <input id="chkTalkN" name="chkTalk" type="radio" value="N">
+                                        <label for="chkTalkN" class="label-margin"> <span>미알림</span>
+                                        </label>
+                                    </div>
                                 </div>
 
                                 <!-- 운송사지정 열기, 접기부분 미정-->
@@ -962,6 +972,7 @@
                                         </div>
                                         <div id="driverTelDataDiv" class="input-group input-group-sm col middle-name form-group">
                                             <strong>휴대전화</strong>
+                                            <strong>휴대전화</strong>
                                             <input type="text" id="driverTelData" class="form-control form-control-sm" readonly>
                                         </div>
                                     </div>
@@ -1083,7 +1094,7 @@ oPopGrid.setEditable(false);
 oPopGrid.setSortable(false);
 oPopGrid.setSelectable(true);
 oPopGrid.setSendUrl("/contents/order/data/orderList.do");
-oPopGrid.setGrid(popColumns); 
+oPopGrid.setGrid(popColumns);
 
 var carTypeData = Util.getComCode("CAR_TYPE_CD");
 var carTonData = Util.getComCode("CAR_TON_CD");
@@ -1129,17 +1140,17 @@ $(document).ready(function(){
     Util.setCmmCode("select", "payType", "PAY_TYPE_CD", "N", "선택하세요");
 	$("[name='driverState'] option").not("[value='01']").not("[value='04']")
 	.not("[value='05']").not("[value='12']").not("[value='21']").remove();
-	
+
 
 	setFrtSelect(truckTypeData, "truckTypeCode", "01", "TR");
 	setFrtSelect(carTypeData, "carTypeCode", "TR", "");
 	setFrtSelect(carTonData, "carTonCode", "TR", "");
 	setFrtSelect(carTypeData, "buyCarTypeCode", "", "");
 	setFrtSelect(carTonData, "buyCarTonCode", "", "");
-	
+
 	$("#sDateDay").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
 	$("#eDateDay").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
-	
+
 	var sDateDay = $("#sDateDay").data("kendoDatePicker");
 	var eDateDay = $("#eDateDay").data("kendoDatePicker");
 	var allocDate = $("#allocDate").data("kendoDatePicker");
@@ -1150,7 +1161,7 @@ $(document).ready(function(){
 	$("#sDateTime, #eDateTime").kendoTimePicker({format: "HH:mm", value : new Date(), dateInput: true});
 	$("#enterDatePicker").kendoDateTimePicker({format: "yyyy-MM-dd HH:mm:ss", timeFormat: "HH:mm:ss", value : new Date(), dateInput: true});
 	$("#allocDate").kendoDateTimePicker({format: "yyyy-MM-dd HH:mm:ss", timeFormat: "HH:mm:ss", value : new Date(), dateInput: true});
-	
+
 	$("input[data-role='datepicker']").on("focus", function(e) {
 		var id = e.target.id;
 		switch (id) {
@@ -1180,7 +1191,7 @@ $(document).ready(function(){
 				break;
 		}
 	});
-	
+
     $("input[data-role='datepicker']").on("keydown", function(e) {
         if ($.isNumeric(e.key)) {
             var id = e.target.id;
@@ -1229,31 +1240,31 @@ $(document).ready(function(){
             }
         }
     });
-	
+
 	$("#driverKind").hide();
 	$("#allocButtons").hide();
 	$("#driverStateDiv").hide();
 	$("#car").prop("disabled",  false);
 	$("#carrier").prop("disabled", false);
 
-	$(".splitter").kendoSplitter({  
+	$(".splitter").kendoSplitter({
         orientation: "vertical",
         panes: [{resizable:true}, {resizable:true}]
-    }); 
-	
+    });
+
 	$("#inOutSctn").on("change", function(){
 		setFrtSelect(truckTypeData, "truckTypeCode", $(this).val(), "");
 	});
-	
+
 	$("#truckTypeCode").on("change", function(){
 		setFrtSelect(carTypeData, "carTypeCode", $(this).val(), "");
-		setFrtSelect(carTonData, "carTonCode", $(this).val(), "");		
+		setFrtSelect(carTonData, "carTonCode", $(this).val(), "");
 	});
 
 	$("input[name='chargeType']:radio").on("change", function(){
 		payTypeChk();
 		var chargeTypeValue = this.value;
-		
+
 		if(chargeTypeValue == "01"){
 			$(".priceCommission").attr("readonly",true);
 			if($("#sellFee").val() != ""){
@@ -1270,7 +1281,7 @@ $(document).ready(function(){
 
 	priceModal = $("#priceView");
 	priceDetail = $("#priceDetail");
-	
+
 	priceDetail.click(function() {
 		var sGungu = $("#sGungu").val().split(' ')[0];
 		var eGungu = $("#eGungu").val().split(' ')[0];
@@ -1281,12 +1292,12 @@ $(document).ready(function(){
 			eGungu: eGungu,
 			carTonCode: $("#carTonCode").val()
 		}
-		
+
 		$.ajax({
 			url: "/contents/order/data/priceDetail.do",
 			type: "POST",
 			dataType: "json",
-			data: param,				
+			data: param,
 			success: function(data){
 				$("#minFare").html(Util.nvl(Util.formatNumber(data.data.minFare),'0'));
 				$("#maxFare").html(Util.nvl(Util.formatNumber(data.data.maxFare),'0'));
@@ -1305,14 +1316,14 @@ $(document).ready(function(){
 		modal: false,
 		close: function(){priceModal.fadeIn();}
 	});
-	
+
 	prevModal = $("#prveOrderList");
 	prevOrder = $("#prevOrder");
-	
+
 	prevOrder.click(function() {
 		prevModal.data("kendoDialog").open();
 	});
-	
+
 	prevModal.kendoDialog({
 		width: "800px",
 		height: "503px",
@@ -1325,11 +1336,11 @@ $(document).ready(function(){
 
 	carModal = $("#carModal");
 	carModalBtn = $("#carModalBtn");
-	
+
 	carModalBtn.click(function() {
 		carModal.data("kendoDialog").open();
 	})
-	
+
 	carModal.kendoDialog({
 		width: "450px",
 		height: "341px",
@@ -1339,9 +1350,9 @@ $(document).ready(function(){
 		modal: false,
 		close: function(){carModalBtn.fadeIn();}
 	});
-	
+
 	popDriverStateModal = $("#popDriverState");
-	
+
 	popDriverStateModal.kendoDialog({
 		width: "350px",
 		height: "230px",
@@ -1351,7 +1362,7 @@ $(document).ready(function(){
 		modal: false,
 		close: function(){popDriverStateModal.fadeIn();}
 	})
-	
+
 	$("#driverProposalBtn").on("click", function(){
 		if(!$("#eSido").val() != '' && !$("#eGungu").val() != '' && !$("#eDong").val() != ''
 		&& !$("#sSido").val() != '' && !$("#sGungu").val() != '' && !$("#sDong").val() != ''){
@@ -1392,8 +1403,12 @@ $(document).ready(function(){
 			$("#driverOtherOpenClose").hide();
 			$("#allocC").html("배차추가열기");
 			if(!$("#buyCustId").val()) {
-				buyCustName.enable(true);	
+				buyCustName.enable(true);
 			}
+            $("#chkTalkYDiv").hide();
+            $("#chkTalkNDiv").hide();
+
+
 		} else {
 			$("#divAllocD").show();
 			$("#divAllocC").hide();
@@ -1405,9 +1420,13 @@ $(document).ready(function(){
 			$("#allocCOpenClose").hide();
 			$("#driverOtherOpenClose").hide();
 			$("#allocD").html("배차추가열기");
+
+            $("#chkTalkYDiv").show();
+            $("#chkTalkNDiv").show();
+
 		}
 	});
-	
+
 	// 부서 선택 기본값 : session dept_id
 	lastDeptSeleted = "${sessionScope.userInfo.deptId}";
 	$("#deptId").val(lastDeptSeleted);
@@ -1422,23 +1441,47 @@ $(document).ready(function(){
 	sellCustName.bind("change", searchSellCustSelectTrigger);
 	sellCustName.bind("select", payTypeChk);
 
-	//담당직원 자동완성	
+	//담당직원 자동완성
 	reqStaff = 	MultiColumnComboBox.setStaff("sell");
-		
+
 	//운송사 자동완성
 	buyCustName = MultiColumnComboBox.setCustName("buy", "02", lastDeptSeleted);
 	buyCustName.bind("select", changeBuyCust);
 	buyCustName.bind("change", searchBuyCustSelectTrigger);
 
-	//담당직원 자동완성	
+	//담당직원 자동완성
 	buyStaff = 	MultiColumnComboBox.setStaff("buy");
 	//차량
 	buyCarNum = MultiColumnComboBox.setCarNum("buyCarNum", lastDeptSeleted, "");
+
 	buyCarNum.bind("select", changeBuyCarNum);
 	buyCarNum.bind("change", searchCarNumSelectTrigger);
 	buyCarNum.bind("select", payTypeChk);
 	buyCarNum.bind("select", driverCodeChk);
-	
+
+    buyCarNum.bind("select", function (e) {
+        var dataItem = e.dataItem;
+        if(typeof dataItem == "undefined" || dataItem == null || dataItem == ""){
+            return;
+        }
+        var deptId = dataItem.deptId;
+        var custId = dataItem.custId;
+
+        $.ajax({
+            url: "/contents/basic/data/getUserTalk.do",
+            type: "POST",
+            data: "deptId=" + deptId + "&custId=" + custId,
+            dataType: "json",
+            success: function (data) {
+                if (data.result) {
+                    $("#f input[name =chkTalk]:input[value=" + data.userInfo.talkYn + "]").prop("checked", true);
+                }
+            }
+        })
+    });
+
+
+
 	if("${addrAuth.writeYn}" == "Y") {
 		// 주소지 체크
 		$('#sComName, #sAddrDetail, #sStaff, #sTel').on('change', function() {
@@ -1449,35 +1492,35 @@ $(document).ready(function(){
 			checkCustAddr('e');
 		})
 	}
-	
+
 	sComName.bind("select", addrLatLonValidation);
 	eComName.bind("select", addrLatLonValidation);
 
 	$('#carTonCode').change(function(){
 		var carTonCode = $(this).val();
-		
+
 		if(carTonCode != "") {
-			getCharge("S"); 
+			getCharge("S");
 		}
 	});
 
 	$("#buyCustName").change(function() {
 		var buyDeptName = $(this).val();
-		
+
 		if(buyDeptName != "") {
 			getCharge("B");
 		}
 	});
-	
+
 	//담당부서 변경 시, 기초 데이터 초기화
 	$("#deptId").change(function() {
-		lastDeptSeleted = $(this).val();	
+		lastDeptSeleted = $(this).val();
 		sComName.destroy();
 		sComName = MultiColumnComboBox.setComName("s", lastDeptSeleted);
-		
+
 		eComName.destroy();
 		eComName = MultiColumnComboBox.setComName("e", lastDeptSeleted);
-		
+
 		// 22.07.05 이건욱 T1 > 거래처 조회시 부서명 제외하고 대표명으로 조회 (화주용)
 		// 거래처 자동완성
 		sellCustName.destroy();
@@ -1486,17 +1529,17 @@ $(document).ready(function(){
 		sellCustName.bind("change", searchSellCustSelectTrigger);
 
 		sellCustName.value('');
-		
+
 		reqStaff.destroy();
 		reqStaff = 	MultiColumnComboBox.setStaff("sell");
-			
+
 		//운송사 자동완성
 		buyCustName.destroy();
 		buyCustName = MultiColumnComboBox.setCustName("buy", "02", lastDeptSeleted);
 		buyCustName.bind("select", changeBuyCust);
 		buyCustName.bind("change", searchBuyCustSelectTrigger);
 
-		//담당직원 자동완성	
+		//담당직원 자동완성
 		buyStaff.destroy();
 		buyStaff = 	MultiColumnComboBox.setStaff("buy");
 
@@ -1511,14 +1554,14 @@ function gridDataSet(data) {
 	//init();
 	buyCarNum.value('');
 	sellCustName.enable(false);
-	$("#reqAddr").attr("disabled", true); 
+	$("#reqAddr").attr("disabled", true);
 	$("#reqAddr").next("i").children('img').attr("onclick", "");
 	$("#reqAddrDetail").attr("disabled", true);
 	$("input[name^='reqAddr']").removeAttr("required");
 
 	if("${menuAuth.editYn}" != "Y")	$("#btnSubmit").hide();
 	if("${menuAuth.writeYn}" != "Y")	$("#orderCopy").hide();
-	
+
 	//더미 상/하차지 위도경도 세팅
 	if(data.sLat == ""){
 		data.sLat = "0.0"
@@ -1549,11 +1592,11 @@ function gridDataSet(data) {
 		$("#carMngCode").val("01").prop("selected", true);
 	}
 	$("#sellFeeBack").val(data.sellFee);
-	
+
 	if (lastDeptSeleted != data.deptId) {
 		lastDeptSeleted = data.deptId;
-		$("#deptId").trigger("change");		
-	} 
+		$("#deptId").trigger("change");
+	}
 
 	$("#deptId").prop("disabled", true);
 	setTimeout(function(){
@@ -1568,47 +1611,47 @@ function gridDataSet(data) {
 		reqStaff.refresh();
 		//화주담당자 세팅
 		reqStaff.value(data.reqStaff);
-		
+
 		//상차지명 세팅
 		sComName.value(data.sComName);
-		
+
 		//하차지명 세팅
 		eComName.value(data.eComName);
-		
+
 		//배차거래처 세팅
 		var name = data.buyCustName;
 		buyCustName.select(function(dataItem) {
 		    return dataItem.custName === name;
 		});
 		//배차담당자 세팅
-		
+
 		buyStaff= $("#buyStaff").data("kendoMultiColumnComboBox");
 		buyStaff.refresh();
 		buyStaff.value(data.buyStaff);
-		
-		
+
+
 	}, 50);
-	
+
 	$("#sellFee").val(Util.formatNumberInput($("#sellFee").val()))
-	
+
 	//차량 세팅
 	//carNum.value(data.carNum);
-	
-	//checkBox 별도 세팅	
+
+	//checkBox 별도 세팅
 	$("input[name=mixYn]:input[value=" + data.mixYn + "]").prop("checked", true);
 	btnChkData('mixYn');
 	$("input[name=returnYn]:input[value=" + data.returnYn + "]").prop("checked", true);
 	btnChkData('returnYn');
-	
+
 	$("input[name=dangerGoodsYn]:input[value=" + data.dangerGoodsYn + "]").prop("checked", true);
 	btnChkData('dangerGoodsYn');
-	
+
 	$("input[name=chemicalsYn]:input[value=" + data.chemicalsYn + "]").prop("checked", true);
 	btnChkData('chemicalsYn');
-	
+
 	$("input[name=foreignLicenseYn]:input[value=" + data.foreignLicenseYn + "]").prop("checked", true);
 	btnChkData('foreignLicenseYn');
-	
+
 	$("#car").attr("disabled", false);
 	$("#carrier").attr("disabled", false);
 	//radio button 별도 세팅
@@ -1616,14 +1659,16 @@ function gridDataSet(data) {
 	$("#f input[name=allocKind]:input[value=" + data.allocKind + "]").prop("checked", true);
 	$("#f input[name=allocKind]:input[value=" + data.allocKind + "]").trigger("click");
 	$("#f input[name=unitPriceType]:input[value=" + data.unitPriceType + "]").prop("checked", true);
-	
-	//운임상태가 인수증이 아니면 수수료 readonly속성 삭제 
+
+    $("#f input[name =chkTalk]:input[value=" + data.talkYn + "]").prop("checked", true);
+
+	//운임상태가 인수증이 아니면 수수료 readonly속성 삭제
 	if (data.chargeType == "01"){
-		$(".priceCommission").attr("readonly",true); 
+		$(".priceCommission").attr("readonly",true);
 	} else{
 		$(".priceCommission").removeAttr("readonly");
 	}
-	
+
 	if(Util.nvl(data.linkType,'') == '99'){
 		$("#linkSelect").val('')
 	}else if(Util.nvl(data.linkType,'') != ''){
@@ -1636,12 +1681,12 @@ function gridDataSet(data) {
 	if($("#f [name='driverState'] option[value='21']").length == 0) {
 		$("#f [name='driverState']").append("<option value='21'>취소</option>");
 	}
-	
+
 	$("input[name=buyCarNum_input]").off("click");
 
 	$("#buyCharge" + data.allocKind).val(Util.formatNumber(data.buyCharge));
 
-	if(data.wayPointMemo || data.wayPointCharge || data.stayMemo || data.stayCharge || data.handWorkMemo || 
+	if(data.wayPointMemo || data.wayPointCharge || data.stayMemo || data.stayCharge || data.handWorkMemo ||
 	   data.handWorkCharge || data.roundMemo || data.roundCharge || data.otherAddMemo || data.otherAddCharge != null || ""){
 		otherChargeOpen();
 		sumCharge();
@@ -1649,8 +1694,8 @@ function gridDataSet(data) {
 		otherChargeClose();
 		$("#addSumCharge").val("");
 	}
-	
-	if(data.sellWayPointMemo || data.sellWayPointCharge || data.sellStayMemo || data.sellStayCharge || data.sellHandWorkMemo || 
+
+	if(data.sellWayPointMemo || data.sellWayPointCharge || data.sellStayMemo || data.sellStayCharge || data.sellHandWorkMemo ||
 	   data.sellHandWorkCharge || data.sellRoundMemo || data.sellRoundCharge || data.sellOtherAddMemo || data.sellOtherAddCharge != null || ""){
 		sellOtherChargeOpen();
 		sellSumCharge();
@@ -1661,7 +1706,7 @@ function gridDataSet(data) {
 
 	$("#buyDriverName,#buyDriverTel").removeAttr("readonly");
 	$("#buyDriverName,#buyDriverTel").removeClass("noColorReadonly");
-	
+
 	if (data.allocState == '10' ){		//운송사 지정 상태
 		$("#driverKind").show();
 		$("#car").prop("disabled",  true);
@@ -1672,7 +1717,7 @@ function gridDataSet(data) {
 		$("#driverProposal").hide();
 		$("#allocC").show();
 		$("#allocD").hide();
-		if(data.wayPointMemo || data.wayPointCharge || data.stayMemo || data.stayCharge || data.handWorkMemo || 
+		if(data.wayPointMemo || data.wayPointCharge || data.stayMemo || data.stayCharge || data.handWorkMemo ||
 		   data.handWorkCharge || data.roundMemo || data.roundCharge || data.otherAddMemo || data.otherAddCharge != null || ""){
 			otherChargeOpen();
 			$("#allocC").trigger("click");
@@ -1714,6 +1759,7 @@ function gridDataSet(data) {
 			$("#buyDriverName,#buyDriverTel").attr("readonly", true);
 			buyCarNum.value(data.buyCarNum);
 			$("input[name=buyCarNum_input]").on("click", function(){
+
 				if(data.buyLinkYn == 'Y' && data.linkType == '03' && data.orderState == '01'){
 					linkDriverView();
 				}else{
@@ -1725,30 +1771,30 @@ function gridDataSet(data) {
 					alert("배차 취소 후 가능합니다");
 				}
 			});
-			
+
 			$("[name='driverState'] option[value='21']").remove();
-			
-			if(data.wayPointMemo || data.wayPointCharge || data.stayMemo || data.stayCharge || data.handWorkMemo || 
+
+			if(data.wayPointMemo || data.wayPointCharge || data.stayMemo || data.stayCharge || data.handWorkMemo ||
 			   data.handWorkCharge || data.roundMemo || data.roundCharge || data.otherAddMemo || data.otherAddCharge != null || ""){
 				otherChargeOpen();
 				$("#allocD").trigger("click");
 			}else{
 				otherChargeClose();
 			}
-		} 
+		}
 	}
-	
+
 	$("#driverStateDiv").hide();
-	if(data.driverKind == 'Y'){	
+	if(data.driverKind == 'Y'){
 		//차량 상태 show
 		$("#driverStateDiv").show();
 	}
-	
+
 	if(data.driverTel, data.driverName, data.carNum != null && !""){
 		$("#carNumData").val(data.carNum);
 		$("#driverNameData").val(data.driverName);
 		$("#driverTelData").val(data.driverTel);
-		
+
 		$("#carNumDataDiv").show();
 		$("#driverNameDataDiv").show();
 		$("#driverTelDataDiv").show();
@@ -1757,15 +1803,15 @@ function gridDataSet(data) {
 		$("#carNumData").val("");
 		$("#driverNameData").val("");
 		$("#driverTelData").val("");
-		
+
 		$("#carNumDataDiv").hide();
 		$("#driverNameDataDiv").hide();
 		$("#driverTelDataDiv").hide();
 		$("#carModalBtnDiv").show();
 	}
 	//수출입 구분, 운송유형, 차종, 톤수 세팅
-	
- 	$("#inOutSctn").val(data.inOutSctn);	
+
+ 	$("#inOutSctn").val(data.inOutSctn);
 	setFrtSelect(truckTypeData, "truckTypeCode", data.inOutSctn, data.truckTypeCode);
 	setFrtSelect(carTypeData, "carTypeCode", data.truckTypeCode, data.carTypeCode);
 	setFrtSelect(carTonData, "carTonCode", data.truckTypeCode, data.carTonCode);
@@ -1777,40 +1823,40 @@ function gridDataSet(data) {
 	if(data.buyCarTonCode == null) {
 		$("#buyCarTonCode").val(data.carTonCode);
 	}
-	
-	
-	// 경유지 값 세팅	
+
+
+	// 경유지 값 세팅
 	var comName = "";
 	var stopCount = parseInt(data.stopCount, 10);
 	comName = data.stopName;
 	if(stopCount > 1)	comName  += " 외 " + (stopCount-1) + "곳";
-	
+
 	if(comName != "") $("#iStopTxt").html(comName);
 
 	//시간 세팅
 	var time = data.time;
 	var timeTxt = "";
 	if(time > 60) {
-		timeTxt = parseInt(time / 60) + "시간 " + (time%60) + "분"; 
+		timeTxt = parseInt(time / 60) + "시간 " + (time%60) + "분";
 	}else {
 		timeTxt = time + "분";
 	}
 	$("#timeTxt").val(timeTxt);
 	driverCodeChk();
 }
- 
+
 //이전거래
 function popGridList() {
 	var popGrid = $("#popGrid").data("kendoGrid");
-	
+
 	var param = {
 			reqCustId : $("#sellCustId").val(),
 			reqDeptId : $("#sellDeptId").val()
 	};
 	oPopGrid.setSearchData(param);
 	popGrid.setDataSource(oPopGrid.gridOption.dataSource);
-	
-	popGrid.tbody.delegate('tr', 'dblclick', function(){		
+
+	popGrid.tbody.delegate('tr', 'dblclick', function(){
 		var dataItem = popGrid.dataItem($(this));
 		$.ajax({
 			url: "/contents/order/data/orderDetail.do",
@@ -1861,7 +1907,7 @@ function popGridList() {
 function init(){
 	sellCustName.enable(true);
 	$("#deptId").prop("disabled", false);
-	$('#sellCustName, #sellDeptName').on('change', function() {	
+	$('#sellCustName, #sellDeptName').on('change', function() {
 		if($("#sellCustName, #sellDeptName").val() != ''){
 			$("#prevDiv").css("display","contents");
 		}
@@ -1870,7 +1916,7 @@ function init(){
 	$("input[name=buyCarNum_input]").off("click");
 	$("input[type=hidden]").val('');
 	$("#f input[name=chargeType]:input[value=01]").prop("checked", true);
-	$(".priceCommission").attr("readonly",true); 
+	$(".priceCommission").attr("readonly",true);
 	$("#f input[name=allocKind]:input[value=D]").prop("checked", true);
 	$("#divAllocC").hide();
 	$("#divAllocD").show();
@@ -1882,7 +1928,7 @@ function init(){
 
 	$("#sDateDay").data("kendoDatePicker").value(new Date());
 	$("#eDateDay").data("kendoDatePicker").value(new Date());
-	
+
 	// form 초기화 시, timepicker data 사라짐 -> 다시 생성
 	var sDateTime = "<strong class=\"required\">상차 시간</strong> " +
         			"<input style=\"padding: 0;\" type=\"text\" id=\"sDateTime\" name=\"sDateTime\" class=\"col-12\" required>" +
@@ -1893,14 +1939,14 @@ function init(){
         			"<input style=\"padding: 0;\" type=\"text\" id=\"eDateTime\" name=\"eDateTime\" class=\"col-12\" required>" +
         			"<div class=\"help-block with-errors\"></div>" +
     				"</div>";
-			
+
 	var ceil = 1000 * 60 * 60;
     var date = new Date()
     var ceiled = new Date(Math.ceil(date.getTime() / ceil) * ceil)
     $("#sTimeDiv").html(sDateTime);
     $("#eTimeDiv").html(eDateTime);
 	$("#sDateTime, #eDateTime").kendoTimePicker({format: "HH:mm", value : ceiled, dateInput: true});
-	
+
 	$("input[data-role='timepicker']").on("focus", function(e) {
 		var id = e.target.id;
 		switch (id) {
@@ -1939,13 +1985,13 @@ function init(){
             }
         }
     });
-	
+
 	//자기부서로 초기화
 	$("#deptId").val("${sessionScope.userInfo.deptId}");
 	if(lastDeptSeleted != "${sessionScope.userInfo.deptId}") {
 		$("#deptId").trigger("change");
 	}
-	
+
 	sellCustName.value('');
 	reqStaff.value('');
 	sComName.value('');
@@ -1954,25 +2000,25 @@ function init(){
 	buyStaff.value('');
 	buyCarNum.value('');
 	$("#iStopTxt").html("");
-	
+
 	btnChkData('mixYn');
-	btnChkData('returnYn'); 
-	
-	btnChkData('dangerGoodsYn'); 
-	btnChkData('chemicalsYn'); 
-	btnChkData('foreignLicenseYn'); 
+	btnChkData('returnYn');
+
+	btnChkData('dangerGoodsYn');
+	btnChkData('chemicalsYn');
+	btnChkData('foreignLicenseYn');
 	$(".list-unstyled").remove();
 
 	$("#car").attr("disabled", false);
 	$("#carrier").attr("disabled", false);
-	
+
 	if("${menuAuth.writeYn}" != "Y")	$("#btnSubmit").hide();
 
 	$("#driverMemo").css("color","");
 	$("#payType").css("color","");
 	$("#buyChargeD").css("color","");
 	$("input[name=buyCarNum_input]").css("color","");
-	
+
 	//등록 모드로 변경
 	$("#mode").val("N");
 	$("#driverStateDiv").hide();
@@ -1980,7 +2026,7 @@ function init(){
 	otherChargeClose();
 	sellOtherChargeClose();
 	reqStaff.enable(false);
-	
+
 	// 업무 초기값 불러오기
 	getUserOption();
 }
@@ -1990,19 +2036,19 @@ function getUserOption(){
 		url: "/contents/basic/data/getUserOption.do",
 		type: "POST",
 		dataType: "json",
-		data: $("#fUserOption").serialize(),				
+		data: $("#fUserOption").serialize(),
 		success: function(data){
 			if(data.result) {
 				var data = data.data;
 				if(data != null){
-					
+
 					//수출입 구분, 운송유형, 차종, 톤수 세팅
 					setFrtSelect(truckTypeData, "truckTypeCode", data.defaultInOutSctn, data.truckTypeCode);
 					setFrtSelect(carTypeData, "carTypeCode", data.defaultTruckTypeCode, data.defaultCarTypeCode);
 					setFrtSelect(carTonData, "carTonCode", data.defaultTruckTypeCode, data.defaultCarTonCode);
 					setFrtSelect(carTypeData, "buyCarTypeCode", data.defaultTruckTypeCode, data.defaultCarTypeCode);
 					setFrtSelect(carTonData, "buyCarTonCode", data.defaultTruckTypeCode, data.defaultCarTonCode);
-					
+
 					$("#sellCustId").val(data.defaultReqCustId);
 					$("#sellDeptId").val(data.defaultReqDeptId);
 					$("#sellStaffId").val(data.defaultReqStaffId);
@@ -2011,7 +2057,7 @@ function getUserOption(){
 					$("#reqAddrDetail").val(data.defaultReqAddrDetail);
 					$("#reqTel").val(Util.formatPhone(data.defaultReqTel));
 					$("#reqMemo").val(data.defaultReqMemo);
-					 
+
 					$("#sLat").val(data.defaultSLat);
 					$("#sLon").val(data.defaultSLon);
 					$("#sSido").val(data.defaultSSido);
@@ -2022,8 +2068,8 @@ function getUserOption(){
 					$("#sStaff").val(data.defaultSStaff);
 					$("#sTel").val(Util.formatPhone(data.defaultSTel));
 					$("#sMemo").val(data.defaultSMemo);
-	
-				 	$("#inOutSctn").val(data.defaultInOutSctn);	
+
+				 	$("#inOutSctn").val(data.defaultInOutSctn);
 					$("#truckTypeCode").val(data.defaultTruckTypeCode);
 					$("#carTypeCode").val(data.defaultCarTypeCode);
 					$("#carTonCode").val(data.defaultCarTonCode);
@@ -2045,7 +2091,7 @@ function getUserOption(){
 					}else{
 						$("#f input[name=unitPriceType]:input[value=01]").prop("checked", true);
 					}
-					 
+
 					setTimeout(function(){
 						var sellCustSelect = data.defaultReqCustName;
 						var reqStaffSelect = data.defaultReqStaffName;
@@ -2099,33 +2145,33 @@ $('#f').validator().on('submit', function (e) {
 		var addCode = "0023╊0025╊0371╊0372╊0294";
 		var addCharge = "";
 		var addMemo = "";
-				
+
 		$("input[name=addCharge]").each(function(){
-			var charge = $(this).val(); 
+			var charge = $(this).val();
 			if(charge == ""){
 				addCharge += charge + "0╊";
 			}else{
 				addCharge += charge + "╊";
 			}
 		});
-		
+
 		$("input[name=addMemo]").each(function(){
-			var memo = $(this).val(); 
+			var memo = $(this).val();
 			if(memo == ""){
 				addMemo += memo + "　╊";
 			}else{
 				addMemo += memo + "╊";
 			}
-			
+
 		});
-		
+
 		addCharge = addCharge.substring(0, addCharge.length - 1);
 		addMemo = addMemo.substring(0, addMemo.length - 1);
-		
+
 		$("#addCodeList").val(addCode);
 		$("#addChargeList").val(addCharge);
 		$("#addMemoList").val(addMemo);
-		
+
 		//매출추가비용
 		$("#sellWayPointCharge").val($("#sellWayPointCharge").val().replace(/,/g, ""));
 		$("#sellStayCharge").val($("#sellStayCharge").val().replace(/,/g, ""));
@@ -2135,38 +2181,38 @@ $('#f').validator().on('submit', function (e) {
 		var addSellCode = "0023╊0025╊0371╊0372╊0294";
 		var addSellCharge = "";
 		var addSellMemo = "";
-		
+
 		$("input[name=addSellCharge]").each(function(){
-			var charge = $(this).val(); 
+			var charge = $(this).val();
 			if(charge == ""){
 				addSellCharge += charge + "0╊";
 			}else{
 				addSellCharge += charge + "╊";
 			}
 		});
-		
+
 		$("input[name=addSellMemo]").each(function(){
-			var memo = $(this).val(); 
+			var memo = $(this).val();
 			if(memo == ""){
 				addSellMemo += memo + "　╊";
 			}else{
 				addSellMemo += memo + "╊";
 			}
-			
+
 		});
-		
+
 		addSellCharge = addSellCharge.substring(0, addSellCharge.length - 1);
 		addSellMemo = addSellMemo.substring(0, addSellMemo.length - 1);
-		
+
 		$("#addSellCodeList").val(addSellCode);
 		$("#addSellChargeList").val(addSellCharge);
 		$("#addSellMemoList").val(addSellMemo);
-		
+
 		$("#sellCharge").val($("#sellCharge").val().replace(/,/g, ""));
 		$("#sellFee").val($("#sellFee").val().replace(/,/g, ""));
 		var allocKind = $("#f input[name=allocKind]:checked").val();
 		$("#buyCharge" + allocKind).val($("#buyCharge" + allocKind).val().replace(/,/g, ""));
-		
+
 		$("#driverTel").val($("#driverTel").val().replace(/\-/g, ""));
 		$("#reqTel").val($("#reqTel").val().replace(/\-/g, ""));
 		$("#sTel").val($("#sTel").val().replace(/\-/g, ""));
@@ -2176,14 +2222,14 @@ $('#f').validator().on('submit', function (e) {
 		$("#deptId").prop("disabled", false);
 		if($("#sellFee").val() == ""){
 			$("#sellFee").val("0");
-		} 
-		
-		//오더가 취소상태이면 재접수 후 수정 가능하도록 
+		}
+
+		//오더가 취소상태이면 재접수 후 수정 가능하도록
 		if ($("#orderState").val() == "09") {
 			alert("오더 재접수 후 배차해주세요.");
 			return false;
 		}
-		
+
 		if($("#allocState").val() == "11" && $("#buyCarNum").val()){
 			var orderId = $("#orderId").val();
 			var allocId = $("#allocId").val();
@@ -2199,14 +2245,14 @@ $('#f').validator().on('submit', function (e) {
 				data: {
 					orderId: orderId,
 					allocId: allocId
-				},		
+				},
 				success: function(data){
 					if(data.result) {
 						$.ajax({
 							url: "/contents/order/data/orderWrite.do",
 							type: "POST",
 							dataType: "json",
-							data: $("#f").serialize(),				
+							data: $("#f").serialize(),
 							success: function(data){
 								if(data.result) {
 									alert(data.msg);
@@ -2227,7 +2273,7 @@ $('#f').validator().on('submit', function (e) {
 				url: "/contents/order/data/orderWrite.do",
 				type: "POST",
 				dataType: "json",
-				data: $("#f").serialize(),				
+				data: $("#f").serialize(),
 				success: function(data){
 					if(data.result) {
 						alert(data.msg);
@@ -2245,7 +2291,7 @@ $('#f').validator().on('submit', function (e) {
 function popOrderStopDetail(){
 	var orderId = $("#orderId").val();
 	var deptId = $("#deptId").val();
-	
+
 	win = $("#divOrderStop").data("kendoWindow");
 	if(win == null) {
 		win = $("#divOrderStop").kendoWindow({
@@ -2256,11 +2302,11 @@ function popOrderStopDetail(){
 			},
 			iframe: true,
 			visible:false
-		}).data("kendoWindow");	
+		}).data("kendoWindow");
 	} else {
 		win.refresh("/contents/order/view/orderStopDetail.do?orderId=" + orderId + "&deptId=" + deptId);
-	}	
-	
+	}
+
 
 	win.center().open();
 }
@@ -2288,7 +2334,7 @@ function setOrderStopData(data) {
 	var jsonData = JSON.parse(data);
 	var size = 0;
 	var comName = "";
-	
+
 	for(var item, i=0; item=jsonData[i]; i++) {
 		if(item.useYn != "N") {
 			if (comName ==  "") comName = item.eComName;
@@ -2303,9 +2349,10 @@ function setOrderStopData(data) {
 function updateAllocState(type, state) {
 	var allocId = $("#allocId").val();
 	var orderId = $("#orderId").val();
-	
+    var chkTalkYN = $("input[name='chkTalk']:checked").val();
+
 	if(type == "C") allocId = $("#driverAllocId").val();	//type D: 직배차, C: 운송사배차
-	
+
 	if($("#buyLinkYn").val() == "Y" && state == '21') {
 // 		if(!confirm("정보망에서 배차된 오더입니다. 배차를 취소하시겠습니까?")) {
 // 			return false;
@@ -2319,7 +2366,7 @@ function updateAllocState(type, state) {
 // 					orderId: orderId,
 // 					allocId: allocId,
 // 					command: "CANCELALLOC"
-// 				},		
+// 				},
 // 				success: function(data){
 // 					if(data.result) {
 // 						alert(data.msg);
@@ -2334,12 +2381,12 @@ function updateAllocState(type, state) {
 		alert("정보망에서 배차된 오더는 정보망 팝업창에서 배차취소 되어야 합니다.");
 	} else {
 
-		
+
 		$.ajax({
 			url: "/contents/order/data/allocState.do",
 			type: "POST",
 			dataType: "json",
-			data: "orderId=" + $("#orderId").val() + "&allocId=" + allocId + "&allocState=" + state,
+			data: "orderId=" + $("#orderId").val() + "&allocId=" + allocId + "&allocState=" + state + "&chkTalkYN=" + chkTalkYN,
 			success: function(data){
 				if(data.result) {
 					alert(data.msg);
@@ -2356,7 +2403,7 @@ function updateAllocState(type, state) {
 
 function updateOrderState(state) {
 	var orderId = $("#orderId").val();
-	
+
 	$.ajax({
 		url: "/contents/order/data/orderState.do",
 		type: "POST",
@@ -2375,13 +2422,14 @@ function updateOrderState(state) {
 }
 
 //운송사 대신 배차
-$('#carForm').validator().on('submit', function (e) {	
+$('#carForm').validator().on('submit', function (e) {
 	if (e.isDefaultPrevented()) {
 		alert("항목을 입력해 주세요.")
 	} else {
 		// 이벤트 초기화 (submit 동작 중단)
 		e.preventDefault();
 		var orderId = $("#orderId").val()
+        var chkTalkYN = $("input[name='chkTalk']:checked").val();
 		var param = {
 				orderId : orderId,
 				custId : $("#buyCustId").val(),
@@ -2393,6 +2441,7 @@ $('#carForm').validator().on('submit', function (e) {
 				driverName : $("#driverName").val(),
 				driverTel : $("#driverTel").val().replace(/\-/g, ""),
 				linkSelect : "99",
+                chkTalkYN : chkTalkYN,
 		}
 		$.ajax({
 			url: "/contents/order/data/orderAlloc.do",
@@ -2417,16 +2466,16 @@ $('#carForm').validator().on('submit', function (e) {
 
 $("#driverState").on('focus', function () {
 	previous = this.value;
-}).change(function() { 
+}).change(function() {
 	var type = $("#f input[name=allocKind]:checked").val();
 	var driverState = $("#driverState").val();
 	var result = confirm("차량상태를 변경 하시겠습니까?");
 	if(type == "C"){
 		allocId = $("#driverAllocId").val();	//type D: 직배차, C: 운송사배차
 	}else{
-		allocId = $("#allocId").val();	
+		allocId = $("#allocId").val();
 	}
-	 
+
 	if(driverState == "04") {
 		if($("#enterDate").val() == ""){
 			alert("입차처리가 되지않은 오더입니다.");
@@ -2460,7 +2509,7 @@ $("#driverState").on('focus', function () {
 			return;
 		}
 	}
-	
+
 	var orderId = $("#orderId").val();
 	if(result){
 		if(driverState == '12'){
@@ -2496,7 +2545,7 @@ function popDriverStateModalSubmit(){
 	if(type == "C"){
 		allocId = $("#driverAllocId").val();	//type D: 직배차, C: 운송사배차
 	}else{
-		allocId = $("#allocId").val();	
+		allocId = $("#allocId").val();
 	}
 	var param = {
 			orderId : orderId,
@@ -2533,7 +2582,7 @@ function getOrderData(orderId, sellAllocId, allocId){
 		success: function(data) {
 			if(data.result) {
 				gridDataSet(data.data);
-				
+
 			}
 		}
 	});
@@ -2544,14 +2593,14 @@ function popSearchPost(mode){
 }
 
 function setSearchAddressInfo(data) {
-	
+
 	//var addr = data.roadAddr; // 주소 변수
 	var addr = data.jibunAddr; // 주소 변수
 	var sido = data.siNm;
 	var gungu = data.sggNm;
     var dong = data.emdNm;
     var mode = data.mode;
-    
+
 	$.ajax({
 		url: "/contents/basic/data/getLatLon.do",
 		type: "POST",
@@ -2568,7 +2617,7 @@ function setSearchAddressInfo(data) {
     			lon = localData.documents[0].x;
 				lat = localData.documents[0].y;
 				var addressData = localData.documents[0].address;
-				
+
 				$("#"+mode).val(addr);
 				if(mode == "sAddr"){
 	                $("#sSido").val(addressData.region_1depth_name);
@@ -2581,10 +2630,10 @@ function setSearchAddressInfo(data) {
 	                $("#eGungu").val(addressData.region_2depth_name);
 	                $("#eDong").val(addressData.region_3depth_name);
                     $("#eLon").val(lon);
-                    $("#eLat").val(lat);                    
+                    $("#eLat").val(lat);
 				}
 
-				getRoute();				
+				getRoute();
                 $("#"+mode+"Detail").focus();
 
 			} else {
@@ -2597,7 +2646,7 @@ function setSearchAddressInfo(data) {
 					$("#eAddr").val(addr);
 					$("#eSido").val(sido);
                     $("#eGungu").val(gungu);
-                    $("#eDong").val(dong);                    
+                    $("#eDong").val(dong);
 				}
 			}
 		}
@@ -2627,7 +2676,7 @@ function dummyAddressInfo(data) {
 	                $("#sGungu").val(addressData.region_2depth_name);
                     $("#sLon").val(lon);
                     $("#sLat").val(lat);
-                    
+
             		$("input:checkbox[id='sAreaSave']").prop("checked", true);
             		$("input:checkbox[id='sAreaSave']").val("Y")
             		$("#sAreaSave").parent(".radio-or-checkBox").css("display", "contents");
@@ -2638,15 +2687,15 @@ function dummyAddressInfo(data) {
 				    $("#eGungu").val(data.gungu);
 				    $("#eDong").val("");
                     $("#eLon").val(lon);
-                    $("#eLat").val(lat);                
+                    $("#eLat").val(lat);
 
             		$("input:checkbox[id='eAreaSave']").prop("checked", true);
             		$("input:checkbox[id='eAreaSave']").val("Y")
             		$("#eAreaSave").parent(".radio-or-checkBox").css("display", "contents");
 	                $("#eAddrDetail").focus();
 				}
-
-				getRoute();				
+                debugger;
+				getRoute();
 
 			} else {
 				if(mode == "sAddr"){
@@ -2658,12 +2707,12 @@ function dummyAddressInfo(data) {
 					$("#eAddr").val(data.sido+" "+data.gungu);
 					$("#eSido").val(data.sido);
                     $("#eGungu").val(data.gungu);
-                    $("#eDong").val("");                    
+                    $("#eDong").val("");
 				}
 			}
 		}
 	});
-	/* 
+	/*
 	$("#distance").val("");
 	$("#time").val("");
 	$("#timeTxt").val(""); */
@@ -2689,12 +2738,12 @@ function orderCopy() {
 	$("#sellFee").val($("#sellFee").val().replace(/,/g, ""));
 	if($("#sellFee").val() == ""){
 		$("#sellFee").val("0");
-	} 
+	}
 	$.ajax({
 		url: "/contents/order/data/orderWrite.do",
 		type: "POST",
 		dataType: "json",
-		data: $("#f").serialize(),				
+		data: $("#f").serialize(),
 		success: function(data){
 			if(data.result) {
 				alert(data.msg);
@@ -2731,7 +2780,7 @@ function sellOtherChargeClose(){
 
 function popDriverStateModalClose() {
 	popDriverStateModal.data("kendoDialog").close();
-} 
+}
 
 $('#unitCharge').on("input", function() {
 	var unitCharge = /^\d*$/;
@@ -2790,7 +2839,7 @@ $("#goodsWeight").on("input", function(){
 
 $("#linkSelect").on('focus', function () {
 	previous = this.value;
-}).change(function() { 
+}).change(function() {
 	if($("#allocState").val() != '00' && $("#mode").val() != 'N'){
 		alert("접수상태일 때만 변경 가능합니다.");
 		$("#linkSelect").val(previous).prop("selected", true); //이전값으로 돌리기
@@ -2814,7 +2863,7 @@ $(".openCloseBtn").on('click', function (){
 	}else if (divId == 'other'){
 		btnText = '기타추가';
 	}
-	
+
 	if(divId == "allocC" || divId == "allocD"){
 		/* 직접배차, 운송사지정 추가정보 접기버튼 */
 		if($("#driverOtherOpenClose").css("display") == "none"){
@@ -2833,9 +2882,9 @@ $(".openCloseBtn").on('click', function (){
 		}else{
 			$("#"+divId+"OpenClose").hide();
 			$("#"+divId).html(btnText+"열기");
-		}		
+		}
 	}
-	
+
 });
 
 function payTypeChk(){
@@ -2844,7 +2893,7 @@ function payTypeChk(){
 	var buyDriverId = $("#buyDriverId").val();
 	var buyVehicId = $("#buyVehicId").val();
 	var chargeType = $('input[name="chargeType"]:checked').val();
-	
+
 	if(chargeType == "01"){
 		if(carPayType == 'P' && custPayType == 'Y'){
 			$("#payType option[value*='Y']").prop('disabled',false);
@@ -2859,7 +2908,7 @@ function payTypeChk(){
 			$("#payType option[value*='Y']").prop('disabled',true);
 			$("#payType").val('N').prop("selected", true);
 		}
-		//신규차량 등록시 빠른지급여부 미지급으로 
+		//신규차량 등록시 빠른지급여부 미지급으로
 		if(buyDriverId == '' && buyVehicId == ''){
 			$("#payType option[value*='Y']").prop('disabled',false);
 			$("#payType").val('Y').prop("selected", true);
@@ -2872,7 +2921,7 @@ function payTypeChk(){
 
 function driverCodeChk(){
 	var driverCode = $("#carMngCode").val();
-	
+
 	if(driverCode == '02'){
 		$("#driverMemo").css("color","rgba(255, 0, 0, 100%)");
 		$("#payType").css("color","rgba(255, 0, 0, 100%)");
@@ -2890,7 +2939,7 @@ function sumCharge(){
 	var allocKind = $("#f input[name=allocKind]:checked").val();
  	var addCharge = $("input[name='addCharge']");
 	var addSumCharge = Number($("#buyCharge"+allocKind).val().replace(/,/g, ""));
- 	
+
  	for(i=0; i<addCharge.length; i++){
  		addSumCharge += Number(addCharge[i].value.replace(/,/g, ""));
  	}
@@ -2900,7 +2949,7 @@ function sumCharge(){
 function sellSumCharge(){
  	var addSellCharge = $("input[name='addSellCharge']");
 	var addSumSellCharge = Number($("#sellCharge").val().replace(/,/g, ""));
- 	
+
  	for(i=0; i<addSellCharge.length; i++){
  		addSumSellCharge += Number(addSellCharge[i].value.replace(/,/g, ""));
  	}
@@ -2914,13 +2963,13 @@ function dummyPopSearchPost(mode){
 function addrLatLonValidation(){
 	if($("#sLat").val() == "0E-13")
 	$("#sLat").val("0.0");
-	
+
 	if($("#eLat").val() == "0E-13")
 	$("#eLat").val("0.0");
-	
+
 	if($("#sLon").val() == "0E-12")
 	$("#sLon").val("0.0");
-	
+
 	if($("#eLon").val() == "0E-12")
 	$("#eLon").val("0.0");
 }
@@ -2978,9 +3027,9 @@ $("#driverTel, #reqTel, #sTel, #eTel, #buyStaffTel, #buyDriverTel").on("input", 
 	$(this).val(Util.formatPhone($(this).val()));
 });
 
-// 신규등록, 접수상태인 오더의 요청차종/톤수 선택시, 차량차종/톤급 같이 변경되게 
+// 신규등록, 접수상태인 오더의 요청차종/톤수 선택시, 차량차종/톤급 같이 변경되게
 $("#carTypeCode, #carTonCode").on("change", function(){
-	
+
 	if($("#orderState").val() == "00" || $("#orderState").val() == ""){
 		$("#buyCarTypeCode").val($("#carTypeCode").val());
 		$("#buyCarTonCode").val($("#carTonCode").val());

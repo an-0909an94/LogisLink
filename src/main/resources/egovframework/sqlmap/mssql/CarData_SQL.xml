@@ -68,20 +68,27 @@
 						 , B.TAXJOIN_DATE	taxjoinDate
 						 , A.CAR_MODIFY_CODE carModifyCode
 						 , C.CAR_CONTRACT_CODE carContractCode
-					FROM T_VEHIC_MST A 
-					   	 INNER JOIN
-					   	T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID
-					   	<if test="loginAuthSeq=='100' or loginAuthSeq=='110'">
+						<!--FROM T_VEHIC_MST A
+					   	INNER JOIN
+					   	T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID-->
+						FROM T_CUST_VEHIC C
+						INNER JOIN T_DRIVER B ON C.DRIVER_ID = B.DRIVER_ID
+						<if test="loginAuthSeq=='100' or loginAuthSeq=='110'">
 					   		LEFT OUTER JOIN
 					   	</if> 
 					   	<if test="loginAuthSeq!='100' and loginAuthSeq != '110'">
 					   		INNER JOIN
-					   	</if>					   	 
-					   	T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId} 
+					   	</if>
+					   	<!--T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId}-->
+						T_VEHIC_MST A ON A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId}
+
+
 					   	<if test="deptId != null and !''.equals(deptId)">
 					   		AND C.DEPT_ID = #{deptId}
-					   	</if> 
+					   	</if>
 					WHERE 1=1
+					and A.VEHIC_ID is not null
+
 					<if test='useYn != null and !"".equals(useYn)'>
 						AND C.USE_YN = #{useYn}
 					</if>
@@ -138,24 +145,28 @@
 		WHERE rNum BETWEEN #{start} AND #{end}
 		ORDER BY rNum ASC
 	</select>
-	
+
 	<select id="selectCarCnt" resultType="string" parameterType="java.util.HashMap">
-		SELECT 
+		SELECT
 			COUNT(1) retCnt
-		FROM T_VEHIC_MST A
-		   	 INNER JOIN
-		   	 T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID
+		<!--FROM T_VEHIC_MST A
+           INNER JOIN
+           T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID-->
+		FROM T_CUST_VEHIC C
+		INNER JOIN T_DRIVER B ON C.DRIVER_ID = B.DRIVER_ID
 		   	 <if test="loginAuthSeq=='100' or loginAuthSeq=='110'">
 		   		LEFT OUTER JOIN
-		   	 </if> 
+		   	 </if>
 		   	 <if test="loginAuthSeq!='100' and loginAuthSeq != '110'">
 		   		INNER JOIN
-		   	 </if>					   	 
-		   	 T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId}
+		   	 </if>
+			<!--T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId}-->
+			T_VEHIC_MST A ON A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId}
 	   	 	<if test="deptId != null and !''.equals(deptId)">
 		   		AND C.DEPT_ID = #{deptId}
 		   	</if>
 		WHERE 1=1
+		and A.VEHIC_ID is not null
 		<if test='useYn != null and !"".equals(useYn)'>
 			AND A.USE_YN = #{useYn}
 		</if>
@@ -205,11 +216,11 @@
 			AND CASE WHEN ISNULL(B.BANK_ACCOUNT, '') = ''  THEN 'N'  ELSE 'Y' END = #{accountYn}
 		</if>
 	</select>
-	
+
 	<select id="selectSearchCar" parameterType="java.util.HashMap" resultType="carVO">
 		SELECT AA.*
 		FROM (
-			SELECT 
+			SELECT
 				ROW_NUMBER() OVER(ORDER BY AAA.carNum ASC, AAA.driverName ASC, AAA.mobile ASC) rNum
 			  , AAA.*
 			FROM (
@@ -218,14 +229,14 @@
 						 , A.CAR_NUM carNum
 						 , B.DRIVER_NAME driverName
 						 , B.MOBILE mobile
-					FROM T_VEHIC_MST A 
+					FROM T_VEHIC_MST A
 					   	 INNER JOIN
 					   	T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID
-					   	INNER JOIN			   	 
-					   	T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId} 
+					   	INNER JOIN
+					   	T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId}
 					   	<if test="deptId != null and !''.equals(deptId)">
 					   		AND C.DEPT_ID = #{deptId}
-					   	</if> 
+					   	</if>
 					WHERE C.USE_YN = 'Y'
 					<if test='carNum != null and !"".equals(carNum)'>
 						AND A.CAR_NUM LIKE '%'+ #{carNum} +'%'
@@ -238,9 +249,9 @@
 		WHERE rNum BETWEEN #{start} AND #{end}
 		ORDER BY rNum ASC
 	</select>
-	
-	<select id="selectSearchCarCnt" parameterType="java.util.HashMap" resultType="string">		
-			SELECT 
+
+	<select id="selectSearchCarCnt" parameterType="java.util.HashMap" resultType="string">
+			SELECT
 				COUNT(1) retCnt
 			FROM (
 					SELECT	DISTINCT A.VEHIC_ID vehicId
@@ -248,14 +259,14 @@
 						 , A.CAR_NUM carNum
 						 , B.DRIVER_NAME driverName
 						 , B.MOBILE mobile
-					FROM T_VEHIC_MST A 
+					FROM T_VEHIC_MST A
 					   	 INNER JOIN
 					   	T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID
-					   	INNER JOIN			   	 
-					   	T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId} 
+					   	INNER JOIN
+					   	T_CUST_VEHIC C ON A.DRIVER_ID = C.DRIVER_ID AND A.VEHIC_ID = C.VEHIC_ID AND C.CUST_ID = #{loginCustId}
 					   	<if test="deptId != null and !''.equals(deptId)">
 					   		AND C.DEPT_ID = #{deptId}
-					   	</if> 
+					   	</if>
 					WHERE C.USE_YN = 'Y'
 					<if test='carNum != null and !"".equals(carNum)'>
 						AND A.CAR_NUM LIKE '%'+ #{carNum} +'%'
@@ -265,7 +276,7 @@
 					</if>
 				) AAA
 	</select>
-	
+
 	<select id="selectSendPushDriverList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT
 			DRIVER_ID AS driverId,
@@ -281,7 +292,7 @@
 				</foreach>
 			</if>
 	</select>
-	
+
 	<select id="selectSendTalkDriverList" parameterType="java.util.HashMap" resultType="java.util.Map">
 		SELECT
 			DRIVER_ID AS id,
@@ -297,7 +308,7 @@
 				</foreach>
 			</if>
 	</select>
-	
+
 	<insert id="insertCar" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{call INSERT_CAR(
 							#{custVehicSeq}
@@ -353,13 +364,13 @@
 						  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
 		}
 	</insert>
-	
+
 	<update id="updateCarSctnCode" parameterType="java.util.HashMap">
-		UPDATE T_CUST_VEHIC 
+		UPDATE T_CUST_VEHIC
 		SET CAR_SCTN_CODE = #{carSctnCode}
 		WHERE VEHIC_ID = #{buyVehicId}
 		AND DRIVER_ID = #{buyDriverId}
 	</update>
-	
-	
+
+
 </mapper>

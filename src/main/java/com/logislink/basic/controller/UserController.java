@@ -291,4 +291,25 @@ public class UserController {
 		return "jsonView";
 		
 	}
+
+	/*
+	 * 유저정보검색
+	 * T_USER 톡 알림 사용여부 체크
+	 */
+	@PostMapping(value="/contents/basic/data/getUserTalk.do")
+	public String getUserTalk(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+								@RequestParam Map<String, Object> param ) throws Exception {
+
+		UserVO userInfo = userService.getUserInfo(param);
+		if(userInfo ==null){
+			map.put("result", Boolean.FALSE);
+		}else{
+			map.put("result", Boolean.TRUE);
+		}
+
+		map.put("userInfo", userInfo);
+
+		return "jsonView";
+
+	}
 }
