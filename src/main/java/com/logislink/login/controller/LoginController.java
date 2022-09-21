@@ -59,7 +59,6 @@ public class LoginController {
 			request.getSession().setAttribute("userInfo", login);
 			//사용자 별 메뉴 정보 저장
 			request.getSession().setAttribute("MenuList", menuJson);
-			
 
 			map.put("result", Boolean.TRUE);
 			map.put("login", login);
@@ -73,11 +72,11 @@ public class LoginController {
 	@GetMapping(value="/logout.do")
 	public String logout(HttpServletRequest request, ModelMap model) throws Exception {
 		request.getSession().setAttribute("userInfo", null);
-		
+
 		return "redirect:/index.do";
-		
+
 	}
-	
+
 	/**
 	 * 사용자 별 메뉴 정보
 	 * @param adminSeq

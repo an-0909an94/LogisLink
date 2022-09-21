@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="termsNS">
+  <select id="termsRead" parameterType="java.util.HashMap" resultType="termsVO">
+    SELECT AA.*  FROM T_TERMS as AA ORDER BY NUMBER ASC
+  </select>
+
+
+  <select id="termsUserSearch" parameterType="java.util.HashMap" resultType="termsAgreeVO">
+
+    SELECT TOP(1)
+        USER_ID AS userId
+         ,NECESSARY as necessary
+         ,SELECTIVE as selective
+    FROM
+      T_TERMS_AGREE
+    WHERE
+      USER_ID = #{userId}
+
+  </select>
+
+
+  <select id="termsTelSearch" parameterType="java.util.HashMap" resultType="termsAgreeVO">
+
+    SELECT TOP(1)
+        TEL AS tel
+         ,NECESSARY as necessary
+         ,SELECTIVE as selective
+    FROM
+      T_TERMS_AGREE
+    WHERE
+      TEL = #{tel}
+
+  </select>
+
+  <insert id="insertTermsAgree" parameterType="java.util.HashMap">
+    INSERT INTO T_TERMS_AGREE
+    (
+        TEL,
+        USER_ID,
+        NECESSARY,
+        SELECTIVE,
+        AGREE_DATE,
+        VERSION
+    )
+    VALUES
+    (
+        #{tel},
+        #{userId},
+        #{necessary},
+        #{selective},
+        getdate(),
+        #{version}
+    )
+
+  </insert>
+
+  <update id="updateTermsAgree" parameterType="java.util.HashMap">
+    UPDATE
+        T_TERMS_AGREE
+    SET
+        NECESSARY = #{necessary},
+        SELECTIVE = #{selective}
+    WHERE
+        TEL = #{tel} OR USER_ID = #{userId}
+  </update>
+
+
+</mapper>
