@@ -35,7 +35,7 @@ import com.logislink.login.vo.LoginVO;
 
 @Controller
 public class SellCalcController {
-	private Logger log = Logger.getLogger(this.getClass());
+	private Logger logger = Logger.getLogger(this.getClass());
 	private String menuCode = "C3120";
 
 	@Resource(name = "sellCalcService")
@@ -394,6 +394,9 @@ public class SellCalcController {
 				linkMessage.setStatus(-1);
 				linkMessage.setMessage("오더ID: " + item.get("orderId") + "에 대한 청구 운송비 변경 처리에 실패했습니다.\n다시 확인하세요.");
 				linkMessage.setDetailMessage(e.getMessage());
+				
+				logger.error("오더ID: " + item.get("orderId") + "에 대한 청구 운송비 변경 처리에 실패했습니다.");
+				logger.error(e.getStackTrace().toString());
 				
 				LinkMessageData linkMesasgeData = new LinkMessageData();
 				linkMesasgeData.setData(item);

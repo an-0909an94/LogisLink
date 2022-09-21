@@ -1,6 +1,9 @@
 package com.logislink.cmm.controller;
 
-import java.io.IOException;
+import com.logislink.cmm.service.TermsService;
+import com.logislink.cmm.service.impl.TermsServiceImpl;
+import com.logislink.cmm.vo.TermsAgreeVO;
+import com.logislink.cmm.vo.TermsVO;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +34,9 @@ public class MainController {
 
 	@Resource(name="mainService")
 	private MainSerivce mainService;
+
+	@Resource(name="termsService")
+	private TermsService termsService;
 
 	@GetMapping(value="/index.do")
 	public String getMainPage(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model) {
@@ -69,7 +75,8 @@ public class MainController {
 	public String orderCar(HttpServletRequest request, HttpSession session, ModelMap model) {
 		return "main/findUserInfo";
 	}	
-	
+
+	/*
 	@GetMapping(value="/terms/service.do")
 	public String getTermsServicePage(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model) {
 		
@@ -81,11 +88,129 @@ public class MainController {
 		
 		return "main/terms/lbs";
 	}
+	*/
+
+
+	@GetMapping(value="/terms/termsAgree.do")
+	public String getTermsLbsPage(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model) {
+
+		return "main/terms/termsAgree";
+	}
+
+	@GetMapping(value="/terms/agree.do")
+	public String getTermsAgreePage(HttpServletRequest request, HttpServletRequest response, HttpSession session, ModelMap model){
+
+		return "main/terms/1_agree_20221001";
+	}
 
 	@GetMapping(value="/terms/privacy.do")
 	public String getTermsPrivacyPage(HttpServletRequest request, HttpServletResponse response, HttpSession session, ModelMap model) {
-		
-		return "main/terms/privacy";
+
+		//return "main/terms/privacy";
+		return "main/terms/2_privacy_20221001";
+	}
+
+	@GetMapping(value="/terms/privateInfo.do")
+	public String getTermsPrivateInfoPage(HttpServletRequest request, HttpServletRequest response, HttpSession session, ModelMap model){
+
+		return "main/terms/3_privateInfo_20221001";
+	}
+
+	@GetMapping(value="/terms/dataSecure.do")
+	public String getTermsDataSecurePage(HttpServletRequest request, HttpServletRequest response, HttpSession session, ModelMap model){
+
+		return "main/terms/4_dataSecure_20221001";
+	}
+
+	@GetMapping(value="/terms/marketing.do")
+	public String getTermsMarketingPage(HttpServletRequest request, HttpServletRequest response, HttpSession session, ModelMap model){
+
+		return "main/terms/5_marketing_20221001";
+	}
+
+	@GetMapping(value="/terms/content.do")
+	public String getTermsContent(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+		@RequestParam Map<String, Object> param ) {
+
+		List<TermsVO> list = termsService.getTermsValueList(param);
+
+		map.put("tResult",list);
+
+		return "jsonView";
+	}
+
+	@PostMapping(value="/terms/AgreeUserIndex.do")
+		public String getTermsUserAgree(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+		@RequestParam Map<String, Object> param ) {
+
+		String user = String.valueOf(param.get("userId"));
+
+		param.put("userId",user);
+
+		TermsAgreeVO data = termsService.getTermsUserAgree(param);
+
+		if(data == null){
+			map.put("result", Boolean.FALSE);
+			map.put("mode","insert");
+		}
+		else {
+			if(data.getNecessary()=="N") {
+				map.put("result", Boolean.FALSE);
+				map.put("mode", "update");
+			}
+			else{
+				map.put("result",Boolean.TRUE);
+				map.put("mode","none");
+			}
+		}
+
+		return "jsonView";
+	}
+
+
+	@PostMapping(value="/terms/AgreeTelIndex.do")
+	public String getTermsTelAgree(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+		@RequestParam Map<String, Object> param ) {
+
+		String number = String.valueOf(param.get("tel"));
+
+		param.put("tel",number);
+
+		TermsAgreeVO data = termsService.getTermsTelAgree(param);
+
+		if(data == null){
+			map.put("result", Boolean.FALSE);
+			map.put("mode","insert");
+		}
+		else {
+			if(data.getNecessary()=="N" || data.getNecessary()=="") {
+				map.put("result", Boolean.FALSE);
+				map.put("mode", "update");
+			}
+			else{
+				map.put("result",Boolean.TRUE);
+				map.put("mode","none");
+			}
+		}
+		return "jsonView";
+	}
+
+	@PostMapping(value="/terms/insertTermsAgree.do")
+	public int insertTermsAgree(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+		@RequestParam Map<String, Object> param ) throws Exception {
+
+		int value = termsService.insertTermsAgree(param);
+
+		return value;
+	}
+
+	@PostMapping(value="/terms/updateTermsAgree.do")
+	public int updateTermsAgree(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+		@RequestParam Map<String, Object> param ) {
+
+		int value = termsService.updateTermsAgree(param);
+
+		return value;
 	}
 	
 	@PostMapping(value="/checkBizNum.do")
@@ -102,8 +227,8 @@ public class MainController {
 			map.put("result", Boolean.FALSE);
 			map.put("msg", data.get("retMsg"));
 		}
-		
-		
+
+
 		return "jsonView";
 	}
 	

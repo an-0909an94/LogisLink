@@ -403,6 +403,12 @@
 			$("#sDeptId").val("");
 		}
 	}
+	
+	function goExcel() {
+		$("#loading").show();
+		var grid = $("#grid").data("kendoGrid");
+		grid.saveAsExcel();
+	}
 </script>
 <style>
 .k-grid tr {

@@ -102,9 +102,20 @@ input:focus {outline: none;}
 </div>
 
 <div id="divFindUserInfo"></div>
+
+
 <script type="text/javascript">
 
+var mUser;
+var mPasswd ;
+var mMobile;
+var mAuthSeq;
+var mUserMainPage;
+
 function goLogin(){
+
+	let defaultPage;
+
 	if(!$("#f input[name=userId]").val()) {
 		alert("ID를 입력해주세요.");
 		$("#f input[name=userId]").focus();
@@ -116,26 +127,30 @@ function goLogin(){
 		$("#f input[name=passwd]").focus();
 		return;
 	}
-/* 	
+
+	/*
  	$("#f").attr("action", "/login.do");
 	$("#f").submit(); */
-	
-	
- 	$.ajax({
+
+	$.ajax({
 		url: "/login.do",
 		type: "POST",
 		data: $("#f").serialize(),
 		dataType: "json",
 		success: function(data, status, xhr) {
+
 			if(data.result == false){
 				alert(data.msg);
 				return;
-			} else {	
+			} else {
+
 				if(data.login.authSeq == "210"){
-					defaultPage = "/oms/order/omsOrderList.do";						
+					defaultPage = "/oms/order/omsOrderList.do";
 				} else{
 					defaultPage = "/contents/order/orderList.do";	
 				}
+
+				AgreeCheckLogin(data.login.userId);
 
 				if(data.login.userMainPage == null) { 
 					location.href = defaultPage;
@@ -147,6 +162,26 @@ function goLogin(){
 		error: function(xhr, status, error) {
 			alert(xhr.responseText);
 			alert(error);
+		}
+	});
+}
+
+function AgreeCheckLogin(userName){
+	$.ajax({
+		url:"/terms/AgreeUserIndex.do",
+		type: "POST",
+		data:{
+			userId:userName
+		},
+		dataType: "json",
+		success:function(data){
+
+			//console.log("data.result:"+data.result+" data.mode:"+data,mode);
+			if(data.result == false && data.mode == "insert"){
+				alert("이용약관이 업데이트 되었습니다 갱신이 필요합니다.")
+				location.href = "/terms/termsAgree.do";
+				//location.href= "/terms/termsAgree.do?&userId="+userName+"&passwd="+passWord+"&mobile="+mobile+"&authSeq="+authSeq+"&userMainPage="+userMainPage;
+			}
 		}
 	});
 }

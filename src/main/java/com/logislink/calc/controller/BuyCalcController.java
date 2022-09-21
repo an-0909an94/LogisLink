@@ -30,7 +30,7 @@ import com.logislink.login.vo.LoginVO;
 
 @Controller
 public class BuyCalcController {
-	private Logger log = Logger.getLogger(this.getClass());
+	private Logger logger = Logger.getLogger(this.getClass());
 	private String menuCode = "C3130";
 	
 	@Resource(name = "buyCalcService")
@@ -87,12 +87,15 @@ public class BuyCalcController {
 		return "jsonView";
 	}
 	
-	@PostMapping(value = "/contents/calc/data/getTaxinvDetailList.do")
-	public String getTaxinvDetail(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
-		
-		return "jsonView";
-	}
-	
+	/**
+	 * 인수증 처리
+	 * @param request
+	 * @param model
+	 * @param map
+	 * @param session
+	 * @param param
+	 * @return
+	 */
 	@PostMapping(value = "/contents/calc/data/setReceiptSub.do")
 	public String setReceiptSub(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
 		
@@ -124,6 +127,15 @@ public class BuyCalcController {
 		return "jsonView";
 	}
 	
+	/**
+	 * 실물/타사 계산서 수령
+	 * @param request
+	 * @param model
+	 * @param map
+	 * @param session
+	 * @param param
+	 * @return
+	 */
 	@PostMapping(value = "/contents/calc/data/setTaxinvSub.do")
 	public String setTaxinvSub(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
 		
@@ -133,7 +145,10 @@ public class BuyCalcController {
 			
 			param.put("allocIdList", allocIdList);
 			
+			// 22.09.07 이건욱 Calc 단위가 아닌 Alloc 단위로 처리방법을 변경하여 결과 카운트가 다름.
 			int resultCnt = buyCalcService.updateTaxinvSub(param);
+			// 쿼리 처리 결과가 아닌 전달받은 Alloc 단위 카운트로 변경
+			resultCnt = allocIdList.size();
 			
 			// 결과값
 			linkMessage.setSender(this.getClass().getName());
@@ -236,6 +251,9 @@ public class BuyCalcController {
 				linkMessage.setMessage("오더ID: " + item.get("orderId") + "에 대한 청구 운송비 변경 처리에 실패했습니다.\n다시 확인하세요.");
 				linkMessage.setDetailMessage(e.getMessage());
 				
+				logger.error("오더ID: " + item.get("orderId") + "에 대한 청구 운송비 변경 처리에 실패했습니다.");
+				logger.error(e.getStackTrace().toString());
+				
 				LinkMessageData linkMesasgeData = new LinkMessageData();
 				linkMesasgeData.setData(item);
 				linkMesasgeData.setDataType("Map<String, Object>");
@@ -252,7 +270,7 @@ public class BuyCalcController {
 	}
 	
 	@PostMapping(value="/contents/calc/data/setBuyCalcFinish.do")
-	public String setBuyCalcFinish(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+	public String setBuyCalcFinish(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
 		
 		// 권한 체크???
 
@@ -264,24 +282,103 @@ public class BuyCalcController {
 //			param.put("mngDeptId", param.get("sDeptId"));
 //		}
 		
-		param.put("editId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+		String finishMode = param.get("mode").toString();
+		String json = param.get("param").toString();
+	    ObjectMapper mapper = new ObjectMapper();
+	    List<Map<String, Object>> calcFinishList = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});
 		
-		LinkMessage linkMessage = new LinkMessage();
-		try {
-			buyCalcService.updateBuyCalcFinish(param);
+	    List<LinkMessage> linkMessages = new ArrayList<>();
+	    for (Map<String, Object> item : calcFinishList) {
+	    	
+	    	// 모드에 따라 취소 시 마감 처리안된 건 제외 / 삭제건 제외, 마감 시 마감 처리된 건 제외 / 삭제건 제외
+	    	if (finishMode.equals("Y")) {
+	    		// 마감 처리
+	    		if (!item.get("finishYn").equals("N"))
+	    			continue;
+	    	} else {
+	    		// 마감 취소
+	    		if (item.get("finishYn").equals("N"))
+	    			continue;
+	    	}
+	    	
+	    	// 삭제건 제외
+	    	if (!item.get("deleteYn").equals("N"))
+	    		continue;
+	    	
+	    	// 서비스로 넘길 파라미터 항목을 매핑한다.
+			Map<String, Object> parameter = new HashMap<String, Object>();
+			parameter.put("custId", item.get("custId"));
+			parameter.put("deptId", item.get("deptId"));
+			parameter.put("vehicId", item.get("vehicId"));
+			parameter.put("driverId", item.get("driverId"));
+			parameter.put("allocId", item.get("buyAllocId"));
 			
-			linkMessage.setSender(this.getClass().getName());
-			linkMessage.setStatus(0);
-			linkMessage.setMessage(param.get("retMsg").toString());
-		} catch (Exception e) {
-			linkMessage.setSender(this.getClass().getName());
-			linkMessage.setStatus(-1);
-			linkMessage.setMessage("마감처리에 실패했습니다.\n시스템 관리자에게 문의하세요.");
-			linkMessage.setDetailMessage(e.getMessage());
-		}
-		
-		map.clear();
-		map.put("linkMessage", linkMessage);
+			String calcIdList = "";
+			String buyChargeId = item.get("buyChargeId").toString();
+			if (buyChargeId != "")
+				calcIdList += buyChargeId;
+				
+			String buyWaypointChargeId = item.get("buyWaypointChargeId").toString();
+			if (buyWaypointChargeId != "")
+				calcIdList += "," + buyWaypointChargeId;
+			
+			String buyStayChargeId = item.get("buyStayChargeId").toString();
+			if (buyStayChargeId != "")
+				calcIdList += "," + buyStayChargeId;
+			
+			String buyHandworkChargeId = item.get("buyHandworkChargeId").toString();
+			if (buyHandworkChargeId != "")
+				calcIdList += "," + buyHandworkChargeId;
+			
+			String buyRoundChargeId = item.get("buyRoundChargeId").toString();
+			if (buyRoundChargeId != "")
+				calcIdList += "," + buyRoundChargeId;
+			
+			String buyOtheraddChargeId = item.get("buyOtheraddChargeId").toString();
+			if (buyOtheraddChargeId != "")
+				calcIdList += "," + buyOtheraddChargeId;
+			
+			String buyServiceFeeChargeId = item.get("buyServiceFeeChargeId").toString();
+			if (buyServiceFeeChargeId != "")
+				calcIdList += "," + buyServiceFeeChargeId;
+			parameter.put("calcIdList", calcIdList);
+			
+			parameter.put("mode", finishMode);
+			parameter.put("regId", ((LoginVO)session.getAttribute("userInfo")).getUserId());
+			
+			LinkMessage linkMessage = new LinkMessage();
+			try {
+				buyCalcService.updateBuyCalcFinish(parameter);
+				
+				if (parameter.get("retCode").toString().equals("00")) {
+					linkMessage.setStatus(0);
+				} else {
+					linkMessage.setStatus(1);
+				}
+				linkMessage.setSender(this.getClass().getName());
+				linkMessage.setMessage(parameter.get("retMsg").toString());
+				
+				linkMessages.add(linkMessage);
+			} catch (Exception e) {
+				linkMessage.setSender(this.getClass().getName());
+				linkMessage.setStatus(-1);
+				linkMessage.setMessage("오더ID: " + item.get("orderId") + "에 대한 마감 처리에 실패했습니다.\n다시 확인하세요.");
+				linkMessage.setDetailMessage(e.getMessage());
+				
+				logger.error("오더ID: " + item.get("orderId") + "에 대한 마감 처리에 실패했습니다.");
+				logger.error(e.getStackTrace().toString());
+				
+				LinkMessageData linkMesasgeData = new LinkMessageData();
+				linkMesasgeData.setData(item);
+				linkMesasgeData.setDataType("Map<String, Object>");
+				linkMessage.setData(linkMesasgeData);
+				
+				linkMessages.add(linkMessage);
+			}
+	    }
+	    
+	    map.clear();
+		map.put("linkMessages", linkMessages);
 		
 		return "jsonView";
 	}

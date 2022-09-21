@@ -38,7 +38,10 @@
 		<typeAlias	alias="payVO"		type="com.logislink.calc.vo.PayVO" />
 		<typeAlias	alias="fileVO"		type="com.logislink.cmm.vo.FileVO" />
 		<typeAlias	alias="manualVO"	type="com.logislink.basic.vo.ManualVO" />
-        <typeAlias  alias="sellCalcVO"  type="com.logislink.calc.vo.SellCalcVO" />
+		<typeAlias  alias="sellCalcVO"  type="com.logislink.calc.vo.SellCalcVO" />
+		<typeAlias  alias="termsVO" 			type="com.logislink.cmm.vo.TermsVO"/>
+		<typeAlias  alias="termsAgreeVO"  type="com.logislink.cmm.vo.TermsAgreeVO"/>
+
         <typeAlias  alias="buyCalcVO"  type="com.logislink.calc.vo.BuyCalcVO" />
 	</typeAliases>
 </configuration>
