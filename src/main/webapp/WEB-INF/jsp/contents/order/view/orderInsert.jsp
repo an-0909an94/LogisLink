@@ -1464,20 +1464,7 @@ $(document).ready(function(){
         if(typeof dataItem == "undefined" || dataItem == null || dataItem == ""){
             return;
         }
-        var deptId = dataItem.deptId;
-        var custId = dataItem.custId;
-
-        $.ajax({
-            url: "/contents/basic/data/getUserTalk.do",
-            type: "POST",
-            data: "deptId=" + deptId + "&custId=" + custId,
-            dataType: "json",
-            success: function (data) {
-                if (data.result) {
-                    $("#f input[name =chkTalk]:input[value=" + data.userInfo.talkYn + "]").prop("checked", true);
-                }
-            }
-        })
+        $("#f input[name =chkTalk]:input[value=" + dataItem.talkYn + "]").prop("checked", true);
     });
 
 
