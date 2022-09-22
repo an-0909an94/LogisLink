@@ -64,8 +64,15 @@
 			<input type="hidden" name="bizTypeCd" id="bizTypeCd" value="01" class="hiddenValue">
 			<input type="hidden" name="orderList" id="orderList" class="hiddenValue">
 			<div class="form-group row">
+                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                <strong>기간검색</strong>
+                    <select id="searchPeriodType" name="searchPeriodType" class="form-control" class="custom-select col-12">
+                        <option value="dueDate" selected>지급예정일자</option>
+                        <option value="finishDate">마감일자</option>
+                    </select>
+                </div>
 				<div class="input-group input-group-sm col-2 middle-name">
-				<strong>마감일자</strong>
+				<strong>&nbsp;</strong>
 				    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
 				</div>
 				<span style="margin-top: 31px;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
@@ -284,6 +291,7 @@ var columns = [
 	{ field: "orderId", title: "오더ID", width: 160 },
 	{ field: "finishDate", title: "마감일", width: 70},
 	{ field: "finishId", title: "마감원", width: 120 },
+	{ field: "withdrawalDueDate", title: "출금예정일", width: 100 },
 	{ field: "payApproDate", title: "지급승인일", width: 120 },
 	{ field: "payApproId", title: "결재자", width: 120 },
 	{ field: "outreqDate", title: "출금요청일", width: 100 },

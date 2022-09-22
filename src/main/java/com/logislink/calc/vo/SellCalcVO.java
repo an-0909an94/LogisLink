@@ -49,6 +49,9 @@ public class SellCalcVO {
 	private String mngUserName;
 	private String deleteYn;
 	private String deleteUserName;
+	private String depositDueDate;
+	private String depositDate;
+	private String depositUserName;
 	
 	/* 숨김항목 */
 	private String mngCustId;
@@ -418,5 +421,23 @@ public class SellCalcVO {
 	}
 	public void seteDateFull(String eDateFull) {
 		this.eDateFull = eDateFull;
+	}
+	public String getDepositDueDate() {
+		return depositDueDate;
+	}
+	public void setDepositDueDate(String depositDueDate) {
+		this.depositDueDate = depositDueDate;
+	}
+	public String getDepositDate() {
+		return depositDate;
+	}
+	public void setDepositDate(String depositDate) {
+		this.depositDate = depositDate;
+	}
+	public String getDepositUserName() {
+		return depositUserName;
+	}
+	public void setDepositUserName(String depositUserName) {
+		this.depositUserName = depositUserName;
 	}
 }

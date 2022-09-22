@@ -13,6 +13,31 @@
 }
 </style>
 
+<!-- 매출마감처리 Modal -->
+<div id="divCalcFinish" class="editor_wrap p-0">
+    <form id="fCalcFinish" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
+        <div class="modalHeader">
+            <div class="form-group row">
+                <div id="finishMessage" style="text-align: left; padding: 0px; font-size: 17px;">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label modal-big-name">입금예정일자</label>
+                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
+                    <input style="padding: 0;" type="text" id="depositDueDate" name="depositDueDate" class="col-12">
+                </div>
+            </div>
+        </div>
+        <div class="editor_btns">
+            <div class="padding">
+                <button type="submit" id="fCalcFinishSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>확인</strong></b></button>
+                <a onclick="calcFinishModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>취소</b></a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 매출마감처리 Modal End -->
+
 <!-- 거래명세서 발행 Modal -->
 <div id="divTranReceipt" class="editor_wrap p-0">
     <form id="fTranReceipt" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
@@ -521,6 +546,7 @@
         $("#fromDate").kendoDatePicker(dateOption);
         $("#toDate").kendoDatePicker(dateOption);
         $("#taxDate").kendoDatePicker(dateOption);
+        $("#depositDueDate").kendoDatePicker(dateOption);
 
         // 담당부서 셀렉트 박스
         var deptOption = {
@@ -1342,60 +1368,7 @@
  		}
  		
  		if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?\n이미 처리된 건은 제외됩니다.";
-    		if (confirm(message)) {
-    			var calcIdList = [];
-    			for (var [key, value] of selectedList) {
-    				if ((value.deleteYn == "" || value.deleteYn == "N") &&
-    					(value.finishYn == "" || value.finishYn == "N")) {
-    					/*
-    						sellChargeId
-    						sellWaypointChargeId
-    						sellStayChargeId
-    						sellHandworkChargeId
-    						sellRoundChargeId
-    						sellOtheraddChargeId
-    					*/
-    					if (value.sellChargeId != null && value.sellChargeId != "")
-    						calcIdList.push(value.sellChargeId);
-    					
-    					if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
-    						calcIdList.push(value.sellWaypointChargeId);
-    					
-    					if (value.sellStayChargeId != null && value.sellStayChargeId != "")
-    						calcIdList.push(value.sellStayChargeId);
-    					
-    					if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
-    						calcIdList.push(value.sellHandworkChargeId);
-    					
-    					if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
-    						calcIdList.push(value.sellRoundChargeId);
-    					
-    					if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
-    						calcIdList.push(value.sellOtheraddChargeId);
-    				}
-    			}
-    			
-    			$.ajax({
-        			url: "/contents/calc/data/updateSellCalcFinish.do",
-        			type: "POST",
-        			dataType: "json",
-        			data: {
-        				mode: "Y",
-        				calcIdList: calcIdList.toString()
-        			},
-        			success: function(data){
-        				if (data.linkMessage.status == 0) {
-        					// 요청 성공시 내용 기술
-							alert(data.linkMessage.message);
-							goList();
-							//contextMenu.close();
-        				} else {
-        					alert(data.linkMessage.message);
-        				}
-        			}
-        		});
-    		}
+ 			calcFinishModalOpen();
     	} else {
     		alert("마감처리할 항목을 선택해 주세요.");
     	}
@@ -1449,7 +1422,7 @@
         			success: function(data){
         				if (data.linkMessage.status == 0) {
         					// 요청 성공시 내용 기술
-							alert(data.linkMessage.message);
+							alert(selectedList.size + "건의 " + data.linkMessage.message);
 							goList();
 							//contextMenu.close();
         				} else {
@@ -1462,6 +1435,87 @@
     		alert("마감처리할 항목을 선택해 주세요.");
     	}
  	}
+ 	
+ 	/*
+     * 매출마감처리 Modal
+     */
+    calcFinishModal = $("#divCalcFinish");
+    calcFinishModal.kendoDialog({
+        width: "400px",
+        height: "300px",
+        visible: false,
+        title: "매출마감",
+        closable: true,
+        modal: true
+    });
+    
+    function calcFinishModalOpen() {
+    	$("#finishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?<br />이미 처리된 건은 제외됩니다</p>");
+    	calcFinishModal.data("kendoDialog").open();
+    }
+    
+    function calcFinishModalClose() {
+    	calcFinishModal.data("kendoDialog").close();
+    }
+    
+    $('#fCalcFinish').validator().on('submit', function(e) {
+    	e.preventDefault();
+    	
+    	var calcIdList = [];
+		for (var [key, value] of selectedList) {
+			if ((value.deleteYn == "" || value.deleteYn == "N") &&
+				(value.finishYn == "" || value.finishYn == "N")) {
+				/*
+					sellChargeId
+					sellWaypointChargeId
+					sellStayChargeId
+					sellHandworkChargeId
+					sellRoundChargeId
+					sellOtheraddChargeId
+				*/
+				if (value.sellChargeId != null && value.sellChargeId != "")
+					calcIdList.push(value.sellChargeId);
+			
+				if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
+					calcIdList.push(value.sellWaypointChargeId);
+			
+				if (value.sellStayChargeId != null && value.sellStayChargeId != "")
+					calcIdList.push(value.sellStayChargeId);
+			
+				if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
+					calcIdList.push(value.sellHandworkChargeId);
+			
+				if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
+					calcIdList.push(value.sellRoundChargeId);
+			
+				if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
+					calcIdList.push(value.sellOtheraddChargeId);
+			}
+		}
+	
+		$.ajax({
+    		url: "/contents/calc/data/updateSellCalcFinish.do",
+    		type: "POST",
+    		dataType: "json",
+    		data: {
+    			mode: "Y",
+    			calcIdList: calcIdList.toString(),
+    			depositDueDate: $("#depositDueDate").val()
+    		},
+    		success: function(data) {
+    			if (data.linkMessage.status == 0) {
+    				// 요청 성공시 내용 기술
+    				alert(selectedList.size + "건의 " + data.linkMessage.message);
+    			} else {
+    				alert(data.linkMessage.message);
+    			}
+    			
+    			calcFinishModal.data("kendoDialog").close();
+    			
+    			goList();
+    		}
+    	});
+    });
  	
  	
     /*
@@ -1504,9 +1558,8 @@
  		$("#modalOrderList").val(orderIdList);
  		
  		searchModalCustName = $("#sModalCustName").data("kendoMultiColumnComboBox");
- 		// 기존코드 : 검색조건의 거래처 구분으로 되어 있음. 화주 검색으로 조건 변경
-//  		searchModalCustName = MultiColumnComboBox.setCustName("sModal", $("#custType").val(), $("#sDeptId").val());
- 		searchModalCustName = MultiColumnComboBox.setCustName("sModal", "01", $("#sDeptId").val());
+		// 22.09.22 이건욱: order.js의 공통 함수사용하지 않음.
+		searchModalCustName = setComboCustName("sModalCustName", "01", $("#sDeptId").val());
  		searchModalCustName.bind("select", onChangeSearchModalCust);
     }
     
@@ -2016,6 +2069,55 @@
     	}); 
     }
     
+ 	// 거래처 검색 콤보박스 설정
+    function setComboCustName(elementId, sellBuySctn, deptId) {
+    	var comboCustName = $("#" + elementId).kendoMultiColumnComboBox({
+    		dataTextField: "custName",
+			dataValueField: "custId",
+			filter: "contains",
+			minLength: 2,
+			autoBind: true,
+			dataSource: {
+				serverFiltering: true,
+				transport: {
+					read : {
+						url: "/contents/basic/data/custList.do",
+						dataType: "json",
+						type: "post",
+						data: {
+							useYn : "Y",
+							sellBuySctn : sellBuySctn,
+							deptId: deptId
+						},
+						beforeSend: function(req) {
+							req.setRequestHeader("AJAX", true);
+						}
+					}
+				},
+				schema : {
+					data : function(response) {
+						return response.data;
+					},
+					total : function(response) {
+						return response.total;
+					}
+				}
+			},
+			popup: {
+	            position: "top left"
+            },
+			columns: [
+				{ field: "custName", title: "거래처명", width: "220" },
+				{ field: "deptName", title: "부서명", width: "100" },
+				{ field: "bizName", title: "계약사명", width: "220" },
+				{ field: "ceo", title: "대표자", width: "100" },
+				{ field: "bizNum", title: "사업자번호", width: "150" }
+			]
+    	}).data("kendoMultiColumnComboBox");
+    	
+    	return comboCustName;
+    }
+    
  	// 그리드 컨택스트 메뉴 처리
     function onContextMenuSelect(e) {
     	var item = e.item.id;
@@ -2179,6 +2281,9 @@
 		{ field: "mngUserName", title: "배차원", width: 100, editable: function (dataItem){} },
 		{ field: "deleteYn", title: "삭제일", width: 80, editable: function (dataItem){} },
 		{ field: "deleteUserName", title: "삭제자", width: 80, editable: function (dataItem){} },
+		{ field: "depositDueDate", title: "입금예정일", width: 100, editable: function (dataItem){} },
+		{ field: "depositDate", title: "입금일", width: 100, editable: function (dataItem){} },
+		{ field: "depositUserName", title: "입금처리자", width: 100, editable: function (dataItem){} },
 		
 		// 숨김항목
 		{ field: "mngCustId", hidden: true, editable: function (dataItem){} },

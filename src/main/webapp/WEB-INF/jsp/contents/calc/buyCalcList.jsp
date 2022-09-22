@@ -13,6 +13,31 @@
 }
 </style>
 
+<!-- 매입마감처리 Modal -->
+<div id="divCalcFinish" class="editor_wrap p-0">
+    <form id="fCalcFinish" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
+        <div class="modalHeader">
+            <div class="form-group row">
+                <div id="finishMessage" style="text-align: left; padding: 0px; font-size: 17px;">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label modal-big-name">출금예정일자</label>
+                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
+                    <input style="padding: 0;" type="text" id="withdrawalDueDate" name="withdrawalDueDate" class="col-12">
+                </div>
+            </div>
+        </div>
+        <div class="editor_btns">
+            <div class="padding">
+                <button type="submit" id="fCalcFinishSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>확인</strong></b></button>
+                <a onclick="calcFinishModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>취소</b></a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 매출마감처리 Modal End -->
+
 <!-- 매입처 변경 Modal -->
 <div id="divChangeRes" class="editor-warp p-0">
     <form id="fChangeRes" class="modalEditor" role="form" autocomplete="off" data-toggle="validator">
@@ -611,6 +636,7 @@
         }
         $("#fromDate").kendoDatePicker(dateOption);
         $("#toDate").kendoDatePicker(dateOption);
+        $("#withdrawalDueDate").kendoDatePicker(dateOption);
         
      	// 담당부서 셀렉트 박스
         var deptOption = {
@@ -1400,44 +1426,7 @@
  		}
  		
  		if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?\n이미 처리된 건은 제외됩니다.";
-    		if (confirm(message)) {
-    			
-    			// object -> Json 
-    			var param = [];
-    			for (var [key, value] of selectedList) {
-    				param.push(value);
-    			}
-    			
-    			var params = {
-				   "param": JSON.stringify(param),
-				   "mode": "Y"
-				}
-    			
-    			$.ajax({
-    				url: "/contents/calc/data/setBuyCalcFinish.do",
-    				type: "POST",
-    				dataType: "json",
-    				data: params,
-    				success: function(data) {
-    					// 결과 출력
-    					var failCnt = 0;
-    	  				for (var i = 0; i < data.linkMessages.length; i++) {
-    	  					linkMessage = data.linkMessages[i];
-    	  					if (linkMessage.status < 0) {
-    	  						failCnt++;
-    	  					}
-    	  				}
-    	  				if (failCnt <= 0) {
-    	  					alert(data.linkMessages.length + "건의 마감처리가 되었습니다.");
-    	  				} else {
-    	  					alert(data.linkMessages.length + "건 중 " + failCnt + "건이 실패했습니다.\n상세 내역은 로그를 확인하세요.");
-    	  				}
-						
-						goList();
-    				}
-    			});
-    		}
+ 			calcFinishModalOpen();
     	} else {
     		alert("마감처리할 항목을 선택해 주세요.");
     	}
@@ -1496,6 +1485,71 @@
     		alert("마감처리할 항목을 선택해 주세요.");
     	}
  	}
+ 	
+ 	/*
+     * 매입마감처리 Modal
+     */
+    calcFinishModal = $("#divCalcFinish");
+    calcFinishModal.kendoDialog({
+        width: "400px",
+        height: "300px",
+        visible: false,
+        title: "매입마감",
+        closable: true,
+        modal: true
+    });
+    
+    function calcFinishModalOpen() {
+    	$("#finishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?<br />이미 처리된 건은 제외됩니다</p>");
+    	calcFinishModal.data("kendoDialog").open();
+    }
+    
+    function calcFinishModalClose() {
+    	calcFinishModal.data("kendoDialog").close();
+    }
+    
+    $('#fCalcFinish').validator().on('submit', function(e) {
+    	e.preventDefault();
+    	
+    	// object -> Json 
+		var param = [];
+		for (var [key, value] of selectedList) {
+			param.push(value);
+		}
+		
+		var params = {
+		   "param": JSON.stringify(param),
+		   "mode": "Y",
+		   "withdrawalDueDate": $("#withdrawalDueDate").val()
+		}
+		
+		$.ajax({
+			url: "/contents/calc/data/setBuyCalcFinish.do",
+			type: "POST",
+			dataType: "json",
+			data: params,
+			success: function(data) {
+				// 결과 출력
+				var failCnt = 0;
+  				for (var i = 0; i < data.linkMessages.length; i++) {
+  					linkMessage = data.linkMessages[i];
+  					if (linkMessage.status < 0) {
+  						failCnt++;
+  					}
+  				}
+  				
+  				if (failCnt <= 0) {
+  					alert(data.linkMessages.length + "건의 마감처리가 되었습니다.");
+  				} else {
+  					alert(data.linkMessages.length + "건 중 " + failCnt + "건이 실패했습니다.\n상세 내역은 로그를 확인하세요.");
+  				}
+  				
+  				calcFinishModal.data("kendoDialog").close();
+				
+				goList();
+			}
+		});
+    });
  	
  	/*
      * 세금계산서 Modal
@@ -2133,6 +2187,7 @@
 		{ field: "mngUserName", title: "배차원", width: 100, editable: function (dataItem){} },
 		{ field: "deleteYn", title: "삭제일", width: 80, editable: function (dataItem){} },
 		{ field: "deleteUserName", title: "삭제자", width: 80, editable: function (dataItem){} },
+		{ field: "withdrawalDueDate", title: "출금예정일", width: 100, editable: function (dataItem){} },
 		
 		// 숨김항목
 		{ field: "mngCustId", hidden: true, editable: function (dataItem){} },

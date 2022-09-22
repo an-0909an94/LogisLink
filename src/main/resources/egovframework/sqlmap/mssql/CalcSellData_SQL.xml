@@ -47,6 +47,9 @@
           , ALLOC_USER_NAME AS mngUserName
           , DELETE_DATE AS deleteYn
           , DELETE_USER_NAME AS deleteUserName
+          , DEPOSIT_DUE_DATE AS depositDueDate
+          , DEPOSIT_DATE AS depositDate
+          , DEPOSIT_USER_NAME AS depositUserName
           
           -- 숨김항목
           , MNG_CUST_ID AS mngCustId
@@ -123,6 +126,9 @@
         	, ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TOA.REGID = USER_ID), '') AS ALLOC_USER_NAME
             , IIF(TC2.DELETE_DATE != '', TC2.DELETE_DATE, 'N') AS DELETE_DATE
         	, ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TC2.DELETE_USER_ID = USER_ID), '') AS DELETE_USER_NAME
+            , IIF(TC2.DEPOSIT_DUE_DATE != '', TC2.DEPOSIT_DUE_DATE, 'N') AS DEPOSIT_DUE_DATE
+            , IIF(TC2.DEPOSIT_DATE != '', TC2.DEPOSIT_DATE, 'N') AS DEPOSIT_DATE
+            , ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TC2.DEPOSIT_USER_ID = USER_ID), '') AS DEPOSIT_USER_NAME
           
         	-- 숨김항목
         	, TC2.MNG_CUST_ID
@@ -181,6 +187,9 @@
               , MAX(T_CALC.DELETE_USER_ID) AS DELETE_USER_ID
               , MAX(T_CALC.POSTSEND_DATE) AS POSTSEND_DATE
               , MAX(T_CALC.POSTSEND_USER_ID) AS POSTSEND_USER_ID
+              , MAX(T_CALC.DEPOSIT_DUE_DATE) AS DEPOSIT_DUE_DATE
+              , MAX(T_CALC.DEPOSIT_DATE) AS DEPOSIT_DATE
+              , MAX(T_CALC.DEPOSIT_USER_ID) AS DEPOSIT_USER_ID
             FROM (
               SELECT
                 TC1.ORDER_ID
@@ -227,6 +236,11 @@
                 -- 우편발송
                 , ISNULL(REPLACE(CONVERT(NVARCHAR(5), TC1.POSTSEND_DATE, 10), '-', '.'), '') AS POSTSEND_DATE
                 , ISNULL(TC1.POSTSEND_USER_ID, '') AS POSTSEND_USER_ID
+                -- 입금예정일
+                , ISNULL(REPLACE(CONVERT(NVARCHAR(5), TC1.DEPOSIT_DUE_DATE, 10), '-', '.'), '') AS DEPOSIT_DUE_DATE
+                -- 입금일/처리자
+                , ISNULL(REPLACE(CONVERT(NVARCHAR(5), TC1.DEPOSIT_DATE, 10), '-', '.'), '') AS DEPOSIT_DATE
+                , ISNULL(TC1.DEPOSIT_USER_ID, '') AS DEPOSIT_USER_ID
               FROM T_CALC TC1, T_ORDER TO1
               WHERE 1=1
               AND TC1.ORDER_ID = TO1.ORDER_ID 
@@ -775,6 +789,7 @@
               #{mode}
             , #{editId}
             , #{calcIdList}
+            , #{depositDueDate}
             , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
             , #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
     }

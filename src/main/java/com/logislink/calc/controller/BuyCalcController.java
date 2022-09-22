@@ -284,6 +284,7 @@ public class BuyCalcController {
 		
 		String finishMode = param.get("mode").toString();
 		String json = param.get("param").toString();
+		String withdrawalDueDate = null;
 	    ObjectMapper mapper = new ObjectMapper();
 	    List<Map<String, Object>> calcFinishList = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});
 		
@@ -295,6 +296,7 @@ public class BuyCalcController {
 	    		// 마감 처리
 	    		if (!item.get("finishYn").equals("N"))
 	    			continue;
+	    		withdrawalDueDate = param.get("withdrawalDueDate").toString();
 	    	} else {
 	    		// 마감 취소
 	    		if (item.get("finishYn").equals("N"))
@@ -345,6 +347,7 @@ public class BuyCalcController {
 			
 			parameter.put("mode", finishMode);
 			parameter.put("regId", ((LoginVO)session.getAttribute("userInfo")).getUserId());
+			parameter.put("withdrawalDueDate", withdrawalDueDate);
 			
 			LinkMessage linkMessage = new LinkMessage();
 			try {

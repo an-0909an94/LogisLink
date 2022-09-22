@@ -52,6 +52,7 @@ public class PayVO {
 	private String calcId;
 	private String payStateCode;
 	private int vat;
+	private String withdrawalDueDate;
 	
 	public String getFinishDate() {
 		return finishDate;
@@ -358,6 +359,12 @@ public class PayVO {
 	}
 	public void setVat(int vat) {
 		this.vat = vat;
+	}
+	public String getWithdrawalDueDate() {
+		return withdrawalDueDate;
+	}
+	public void setWithdrawalDueDate(String withdrawalDueDate) {
+		this.withdrawalDueDate = withdrawalDueDate;
 	}
 	
 }

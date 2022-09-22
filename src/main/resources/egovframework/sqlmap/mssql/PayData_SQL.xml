@@ -8,45 +8,45 @@
 			ROW_NUMBER() OVER(ORDER BY AA.regDate DESC) AS number
 		  , AA.*	
 		FROM (
-			SELECT REPLACE(CONVERT(CHAR(5), A.FINISH_DATE, 110),'-','.') finishDate			
-				 , A.finishId			finishId		
-				 , REPLACE(CONVERT(CHAR(5), A.PAY_APPRO_DATE, 110),'-','.') payApproDate	
-				 , A.payApproId			payApproId											
-				 , REPLACE(CONVERT(CHAR(5), A.OUTREQ_DATE, 110),'-','.') outreqDate			
-				 , A.outreqId			outreqId											
-				 , A.OUT_KIND 			outKind												
-				 , REPLACE(CONVERT(CHAR(5), A.OUT_DATE, 110),'-','.') outDate				
-				 , CASE WHEN A.OUT_ID = 'SYSTEM' THEN '펌뱅킹(실시간)' ELSE A.outId END outId												
-				 , A.BUY_AMT 			buyAmt												
-				 , A.PAYABLE_AMT 		payableAmt											
-				 , A.WITHDRAWAL_AMT		withdrawalAmt										
-				 , F.REQ_PAY_YN			reqPayYn											
-				 , REPLACE(CONVERT(CHAR(5), F.REQ_PAY_DATE, 110),'-','.') reqPayDate		
+			SELECT REPLACE(CONVERT(CHAR(5), A.FINISH_DATE, 110),'-','.') finishDate
+				 , A.finishId			finishId
+				 , REPLACE(CONVERT(CHAR(5), A.PAY_APPRO_DATE, 110),'-','.') payApproDate
+				 , A.payApproId			payApproId
+				 , REPLACE(CONVERT(CHAR(5), A.OUTREQ_DATE, 110),'-','.') outreqDate
+				 , A.outreqId			outreqId
+				 , A.OUT_KIND 			outKind
+				 , REPLACE(CONVERT(CHAR(5), A.OUT_DATE, 110),'-','.') outDate
+				 , CASE WHEN A.OUT_ID = 'SYSTEM' THEN '펌뱅킹(실시간)' ELSE A.outId END outId
+				 , A.BUY_AMT 			buyAmt
+				 , A.PAYABLE_AMT 		payableAmt
+				 , A.WITHDRAWAL_AMT		withdrawalAmt
+				 , F.REQ_PAY_YN			reqPayYn
+				 , REPLACE(CONVERT(CHAR(5), F.REQ_PAY_DATE, 110),'-','.') reqPayDate
 				 , H.BIZ_NAME 			taxOwnerBizName
 				 , I.BIZ_NAME 			taxDriverBizName
-				 , G.BANK_CNNM 			bankCnnm				
-		 		 , G.bankCode 			bankCode									
-				 , G.BANK_ACCOUNT 		bankAccount											
-				 , REPLACE(CONVERT(CHAR(8), G.BANKCHK_DATE, 2),'-','.') bankChkDate			
-				 , A.CAR_NUM 			carNum												
-				 , A.DRIVER_NAME		driverName											
-				 , A.DRIVER_TEL 		driverTel											
-				 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'UNIT_PRICE_TYPE' AND CODE = B.UNIT_PRICE_TYPE) unitPriceType 
-				 , REPLACE(CONVERT(CHAR(5), F.ALLOC_DATE, 110),'-','.') allocDate			
-				 , REPLACE(CONVERT(CHAR(5), B.E_DATE, 110),'-','.') eDate			
+				 , G.BANK_CNNM 			bankCnnm
+		 		 , G.bankCode 			bankCode
+				 , G.BANK_ACCOUNT 		bankAccount
+				 , REPLACE(CONVERT(CHAR(8), G.BANKCHK_DATE, 2),'-','.') bankChkDate
+				 , A.CAR_NUM 			carNum
+				 , A.DRIVER_NAME		driverName
+				 , A.DRIVER_TEL 		driverTel
+				 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'UNIT_PRICE_TYPE' AND CODE = B.UNIT_PRICE_TYPE) unitPriceType
+				 , REPLACE(CONVERT(CHAR(5), F.ALLOC_DATE, 110),'-','.') allocDate
+				 , REPLACE(CONVERT(CHAR(5), B.E_DATE, 110),'-','.') eDate
 				 , B.S_SIDO +' '+ B.S_GUNGU sComName
-				 , B.E_SIDO +' '+ B.E_GUNGU eComName									
-				 , C.STOP_COM_NAME		stopComName											
-				 , ISNULL(C.STOP_COUNT,'0') stopCount										
-				 , F.SELL_WEIGHT		sellWeight											
-				 , CONVERT(FLOAT,B.GOODS_WEIGHT)/1000	goodsWeight											
-				 , E.USER_NAME			userName											
-				 , A.MEMO1 				memo1												
-				 , A.MEMO2 				memo2												
-				 , A.MEMO3 				memo3												
-				 , B.GOODS_NAME			goodsName											
-			     , (SELECT DEPT_NAME FROM T_CUST_DEPT WHERE DEPT_ID = A.MNG_DEPT_ID) mngDeptName 
-			     , A.ORDER_ID 			orderId												
+				 , B.E_SIDO +' '+ B.E_GUNGU eComName
+				 , C.STOP_COM_NAME		stopComName
+				 , ISNULL(C.STOP_COUNT,'0') stopCount
+				 , F.SELL_WEIGHT		sellWeight
+				 , CONVERT(FLOAT,B.GOODS_WEIGHT)/1000	goodsWeight
+				 , E.USER_NAME			userName
+				 , A.MEMO1 				memo1
+				 , A.MEMO2 				memo2
+				 , A.MEMO3 				memo3
+				 , B.GOODS_NAME			goodsName
+			     , (SELECT DEPT_NAME FROM T_CUST_DEPT WHERE DEPT_ID = A.MNG_DEPT_ID) mngDeptName
+			     , A.ORDER_ID 			orderId
 			     , A.REGDATE			regdate
 			     , A.MNG_CUST_ID		mngCustId
 			     , A.MNG_DEPT_ID		mngDeptId
@@ -57,18 +57,29 @@
 			     , A.ALLOC_ID			allocId
 			     , A.PAY_SEQ			paySeq
 			     , A.PAY_STATE_CODE		payStateCode
+                 , REPLACE(CONVERT(CHAR(5), A.WITHDRAWAL_DUE_DATE, 110),'-','.') withdrawalDueDate
 			FROM 
 				(SELECT FINISH_DATE, PAY_APPRO_DATE, OUTREQ_DATE, OUT_KIND,
 						OUT_DATE, OUT_ID, BUY_AMT, PAYABLE_AMT, WITHDRAWAL_AMT, CUST_ID, DEPT_ID, VEHIC_ID, DRIVER_ID, CAR_NUM,
 						DRIVER_NAME, DRIVER_TEL, MEMO1, MEMO2, MEMO3, MNG_CUST_ID, MNG_DEPT_ID, ORDER_ID,
 						REGDATE, ALLOC_ID, PAY_SEQ, PAY_STATE_CODE,
-						(SELECT USER_NAME FROM T_USER WHERE USER_ID = PAY_APPRO_ID) payApproId, 
+						(SELECT USER_NAME FROM T_USER WHERE USER_ID = PAY_APPRO_ID) payApproId,
 						(SELECT USER_NAME FROM T_USER WHERE USER_ID = FINISH_ID) finishId,
 						(SELECT USER_NAME FROM T_USER WHERE USER_ID = OUTREQ_ID) outreqId,
-						(SELECT USER_NAME FROM T_USER WHERE USER_ID = OUT_ID) outId
+						(SELECT USER_NAME FROM T_USER WHERE USER_ID = OUT_ID) outId,
+                        WITHDRAWAL_DUE_DATE
 				 FROM T_CALC_PAY
 				 WHERE USE_YN = 'Y' AND MNG_CUST_ID = #{loginCustId}
-				  	AND FINISH_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                    <if test="searchPeriodType != null and searchPeriodType != ''">
+                        <choose>
+                            <when test="searchPeriodType == 'finishDate'">
+                                AND FINISH_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                            </when>
+                            <otherwise>
+                                AND WITHDRAWAL_DUE_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                            </otherwise>
+                        </choose>
+                    </if>
 					<if test="payApproYn != null and payApproYn != ''">
 						AND CASE WHEN PAY_APPRO_DATE IS NULL THEN 'N' ELSE 'Y' END = #{payApproYn}
 					</if>
