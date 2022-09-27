@@ -1288,13 +1288,13 @@
  	// 삭제 처리
 	function deleteCalc() {
 		if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 삭제 처리를 하시겠습니까?\n이미 마감 처리 및 삭제 처리된 건은 제외됩니다.";
+    		var message = "선택된 (" + selectedList.size + ")건에 대한 삭제 처리를 하시겠습니까?\n마감 처리된 건은 제외됩니다.";
     		if (confirm(message)) {
     			var orderIdList = [];
     			var allocIdList = [];
         		for (var [key, value] of selectedList) {
-        			if (value.finishYn == "" || value.finishYn == "N") {
-        				if (value.deleteYn == "" || value.deleteYn == "N") {
+        			if (value.finishYn == "N") {
+        				if (value.deleteYn == "N") {
             				orderIdList.push(value.orderId);
                 			allocIdList.push(value.buyAllocId);
         				}
@@ -1335,7 +1335,7 @@
     			var orderIdList = [];
     			var allocIdList = [];
         		for (var [key, value] of selectedList) {
-        			if (value.deleteYn != "" && value.deleteYn != "N") {
+        			if (value.deleteYn != "N") {
         				orderIdList.push(value.orderId);
             			allocIdList.push(value.buyAllocId);	
         			}

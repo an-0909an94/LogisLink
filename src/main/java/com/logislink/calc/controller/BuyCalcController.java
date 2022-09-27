@@ -190,9 +190,9 @@ public class BuyCalcController {
 			linkMessage.setSender(this.getClass().getName());
 			linkMessage.setStatus(0);
 			if (param.get("deleteYn").equals("Y"))
-				linkMessage.setMessage("삭제 처리를 완료했습니다.");
+				linkMessage.setMessage("(" + resultCnt + ")건의 삭제 처리를 완료했습니다.");
 			else
-				linkMessage.setMessage("삭제 취소 처리를 완료했습니다.");
+				linkMessage.setMessage("(" + resultCnt + ")건의 삭제 취소 처리를 완료했습니다.");
 		} catch (Exception e) {
 			linkMessage.setSender(this.getClass().getName());
 			linkMessage.setStatus(-1);

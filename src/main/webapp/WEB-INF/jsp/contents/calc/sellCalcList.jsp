@@ -1170,13 +1170,17 @@
  	// 우편발송 처리
     function taxinvPostSend() {
     	if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 우편발송 처리를 하시겠습니까?";
+    		var message = "선택된 (" + selectedList.size + ")건에 대한 우편발송 처리를 하시겠습니까?\n이미 발송처리된 건은 제외됩니다.";
     		if (confirm(message)) {
     			var orderIdList = [];
     			var allocIdList = [];
         		for (var [key, value] of selectedList) {
-        			orderIdList.push(value.orderId);
-        			allocIdList.push(value.sellAllocId);
+        			if (value.postsendYn == "N") {
+        				if (value.deleteYn == "N") {
+        					orderIdList.push(value.orderId);
+                			allocIdList.push(value.sellAllocId);
+        				}
+        			}
             	}
         		
         		$.ajax({
@@ -1208,13 +1212,17 @@
 	// 우편발송 취소
     function taxInvPostSendCancel() {
     	if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 우편발송 처리를 취소 하시겠습니까?";
+    		var message = "선택된 (" + selectedList.size + ")건에 대한 우편발송 처리를 취소 하시겠습니까?\n발송 처리되지 않은 건은 제외됩니다.";
     		if (confirm(message)) {
     			var orderIdList = [];
     			var allocIdList = [];
         		for (var [key, value] of selectedList) {
-        			orderIdList.push(value.orderId);
-        			allocIdList.push(value.sellAllocId);
+        			if (value.postsendYn != "N") {
+        				if (value.deleteYn == "N") {
+        					orderIdList.push(value.orderId);
+                			allocIdList.push(value.sellAllocId);
+        				}
+        			}
             	}
         		
         		$.ajax({
@@ -1246,13 +1254,13 @@
  	// 삭제 처리
 	function deleteCalc() {
 		if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 삭제 처리를 하시겠습니까?\n이미 마감 처리 및 삭제 처리된 건은 제외됩니다.";
+    		var message = "선택된 (" + selectedList.size + ")건에 대한 삭제 처리를 하시겠습니까?\n마감 처리된 건은 제외됩니다.";
     		if (confirm(message)) {
     			var orderIdList = [];
     			var allocIdList = [];
         		for (var [key, value] of selectedList) {
-        			if (value.finishYn == "" || value.finishYn == "N") {
-        				if (value.deleteYn == "" || value.deleteYn == "N") {
+        			if (value.finishYn == "N") {
+        				if (value.deleteYn == "N") {
             				orderIdList.push(value.orderId);
                 			allocIdList.push(value.sellAllocId);
         				}
@@ -1293,7 +1301,7 @@
     			var orderIdList = [];
     			var allocIdList = [];
         		for (var [key, value] of selectedList) {
-        			if (value.deleteYn != "" && value.deleteYn != "N") {
+        			if (value.deleteYn != "N") {
         				orderIdList.push(value.orderId);
             			allocIdList.push(value.sellAllocId);	
         			}
@@ -1427,38 +1435,46 @@
  	// 마감취소
  	function calcFinishCancel() {
  		if (selectedList.size > 0) {
-    		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 취소를 하시겠습니까?\n이미 처리된 건은 제외됩니다.";
+    		var message = "선택된 (" + selectedList.size + ")건에 대한 마감 취소를 하시겠습니까?\n이미 처리된 건 및 입금 확인된 건은 제외됩니다.";
     		if (confirm(message)) {
+    			var finishCnt = 0;
     			var calcIdList = [];
     			for (var [key, value] of selectedList) {
-    				if ((value.deleteYn == "" || value.deleteYn == "N") &&
-    					(value.finishYn != "" || value.finishYn != "N")) {
-    					/*
-    						sellChargeId
-    						sellWaypointChargeId
-    						sellStayChargeId
-    						sellHandworkChargeId
-    						sellRoundChargeId
-    						sellOtheraddChargeId
-    					*/
-    					if (value.sellChargeId != null && value.sellChargeId != "")
-    						calcIdList.push(value.sellChargeId);
-    					
-    					if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
-    						calcIdList.push(value.sellWaypointChargeId);
-    					
-    					if (value.sellStayChargeId != null && value.sellStayChargeId != "")
-    						calcIdList.push(value.sellStayChargeId);
-    					
-    					if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
-    						calcIdList.push(value.sellHandworkChargeId);
-    					
-    					if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
-    						calcIdList.push(value.sellRoundChargeId);
-    					
-    					if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
-    						calcIdList.push(value.sellOtheraddChargeId);
-    				}
+    				if (value.finishYn != "N") {
+        				if (value.deleteYn == "N") {
+        					// 입금 확인된 건 제외
+        					if (value.depositDate != "N")
+        						continue;
+        					
+        					/*
+            					sellChargeId
+            					sellWaypointChargeId
+            					sellStayChargeId
+            					sellHandworkChargeId
+            					sellRoundChargeId
+            					sellOtheraddChargeId
+        					*/
+        					if (value.sellChargeId != null && value.sellChargeId != "")
+        						calcIdList.push(value.sellChargeId);
+
+        					if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
+        						calcIdList.push(value.sellWaypointChargeId);
+
+        					if (value.sellStayChargeId != null && value.sellStayChargeId != "")
+        						calcIdList.push(value.sellStayChargeId);
+
+        					if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
+        						calcIdList.push(value.sellHandworkChargeId);
+
+        					if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
+        						calcIdList.push(value.sellRoundChargeId);
+
+        					if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
+        						calcIdList.push(value.sellOtheraddChargeId);
+        					
+        					finishCnt++;
+        				}
+        			}
     			}
     			
     			$.ajax({
@@ -1472,7 +1488,7 @@
         			success: function(data){
         				if (data.linkMessage.status == 0) {
         					// 요청 성공시 내용 기술
-							alert(selectedList.size + "건의 " + data.linkMessage.message);
+							alert("(" + finishCnt + ")건의 " + data.linkMessage.message);
 							goList();
 							//contextMenu.close();
         				} else {
@@ -1500,35 +1516,39 @@
  		if (selectedList.size > 0) {
     		var message = "선택된 (" + selectedList.size + ")건에 대한 입금확인 취소를 하시겠습니까?\n입금확인되지 않은 건은 제외됩니다.";
     		if (confirm(message)) {
+    			var finishCnt = 0;
     			var calcIdList = [];
     			for (var [key, value] of selectedList) {
-    				if ((value.deleteYn == "" || value.deleteYn == "N") &&
-    					(value.depositDate != "" || value.depositDate != "N")) {
-    					/*
-    						sellChargeId
-    						sellWaypointChargeId
-    						sellStayChargeId
-    						sellHandworkChargeId
-    						sellRoundChargeId
-    						sellOtheraddChargeId
-    					*/
-    					if (value.sellChargeId != null && value.sellChargeId != "")
-    						calcIdList.push(value.sellChargeId);
-    					
-    					if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
-    						calcIdList.push(value.sellWaypointChargeId);
-    					
-    					if (value.sellStayChargeId != null && value.sellStayChargeId != "")
-    						calcIdList.push(value.sellStayChargeId);
-    					
-    					if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
-    						calcIdList.push(value.sellHandworkChargeId);
-    					
-    					if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
-    						calcIdList.push(value.sellRoundChargeId);
-    					
-    					if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
-    						calcIdList.push(value.sellOtheraddChargeId);
+    				if (value.depositDate != "N") {
+        				if (value.deleteYn == "N") {
+        					/*
+            					sellChargeId
+            					sellWaypointChargeId
+            					sellStayChargeId
+            					sellHandworkChargeId
+            					sellRoundChargeId
+            					sellOtheraddChargeId
+            				*/
+            				if (value.sellChargeId != null && value.sellChargeId != "")
+            					calcIdList.push(value.sellChargeId);
+    
+            				if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
+            					calcIdList.push(value.sellWaypointChargeId);
+    
+            				if (value.sellStayChargeId != null && value.sellStayChargeId != "")
+            					calcIdList.push(value.sellStayChargeId);
+    
+            				if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
+            					calcIdList.push(value.sellHandworkChargeId);
+    
+            				if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
+            					calcIdList.push(value.sellRoundChargeId);
+    
+            				if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
+            					calcIdList.push(value.sellOtheraddChargeId);
+    
+            				finishCnt++;
+        				}
     				}
     			}
     			
@@ -1543,7 +1563,7 @@
         			success: function(data){
         				if (data.linkMessage.status == 0) {
         					// 요청 성공시 내용 기술
-							alert(selectedList.size + "건의 " + data.linkMessage.message);
+							alert("(" + finishCnt + ")건의 " + data.linkMessage.message);
 							goList();
 							//contextMenu.close();
         				} else {
@@ -1582,35 +1602,31 @@
     $('#fCalcFinish').validator().on('submit', function(e) {
     	e.preventDefault();
     	
+    	var finishCnt = 0;
     	var calcIdList = [];
 		for (var [key, value] of selectedList) {
-			if ((value.deleteYn == "" || value.deleteYn == "N") &&
-				(value.finishYn == "" || value.finishYn == "N")) {
-				/*
-					sellChargeId
-					sellWaypointChargeId
-					sellStayChargeId
-					sellHandworkChargeId
-					sellRoundChargeId
-					sellOtheraddChargeId
-				*/
-				if (value.sellChargeId != null && value.sellChargeId != "")
-					calcIdList.push(value.sellChargeId);
-			
-				if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
-					calcIdList.push(value.sellWaypointChargeId);
-			
-				if (value.sellStayChargeId != null && value.sellStayChargeId != "")
-					calcIdList.push(value.sellStayChargeId);
-			
-				if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
-					calcIdList.push(value.sellHandworkChargeId);
-			
-				if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
-					calcIdList.push(value.sellRoundChargeId);
-			
-				if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
-					calcIdList.push(value.sellOtheraddChargeId);
+			if (value.finishYn == "N") {
+				if (value.deleteYn == "N") {
+    				if (value.sellChargeId != null && value.sellChargeId != "")
+    					calcIdList.push(value.sellChargeId);
+    
+    				if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
+    					calcIdList.push(value.sellWaypointChargeId);
+    
+    				if (value.sellStayChargeId != null && value.sellStayChargeId != "")
+    					calcIdList.push(value.sellStayChargeId);
+    
+    				if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
+    					calcIdList.push(value.sellHandworkChargeId);
+    
+    				if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
+    					calcIdList.push(value.sellRoundChargeId);
+    
+    				if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
+    					calcIdList.push(value.sellOtheraddChargeId);
+    				
+    				finishCnt++;
+				}
 			}
 		}
 	
@@ -1626,7 +1642,7 @@
     		success: function(data) {
     			if (data.linkMessage.status == 0) {
     				// 요청 성공시 내용 기술
-    				alert(selectedList.size + "건의 " + data.linkMessage.message);
+    				alert("(" + finishCnt + ")건의 " + data.linkMessage.message);
     			} else {
     				alert(data.linkMessage.message);
     			}
@@ -1645,7 +1661,7 @@
     calcPayFinishModal = $("#divCalcPayFinish");
     calcPayFinishModal.kendoDialog({
         width: "430px",
-        height: "300px",
+        height: "350px",
         visible: false,
         title: "입금확인",
         closable: true,
@@ -1653,7 +1669,7 @@
     });
     
     function calcPayFinishModalOpen() {
-    	$("#payFinishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 입금확인 처리를 하시겠습니까?<br />이미 처리된 건은 제외됩니다</p>");
+    	$("#payFinishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 입금확인 처리를 하시겠습니까? (이미 처리된 건은 제외됩니다.)<br />입금확인 처리시 마감 처리되지 않은 건은 자동 마감 처리됩니다.</p>");
     	calcPayFinishModal.data("kendoDialog").open();
     }
     
@@ -1664,60 +1680,138 @@
     $('#fCalcPayFinish').validator().on('submit', function(e) {
     	e.preventDefault();
     	
-    	var calcIdList = [];
+    	var calcFinishCnt = 0;
+    	var calcPayFinishCnt = 0;
+    	var calcFinishIdList = [];
+    	var calcPayFinishIdList = [];
 		for (var [key, value] of selectedList) {
-			if ((value.deleteYn == "" || value.deleteYn == "N") &&
-				(value.depositDate == "" || value.depositDate == "N")) {
-				/*
-					sellChargeId
-					sellWaypointChargeId
-					sellStayChargeId
-					sellHandworkChargeId
-					sellRoundChargeId
-					sellOtheraddChargeId
-				*/
-				if (value.sellChargeId != null && value.sellChargeId != "")
-					calcIdList.push(value.sellChargeId);
-			
-				if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
-					calcIdList.push(value.sellWaypointChargeId);
-			
-				if (value.sellStayChargeId != null && value.sellStayChargeId != "")
-					calcIdList.push(value.sellStayChargeId);
-			
-				if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
-					calcIdList.push(value.sellHandworkChargeId);
-			
-				if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
-					calcIdList.push(value.sellRoundChargeId);
-			
-				if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
-					calcIdList.push(value.sellOtheraddChargeId);
+			if (value.deleteYn == "N") {
+				if (value.finishYn == "N") {
+					if (value.sellChargeId != null && value.sellChargeId != "") {
+						calcFinishIdList.push(value.sellChargeId);
+					}
+    
+    				if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "") {
+    					calcFinishIdList.push(value.sellChargeId);
+    				}
+    
+    				if (value.sellStayChargeId != null && value.sellStayChargeId != "") {
+    					calcFinishIdList.push(value.sellStayChargeId);
+    				}
+    
+    				if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "") {
+    					calcFinishIdList.push(value.sellHandworkChargeId);
+    				}
+    
+    				if (value.sellRoundChargeId != null && value.sellRoundChargeId != "") {
+    					calcFinishIdList.push(value.sellRoundChargeId);
+    				}
+    
+    				if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "") {
+    					calcFinishIdList.push(value.sellOtheraddChargeId);
+    				}
+    				
+    				calcFinishCnt++;
+				}
+				
+				if(value.depositDate == "N") {
+					if (value.sellChargeId != null && value.sellChargeId != "") {
+						calcPayFinishIdList.push(value.sellChargeId);
+					}
+    
+    				if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "") {
+    					calcPayFinishIdList.push(value.sellChargeId);
+    				}
+    
+    				if (value.sellStayChargeId != null && value.sellStayChargeId != "") {
+    					calcPayFinishIdList.push(value.sellStayChargeId);
+    				}
+    
+    				if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "") {
+    					calcPayFinishIdList.push(value.sellHandworkChargeId);
+    				}
+    
+    				if (value.sellRoundChargeId != null && value.sellRoundChargeId != "") {
+    					calcPayFinishIdList.push(value.sellRoundChargeId);
+    				}
+    
+    				if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "") {
+    					calcPayFinishIdList.push(value.sellOtheraddChargeId);
+    				}
+    				
+    				calcPayFinishCnt++;
+				}
 			}
 		}
-	
-		$.ajax({
-    		url: "/contents/calc/data/updateSellCalcPayFinish.do",
-    		type: "POST",
-    		dataType: "json",
-    		data: {
-    			mode: "Y",
-    			calcIdList: calcIdList.toString(),
-    			depositDate: $("#depositDate").val()
-    		},
-    		success: function(data) {
-    			if (data.linkMessage.status == 0) {
-    				// 요청 성공시 내용 기술
-    				alert(selectedList.size + "건의 " + data.linkMessage.message);
-    			} else {
-    				alert(data.linkMessage.message);
-    			}
-    			
-    			calcPayFinishModal.data("kendoDialog").close();
-    			
-    			goList();
-    		}
-    	});
+		
+		if (calcFinishCnt > 0) {
+			/* 마감 처리와 입금 확인 처리 진행 */
+			
+			// 마감 처리
+			$.ajax({
+	    		url: "/contents/calc/data/updateSellCalcFinish.do",
+	    		type: "POST",
+	    		dataType: "json",
+	    		data: {
+	    			mode: "Y",
+	    			calcIdList: calcFinishIdList.toString(),
+	    			depositDueDate: $("#depositDate").val()
+	    		},
+	    		success: function(data) {
+	    			if (data.linkMessage.status == 0) {
+	    				// 입금 확인 처리
+	    				$.ajax({
+	    					url: "/contents/calc/data/updateSellCalcPayFinish.do",
+	    					type: "POST",
+	    					dataType: "json",
+	    					data: {
+	    						mode: "Y",
+	    						calcIdList: calcPayFinishIdList.toString(),
+	    						depositDate: $("#depositDate").val()
+	    					},
+	    					success: function(data) {
+	    						if (data.linkMessage.status == 0) {
+	    							// 요청 성공시 내용 기술
+	    							alert("(" + calcFinishCnt + ")건의 마감 처리와\n(" + calcPayFinishCnt + ")건의 입금확인 처리가 완료되었습니다.");
+	    						} else {
+	    							alert(data.linkMessage.message);
+	    						}
+	    						
+	    						calcPayFinishModal.data("kendoDialog").close();
+	    						
+	    						goList();
+	    					}
+	    				});
+	    			} else {
+	    				alert(data.linkMessage.message);
+	    			}
+	    		}
+	    	});
+		} else {
+			// 입금 확인 처리만 진행
+			$.ajax({
+				url: "/contents/calc/data/updateSellCalcPayFinish.do",
+				type: "POST",
+				dataType: "json",
+				data: {
+					mode: "Y",
+					calcIdList: calcPayFinishIdList.toString(),
+					depositDate: $("#depositDate").val()
+				},
+				success: function(data) {
+					if (data.linkMessage.status == 0) {
+						// 요청 성공시 내용 기술
+						alert("(" + calcPayFinishCnt + ")건의 " + data.linkMessage.message);
+					} else {
+						alert(data.linkMessage.message);
+					}
+					
+					calcPayFinishModal.data("kendoDialog").close();
+					
+					goList();
+				}
+			});
+		}
     });
  	
     /*

@@ -49,8 +49,7 @@
 }
 
 body {
-    font-family: 'Nanum Square Round';
-    font-weight: bold;
+    font-family: 'Noto Sans KR', sans-serif;
     overflow-x: hidden;
     background-color: #EDF0F2;
     color: #222A31;
