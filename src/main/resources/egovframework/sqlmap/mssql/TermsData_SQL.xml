@@ -3,8 +3,12 @@
 
 <mapper namespace="termsNS">
   <select id="termsRead" parameterType="java.util.HashMap" resultType="termsVO">
-    SELECT AA.*  FROM T_TERMS as AA ORDER BY NUMBER ASC
-  </select>
+
+    SELECT TOP(10) AA.*
+    FROM T_TERMS as AA
+    ORDER BY NUMBER ASC
+
+</select>
 
 
   <select id="termsUserSearch" parameterType="java.util.HashMap" resultType="termsAgreeVO">
