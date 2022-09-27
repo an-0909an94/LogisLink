@@ -1501,6 +1501,14 @@
     
     function calcFinishModalOpen() {
     	$("#finishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?<br />이미 처리된 건은 제외됩니다</p>");
+    	
+    	var dateOption = {
+            format : "yyyy-MM-dd",
+            value : new Date(),
+            dateInput : true
+        }
+    	$("#withdrawalDueDate").kendoDatePicker(dateOption);
+    	
     	calcFinishModal.data("kendoDialog").open();
     }
     

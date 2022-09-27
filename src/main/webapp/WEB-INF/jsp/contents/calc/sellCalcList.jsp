@@ -1370,12 +1370,12 @@
     }
   	
   	// 검색조건 체크박스 Value 설정
-  	function searchChecked(e) {
-  		if (e.checked == true)
-  			$(e).val("Y")
-  		else
-  			$(e).val("N")
-  	}
+//   	function searchChecked(e) {
+//   		if (e.checked == true)
+//   			$(e).val("Y")
+//   		else
+//   			$(e).val("N")
+//   	}
   	
  	// 청구운송비 변경
  	function changeSellCharge() {
@@ -1592,6 +1592,14 @@
     
     function calcFinishModalOpen() {
     	$("#finishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?<br />이미 처리된 건은 제외됩니다</p>");
+    	
+    	var dateOption = {
+            format : "yyyy-MM-dd",
+            value : new Date(),
+            dateInput : true
+        }
+    	$("#depositDueDate").kendoDatePicker(dateOption);
+    	
     	calcFinishModal.data("kendoDialog").open();
     }
     
@@ -1670,6 +1678,14 @@
     
     function calcPayFinishModalOpen() {
     	$("#payFinishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 입금확인 처리를 하시겠습니까? (이미 처리된 건은 제외됩니다.)<br />입금확인 처리시 마감 처리되지 않은 건은 자동 마감 처리됩니다.</p>");
+    	
+    	var dateOption = {
+            format : "yyyy-MM-dd",
+            value : new Date(),
+            dateInput : true
+        }
+    	$("#depositDate").kendoDatePicker(dateOption);
+    	
     	calcPayFinishModal.data("kendoDialog").open();
     }
     
