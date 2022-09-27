@@ -34,6 +34,8 @@
           , CHARGE_TYPE_NAME AS chargeTypeName
           , ALLOC_FEE AS allocFee
           , DEPOSIT_AMT AS depositAmt
+          , DEPOSIT_AMT / 10 AS depositVat
+          , DEPOSIT_AMT + (DEPOSIT_AMT / 10) AS depositSum
           , TRAN_RECEIPT_DATE AS tranReceiptYn
           , TRAN_RECEIPT_USER_NAME AS tranReceiptUserName
           , SELL_TAXINV_DATE AS sellTaxinvYn
@@ -252,9 +254,30 @@
               <if test = 'deptId != null and deptId != ""'>
                 AND TC1.MNG_DEPT_ID = #{deptId}
               </if>
-              -- 배차일자검색 -> 미처리이월건 포함 검색 시 배차일자검색 제외
+              -- 기간검색 -> 미처리이월건 포함 검색 시 기간검색 제외
               <if test = 'carryOver != "Y"'>
-                AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                <choose>
+                  <!-- 입금예정일 -->
+                  <when test = 'searchDateType == "depositDueDate"'>
+                    AND TC1.DEPOSIT_DUE_DATE IS NOT NULL
+                    AND TC1.DEPOSIT_DUE_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </when>
+                  <!-- 입금확인일 -->
+                  <when test = 'searchDateType == "depositDate"'>
+                    AND TC1.DEPOSIT_DATE IS NOT NULL
+                    AND TC1.DEPOSIT_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </when>
+                  <!-- 마감일 -->
+                  <when test = 'searchDateType == "finishDate"'>
+                    AND TC1.CALC_DATE IS NOT NULL
+                    AND TC1.CALC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </when>
+                  <!-- 배차일 -->
+                  <otherwise>
+                    AND TO1.ALLOC_DATE IS NOT NULL
+                    AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </otherwise>
+                </choose>
               </if>
               -- 거래처(화주)검색
               <if test = 'custId != null and custId != ""'>
@@ -297,6 +320,17 @@
                   </when>
                   <otherwise>
                     AND TC1.DELETE_DATE IS NULL
+                  </otherwise>
+                </choose>
+              </if>
+              -- 입금확인 여부
+              <if test = 'depositYn != null and depositYn != "" and carryOver != "Y"'>
+                <choose>
+                  <when test = 'depositYn == "Y"'>
+                    AND TC1.DEPOSIT_DATE IS NOT NULL
+                  </when>
+                  <otherwise>
+                    AND TC1.DEPOSIT_DATE IS NULL
                   </otherwise>
                 </choose>
               </if>
@@ -492,9 +526,30 @@
             <if test = 'deptId != null and deptId != ""'>
               AND TC1.MNG_DEPT_ID = #{deptId}
             </if>
-            -- 배차일자검색 -> 미처리이월건 포함 검색 시 배차일자검색 제외
+            -- 기간검색 -> 미처리이월건 포함 검색 시 기간검색 제외
             <if test = 'carryOver != "Y"'>
-              AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+              <choose>
+                <!-- 입금예정일 -->
+                <when test = 'searchDateType == "depositDueDate"'>
+                  AND TC1.DEPOSIT_DUE_DATE IS NOT NULL
+                  AND TC1.DEPOSIT_DUE_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </when>
+                <!-- 입금확인일 -->
+                <when test = 'searchDateType == "depositDate"'>
+                  AND TC1.DEPOSIT_DATE IS NOT NULL
+                  AND TC1.DEPOSIT_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </when>
+                <!-- 마감일 -->
+                <when test = 'searchDateType == "finishDate"'>
+                  AND TC1.CALC_DATE IS NOT NULL
+                  AND TC1.CALC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </when>
+                <!-- 배차일 -->
+                <otherwise>
+                  AND TO1.ALLOC_DATE IS NOT NULL
+                  AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </otherwise>
+              </choose>
             </if>
             -- 거래처(화주)검색
             <if test = 'custId != null and custId != ""'>
@@ -537,6 +592,17 @@
                 </when>
                 <otherwise>
                   AND TC1.DELETE_DATE IS NULL
+                </otherwise>
+              </choose>
+            </if>
+            -- 입금확인 여부
+            <if test = 'depositYn != null and depositYn != "" and carryOver != "Y"'>
+              <choose>
+                <when test = 'depositYn == "Y"'>
+                  AND TC1.DEPOSIT_DATE IS NOT NULL
+                </when>
+                <otherwise>
+                  AND TC1.DEPOSIT_DATE IS NULL
                 </otherwise>
               </choose>
             </if>
@@ -790,6 +856,18 @@
             , #{editId}
             , #{calcIdList}
             , #{depositDueDate}
+            , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+            , #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
+    }
+  </update>
+  
+  <!-- 매출 입금확인 -->
+  <update id="sellCalcPayFinish" statementType="CALLABLE" parameterType="java.util.HashMap">
+    { call UPDATE_SELL_CALC_PAY_FINISH (
+              #{mode}
+            , #{editId}
+            , #{calcIdList}
+            , #{depositDate}
             , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
             , #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
     }

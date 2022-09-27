@@ -75,4 +75,9 @@ public class SellCalcServiceImpl implements SellCalcService {
 	public void updateSellCalcFinish(Map<String, Object> map) {
 		sellCalcDao.updateSellCalcFinish(map);
 	}
+	
+	@Override
+	public void updateSellCalcPayFinish(Map<String, Object> map) {
+		sellCalcDao.updateSellCalcPayFinish(map);
+	}
 }

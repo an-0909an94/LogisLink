@@ -448,6 +448,41 @@ public class SellCalcController {
 		return "jsonView";
 	}
 	
+	@PostMapping(value="/contents/calc/data/updateSellCalcPayFinish.do")
+	public String updateSellCalcPayFinish(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
+		
+		// 권한 체크???
+
+		// mngDeptId 조건 반드시 확인 필! -> 기존 항목에 mngDeptId를 따라야 함?
+//		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+//		if("N".equals(login.getMasterYn())) {
+//			param.put("mngDeptId", login.getDeptId());
+//		} else {
+//			param.put("mngDeptId", param.get("sDeptId"));
+//		}
+		
+		param.put("editId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+		
+		LinkMessage linkMessage = new LinkMessage();
+		try {
+			sellCalcService.updateSellCalcPayFinish(param);
+			
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(0);
+			linkMessage.setMessage(param.get("retMsg").toString());
+		} catch (Exception e) {
+			linkMessage.setSender(this.getClass().getName());
+			linkMessage.setStatus(-1);
+			linkMessage.setMessage("입금확인 처리에 실패했습니다.\n시스템 관리자에게 문의하세요.");
+			linkMessage.setDetailMessage(e.getMessage());
+		}
+		
+		map.clear();
+		map.put("linkMessage", linkMessage);
+		
+		return "jsonView";
+	}
+	
 //	@PostMapping(value="/contents/calc/data/setTranReceipt.do")
 //	public String setTranReceipt(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) {
 //		

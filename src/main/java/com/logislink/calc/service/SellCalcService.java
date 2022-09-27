@@ -29,4 +29,6 @@ public interface SellCalcService {
 	public int updateAllocCharge(Map<String, Object> map);
 	
 	public void updateSellCalcFinish(Map<String, Object> map);
+	
+	public void updateSellCalcPayFinish(Map<String, Object> map);
 }

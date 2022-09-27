@@ -38,6 +38,31 @@
 </div>
 <!-- 매출마감처리 Modal End -->
 
+<!-- 입금확인처리 Modal -->
+<div id="divCalcPayFinish" class="editor_wrap p-0">
+    <form id="fCalcPayFinish" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
+        <div class="modalHeader">
+            <div class="form-group row">
+                <div id="payFinishMessage" style="text-align: left; padding: 0px; font-size: 17px;">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-form-label modal-big-name">입금확인일자</label>
+                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
+                    <input style="padding: 0;" type="text" id="depositDate" name="depositDate" class="col-12">
+                </div>
+            </div>
+        </div>
+        <div class="editor_btns">
+            <div class="padding">
+                <button type="submit" id="fCalcPayFinishSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>확인</strong></b></button>
+                <a onclick="calcPayFinishModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>취소</b></a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 입금확인처리 Modal End -->
+
 <!-- 거래명세서 발행 Modal -->
 <div id="divTranReceipt" class="editor_wrap p-0">
     <form id="fTranReceipt" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
@@ -348,8 +373,17 @@
 
                 <!-- 검색 2라인 -->
                 <div class="form-group row">
+                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                        <strong>기간검색</strong>
+                        <select id="searchDateType" name="searchDateType" class="custom-select col-12">
+                            <option value="allocDate" selected>배차일자</option>
+                            <option value="depositDueDate">입금예정일자</option>
+                            <option value="depositDate">입금확인일자</option>
+                            <option value="finishDate">마감일자</option>
+                        </select>
+                    </div>
                     <div class="input-group input-group-sm col-1 middle-name">
-                        <strong>배차일자</strong>
+                        <strong>&nbsp;</strong>
                         <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
                     </div>
                     <span style="margin-top: 31px;">~</span>
@@ -383,6 +417,15 @@
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>&nbsp;</strong>
                         <input type="text" class="form-control form-control-sm" hidden="true">
+                    </div>
+
+                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                        <strong>입금확인여부</strong>
+                        <select id="sDepositYn" name="depositYn" class="custom-select col-12">
+                            <option value="">--전체--</option>
+                            <option value="Y">Y</option>
+                            <option value="N" selected>N</option>
+                        </select>
                     </div>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
@@ -464,6 +507,10 @@
                                                             <b class="btn-b"> <i class="k-icon k-i-edit"> </i>마감처리
                                                             </b>
                                                         </a>
+                                                        <a href="#" class="k-pager-refresh k-button" id="finishCalcPay" onClick="calcPayFinish()">
+                                                            <b class="btn-b"> <i class="k-icon k-i-edit"> </i>입금확인
+                                                            </b>
+                                                        </a>
                                                         <a href="#" class="k-pager-refresh k-button" id="excelDownload" onClick="excelDownload()">
                                                             <b class="btn-x"> <i class="k-icon k-i-file-excel"> </i>엑셀출력
                                                             </b>
@@ -491,6 +538,8 @@
                                 <li id="taxinvPostSendCancel">우편발송 취소</li>
                                 <li class="k-separator"></li>
                                 <li id="cancelCalc">마감 취소</li>
+                                <li class="k-separator"></li>
+                                <li id="cancelCalcPay">입금확인 취소</li>
                                 <li class="k-separator"></li>
                                 <li id="cancelDeleteCalc">삭제 취소</li>
                             </ul>
@@ -547,6 +596,7 @@
         $("#toDate").kendoDatePicker(dateOption);
         $("#taxDate").kendoDatePicker(dateOption);
         $("#depositDueDate").kendoDatePicker(dateOption);
+        $("#depositDate").kendoDatePicker(dateOption);
 
         // 담당부서 셀렉트 박스
         var deptOption = {
@@ -1436,6 +1486,77 @@
     	}
  	}
  	
+ 	// 입금확인처리
+ 	function calcPayFinish() {
+ 		if (selectedList.size > 0) {
+ 			calcPayFinishModalOpen();
+    	} else {
+    		alert("입금확인 처리할 항목을 선택해 주세요.");
+    	}
+ 	}
+ 	
+ 	// 입금확인취소
+ 	function calcPayFinishCancel() {
+ 		if (selectedList.size > 0) {
+    		var message = "선택된 (" + selectedList.size + ")건에 대한 입금확인 취소를 하시겠습니까?\n입금확인되지 않은 건은 제외됩니다.";
+    		if (confirm(message)) {
+    			var calcIdList = [];
+    			for (var [key, value] of selectedList) {
+    				if ((value.deleteYn == "" || value.deleteYn == "N") &&
+    					(value.depositDate != "" || value.depositDate != "N")) {
+    					/*
+    						sellChargeId
+    						sellWaypointChargeId
+    						sellStayChargeId
+    						sellHandworkChargeId
+    						sellRoundChargeId
+    						sellOtheraddChargeId
+    					*/
+    					if (value.sellChargeId != null && value.sellChargeId != "")
+    						calcIdList.push(value.sellChargeId);
+    					
+    					if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
+    						calcIdList.push(value.sellWaypointChargeId);
+    					
+    					if (value.sellStayChargeId != null && value.sellStayChargeId != "")
+    						calcIdList.push(value.sellStayChargeId);
+    					
+    					if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
+    						calcIdList.push(value.sellHandworkChargeId);
+    					
+    					if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
+    						calcIdList.push(value.sellRoundChargeId);
+    					
+    					if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
+    						calcIdList.push(value.sellOtheraddChargeId);
+    				}
+    			}
+    			
+    			$.ajax({
+        			url: "/contents/calc/data/updateSellCalcPayFinish.do",
+        			type: "POST",
+        			dataType: "json",
+        			data: {
+        				mode: "N",
+        				calcIdList: calcIdList.toString()
+        			},
+        			success: function(data){
+        				if (data.linkMessage.status == 0) {
+        					// 요청 성공시 내용 기술
+							alert(selectedList.size + "건의 " + data.linkMessage.message);
+							goList();
+							//contextMenu.close();
+        				} else {
+        					alert(data.linkMessage.message);
+        				}
+        			}
+        		});
+    		}
+    	} else {
+    		alert("마감처리할 항목을 선택해 주세요.");
+    	}
+ 	}
+ 	
  	/*
      * 매출마감처리 Modal
      */
@@ -1517,6 +1638,87 @@
     	});
     });
  	
+    
+    /*
+     * 입금확인처리 Modal
+     */
+    calcPayFinishModal = $("#divCalcPayFinish");
+    calcPayFinishModal.kendoDialog({
+        width: "430px",
+        height: "300px",
+        visible: false,
+        title: "입금확인",
+        closable: true,
+        modal: true
+    });
+    
+    function calcPayFinishModalOpen() {
+    	$("#payFinishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 입금확인 처리를 하시겠습니까?<br />이미 처리된 건은 제외됩니다</p>");
+    	calcPayFinishModal.data("kendoDialog").open();
+    }
+    
+    function calcPayFinishModalClose() {
+    	calcPayFinishModal.data("kendoDialog").close();
+    }
+    
+    $('#fCalcPayFinish').validator().on('submit', function(e) {
+    	e.preventDefault();
+    	
+    	var calcIdList = [];
+		for (var [key, value] of selectedList) {
+			if ((value.deleteYn == "" || value.deleteYn == "N") &&
+				(value.depositDate == "" || value.depositDate == "N")) {
+				/*
+					sellChargeId
+					sellWaypointChargeId
+					sellStayChargeId
+					sellHandworkChargeId
+					sellRoundChargeId
+					sellOtheraddChargeId
+				*/
+				if (value.sellChargeId != null && value.sellChargeId != "")
+					calcIdList.push(value.sellChargeId);
+			
+				if (value.sellWaypointChargeId != null && value.sellWaypointChargeId != "")
+					calcIdList.push(value.sellWaypointChargeId);
+			
+				if (value.sellStayChargeId != null && value.sellStayChargeId != "")
+					calcIdList.push(value.sellStayChargeId);
+			
+				if (value.sellHandworkChargeId != null && value.sellHandworkChargeId != "")
+					calcIdList.push(value.sellHandworkChargeId);
+			
+				if (value.sellRoundChargeId != null && value.sellRoundChargeId != "")
+					calcIdList.push(value.sellRoundChargeId);
+			
+				if (value.sellOtheraddChargeId != null && value.sellOtheraddChargeId != "")
+					calcIdList.push(value.sellOtheraddChargeId);
+			}
+		}
+	
+		$.ajax({
+    		url: "/contents/calc/data/updateSellCalcPayFinish.do",
+    		type: "POST",
+    		dataType: "json",
+    		data: {
+    			mode: "Y",
+    			calcIdList: calcIdList.toString(),
+    			depositDate: $("#depositDate").val()
+    		},
+    		success: function(data) {
+    			if (data.linkMessage.status == 0) {
+    				// 요청 성공시 내용 기술
+    				alert(selectedList.size + "건의 " + data.linkMessage.message);
+    			} else {
+    				alert(data.linkMessage.message);
+    			}
+    			
+    			calcPayFinishModal.data("kendoDialog").close();
+    			
+    			goList();
+    		}
+    	});
+    });
  	
     /*
      * 화주변경 Modal
@@ -2141,6 +2343,9 @@
         case "cancelCalc":
         	calcFinishCancel();
         	break;
+        case "cancelCalcPay":
+        	calcPayFinishCancel();
+        	break;
         case "cancelDeleteCalc":
         	cancelDeleteCalc();
         	break;
@@ -2177,8 +2382,8 @@
 			template: function(dataItem) {
 			   return Util.formatNumber(Util.nvl(dataItem.unpaidAmt, "0"));
 			},
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			},
 			editable: function (dataItem){}
 		},
@@ -2195,8 +2400,8 @@
 			template: function(dataItem) {
 			   return Util.formatNumber(Util.nvl(dataItem.sellWaypointCharge, "0"));
 			},
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			},
 			headerTemplate : '<label class="editHeader">경유비</label>'
 		},
@@ -2204,8 +2409,8 @@
 			template: function(dataItem) {
 			   return Util.formatNumber(Util.nvl(dataItem.sellStayCharge, "0"));
 			},
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			},
 			headerTemplate : '<label class="editHeader">대기료</label>'
 		},
@@ -2213,8 +2418,8 @@
 			template: function(dataItem) {
 			   return Util.formatNumber(Util.nvl(dataItem.sellHandworkCharge, "0"));
 			},
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			},
 			headerTemplate : '<label class="editHeader">수작업비</label>'
 		},
@@ -2222,8 +2427,8 @@
 			template: function(dataItem) {
 			   return Util.formatNumber(Util.nvl(dataItem.sellRoundCharge, "0"));
 			},
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			},
 			headerTemplate : '<label class="editHeader">회차료</label>'
 		},
@@ -2231,8 +2436,8 @@
 			template: function(dataItem) {
 			   return Util.formatNumber(Util.nvl(dataItem.sellOtheraddCharge, "0"));
 			},
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			},
 			headerTemplate : '<label class="editHeader">기타추가비</label>'
 		},
@@ -2242,8 +2447,8 @@
 			template: function(dataItem) {
 			   return Util.formatNumber(Util.nvl(dataItem.unitPrice, "0"));
 			},
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			},
 			editable: function (dataItem){}
 		},
@@ -2254,8 +2459,8 @@
 			template: function(dataItem) {
 		       return Util.formatNumber(Util.nvl(dataItem.allocFee, "0"));
 		    },
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			},
 			editable: function (dataItem){}
 		},
@@ -2263,8 +2468,8 @@
 			template: function(dataItem) {
 		       return Util.formatNumber(Util.nvl(dataItem.depositAmt, "0"));
 		    },
-			attributes: { 
-				style: "text-align: right" 
+			attributes: {
+				style: "text-align: right"
 			},
 			editable: function (dataItem){}
 		},
@@ -2282,8 +2487,26 @@
 		{ field: "deleteYn", title: "삭제일", width: 80, editable: function (dataItem){} },
 		{ field: "deleteUserName", title: "삭제자", width: 80, editable: function (dataItem){} },
 		{ field: "depositDueDate", title: "입금예정일", width: 100, editable: function (dataItem){} },
-		{ field: "depositDate", title: "입금일", width: 100, editable: function (dataItem){} },
-		{ field: "depositUserName", title: "입금처리자", width: 100, editable: function (dataItem){} },
+		{ field: "depositDate", title: "입금확인일", width: 100, editable: function (dataItem){} },
+		{ field: "depositUserName", title: "입금확인자", width: 100, editable: function (dataItem){} },
+		{ field: "depositVat", title: "부가세", width: 100,
+			template: function(dataItem) {
+		       return Util.formatNumber(Util.nvl(dataItem.depositVat, "0"));
+		    },
+			attributes: {
+				style: "text-align: right"
+			},
+			editable: function (dataItem){}
+		},
+		{ field: "depositSum", title: "입금액(소계)", width: 100,
+			template: function(dataItem) {
+		       return Util.formatNumber(Util.nvl(dataItem.depositSum, "0"));
+		    },
+			attributes: {
+				style: "text-align: right"
+			},
+			editable: function (dataItem){}
+		},
 		
 		// 숨김항목
 		{ field: "mngCustId", hidden: true, editable: function (dataItem){} },

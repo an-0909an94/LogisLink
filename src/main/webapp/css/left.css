@@ -1,55 +1,55 @@
 .side-nav {
-        width: 207px;
-        display: inline-block;
-        min-height: 100vh;
-        background-color: #002B57;
-        overflow:hidden;
-        z-index: 2000;
-        position:relative;
-	}
-    .nav {
-        width: 207px;
-        display: inline-block;
-        height: 100%;
-        overflow: scroll; 
-        padding: 30px;
-        -ms-overflow-style: none;
-        /* IE and Edge */
-       scrollbar-width: none;
-       /* Firefox */
-   }
+	width: 207px;
+	display: inline-block;
+	min-height: 100vh;
+	background-color: #002B57;
+	overflow:hidden;
+	z-index: 2000;
+	position:relative;
+}
 
-   .nav::-webkit-scrollbar {
-       display: none;
-       /* Chrome, Safari, Opera*/
-   }
+.nav {
+	width: 207px;
+	display: inline-block;
+	height: 100%;
+	overflow: scroll; 
+	padding: 30px;
+	-ms-overflow-style: none;
+	/* IE and Edge */
+	scrollbar-width: none;
+	/* Firefox */
+}
 
-   .nav .side-nav-ul a {
-       font-size: 17px;
-       color: #fff;
-       cursor: pointer;
-   }
+.nav::-webkit-scrollbar {
+	display: none;
+	/* Chrome, Safari, Opera*/
+}
 
-   .nav .side-nav-ul a:hover {
-       font-size: 17px;
-       color: #fff;
-   }
+.nav .side-nav-ul a {
+	font-size: 17px;
+	color: #fff;
+	cursor: pointer;
+}
 
-   .nav .side-nav-ul li {
-       text-align: left;
-       margin-top: 10px;
-       list-style: none;
-   }
+.nav .side-nav-ul a:hover {
+	font-size: 17px;
+	color: #fff;
+}
 
+.nav .side-nav-ul li {
+	text-align: left;
+	margin-top: 10px;
+	list-style: none;
+}
 
-   .nav .side-nav-ul span {
-       display: block;
-       padding: 10px 0 10px 0;
-   }
+.nav .side-nav-ul span {
+	display: block;
+	padding: 10px 0 10px 0;
+}
    
-   #leftMenu {
-   	min-height:501px;
-   }
+#leftMenu {
+	min-height:501px;
+}
 
 .logo-title {
 	width:82px;
@@ -57,139 +57,139 @@
 	margin:30px 0px 0px 30px;
 } 
 
-   .sub-li-wrap {
+.sub-li-wrap {
 	padding: 20px; 
-		display:none;
-   }
-  
-   .line {
-   	border-bottom: 1px solid #8098B1;
-    margin: 10px;
-    width: 206px;
-    margin-left: -30px;
-    padding-top: 30px;
-   	margin-bottom: 30px
-   }
+	display:none;
+}
 
-   .sub-li a {
-       display: block;
-   }
-   
-   .nav-li > span > a {
+.line {
+	border-bottom: 1px solid #8098B1;
+	margin: 10px;
+	width: 206px;
+	margin-left: -30px;
+	padding-top: 30px;
+	margin-bottom: 30px
+}
+
+.sub-li a {
+	display: block;
+}
+  
+.nav-li > span > a {
 	box-sizing: border-box;
 	padding: 0 10px;
-   }
+}
    
-   .info-btn > div > a {
-   	font-size: 14px;
-       color: #fff;
-   }
+.info-btn > div > a {
+	font-size: 14px;
+	color: #fff;
+}
    
-   .justify {
-    text-align: justify;
-    padding-top: 10px;
-   	padding-bottom: 10px;
-   }
+.justify {
+	text-align: justify;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
    
-   .justify:after{
-   	content: "";
-   	display: inline-block;
-   	width: 100%;
-   }
+.justify:after{
+	content: "";
+	display: inline-block;
+	width: 100%;
+}
    
-   .mem-info-wrapper {
-   	width: 100%;
-   	overflow: hidden;
-   	border-top : 1px solid #224E7B;
-   	border-bottom: 1px solid #224E7B;
-   }
+.mem-info-wrapper {
+	width: 100%;
+	overflow: hidden;
+	border-top : 1px solid #224E7B;
+	border-bottom: 1px solid #224E7B;
+}
    
-   .mem-info {
-   	margin: 45px 30px 133px;
-   	overflow: hidden;
-   }
+.mem-info {
+	margin: 45px 30px 133px;
+	overflow: hidden;
+}
    
-   .mem-info > * {
-   	font-size: 14px;
-       color: #fff;
-   }
-   .mem-info > .manager-role{
-       display: inline;
-    margin-top: -4px;
-    position: absolute;
-    text-align: right;
-    width: 50px;
-    margin-left: 57px
-   }
+.mem-info > * {
+	font-size: 14px;
+	color: #fff;
+}
+.mem-info > .manager-role{
+	display: inline;
+	margin-top: -4px;
+	position: absolute;
+	text-align: right;
+	width: 50px;
+	margin-left: 57px
+}
    
-   .mem-info > .manager-name{
-       display: inline;
-    margin-top: -4px;
-    position: absolute;
-    text-align: left;
-    width: 47px;
-    margin-left: 10px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-   }
+.mem-info > .manager-name{
+	display: inline;
+	margin-top: -4px;
+	position: absolute;
+	text-align: left;
+	width: 47px;
+	margin-left: 10px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
        
-   .mem-info > .manager-profile{
-   	width: 40px;
-    height: 40px;
-    display: inline-block;
-    border-radius: 100%;
-    background: #FFFFFF;
-    color:#808A94;
-    float:left;
+.mem-info > .manager-profile{
+	width: 40px;
+	height: 40px;
+	display: inline-block;
+	border-radius: 100%;
+	background: #FFFFFF;
+	color:#808A94;
+	float:left;
 	font-size: 18px;
-    text-align: center;
-    padding-top: 5px;
-   }
+	text-align: center;
+	padding-top: 5px;
+}
    
-   .mem-info > .carrier-name {
-    display: inline;
-    margin-left: 10px;
-    position: absolute;
-    margin-top: 22px;
-    width: 97px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-	}
+.mem-info > .carrier-name {
+	display: inline;
+	margin-left: 10px;
+	position: absolute;
+	margin-top: 22px;
+	width: 97px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 	
-   .mem-info > .mem-setpage {
- 	position:absolute;
- 	margin-top:148px;
- 	width:140px;
- 	margin-left:0px;
- 	font-size:12px;
- 	}	
+.mem-info > .mem-setpage {
+	position:absolute;
+	margin-top:148px;
+	width:140px;
+	margin-left:0px;
+	font-size:12px;
+}	
 
-   .mem-info > .mem-setting {
-   	position:absolute;
-   	margin-top:144px;
-   	width:50px;
-   	text-align:right;
-   	margin-left:114px;
-   }
+.mem-info > .mem-setting {
+	position:absolute;
+	margin-top:144px;
+	width:50px;
+	text-align:right;
+	margin-left:114px;
+}
    
-   .nav-li.backColor{
-   	background-color: #001D3A;
-    margin-left: -30px;
-    width: 207px;
-   }
+.nav-li.backColor{
+	background-color: #001D3A;
+	margin-left: -30px;
+	width: 207px;
+}
    
-   .nav-li.backColor > span{
-   	margin-left: 30px;
-   }
+.nav-li.backColor > span{
+	margin-left: 30px;
+}
    
-   .justify > a > img {
-   	padding-left: 9px
-   }
+.justify > a > img {
+	padding-left: 9px
+}
    
-   a.dropBtn {
-   	margin-left: -10px;
+a.dropBtn {
+	margin-left: -10px;
 }
 
 .nav-li > span > .dropBtn > img {
@@ -202,6 +202,7 @@
 .side-logout {
 	margin:30px;
 }
+
 .side-logout-link { 
 	font-size:12px; 
 	color:#ffffff;

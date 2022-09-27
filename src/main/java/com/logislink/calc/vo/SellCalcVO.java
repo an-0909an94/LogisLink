@@ -52,6 +52,8 @@ public class SellCalcVO {
 	private String depositDueDate;
 	private String depositDate;
 	private String depositUserName;
+	private int depositVat;
+	private int depositSum;
 	
 	/* 숨김항목 */
 	private String mngCustId;
@@ -439,5 +441,17 @@ public class SellCalcVO {
 	}
 	public void setDepositUserName(String depositUserName) {
 		this.depositUserName = depositUserName;
+	}
+	public int getDepositVat() {
+		return depositVat;
+	}
+	public void setDepositVat(int depositVat) {
+		this.depositVat = depositVat;
+	}
+	public int getDepositSum() {
+		return depositSum;
+	}
+	public void setDepositSum(int depositSum) {
+		this.depositSum = depositSum;
 	}
 }

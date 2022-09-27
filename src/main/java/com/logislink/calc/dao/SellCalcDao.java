@@ -68,4 +68,8 @@ public class SellCalcDao extends EgovAbstractMapper{
 	public void updateSellCalcFinish(Map<String, Object> map) {
 		update("sellCalcDataNS.sellCalcFinish", map);
 	}
+	
+	public void updateSellCalcPayFinish(Map<String, Object> map) {
+		update("sellCalcDataNS.sellCalcPayFinish", map);
+	}
 }
