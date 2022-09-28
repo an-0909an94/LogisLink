@@ -37,7 +37,7 @@
                                    <label class="col-form-label big-name">기본정보</label>                                   
                                    <div id="carNumber" class="input-group input-group-sm col middle-name form-group">
                                    <strong class="required">차량번호</strong>
-                                       <input type="text" class="form-control form-control-sm" id="carNum" name="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[아,바,사,자\x20]\d{4}$"
+                                       <input type="text" class="form-control form-control-sm" id="carNum" name="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$"
                                        data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required placeholder="서울XX아XXXX">
                                        <div class="help-block with-errors"></div>
                                    </div>
