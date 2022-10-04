@@ -1063,6 +1063,7 @@
 							  , #{regid}
 							  , #{enterDate}
 						 	  , #{chkTalkYN}
+							  , #{buyStaffTel}
 							  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
 							  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
 		}

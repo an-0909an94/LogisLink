@@ -2352,6 +2352,7 @@ function updateAllocState(type, state) {
 	var allocId = $("#allocId").val();
 	var orderId = $("#orderId").val();
     var chkTalkYN = $("input[name='chkTalk']:checked").val();
+    var buyStaffTel = $("#buyStaffTel").val().replace(/\-/g, "");
 
 	if(type == "C") allocId = $("#driverAllocId").val();	//type D: 직배차, C: 운송사배차
 
@@ -2388,7 +2389,7 @@ function updateAllocState(type, state) {
 			url: "/contents/order/data/allocState.do",
 			type: "POST",
 			dataType: "json",
-			data: "orderId=" + $("#orderId").val() + "&allocId=" + allocId + "&allocState=" + state + "&chkTalkYN=" + chkTalkYN,
+			data: "orderId=" + $("#orderId").val() + "&allocId=" + allocId + "&allocState=" + state + "&chkTalkYN=" + chkTalkYN + "&buyStaffTel=" + buyStaffTel,
 			success: function(data){
 				if(data.result) {
 					alert(data.msg);
