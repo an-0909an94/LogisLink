@@ -24,7 +24,7 @@
         <div class="form-group row">
             <label class="col-form-label big-name">차량번호</label>
             <div class="input-group input-group-sm col middle-name form-group">
-                <input type="text" class="form-control form-control-sm" id="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[아,바,사,자\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required>
+                <input type="text" class="form-control form-control-sm" id="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required>
                 <div class="help-block with-errors" style="position: absolute;"></div>
             </div>
         </div>
@@ -734,12 +734,15 @@
                                     <div class="input-group input-group-sm col" id="driverProposal" style="align-self: flex-end;">
                                         <a id="driverProposalBtn" class="k-button">추천차주</a>
                                     </div>
-                                    <div id="chkTalkYDiv" class="input-group input-group-sm col radio-or-checkBox">
+                                    <div class="input-group input-group-sm col" id="divHidden" style="align-self: flex-end;">
+
+                                    </div>
+                                    <div id="chkTalkYDiv" class="input-group input-group-sm col radio-or-checkBox" style="text-align: right;">
                                         <input id="chkTalkY" name="chkTalk" type="radio" value="Y" checked="checked">
                                         <label for="chkTalkY" class="label-margin"> <span>알림</span>
                                         </label>
                                     </div>
-                                    <div id="chkTalkNDiv" class="input-group input-group-sm col radio-or-checkBox">
+                                    <div id="chkTalkNDiv" class="input-group input-group-sm col radio-or-checkBox" style="text-align: right;">
                                         <input id="chkTalkN" name="chkTalk" type="radio" value="N">
                                         <label for="chkTalkN" class="label-margin"> <span>미알림</span>
                                         </label>
@@ -791,7 +794,7 @@
                                             <input type="hidden" id="buyDriverId" name="buyDriverId">
                                             <input type="hidden" id="carPayType" name="carPayType">
                                             <strong>차량번호</strong>
-                                            <input style="width: 100%;" type="text" name="buyCarNum" id="buyCarNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[아,바,사,자\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" placeholder="서울XX아XXXX">
+                                            <input style="width: 100%;" type="text" name="buyCarNum" id="buyCarNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" placeholder="서울XX아XXXX">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="input-group input-group-sm col middle-name form-group">
@@ -1405,8 +1408,8 @@ $(document).ready(function(){
 			if(!$("#buyCustId").val()) {
 				buyCustName.enable(true);
 			}
-            $("#chkTalkYDiv").hide();
-            $("#chkTalkNDiv").hide();
+           $("#divHidden").show();
+            /*$("#chkTalkNDiv").hide();*/
 
 
 		} else {
@@ -1421,8 +1424,8 @@ $(document).ready(function(){
 			$("#driverOtherOpenClose").hide();
 			$("#allocD").html("배차추가열기");
 
-            $("#chkTalkYDiv").show();
-            $("#chkTalkNDiv").show();
+            $("#divHidden").hide();
+            /* $("#chkTalkNDiv").show();*/
 
 		}
 	});
@@ -2349,6 +2352,7 @@ function updateAllocState(type, state) {
 	var allocId = $("#allocId").val();
 	var orderId = $("#orderId").val();
     var chkTalkYN = $("input[name='chkTalk']:checked").val();
+    var buyStaffTel = $("#buyStaffTel").val().replace(/\-/g, "");
 
 	if(type == "C") allocId = $("#driverAllocId").val();	//type D: 직배차, C: 운송사배차
 
@@ -2385,7 +2389,7 @@ function updateAllocState(type, state) {
 			url: "/contents/order/data/allocState.do",
 			type: "POST",
 			dataType: "json",
-			data: "orderId=" + $("#orderId").val() + "&allocId=" + allocId + "&allocState=" + state + "&chkTalkYN=" + chkTalkYN,
+			data: "orderId=" + $("#orderId").val() + "&allocId=" + allocId + "&allocState=" + state + "&chkTalkYN=" + chkTalkYN + "&buyStaffTel=" + buyStaffTel,
 			success: function(data){
 				if(data.result) {
 					alert(data.msg);
@@ -2838,13 +2842,16 @@ $("#goodsWeight").on("input", function(){
 
 $("#linkSelect").on('focus', function () {
 	previous = this.value;
-}).change(function() {
+})
+
+/*
+    .change(function() {
 	if($("#allocState").val() != '00' && $("#mode").val() != 'N'){
 		alert("접수상태일 때만 변경 가능합니다.");
 		$("#linkSelect").val(previous).prop("selected", true); //이전값으로 돌리기
 		return;
 	}
-});
+});*/
 
 $(".openCloseBtn").on('click', function (){
 	var divId = $(this).context.id;
