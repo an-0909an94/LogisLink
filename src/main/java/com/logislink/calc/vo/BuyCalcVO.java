@@ -64,7 +64,7 @@ public class BuyCalcVO {
 	private String mngUserName;
 	private String deleteYn;
 	private String deleteUserName;
-	private String withdrawalDueDate;
+	//private String withdrawalDueDate;
 	
 	/* 숨김항목 */
 	private String mngCustId;
@@ -629,11 +629,11 @@ public class BuyCalcVO {
 		this.calcTypeCode = calcTypeCode;
 	}
 
-	public String getWithdrawalDueDate() {
-		return withdrawalDueDate;
-	}
-
-	public void setWithdrawalDueDate(String withdrawalDueDate) {
-		this.withdrawalDueDate = withdrawalDueDate;
-	}
+//	public String getWithdrawalDueDate() {
+//		return withdrawalDueDate;
+//	}
+//
+//	public void setWithdrawalDueDate(String withdrawalDueDate) {
+//		this.withdrawalDueDate = withdrawalDueDate;
+//	}
 }
