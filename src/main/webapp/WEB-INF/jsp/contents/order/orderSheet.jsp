@@ -129,13 +129,13 @@
     
     var columns = [
     	{ field: "number", title: "번호", width: 80, editable: function (dataItem){} },
-    	{ field: "custName", title: "거래처명", width: 120, editor: cellCustNameComboBox },
-    	{ field: "sComName", title: "상차지명", width: 140, editor: cellComNameComboBox },
-    	{ field: "sComDate", title: "상차일시", width: 120, format: "{0:yyyy-MM-dd HH:mm}", editor: cellDateTimeComboBox },
+    	{ field: "custName", title: "거래처명", width: 180, editor: cellCustNameComboBox },
+    	{ field: "sComName", title: "상차지명", width: 180, editor: cellComNameComboBox },
+    	{ field: "sComDate", title: "상차일시", width: 180, format: "{0:yyyy-MM-dd HH:mm}", editor: cellDateTimeComboBox },
     	{ field: "sComAddr", title: "주소", width: 180 },
     	{ field: "sComDtlAddr", title: "주소상세", width: 180 },
-    	{ field: "eComName", title: "하차지명", width: 140, editor: cellComNameComboBox },
-    	{ field: "eComDate", title: "하차일시", width: 120, format: "{0:yyyy-MM-dd HH:mm}", editor: cellDateTimeComboBox },
+    	{ field: "eComName", title: "하차지명", width: 180, editor: cellComNameComboBox },
+    	{ field: "eComDate", title: "하차일시", width: 180, format: "{0:yyyy-MM-dd HH:mm}", editor: cellDateTimeComboBox },
     	{ field: "eComAddr", title: "주소", width: 180 },
     	{ field: "eComDtlAddr", title: "주소상세", width: 180 },
     	{ field: "carType", title: "요청차종", width: 120, editor: cellCarTypeDropdown },
@@ -185,8 +185,8 @@
                     }
                 },
                 columns: [
-                    { field: "custName", title: "거래처명", width: "auto" },
-                    { field: "deptName", title: "부서명", width: "auto" }
+                    { field: "custName", title: "거래처명", width: "180" },
+                    { field: "deptName", title: "부서명", width: "150" }
                 ]
             }).data("kendoMultiColumnComboBox");
     }
@@ -244,9 +244,9 @@
 					
 				},
 				columns: [
-					{ field: "addrName", title: "주소지명", width: "auto" },
-					{ field: "addr", title: "주소", width: "auto" },
-					{ field: "addrDetail", title: "상세주소", width: "auto" }
+					{ field: "addrName", title: "주소지명", width: "150" },
+					{ field: "addr", title: "주소", width: "350" },
+					{ field: "addrDetail", title: "상세주소", width: "80" }
                 ]
         	}).data("kendoMultiColumnComboBox");
     }
