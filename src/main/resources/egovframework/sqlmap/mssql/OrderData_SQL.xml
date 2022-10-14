@@ -1014,7 +1014,7 @@
    	</select>
    	
    	<update id="updateOrderAlloc" statementType="CALLABLE" parameterType="java.util.HashMap">
-   		{call UPDATE_ORDER_ALLOC_TALK(
+   		{call UPDATE_ORDER_ALLOC_TALK (
    									#{orderId}
    							 	  ,	#{allocId}
    								  , #{custId}
