@@ -773,10 +773,10 @@
    	</update>
    
    	<update id="orderWrite" statementType="CALLABLE" parameterType="java.util.HashMap">
-		{call INSERT_ORDER1(
+		{call INSERT_ORDER_ALLOC_TALK(
 						    #{mode}
 						  , #{sellCustId}
-						  , #{orderId}
+					    	  , #{orderId}
 						  , #{allocId}
 						  , #{sellAllocId}
 						  , #{sellDeptId}	
@@ -1014,7 +1014,7 @@
    	</select>
    	
    	<update id="updateOrderAlloc" statementType="CALLABLE" parameterType="java.util.HashMap">
-   		{call UPDATE_ORDER_ALLOC1(
+   		{call UPDATE_ORDER_ALLOC_TALK(
    									#{orderId}
    							 	  ,	#{allocId}
    								  , #{custId}
@@ -1056,7 +1056,7 @@
 	</update>
 	
 	<update id="updateAllocState" statementType="CALLABLE" parameterType="java.util.HashMap">
-	   	{call UPDATE_ALLOC_STATE1(
+	   	{call UPDATE_ALLOC_STATE_CARRIER(
 							    #{orderId}
 							  , #{allocId}	
 							  , #{allocState}	
