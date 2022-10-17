@@ -1,4 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<style>
+    .image_sizeK{
+      height:35px;
+      margin-right: 5px;
+    }
+</style>
 <div class="pop-layer">
     <!--
     <div id="divAddDept" class="editor-warp p-0">
@@ -40,8 +46,8 @@
                                     <div class="input-group input-group-sm col middle-name form-group">
                                     <strong class="required">사업자번호/상호</strong>
                                         <div class="textBox-in-icon">
-	                                        <input type="text" class="form-control form-control-sm" id="bizNum" placeholder="사업자번호는 하이픈(-)을 제외한 10자리 숫자로 입력해주세요. " required>
-										<i><img onclick="popSearchBizinfo();" src="/images/icon/search.png" id="searchBizinfo"></i>
+	                                        <input type="text" class="form-control form-control-sm" name="bizNum" id="bizNum" maxlength="12" required readonly>
+										<i><img class="image_sizeK" src="/images/icon/search.png" id="searchBizinfo"></i>
 										</div>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -802,102 +808,113 @@ $('#bizNum').on('input', function() {
 	$(this).val(temp);
 });
 */
+
 $('#bizNum').on('change', function() {
 	$("#btn_chkBizNum").css('border', '#ced4da solid 1px');
 	$('#btn_chkBizNum .k-icon').remove();
 	chkUID = false;
 });
 
+document.getElementById('bizNum').addEventListener('keydown',function (event) {
+
+    if(event.code === "Enter"){
+        event.preventDefault();
+        popSearchBizinfo();
+    }
+});
+
 // 저장 버튼에 대한 Submit 처리 내용
 $('#f').validator().on('submit', function (e) {
-	  if(!chkUID) {
-		e.preventDefault();
-		alert("사업자번호 확인을 해주세요.");
-		return;
-	  }
-	  if (e.isDefaultPrevented()) {
-	    alert("항목을 입력해 주세요.");
-	  } else {
 
-			// 이벤트 초기화 (submit 동작 중단)
-			e.preventDefault();
-			if (!$("#userId").attr("readonly")){
-				if(!checkUserInfo()) {
-					e.preventDefault();
-					return;
-				}
-			} 
-			$("#mngDeptId").prop("disabled", false);
-			var param = {
-				mngDeptId: $("#mngDeptId").val(),
-				custSeq : Util.nvl(g_idx.custSeq, ''),
-				custId : Util.nvl(g_idx.custId, ''),
-				deptId : Util.nvl($("#deptId").val(), ''),
-				bizName : $("#bizName").val(),
-				custTypeCode : $("#custTypeCode").val(),
-				bizNum : $("#bizNum").val().replace(/\-/g, ''),
-				bizNumSub : $("#bizNumSub").val(),
-				bizTypeCode : $("#bizTypeCode").val(),
-				ceo : $("#ceo").val(),
-				bizCond : $("#bizCond").val(),
-				bizKind : $("#bizKind").val(),
-				bizPost : $("#bizPost").val(),
-				bizAddr : $("#bizAddr").val(),
-				bizAddrDetail : $("#bizAddrDetail").val(),
-				sellBuySctn : $("#sellBuySctn").val(),
-				custName : $("#custName").val(),
-				telNum: $("#telNum").val().replace(/\-/g, ""),
-				mobile: $("#mobile").val().replace(/\-/g, ""),
-				fax : $("#fax").val(),
-				taxEmail : $("#taxEmail").val(),
-				taxStaffName : $("#taxStaffName").val(),
-				taxTelNum: $("#taxTelNum").val().replace(/\-/g, ""),
-				itemCode : $("#itemCode").val(),
-				manager : $("#manager").val(),
-				custMemo : $("#custMemo").val(),
-				orderMemo : $("#orderMemo").val(),
-				useYn : $("#useYn").val(),
-				//deptName : $('input[name="deptId"]:checked').next().text(),
-				deptName: $("#deptName").val(),
-				userId : $("#userId").val(),
-				passwd : $("#passwd").val(),
-				userName : $("#userName").val(),
-				grade : $("#grade").val(),
-				email : $("#email").val(),
-				talkYn : $("#talk").val() == 'on' ? "Y" : "N",
-				bankCode : $("#bankCode").val(),
-				bankCnnm : $("#bankCnnm").val(),
-				bankAccount : $("#bankAccount").val(),
-				custMngCode : $("#custMngCode").val(),
-				custMngMemo : $("#custMngMemo").val(),
-				payType : $("#payType").val(),
-				payMemo : $("#payMemo").val(),
-				driverCommission : $("#driverCommission").val(),
-				postalAddr : $("#postalAddr").val(),
-				postalAddrDetail : $("#postalAddrDetail").val(),
-				postalPost : $("#postalPost").val(),
-				// 22.06.17 이건욱 T5 > J13, J14추가
-				dlineDayCode : $("#dlineDayCode").val(),
-				dlinePointCode : $("#dlinePointCode").val()
-			};
-			$.ajax({
-				url: "/contents/basic/data/insertCust.do",
-				type: "POST",
-				dataType: "json",
-				data: param,
-				success: function(data){
-					if(data.result) {
-						alert(data.msg);
-						init_popup_close();				
-						goList();
-					} else {
-						alert(data.msg);
-						$("#userId").focus();
-					}
-				}
-			});
-	}
+    if(!chkUID) {
+      e.preventDefault();
+      alert("사업자번호 확인을 해주세요.");
+      return;
+    }
+    if (e.isDefaultPrevented()) {
+      alert("항목을 입력해 주세요.");
+    } else {
+
+      // 이벤트 초기화 (submit 동작 중단)
+      e.preventDefault();
+      if (!$("#userId").attr("readonly")){
+        if(!checkUserInfo()) {
+          e.preventDefault();
+          return;
+        }
+      }
+      $("#mngDeptId").prop("disabled", false);
+      var param = {
+        mngDeptId: $("#mngDeptId").val(),
+        custSeq : Util.nvl(g_idx.custSeq, ''),
+        custId : Util.nvl(g_idx.custId, ''),
+        deptId : Util.nvl($("#deptId").val(), ''),
+        bizName : $("#bizName").val(),
+        custTypeCode : $("#custTypeCode").val(),
+        bizNum : $("#bizNum").val().replace(/\-/g, ''),
+        bizNumSub : $("#bizNumSub").val(),
+        bizTypeCode : $("#bizTypeCode").val(),
+        ceo : $("#ceo").val(),
+        bizCond : $("#bizCond").val(),
+        bizKind : $("#bizKind").val(),
+        bizPost : $("#bizPost").val(),
+        bizAddr : $("#bizAddr").val(),
+        bizAddrDetail : $("#bizAddrDetail").val(),
+        sellBuySctn : $("#sellBuySctn").val(),
+        custName : $("#custName").val(),
+        telNum: $("#telNum").val().replace(/\-/g, ""),
+        mobile: $("#mobile").val().replace(/\-/g, ""),
+        fax : $("#fax").val(),
+        taxEmail : $("#taxEmail").val(),
+        taxStaffName : $("#taxStaffName").val(),
+        taxTelNum: $("#taxTelNum").val().replace(/\-/g, ""),
+        itemCode : $("#itemCode").val(),
+        manager : $("#manager").val(),
+        custMemo : $("#custMemo").val(),
+        orderMemo : $("#orderMemo").val(),
+        useYn : $("#useYn").val(),
+        //deptName : $('input[name="deptId"]:checked').next().text(),
+        deptName: $("#deptName").val(),
+        userId : $("#userId").val(),
+        passwd : $("#passwd").val(),
+        userName : $("#userName").val(),
+        grade : $("#grade").val(),
+        email : $("#email").val(),
+        talkYn : $("#talk").val() == 'on' ? "Y" : "N",
+        bankCode : $("#bankCode").val(),
+        bankCnnm : $("#bankCnnm").val(),
+        bankAccount : $("#bankAccount").val(),
+        custMngCode : $("#custMngCode").val(),
+        custMngMemo : $("#custMngMemo").val(),
+        payType : $("#payType").val(),
+        payMemo : $("#payMemo").val(),
+        driverCommission : $("#driverCommission").val(),
+        postalAddr : $("#postalAddr").val(),
+        postalAddrDetail : $("#postalAddrDetail").val(),
+        postalPost : $("#postalPost").val(),
+        // 22.06.17 이건욱 T5 > J13, J14추가
+        dlineDayCode : $("#dlineDayCode").val(),
+        dlinePointCode : $("#dlinePointCode").val()
+      };
+      $.ajax({
+        url: "/contents/basic/data/insertCust.do",
+        type: "POST",
+        dataType: "json",
+        data: param,
+        success: function(data){
+          if(data.result) {
+            alert(data.msg);
+            init_popup_close();
+            goList();
+          } else {
+            alert(data.msg);
+            $("#userId").focus();
+          }
+        }
+      });
+  }
 });
+
 
 function init() {
 	$("#btn_chkBizNum").css('border', '#ced4da solid 1px');
@@ -974,7 +991,7 @@ function popSearchBizinfo(){
         return;
     }
 
-    window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=912, height=407");
+    window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=1380, height=663");
 
 	//Util.popSearchBizinfo($("#bizNum").val());
 }

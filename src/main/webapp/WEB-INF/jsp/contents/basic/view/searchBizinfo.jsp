@@ -59,10 +59,12 @@ var columns = [
 */
 
 var columns = [
-	{field: "cmpNm", title: "회사명",width: 110 ,attributes :
+    { template: "<a class='k-pager-refresh k-button noColorReadonly' style='width:\\\36px; height:\\\32px; background:\\\#fff; border:\\\none; box-shadow:\\\0px 0px 2px 0px;' onclick='selectBizInfo(this)'><b class='btn-b'><i class='k-icon k-i-check'></i></b></a>", title: "선택", width: 30
+    },
+    {field: "cmpNm", title: "회사명", width: 90 ,attributes :
           { style : "text-align : left" }
     },
-	{field: "bizNo", title: "사업자번호", width: 70,
+	{field: "bizNo", title: "사업자번호", width: 40,
 		template: "#=Util.formatBizNum(bizNo)#"
 	},
     {field: "zip", title: "우편번호", hidden:true ,attributes :
@@ -74,21 +76,19 @@ var columns = [
     {field: "dtlAdr", title: "상세주소", hidden:true ,attributes :
           { style : "text-align : left" }
     },
-    {field: "address", title: "주소", width: 150
+    {field: "address", title: "주소", width: 120
         ,template:kendo.template("#if (adr != null) {# <div>#=adr#</div> <div>#=dtlAdr#</div> #} #")
         ,attributes : { style : "text-align : left" }
     },
-    {field: "ceoNm", title: "대표자", width: 65 ,attributes :
+    {field: "ceoNm", title: "대표자", width: 60 ,attributes :
           { style : "text-align : left" }
     },
-	{field: "cmpSclNm", title: "업종", width: 100 ,attributes :
+	{field: "cmpSclNm", title: "업종", hidden: true ,width: 100 ,attributes :
           { style : "text-align : left" }
     },
-	{field: "indNm", title: "주생산품" ,width: 150, attributes :
+	{field: "indNm", title: "업태" ,width: 130, attributes :
           { style : "text-align : left" }
     },
-
-	{ template: "<a class='k-pager-refresh k-button noColorReadonly' style='width:\\\56px; height:\\\32px; background:\\\#fff; border:\\\none; box-shadow:\\\0px 0px 2px 0px;' onclick='selectBizInfo(this)'><b class='btn-b'><i class='k-icon k-i-check'></i></b></a>", title: "선택", width: 52 }
 ];
 
 

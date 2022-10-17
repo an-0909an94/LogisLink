@@ -147,6 +147,7 @@ $(document).ready(function(){
 	});
     
 	goList();
+
 });
 
 var columns = [
@@ -293,22 +294,21 @@ function bizNumCheck(recvData){
 		},
 		success: function(data){
 
-
 			var mode = "";
 			var chkBizNum = {};
 			if(data.result) {
-				//if(!confirm('이미 등록되어있는 사업자 입니다. \n계속 진행하시려면 "확인" 버튼을 클릭해주세요.')){
+				if(!confirm('이미 등록되어있는 사업자 입니다. \n계속 진행하시려면 "확인" 버튼을 클릭해주세요.')) {
 					//console.log("bizNumCheck confirm");
-					//return false;
+					return false;
 					//chkUID = false;
-				//}
+				}
 
 				chkBizNum.bizNum = bizNum;
 
 				mode = "BE";
 
 			} else {
-				//alert(data.msg.replace('\\n', '\n'));
+				alert(data.msg.replace('\\n', '\n'));
 
 				//chkBizNum.bizNum = bizNum.replace(/(\d{3})(\d{1,2})(\d{1,5})/, '$1-$2-$3');
 				// 변경내용
@@ -367,8 +367,9 @@ function form_popup_close() {
 function bizSetting(recvData){
 	$("#bizName").val(recvData.cmpNm); // 사업자상호
 	$("#ceo").val(recvData.ceoNm);		// 대표자명
-	$("#bizCond").val(recvData.bizNo);	// 업태
-	$("#bizKind").val(recvData.indNm);	// 업종
+	//$("#bizCond").val(recvData.bizNo);	// 업태
+	$("#bizCond").val(recvData.indNm);	// 업태
+	//$("#bizKind").val(recvData.indNm);	// 업종
 	$("#bizPost").val(recvData.zip);	// 우편번호
 	$("#bizAddr").val(recvData.adr);	// 주소
 	$("#bizTypeCode").val("01");
