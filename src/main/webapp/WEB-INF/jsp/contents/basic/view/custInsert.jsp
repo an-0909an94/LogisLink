@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="pop-layer">
-<!-- 	<div id="divAddDept" class="editor-warp p-0">
+    <!--
+    <div id="divAddDept" class="editor-warp p-0">
 		<div class="modalEditor" id="addDept">
 			<div id="popGrid"></div>
 			<div class="modalHeader">
@@ -14,7 +15,8 @@
 			    </div>
 		    </div>
 		</div>
-	</div> -->
+	</div>
+	-->
     <div class="editor_wrap pop-layer" id="layer1">
 	    <div class="insertClose">
 	    	<a class="insertCloseButton k-icon k-i-close" onclick="init_popup_close();"></a>
@@ -33,19 +35,22 @@
                             <fieldset>
                                 <legend id="cust_legend">거래처 등록</legend>
                                 <div class="form-group row">
-		                            <label class="col-form-label big-name">사업자번호</label>
+                                    <label class="col-form-label big-name">사업자조회</label>
+
                                     <div class="input-group input-group-sm col middle-name form-group">
-                                    <strong class="required">사업자번호</strong>
+                                    <strong class="required">사업자번호/상호</strong>
                                         <div class="textBox-in-icon">
-	                                        <input type="text" class="form-control form-control-sm" name="bizNum" id="bizNum" maxlength="12" required readonly>
+	                                        <input type="text" class="form-control form-control-sm" id="bizNum" required>
 										<i><img onclick="popSearchBizinfo();" src="/images/icon/search.png" id="searchBizinfo"></i>
 										</div>
                                         <div class="help-block with-errors"></div>
                                     </div>
+                                    <!--
 		                            <div class="input-group input-group-sm col middle-name">
 		                            	<strong>사업자번호 확인</strong>
 		                                <button type="button" class="form-control form-control-sm a-text-center" onclick="bizNumCheck();" id="btn_chkBizNum">사업자번호 확인</button>
 		                            </div>
+		                            -->
 		                        </div>
                                 
                                 <div class="form-group row">
@@ -374,6 +379,7 @@ $(document).ready(function(){
 });
 
 function init_pop(mode, data) {
+
 	init();
 	g_custList = [];
 	g_idx = {};
@@ -426,6 +432,7 @@ function init_pop(mode, data) {
 		$("#searchBizinfo").attr("onClick", "popSearchBizinfo()");
 		
 		if("${menuAuth.writeYn}" != "Y")	$("#btn_saveCust").hide();
+
 	} else if(mode == "BE") {
 		chkUID = true;
 		$("#btn_chkBizNum").css('border', '#0bba82 solid 2px');
@@ -446,6 +453,7 @@ function init_pop(mode, data) {
 
 		if("${menuAuth.writeYn}" != "Y")	$("#btn_saveCust").hide();
 		$("#passwd").val('');
+
 	} else if(mode == "E") {
 		chkUID = true;
 		$("#btn_chkBizNum").attr("disabled", true);
@@ -482,6 +490,7 @@ function init_pop(mode, data) {
 		$("#searchBizinfo").removeAttr("onClick");
 		
 		if("${menuAuth.editYn}" != "Y")	$("#btn_saveCust").hide();
+
 	}
 }
 
@@ -565,11 +574,11 @@ function getCust() {
 }
 
 function setDeptList(custId, deptId) {
-	/* var radioGrp = $("input:radio[name='deptId']");
-	for(var i = 0; i < radioGrp.length; i++) {
-		radioGrp[i].parentNode.remove();
-	}	 */
-	
+    /* var radioGrp = $("input:radio[name='deptId']");
+    for(var i = 0; i < radioGrp.length; i++) {
+        radioGrp[i].parentNode.remove();
+    }	 */
+
 	for(var i=0, cust; cust=g_custList[i]; i++){
 		if(cust.bizNumSub == $("#bizNumSub").val()) {
 			deptList = cust.deptList;
@@ -785,20 +794,21 @@ $('#userId').on('blur', function() {
 		});
 	}	
 });
- 
+
+/*
 $('#bizNum').on('input', function() {
 	var bizNum = $(this).val().replace(/[^\d]/g, '');
 	var temp = bizNum.replace(/(\d{3})(\d{1,2})(\d{1,5})/, '$1-$2-$3');
 	$(this).val(temp);
 });
-
+*/
 $('#bizNum').on('change', function() {
 	$("#btn_chkBizNum").css('border', '#ced4da solid 1px');
 	$('#btn_chkBizNum .k-icon').remove();
 	chkUID = false;
 });
 
- 
+// 저장 버튼에 대한 Submit 처리 내용
 $('#f').validator().on('submit', function (e) {
 	  if(!chkUID) {
 		e.preventDefault();
@@ -901,6 +911,7 @@ function init() {
 	Util.setReadOnlyDisable(["bizName", "bizNum", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userName", "grade", "mobile", "email", "telNum", "bankCnnm", "bankAccount"]);
 	Util.setEnabledList(["bizTypeCode", "bizNumSub", "custTypeCode", "sellBuySctn", "bankCode"]);
 	$(".list-unstyled").remove();
+
 }
 
 function init_popup_close() {
@@ -915,8 +926,57 @@ function popSearchPost(mode){
 	Util.popSearchPost(mode);
 }
 
+// 한글 체크
+function checkKor(str) {
+  const regExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+  if(regExp.test(str)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+// 숫자 체크
+function checkNum(str){
+  const regExp = /[0-9]/g;
+  if(regExp.test(str)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+//특수문자 체크
+function checkSpc(str){
+  const regExp = /[~!@#$%^&*()_+|<>?:{}]/;
+  if(regExp.test(str)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 function popSearchBizinfo(){
-	Util.popSearchBizinfo();
+
+    /*
+    * Junghwan.Hwang - NICE_DNB 추가내용
+    */
+
+    var mBizName=$("#bizNum").val();
+
+    if(mBizName == null || mBizName==""){
+        alert("공란으로 입력되었습니다.");
+        return;
+    }
+
+    if(checkSpc(mBizName)){
+        alert("특수문자가 입력되었습니다.");
+        return;
+    }
+
+    window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=912, height=407");
+
+	//Util.popSearchBizinfo($("#bizNum").val());
 }
 
 function setSearchAddressInfo(data) {
@@ -926,7 +986,11 @@ function setSearchAddressInfo(data) {
 }
 
 function setSearchBizInfo(data) {
-    $("#bizNum").val(data.bizNum);
+
+    // 데이터는 받아서 여기서 다 처리하고 있음
+    // 해당 데이터로 각 data가 어떻게 들어가는지 한번 확인해 볼 것
+    //$("#bizNum").val(data.bizNo);
+    bizNumCheck(data)
 }
 
 function checkUserInfo() {

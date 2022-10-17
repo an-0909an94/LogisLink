@@ -188,7 +188,8 @@ public class CustController {
 //		
 //		param.put("custId", custId);
 //		param.put("deptId", deptId);
-		
+
+		// BizNum (사업자번호) 데이터를 받고 처리
 		HashMap<String, Object> ret = custService.checkBizNum(param);
 		
 		if("00".equals(ret.get("retCode"))) {
@@ -201,8 +202,6 @@ public class CustController {
 //			map.put("data", custList);
 			map.put("msg", ret.get("retMsg"));
 		}
-		
-		
 		return "jsonView";
 	}
 	
@@ -627,19 +626,19 @@ public class CustController {
 		
 		return result;
 	}
-	
+
 	@PostMapping(value="/contents/basic/data/bizInfo.do")
 	public String bizInfo(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
-								@RequestParam Map<String, Object> param ) throws Exception {	
-		
+		@RequestParam Map<String, Object> param ) throws Exception {
+
 		CustVO data = custService.getBizInfo(param);
-		
+
 		map.put("result", Boolean.TRUE);
 		map.put("data", data);
-		
+
 		return "jsonView";
 	}
-	
+
 	@PostMapping(value="/contents/basic/data/searchBizinfo.do")
 	public String searchBizinfo(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
 								@RequestParam Map<String, Object> param ) throws Exception {
@@ -653,4 +652,6 @@ public class CustController {
 		
 		return "jsonView";
 	}
+
+
 }

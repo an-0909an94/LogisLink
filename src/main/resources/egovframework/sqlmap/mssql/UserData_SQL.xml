@@ -467,9 +467,9 @@
 			 , (SELECT CUST_NAME FROM T_CUST_DTL WHERE CUST_ID = BUY_CUST_ID AND DEPT_ID = BUY_DEPT_ID AND MNG_CUST_ID = #{loginCustId} AND MNG_DEPT_ID = #{loginDeptId}) defaultBuyCustName
 		FROM T_USER_OPTION
 		WHERE USER_ID = #{loginId}
-   	</select>
+	</select>
    	
-   	<insert id="getUserData" statementType="CALLABLE" parameterType="java.util.HashMap">
+	<insert id="getUserData" statementType="CALLABLE" parameterType="java.util.HashMap">
 		{call FIND_USER_INFO(
 		 		#{userName}
 			  ,	#{userPhone}
@@ -481,4 +481,17 @@
 			  ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
 		} 
 	</insert>
+
+	<select id="getNiceDnbToken" parameterType="java.util.HashMap" resultType="string">
+		SELECT K_VALUE
+		FROM T_KEYGEN
+		WHERE K_NAME = #{kName}
+	</select>
+
+	<update id="updateNiceDnbToken" parameterType="java.util.HashMap">
+		UPDATE T_KEYGEN
+		SET K_VALUE = #{kValue}, K_DATE=GETDATE(), EXPIRE= #{expire}
+		WHERE K_NAME = #{kName}
+	</update>
+
 </mapper>
