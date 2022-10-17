@@ -40,7 +40,7 @@
                                     <div class="input-group input-group-sm col middle-name form-group">
                                     <strong class="required">사업자번호/상호</strong>
                                         <div class="textBox-in-icon">
-	                                        <input type="text" class="form-control form-control-sm" id="bizNum" required>
+	                                        <input type="text" class="form-control form-control-sm" id="bizNum" placeholder="사업자번호는 하이픈(-)을 제외한 10자리 숫자로 입력해주세요. " required>
 										<i><img onclick="popSearchBizinfo();" src="/images/icon/search.png" id="searchBizinfo"></i>
 										</div>
                                         <div class="help-block with-errors"></div>
