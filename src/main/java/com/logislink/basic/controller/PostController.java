@@ -95,6 +95,8 @@ public class PostController {
 			res = apiHelper.searchNice(paramMap);
 			apiHelper.setAdminKey("");
 
+			// 일단 처음 보내는것으로 확인
+
 			if("401".equals(res.get("resCode"))) {
 
 				// Token Key 만료 시 Gen 되는 Method - Junghwan.Hwang

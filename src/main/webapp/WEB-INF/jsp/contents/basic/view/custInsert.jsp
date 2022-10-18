@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <style>
     .image_sizeK{
-      height:35px;
-      margin-right: 5px;
+      height:30px;
+      margin-right: 10px;
+      left: 90px;
     }
 </style>
 <div class="pop-layer">
@@ -44,10 +45,12 @@
                                     <label class="col-form-label big-name">사업자조회</label>
 
                                     <div class="input-group input-group-sm col middle-name form-group">
-                                    <strong class="required">사업자번호/상호</strong>
+                                        <strong class="required">사업자번호</strong>
+                                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                        <font size="1em" color="black">사업자번호/상호로 검색 가능합니다.</font>
                                         <div class="textBox-in-icon">
-	                                        <input type="text" class="form-control form-control-sm" name="bizNum" id="bizNum" maxlength="12" required readonly>
-										<i><img class="image_sizeK" src="/images/icon/search.png" id="searchBizinfo"></i>
+	                                        <input type="text" class="form-control form-control-sm " name="bizNum" id="bizNum" maxlength="12" required readonly>
+										    <i><img class = "image_sizeK" src="/images/icon/search.png" id="searchBizinfo"></i>
 										</div>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -460,6 +463,7 @@ function init_pop(mode, data) {
 		if("${menuAuth.writeYn}" != "Y")	$("#btn_saveCust").hide();
 		$("#passwd").val('');
 
+
 	} else if(mode == "E") {
 		chkUID = true;
 		$("#btn_chkBizNum").attr("disabled", true);
@@ -512,18 +516,23 @@ function getCustInfo(bizNum) {
 		success: function(data){
 			if(data.result) {
 				g_custList = data.data;
-				setBizNumSub();
+                setBizNumSub();
 				changeBizNumSub();
-
 			    $("#mngDeptId").val("${sessionScope.userInfo.deptId}");
 			    $("#manager").val("${loginUser}");
+
 			}
 		}
 	});	
 }
 
 function changeBizNumSub(obj){
+
+    // 한군데에서만 쓰이는 Method
+    // 매개변수 obj 미 사용으로 확인 - Junghwan.Hwang
+
 	var cust = getCust();
+
 	if($(obj).val() == "new"){
 
 		$("#bizNumSub").remove();
@@ -532,8 +541,12 @@ function changeBizNumSub(obj){
 		Util.setReadOnlyDisable(["bizName", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userName", "grade", "mobile", "email", "telNum", "bankCode", "bankCnnm", "bankAccount"]);
 		Util.setEnabledList(["bankCode", "bizTypeCode"]);
 		$("input:checkbox[id='talk']").prop('checked', false).prop('disabled', false);
-		Util.formReset("", ["#userId", "#passwd", "#userName", "#grade", "#mobile", "#email", "#telNum", "#bizTypeCode" ,"#bankCode", "#bankCnnm", "#bankAccount", "#taxEmail", "taxStaffName", "taxTelNum", "#itemCode", "#fax", "#custMemo", "#orderMemo", "#bizName", "#ceo", "#bizCond", "#bizKind", "#bizPost", "#bizAddr", "#bizAddrDetail"], {});
-		setDeptTextBox();
+		Util.formReset("", ["#userId", "#passwd", "#userName", "#grade", "#mobile", "#email", "#telNum", "#bizTypeCode" ,"#bankCode", "#bankCnnm", "#bankAccount", "#taxEmail", "taxStaffName", "taxTelNum", "#itemCode", "#fax", "#custMemo", "#orderMemo", "#bizName", "#ceo", "#bizCond", "#bizKind", "#bizPost", "#bizAddr", "#bizAddrDetail","#custName"], {});
+
+        //$("#custName").val(obj.cmpNm);
+        setDeptTextBox();
+
+
 	} else {
 
 		cust.regDate = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -543,6 +556,11 @@ function changeBizNumSub(obj){
 		cust.mngDeptId = '${sessionScope.userInfo.deptId}';
 		Util.setPageData(cust);	
 		setDeptList(cust.custId, "");
+
+        // 추가내용, 현재 Input박스에 넣는 내용은 해당 DB를 받아 직접 뿌려주는 형태로 되어 있다.
+        // List도 자동완성으로 DB Generic 데이터를 Iterator 형태의 방범으로 뿌려주고 있기에 여기에 강제적으로
+        // 하드코딩을 하게 되었다. - Junghwan.Hwang
+        $("#custName").val(cust.bizName);
 	}
 }
 
@@ -978,8 +996,8 @@ function popSearchBizinfo(){
     /*
     * Junghwan.Hwang - NICE_DNB 추가내용
     */
-
-    var mBizName=$("#bizNum").val();
+    var mBizName=$("#bizNum").val().replace(/\-/g, '');
+    var mBizCode = "CMP_NM";
 
     if(mBizName == null || mBizName==""){
         alert("공란으로 입력되었습니다.");
@@ -991,7 +1009,50 @@ function popSearchBizinfo(){
         return;
     }
 
-    window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=1380, height=663");
+    if(checkKor(mBizName)) {
+        mBizCode = "CMP_NM";
+    }
+
+    if(checkNum(mBizName)) {
+        mBizCode = "BIZ_NO";
+    }
+
+    var mParam = {
+        BizCode: mBizCode,
+        BizValue: mBizName,
+        page: "1",
+        pageSize: "1"
+    };
+
+    $.ajax({
+        url : "/contents/basic/data/searchNiceinfo.do",
+        type : "post",
+        dataType : "json",
+        data:mParam,
+        success:function (data) {
+
+            if(data.total==0){
+
+                if(checkKor(mBizName)){
+                   alert("해당되는 업체가 없습니다.");
+                }
+                else{
+                  var Data = {
+                    bizNo: mBizName
+                  }
+                  setSearchBizInfo(Data);
+                }
+            }
+            else
+            {
+                window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=1380, height=663");
+            }
+
+        }
+    });
+
+
+    //window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=1380, height=663");
 
 	//Util.popSearchBizinfo($("#bizNum").val());
 }

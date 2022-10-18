@@ -10,23 +10,23 @@
                     aria-expanded="true" style="display: block;">
                     <fieldset>
                         <legend style="text-align: center;">사업자검색</legend>
-                        <!--
+                        
                         <div class="form-group row">
+                            <!--
                         	<div class="col input-group middle-name col-2">
 							    <select class="custom-select searchSelectBox" id="sSelector" name="sSelector">
 									<option value="BIZ_NUM" selected="selected">--사업자번호--</option>
 									<option value="BIZ_NAME">--사업자상호--</option>
 							    </select>
 							</div>
+							-->
                             <div class="col input-group middle-name">
                                  <input type="text" class="form-control form-control-sm searchInputBox searchValue" id="sValue" name="sValue" maxlength="13">
                             </div>
                             <div class="padding">
                                 <a onclick="goList();" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-zoom"></i>검색</b></a>
                             </div>
-
                         </div>
-                        -->
                     </fieldset>
 	                <div id="splitter" style="min-height:544px; border: 0;">
 	               		<div id="bizInfo_grid" style="min-width:1350px;"></div>
@@ -86,7 +86,10 @@ var columns = [
 	{field: "cmpSclNm", title: "업종", hidden: true ,width: 100 ,attributes :
           { style : "text-align : left" }
     },
-	{field: "indNm", title: "업태" ,width: 130, attributes :
+	{field: "indNm", title: "업태" ,width: 95, attributes :
+          { style : "text-align : left" }
+    },
+    {field: "cmpTypNm", title: "영업유무" ,width: 35, attributes :
           { style : "text-align : left" }
     },
 ];
@@ -100,7 +103,6 @@ oGrid.setPageable(true);
 //oGrid.setSendUrl("/contents/basic/data/searchBizinfo.do");
 oGrid.setSendUrl("/contents/basic/data/searchNiceinfo.do");
 
-
 $(document).ready(function(){
 	$("#splitter").kendoSplitter({
         orientation: "vertical",
@@ -108,6 +110,16 @@ $(document).ready(function(){
     });
 
     goList();
+
+});
+
+
+document.getElementById('sValue').addEventListener('keydown',function (event) {
+    if(event.code === "Enter"){
+        event.preventDefault();
+        goList();
+
+    }
 });
 
 /*
@@ -158,6 +170,16 @@ function checkNum(str){
   }
 }
 
+//특수문자 체크
+function checkSpc(str){
+  const regExp = /[~!@#$%^&*()_+|<>?:{}]/;
+  if(regExp.test(str)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 function goList(){
 
     /*
@@ -179,6 +201,14 @@ function goList(){
 
     var BizCode = "CMP_NM";
 
+    if($('#sValue').val() != null && $('#sValue').val()!=""){
+        BizValue = $('#sValue').val().replace(/\-/g, '');
+    }
+
+    if(checkSpc(BizValue)){
+        alert("특수문자가 입력되었습니다.");
+        return;
+    }
 
     if(checkKor(BizValue)) {
         BizCode = "CMP_NM";
@@ -203,6 +233,12 @@ function goList(){
     } else {			//그리드가 생성된 이후로는 dataSource만 세팅한다.
         grid.setDataSource(oGrid.gridOption.dataSource);
     }
+
+
+    //var data = grid.dataSource.data();
+    //var totalNumber = oGrid.gridOption.dataSource.length;
+
+    //console.log(data);
 }
 
 // 선택 후 데이터 전달 하고 Window 꺼지는 Method
@@ -218,7 +254,8 @@ function selectBizInfo(e){
       ceoNm     : dataItem.ceoNm,
       cmpSclNm  : dataItem.cmpSclNm,
       indNm     : dataItem.indNm,
-      zip       : dataItem.zip
+      zip       : dataItem.zip,
+      cmpTypNm  : dataItem.cmpTypNm
     }
 
     window.opener.setSearchBizInfo(searchData);

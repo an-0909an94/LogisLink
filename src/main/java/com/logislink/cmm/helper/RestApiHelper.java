@@ -102,7 +102,8 @@ public class RestApiHelper {
 
 		return parserMap(result);
     }
-*/
+    */
+
     public Map<String, String> request(final String host, final String apiPath) {
         return request(HttpMethodType.GET, host, apiPath, null);
     }

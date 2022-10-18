@@ -320,6 +320,7 @@ function bizNumCheck(recvData){
 				chkBizNum.cmpSclNm = recvData.cmpSclNm;
 				chkBizNum.indNm = recvData.indNm;
 				chkBizNum.zip	= recvData.zip;
+				chkBizNum.cmpTypNm = recvData.cmpTypNm;
 
 				mode = "N";
 
@@ -376,6 +377,8 @@ function bizSetting(recvData){
 	$("#bizNum").val(Util.formatBizNum(recvData.bizNum)); // 사업자번호
 	$("#bizNumSub").val("0000");
 	$("#bizAddrDetail").val(recvData.dtlAdr); // 상세주소
+	// 추가내용
+	$("#custName").val(recvData.cmpNm);
 
 	Util.setReadOnlyEnable(["bizNum"]);
 	Util.setDisabledList(["bizNumSub"]);
@@ -406,6 +409,9 @@ function bizInfo(recvData){
 				$("#bizPost").val(bizInfo.bizPost.replace(/[^0-9]/g, "")); // 우편번호
 				$("#bizAddr").val(bizInfo.bizAddr);	// 주소
 			    $("#bizTypeCode").val("01");
+				// 추가내용
+				//$("#custName").val(bizInfo.bizName);
+
 			}
 		}
 	});
