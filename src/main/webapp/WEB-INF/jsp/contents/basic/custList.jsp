@@ -264,70 +264,16 @@ function modalClose(){
 	modal.data("kendoDialog").close();
 } */
 
-function bizNumCheck(recvData){
+function bizNumCheck(mode,data){
 
+	var bData = data;
+	var bMode = mode;
 	/*
 	* 사업자 번호 Check 버튼 내용을 지우지 않고 Method 연결로 처리 진행
-	* Junghwan.Hwang - NICE_DNB
+	* Junghwan.Hwang - NICE_DNB - 2022-10-19
 	*/
 
-	//var bizNum = $("#bizNum").val().replace(/\-/g, ''); // '-' 값 없애는 Property
-	var bizNum = recvData.bizNo;
-
-	if(bizNum == "") {
-		alert("사업자번호를 입력해주세요.");
-		return;
-	}
-
-	if(bizNum.length < 10) {
-		alert("사업자번호는 하이픈(-)을 제외한 10자리 숫자로 입력해주세요.");
-		return;
-	}
-	
-	$.ajax({
-		url: "/contents/basic/data/checkBizNum.do",
-		type: "POST",
-		dataType: "json",
-		data: {
-			//bizNum: bizNum
-			bizNum: recvData.bizNo
-		},
-		success: function(data){
-
-			var mode = "";
-			var chkBizNum = {};
-			if(data.result) {
-				if(!confirm('이미 등록되어있는 사업자 입니다. \n계속 진행하시려면 "확인" 버튼을 클릭해주세요.')) {
-					//console.log("bizNumCheck confirm");
-					return false;
-					//chkUID = false;
-				}
-
-				chkBizNum.bizNum = bizNum;
-
-				mode = "BE";
-
-			} else {
-				alert(data.msg.replace('\\n', '\n'));
-
-				//chkBizNum.bizNum = bizNum.replace(/(\d{3})(\d{1,2})(\d{1,5})/, '$1-$2-$3');
-				// 변경내용
-				chkBizNum.cmpNm = recvData.cmpNm;
-				chkBizNum.bizNum = recvData.bizNo;
-				chkBizNum.adr = recvData.adr;
-				chkBizNum.dtlAdr = recvData.dtlAdr;
-				chkBizNum.ceoNm = recvData.ceoNm;
-				chkBizNum.cmpSclNm = recvData.cmpSclNm;
-				chkBizNum.indNm = recvData.indNm;
-				chkBizNum.zip	= recvData.zip;
-				chkBizNum.cmpTypNm = recvData.cmpTypNm;
-
-				mode = "N";
-
-			}
-			form_popup(mode, chkBizNum); // popUp 처리 된 내용 반영 : custList.jsp 파일에 한정
-		}
-	});		
+	form_popup(bMode, bData); // popUp 처리 된 내용 반영 : custList.jsp 파일에 한정
 }
 function custPrice(){
 	var grid = $("#cust_list").data("kendoGrid");
@@ -363,7 +309,7 @@ function form_popup_close() {
     $("#deptList").empty();
 }
 
-// Junghwan.Hwang
+// Junghwan.Hwang - memo
 // Nice DNB에는 있고 내부 DB에는 없을때의 최종 UI Setting 내용
 function bizSetting(recvData){
 	$("#bizName").val(recvData.cmpNm); // 사업자상호

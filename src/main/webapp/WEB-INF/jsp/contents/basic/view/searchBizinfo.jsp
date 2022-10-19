@@ -42,7 +42,7 @@
 
 /*
 * 결과 List 부분 확인 페이지 Backup
-* Junghwan.Hwang - NICE_DNB
+* Junghwan.Hwang - NICE_DNB - 2022-10-19
 */
 /*
 var columns = [
@@ -94,8 +94,8 @@ var columns = [
     },
 ];
 
-
 var oGrid = null;
+//oGrid = new gridData("bizInfo_grid");
 oGrid = new gridData("bizInfo_grid");
 oGrid.initGrid();
 oGrid.setSelectable(true);
@@ -108,17 +108,13 @@ $(document).ready(function(){
         orientation: "vertical",
         panes: [{resizable:true}, {resizable:true}]
     });
-
     goList();
-
 });
-
 
 document.getElementById('sValue').addEventListener('keydown',function (event) {
     if(event.code === "Enter"){
         event.preventDefault();
         goList();
-
     }
 });
 
@@ -223,8 +219,9 @@ function goList(){
         BizValue : BizValue
     }
 
-    var grid = $("#bizInfo_grid").data("kendoGrid");
+    //var grid = $("#bizInfo_grid").data("kendoGrid");
 
+    /*
     oGrid.setSearchData(param);
 
     if(grid == null) {	//페이지를 처음 로딩한 경우, 그리드를 최초 1회 생성한다.
@@ -233,33 +230,114 @@ function goList(){
     } else {			//그리드가 생성된 이후로는 dataSource만 세팅한다.
         grid.setDataSource(oGrid.gridOption.dataSource);
     }
+    */
 
-
-    //var data = grid.dataSource.data();
-    //var totalNumber = oGrid.gridOption.dataSource.length;
-
-    //console.log(data);
+    var grid = $("#bizInfo_grid").kendoGrid({
+      dataSource: {
+        transport: {
+          read: {
+            url: "/contents/basic/data/searchNiceinfo.do",
+            type: "post",
+            dataType: "json",
+            data: param,
+            beforeSend: function(req) {
+              req.setRequestHeader("AJAX", true);
+            }
+          }
+        },
+        schema: {
+          data: function(response) {
+            return response.data;
+          },
+          total: function(response) {
+            return response.total;
+          },
+        },
+        pageSize: 20,
+        serverPaging: true,
+        serverFiltering: true,
+        error: function(e) {
+          if (e.xhr.status == "400") {
+            alert("세션값이 존재하지 않습니다. 로그인 페이지로 이동합니다.");
+            location.href = "/";
+          }
+        }
+      },
+      excel: {
+        fileName: "test.xlsx",
+        proxyURL: "/cmm/saveGrid.do",
+        filterable: false,
+        allPages: true
+      },
+      excelExport: function(e) {
+        if($("#loading").length > 0) $("#loading").hide();
+      },
+      navigatable: true,
+      selectable: "cell",
+      persistSelection: true,
+      editable: false,
+      columns: columns,
+      noRecords: true,
+      resizable: true,
+      scrollable: {
+        endless: true
+      },
+      sortable : true,
+      pageable: false,
+      //sort: onSortEnd,
+      messages: {
+        noRecords: "조회된 데이터가 없습니다."
+      }
+    }).data("kendoGrid");
 }
 
 // 선택 후 데이터 전달 하고 Window 꺼지는 Method
+// JungHwan.Hwang - 기업 검색 - 2022-10-19
 function selectBizInfo(e){
-	var grid = $("#bizInfo_grid").data("kendoGrid");
-    var dataItem = grid.dataItem($(e).closest("tr"));
+  var grid = $("#bizInfo_grid").data("kendoGrid");
+  var dataItem = grid.dataItem($(e).closest("tr"));
 
-    var searchData = {
-      cmpNm     : dataItem.cmpNm,
-      bizNo     : dataItem.bizNo,
-      adr       : dataItem.adr,
-      dtlAdr    : dataItem.dtlAdr,
-      ceoNm     : dataItem.ceoNm,
-      cmpSclNm  : dataItem.cmpSclNm,
-      indNm     : dataItem.indNm,
-      zip       : dataItem.zip,
-      cmpTypNm  : dataItem.cmpTypNm
-    }
+  $.ajax({
+    url: "/contents/basic/data/checkBizNum.do",
+    type: "POST",
+    dataType: "json",
+    data: {
+      bizNum : dataItem.bizNo
+    },
+    success: function(data) {
 
-    window.opener.setSearchBizInfo(searchData);
-	window.close();
+      var mode = "";
+      var chkBizNum = {};
+      if (data.result) {
+
+        if (!confirm('이미 등록되어있는 사업자 입니다. \n계속 진행하시려면 "확인" 버튼을 클릭해주세요.')) {
+          //chkUID = false;
+          return false;
+        }
+
+        chkBizNum.bizNum = dataItem.bizNo;
+
+        mode = "BE";
+
+      } else {
+        alert(data.msg.replace('\\n', '\n'));
+
+        chkBizNum.cmpNm = dataItem.cmpNm;
+        chkBizNum.bizNum = dataItem.bizNo;
+        chkBizNum.adr = dataItem.adr;
+        chkBizNum.dtlAdr = dataItem.dtlAdr;
+        chkBizNum.ceoNm = dataItem.ceoNm;
+        chkBizNum.cmpSclNm = dataItem.cmpSclNm;
+        chkBizNum.indNm = dataItem.indNm;
+        chkBizNum.zip	= dataItem.zip;
+        chkBizNum.cmpTypNm = dataItem.cmpTypNm;
+
+        mode = "N";
+      }
+      window.opener.setSearchBizInfo(mode,chkBizNum);
+      window.close();
+    },
+  });
 }
 
 /*

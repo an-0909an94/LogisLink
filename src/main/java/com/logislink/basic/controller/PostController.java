@@ -99,7 +99,7 @@ public class PostController {
 
 			if("401".equals(res.get("resCode"))) {
 
-				// Token Key 만료 시 Gen 되는 Method - Junghwan.Hwang
+				// Token Key 만료 시 Gen 되는 Method - Junghwan.Hwang - 2022-10-19
 				// 설정 후 DataBase에 저장되도록 설정 되어 있음
 				Map<String, String> genRes = apiHelper.genNicekey(niceDnbAppKey,niceDnbAppSecret);
 

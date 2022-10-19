@@ -529,7 +529,7 @@ function getCustInfo(bizNum) {
 function changeBizNumSub(obj){
 
     // 한군데에서만 쓰이는 Method
-    // 매개변수 obj 미 사용으로 확인 - Junghwan.Hwang
+    // 매개변수 obj 미 사용으로 확인 - Junghwan.Hwang - memo
 
 	var cust = getCust();
 
@@ -994,7 +994,7 @@ function checkSpc(str){
 function popSearchBizinfo(){
 
     /*
-    * Junghwan.Hwang - NICE_DNB 추가내용
+    * Junghwan.Hwang - NICE_DNB 추가내용 2022-10-19
     */
     var mBizName=$("#bizNum").val().replace(/\-/g, '');
     var mBizCode = "CMP_NM";
@@ -1034,26 +1034,25 @@ function popSearchBizinfo(){
             if(data.total==0){
 
                 if(checkKor(mBizName)){
-                   alert("해당되는 업체가 없습니다.");
+                   alert("해당되는 업체가 없습니다. 사업자 번호로 조회해보세요");
                 }
                 else{
-                  var Data = {
+                  // 영세업체, 세무서에 등록은 되어있으나 Nice DNB에는 미 등록
+                  var nData = {
                     bizNo: mBizName
                   }
-                  setSearchBizInfo(Data);
+                  var nMode = "DEFAULT";
+                  setSearchBizInfo(nMode,nData);
                 }
             }
             else
             {
                 window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=1380, height=663");
             }
-
         }
     });
 
-
     //window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=1380, height=663");
-
 	//Util.popSearchBizinfo($("#bizNum").val());
 }
 
@@ -1063,12 +1062,40 @@ function setSearchAddressInfo(data) {
     $("#"+data.mode+"AddrDetail").focus();
 }
 
-function setSearchBizInfo(data) {
+function setSearchBizInfo(mode,data) {
 
-    // 데이터는 받아서 여기서 다 처리하고 있음
-    // 해당 데이터로 각 data가 어떻게 들어가는지 한번 확인해 볼 것
-    //$("#bizNum").val(data.bizNo);
-    bizNumCheck(data)
+  /*
+   * 기존 DB 모듈 이식, DEFAULT 일 경우 대비
+   * Junghwan.Hwang - 2022-10-19
+   */
+  var sData = data;
+  var sMode = mode;
+
+  if(mode=="DEFAULT"){
+    $.ajax({
+      url: "/contents/basic/data/checkBizNum.do",
+      type: "POST",
+      dataType: "json",
+      data: {
+        bizNum : sData.bizNo
+      },
+      success: function(data) {
+        var chkNum = {};
+        if (data.result) {
+          sMode = "BE";
+        } else {
+          sMode = "N";
+        }
+        chkNum.bizNum = sData.bizNo;
+        alert("조회된 데이터가 없습니다. 신규 사용자 입니다.");
+        bizNumCheck(sMode,chkNum)
+      },
+    });
+  }
+  else{
+    bizNumCheck(sMode,sData)
+  }
+
 }
 
 function checkUserInfo() {

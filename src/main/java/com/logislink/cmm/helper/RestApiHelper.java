@@ -177,7 +177,7 @@ public class RestApiHelper {
     public Map<String, String> requestSub(HttpMethodType httpMethod, final String host, final String apiPath, final Map<String, String> params) {
 
         /*
-         * Junghwan.Hwang - NICE_DNB
+         * Junghwan.Hwang - NICE_DNB - 2022-10-19
          * Nice DNB 용으로 따로 생성하여 이용
          */
 
