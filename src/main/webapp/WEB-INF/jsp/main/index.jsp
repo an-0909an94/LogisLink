@@ -152,10 +152,11 @@ function goLogin(){
 
 				AgreeCheckLogin(data.login.userId);
 
-				if(data.login.userMainPage == null) { 
+				if(data.login.userMainPage == null || data.login.userMainPage == "") {
 					location.href = defaultPage;
 				} else {
 					location.href = data.login.userMainPage;
+
 				}
 			}
 		},

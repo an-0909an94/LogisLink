@@ -1,7 +1,5 @@
 package com.logislink.basic.service.impl;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -16,4 +14,14 @@ import com.logislink.basic.service.PostService;
 public class PostServiceImpl implements PostService {
 	@Resource(name="postDao")
 	private PostDao postDao;
+
+	@Override
+	public String selectNDToken(Map<String, String> map) {
+		return postDao.getNiceDnbToken(map);
+	}
+
+	@Override
+	public void updateNDToken(Map<String, String> map) {
+		postDao.updateNiceDnbToken(map);
+	}
 }

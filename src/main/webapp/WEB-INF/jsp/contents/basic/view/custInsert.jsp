@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<style>
+    .image_sizeK{
+      height:30px;
+      margin-right: 10px;
+      left: 90px;
+    }
+</style>
 <div class="pop-layer">
-<!-- 	<div id="divAddDept" class="editor-warp p-0">
+    <!--
+    <div id="divAddDept" class="editor-warp p-0">
 		<div class="modalEditor" id="addDept">
 			<div id="popGrid"></div>
 			<div class="modalHeader">
@@ -14,7 +22,8 @@
 			    </div>
 		    </div>
 		</div>
-	</div> -->
+	</div>
+	-->
     <div class="editor_wrap pop-layer" id="layer1">
 	    <div class="insertClose">
 	    	<a class="insertCloseButton k-icon k-i-close" onclick="init_popup_close();"></a>
@@ -33,19 +42,24 @@
                             <fieldset>
                                 <legend id="cust_legend">거래처 등록</legend>
                                 <div class="form-group row">
-		                            <label class="col-form-label big-name">사업자번호</label>
+                                    <label class="col-form-label big-name">사업자조회</label>
+
                                     <div class="input-group input-group-sm col middle-name form-group">
-                                    <strong class="required">사업자번호</strong>
+                                        <strong class="required">사업자번호</strong>
+                                        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+                                        <font size="1em" color="black">사업자번호/상호로 검색 가능합니다.</font>
                                         <div class="textBox-in-icon">
-	                                        <input type="text" class="form-control form-control-sm" name="bizNum" id="bizNum" maxlength="12" required readonly>
-										<i><img onclick="popSearchBizinfo();" src="/images/icon/search.png" id="searchBizinfo"></i>
+	                                        <input type="text" class="form-control form-control-sm " name="bizNum" id="bizNum" maxlength="12" required readonly>
+										    <i><img class = "image_sizeK" src="/images/icon/search.png" id="searchBizinfo"></i>
 										</div>
                                         <div class="help-block with-errors"></div>
                                     </div>
+                                    <!--
 		                            <div class="input-group input-group-sm col middle-name">
 		                            	<strong>사업자번호 확인</strong>
 		                                <button type="button" class="form-control form-control-sm a-text-center" onclick="bizNumCheck();" id="btn_chkBizNum">사업자번호 확인</button>
 		                            </div>
+		                            -->
 		                        </div>
                                 
                                 <div class="form-group row">
@@ -374,6 +388,7 @@ $(document).ready(function(){
 });
 
 function init_pop(mode, data) {
+
 	init();
 	g_custList = [];
 	g_idx = {};
@@ -426,6 +441,7 @@ function init_pop(mode, data) {
 		$("#searchBizinfo").attr("onClick", "popSearchBizinfo()");
 		
 		if("${menuAuth.writeYn}" != "Y")	$("#btn_saveCust").hide();
+
 	} else if(mode == "BE") {
 		chkUID = true;
 		$("#btn_chkBizNum").css('border', '#0bba82 solid 2px');
@@ -446,6 +462,8 @@ function init_pop(mode, data) {
 
 		if("${menuAuth.writeYn}" != "Y")	$("#btn_saveCust").hide();
 		$("#passwd").val('');
+
+
 	} else if(mode == "E") {
 		chkUID = true;
 		$("#btn_chkBizNum").attr("disabled", true);
@@ -482,6 +500,7 @@ function init_pop(mode, data) {
 		$("#searchBizinfo").removeAttr("onClick");
 		
 		if("${menuAuth.editYn}" != "Y")	$("#btn_saveCust").hide();
+
 	}
 }
 
@@ -497,18 +516,23 @@ function getCustInfo(bizNum) {
 		success: function(data){
 			if(data.result) {
 				g_custList = data.data;
-				setBizNumSub();
+                setBizNumSub();
 				changeBizNumSub();
-
 			    $("#mngDeptId").val("${sessionScope.userInfo.deptId}");
 			    $("#manager").val("${loginUser}");
+
 			}
 		}
 	});	
 }
 
 function changeBizNumSub(obj){
+
+    // 한군데에서만 쓰이는 Method
+    // 매개변수 obj 미 사용으로 확인 - Junghwan.Hwang - memo
+
 	var cust = getCust();
+
 	if($(obj).val() == "new"){
 
 		$("#bizNumSub").remove();
@@ -517,8 +541,12 @@ function changeBizNumSub(obj){
 		Util.setReadOnlyDisable(["bizName", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userName", "grade", "mobile", "email", "telNum", "bankCode", "bankCnnm", "bankAccount"]);
 		Util.setEnabledList(["bankCode", "bizTypeCode"]);
 		$("input:checkbox[id='talk']").prop('checked', false).prop('disabled', false);
-		Util.formReset("", ["#userId", "#passwd", "#userName", "#grade", "#mobile", "#email", "#telNum", "#bizTypeCode" ,"#bankCode", "#bankCnnm", "#bankAccount", "#taxEmail", "taxStaffName", "taxTelNum", "#itemCode", "#fax", "#custMemo", "#orderMemo", "#bizName", "#ceo", "#bizCond", "#bizKind", "#bizPost", "#bizAddr", "#bizAddrDetail"], {});
-		setDeptTextBox();
+		Util.formReset("", ["#userId", "#passwd", "#userName", "#grade", "#mobile", "#email", "#telNum", "#bizTypeCode" ,"#bankCode", "#bankCnnm", "#bankAccount", "#taxEmail", "taxStaffName", "taxTelNum", "#itemCode", "#fax", "#custMemo", "#orderMemo", "#bizName", "#ceo", "#bizCond", "#bizKind", "#bizPost", "#bizAddr", "#bizAddrDetail","#custName"], {});
+
+        //$("#custName").val(obj.cmpNm);
+        setDeptTextBox();
+
+
 	} else {
 
 		cust.regDate = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -528,6 +556,11 @@ function changeBizNumSub(obj){
 		cust.mngDeptId = '${sessionScope.userInfo.deptId}';
 		Util.setPageData(cust);	
 		setDeptList(cust.custId, "");
+
+        // 추가내용, 현재 Input박스에 넣는 내용은 해당 DB를 받아 직접 뿌려주는 형태로 되어 있다.
+        // List도 자동완성으로 DB Generic 데이터를 Iterator 형태의 방범으로 뿌려주고 있기에 여기에 강제적으로
+        // 하드코딩을 하게 되었다. - Junghwan.Hwang
+        $("#custName").val(cust.bizName);
 	}
 }
 
@@ -565,11 +598,11 @@ function getCust() {
 }
 
 function setDeptList(custId, deptId) {
-	/* var radioGrp = $("input:radio[name='deptId']");
-	for(var i = 0; i < radioGrp.length; i++) {
-		radioGrp[i].parentNode.remove();
-	}	 */
-	
+    /* var radioGrp = $("input:radio[name='deptId']");
+    for(var i = 0; i < radioGrp.length; i++) {
+        radioGrp[i].parentNode.remove();
+    }	 */
+
 	for(var i=0, cust; cust=g_custList[i]; i++){
 		if(cust.bizNumSub == $("#bizNumSub").val()) {
 			deptList = cust.deptList;
@@ -785,12 +818,14 @@ $('#userId').on('blur', function() {
 		});
 	}	
 });
- 
+
+/*
 $('#bizNum').on('input', function() {
 	var bizNum = $(this).val().replace(/[^\d]/g, '');
 	var temp = bizNum.replace(/(\d{3})(\d{1,2})(\d{1,5})/, '$1-$2-$3');
 	$(this).val(temp);
 });
+*/
 
 $('#bizNum').on('change', function() {
 	$("#btn_chkBizNum").css('border', '#ced4da solid 1px');
@@ -798,96 +833,106 @@ $('#bizNum').on('change', function() {
 	chkUID = false;
 });
 
- 
-$('#f').validator().on('submit', function (e) {
-	  if(!chkUID) {
-		e.preventDefault();
-		alert("사업자번호 확인을 해주세요.");
-		return;
-	  }
-	  if (e.isDefaultPrevented()) {
-	    alert("항목을 입력해 주세요.");
-	  } else {
+document.getElementById('bizNum').addEventListener('keydown',function (event) {
 
-			// 이벤트 초기화 (submit 동작 중단)
-			e.preventDefault();
-			if (!$("#userId").attr("readonly")){
-				if(!checkUserInfo()) {
-					e.preventDefault();
-					return;
-				}
-			} 
-			$("#mngDeptId").prop("disabled", false);
-			var param = {
-				mngDeptId: $("#mngDeptId").val(),
-				custSeq : Util.nvl(g_idx.custSeq, ''),
-				custId : Util.nvl(g_idx.custId, ''),
-				deptId : Util.nvl($("#deptId").val(), ''),
-				bizName : $("#bizName").val(),
-				custTypeCode : $("#custTypeCode").val(),
-				bizNum : $("#bizNum").val().replace(/\-/g, ''),
-				bizNumSub : $("#bizNumSub").val(),
-				bizTypeCode : $("#bizTypeCode").val(),
-				ceo : $("#ceo").val(),
-				bizCond : $("#bizCond").val(),
-				bizKind : $("#bizKind").val(),
-				bizPost : $("#bizPost").val(),
-				bizAddr : $("#bizAddr").val(),
-				bizAddrDetail : $("#bizAddrDetail").val(),
-				sellBuySctn : $("#sellBuySctn").val(),
-				custName : $("#custName").val(),
-				telNum: $("#telNum").val().replace(/\-/g, ""),
-				mobile: $("#mobile").val().replace(/\-/g, ""),
-				fax : $("#fax").val(),
-				taxEmail : $("#taxEmail").val(),
-				taxStaffName : $("#taxStaffName").val(),
-				taxTelNum: $("#taxTelNum").val().replace(/\-/g, ""),
-				itemCode : $("#itemCode").val(),
-				manager : $("#manager").val(),
-				custMemo : $("#custMemo").val(),
-				orderMemo : $("#orderMemo").val(),
-				useYn : $("#useYn").val(),
-				//deptName : $('input[name="deptId"]:checked').next().text(),
-				deptName: $("#deptName").val(),
-				userId : $("#userId").val(),
-				passwd : $("#passwd").val(),
-				userName : $("#userName").val(),
-				grade : $("#grade").val(),
-				email : $("#email").val(),
-				talkYn : $("#talk").val() == 'on' ? "Y" : "N",
-				bankCode : $("#bankCode").val(),
-				bankCnnm : $("#bankCnnm").val(),
-				bankAccount : $("#bankAccount").val(),
-				custMngCode : $("#custMngCode").val(),
-				custMngMemo : $("#custMngMemo").val(),
-				payType : $("#payType").val(),
-				payMemo : $("#payMemo").val(),
-				driverCommission : $("#driverCommission").val(),
-				postalAddr : $("#postalAddr").val(),
-				postalAddrDetail : $("#postalAddrDetail").val(),
-				postalPost : $("#postalPost").val(),
-				// 22.06.17 이건욱 T5 > J13, J14추가
-				dlineDayCode : $("#dlineDayCode").val(),
-				dlinePointCode : $("#dlinePointCode").val()
-			};
-			$.ajax({
-				url: "/contents/basic/data/insertCust.do",
-				type: "POST",
-				dataType: "json",
-				data: param,
-				success: function(data){
-					if(data.result) {
-						alert(data.msg);
-						init_popup_close();				
-						goList();
-					} else {
-						alert(data.msg);
-						$("#userId").focus();
-					}
-				}
-			});
-	}
+    if(event.code === "Enter"){
+        event.preventDefault();
+        popSearchBizinfo();
+    }
 });
+
+// 저장 버튼에 대한 Submit 처리 내용
+$('#f').validator().on('submit', function (e) {
+
+    if(!chkUID) {
+      e.preventDefault();
+      alert("사업자번호 확인을 해주세요.");
+      return;
+    }
+    if (e.isDefaultPrevented()) {
+      alert("항목을 입력해 주세요.");
+    } else {
+
+      // 이벤트 초기화 (submit 동작 중단)
+      e.preventDefault();
+      if (!$("#userId").attr("readonly")){
+        if(!checkUserInfo()) {
+          e.preventDefault();
+          return;
+        }
+      }
+      $("#mngDeptId").prop("disabled", false);
+      var param = {
+        mngDeptId: $("#mngDeptId").val(),
+        custSeq : Util.nvl(g_idx.custSeq, ''),
+        custId : Util.nvl(g_idx.custId, ''),
+        deptId : Util.nvl($("#deptId").val(), ''),
+        bizName : $("#bizName").val(),
+        custTypeCode : $("#custTypeCode").val(),
+        bizNum : $("#bizNum").val().replace(/\-/g, ''),
+        bizNumSub : $("#bizNumSub").val(),
+        bizTypeCode : $("#bizTypeCode").val(),
+        ceo : $("#ceo").val(),
+        bizCond : $("#bizCond").val(),
+        bizKind : $("#bizKind").val(),
+        bizPost : $("#bizPost").val(),
+        bizAddr : $("#bizAddr").val(),
+        bizAddrDetail : $("#bizAddrDetail").val(),
+        sellBuySctn : $("#sellBuySctn").val(),
+        custName : $("#custName").val(),
+        telNum: $("#telNum").val().replace(/\-/g, ""),
+        mobile: $("#mobile").val().replace(/\-/g, ""),
+        fax : $("#fax").val(),
+        taxEmail : $("#taxEmail").val(),
+        taxStaffName : $("#taxStaffName").val(),
+        taxTelNum: $("#taxTelNum").val().replace(/\-/g, ""),
+        itemCode : $("#itemCode").val(),
+        manager : $("#manager").val(),
+        custMemo : $("#custMemo").val(),
+        orderMemo : $("#orderMemo").val(),
+        useYn : $("#useYn").val(),
+        //deptName : $('input[name="deptId"]:checked').next().text(),
+        deptName: $("#deptName").val(),
+        userId : $("#userId").val(),
+        passwd : $("#passwd").val(),
+        userName : $("#userName").val(),
+        grade : $("#grade").val(),
+        email : $("#email").val(),
+        talkYn : $("#talk").val() == 'on' ? "Y" : "N",
+        bankCode : $("#bankCode").val(),
+        bankCnnm : $("#bankCnnm").val(),
+        bankAccount : $("#bankAccount").val(),
+        custMngCode : $("#custMngCode").val(),
+        custMngMemo : $("#custMngMemo").val(),
+        payType : $("#payType").val(),
+        payMemo : $("#payMemo").val(),
+        driverCommission : $("#driverCommission").val(),
+        postalAddr : $("#postalAddr").val(),
+        postalAddrDetail : $("#postalAddrDetail").val(),
+        postalPost : $("#postalPost").val(),
+        // 22.06.17 이건욱 T5 > J13, J14추가
+        dlineDayCode : $("#dlineDayCode").val(),
+        dlinePointCode : $("#dlinePointCode").val()
+      };
+      $.ajax({
+        url: "/contents/basic/data/insertCust.do",
+        type: "POST",
+        dataType: "json",
+        data: param,
+        success: function(data){
+          if(data.result) {
+            alert(data.msg);
+            init_popup_close();
+            goList();
+          } else {
+            alert(data.msg);
+            $("#userId").focus();
+          }
+        }
+      });
+  }
+});
+
 
 function init() {
 	$("#btn_chkBizNum").css('border', '#ced4da solid 1px');
@@ -901,6 +946,7 @@ function init() {
 	Util.setReadOnlyDisable(["bizName", "bizNum", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userName", "grade", "mobile", "email", "telNum", "bankCnnm", "bankAccount"]);
 	Util.setEnabledList(["bizTypeCode", "bizNumSub", "custTypeCode", "sellBuySctn", "bankCode"]);
 	$(".list-unstyled").remove();
+
 }
 
 function init_popup_close() {
@@ -915,8 +961,99 @@ function popSearchPost(mode){
 	Util.popSearchPost(mode);
 }
 
+// 한글 체크
+function checkKor(str) {
+  const regExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+  if(regExp.test(str)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+// 숫자 체크
+function checkNum(str){
+  const regExp = /[0-9]/g;
+  if(regExp.test(str)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
+//특수문자 체크
+function checkSpc(str){
+  const regExp = /[~!@#$%^&*()_+|<>?:{}]/;
+  if(regExp.test(str)){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 function popSearchBizinfo(){
-	Util.popSearchBizinfo();
+
+    /*
+    * Junghwan.Hwang - NICE_DNB 추가내용 2022-10-19
+    */
+    var mBizName=$("#bizNum").val().replace(/\-/g, '');
+    var mBizCode = "CMP_NM";
+
+    if(mBizName == null || mBizName==""){
+        alert("공란으로 입력되었습니다.");
+        return;
+    }
+
+    if(checkSpc(mBizName)){
+        alert("특수문자가 입력되었습니다.");
+        return;
+    }
+
+    if(checkKor(mBizName)) {
+        mBizCode = "CMP_NM";
+    }
+
+    if(checkNum(mBizName)) {
+        mBizCode = "BIZ_NO";
+    }
+
+    var mParam = {
+        BizCode: mBizCode,
+        BizValue: mBizName,
+        page: "1",
+        pageSize: "1"
+    };
+
+    $.ajax({
+        url : "/contents/basic/data/searchNiceinfo.do",
+        type : "post",
+        dataType : "json",
+        data:mParam,
+        success:function (data) {
+
+            if(data.total==0){
+
+                if(checkKor(mBizName)){
+                   alert("해당되는 업체가 없습니다. 사업자 번호로 조회해보세요");
+                }
+                else{
+                  // 영세업체, 세무서에 등록은 되어있으나 Nice DNB에는 미 등록
+                  var nData = {
+                    bizNo: mBizName
+                  }
+                  var nMode = "DEFAULT";
+                  setSearchBizInfo(nMode,nData);
+                }
+            }
+            else
+            {
+                window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=1380, height=663");
+            }
+        }
+    });
+
+    //window.open("/contents/basic/view/searchBizinfo.do?bizname="+mBizName, "PopupPost", "width=1380, height=663");
+	//Util.popSearchBizinfo($("#bizNum").val());
 }
 
 function setSearchAddressInfo(data) {
@@ -925,8 +1062,40 @@ function setSearchAddressInfo(data) {
     $("#"+data.mode+"AddrDetail").focus();
 }
 
-function setSearchBizInfo(data) {
-    $("#bizNum").val(data.bizNum);
+function setSearchBizInfo(mode,data) {
+
+  /*
+   * 기존 DB 모듈 이식, DEFAULT 일 경우 대비
+   * Junghwan.Hwang - 2022-10-19
+   */
+  var sData = data;
+  var sMode = mode;
+
+  if(mode=="DEFAULT"){
+    $.ajax({
+      url: "/contents/basic/data/checkBizNum.do",
+      type: "POST",
+      dataType: "json",
+      data: {
+        bizNum : sData.bizNo
+      },
+      success: function(data) {
+        var chkNum = {};
+        if (data.result) {
+          sMode = "BE";
+        } else {
+          sMode = "N";
+        }
+        chkNum.bizNum = sData.bizNo;
+        alert("조회된 데이터가 없습니다. 신규 사용자 입니다.");
+        bizNumCheck(sMode,chkNum)
+      },
+    });
+  }
+  else{
+    bizNumCheck(sMode,sData)
+  }
+
 }
 
 function checkUserInfo() {

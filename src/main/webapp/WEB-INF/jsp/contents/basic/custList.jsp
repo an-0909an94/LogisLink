@@ -147,6 +147,7 @@ $(document).ready(function(){
 	});
     
 	goList();
+
 });
 
 var columns = [
@@ -263,46 +264,16 @@ function modalClose(){
 	modal.data("kendoDialog").close();
 } */
 
-function bizNumCheck(){
-	var bizNum = $("#bizNum").val().replace(/\-/g, '');
-	if(bizNum == "") {
-		alert("사업자번호를 입력해주세요.");
-		return;
-	}
-	
-	if(bizNum.length < 10) {
-		alert("사업자번호는 하이픈(-)을 제외한 10자리 숫자로 입력해주세요.");
-		return;
-	}
-	
-	$.ajax({
-		url: "/contents/basic/data/checkBizNum.do",
-		type: "POST",
-		dataType: "json",
-		data: {
-			bizNum: bizNum
-		},
-		success: function(data){
-			var mode = "";
-			var chkBizNum = {};
-			if(data.result) {
-				if(!confirm('이미 등록되어있는 사업자 입니다. \n계속 진행하시려면 "확인" 버튼을 클릭해주세요.')){
-					return false;
-					chkUID = false;
-				}
-					chkBizNum.bizNum = bizNum;
-					mode = "BE";
-			} else {
-				alert(data.msg.replace('\\n', '\n'));
+function bizNumCheck(mode,data){
 
-				chkBizNum.bizNum = bizNum.replace(/(\d{3})(\d{1,2})(\d{1,5})/, '$1-$2-$3');
-				mode = "N";
-			}
+	var bData = data;
+	var bMode = mode;
+	/*
+	* 사업자 번호 Check 버튼 내용을 지우지 않고 Method 연결로 처리 진행
+	* Junghwan.Hwang - NICE_DNB - 2022-10-19
+	*/
 
-			form_popup(mode, chkBizNum);
-			
-		}
-	});		
+	form_popup(bMode, bData); // popUp 처리 된 내용 반영 : custList.jsp 파일에 한정
 }
 function custPrice(){
 	var grid = $("#cust_list").data("kendoGrid");
@@ -324,8 +295,10 @@ function form_popup(mode, data) {
 	$('.insert_pop').addClass("block");
 	$('.insertClose').addClass("block");
 	init_pop(mode, data);
+
  	if(mode == 'N' && data != ""){
-		bizInfo();
+		 //bizInfo(data);
+		 bizSetting(data);
 	} 
 }
 
@@ -336,27 +309,58 @@ function form_popup_close() {
     $("#deptList").empty();
 }
 
- function bizInfo(){
+// Junghwan.Hwang - memo
+// Nice DNB에는 있고 내부 DB에는 없을때의 최종 UI Setting 내용
+function bizSetting(recvData){
+	$("#bizName").val(recvData.cmpNm); // 사업자상호
+	$("#ceo").val(recvData.ceoNm);		// 대표자명
+	//$("#bizCond").val(recvData.bizNo);	// 업태
+	$("#bizCond").val(recvData.indNm);	// 업태
+	//$("#bizKind").val(recvData.indNm);	// 업종
+	$("#bizPost").val(recvData.zip);	// 우편번호
+	$("#bizAddr").val(recvData.adr);	// 주소
+	$("#bizTypeCode").val("01");
+	$("#bizNum").val(Util.formatBizNum(recvData.bizNum)); // 사업자번호
+	$("#bizNumSub").val("0000");
+	$("#bizAddrDetail").val(recvData.dtlAdr); // 상세주소
+	// 추가내용
+	$("#custName").val(recvData.cmpNm);
+
+	Util.setReadOnlyEnable(["bizNum"]);
+	Util.setDisabledList(["bizNumSub"]);
+
+	$("#btn_chkBizNum").css('border', '#0bba82 solid 2px');
+	$("#btn_chkBizNum").html("<i class=\"k-icon k-i-check-outline\" id=\"chkOK\" style=\"color:#0bba82;margin-right:3px;\"></i>사업자번호 확인");
+	$("#btn_chkBizNum").attr("disabled", true);
+}
+
+function bizInfo(recvData){
+
 	$.ajax({
 		url: "/contents/basic/data/bizInfo.do",
 		type: "POST",
 		dataType: "json",
 		data: {
-			bizNum: $("#bizNum").val().replace(/\-/g, "")
+			//bizNum: $("#bizNum").val().replace(/\-/g, "")
+			bizNum: recvData.bizNum
 		},
 		success: function(data){
 			if(data.data != null){
+
 				var bizInfo = data.data;
-				$("#bizName").val(bizInfo.bizName);
-				$("#ceo").val(bizInfo.ceo);
-				$("#bizCond").val(bizInfo.bizCond);
-				$("#bizKind").val(bizInfo.bizKind);
-				$("#bizPost").val(bizInfo.bizPost.replace(/[^0-9]/g, ""));
-				$("#bizAddr").val(bizInfo.bizAddr);
+				$("#bizName").val(bizInfo.bizName);	// 사업자상호
+				$("#ceo").val(bizInfo.ceo);		// 대표자명
+				$("#bizCond").val(bizInfo.bizCond);	// 업태
+				$("#bizKind").val(bizInfo.bizKind);	// 업종
+				$("#bizPost").val(bizInfo.bizPost.replace(/[^0-9]/g, "")); // 우편번호
+				$("#bizAddr").val(bizInfo.bizAddr);	// 주소
 			    $("#bizTypeCode").val("01");
+				// 추가내용
+				//$("#custName").val(bizInfo.bizName);
+
 			}
 		}
-	});	
+	});
 } 
 
 //excel download
