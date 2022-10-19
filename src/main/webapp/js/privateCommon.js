@@ -540,17 +540,20 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 	            ui.item.data('startPos', startPos);
 	        },
 			update: function(event, ui) {
+
 				var startPos = ui.item.data('startPos');
 	            var updatePos = ui.item.index();
-	            
+
+				if (typeof nonPrivateColumnCheck != 'undefined' && nonPrivateColumnCheck != null) {
+					startPos += 1;
+					updatePos += 1;
+				}
 	            // 체크박스 컬럼으로 인해 위치 인덱스를 1씩 늘림.
-	            startPos += 1;
-            	updatePos += 1;
-            	
 	            grid.reorderColumn(updatePos, grid.columns[startPos]);
 	            CHANGED_GRID_INFO = true;
 	            
 	            $.each($("#privateTbody tr"), function(idx, node) {
+
 	            	$(node).attr("id", idx);
 	            });
 	        }
