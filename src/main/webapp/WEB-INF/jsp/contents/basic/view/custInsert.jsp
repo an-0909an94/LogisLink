@@ -1071,7 +1071,7 @@ function setSearchBizInfo(mode,data) {
 
   var sData = data;
   var sMode = mode;
-  var sBizNum = sData.bizNo.replace(/\-/g, '');
+  var sBizNum = sData.bizNo;
 
   if(mode=="DEFAULT"){
     $.ajax({
