@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.logislink.basic.vo.AddrVO;
 import org.springframework.stereotype.Service;
 
 import com.logislink.cmm.dao.CmmDao;
@@ -86,4 +87,14 @@ public class CmmServiceImpl implements CmmService {
 		cmmDao.savePrivateTblCnt(map);
 	}
 	// 22.07.15 이건욱 그리드 개인화 설정 -> End
+
+	@Override
+	public List<AddrVO> getJibunAddr(Map<String, Object> map) throws Exception {
+		return cmmDao.getJibunAddr(map);
+	}
+
+	@Override
+	public int getAddrCnt(Map<String, Object> map) {
+		return cmmDao.getAddrCnt(map);
+	}
 }

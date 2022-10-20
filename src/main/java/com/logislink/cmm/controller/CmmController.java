@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.bind.DatatypeConverter;
 
+import com.logislink.basic.vo.AddrVO;
+import com.logislink.order.controller.OrderBundleController;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +40,6 @@ import com.logislink.cmm.vo.FileVO;
 @Controller
 public class CmmController {
 
-	private static RestApiHelper apiHelper = new RestApiHelper();
-	
 	public static HashMap<String, ArrayList<CodeVO>> codeMap;
 	
 	@Resource(name="cmmService")
@@ -47,7 +47,7 @@ public class CmmController {
 	
 	@Resource(name="globalProperties")
 	private Properties globalProperties;
-	
+
 	/**
 	 * 공통코드 
 	 * @param request
@@ -347,4 +347,22 @@ public class CmmController {
 		
 		return "jsonView";
 	}
+
+	/**
+	 * 22-10-11 지번 주소 가져오기
+	 */
+	@PostMapping(value="/cmm/jibunAddrList.do")
+	public String jibunAddrList(HttpServletRequest request, HttpServletResponse response, Model model,
+							  ModelMap map, @RequestParam Map<String, Object> param) throws Exception {
+
+			List<AddrVO> jibunList = cmmService.getJibunAddr(param);
+			int count = cmmService.getAddrCnt(param);
+
+			map.put("result", Boolean.TRUE);
+			map.put("data", jibunList);
+			map.put("total", count);
+
+		return "jsonView";
+	}
+
 }

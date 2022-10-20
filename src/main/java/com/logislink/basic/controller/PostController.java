@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.logislink.basic.vo.AddrVO;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -417,7 +418,83 @@ public class PostController {
 			map.put("result", Boolean.FALSE);
 			map.put("data", res.get("result"));
 		}
-		
+
 		return "jsonView";
 	}
+	/*@PostMapping(value="/contents/basic/data/getLatLon.do")
+	public String getLatLon(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+								@RequestParam Map<String, Object> param ) throws Exception {
+		
+		Map<String, String> paramMap = new HashMap<String, String>();
+
+		paramMap.put("query", (String) param.get("searchAddress"));
+		
+		if(param.get("analyze_type") != null) {
+			paramMap.put("analyze_type", (String) param.get("analyze_type"));
+		}
+		
+		if(param.get("page") != null) {
+			paramMap.put("page", (String) param.get("page"));
+		}
+		
+		if(param.get("size") != null) {
+			paramMap.put("size", (String) param.get("size"));
+		}
+		
+		apiHelper.setAdminKey(kakaoKey);
+		Map<String, String> res = apiHelper.getLatLon(paramMap);
+
+		System.out.println(res.get("result"));
+
+		JSONObject jsonObject = new JSONObject();
+		JSONParser jsonParser = new JSONParser();
+		// 처음 유효 주소데이터를 json에 담기 위함
+		jsonObject = (JSONObject) jsonParser.parse(res.get("result").toString());
+
+		//유효주소에 대한 토탈 카운트 및 정보를 json에 담음
+		JSONObject metaData = (JSONObject) jsonObject.get("meta");
+		//유효주소에 대한 주소 리스트를 array애 담음
+		JSONArray arr = (JSONArray)jsonObject.get("documents");
+
+		List<AddrVO> addrList = new ArrayList<AddrVO>();
+		for(Object addrArrObject : arr) {
+			AddrVO addrVO = new AddrVO();
+			JSONObject obj = (JSONObject) addrArrObject; // JSONArray 데이터를 하나씩 가져와 JSONObject로 변환해준다.
+			if(obj.get("address_type").toString().equals("ROAD")){
+				JSONObject addrData = (JSONObject) obj.get("road_address");
+
+
+				addrVO.setFullAddr((String) obj.get("address_name"));
+				addrVO.setSido((String) addrData.get("region_1depth_name"));
+				addrVO.setGugun((String) addrData.get("region_2depth_name"));
+				addrVO.setDong("");
+
+			}else{
+				JSONObject addrData = (JSONObject) obj.get("address");
+
+				addrVO.setFullAddr((String) obj.get("address_name"));
+				addrVO.setSido((String) addrData.get("region_1depth_name"));
+				addrVO.setGugun((String) addrData.get("region_2depth_name"));
+				addrVO.setDong((String) addrData.get("region_3depth_name"));
+			}
+
+			addrList.add(empVO);
+		}
+
+
+
+		//arr.add((JSONArray)jsonObject.get("documents"));
+
+		apiHelper.setAdminKey("");
+
+		if("200".equals(res.get("resCode"))) {
+			map.put("result", Boolean.TRUE);
+			map.put("data", res.get("result"));
+		} else {
+			map.put("result", Boolean.FALSE);
+			map.put("data", res.get("result"));
+		}
+		
+		return "jsonView";
+	}*/
 }

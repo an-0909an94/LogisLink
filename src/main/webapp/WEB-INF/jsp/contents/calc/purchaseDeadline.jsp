@@ -1249,7 +1249,6 @@ function orderAllCheckHandler(e) {
 	var grid = $("#purchDead").data("kendoGrid");
 	var checked = this.checked;
 
-	//debugger;
 
 	if (checked) {
 		// 체크 해제하고 click 트리거 발생

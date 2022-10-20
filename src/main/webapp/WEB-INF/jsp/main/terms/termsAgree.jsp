@@ -235,7 +235,7 @@ function termsOfUseSuccess(){
         } else {
             result = userMainPage;
         }
-        debugger;
+
         location.href = result;
 
     }else{

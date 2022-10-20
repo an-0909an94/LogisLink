@@ -251,8 +251,8 @@
                                         <input type="hidden" name="sGungu" id="sGungu">
                                         <input type="hidden" name="sDong" id="sDong">
                                         <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong class="required">상차지명</strong>
-                                            <input style="width: 100%;" type="text" id="sComName" name="sComName" required>
+                                            <strong>상차지명</strong>
+                                            <input style="width: 100%;" type="text" id="sComName" name="sComName">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="col input-group middle-name form-group">
@@ -272,7 +272,7 @@
                                         <div class="col input-group middle-name form-group">
                                             <strong class="required">주소</strong>
                                             <div class="textBox-in-icon">
-                                                <input style="width: 17.5rem;" onclick="dummyPopSearchPost('sAddr');" id="sAddr" name="sAddr" type="text" class="form-control form-control-sm addr-text-box" required readonly="readonly">
+                                                <input style="width: 17.5rem;"  id="sAddr" name="sAddr" type="text">
                                                 <i><img onclick="dummyPopSearchPost('sAddr');" src="/images/icon/search.png"></i>
                                                 <!-- 											<input style="width:17.5rem;" onclick="popSearchPost('sAddr');" id="sAddr" name="sAddr" type="text" class="form-control form-control-sm addr-text-box" required readonly="readonly"> -->
                                                 <!-- 											<i><img onclick="popSearchPost('sAddr');" src="/images/icon/search.png"></i> -->
@@ -340,8 +340,8 @@
                                         <input type="hidden" name="eGungu" id="eGungu">
                                         <input type="hidden" name="eDong" id="eDong">
                                         <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong class="required">하차지명</strong>
-                                            <input style="width: 100%;" type="text" id="eComName" name="eComName" required>
+                                            <strong>하차지명</strong>
+                                            <input style="width: 100%;" type="text" id="eComName" name="eComName">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="col input-group middle-name form-group">
@@ -361,7 +361,7 @@
                                         <div class="col input-group middle-name form-group">
                                             <strong class="required">주소</strong>
                                             <div class="textBox-in-icon">
-                                                <input style="width: 17.5rem;" onClick="dummyPopSearchPost('eAddr');" id="eAddr" name="eAddr" type="text" class="form-control form-control-sm addr-text-box" readonly="readonly" required>
+                                                <input style="width: 17.5rem;"  id="eAddr" name="eAddr" type="text">
                                                 <i><img onclick="dummyPopSearchPost('eAddr');" src="/images/icon/search.png"></i>
                                                 <!-- 											<input style="width:17.5rem;" onClick="" id="eAddr" name="eAddr" type="text" class="form-control form-control-sm addr-text-box" readonly="readonly" required> -->
                                                 <!-- 											<i><img onclick="popSearchPost('eAddr');" src="/images/icon/search.png"></i> -->
@@ -1064,9 +1064,11 @@
     <div id="linkDriverView"></div>
 </div>
 <script type="text/javascript">
+var chkUID =true;
 var sellCustName, buyCustName;
 var reqStaff, buyStaff;
 var sComName, eComName;
+var sAddr, eAddr;
 var carNum, buyCarNum;
 var g_mode = "";
 var win = null;
@@ -1441,6 +1443,27 @@ $(document).ready(function(){
 	sComName = MultiColumnComboBox.setComName("s", lastDeptSeleted);
 	eComName = MultiColumnComboBox.setComName("e", lastDeptSeleted);
 
+
+    var paramName = {
+        Address: "sAddr",
+        sSido : "sSido",
+        sGungu : "sGungu",
+        sDong : "sDong",
+        sLon : "sLon",
+        sLat : "sLat",
+
+        eAddress: "eAddr",
+        eSido : "eSido",
+        eGungu : "eGungu",
+        eDong : "eDong",
+        eLon : "eLon",
+        eLat : "eLat"
+    };
+
+
+    sAddr = AddrComboBox.setAddrName("sAddr", lastDeptSeleted,"orderList",paramName);
+    eAddr = AddrComboBox.setAddrName("eAddr", lastDeptSeleted,"orderList",paramName);
+
 	// 22.07.05 이건욱 T1 > 거래처 조회시 부서명 제외하고 대표명으로 조회 (화주용)
 	//거래처 자동완성
 	sellCustName = MultiColumnComboBox.setCustNameWithCeoName("sell", "01", lastDeptSeleted);
@@ -1491,11 +1514,24 @@ $(document).ready(function(){
 	if("${addrAuth.writeYn}" == "Y") {
 		// 주소지 체크
 		$('#sComName, #sAddrDetail, #sStaff, #sTel').on('change', function() {
-			checkCustAddr('s');
+
+            if($('#sComName').val().trim()==""){
+                $("#sAreaSave").parent(".radio-or-checkBox").css("display", "none");
+            }else{
+                checkCustAddr('s');
+            }
+
+
+			//checkCustAddr('s');
 		})
 
 		$('#eComName, #eAddrDetail, #eStaff, #eTel').on('change', function() {
-			checkCustAddr('e');
+            if($('#eComName').val().trim()==""){
+                $("#eAreaSave").parent(".radio-or-checkBox").css("display", "none");
+            }else{
+                checkCustAddr('e');
+            }
+			//checkCustAddr('e');
 		})
 	}
 
@@ -1589,6 +1625,10 @@ function gridDataSet(data) {
 	}else{
 		$("#allocDate").val(data.allocDate);
 	}
+
+    $("#sAddr").data("kendoMultiColumnComboBox").text(data.sAddr);
+    $("#eAddr").data("kendoMultiColumnComboBox").text(data.eAddr);
+
 	//배차일자
 	var eDateTime = $("#eDateTime").data("kendoTimePicker");
 	var sDateTime = $("#sDateTime").data("kendoTimePicker");
@@ -2136,11 +2176,29 @@ function readonlyValidator(){
 	$("input[name$='Addr']").removeAttr('readonly');
 }
 
+
+$('#sAddr, #eAddr').on('change', function() {
+    chkUID = false;
+});
+
 $('#f').validator().on('submit', function (e) {
+
+
+    if(!chkUID) {
+        e.preventDefault();
+        chkUID =true;
+        return;
+    }
+
+
 	$("input[name$='Addr']").attr('readonly', true);
 	if (e.isDefaultPrevented()) {
 		alert("항목을 입력해 주세요.")
 	} else {
+        if($("#distance").val() ==""){
+            alert("유효한 주소가 아닙니다");
+            return;
+        }
 		//매입추가비용
 		$("#wayPointCharge").val($("#wayPointCharge").val().replace(/,/g, ""));
 		$("#stayCharge").val($("#stayCharge").val().replace(/,/g, ""));
@@ -2600,7 +2658,7 @@ function popSearchPost(mode){
 }
 
 function setSearchAddressInfo(data) {
-
+alert(1111111);
 	//var addr = data.roadAddr; // 주소 변수
 	var addr = data.jibunAddr; // 주소 변수
 	var sido = data.siNm;
@@ -2625,7 +2683,13 @@ function setSearchAddressInfo(data) {
 				lat = localData.documents[0].y;
 				var addressData = localData.documents[0].address;
 
+/*                var combobox = $("#" + gbn + "Addr").data("kendoMultiColumnComboBox");
+                combobox.text(data.item.addr);*/
+
 				$("#"+mode).val(addr);
+                var combobox = $("#" + mode).data("kendoMultiColumnComboBox");
+                combobox.text(addr);
+
 				if(mode == "sAddr"){
 	                $("#sSido").val(addressData.region_1depth_name);
 	                $("#sGungu").val(addressData.region_2depth_name);
@@ -2661,6 +2725,7 @@ function setSearchAddressInfo(data) {
 }
 
 function dummyAddressInfo(data) {
+alert(222222);
 	$.ajax({
 		url: "/contents/basic/data/getLatLon.do",
 		type: "POST",
@@ -2678,7 +2743,15 @@ function dummyAddressInfo(data) {
 				lat = localData.documents[0].y;
 				var addressData = localData.documents[0].address;
 				if(data.mode == "sAddr"){
-					$("#sAddr").val(data.sido+" "+data.gungu);
+					//$("#sAddr").val(data.sido+" "+data.gungu);
+                    if(typeof data.fullAddr == "undefined" || data.fullAddr == null || data.fullAddr == ""){
+                        $("#sAddr").val(data.sido+" "+data.gungu);
+                        var combobox = $("#sAddr").data("kendoMultiColumnComboBox");
+                        combobox.text(data.sido+" "+data.gungu);
+                    }else{
+                        $("#sAddr").val(data.fullAddr);
+                    }
+
 	                $("#sSido").val(addressData.region_1depth_name);
 	                $("#sGungu").val(addressData.region_2depth_name);
                     $("#sLon").val(lon);
@@ -2689,7 +2762,15 @@ function dummyAddressInfo(data) {
             		$("#sAreaSave").parent(".radio-or-checkBox").css("display", "contents");
 	                $("#sAddrDetail").focus();
 				} else if(data.mode == "eAddr"){
-					$("#eAddr").val(data.sido+" "+data.gungu);
+					//$("#eAddr").val(data.sido+" "+data.gungu);
+                    if(typeof data.fullAddr == "undefined" || data.fullAddr == null || data.fullAddr == ""){
+                        $("#eAddr").val(data.sido+" "+data.gungu);
+                        var combobox = $("#eAddr").data("kendoMultiColumnComboBox");
+                        combobox.text(data.sido+" "+data.gungu);
+                    }else{
+                        $("#eAddr").val(data.fullAddr);
+                    }
+                    $("#eAddr").val(data.fullAddr);
 					$("#eSido").val(data.sido);
 				    $("#eGungu").val(data.gungu);
 				    $("#eDong").val("");
@@ -2701,7 +2782,6 @@ function dummyAddressInfo(data) {
             		$("#eAreaSave").parent(".radio-or-checkBox").css("display", "contents");
 	                $("#eAddrDetail").focus();
 				}
-                debugger;
 				getRoute();
 
 			} else {

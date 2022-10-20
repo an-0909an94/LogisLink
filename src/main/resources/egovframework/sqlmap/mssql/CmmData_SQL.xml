@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="cmmDataNS">	
+<mapper namespace="cmmDataNS">
 
 	<select id="selectCmmCode" parameterType="java.util.HashMap" resultType="codeVO">
 		SELECT
@@ -17,7 +17,7 @@
 				</if>
 		ORDER BY ASORT ASC
 	</select>
-	
+
 	<select id="selectAreaCode" parameterType="java.util.HashMap" resultType="areaVO">
 		SELECT
 				AREA_CD			areaCd
@@ -29,16 +29,16 @@
 		WHERE
 				SIDO = #{sido} AND SIGUN = #{sigun}
 	</select>
-	
+
 	<select id="selectOpiInfoCnt" parameterType="java.util.HashMap" resultType="String">
 		SELECT
 				COUNT(1)
 		FROM
 				T_OPI_INFO
 		WHERE
-				SIDO = #{sido} AND SIGUN = #{sigun} AND BASE_DATE = CONVERT(CHAR(10), GETDATE(), 23) 
+				SIDO = #{sido} AND SIGUN = #{sigun} AND BASE_DATE = CONVERT(CHAR(10), GETDATE(), 23)
 	</select>
-	
+
 	<insert id="insertOpiInfo" parameterType="java.util.HashMap">
 		INSERT
 			INTO T_OPI_INFO (PREMIUM_GASOLINE, GASOLINE, DIESEL, LAMP_OIL, BUTANE, BASE_DATE, SIDO, SIGUN)
@@ -49,11 +49,11 @@
 				  , #{lampOil}
 				  , #{butane}
 				  , CONVERT(CHAR(10), GETDATE(), 23)
-				  , #{sido}	
+				  , #{sido}
 				  , #{sigun}
 			  	)
 	</insert>
-	
+
 	<insert id="insertWeatherInfo" parameterType="java.util.HashMap">
 		INSERT
 			INTO T_ORDER_WEATHER
@@ -69,7 +69,7 @@
 				  , BASE_DATE
 				  , BASE_TIME
 				  , NX
-				  , NY	
+				  , NY
 				)
 			VALUES
 				(
@@ -86,7 +86,7 @@
 				  , #{nx}
 				  , #{ny}
 				)
-	</insert>	
+	</insert>
 
 	<select id="selectAreaCodeList" parameterType="java.util.HashMap" resultType="areaVO">
 		SELECT
@@ -101,16 +101,16 @@
 				AND SIDO = #{sido}
 		ORDER BY SIGUN ASC
 	</select>
-  
+
     <!-- 22.07.20 이건욱 그리드 개인화 설정 -> 컬럼명을 Master 테이블에서 가져옴. -->
     <select id="selectPrivateColInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		 SELECT A.COL_ID
 		     , B.COL_NAME
 			 , A.COL_IDX
 			 , A.FIX_YN
-			 , A.SHOW_YN 
-			 , A.COL_WIDTH 
-			 , A.TEXT_ALIGN 
+			 , A.SHOW_YN
+			 , A.COL_WIDTH
+			 , A.TEXT_ALIGN
 			 , A.FONT_SIZE
 			 , A.COLOR
 			 , A.FONT_WEIGHT
@@ -121,7 +121,7 @@
 		  LEFT OUTER JOIN dbo.T_PRIVATE_COL_MASTER B
 		    ON A.MENU_CODE = B.MENU_CODE
 	       AND A.GRID_ID = B.GRID_ID
-		   AND A.COL_ID = B.COL_ID 
+		   AND A.COL_ID = B.COL_ID
 		 WHERE 1=1
 		   AND A.USER_ID = #{userId}
 		   AND A.MENU_CODE = #{pageId}
@@ -129,7 +129,7 @@
 		   AND A.USE_YN = 'Y'
 		 ORDER BY A.COL_IDX
 	</select>
-    
+
     <update id="savePrivateColList" parameterType="java.util.HashMap">
       UPDATE dbo.T_PRIVATE_COL_DETAIL
          SET COL_IDX    = COL_IDX_OUT
@@ -145,28 +145,28 @@
            , EDITDATE   = getdate()
         FROM (
            <foreach item="item" index="index" collection="list" open="" separator="union" close="">
-            SELECT #{item.userId, jdbcType=VARCHAR} USER_ID_OUT 
-                 , #{item.menuCode, jdbcType=VARCHAR} MENU_CODE_OUT 
-                 , #{item.gridId, jdbcType=VARCHAR} GRID_ID_OUT 
-                 , #{item.colId, jdbcType=VARCHAR}  COL_ID_OUT  
-                 , #{item.colName, jdbcType=VARCHAR}  COL_NAME_OUT  
-                 , #{item.colIdx, jdbcType=INTEGER} COL_IDX_OUT 
-                 , #{item.fixYn, jdbcType=VARCHAR}  FIX_YN_OUT  
-                 , #{item.showYn, jdbcType=VARCHAR} SHOW_YN_OUT 
-                 , #{item.colWidth, jdbcType=INTEGER} COL_WIDTH_OUT 
-                 , #{item.textAlign, jdbcType=INTEGER}  TEXT_ALIGN_OUT  
-                 , #{item.fontSize, jdbcType=INTEGER} FONT_SIZE_OUT 
-                 , #{item.color, jdbcType=VARCHAR}  COLOR_OUT 
-                 , #{item.fontWeight, jdbcType=VARCHAR} FONT_WEIGHT_OUT 
-                 , #{item.fontStyle, jdbcType=VARCHAR}  FONT_STYLE_OUT  
+            SELECT #{item.userId, jdbcType=VARCHAR} USER_ID_OUT
+                 , #{item.menuCode, jdbcType=VARCHAR} MENU_CODE_OUT
+                 , #{item.gridId, jdbcType=VARCHAR} GRID_ID_OUT
+                 , #{item.colId, jdbcType=VARCHAR}  COL_ID_OUT
+                 , #{item.colName, jdbcType=VARCHAR}  COL_NAME_OUT
+                 , #{item.colIdx, jdbcType=INTEGER} COL_IDX_OUT
+                 , #{item.fixYn, jdbcType=VARCHAR}  FIX_YN_OUT
+                 , #{item.showYn, jdbcType=VARCHAR} SHOW_YN_OUT
+                 , #{item.colWidth, jdbcType=INTEGER} COL_WIDTH_OUT
+                 , #{item.textAlign, jdbcType=INTEGER}  TEXT_ALIGN_OUT
+                 , #{item.fontSize, jdbcType=INTEGER} FONT_SIZE_OUT
+                 , #{item.color, jdbcType=VARCHAR}  COLOR_OUT
+                 , #{item.fontWeight, jdbcType=VARCHAR} FONT_WEIGHT_OUT
+                 , #{item.fontStyle, jdbcType=VARCHAR}  FONT_STYLE_OUT
            </foreach>
-        ) SUB 
+        ) SUB
        WHERE dbo.T_PRIVATE_COL_DETAIL.USER_ID = SUB.USER_ID_OUT
          AND dbo.T_PRIVATE_COL_DETAIL.MENU_CODE = SUB.MENU_CODE_OUT
          AND dbo.T_PRIVATE_COL_DETAIL.GRID_ID = SUB.GRID_ID_OUT
          AND dbo.T_PRIVATE_COL_DETAIL.COL_ID = SUB.COL_ID_OUT
     </update>
-    
+
     <select id="selectPrivateTblInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
       SELECT  MENU_CODE
             , GRID_ID
@@ -189,7 +189,7 @@
          AND MENU_CODE = #{pageId}
          AND GRID_ID = #{gridId}
     </select>
-    
+
     <select id="selectPrivateTblCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
       SELECT  MENU_CODE
             , GRID_ID
@@ -200,42 +200,42 @@
          AND MENU_CODE = #{pageId}
          AND GRID_ID = #{gridId}
     </select>
-    
+
     <delete id="savePrivateColRemove" parameterType="java.util.HashMap">
       DELETE
-        FROM dbo.T_PRIVATE_COL_DETAIL 
+        FROM dbo.T_PRIVATE_COL_DETAIL
        WHERE 1=1
          AND USER_ID = #{userId}
          AND MENU_CODE = #{pageId}
          AND GRID_ID = #{gridId}
     </delete>
-    
+
     <insert id="savePrivateColReset" parameterType="java.util.HashMap">
-      INSERT INTO dbo.T_PRIVATE_COL_DETAIL 
+      INSERT INTO dbo.T_PRIVATE_COL_DETAIL
       SELECT  #{userId}
-            , MENU_CODE 
-          , GRID_ID 
+            , MENU_CODE
+          , GRID_ID
           , COL_ID
           , COL_NAME
           , COL_IDX
-          , FIX_YN 
+          , FIX_YN
           , SHOW_YN
-          , COL_WIDTH 
-          , TEXT_ALIGN 
+          , COL_WIDTH
+          , TEXT_ALIGN
           , FONT_SIZE
           , COLOR
           , FONT_WEIGHT
           , FONT_STYLE
           , FIELD_USE_YN
-          , USE_YN 
-          , #{userId} 
+          , USE_YN
+          , #{userId}
           , getdate()
         FROM dbo.T_PRIVATE_COL_MASTER
        WHERE 1=1
          AND MENU_CODE = #{pageId}
          AND GRID_ID = #{gridId}
     </insert>
-    
+
     <update id="savePrivateTblCnt" parameterType="java.util.HashMap">
       UPDATE dbo.T_PRIVATE_TBL_DETAIL
          SET PAGING_CNT = #{pagingCnt}
@@ -244,4 +244,44 @@
          AND MENU_CODE = #{pageId}
          AND GRID_ID = #{gridId}
     </update>
+
+	<select id="selectJibunList" parameterType="java.util.HashMap" resultType="addrVO">
+		SELECT * from(
+			SELECT
+			ROW_NUMBER() OVER( ORDER BY SIDO,GUGUN,DONG,RI ASC) AS number, SIDO , GUGUN , DONG , RI , FULLADDR
+			FROM (
+				SELECT
+				SIDO
+				, GUGUN
+				, DONG
+				, RI
+				, RTRIM(CONCAT(SIDO,' ', GUGUN,' ', DONG, ' ', RI)) FULLADDR
+				FROM
+				dbo.zipcode
+				group by SIDO,GUGUN,DONG,RI
+			) A
+
+			<if test='fullAddr != null and !"".equals(fullAddr)'>
+				where FULLADDR LIKE RTRIM('%'+ #{fullAddr} +'%')
+			</if>
+			) AA
+		<if test='(start != null and !"".equals(start)) and (end != null and !"".equals(end))'>
+		where
+		number BETWEEN #{start} AND #{end}
+		</if>
+		ORDER BY number ASC
+	</select>
+
+	<select id="selectAddrCnt" resultType="string" parameterType="java.util.HashMap">
+		SELECT
+		COUNT(1) retCnt
+		FROM( SELECT SIDO , GUGUN , DONG , RI ,
+		     RTRIM(CONCAT(SIDO,' ',GUGUN,' ', DONG, ' ', RI)) FULLADDR
+		     FROM dbo.zipcode
+		     group by SIDO,GUGUN,DONG,RI
+		     ) A
+		<if test='fullAddr != null and !"".equals(fullAddr)'>
+			where FULLADDR LIKE RTRIM('%'+ #{fullAddr} +'%')
+		</if>
+	</select>
 </mapper>

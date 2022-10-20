@@ -249,9 +249,11 @@ var MultiColumnComboBox = {
 										$("#" + gbn + "Memo").val(dataItem.orderMemo);
 										getRoute();
 									}else{
+
 										if(e.sender.selectedIndex != -1){
 											comName.select(e.sender.selectedIndex);
 											var data = e.sender.listView._view[e.sender.selectedIndex];
+
 											$("#" + gbn + "Sido").val(data.item.sido);
 											$("#" + gbn + "Gungu").val(data.item.gungu);
 											$("#" + gbn + "Dong").val(data.item.dong);
@@ -262,6 +264,9 @@ var MultiColumnComboBox = {
 											$("#" + gbn + "Lat").val(data.item.lat);
 											$("#" + gbn + "Lon").val(data.item.lon);
 											$("#" + gbn + "Memo").val(data.item.orderMemo);
+											var combobox = $("#" + gbn + "Addr").data("kendoMultiColumnComboBox");
+											combobox.text(data.item.addr);
+
 										}
 									}
 								},
@@ -378,7 +383,6 @@ var MultiColumnComboBox = {
 			return carNum;
 		}
 }
-
 
 //화주거래처 선택 콜백함수
 function changeSellCust(e){

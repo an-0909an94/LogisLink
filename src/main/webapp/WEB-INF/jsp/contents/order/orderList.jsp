@@ -678,10 +678,6 @@
     function form_popup(mode, data) {
         /*20220819 popDiv 수정*/
 
-
-
-
-
         if ($('.insert_pop').css('display') == 'none') {
             $('.insert_pop').css('display', 'block');
         }

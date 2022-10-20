@@ -43,5 +43,8 @@
 		<typeAlias  alias="termsAgreeVO"  type="com.logislink.cmm.vo.TermsAgreeVO"/>
 
         <typeAlias  alias="buyCalcVO"  type="com.logislink.calc.vo.BuyCalcVO" />
+
+		<typeAlias  alias="addrVO"  type="com.logislink.basic.vo.AddrVO" />
+
 	</typeAliases>
 </configuration>

@@ -52,6 +52,8 @@ response.setHeader ("Cache-Control", "no-cache");
 <script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>" ></script>
 <script type="text/javascript" src="<c:url value='/js/bcPicker.js'/>" ></script>
 <script type="text/javascript" src="<c:url value='/js/privateCommon.js?v=4'/>" ></script>
+<script type="text/javascript" src="<c:url value='/js/addr.js'/>" ></script>
+
 <!-- validator JS -->
 <script src="/js/validator.min.js"></script>
 

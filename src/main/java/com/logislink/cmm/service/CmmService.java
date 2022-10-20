@@ -3,6 +3,7 @@ package com.logislink.cmm.service;
 import java.util.List;
 import java.util.Map;
 
+import com.logislink.basic.vo.AddrVO;
 import com.logislink.basic.vo.CodeVO;
 import com.logislink.cmm.vo.AreaVO;
 
@@ -33,4 +34,8 @@ public interface CmmService {
 	
 	public void savePrivateTblCnt(Map<String, Object> map) throws Exception;
 	// 22.07.15 이건욱 그리드 개인화 설정 -> End
+
+	public List<AddrVO> getJibunAddr(Map<String, Object> map) throws Exception;
+
+	public int getAddrCnt(Map<String, Object> map) throws Exception;
 }

@@ -3,6 +3,7 @@ package com.logislink.cmm.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.logislink.basic.vo.AddrVO;
 import org.springframework.stereotype.Repository;
 
 import com.logislink.basic.vo.CodeVO;
@@ -73,4 +74,14 @@ public class CmmDao extends EgovAbstractMapper{
 		insert("cmmDataNS.savePrivateTblCnt", map);
 	}
 	// 22.07.15 이건욱 그리드 개인화 설정 -> End
+
+	public List<AddrVO> getJibunAddr(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return selectList("cmmDataNS.selectJibunList", map);
+	}
+
+	public int getAddrCnt(Map<String, Object> map) {
+		String cnt = selectOne("cmmDataNS.selectAddrCnt",map);
+		return Integer.valueOf(cnt);
+	}
 }
