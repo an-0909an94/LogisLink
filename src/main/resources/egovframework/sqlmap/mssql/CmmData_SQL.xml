@@ -251,10 +251,10 @@
 			ROW_NUMBER() OVER( ORDER BY SIDO,GUGUN,DONG,RI ASC) AS number, SIDO , GUGUN , DONG , RI , FULLADDR
 			FROM (
 				SELECT
-				SIDO
-				, GUGUN
-				, DONG
-				, RI
+				ISNULL(SIDO,'') SIDO
+				, ISNULL(GUGUN,'') GUGUN
+				, ISNULL(DONG,'')	DONG
+				, ISNULL(RI,'')	RI
 				, RTRIM(CONCAT(SIDO,' ', GUGUN,' ', DONG, ' ', RI)) FULLADDR
 				FROM
 				dbo.zipcode

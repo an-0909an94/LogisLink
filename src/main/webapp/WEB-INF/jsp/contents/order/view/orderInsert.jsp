@@ -2196,6 +2196,7 @@ $('#f').validator().on('submit', function (e) {
 		alert("항목을 입력해 주세요.")
 	} else {
         if($("#distance").val() ==""){
+            alert(1111111);
             alert("유효한 주소가 아닙니다");
             return;
         }

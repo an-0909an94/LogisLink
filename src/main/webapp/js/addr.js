@@ -88,11 +88,12 @@ function dummyCommonAddressInfo(data,paramName) {
                         $("#" + paramName.sLat).val(lat);
 
                         if(data.pageMode =="orderList") {
-
-                            $("input:checkbox[id='sAreaSave']").prop("checked", true);
-                            $("input:checkbox[id='sAreaSave']").val("Y")
-                            $("#sAreaSave").parent(".radio-or-checkBox").css("display", "contents");
-                            $("#sAddrDetail").focus();
+                            if($('#sComName').val().trim()!="") {
+                                $("input:checkbox[id='sAreaSave']").prop("checked", true);
+                                $("input:checkbox[id='sAreaSave']").val("Y")
+                                $("#sAreaSave").parent(".radio-or-checkBox").css("display", "contents");
+                                $("#sAddrDetail").focus();
+                            }
                         }
                     }else{
                         $("#" + paramName.eAddr).val(data.fullAddr);
@@ -103,10 +104,12 @@ function dummyCommonAddressInfo(data,paramName) {
                         $("#" + paramName.eLat).val(lat);
 
                         if(data.pageMode =="orderList") {
-                            $("input:checkbox[id='eAreaSave']").prop("checked", true);
-                            $("input:checkbox[id='eAreaSave']").val("Y")
-                            $("#eAreaSave").parent(".radio-or-checkBox").css("display", "contents");
-                            $("#eAddrDetail").focus();
+                            if($('#eComName').val().trim()!=""){
+                                $("input:checkbox[id='eAreaSave']").prop("checked", true);
+                                $("input:checkbox[id='eAreaSave']").val("Y")
+                                $("#eAreaSave").parent(".radio-or-checkBox").css("display", "contents");
+                                $("#eAddrDetail").focus();
+                            }
                         }
                     }
                 if(data.pageMode =="orderList" && ($("#" + paramName.sAddr).val() !="" && $("#" + paramName.eAddr).val() !="")) {
@@ -118,15 +121,28 @@ function dummyCommonAddressInfo(data,paramName) {
                     $("#"+ paramName.sSido).val("");
                     $("#"+ paramName.sGungu).val("");
                     $("#"+ paramName.sDong).val("");
+                    if(data.pageMode =="orderList") {
+                        $("#distance").val("");
+                        $("#time").val("");
+                        $("#timeTxt").val("");
+                    }
                     $("#" + data.mode).focus();
+
                 }else{
                     $("#"+ paramName.eAddress).val("");
                     $("#"+ paramName.eSido).val("");
                     $("#"+ paramName.eGungu).val("");
                     $("#"+ paramName.eDong).val("");
-                    $("#" + data.mode).focus();
+                    if(data.pageMode =="orderList") {
+                        $("#distance").val("");
+                        $("#time").val("");
+                        $("#timeTxt").val("");
+                        $("#" + data.mode).focus();
+                    }
                 }
-                alert("유효한 주소가 아닙니다");
+                if($("#" + data.mode).val().trim() !=""){
+                    alert("유효한 주소가 아닙니다");
+                }
                 return;
             }
         }
