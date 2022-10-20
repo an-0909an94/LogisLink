@@ -290,9 +290,10 @@ function goList(){
         noRecords: "조회된 데이터가 없습니다."
       }
     }).data("kendoGrid");
-    grid.bind("dataBound", grid_dataBound);
-}
 
+
+
+}
 
 // 선택 후 데이터 전달 하고 Window 꺼지는 Method
 // JungHwan.Hwang - 기업 검색 - 2022-10-19
