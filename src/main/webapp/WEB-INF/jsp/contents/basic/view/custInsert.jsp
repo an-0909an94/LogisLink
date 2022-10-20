@@ -1025,7 +1025,7 @@ function popSearchBizinfo(){
     };
 
     $.ajax({
-        url : "/contents/basic/data/searchNiceinfo.do",
+        url : "/contents/basic/data/searchNiceinfoGet.do",
         type : "post",
         dataType : "json",
         data:mParam,
@@ -1068,8 +1068,10 @@ function setSearchBizInfo(mode,data) {
    * 기존 DB 모듈 이식, DEFAULT 일 경우 대비
    * Junghwan.Hwang - 2022-10-19
    */
+
   var sData = data;
   var sMode = mode;
+  var sBizNum = sData.bizNo.replace(/\-/g, '');
 
   if(mode=="DEFAULT"){
     $.ajax({
@@ -1077,17 +1079,18 @@ function setSearchBizInfo(mode,data) {
       type: "POST",
       dataType: "json",
       data: {
-        bizNum : sData.bizNo
+        bizNum : sBizNum
       },
       success: function(data) {
         var chkNum = {};
         if (data.result) {
           sMode = "BE";
+          alert("기존 등록되어있는 사업자 입니다. 추가등록을 진행합니다.");
         } else {
           sMode = "N";
+          alert("조회된 데이터가 없습니다. 신규 사용자 입니다.");
         }
         chkNum.bizNum = sData.bizNo;
-        alert("조회된 데이터가 없습니다. 신규 사용자 입니다.");
         bizNumCheck(sMode,chkNum)
       },
     });

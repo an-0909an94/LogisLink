@@ -253,9 +253,10 @@ function goList(){
             return response.total;
           },
         },
-        pageSize: 20,
-        serverPaging: true,
-        serverFiltering: true,
+        //pageSize: 100,
+        //serverPaging: true,
+        //serverFiltering: true,
+        //pageable: "all",
         error: function(e) {
           if (e.xhr.status == "400") {
             alert("세션값이 존재하지 않습니다. 로그인 페이지로 이동합니다.");
@@ -289,7 +290,9 @@ function goList(){
         noRecords: "조회된 데이터가 없습니다."
       }
     }).data("kendoGrid");
+    grid.bind("dataBound", grid_dataBound);
 }
+
 
 // 선택 후 데이터 전달 하고 Window 꺼지는 Method
 // JungHwan.Hwang - 기업 검색 - 2022-10-19
@@ -333,6 +336,42 @@ function selectBizInfo(e){
         chkBizNum.cmpTypNm = dataItem.cmpTypNm;
 
         mode = "N";
+      }
+      window.opener.setSearchBizInfo(mode,chkBizNum);
+      window.close();
+    },
+  });
+}
+
+// Test 용 - Junghwan.hwang
+function findBizInfo(bizNum){
+
+  var mBizNum = bizNum;
+
+  $.ajax({
+    url: "/contents/basic/data/checkBizNum.do",
+    type: "POST",
+    dataType: "json",
+    data: {
+      bizNum : mBizNum
+    },
+    success: function(data) {
+
+      var mode = "";
+      var chkBizNum = {};
+      if (data.result) {
+
+        if (!confirm('이미 등록되어있는 사업자 입니다. \n계속 진행하시려면 "확인" 버튼을 클릭해주세요.')) {
+          //chkUID = false;
+          return false;
+          window.close();
+        }
+        else
+        {
+          chkBizNum.bizNum = dataItem.bizNo;
+          mode = "BE";
+        }
+
       }
       window.opener.setSearchBizInfo(mode,chkBizNum);
       window.close();
