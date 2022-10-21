@@ -62,6 +62,7 @@ var AddrComboBox = {
 }
 
 function dummyCommonAddressInfo(data,paramName) {
+
     $.ajax({
         url: "/contents/basic/data/getLatLon.do",
         type: "POST",
@@ -80,7 +81,7 @@ function dummyCommonAddressInfo(data,paramName) {
                     var addressData = localData.documents[0].address_type =="REGION" ? localData.documents[0].address : localData.documents[0].road_address;
 
                     if(data.mode == "sAddr") {
-                        $("#" + paramName.sAddr).val(data.fullAddr);
+                        $("#" + paramName.sAddress).val(data.fullAddr);
                         $("#" + paramName.sSido).val(addressData.region_1depth_name);
                         $("#" + paramName.sGungu).val(addressData.region_2depth_name);
                         $("#" + paramName.sDong).val("");
@@ -96,7 +97,10 @@ function dummyCommonAddressInfo(data,paramName) {
                             }
                         }
                     }else{
-                        $("#" + paramName.eAddr).val(data.fullAddr);
+                        alert(paramName.eAddr);
+                      alert($("#" + paramName.eAddress).val());
+                        $("#" + paramName.eAddress).val(data.fullAddr);
+                        alert($("#" + paramName.eAddress).val());
                         $("#" + paramName.eSido).val(addressData.region_1depth_name);
                         $("#" + paramName.eGungu).val(addressData.region_2depth_name);
                         $("#" + paramName.eDong).val("");
@@ -117,7 +121,7 @@ function dummyCommonAddressInfo(data,paramName) {
                 }
             }else{
                 if(data.mode == "sAddr") {
-                    $("#"+ paramName.sAddress).val("");
+                   // $("#"+ paramName.sAddress).val("");
                     $("#"+ paramName.sSido).val("");
                     $("#"+ paramName.sGungu).val("");
                     $("#"+ paramName.sDong).val("");
@@ -129,7 +133,7 @@ function dummyCommonAddressInfo(data,paramName) {
                     $("#" + data.mode).focus();
 
                 }else{
-                    $("#"+ paramName.eAddress).val("");
+                   // $("#"+ paramName.eAddress).val("");
                     $("#"+ paramName.eSido).val("");
                     $("#"+ paramName.eGungu).val("");
                     $("#"+ paramName.eDong).val("");
