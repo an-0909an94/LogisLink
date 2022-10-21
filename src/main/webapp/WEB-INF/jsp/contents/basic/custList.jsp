@@ -142,10 +142,10 @@ $(document).ready(function(){
 
 	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn:'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서명--");
     Util.setSelectBox("/contents/basic/data/userNameList.do", "s_userId", {deptId:$("#s_dept").val()}, "userId", "userName", "", "--담당자--");
-	$("#s_dept").on("change", function(){ 
+	$("#s_dept").on("change", function(){
 		Util.setSelectBox("/contents/basic/data/userNameList.do", "s_userId", {deptId:$(this).val()}, "userId", "userName", "", "--담당자--");
 	});
-    
+
 	goList();
 
 });
@@ -153,11 +153,15 @@ $(document).ready(function(){
 var columns = [
 	{ field: "number", title: "No", width: 50 },
 	{ field: "mngDeptName", title: "담당부서", width:100},
+	//{ field: "custName", title: "거래처명", width: 130 },
+	//{ field: "bizName", title: "사업자상호", width: 130 },
+	//{ field: "bizNum", title: "사업자번호", width: 110,
+	//	template: "#=Util.formatBizNum(bizNum)#" },
 	{ field: "managerName", title: "당사 담당자명", width:120},
 	{ field: "custTypeName", title: "분류", width: 110 },
 	{ field: "sellBuySctnName", title: "구분", width: 70 },
 	{ field: "custName", title: "거래처명", width: 130 },
-	{ field: "bizName", title: "사업자상호", width: 100, hidden:true },
+	{ field: "bizName", title: "사업자상호", width: 130, hidden:true },
 	{ field: "deptName", title: "부서명", width: 100 },
 	{ field: "fax", title: "팩스번호", width: 100 },
 	{ field: "userName", title: "거래처 담당자명", width: 120 },
@@ -169,7 +173,7 @@ var columns = [
 	{ field: "payType", title: "빠른지급 대상여부", width: 140 },
 	{ field: "bizName", title: "상호명", width: 100 },
 	{ field: "ceo", title: "대표자명", width: 100 },
-	{ field: "bizNum", title: "사업자번호", width: 110, 
+	{ field: "bizNum", title: "사업자번호", width: 110,
 		template: "#=Util.formatBizNum(bizNum)#" },
 	{ field: "bizNumSub", title: "종사업장번호", width: 120 },
 	{ field: "bizCond", title: "업태", width: 100 },
@@ -197,15 +201,35 @@ oGrid.initGrid();
 oGrid.setSendUrl("/contents/basic/data/custList.do");
 oGrid.setExcelFile("거래처관리리스트.xlsx");
 oGrid.setSelectable(true);
+oGrid.setPageable(true);
 oGrid.setExcelFile(headerTitle+"(" + new Date().yyyymmdd() + ").xlsx");
+
+// 사업자번호 체크
+function checkBN(str){
+	const regExp = /[-]/;
+	if(regExp.test(str)){
+		return true;
+	}else{
+		return false;
+	}
+	//var bizNum = $(this).val().replace(/[^\d]/g, '');
+	//var temp = bizNum.replace(/(\d{3})(\d{1,2})(\d{1,5})/, '$1-$2-$3');
+}
 
 function goList() {
 	var grid = $("#cust_list").data("kendoGrid");
 	var id = $("#searchColumn").val().split('_')[1];
 	var data = $("#searchValue").val();
-	
+	var dataResult = "";
+
+	if(checkBN(data)){
+		dataResult=data.replace(/[^\d]/g, '');
+	}else{
+		dataResult=data;
+	}
+
 	var param = {};
-	param[id] = data;
+	param[id] = dataResult;
 	param["custTypeCode"] = $("#fSearch select[name=s_custTypeCode] option:selected").val();
 	param["sellBuySctn"] = $("#fSearch select[name=s_sellBuySctn] option:selected").val();
 	param["useYn"] = $("#fSearch select[name=s_useYn] option:selected").val();
@@ -215,6 +239,7 @@ function goList() {
 	param["custMngCode"] = $("#s_custMngCode").val();
 	
 	oGrid.setSearchData(param);
+
 	if(grid == null) {
 		oGrid.setGrid(columns);
 		grid = $("#cust_list").data("kendoGrid");
