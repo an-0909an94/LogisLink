@@ -272,6 +272,16 @@
                     AND TC1.CALC_DATE IS NOT NULL
                     AND TC1.CALC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
                   </when>
+                  <!-- 상차일 -->
+                  <when test = 'searchDateType == "sDate"'>
+                    AND TO1.S_DATE IS NOT NULL
+                    AND TO1.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </when>
+                  <!-- 하차일 -->
+                  <when test = 'searchDateType == "eDate"'>
+                    AND TO1.E_DATE IS NOT NULL
+                    AND TO1.E_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </when>
                   <!-- 배차일 -->
                   <otherwise>
                     AND TO1.ALLOC_DATE IS NOT NULL
@@ -543,6 +553,16 @@
                 <when test = 'searchDateType == "finishDate"'>
                   AND TC1.CALC_DATE IS NOT NULL
                   AND TC1.CALC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </when>
+                <!-- 상차일 -->
+                <when test = 'searchDateType == "sDate"'>
+                  AND TO1.S_DATE IS NOT NULL
+                  AND TO1.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </when>
+                <!-- 하차일 -->
+                <when test = 'searchDateType == "eDate"'>
+                  AND TO1.E_DATE IS NOT NULL
+                  AND TO1.E_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
                 </when>
                 <!-- 배차일 -->
                 <otherwise>

@@ -63,4 +63,8 @@ public class PayServiceImpl implements PayService {
 		payDao.bankChkDateupdate(map);
 	}
 
+	@Override
+	public int updateWithdrawalDueDate(Map<String, Object> map) {
+		return payDao.updateWithdrawalDueDate(map);
+	}
 }

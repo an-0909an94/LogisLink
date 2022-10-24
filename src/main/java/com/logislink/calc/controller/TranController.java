@@ -218,6 +218,7 @@ public class TranController {
 		
 	}
 	
+	// 사용안함.
 	@PostMapping(value="/contents/calc/data/getInvoicePdf.do")
 	public String getInvoicePdf(HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model, ModelMap map,
 							@RequestParam Map<String, Object> param) throws Exception{
@@ -234,6 +235,24 @@ public class TranController {
 		
         map.put("fileName", invoicePdf.getName());
         map.put("message", "pdf 생성 성공");
+		
+		return "jsonView";
+    }
+	
+	@PostMapping(value="/contents/calc/data/getInvoice.do")
+	public String getInvoice(HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model, ModelMap map, @RequestParam Map<String, Object> param) throws Exception{
+		TranVO tran = tranService.selectTranInfo(param);
+		tran.setAmtKrw(EtcUtil.NumberToKor(tran.getAmt()));
+		tran.setTranDtlList(tranService.selectTranDtlList(param));
+				
+		param.put("tran", tran);
+		param.put("locale", Locale.forLanguageTag("ko"));
+		param.put("root_path", filepath);
+		
+		File invoiceFile = tranService.generateInvoice(param);
+		
+        map.put("fileName", invoiceFile.getName());
+        map.put("message", "거래명세서 생성 성공");
 		
 		return "jsonView";
     }

@@ -18,6 +18,8 @@ public class TranDtlVO {
 	private String sComName;
 	private String eComName;
 	private String custName;
+	private String sDate;
+	private String eDate;
 	
 	private int goodsQty;
 	private String weightUnitCode;
@@ -143,6 +145,18 @@ public class TranDtlVO {
 	}
 	public void setCarNum(String carNum) {
 		this.carNum = carNum;
+	}
+	public String getsDate() {
+		return sDate;
+	}
+	public void setsDate(String sDate) {
+		this.sDate = sDate;
+	}
+	public String geteDate() {
+		return eDate;
+	}
+	public void seteDate(String eDate) {
+		this.eDate = eDate;
 	}
 	
 }

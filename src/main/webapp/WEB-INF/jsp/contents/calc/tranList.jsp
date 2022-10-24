@@ -5,6 +5,38 @@
     <span class="sr-only">Loading...</span>
   </div>
 </div>
+
+<!-- Export 명세서 Modal -->
+<div id="divExportRecipt" class="editor_wrap p-0">
+    <form id="fExportRecipt" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
+        <div class="modalHeader">
+            <div class="form-group row">
+                <div id="exportMessage" style="text-align: left; padding: 0px; font-size: 17px;">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="input-group input-group-sm col middle-name form-group">
+                    <div class="input-group input-group-sm col radio-or-checkBox">
+                        <input type="radio" id="modalExportExcel" name="modalExportFileType" value="e" checked>
+                        <label for="modalExportExcel" class="label-margin"> <span>Excel</span> </label>
+                    </div>
+                    <div class="input-group input-group-sm col radio-or-checkBox">
+                        <input type="radio" id="modalExportPDF" name="modalExportFileType" value="p">
+                        <label for="modalExportPDF" class="label-margin"> <span>PDF</span> </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="editor_btns">
+            <div class="padding">
+                <button type="submit" id="fExportReceiptBtn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>확인</strong></b></button>
+                <a onclick="exportReceiptClose();" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>취소</b></a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Export 명세서 Modal End -->
+
 <div class="header">	
 	<div class="summary p30">
 		<div class="hdr-tit">
@@ -78,9 +110,9 @@
 									<div class="tool_group">
 										<div class="padding">
 											<!-- <a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-b"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a> -->
-											<a href="#" class="k-pager-refresh k-button" onClick="goPdf();"><b class="btn-h"><i class="k-icon k-i-file-pdf"></i>명세서출력</b></a>
+											<a href="#" class="k-pager-refresh k-button" onClick="exportReceiptOpen();"><b class="btn-h"><i class="k-icon k-i-file-pdf"></i>명세서출력</b></a>
 											<c:if test="${menuAuth.deleteYn eq 'Y'}">
-											<a href="#" class="k-pager-refresh k-button" onClick="goDel();"><b class="btn-r"><i class="k-icon k-i-delete"></i>삭제</b></a>
+											     <a href="#" class="k-pager-refresh k-button" onClick="goDel();"><b class="btn-r"><i class="k-icon k-i-delete"></i>삭제</b></a>
 											</c:if>
 										</div>
 									</div>
@@ -179,9 +211,12 @@ var columns = [
 var dtlColumns = [
 	{ field: "number", title: "No", width: 50 },
 	{ field: "orderId", title: "오더번호", width: 100 },
-	{ field: "allocDate", title: "배차일", width: 50 },
-	{ field: "sComName", title: "상차지", width: 50 },
-	{ field: "eComName", title: "하차지", width: 50 },
+	// 배차일 숨김.
+// 	{ field: "allocDate", title: "배차일", width: 50 },
+	{ field: "sDate", title: "상차일", width: 80 },
+	{ field: "sComName", title: "상차지", width: 120 },
+	{ field: "eDate", title: "하차일", width: 80 },
+	{ field: "eComName", title: "하차지", width: 120 },
 	{ field: "goodsName", title: "품명", width: 100 },
 	{ field: "goodsWeight", title: "중량", width: 100, template: function(item) { return kendo.htmlEncode(item.goodsWeight + ' ' + item.weightUnitCode);} },
 	{ field: "allocCharge", title: "금액", width: 50,
@@ -270,6 +305,7 @@ function goExcel(){
 	grid.saveAsExcel();
 }
 
+// 사용안함.
 function goPdf(){
 	var grid = $("#tranList").data("kendoGrid");
 	var selectedItem = grid.dataItem(grid.select());
@@ -324,7 +360,76 @@ function goDel() {
 				alert(data.msg);
 			}
 		}
+	});	
+}
+
+exportReceiptModal = $("#divExportRecipt");
+exportReceiptModal.kendoDialog({
+    width: "400px",
+    height: "250px",
+    visible: false,
+    title: "명세서출력",
+    closable: true,
+    modal: true
+});
+
+function exportReceiptOpen() {
+	var grid = $("#tranList").data("kendoGrid");
+	var selectedItem = grid.dataItem(grid.select());
+	
+	if (selectedItem == null) {
+		alert("발행할 명세서를 선택해주세요.");
+		return;
+	}
+	
+	$("#exportMessage").html("<p>출력할 파일 타입을 선택하세요.</p>");
+	
+	exportReceiptModal.data("kendoDialog").open();
+}
+
+function exportReceiptClose() {
+	exportReceiptModal.data("kendoDialog").close();
+}
+
+$('#fExportRecipt').validator().on('submit', function(e) {
+	e.preventDefault();
+	
+	var exportFileType = $('input[name="modalExportFileType"]:checked').val();
+	var fileType = exportFileType;
+// 	if (exportFileType == "e") {
+// 		// Excel
+// 		console.log("Excel");
+// 	} else {
+// 		// PDF
+// 		console.log("PDF");
+// 	}
+
+	var grid = $("#tranList").data("kendoGrid");
+	var selectedItem = grid.dataItem(grid.select());
+	
+	$.ajax({
+		url: "/contents/calc/data/getInvoice.do",
+		type: "POST",
+		dataType: "json",
+		data: {
+			receiptId: selectedItem.receiptId,
+			fileType: fileType
+		},
+		beforeSend: function(xmlHttpRequest) {
+			xmlHttpRequest.setRequestHeader("AJAX", "true");
+			exportReceiptModal.data("kendoDialog").close();
+			$("#loading").show();
+		},
+		success: function(data){
+			location.href = "/cmm/downloadInvoice.do?fileName=" + data.fileName;
+		},
+		complete: function() {
+			$("#loading").hide();
+		}
 	});
+});
+
+function exportReceipt(){
 	
 }
 </script>

@@ -318,7 +318,7 @@
 		UPDATE 
 			T_CALC_PAY
 		SET
-			OUT_DATE = GETDATE(),
+			OUT_DATE = #{outDate},
 			OUT_ID = #{loginId}, 
 			WITHDRAWAL_AMT = PAYABLE_AMT,
 			PAYABLE_AMT = 0
@@ -402,4 +402,17 @@
 			BANKCHK_DATE = GETDATE()
 		WHERE DRIVER_ID = #{driverId}
 	</update>
+  
+    <update id="updateWithdrawalDueDate" parameterType="java.util.HashMap">
+        UPDATE
+          T_CALC_PAY
+        SET
+          WITHDRAWAL_DUE_DATE = #{withdrawalDueDate},
+          WITHDRAWAL_DUE_DATE_EDIT_ID = #{loginId}
+        WHERE 
+          PAY_SEQ IN 
+        <foreach collection="paySeqList" item="item" separator="," open="(" close=")">
+          #{item}
+        </foreach>
+    </update>
 </mapper>

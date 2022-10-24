@@ -292,14 +292,16 @@
         <div id="group-list" class="cont-wrapper-page-grid">
             <!-- 검색 조건 영역 -->
             <form id="fSearch" class="date-bnt" method="post">
-                <!-- 화주명 -->
+                <!-- 화주 아이디 -->
                 <input type="hidden" id="hCustId" name="custId" class="hiddenValue">
                 <!-- 담당부서 -->
                 <input type="hidden" id="hCustDeptId" name="custDeptId" class="hiddenValue">
-                <!-- 거래처명 -->
+                <!-- 거래처 아이디 -->
                 <input type="hidden" id="hBizId" name="bizId" class="hiddenValue">
-                <!-- 담당부서 -->
+                <!-- 거래처 담당부서 아이디 -->
                 <input type="hidden" id="hBizDeptId" name="bizDeptId" class="hiddenValue">
+                <!-- 거래처 사업자 번호 -->
+                <input type="hidden" id="hBizNo" name="bizNo" class="hiddenValue">
 
                 <!-- 검색 1라인 -->
                 <div class="form-group row">
@@ -326,7 +328,7 @@
                     </div>
                     <div id="searchOrderId" class="input-group input-group-sm col-2 middle-name" style="display: none;">
                         <strong>&nbsp;</strong>
-                        <input type="text" id="sOrderId" name="orderId" class="form-control form-control-sm">
+                        <input type="text" id="sOrderId" name="orderId" class="form-control form-control-sm" onkeydown="searchOrderIdKeyDown(this)">
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>&nbsp;</strong>
@@ -377,6 +379,8 @@
                         <strong>기간검색</strong>
                         <select id="searchDateType" name="searchDateType" class="custom-select col-12">
                             <option value="allocDate" selected>배차일자</option>
+                            <option value="sDate">상차일자</option>
+                            <option value="eDate">하차일자</option>
                             <option value="depositDueDate">입금예정일자</option>
                             <option value="depositDate">입금확인일자</option>
                             <option value="finishDate">마감일자</option>
@@ -447,7 +451,7 @@
                     </div>
 
                     <div class="input-group input-group-sm col radio-or-checkBox ">
-                        <input id="carryOverYn" name="carryOver" type="checkbox" value="Y" onClick="searchChecked(this)">
+                        <input id="carryOverYn" name="carryOver" type="checkbox" value="Y">
                         <label for="carryOverYn" class="label-margin"> <span>미처리 이월건 포함</span>
                         </label>
                     </div>
@@ -724,6 +728,23 @@
     			taxDate.enable(false);			
     		}
     	});
+     	
+        searchCustName.input.keydown(function(e) {
+			if (e.keyCode === 13) {
+				var inputValue = searchCustName.input.val();
+				if (inputValue != "")
+					goList();
+			}
+			
+		});
+		
+		searchBizName.input.keydown(function(e) {
+			if (e.keyCode === 13) {
+				var inputValue = searchBizName.input.val();
+				if (inputValue != "")
+					goList();
+			}
+		});
      	
         // 리스트 출력
        	goList();
@@ -2428,6 +2449,16 @@
     	}).data("kendoMultiColumnComboBox");
     	
     	return comboCustName;
+    }
+ 	
+ 	// 검색 조건의 오더Id 텍스트 박스 엔터 이벤트 처리
+    function searchOrderIdKeyDown(e) {
+    	var keycode = event.keyCode;
+    	if (keycode === 13) {
+    		var inputValue = $("#sOrderId").val();
+    		if (inputValue != "")
+    			goList();
+    	}
     }
     
  	// 그리드 컨택스트 메뉴 처리
