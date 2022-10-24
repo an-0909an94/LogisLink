@@ -169,4 +169,19 @@ public class PayController {
 		
 		return "jsonView";
 	}
+	
+	@PostMapping(value="/contents/calc/data/setWithdrawalDueDate.do")
+	public String setWithdrawalDueDate(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param ) throws Exception {
+		List<String> paySeqList = Arrays.asList(((String)param.get("paySeqArr")).split(","));
+		
+		param.put("paySeqList", paySeqList);
+		
+		int resultCnt = payService.updateWithdrawalDueDate(param);
+		
+		map.put("result", Boolean.TRUE);
+		map.put("resultCnt", resultCnt);
+		map.put("msg", "(" + resultCnt + ")건의 출금예정일 변경 처리가 완료되었습니다.");
+		
+		return "jsonView";
+	}
 }

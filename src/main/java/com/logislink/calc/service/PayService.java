@@ -25,4 +25,6 @@ public interface PayService {
 	public Map<String, Object> getVacsSendRlt(Map<String, Object> map);
 
 	public void bankChkDateupdate(Map<String, Object> map);
+	
+	public int updateWithdrawalDueDate(Map<String, Object> map);
 }

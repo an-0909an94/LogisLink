@@ -19,6 +19,8 @@ public interface TranService {
 	
 	public File generateInvoiceFor(Map<String, Object> map) throws IOException;
 	
+	public File generateInvoice(Map<String, Object> map) throws IOException;
+	
 	public TranVO selectTranInfo(Map<String, Object> map);
 	
 	public void deleteTranReceipt(Map<String, Object> map);

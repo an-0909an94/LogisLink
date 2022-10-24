@@ -1445,7 +1445,7 @@ $(document).ready(function(){
 
 
     var paramName = {
-        Address: "sAddr",
+        sAddress: "sAddr",
         sSido : "sSido",
         sGungu : "sGungu",
         sDong : "sDong",
@@ -2183,7 +2183,6 @@ $('#sAddr, #eAddr').on('change', function() {
 
 $('#f').validator().on('submit', function (e) {
 
-
     if(!chkUID) {
         e.preventDefault();
         chkUID =true;
@@ -2658,7 +2657,6 @@ function popSearchPost(mode){
 }
 
 function setSearchAddressInfo(data) {
-alert(1111111);
 	//var addr = data.roadAddr; // 주소 변수
 	var addr = data.jibunAddr; // 주소 변수
 	var sido = data.siNm;
@@ -3125,5 +3123,4 @@ $("#carTypeCode, #carTonCode").on("change", function(){
 		$("#buyCarTonCode").val($("#carTonCode").val());
 	}
 });
-
 </script>
