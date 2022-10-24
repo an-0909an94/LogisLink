@@ -6,7 +6,6 @@
   	SELECT A.*
     FROM (
       SELECT
-        --ROW_NUMBER() OVER(PARTITION BY AA.custId, AA.deptId ORDER BY AA.custName ASC, AA.mngDeptName ASC, AA.custMngName, AA.bizNum) AS number
         ROW_NUMBER() OVER(ORDER BY AA.custName ASC, AA.mngDeptName ASC, AA.custMngName, AA.bizNum) AS number
         , AA.*
       FROM (
@@ -116,7 +115,6 @@
         ) AA
       ) A
     WHERE number BETWEEN #{start} AND #{end}
-    --AND number = 1
     ORDER BY number ASC
   </select>
   

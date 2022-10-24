@@ -153,10 +153,6 @@ $(document).ready(function(){
 var columns = [
 	{ field: "number", title: "No", width: 50 },
 	{ field: "mngDeptName", title: "담당부서", width:100},
-	//{ field: "custName", title: "거래처명", width: 130 },
-	//{ field: "bizName", title: "사업자상호", width: 130 },
-	//{ field: "bizNum", title: "사업자번호", width: 110,
-	//	template: "#=Util.formatBizNum(bizNum)#" },
 	{ field: "managerName", title: "당사 담당자명", width:120},
 	{ field: "custTypeName", title: "분류", width: 110 },
 	{ field: "sellBuySctnName", title: "구분", width: 70 },
