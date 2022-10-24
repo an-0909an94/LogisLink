@@ -421,6 +421,7 @@ public class PostController {
 
 		return "jsonView";
 	}
+
 /*	@PostMapping(value="/contents/basic/data/getLatLon1.do")
 	public String getLatLon1(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
 								@RequestParam Map<String, Object> param ) throws Exception {

@@ -3123,5 +3123,4 @@ $("#carTypeCode, #carTonCode").on("change", function(){
 		$("#buyCarTonCode").val($("#carTonCode").val());
 	}
 });
-
 </script>
