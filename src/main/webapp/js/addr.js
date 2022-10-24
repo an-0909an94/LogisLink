@@ -98,10 +98,7 @@ function dummyCommonAddressInfo(data,paramName) {
                         }
                     }
                 }else{
-                    alert(paramName.eAddr);
-                    alert($("#" + paramName.eAddress).val());
                     $("#" + paramName.eAddress).val(data.fullAddr);
-                    alert($("#" + paramName.eAddress).val());
                     $("#" + paramName.eSido).val(addressData.region_1depth_name);
                     $("#" + paramName.eGungu).val(addressData.region_2depth_name);
                     $("#" + paramName.eDong).val("");
