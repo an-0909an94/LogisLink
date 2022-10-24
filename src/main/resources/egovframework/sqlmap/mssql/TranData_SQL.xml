@@ -146,11 +146,13 @@
 			TRD.RECEIPT_ID receiptId,
 			TRD.CALC_ID calcId,
 			TRD.RECEIPT_SEQ receiptSeq,
-			(SELECT CONVERT(CHAR(10), ALLOC_DATE, 23) FROM T_ORDER_ALLOC WHERE ALLOC_ID = TRD.ALLOC_ID) allocDate,
+            (SELECT CONVERT(CHAR(10), ALLOC_DATE, 23) FROM T_ORDER_ALLOC WHERE ALLOC_ID = TRD.ALLOC_ID) allocDate,
+			CONVERT(CHAR(10), O.S_DATE, 23) sDate,
+            CONVERT(CHAR(10), O.E_DATE, 23) eDate,
 			O.S_SIDO + ' ' + O.S_GUNGU sComName,
 			O.E_SIDO + ' ' + O.E_GUNGU eComName,
 			O.GOODS_NAME goodsName,
-			CONVERT(FLOAT,O.GOODS_WEIGHT)/1000  goodsWeight,
+			CONVERT(FLOAT,O.GOODS_WEIGHT) / 1000 goodsWeight,
 			O.GOODS_QTY goodsQty,
 			(SELECT CNAME FROM T_CODE WHERE GCODE = 'WGT_UNIT_CD' AND CODE = O.WEIGHT_UNIT_CODE) weightUnitCode,
 			ISNULL((SELECT CNAME FROM T_CODE WHERE GCODE = 'QTY_UNIT_CD' AND CODE = O.QTY_UNIT_CODE),'') qtyUnitCode,
@@ -164,7 +166,9 @@
 			T_TRAN_RECEIPT_DTL TRD, T_ORDER O
 		WHERE 
 			TRD.ORDER_ID = O.ORDER_ID
-			AND RECEIPT_ID = #{receiptId}     
+			AND RECEIPT_ID = #{receiptId}    
+        ORDER BY
+            O.S_DATE ASC, O.E_DATE ASC, O.ORDER_ID ASC 
    </select>
    
    <select id="selectTranInfo" resultType="tranVO" parameterType="java.util.HashMap">

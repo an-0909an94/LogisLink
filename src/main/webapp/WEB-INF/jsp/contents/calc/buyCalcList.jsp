@@ -36,7 +36,7 @@
         </div>
     </form>
 </div>
-<!-- 매출마감처리 Modal End -->
+<!-- 매입마감처리 Modal End -->
 
 <!-- 매입처 변경 Modal -->
 <div id="divChangeRes" class="editor-warp p-0">
@@ -351,8 +351,10 @@
                 <input type="hidden" id="hCustDeptId" name="custDeptId" class="hiddenValue">
                 <!-- 거래처명 -->
                 <input type="hidden" id="hBizId" name="bizId" class="hiddenValue">
-                <!-- 담당부서 -->
+                <!-- 거래처 담당부서 -->
                 <input type="hidden" id="hBizDeptId" name="bizDeptId" class="hiddenValue">
+                <!-- 거래처 사업자 번호 -->
+                <input type="hidden" id="hBizNo" name="bizNo" class="hiddenValue">
                 <!-- 차량ID -->
                 <input type="hidden" id="hVehicId" name="vehicId" class="hiddenValue">
                 <!-- 차주ID -->
@@ -384,7 +386,7 @@
                     </div>
                     <div id="searchOrderId" class="input-group input-group-sm col-2 middle-name" style="display: none;">
                         <strong>&nbsp;</strong>
-                        <input type="text" id="sOrderId" name="orderId" class="form-control form-control-sm">
+                        <input type="text" id="sOrderId" name="orderId" class="form-control form-control-sm" onkeydown="searchOrderIdKeyDown(this)">
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>&nbsp;</strong>
@@ -487,7 +489,7 @@
                     </div>
 
                     <div class="input-group input-group-sm col radio-or-checkBox ">
-                        <input id="carryOverYn" name="carryOver" type="checkbox" value="Y" onClick="searchChecked(this)">
+                        <input id="carryOverYn" name="carryOver" type="checkbox" value="Y">
                         <label for="carryOverYn" class="label-margin"> <span>미처리 이월건 포함</span>
                         </label>
                     </div>
@@ -630,12 +632,14 @@
 
     $(document).ready(function() {
     	var dateOption = {
-            format : "yyyy-MM-dd",
-            value : new Date(),
-            dateInput : true
+            format: "yyyy-MM-dd",
+            value: new Date(),
+            dateInput: true
         }
         $("#fromDate").kendoDatePicker(dateOption);
         $("#toDate").kendoDatePicker(dateOption);
+        
+        dateOption.min = new Date();
         $("#withdrawalDueDate").kendoDatePicker(dateOption);
         
      	// 담당부서 셀렉트 박스
@@ -789,6 +793,23 @@
 				$("#changeResModalBuyDeptId").val("");
 				$("#changeResModalManagerName").val("");
 				$("#changeResModalManagerMobile").val("");
+			}
+		});
+		
+		searchCustName.input.keydown(function(e) {
+			if (e.keyCode === 13) {
+				var inputValue = searchCustName.input.val();
+				if (inputValue != "")
+					goList();
+			}
+			
+		});
+		
+		searchBizName.input.keydown(function(e) {
+			if (e.keyCode === 13) {
+				var inputValue = searchBizName.input.val();
+				if (inputValue != "")
+					goList();
 			}
 		});
 		
@@ -1503,9 +1524,10 @@
     	$("#finishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?<br />이미 처리된 건은 제외됩니다</p>");
     	
     	var dateOption = {
-            format : "yyyy-MM-dd",
-            value : new Date(),
-            dateInput : true
+            format: "yyyy-MM-dd",
+            value: new Date(),
+            dateInput: true,
+            min: new Date()
         }
     	$("#withdrawalDueDate").kendoDatePicker(dateOption);
     	
@@ -1519,6 +1541,11 @@
     $('#fCalcFinish').validator().on('submit', function(e) {
     	e.preventDefault();
     	
+    	var withdrawalDueDate =  $("#withdrawalDueDate").val();
+    	var message = "지급예정일을 \"" + withdrawalDueDate + "\" 로 확정하고 마감처리를 하시겠습니까?";
+    	if (!confirm(message))
+    		return;
+    	
     	// object -> Json 
 		var param = [];
 		for (var [key, value] of selectedList) {
@@ -1528,7 +1555,7 @@
 		var params = {
 		   "param": JSON.stringify(param),
 		   "mode": "Y",
-		   "withdrawalDueDate": $("#withdrawalDueDate").val()
+		   "withdrawalDueDate": withdrawalDueDate
 		}
 		
 		$.ajax({
@@ -1670,7 +1697,33 @@
     				success: function(data){
     					if (data.linkMessage.status == 0) {
     						alert(data.linkMessage.message);
-    						goList();
+    						
+    						var grid = $("#grid").data("kendoGrid");
+    						selectedList.forEach(function(dataItem, index) {
+    							var data = grid.dataSource.get(dataItem.orderId);
+    							var row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+    							
+    							// 전자 인수증 수령 건 제외
+    							if (!dataItem.receiptYn.includes("전자")) {
+    								data.set("receiptYn", "종이(" + moment().format("YY.MM.DD") + ")");
+        							
+        							var rowHtml = grid.rowTemplate(data);
+        							row.replaceWith(rowHtml);
+        							
+        							// 필드 업데이트 이후 선택된 항목 다시 선택해 줌.
+        							row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+        							
+        							$("#" + dataItem.orderId).prop("checked", true);
+        							
+        							row.addClass("k-state-selected");
+    							}
+    						});
+    						
+    						// 체크 상태의 경우 전체선택도 체크해줌.
+							var total = $(".orderCheck").length;
+							var checked = $(".orderCheck:checked").length;
+							if (total == checked)
+								$("#orderAllCheck").prop("checked", true);
     					} else {
     						alert(data.linkMessage.message);
     					}
@@ -1691,7 +1744,9 @@
 				var mode = "N";
     			var orderIdList = [];
     			for (var [key, value] of selectedList) {
-    				orderIdList.push(value.orderId);
+    				// 종이 인수증만 처리
+    				if (value.receiptYn.includes("종이"))
+    					orderIdList.push(value.orderId);
     			}
     			
     			$.ajax({
@@ -1705,7 +1760,33 @@
     				success: function(data){
     					if (data.linkMessage.status == 0) {
     						alert(data.linkMessage.message);
-    						goList();
+
+    						var grid = $("#grid").data("kendoGrid");
+    						selectedList.forEach(function(dataItem, index) {
+    							var data = grid.dataSource.get(dataItem.orderId);
+    							var row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+    							
+    							// 종이 인수증만 처리
+    							if (dataItem.receiptYn.includes("종이")) {
+    								data.set("receiptYn", "N");
+        							
+        							var rowHtml = grid.rowTemplate(data);
+        							row.replaceWith(rowHtml);
+        							
+        							// 필드 업데이트 이후 선택된 항목 다시 선택해 줌.
+        							row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+        							
+        							$("#" + dataItem.orderId).prop("checked", true);
+        							
+        							row.addClass("k-state-selected");
+    							}
+    						});
+    						
+    						// 체크 상태의 경우 전체선택도 체크해줌.
+							var total = $(".orderCheck").length;
+							var checked = $(".orderCheck:checked").length;
+							if (total == checked)
+								$("#orderAllCheck").prop("checked", true);
     					} else {
     						alert(data.linkMessage.message);
     					}
@@ -1748,7 +1829,33 @@
     				success: function(data){
     					if (data.linkMessage.status == 0) {
     						alert(data.linkMessage.message);
-    						goList();
+    						
+    						var grid = $("#grid").data("kendoGrid");
+    						selectedList.forEach(function(dataItem, index) {
+    							var data = grid.dataSource.get(dataItem.orderId);
+    							var row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+    							
+    							// 전자 계산서 수령 건 제외
+    							if (!dataItem.taxinvYn.includes("전자")) {
+    								data.set("taxinvYn", "종이(" + moment().format("YY.MM.DD") + ")");
+        							
+        							var rowHtml = grid.rowTemplate(data);
+        							row.replaceWith(rowHtml);
+        							
+        							// 필드 업데이트 이후 선택된 항목 다시 선택해 줌.
+        							row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+        							
+        							$("#" + dataItem.orderId).prop("checked", true);
+        							
+        							row.addClass("k-state-selected");
+    							}
+    						});
+    						
+    						// 체크 상태의 경우 전체선택도 체크해줌.
+							var total = $(".orderCheck").length;
+							var checked = $(".orderCheck:checked").length;
+							if (total == checked)
+								$("#orderAllCheck").prop("checked", true);
     					} else {
     						alert(data.linkMessage.message);
     					}
@@ -1771,7 +1878,9 @@
     			for (var [key, value] of selectedList) {
     				// CalcId 건별로 처리하는게 아닌 AllocId로 한번에 처리함.
     				// * 기존에는 CalcId 건별로 처리하는 방식
-    				allocIdList.push(value.buyAllocId);
+    				// 종이 계산서만 처리
+    				if (value.taxinvYn.includes("종이"))
+    					allocIdList.push(value.buyAllocId);
     				
     				// CalcId로 처리 시. 
 //     				if (typeof value.buyChargeId != "ubdefined" && value.buyChargeId != null && value.buyChargeId != "")
@@ -1789,7 +1898,34 @@
     				success: function(data){
     					if (data.linkMessage.status == 0) {
     						alert(data.linkMessage.message);
-    						goList();
+    						
+    						var grid = $("#grid").data("kendoGrid");
+    						selectedList.forEach(function(dataItem, index) {
+    							var data = grid.dataSource.get(dataItem.orderId);
+    							var row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+    							
+    							// 종이 계산서만 처리
+    							if (dataItem.taxinvYn.includes("종이")) {
+    								data.set("taxinvYn", "N");
+        							
+        							var rowHtml = grid.rowTemplate(data);
+        							row.replaceWith(rowHtml);
+        							
+        							// 필드 업데이트 이후 선택된 항목 다시 선택해 줌.
+        							row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+        							
+        							$("#" + dataItem.orderId).prop("checked", true);
+        							
+        							row.addClass("k-state-selected");
+    							}
+    						});
+    						
+    						// 체크 상태의 경우 전체선택도 체크해줌.
+							var total = $(".orderCheck").length;
+							var checked = $(".orderCheck:checked").length;
+							if (total == checked)
+								$("#orderAllCheck").prop("checked", true);
+    						
     						contextMenu.close();
     					} else {
     						alert(data.linkMessage.message);
@@ -1833,7 +1969,33 @@
     				success: function(data){
     					if (data.linkMessage.status == 0) {
     						alert(data.linkMessage.message);
-    						goList();
+    						
+    						var grid = $("#grid").data("kendoGrid");
+    						selectedList.forEach(function(dataItem, index) {
+    							var data = grid.dataSource.get(dataItem.orderId);
+    							var row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+    							
+    							// 전자 계산서 수령 건 제외
+    							if (!dataItem.taxinvYn.includes("전자")) {
+    								data.set("taxinvYn", "타사(" + moment().format("YY.MM.DD") + ")");
+        							
+        							var rowHtml = grid.rowTemplate(data);
+        							row.replaceWith(rowHtml);
+        							
+        							// 필드 업데이트 이후 선택된 항목 다시 선택해 줌.
+        							row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+        							
+        							$("#" + dataItem.orderId).prop("checked", true);
+        							
+        							row.addClass("k-state-selected");
+    							}
+    						});
+    						
+    						// 체크 상태의 경우 전체선택도 체크해줌.
+							var total = $(".orderCheck").length;
+							var checked = $(".orderCheck:checked").length;
+							if (total == checked)
+								$("#orderAllCheck").prop("checked", true);
     					} else {
     						alert(data.linkMessage.message);
     					}
@@ -1856,7 +2018,9 @@
     			for (var [key, value] of selectedList) {
     				// CalcId 건별로 처리하는게 아닌 AllocId로 한번에 처리함.
     				// * 기존에는 CalcId 건별로 처리하는 방식
-    				allocIdList.push(value.buyAllocId);
+    				// 타사 계산서만 처리
+    				if (value.taxinvYn.includes("타사"))
+    					allocIdList.push(value.buyAllocId);
     				
     				// CalcId로 처리 시. 
 //     				if (typeof value.buyChargeId != "ubdefined" && value.buyChargeId != null && value.buyChargeId != "")
@@ -1874,7 +2038,34 @@
     				success: function(data){
     					if (data.linkMessage.status == 0) {
     						alert(data.linkMessage.message);
-    						goList();
+    						
+    						var grid = $("#grid").data("kendoGrid");
+    						selectedList.forEach(function(dataItem, index) {
+    							var data = grid.dataSource.get(dataItem.orderId);
+    							var row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+    							
+    							// 타사 계산서만 처리
+    							if (dataItem.taxinvYn.includes("타사")) {
+    								data.set("taxinvYn", "N");
+        							
+        							var rowHtml = grid.rowTemplate(data);
+        							row.replaceWith(rowHtml);
+        							
+        							// 필드 업데이트 이후 선택된 항목 다시 선택해 줌.
+        							row = grid.tbody.find("tr[data-uid='" + data.uid + "']").closest("tr");
+        							
+        							$("#" + dataItem.orderId).prop("checked", true);
+        							
+        							row.addClass("k-state-selected");
+    							}
+    						});
+    						
+    						// 체크 상태의 경우 전체선택도 체크해줌.
+							var total = $(".orderCheck").length;
+							var checked = $(".orderCheck:checked").length;
+							if (total == checked)
+								$("#orderAllCheck").prop("checked", true);
+    						
     						contextMenu.close();
     					} else {
     						alert(data.linkMessage.message);
@@ -1987,6 +2178,16 @@
     	 
     	 
      });
+     
+  	 // 검색 조건의 오더Id 텍스트 박스 엔터 이벤트 처리
+     function searchOrderIdKeyDown(e) {
+     	var keycode = event.keyCode;
+     	if (keycode === 13) {
+     		var inputValue = $("#sOrderId").val();
+     		if (inputValue != "")
+     			goList();
+     	}
+     }
      
  	// 그리드 컨택스트 메뉴 처리
     function onContextMenuSelect(e) {
@@ -2195,7 +2396,6 @@
 		{ field: "mngUserName", title: "배차원", width: 100, editable: function (dataItem){} },
 		{ field: "deleteYn", title: "삭제일", width: 80, editable: function (dataItem){} },
 		{ field: "deleteUserName", title: "삭제자", width: 80, editable: function (dataItem){} },
-		{ field: "withdrawalDueDate", title: "출금예정일", width: 100, editable: function (dataItem){} },
 		
 		// 숨김항목
 		{ field: "mngCustId", hidden: true, editable: function (dataItem){} },
