@@ -35,9 +35,9 @@ var AddrComboBox = {
             height: 200,
             columns: [
                 {field: "sido", title: "시도", width:70},
-                {field: "gugun", title: "구군", width:70},
-                {field: "dong", title: "동", width:70},
-                {field: "ri", title: "리", width:50}
+                {field: "gugun", title: "구군", width:120},
+                {field: "dong", title: "동", width:140},
+                {field: "ri", title: "리", width:80}
 
             ],
             virtual: {
@@ -76,52 +76,52 @@ function dummyCommonAddressInfo(data,paramName) {
             var lat = '';
             var lon = '';
             if(apiData.result && localData.meta.total_count >0){
-                    lon = localData.documents[0].x;
-                    lat = localData.documents[0].y;
-                    var addressData = localData.documents[0].address_type =="REGION" ? localData.documents[0].address : localData.documents[0].road_address;
+                lon = localData.documents[0].x;
+                lat = localData.documents[0].y;
+                var addressData = localData.documents[0].address_type =="REGION" ? localData.documents[0].address : localData.documents[0].road_address;
 
-                    if(data.mode == "sAddr") {
-                        $("#" + paramName.sAddress).val(data.fullAddr);
-                        $("#" + paramName.sSido).val(addressData.region_1depth_name);
-                        $("#" + paramName.sGungu).val(addressData.region_2depth_name);
-                        $("#" + paramName.sDong).val("");
-                        $("#" + paramName.sLon).val(lon);
-                        $("#" + paramName.sLat).val(lat);
+                if(data.mode == "sAddr") {
+                    $("#" + paramName.sAddress).val(data.fullAddr);
+                    $("#" + paramName.sSido).val(addressData.region_1depth_name);
+                    $("#" + paramName.sGungu).val(addressData.region_2depth_name);
+                    $("#" + paramName.sDong).val("");
+                    $("#" + paramName.sLon).val(lon);
+                    $("#" + paramName.sLat).val(lat);
 
-                        if(data.pageMode =="orderList") {
-                            if($('#sComName').val().trim()!="") {
-                                $("input:checkbox[id='sAreaSave']").prop("checked", true);
-                                $("input:checkbox[id='sAreaSave']").val("Y")
-                                $("#sAreaSave").parent(".radio-or-checkBox").css("display", "contents");
-                                $("#sAddrDetail").focus();
-                            }
-                        }
-                    }else{
-                        alert(paramName.eAddr);
-                      alert($("#" + paramName.eAddress).val());
-                        $("#" + paramName.eAddress).val(data.fullAddr);
-                        alert($("#" + paramName.eAddress).val());
-                        $("#" + paramName.eSido).val(addressData.region_1depth_name);
-                        $("#" + paramName.eGungu).val(addressData.region_2depth_name);
-                        $("#" + paramName.eDong).val("");
-                        $("#" + paramName.eLon).val(lon);
-                        $("#" + paramName.eLat).val(lat);
-
-                        if(data.pageMode =="orderList") {
-                            if($('#eComName').val().trim()!=""){
-                                $("input:checkbox[id='eAreaSave']").prop("checked", true);
-                                $("input:checkbox[id='eAreaSave']").val("Y")
-                                $("#eAreaSave").parent(".radio-or-checkBox").css("display", "contents");
-                                $("#eAddrDetail").focus();
-                            }
+                    if(data.pageMode =="orderList") {
+                        if($('#sComName').val().trim()!="") {
+                            $("input:checkbox[id='sAreaSave']").prop("checked", true);
+                            $("input:checkbox[id='sAreaSave']").val("Y")
+                            $("#sAreaSave").parent(".radio-or-checkBox").css("display", "contents");
+                            $("#sAddrDetail").focus();
                         }
                     }
+                }else{
+                    alert(paramName.eAddr);
+                    alert($("#" + paramName.eAddress).val());
+                    $("#" + paramName.eAddress).val(data.fullAddr);
+                    alert($("#" + paramName.eAddress).val());
+                    $("#" + paramName.eSido).val(addressData.region_1depth_name);
+                    $("#" + paramName.eGungu).val(addressData.region_2depth_name);
+                    $("#" + paramName.eDong).val("");
+                    $("#" + paramName.eLon).val(lon);
+                    $("#" + paramName.eLat).val(lat);
+
+                    if(data.pageMode =="orderList") {
+                        if($('#eComName').val().trim()!=""){
+                            $("input:checkbox[id='eAreaSave']").prop("checked", true);
+                            $("input:checkbox[id='eAreaSave']").val("Y")
+                            $("#eAreaSave").parent(".radio-or-checkBox").css("display", "contents");
+                            $("#eAddrDetail").focus();
+                        }
+                    }
+                }
                 if(data.pageMode =="orderList" && ($("#" + paramName.sAddr).val() !="" && $("#" + paramName.eAddr).val() !="")) {
                     getCommonRoute(paramName);
                 }
             }else{
                 if(data.mode == "sAddr") {
-                   // $("#"+ paramName.sAddress).val("");
+                    // $("#"+ paramName.sAddress).val("");
                     $("#"+ paramName.sSido).val("");
                     $("#"+ paramName.sGungu).val("");
                     $("#"+ paramName.sDong).val("");
@@ -133,7 +133,7 @@ function dummyCommonAddressInfo(data,paramName) {
                     $("#" + data.mode).focus();
 
                 }else{
-                   // $("#"+ paramName.eAddress).val("");
+                    // $("#"+ paramName.eAddress).val("");
                     $("#"+ paramName.eSido).val("");
                     $("#"+ paramName.eGungu).val("");
                     $("#"+ paramName.eDong).val("");

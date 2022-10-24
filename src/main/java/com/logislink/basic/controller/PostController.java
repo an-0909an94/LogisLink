@@ -421,14 +421,15 @@ public class PostController {
 
 		return "jsonView";
 	}
-	/*@PostMapping(value="/contents/basic/data/getLatLon.do")
-	public String getLatLon(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+/*	@PostMapping(value="/contents/basic/data/getLatLon1.do")
+	public String getLatLon1(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
 								@RequestParam Map<String, Object> param ) throws Exception {
 		
 		Map<String, String> paramMap = new HashMap<String, String>();
 
-		paramMap.put("query", (String) param.get("searchAddress"));
-		
+		if(param.get("filter[filters][0][value]") != null) {
+			paramMap.put("query", (String) param.get("filter[filters][0][value]"));
+		}
 		if(param.get("analyze_type") != null) {
 			paramMap.put("analyze_type", (String) param.get("analyze_type"));
 		}
@@ -437,8 +438,8 @@ public class PostController {
 			paramMap.put("page", (String) param.get("page"));
 		}
 		
-		if(param.get("size") != null) {
-			paramMap.put("size", (String) param.get("size"));
+		if(param.get("pageSize") != null) {
+			paramMap.put("size", (String) param.get("pageSize"));
 		}
 		
 		apiHelper.setAdminKey(kakaoKey);
@@ -450,46 +451,49 @@ public class PostController {
 		JSONParser jsonParser = new JSONParser();
 		// 처음 유효 주소데이터를 json에 담기 위함
 		jsonObject = (JSONObject) jsonParser.parse(res.get("result").toString());
+		if("200".equals(res.get("resCode"))) {
+			//유효주소에 대한 토탈 카운트 및 정보를 json에 담음
+			JSONObject metaData = (JSONObject) jsonObject.get("meta");
+			//유효주소에 대한 주소 리스트를 array애 담음
+			JSONArray arr = (JSONArray)jsonObject.get("documents");
 
-		//유효주소에 대한 토탈 카운트 및 정보를 json에 담음
-		JSONObject metaData = (JSONObject) jsonObject.get("meta");
-		//유효주소에 대한 주소 리스트를 array애 담음
-		JSONArray arr = (JSONArray)jsonObject.get("documents");
-
-		List<AddrVO> addrList = new ArrayList<AddrVO>();
-		for(Object addrArrObject : arr) {
-			AddrVO addrVO = new AddrVO();
-			JSONObject obj = (JSONObject) addrArrObject; // JSONArray 데이터를 하나씩 가져와 JSONObject로 변환해준다.
-			if(obj.get("address_type").toString().equals("ROAD")){
-				JSONObject addrData = (JSONObject) obj.get("road_address");
+			List<AddrVO> addrList = new ArrayList<AddrVO>();
+			for(Object addrArrObject : arr) {
+				AddrVO addrVO = new AddrVO();
+				JSONObject obj = (JSONObject) addrArrObject; // JSONArray 데이터를 하나씩 가져와 JSONObject로 변환해준다.
+				if(obj.get("address_type").toString().equals("ROAD")){
+					JSONObject addrData = (JSONObject) obj.get("road_address");
 
 
-				addrVO.setFullAddr((String) obj.get("address_name"));
-				addrVO.setSido((String) addrData.get("region_1depth_name"));
-				addrVO.setGugun((String) addrData.get("region_2depth_name"));
-				addrVO.setDong("");
+					addrVO.setFullAddr((String) obj.get("address_name"));
+					addrVO.setSido((String) addrData.get("region_1depth_name"));
+					addrVO.setGugun((String) addrData.get("region_2depth_name"));
+					addrVO.setDong((String) addrData.get("road_name"));
 
-			}else{
-				JSONObject addrData = (JSONObject) obj.get("address");
+				}else{
+					JSONObject addrData = (JSONObject) obj.get("address");
 
-				addrVO.setFullAddr((String) obj.get("address_name"));
-				addrVO.setSido((String) addrData.get("region_1depth_name"));
-				addrVO.setGugun((String) addrData.get("region_2depth_name"));
-				addrVO.setDong((String) addrData.get("region_3depth_name"));
+					addrVO.setFullAddr((String) obj.get("address_name"));
+					addrVO.setSido((String) addrData.get("region_1depth_name"));
+					addrVO.setGugun((String) addrData.get("region_2depth_name"));
+					addrVO.setDong((String) addrData.get("region_3depth_name"));
+				}
+
+				addrList.add(addrVO);
 			}
 
-			addrList.add(empVO);
-		}
 
 
+			//arr.add((JSONArray)jsonObject.get("documents"));
 
-		//arr.add((JSONArray)jsonObject.get("documents"));
+			apiHelper.setAdminKey("");
 
-		apiHelper.setAdminKey("");
 
-		if("200".equals(res.get("resCode"))) {
 			map.put("result", Boolean.TRUE);
-			map.put("data", res.get("result"));
+			map.put("data", addrList);
+			//map.put("result", Boolean.TRUE);
+			map.put("total", metaData.get("total_count"));
+			//map.put("data", res.get("result"));
 		} else {
 			map.put("result", Boolean.FALSE);
 			map.put("data", res.get("result"));
