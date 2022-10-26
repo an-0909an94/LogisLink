@@ -2882,6 +2882,14 @@ $('#unitCharge').on("input", function() {
 		$("#sellCharge").val(Util.formatNumberInput($("#unitCharge").val()));
 	}
 });
+$('#sellCharge').on("input", function() {
+    var sellCharge = /^\d*$/;
+    if(!sellCharge.test($("#sellCharge").val().replace(/,/g, ""))){
+        alert("\"기본운임\"에 숫자를 입력하시기 바랍니다.");
+        $("#sellCharge").val("")
+        return;
+    }
+});
 
 $('#sellWeight').on("input", function() {
 	if($('input[name="unitPriceType"]:checked').val() == "02"){
