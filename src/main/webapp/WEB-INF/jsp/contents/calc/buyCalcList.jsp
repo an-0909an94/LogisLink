@@ -1868,10 +1868,10 @@
     	}
     }
     
-    // 실물 거래명세서 수령 취소
+    // 실물 계산서 수령 취소
     function cancelPaperTaxinvSub() {
 		if (selectedList.size > 0) {
-			var message = "선택된 (" + selectedList.size + ")건에 대한 실물 거래명세서 수령을 취소 하시겠습니까?";
+			var message = "선택된 (" + selectedList.size + ")건에 대한 실물 세금계산서 수령을 취소 하시겠습니까?";
 			if (confirm(message)) {
 				var mode = "N";
 				var allocIdList = [];
@@ -1935,14 +1935,14 @@
     		}
     	}
     	else {
-    		alert("실물 거래명세서 수령을 취소할 항목을 선택해 주세요.");
+    		alert("실물 세금계산서 수령을 취소할 항목을 선택해 주세요.");
     	}
     }
     
-    // 타사 거래명세서 수령
+    // 타사 계산서 수령
     function etcTaxinvSub() {
 		if (selectedList.size > 0) {
-			var message = "선택된 (" + selectedList.size + ")건에 대한 타사 거래명세서 수령을 처리 하시겠습니까?";
+			var message = "선택된 (" + selectedList.size + ")건에 대한 타사 세금계산서 수령을 처리 하시겠습니까?";
 			if (confirm(message)) {
 				var mode = "E";
 				var allocIdList = [];
@@ -2004,14 +2004,14 @@
     		}
     	}
     	else {
-    		alert("타사 거래명세서 수령을 처리할 항목을 선택해 주세요.");
+    		alert("타사 세금계산서 수령을 처리할 항목을 선택해 주세요.");
     	}
     }
     
-    // 타사 거래명세서 수령 취소
+    // 타사 계산서 수령 취소
     function cancelEtcTaxinvSub() {
 		if (selectedList.size > 0) {
-			var message = "선택된 (" + selectedList.size + ")건에 대한 타사 거래명세서 수령을 취소 하시겠습니까?";
+			var message = "선택된 (" + selectedList.size + ")건에 대한 타사 세금계산서 수령을 취소 하시겠습니까?";
 			if (confirm(message)) {
 				var mode = "N";
 				var allocIdList = [];
@@ -2075,7 +2075,7 @@
     		}
     	}
     	else {
-    		alert("타사 거래명세서 수령을 취소할 항목을 선택해 주세요.");
+    		alert("타사 세금계산서 수령을 취소할 항목을 선택해 주세요.");
     	}
     }
     
