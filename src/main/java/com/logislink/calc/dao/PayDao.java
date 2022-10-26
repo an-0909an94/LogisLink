@@ -56,4 +56,8 @@ public class PayDao extends EgovAbstractMapper {
 		int result = update("payDataNS.updateWithdrawalDueDate", map);
 		return result;
 	}
+	
+	public Map<String, Object> selectPaySummary(Map<String, Object> map) {
+		return selectOne("payDataNS.selectPaySummary", map);
+	}
 }

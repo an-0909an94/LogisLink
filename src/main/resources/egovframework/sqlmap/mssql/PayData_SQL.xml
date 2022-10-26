@@ -69,7 +69,7 @@
 						(SELECT USER_NAME FROM T_USER WHERE USER_ID = OUT_ID) outId,
                         WITHDRAWAL_DUE_DATE
 				 FROM T_CALC_PAY
-				 WHERE USE_YN = 'Y' AND MNG_CUST_ID = #{loginCustId}
+ 				 WHERE USE_YN = 'Y' AND MNG_CUST_ID = #{loginCustId}
                     <if test="searchPeriodType != null and searchPeriodType != ''">
                         <choose>
                             <when test="searchPeriodType == 'finishDate'">
@@ -415,4 +415,99 @@
           #{item}
         </foreach>
     </update>
+    
+    <select id="selectPaySummary" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+          SELECT
+            COUNT(1) tCount
+            -- 공급가액
+            , ISNULL(SUM(A.BUY_AMT), 0) tBuyAmt
+            -- 미지급금
+            , ISNULL(SUM(A.PAYABLE_AMT), 0) tPayableAmt
+            -- 출금액 전체 (펌뱅킹 + 인터넷뱅킹)
+            , ISNULL(SUM(A.WITHDRAWAL_AMT), 0) tWithdrawalAmt
+            -- 출금액 (펌뱅킹)
+            , ISNULL(SUM(CASE WHEN A.OUT_KIND = 'F' THEN A.WITHDRAWAL_AMT ELSE 0 END), 0) fWithdrawalAmt
+            -- 출금액 (인터넷뱅킹)
+            , ISNULL(SUM(CASE WHEN A.OUT_KIND = 'I' THEN A.WITHDRAWAL_AMT ELSE 0 END), 0) iWithdrawalAmt
+          FROM
+            (SELECT FINISH_DATE, PAY_APPRO_DATE, OUTREQ_DATE, OUT_KIND,
+                OUT_DATE, OUT_ID, BUY_AMT, PAYABLE_AMT, WITHDRAWAL_AMT, CUST_ID, DEPT_ID, VEHIC_ID, DRIVER_ID, CAR_NUM,
+                DRIVER_NAME, DRIVER_TEL, MEMO1, MEMO2, MEMO3, MNG_CUST_ID, MNG_DEPT_ID, ORDER_ID,
+                REGDATE, ALLOC_ID, PAY_SEQ, PAY_STATE_CODE,
+                (SELECT USER_NAME FROM T_USER WHERE USER_ID = PAY_APPRO_ID) payApproId,
+                (SELECT USER_NAME FROM T_USER WHERE USER_ID = FINISH_ID) finishId,
+                (SELECT USER_NAME FROM T_USER WHERE USER_ID = OUTREQ_ID) outreqId,
+                (SELECT USER_NAME FROM T_USER WHERE USER_ID = OUT_ID) outId,
+                WITHDRAWAL_DUE_DATE
+             FROM T_CALC_PAY
+             WHERE USE_YN = 'Y' AND MNG_CUST_ID = #{loginCustId}
+              <if test="searchPeriodType != null and searchPeriodType != ''">
+                  <choose>
+                      <when test="searchPeriodType == 'finishDate'">
+                          AND FINISH_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                      </when>
+                      <otherwise>
+                          AND WITHDRAWAL_DUE_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                      </otherwise>
+                  </choose>
+              </if>
+              <if test="payApproYn != null and payApproYn != ''">
+                AND CASE WHEN PAY_APPRO_DATE IS NULL THEN 'N' ELSE 'Y' END = #{payApproYn}
+              </if>
+              <if test="sOutKind != null and sOutKind != ''">
+                AND OUT_KIND = #{sOutKind}
+              </if>
+              <if test="outYn != null and outYn != ''">
+                AND CASE WHEN OUT_DATE IS NULL THEN 'N' ELSE 'Y' END = #{outYn}
+              </if>
+              <if test="sSerach1 == 'bankCnnm' and sValue1 != null and sValue1 != ''">
+                AND BANK_CNNM LIKE '%'+ #{sValue1} +'%'
+              </if>
+              <if test="sSerach2 == 'driverName' and sValue2 != null and sValue2 != ''">
+                AND DRIVER_NAME LIKE '%'+ #{sValue2} +'%'
+              </if>
+              <if test="sSerach2 == 'carNum' and sValue2 != null and sValue2 != ''">
+                AND CAR_NUM LIKE '%'+ #{sValue2} +'%'
+              </if>
+             ) A
+             INNER JOIN
+               T_ORDER B ON A.ORDER_ID = B.ORDER_ID
+             LEFT OUTER JOIN 
+               (SELECT (SELECT TOP 1 SUBSTRING(E_ADDR, 1, CHARINDEX(' ', E_ADDR, CHARINDEX(' ', E_ADDR) + 1)) FROM T_ORDER_STOP WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y') STOP_COM_NAME, COUNT(*) STOP_COUNT, ORDER_ID
+               FROM T_ORDER_STOP A
+               WHERE USE_YN = 'Y'
+               GROUP BY ORDER_ID) C ON A.ORDER_ID = C.ORDER_ID 
+             LEFT OUTER JOIN 
+               T_ORDER_ALLOC D ON A.ORDER_ID = D.ORDER_ID AND ISNULL(D.DRIVER_ID, '') != '' AND ISNULL(D.VEHIC_ID, '') != ''
+             LEFT OUTER JOIN 
+               (SELECT USER_NAME, USER_ID
+               FROM T_USER) E ON D.REGID = E.USER_ID 
+             INNER JOIN
+               (SELECT ALLOC_ID, REQ_PAY_YN, REQ_PAY_DATE, ALLOC_DATE, SELL_WEIGHT
+               FROM T_ORDER_ALLOC
+               <if test="payreqYn != null and payreqYn != ''">
+                WHERE REQ_PAY_YN = #{payreqYn}
+               </if>
+               ) F ON A.ALLOC_ID = F.ALLOC_ID
+             LEFT OUTER JOIN
+               (SELECT BANK_CNNM, BANK_ACCOUNT, DRIVER_ID, BANKCHK_DATE, (SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = BANK_CODE) bankCode
+               FROM T_DRIVER) G ON D.DRIVER_ID = G.DRIVER_ID
+             LEFT OUTER JOIN 
+               T_CUST_MST H ON A.CUST_ID = H.CUST_ID
+             LEFT OUTER JOIN
+               T_VEHIC_MST I ON A.VEHIC_ID = I.VEHIC_ID
+          WHERE 1=1
+            <if test="sFinishId != null and sFinishId != ''">
+              AND A.finishId LIKE '%'+ #{sFinishId} +'%'
+            </if>
+            <if test="outreqId != null and outreqId != ''">
+              AND A.outreqId LIKE '%'+ #{outreqId} +'%'
+            </if>    
+            <if test="sSerach1 == 'tax' and sValue1 != null and sValue1 != ''">
+              AND (H.BIZ_NAME LIKE '%'+ #{sValue1} +'%' OR I.BIZ_NAME LIKE '%'+ #{sValue1} +'%')
+            </if>
+            <if test="sSerach2 == 'ceo' and sValue2 != null and sValue2 != ''">
+              AND I.CEO LIKE '%'+ #{sValue2} +'%'
+            </if>
+    </select>
 </mapper>

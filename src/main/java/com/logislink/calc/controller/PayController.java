@@ -184,4 +184,24 @@ public class PayController {
 		
 		return "jsonView";
 	}
+	
+	@PostMapping(value="/contents/calc/data/getPaySummary.do")
+	public String getPaySummary(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param ) throws Exception {
+
+		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+		if("N".equals(login.getMasterYn())) {
+			param.put("mngDeptId", login.getDeptId());
+		} else {
+			param.put("mngDeptId", param.get("sDeptId"));
+		}
+		
+		//param.put("mngDeptId", login.getDeptId());
+		
+		Map<String, Object> paySummary = payService.selectPaySummary(param);
+		
+		map.put("result", Boolean.TRUE);
+		map.put("data", paySummary);
+		
+		return "jsonView";
+	}
 }
