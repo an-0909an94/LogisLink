@@ -320,12 +320,6 @@
     
     var selectedDataList = [];
 	var paySeqList = [];
-	
-// 	$("#payListMainContextMenu").kendoContextMenu({
-//         target: "#grid",
-//         filter: "tr[role='row']",
-// //         select: onContextMenuSelect
-//     });
     
 	$(document).ready(function() {
 		Util.setCmmCode("select", "sOutKind", "OUT_KIND_CD", "", "선택해주세요.");
@@ -345,6 +339,7 @@
      	
      	$("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(year, month, day - 1), dateInput: true});
     	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(year, month, day - 1), dateInput: true});
+    	Util.setSearchDateForm();
     	
     	goList();
     	
