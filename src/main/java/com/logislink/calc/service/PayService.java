@@ -27,4 +27,6 @@ public interface PayService {
 	public void bankChkDateupdate(Map<String, Object> map);
 	
 	public int updateWithdrawalDueDate(Map<String, Object> map);
+	
+	public Map<String, Object> selectPaySummary(Map<String, Object> map);
 }

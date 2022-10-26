@@ -67,4 +67,9 @@ public class PayServiceImpl implements PayService {
 	public int updateWithdrawalDueDate(Map<String, Object> map) {
 		return payDao.updateWithdrawalDueDate(map);
 	}
+	
+	@Override
+	public Map<String, Object> selectPaySummary(Map<String, Object> map) {
+		return payDao.selectPaySummary(map);
+	}
 }

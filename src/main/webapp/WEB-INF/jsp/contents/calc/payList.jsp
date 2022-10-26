@@ -99,11 +99,17 @@
 <!-- 출금예정일 변경 Modal End -->
 
 <div class="header">
-	<div class="summary p30">
-		<div class="hdr-tit">
-			<P id="headerTitle">운송비지급</P>
-		</div>
-	</div>
+	<div style="justify-content: space-between; display: flex;" class="summary p30">
+        <div class="hdr-tit">
+            <P id="headerTitle">운송비지급</P>
+        </div>
+        <div id="summaryData" style="height: 30px;">
+            <div style="display: contents;" class="col input-group i-name">
+                <i id="groupCount" style="font-size: larger;"></i>
+            </div>
+        </div>
+    </div>
+    
 	<div class="contents">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" method="post">
@@ -283,6 +289,13 @@
 						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 409px);">
 							<div class="top-pane">
 								<div style="height: 100%;" id="grid"></div>
+                                
+                                <ul id="payListContextMenu">
+                                    <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
+                                    <li class="k-separator privateRClick"></li>
+                                    <li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
+                                    <li class="k-separator privateRClick"></li>
+                                </ul>
 							</div>
 							<div class="bottom-pane">
 								<div style="height: 100%;" id="subGrid"></div>
@@ -299,55 +312,677 @@
 	<!-- content -->
 </div>
 <script type="text/javascript">
+    var loginCustId = '${sessionScope.userInfo.custId}';
+    var userId = '${sessionScope.userInfo.userId}';
+    var deptId = "${sessionScope.userInfo.deptId}";
+    
+    var headerTitle = ($("#headerTitle").text());
+    
+    var selectedDataList = [];
 	var paySeqList = [];
-
-    $(document).ready(function(){ 	
-    	Util.setCmmCode("select", "sOutKind", "OUT_KIND_CD", "", "선택해주세요.");
+	
+// 	$("#payListMainContextMenu").kendoContextMenu({
+//         target: "#grid",
+//         filter: "tr[role='row']",
+// //         select: onContextMenuSelect
+//     });
+    
+	$(document).ready(function() {
+		Util.setCmmCode("select", "sOutKind", "OUT_KIND_CD", "", "선택해주세요.");
      	$("#splitter").kendoSplitter({
             orientation: "vertical",
-            panes: [{resizable:true}, {resizable:true}]
+            panes: [
+            	{resizable:true},
+            	{resizable:true}
+            ]
      	});
      	
      	var date = new Date();
-    
-     	var year = date.getFullYear(); 
-     	var month = date.getMonth();   
-     	var day = date.getDate();      
+     	
+     	var year = date.getFullYear();
+     	var month = date.getMonth();
+     	var day = date.getDate();
      	
      	$("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(year, month, day - 1), dateInput: true});
-    	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(year, month, day - 1), dateInput: true}); 
-    	Util.setSearchDateForm();
+    	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(year, month, day - 1), dateInput: true});
     	
     	goList();
     	
-    	outreqModal = $("#outreqModal");
+    	$("#payListContextMenu").kendoContextMenu({
+            target: "#grid",
+            filter: "tr[role='row']",
+            select: onContextMenuSelect
+        });
+	});
+	
+	function goList() {
+		columns = setPrivateData("C3610", "grid", userId, columns);
+		
+		var grid = $("#grid").kendoGrid({
+			dataSource: {
+                transport: {
+                    read: {
+                        url: "/contents/calc/data/payList.do",
+                        type: "POST",
+                        dataType: "JSON",
+                        data: $("#fSearch").serializeObject(),
+                        beforeSend: function(req) {
+                            req.setRequestHeader("AJAX", true);
+                        }
+                    }
+                },
+                schema: {
+                    data: function(response) {
+                        return response.data;
+                    },
+                    total: function(response) {
+                        return response.total;
+                    }
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                error: function(e) {
+                    if (e.xhr.status == "400") {
+                        alert("세션값이 존재하지 않습니다. 로그인 페이지로 이동합니다.");
+                        location.href = "/";
+                    }
+                }
+            },
+            excel: {
+                fileName: headerTitle + "(" + new Date().yyyymmdd() + ").xlsx",
+                proxyURL: "/cmm/saveGrid.do",
+                filterable: false,
+                allPages: true
+            },
+            excelExport: function(e) {
+                if ($("#loading").length > 0) $("#loading").hide();
+            },
+            navigatable: true,
+			selectable: "multiple",
+			pageable: false,
+			resizable: true,
+			scrollable: true,
+			editable: false,
+			columns: columns,
+            noRecords: true,
+            messages: {
+                noRecords: "조회된 데이터가 없습니다."
+            }
+		}).data("kendoGrid");
+		
+		setOptionActive("C3610", "grid", userId);
+		
+		grid.bind("change", onChange);
+		grid.tbody.delegate('tr', 'dblclick', function(){
+			var grid = $("#grid").data("kendoGrid");
+			var row = grid.select();
+			selectedData = grid.dataItem(row);
+			
+			viewCalc(selectedData.orderId, selectedData.allocId, selectedData.mngCustId, selectedData.mngDeptId);
+		});
+		
+		var subGrid = $("#subGrid").kendoGrid({
+            dataSource: {
+                transport: {
+                    read: {
+                        url: "/contents/calc/data/payCalcList.do",
+                        type: "POST",
+                        dataType: "JSON",
+                        data: $("#fSearch").serializeObject(),
+                        beforeSend: function(req) {
+                            req.setRequestHeader("AJAX", true);
+                        }
+                    }
+                },
+                schema: {
+                    data: function(response) {
+                        return response.data;
+                    },
+                    total: function(response) {
+                        return response.total;
+                    }
+                },
+                pageSize: 20,
+                serverPaging: true,
+                serverFiltering: true,
+                error: function(e) {
+                    if (e.xhr.status == "400") {
+                        alert("세션값이 존재하지 않습니다. 로그인 페이지로 이동합니다.");
+                        location.href = "/";
+                    }
+                }
+            },
+			selectable: true,
+			sortable: false,
+			pageable: false,
+			editable: false,
+			columns: subColumns,
+			noRecords: true,
+            messages: {
+                noRecords: "조회된 데이터가 없습니다."
+            }
+        }).data("kendoGrid");
     	
-    	outreqModal.kendoDialog({
-    		width: "400px",
-    		height: "200px",
-    		visible: false,
-    		title: "출금요청",
-    		closable: true,
-    		modal: false,
-    		close: function(){
-    			$("#fOutreqModal")[0].reset();
+    	// 요약 정보 설정
+    	setPaySummary();
+	}
+	
+	function onChange(e) {
+    	var grid = $("#grid").data("kendoGrid");
+    	var data = grid.dataItem(e.target);
+    	var row = grid.select();
+    	
+    	selectedDataList = [];
+    	for (var i = 0; i < row.length; i++) {
+    		selectedDataList.push(grid.dataItem(row[i]));
+    	}
+    }
+	
+	function viewCalc(orderId, allocId, mngCustId, mngDeptId) {	
+    	var searchData = {
+			orderId: orderId,
+			allocId: allocId,
+			custId: mngCustId,
+			deptId: mngDeptId
+    	}
+    	
+    	var subDataSource = new kendo.data.DataSource({
+			transport: {
+				read: {
+					url: "/contents/calc/data/payCalcList.do",
+					type: "POST",
+					dataType: "JSON",
+					data: searchData,
+					beforeSend: function(req) {
+						req.setRequestHeader("AJAX", true);
+					}
+				}
+			},
+			schema: {
+				data: function(response) {
+					return response.data;
+				},
+				total: function(response) {
+					return response.total;
+				}
+			},
+			pageSize: 20,
+			serverPaging: true,
+			serverFiltering: true,
+			error: function(e) {
+				if (e.xhr.status == "400") {
+					alert("세션값이 존재하지 않습니다. 로그인 페이지로 이동합니다.");
+					location.href = "/";
+				}
+			}
+		});
+    	
+    	var subGrid = $("#subGrid").data("kendoGrid");
+    	subGrid.setDataSource(subDataSource);
+    }
+	
+	function goExcel() {
+    	$("#loading").show();
+    	var grid = $("#grid").data("kendoGrid");
+    	grid.saveAsExcel();
+    }
+    
+    function bankChk() {
+    	row = selectedDataList;
+    	if(row.length != 1) {
+    		alert("하나의 정산내역을 선택해주세요.");
+    		return;
+    	}
+    	
+    	var param = {
+    		module: "VA",
+    		trAmt: 0,
+    		custId: row[0].custId,
+    		deptId: row[0].deptId,
+    		driverId: row[0].driverId,
+    		vehicId: row[0].vehicId,
+    		trCd: "2001",
+    		mngCustId: row[0].mngCustId,
+    		mngDeptId: row[0].mngDeptId,
+    		paySeq: row[0].paySeq,
+    		acctNm: row[0].bankCnnm
+    	}
+    
+    	$.ajax({
+    		url: "/contents/calc/data/bankChk.do",
+    		type: "POST",
+    		dataType: "json",
+    		data: param,
+    		async: true,
+    		beforeSend : function(xmlHttpRequest) {
+    			xmlHttpRequest.setRequestHeader("AJAX", "true");
+    			$("#loading").show();
+    		},
+    		success: function(data) {
+    			if(data.result) {
+    				$("#btnCheckAccNm").prop("disabled", true);				
+    			}
+    			alert(data.msg);
+    		},
+    		complete: function() {
+    			$("#loading").hide();
     		}
-    	})
+    	});
+    }
+	
+	// 지급승인 버튼클릭 이벤트 핸들러
+	function payAppro() {
+    	var paySeqArr = [];
+    	row = selectedDataList;
     	
-    	payReturnModal = $("#payReturnModal");
+    	if (row.length < 1) {
+    		alert("지급승인할 내역을 선택해주세요.");
+    		return;
+    	}
     	
-    	payReturnModal.kendoDialog({
-    		width: "500px",
-    		height: "265px",
-    		visible: false,
-    		title: "지급반려",
-    		closable: true,
-    		modal: false,
-    		close: function(){
-    			$("#fPayReturnModal")[0].reset();
+    	for (var i = 0; i < row.length; i++) {
+    		if (row[i].payApproId != null) {
+    			alert("이미 지급승인 처리된 정산입니다.")
+    			return 
     		}
-    	})
+    		paySeqArr.push(row[i].paySeq);
+    	}
+    		
+    	$.ajax({
+    		url: "/contents/calc/data/payApproUpdate.do",
+    		type: "POST",
+    		dataType: "json",
+    		data: {
+    			paySeqArr: paySeqArr.toString()
+    		},
+    		success: function(data) {
+    			if (data.result) {
+    				alert(data.msg);
+    				goList();
+    			}
+    		}
+    	});
+    }
+	
+	/*
+     * 출금요청 Modal
+     */
+	outreqModal = $("#outreqModal");
+	outreqModal.kendoDialog({
+		width: "400px",
+		height: "200px",
+		visible: false,
+		title: "출금요청",
+		closable: true,
+		modal: true,
+		close: function() {
+			$("#fOutreqModal")[0].reset();
+		}
+	});
+	
+	// 출금요청 버튼클릭 이벤트 핸들러
+	function outreqOpen() {
+    	row = selectedDataList;
+    	
+    	if (row.length < 1) {
+    		alert("출금요청할 내역을 선택해주세요.");
+    		return;
+    	}
+    
+    	for (var i = 0; i < row.length; i++) {
+    		if(row[i].payApproId == null || row[i].payApproId == '') {
+    			alert("지급승인 된 내역만 선택해 주세요.")
+    			return 
+    		}
+    	}
+    	
+    	// 출금방법 선택 시 처리자 소속이 로지스마일이 아닌경우 펌뱅킹은 선택하지 못하도록 제한한다.
+    	if (loginCustId != 'C20210802130835001') {
+        	$("#outKind option[value='F']").prop("hidden", true);
+        	$("#outKind option[value='I']").prop("selected", true);
+    	}
+    	
+    	outreqModal.data("kendoDialog").open();
+    }
+	
+	function outreqModalClose() {
+    	outreqModal.data("kendoDialog").close();
+    	
+    	// 모달 Open시 설정해 두었음.
+    	// 추후 문제 발생 시 주석 해제
+//     	$("#outKind option[value='F']").prop("hidden", false);
+//     	$("#outKind option[value='I']").prop("selected", false);
+    	
+    	$("#fOutreqModal")[0].reset();
+    }
+	
+	function outreqModalSubmit() {
+    	var paySeqArr = [];
+    	var payStateCodeArr = [];
+    	row = selectedDataList;
+    	
+    	for(var i = 0; i < row.length; i++) {
+    		paySeqArr.push(row[i].paySeq);
+    		payStateCodeArr.push(row[i].payStateCode);
+    	}
+    
+    	if($.inArray("1", payStateCodeArr) != -1 || $.inArray("2", payStateCodeArr) != -1){
+    		alert("이미 출금요청한 정산입니다.");
+    		outreqModalClose();
+    		return 
+    	}
+    	
+    	$.ajax({
+    		url: "/contents/calc/data/outreqUpdate.do",
+    		type: "POST",
+    		dataType: "json",
+    		data: {
+    			paySeqArr: paySeqArr.toString(),
+    			outKind: $("#outKind").val()
+    		},
+    		success: function(data){
+    			if (data.result) {
+    				alert(data.msg);
+    				outreqModalClose();
+    				goList();
+    			}
+    		}
+    	});
+    }
+	
+	/*
+     * 지급반려 Modal
+     */
+	payReturnModal = $("#payReturnModal");
+	payReturnModal.kendoDialog({
+		width: "500px",
+		height: "265px",
+		visible: false,
+		title: "지급반려",
+		closable: true,
+		modal: true,
+		close: function() {
+			$("#fPayReturnModal")[0].reset();
+		}
+	});
+	
+	// 지급반려 버튼클릭 이벤트 핸들러
+    function payReturn() {
+    	row = selectedDataList;
+    	
+    	if(row.length < 1) {
+    		alert("지급반려할 내역을 선택해주세요.");
+    		return;
+    	}
+    	
+    	for(var i = 0; i < row.length; i++) {
+    		if(Util.nvl(row[i].payApproId,'') != ''){
+    			alert("지급승인 된 내역은 처리 불가합니다.")
+    			return 
+    		}
+    	}
+    	
+    	payReturnModal.data("kendoDialog").open();
+    }
+	
+    function payReturnModalClose() {
+    	payReturnModal.data("kendoDialog").close();
+    	$("#fPayReturnModal")[0].reset();
+    }
+	
+    function payReturnModalSubmit() {
+    	var paySeqArr = [];
+    	var orderIdArr = [];
+    	var allocIdArr = [];
+    	row = selectedDataList;
+    	
+    	for(var i = 0; i < row.length; i++) {
+    		paySeqArr.push(row[i].paySeq);
+    		orderIdArr.push(row[i].orderId);
+    		allocIdArr.push(row[i].allocId);
+    	}
+    
+    	$.ajax({
+    		url: "/contents/calc/data/payReturn.do",
+    		type: "POST",
+    		dataType: "json",
+    		data: {
+    			paySeqArr: paySeqArr.toString(),
+    			orderIdArr: orderIdArr.toString(),
+    			allocIdArr: allocIdArr.toString(),
+    			payReturnMemo: $("#payReturnMemo").val()
+    		},
+    		success: function(data) {
+    			if (data.result) {
+    				alert(data.msg);
+    				payReturnModalClose();
+    				goList();
+    			}
+    		}
+    	});
+    }
+	
+	/*
+     * 출금처리 Modal
+     */
+    withdrawalFinishModal = $("#divWithdrawalFinish");
+    withdrawalFinishModal.kendoDialog({
+        width: "400px",
+        height: "300px",
+        visible: false,
+        title: "출금처리",
+        closable: true,
+        modal: true
     });
+    
+    function out() {
+    	var paySeqArr = [];
+    	row = selectedDataList;
+    	
+    	if (row.length < 1) {
+    		alert("출금처리할 내역을 선택해주세요.");
+    		return;
+    	}
+    	
+    	for (var i = 0; i < row.length; i++) {
+    		if (row[i].outKind == null || row[i].outKind == '') {
+    			alert("출금요청 된 내역만 선택해 주세요.")
+    			return 
+    		} else if (row[i].outKind == 'F') {
+    			alert("펌뱅킹은 출금처리 할 수 없습니다.\n인터넷뱅킹으로 요청된 내역을 선택해 주세요.")
+    			return
+    		} else {
+    			// 출금처리되지 않은 항목만 처리
+    			if (row[i].outDate == null || row[i].outDate == '') {
+    				paySeqArr.push(row[i].paySeq);
+    			}
+    		}
+    	}
+    	
+    	$("#paySeqArr").val(paySeqArr);
+    	
+    	// 출금처리 Modal
+    	withdrawalFinishModalOpen(paySeqArr);
+    }
+    
+    function withdrawalFinishModalOpen() {
+    	$("#finishMessage").html("<p>출금 처리일을 지정해 주세요.<br />이미 처리된 건은 제외됩니다.</p>");
+    	
+    	var dateOption = {
+            format: "yyyy-MM-dd",
+            value: new Date(),
+            dateInput: true,
+            max: new Date()
+        }
+    	$("#withdrawalFinishDate").kendoDatePicker(dateOption);
+    	
+    	withdrawalFinishModal.data("kendoDialog").open();
+    };
+    
+    function withdrawalFinishModalClose() {
+    	withdrawalFinishModal.data("kendoDialog").close();
+    };
+    
+    $('#fWithdrawalFinish').validator().on('submit', function(e) {
+    	e.preventDefault();
+    	
+    	var withdrawalFinishDate =  $("#withdrawalFinishDate").val();
+    	var message = "출금일을 \"" + withdrawalFinishDate + "\" 로 확정하고 출금처리를 하시겠습니까?";
+    	if (!confirm(message))
+    		return;
+    	
+    	var paySeqArr = $("#paySeqArr").val();
+    	var outDate = $("#withdrawalFinishDate").val();
+    	
+    	$.ajax({
+    		url: "/contents/calc/data/outUpdate.do",
+    		type: "POST",
+    		dataType: "json",
+    		data: {
+    			paySeqArr: paySeqArr.toString(),
+    			// 출금처리는 인터넷 뱅킹으로만 처리 가능함.
+    			//outKind: $("#outKind").val()
+    			outKind: "I",
+    			outDate: outDate
+    		},
+    		success: function(data) {
+    			if (data.result) {
+    				alert(data.msg);
+    				withdrawalFinishModalClose();
+    				goList();
+    			}
+    		}
+    	});
+    });
+	
+    /*
+     * 출금예정일 변경 Modal
+     */
+    changeWithdrawalDueDateModal = $("#divChangeWithdrawalDueDate");
+    changeWithdrawalDueDateModal.kendoDialog({
+        width: "400px",
+        height: "300px",
+        visible: false,
+        title: "출금예정일 변경",
+        closable: true,
+        modal: true
+    });
+    
+    function changeWithdrawalDueDate() {
+    	var paySeqArr = [];
+    	var row = selectedDataList;
+    	
+    	if (row.length < 1) {
+    		alert("출금예정일을 변경할 내역을 선택해주세요.");
+    		return;
+    	}
+    	
+    	// 출금예정일 변경에 대한 조건 체크
+    	for (var i = 0; i < row.length; i++) {
+    		// 출금예정일의 경우 매입정산에서 마감처리 시 확정되기 때문에 아래의 조건에 해당하지 않을듯..
+//     		if (row[i].outKind == null || row[i].outKind == '') {
+//     			alert("출금요청 된 내역만 선택해 주세요.")
+//     			return 
+//     		} else if (row[i].outKind == 'F') {
+//     			alert("펌뱅킹은 출금처리 할 수 없습니다.\n인터넷뱅킹으로 요청된 내역을 선택해 주세요.")
+//     			return
+//     		} else {
+//     			// 출금처리되지 않은 항목만 처리
+//     			if (row[i].outDate == null || row[i].outDate == '') {
+    				paySeqArr.push(row[i].paySeq);
+//     			}
+//     		}
+    	}
+    	
+    	$("#paySeqArr").val(paySeqArr);
+    	
+    	changeWithdrawalDueDateModalOpen();
+    }
+    
+    function changeWithdrawalDueDateModalOpen() {
+		$("#ChangeMessage").html("<p>출금예정일을 지정해 주세요.</p>");
+    	
+    	var dateOption = {
+            format: "yyyy-MM-dd",
+            value: new Date(),
+            dateInput: true,
+            min: new Date()
+        }
+    	$("#withdrawalDueDate").kendoDatePicker(dateOption);
+    	
+    	changeWithdrawalDueDateModal.data("kendoDialog").open();
+    }
+    
+    function changeWithdrawalDueDateModalClose() {
+    	changeWithdrawalDueDateModal.data("kendoDialog").close();
+    }
+    
+    $('#fChangeWithdrawalDueDate').validator().on('submit', function(e) {
+		e.preventDefault();
+    	
+    	var withdrawalDueDate =  $("#withdrawalDueDate").val();
+    	var message = "출금예정일을 \"" + withdrawalDueDate + "\" 로 확정하고 변경을 하시겠습니까?";
+    	if (!confirm(message))
+    		return;
+    	
+    	var paySeqArr = $("#paySeqArr").val();
+    	var withdrawalDueDate = $("#withdrawalDueDate").val();
+    	
+    	$.ajax({
+    		url: "/contents/calc/data/setWithdrawalDueDate.do",
+    		type: "POST",
+    		dataType: "json",
+    		data: {
+    			paySeqArr: paySeqArr.toString(),
+    			withdrawalDueDate: withdrawalDueDate
+    		},
+    		success: function(data) {
+    			if (data.result) {
+    				alert(data.msg);
+    				changeWithdrawalDueDateModalClose();
+    				goList();
+    			}
+    		}
+    	});
+    });
+    
+    // 요약정보 표시
+    function setPaySummary() {
+    	$.ajax({
+    		url: "/contents/calc/data/getPaySummary.do",
+    		type: "POST",
+    		dataType: "JSON",
+    		data: $("#fSearch").serializeObject(),
+    		success: function(data) {
+    			if (data.result) {
+    				// 요약정보 표시
+    				var groupCount = 
+            			"<i style=\"color: #000000\">전체 : " + Util.nvl(Util.formatNumber(data.data.tCount), '0') + "건</i> / " + 
+            			"<i style=\"color: #e84524\">미지급금 : " + Util.nvl(Util.formatNumber(data.data.tPayableAmt), '0') + "원</i> / " + 
+            			"<i style=\"color: #3f75c1\">출금액 : " + Util.nvl(Util.formatNumber(data.data.tWithdrawalAmt), '0') + "원 (" + 
+            			"펌뱅킹 : " + Util.nvl(Util.formatNumber(data.data.fWithdrawalAmt), '0') + "원 / " + 
+            			"인터넷뱅킹 : "	 + Util.nvl(Util.formatNumber(data.data.iWithdrawalAmt), '0') + "원)</i>";
+            			
+    				$("#groupCount").html(groupCount);
+    			}
+    		}
+    	});
+    }
+    
+	// 그리드 컨택스트 메뉴 처리
+    function onContextMenuSelect(e) {
+    	var item = e.item.id;
+    	
+    	switch (item) {
+    	case "cSave":
+            setPrivateSaveData("C3610", "grid", userId);
+            break;
+        case "dSave":
+            setPrivatePanel("C3610", "grid", userId);
+            break;
+    	}
+    }
     
     var columns = [
     	{ field: "number", title: "No", width: 50 },
@@ -546,447 +1181,4 @@
     	{ field: "allocId", hidden: true },
     	{ field: "invId", hidden: true }
     ];
-    
-    var headerTitle = ($("#headerTitle").text());
-    var oGrid = null;	
-    oGrid = new gridData("grid");
-    oGrid.initGrid();
-    oGrid.setSendUrl("/contents/calc/data/payList.do");
-    oGrid.setSelectable("multiple");
-    oGrid.setPageable(false);
-    oGrid.setExcelFile(headerTitle+"(" + new Date().yyyymmdd() + ").xlsx");
-    
-    var oSubGrid = null;
-    oSubGrid = new gridData("subGrid");
-    oSubGrid.initGrid();
-    oSubGrid.setSendUrl("/contents/calc/data/payCalcList.do");
-    oSubGrid.setEditable(false);
-    oSubGrid.setSelectable(true);
-    oSubGrid.setSortable(false);
-    oSubGrid.setPageable(false);
-    oSubGrid.setGrid(subColumns); 
-    
-    var selectedDataList = [];
-    
-    function goList() {
-    	var grid = $("#grid").data("kendoGrid");
-    	
-    	oGrid.setSearchData($("#fSearch").serializeObject());
-    	if(grid == null) {
-    		oGrid.setGrid(columns);
-    		grid = $("#grid").data("kendoGrid");
-    		grid.bind("change", onChange);
-    		grid.tbody.delegate('tr', 'dblclick', function(){
-    			var grid = $("#grid").data("kendoGrid");
-    			var row = grid.select();
-    			selectedData = grid.dataItem(row);
-    			
-    			viewCalc(selectedData.orderId, selectedData.allocId, selectedData.mngCustId, selectedData.mngDeptId);
-    		});
-    	} else {
-    		grid.setDataSource(oGrid.gridOption.dataSource);
-    	}
-    	$("#subGrid").data("kendoGrid").setDataSource([]);
-    }
-    
-    function onChange(e){
-    	var grid = $("#grid").data("kendoGrid");
-    	var data = grid.dataItem(e.target);
-    	var row = grid.select();
-    	selectedDataList = [];
-    	for(var i = 0; i < row.length; i++) {
-    		selectedDataList.push(grid.dataItem(row[i]));
-    	}
-    }
-    
-    function viewCalc(){	
-    	var searchData = {
-    			orderId : arguments[0],
-    			allocId : arguments[1],
-    			custId : arguments[2],
-    			deptId : arguments[3]
-    	}
-    	
-    	var subGrid = $("#subGrid").data("kendoGrid");
-    	oSubGrid.setSearchData(searchData);
-    	subGrid.setDataSource(oSubGrid.gridOption.dataSource);	
-    }
-    
-    function payAppro(){
-    	var paySeqArr = [];
-    	row = selectedDataList;
-    	
-    	if(row.length < 1) {
-    		alert("지급승인할 내역을 선택해주세요.");
-    		return;
-    	}
-    	
-    	for(var i = 0; i < row.length; i++) {
-    		if(row[i].payApproId != null){
-    			alert("이미 지급승인 처리된 정산입니다.")
-    			return 
-    		}
-    		paySeqArr.push(row[i].paySeq);
-    	}
-    		
-    	$.ajax({
-    		url: "/contents/calc/data/payApproUpdate.do",
-    		type: "POST",
-    		dataType: "json",
-    		data: {
-    			paySeqArr: paySeqArr.toString()
-    		},
-    		success: function(data){
-    			if (data.result) {
-    				alert(data.msg);
-    				goList();
-    			}
-    		}
-    	});
-    }
-    
-    function payReturn(){
-    	row = selectedDataList;
-    	
-    	if(row.length < 1) {
-    		alert("지급반려할 내역을 선택해주세요.");
-    		return;
-    	}
-    	for(var i = 0; i < row.length; i++) {
-    		if(Util.nvl(row[i].payApproId,'') != ''){
-    			alert("지급승인 된 내역은 처리 불가합니다.")
-    			return 
-    		}
-    	}
-    	
-    	payReturnModal.data("kendoDialog").open();
-    }
-    
-    function payReturnModalSubmit(){
-    	var paySeqArr = [];
-    	var orderIdArr = [];
-    	var allocIdArr = [];
-    	row = selectedDataList;
-    	
-    	for(var i = 0; i < row.length; i++) {
-    		paySeqArr.push(row[i].paySeq);
-    		orderIdArr.push(row[i].orderId);
-    		allocIdArr.push(row[i].allocId);
-    	}
-    
-    	$.ajax({
-    		url: "/contents/calc/data/payReturn.do",
-    		type: "POST",
-    		dataType: "json",
-    		data: {
-    			paySeqArr: paySeqArr.toString(),
-    			orderIdArr: orderIdArr.toString(),
-    			allocIdArr: allocIdArr.toString(),
-    			payReturnMemo: $("#payReturnMemo").val()
-    		},
-    		success: function(data){
-    			if (data.result) {
-    				alert(data.msg);
-    				payReturnModalClose();
-    				goList();
-    			}
-    		}
-    	});
-    }
-    
-    function outreqOpen(){
-    	row = selectedDataList;
-    	
-    	if(row.length < 1) {
-    		alert("출금요청할 내역을 선택해주세요.");
-    		return;
-    	}
-    
-    	for(var i = 0; i < row.length; i++) {
-    		if(row[i].payApproId == null || row[i].payApproId == ''){
-    			alert("지급승인 된 내역만 선택해 주세요.")
-    			return 
-    		}
-    	}
-    	
-    	outreqModal.data("kendoDialog").open();
-    }
-    
-    function outreqModalSubmit(){
-    	var paySeqArr = [];
-    	var payStateCodeArr = [];
-    	row = selectedDataList;
-    	
-    	for(var i = 0; i < row.length; i++) {
-    		paySeqArr.push(row[i].paySeq);
-    		payStateCodeArr.push(row[i].payStateCode);
-    	}
-    
-    	if($.inArray("1", payStateCodeArr) != -1 || $.inArray("2", payStateCodeArr) != -1){
-    		alert("이미 출금요청한 정산입니다.");
-    		outreqModalClose();
-    		return 
-    	}
-    	
-    	$.ajax({
-    		url: "/contents/calc/data/outreqUpdate.do",
-    		type: "POST",
-    		dataType: "json",
-    		data: {
-    			paySeqArr: paySeqArr.toString(),
-    			outKind: $("#outKind").val()
-    		},
-    		success: function(data){
-    			if (data.result) {
-    				alert(data.msg);
-    				outreqModalClose();
-    				goList();
-    			}
-    		}
-    	});
-    }
-    
-    function out(){
-    	var paySeqArr = [];
-    	row = selectedDataList;
-    	
-    	if (row.length < 1) {
-    		alert("출금처리할 내역을 선택해주세요.");
-    		return;
-    	}
-    	
-    	for (var i = 0; i < row.length; i++) {
-    		if (row[i].outKind == null || row[i].outKind == '') {
-    			alert("출금요청 된 내역만 선택해 주세요.")
-    			return 
-    		} else if (row[i].outKind == 'F') {
-    			alert("펌뱅킹은 출금처리 할 수 없습니다.\n인터넷뱅킹으로 요청된 내역을 선택해 주세요.")
-    			return
-    		} else {
-    			// 출금처리되지 않은 항목만 처리
-    			if (row[i].outDate == null || row[i].outDate == '') {
-    				paySeqArr.push(row[i].paySeq);
-    			}
-    		}
-    	}
-    	
-    	$("#paySeqArr").val(paySeqArr);
-    	
-    	// 출금처리 Modal
-    	withdrawalFinishModalOpen(paySeqArr);
-    }
-    
-    //excel download
-    function goExcel(){
-    	$("#loading").show();
-    	var grid = $("#grid").data("kendoGrid");
-    	grid.saveAsExcel();
-    }
-    
-    function bankChk(){
-    	row = selectedDataList;
-    	if(row.length != 1) {
-    		alert("하나의 정산내역을 선택해주세요.");
-    		return;
-    	}
-    	
-    	var param = {
-    		module: "VA",
-    		trAmt: 0,
-    		custId: row[0].custId,
-    		deptId: row[0].deptId,
-    		driverId: row[0].driverId,
-    		vehicId: row[0].vehicId,
-    		trCd: "2001",
-    		mngCustId: row[0].mngCustId,
-    		mngDeptId: row[0].mngDeptId,
-    		paySeq: row[0].paySeq,
-    		acctNm: row[0].bankCnnm
-    	}
-    
-    	$.ajax({
-    		url: "/contents/calc/data/bankChk.do",
-    		type: "POST",
-    		dataType: "json",
-    		data: param,
-    		async: true,
-    		beforeSend : function(xmlHttpRequest){
-    			xmlHttpRequest.setRequestHeader("AJAX", "true");
-    			$("#loading").show();
-    		},
-    		success: function(data) {
-    			if(data.result) {
-    				$("#btnCheckAccNm").prop("disabled", true);				
-    			}
-    			alert(data.msg);
-    		},
-    		complete:function(){
-    			$("#loading").hide();
-    		}
-    	});
-    }
-    
-    function outreqModalClose(){
-    	outreqModal.data("kendoDialog").close();
-    	$("#fOutreqModal")[0].reset();
-    }
-    
-    function payReturnModalClose(){
-    	payReturnModal.data("kendoDialog").close();
-    	$("#fPayReturnModal")[0].reset();
-    }
-    
-    /*
-     * 출금처리 Modal
-     */
-    withdrawalFinishModal = $("#divWithdrawalFinish");
-    withdrawalFinishModal.kendoDialog({
-        width: "400px",
-        height: "300px",
-        visible: false,
-        title: "출금처리",
-        closable: true,
-        modal: true
-    });
-    
-    function withdrawalFinishModalOpen() {
-    	$("#finishMessage").html("<p>출금 처리일을 지정해 주세요.<br />이미 처리된 건은 제외됩니다.</p>");
-    	
-    	var dateOption = {
-            format: "yyyy-MM-dd",
-            value: new Date(),
-            dateInput: true,
-            max: new Date()
-        }
-    	$("#withdrawalFinishDate").kendoDatePicker(dateOption);
-    	
-    	withdrawalFinishModal.data("kendoDialog").open();
-    };
-    
-    function withdrawalFinishModalClose() {
-    	withdrawalFinishModal.data("kendoDialog").close();
-    };
-    
-    $('#fWithdrawalFinish').validator().on('submit', function(e) {
-    	e.preventDefault();
-    	
-    	var withdrawalFinishDate =  $("#withdrawalFinishDate").val();
-    	var message = "출금일을 \"" + withdrawalFinishDate + "\" 로 확정하고 출금처리를 하시겠습니까?";
-    	if (!confirm(message))
-    		return;
-    	
-    	var paySeqArr = $("#paySeqArr").val();
-    	var outDate = $("#withdrawalFinishDate").val();
-    	
-    	$.ajax({
-    		url: "/contents/calc/data/outUpdate.do",
-    		type: "POST",
-    		dataType: "json",
-    		data: {
-    			paySeqArr: paySeqArr.toString(),
-    			// 출금처리는 인터넷 뱅킹으로만 처리 가능함.
-    			//outKind: $("#outKind").val()
-    			outKind: "I",
-    			outDate: outDate
-    		},
-    		success: function(data) {
-    			if (data.result) {
-    				alert(data.msg);
-    				withdrawalFinishModalClose();
-    				goList();
-    			}
-    		}
-    	});
-    });
-    
-    /*
-     * 출금예정일 변경 Modal
-     */
-    changeWithdrawalDueDateModal = $("#divChangeWithdrawalDueDate");
-    changeWithdrawalDueDateModal.kendoDialog({
-        width: "400px",
-        height: "300px",
-        visible: false,
-        title: "출금예정일 변경",
-        closable: true,
-        modal: true
-    });
-    
-    function changeWithdrawalDueDate() {
-    	var paySeqArr = [];
-    	var row = selectedDataList;
-    	
-    	if (row.length < 1) {
-    		alert("출금예정일을 변경할 내역을 선택해주세요.");
-    		return;
-    	}
-    	
-    	// 출금예정일 변경에 대한 조건 체크
-    	for (var i = 0; i < row.length; i++) {
-    		// 출금예정일의 경우 매입정산에서 마감처리 시 확정되기 때문에 아래의 조건에 해당하지 않을듯..
-//     		if (row[i].outKind == null || row[i].outKind == '') {
-//     			alert("출금요청 된 내역만 선택해 주세요.")
-//     			return 
-//     		} else if (row[i].outKind == 'F') {
-//     			alert("펌뱅킹은 출금처리 할 수 없습니다.\n인터넷뱅킹으로 요청된 내역을 선택해 주세요.")
-//     			return
-//     		} else {
-//     			// 출금처리되지 않은 항목만 처리
-//     			if (row[i].outDate == null || row[i].outDate == '') {
-    				paySeqArr.push(row[i].paySeq);
-//     			}
-//     		}
-    	}
-    	
-    	$("#paySeqArr").val(paySeqArr);
-    	
-    	changeWithdrawalDueDateModalOpen();
-    }
-    
-    function changeWithdrawalDueDateModalOpen() {
-		$("#ChangeMessage").html("<p>출금예정일을 지정해 주세요.</p>");
-    	
-    	var dateOption = {
-            format: "yyyy-MM-dd",
-            value: new Date(),
-            dateInput: true,
-            min: new Date()
-        }
-    	$("#withdrawalDueDate").kendoDatePicker(dateOption);
-    	
-    	changeWithdrawalDueDateModal.data("kendoDialog").open();
-    }
-    
-    function changeWithdrawalDueDateModalClose() {
-    	changeWithdrawalDueDateModal.data("kendoDialog").close();
-    }
-    
-    $('#fChangeWithdrawalDueDate').validator().on('submit', function(e) {
-		e.preventDefault();
-    	
-    	var withdrawalDueDate =  $("#withdrawalDueDate").val();
-    	var message = "출금예정일을 \"" + withdrawalDueDate + "\" 로 확정하고 변경을 하시겠습니까?";
-    	if (!confirm(message))
-    		return;
-    	
-    	var paySeqArr = $("#paySeqArr").val();
-    	var withdrawalDueDate = $("#withdrawalDueDate").val();
-    	
-    	$.ajax({
-    		url: "/contents/calc/data/setWithdrawalDueDate.do",
-    		type: "POST",
-    		dataType: "json",
-    		data: {
-    			paySeqArr: paySeqArr.toString(),
-    			withdrawalDueDate: withdrawalDueDate
-    		},
-    		success: function(data) {
-    			if (data.result) {
-    				alert(data.msg);
-    				changeWithdrawalDueDateModalClose();
-    				goList();
-    			}
-    		}
-    	});
-    });
 </script>
