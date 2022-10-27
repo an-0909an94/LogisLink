@@ -2892,18 +2892,9 @@ $('#sellCharge').on("input", function() {
     $("#sellCharge").val(Util.formatNumberInput($("#sellCharge").val().trim()));
 });
 
-$('#buyChargeD').on("input", function() {
-    var buyChargeD = /^\d*$/;
-    if(!buyChargeD.test($("#buyChargeD").val().trim().replace(/,/g, ""))){
-        alert("\"지불운임\"에 숫자를 입력하시기 바랍니다.");
-        $("#buyChargeD").val("")
-        return;
-    }
-    $("#buyChargeD").val(Util.formatNumberInput($("#buyChargeD").val().trim()));
-});
-
 
 $('#sellWeight').on("input", function() {
+	if($('input[name="unitPriceType"]:checked').val() == "02"){
 		var sellWeight = /^(\d*)[\.]?(\d{1,})?$/;
 		if(!sellWeight.test($("#sellWeight").val())){
 		    alert("\"청구중량\"에 숫자를 입력하시기 바랍니다.");
