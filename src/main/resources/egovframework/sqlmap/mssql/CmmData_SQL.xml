@@ -257,7 +257,7 @@
 				, ISNULL(RI,'')	RI
 				, RTRIM(CONCAT(SIDO,' ', GUGUN,' ', DONG, ' ', RI)) FULLADDR
 				FROM
-				dbo.zipcode
+				dbo.ZIP_CODE
 				group by SIDO,GUGUN,DONG,RI
 			) A
 
@@ -277,7 +277,7 @@
 		COUNT(1) retCnt
 		FROM( SELECT SIDO , GUGUN , DONG , RI ,
 		     RTRIM(CONCAT(SIDO,' ',GUGUN,' ', DONG, ' ', RI)) FULLADDR
-		     FROM dbo.zipcode
+		     FROM dbo.ZIP_CODE
 		     group by SIDO,GUGUN,DONG,RI
 		     ) A
 		<if test='fullAddr != null and !"".equals(fullAddr)'>
