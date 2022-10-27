@@ -1,6 +1,5 @@
 var AddrComboBox = {
     setAddrName: function(gbn,deptId,pageMode,paramName) {
-
         var addrName = $("#" + gbn).kendoMultiColumnComboBox({
             dataTextField: "fullAddr",
             dataValueField: "fullAddr",
