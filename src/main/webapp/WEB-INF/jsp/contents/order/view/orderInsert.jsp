@@ -2869,7 +2869,7 @@ function popDriverStateModalClose() {
 
 $('#unitCharge').on("input", function() {
 	var unitCharge = /^\d*$/;
-	if(!unitCharge.test($("#unitCharge").val().replace(/,/g, ""))){
+	if(!unitCharge.test($("#unitCharge").val().trim().replace(/,/g, ""))){
 	    alert("\"단가입력\"에 숫자를 입력하시기 바랍니다.");
 	    $("#unitCharge").val("")
 	    return;
@@ -2879,20 +2879,31 @@ $('#unitCharge').on("input", function() {
 		var sellCharge = charge.toString().split(".");
 		$("#sellCharge").val(Util.formatNumberInput(sellCharge[0]));
 	}else{
-		$("#sellCharge").val(Util.formatNumberInput($("#unitCharge").val()));
+		$("#sellCharge").val(Util.formatNumberInput($("#unitCharge").val().trim()));
 	}
 });
 $('#sellCharge').on("input", function() {
     var sellCharge = /^\d*$/;
-    if(!sellCharge.test($("#sellCharge").val().replace(/,/g, ""))){
+    if(!sellCharge.test($("#sellCharge").val().trim().replace(/,/g, ""))){
         alert("\"기본운임\"에 숫자를 입력하시기 바랍니다.");
         $("#sellCharge").val("")
         return;
     }
+    $("#sellCharge").val(Util.formatNumberInput($("#sellCharge").val().trim()));
 });
 
+$('#buyChargeD').on("input", function() {
+    var buyChargeD = /^\d*$/;
+    if(!buyChargeD.test($("#buyChargeD").val().trim().replace(/,/g, ""))){
+        alert("\"지불운임\"에 숫자를 입력하시기 바랍니다.");
+        $("#buyChargeD").val("")
+        return;
+    }
+    $("#buyChargeD").val(Util.formatNumberInput($("#buyChargeD").val().trim()));
+});
+
+
 $('#sellWeight').on("input", function() {
-	if($('input[name="unitPriceType"]:checked').val() == "02"){
 		var sellWeight = /^(\d*)[\.]?(\d{1,})?$/;
 		if(!sellWeight.test($("#sellWeight").val())){
 		    alert("\"청구중량\"에 숫자를 입력하시기 바랍니다.");
@@ -3116,7 +3127,7 @@ function searchCarNumSelectTrigger(e) {
 }
 
 $("#sellCharge, #buyChargeC, #buyChargeD, #sellFee, input[name='addCharge'], input[name='addSellCharge'], #unitCharge").on("input", function(){
-	$(this).val(Util.formatNumberInput($(this).val()));
+	$(this).val(Util.formatNumberInput($(this).val().trim()));
 });
 
 $("#driverTel, #reqTel, #sTel, #eTel, #buyStaffTel, #buyDriverTel").on("input", function(){
