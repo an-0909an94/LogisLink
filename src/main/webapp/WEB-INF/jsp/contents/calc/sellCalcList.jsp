@@ -785,8 +785,9 @@
             	}
             },
             columns: [
-            	{ field: "custName", title: "거래처명", width: "220" },
-            	{ field: "deptName", title: "부서명", width: "120" }
+            	{ field: "custName", title: "거래처명", width: "200" },
+            	{ field: "deptName", title: "부서명", width: "120" },
+            	{ field: "mngDeptName", title: "담당부서명", width: "120" }
             ]
 		}).data("kendoMultiColumnComboBox");
     	
