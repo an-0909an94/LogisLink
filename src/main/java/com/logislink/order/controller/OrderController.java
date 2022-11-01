@@ -50,33 +50,33 @@ public class OrderController {
 
 	@Value("#{globalProperties['Globals.mainCustId']}")
 	private String mainCustId;
-	
+
 	@Resource(name="orderService")
 	private OrderService orderService;
 
 	@Resource(name="custService")
 	private CustService custService;
-	
+
 	@Resource(name="carService")
 	private CarService carService;
-	
+
 	@Resource(name="calcService")
 	private CalcService calcService;
 
 	@Resource(name="cmmService")
 	private CmmService cmmService;
-	
+
 	@Autowired
 	private RestService restService;
-	
+
 	@GetMapping(value="/contents/order/view/orderStopDetail.do")
 	public String getOrderStopDetail(HttpServletRequest request, HttpSession session, ModelMap model
-									, @RequestParam Map<String, Object> param) {
+			, @RequestParam Map<String, Object> param) {
 		model.addAttribute("orderId", param.get("orderId"));
 		model.addAttribute("deptId", param.get("deptId"));
 		return "contents/order/view/orderStopDetail";
 	}
-	
+
 	@GetMapping(value="/contents/order/orderList.do")
 	public String getOrderList(HttpServletRequest request, HttpSession session, ModelMap model) {
 
@@ -87,18 +87,18 @@ public class OrderController {
 		model.put("mainCustId", mainCustId);
 		return "contents/order/orderList";
 	}
-	
+
 	@GetMapping(value="/contents/order/view/sendLinkPop.do")
 	public String sendLinkPop(HttpServletRequest request, HttpServletResponse response, Model model,
-								ModelMap map, @RequestParam Map<String, Object> param) throws Exception {
+							  ModelMap map, @RequestParam Map<String, Object> param) throws Exception {
 
 		String charge = "";
 		if(param.get("allocId") != null) {
 			Map<String, Object> chargeMap = orderService.getAllocCharge(param);
-			
+
 			if(chargeMap != null) {
 				charge = String.valueOf(chargeMap.get("charge"));
-			}	
+			}
 		}
 		
 		/*int avgFare = orderService.getAvgFare(param);
@@ -106,17 +106,17 @@ public class OrderController {
 		model.addAttribute("allocCharge", charge);
 		return "contents/order/view/sendLinkPop";
 	}
-	
+
 	@PostMapping(value="/contents/order/data/orderWrite.do")
 	public String orderWrite(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-							@RequestParam Map<String, Object> param) throws Exception{
-		
+							 @RequestParam Map<String, Object> param) throws Exception{
+
 		String resMsg = "";
 		if("E".equals(param.get("mode"))) {
 			if(!EtcUtil.checkAuth(request, orderCode, "E")) {
 				map.put("result", Boolean.FALSE);
 				map.put("msg", "해당 권한이 없습니다.");
-				
+
 				return "jsonView";
 			}
 			param.put("editId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
@@ -124,33 +124,33 @@ public class OrderController {
 			if(!EtcUtil.checkAuth(request, orderCode, "W")) {
 				map.put("result", Boolean.FALSE);
 				map.put("msg", "해당 권한이 없습니다.");
-				
+
 				return "jsonView";
-			}			
+			}
 			param.put("regId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
-		} 
+		}
 
 		param.put("custId", ((LoginVO) session.getAttribute("userInfo")).getCustId());
 		//param.put("deptId", ((LoginVO) session.getAttribute("userInfo")).getDeptId());
-		
-		
+
+
 		param.put("loginId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
 		orderService.orderWrite(param);
 		/*
 		if(param.get("carSctnCode") != "") {
 			carService.updateCarSctnCode(param);
 		}*/
-		
-		param.put("orderId", param.get("retId"));	
-		
+
+		param.put("orderId", param.get("retId"));
+
 		ObjectMapper objectMapper ;
 		if(param.get("orderStopData") != null && !"".equals(param.get("orderStopData"))) {
 
 			String jsonParam = String.valueOf(param.get("orderStopData"));
-			
-			objectMapper = new ObjectMapper(); 
+
+			objectMapper = new ObjectMapper();
 			List<Map<String, Object>> readValue = objectMapper.readValue(jsonParam, new TypeReference<List<Map<String, Object>>>(){});
-			
+
 			param.put("list", readValue);
 			orderService.insertOrderStop(param);
 
@@ -160,7 +160,7 @@ public class OrderController {
 			List<String> codeList = Arrays.asList(((String) param.get("addCodeList")).split("╊"));
 			List<String> chargeList = Arrays.asList(((String) param.get("addChargeList")).split("╊"));
 			List<String> memoList = Arrays.asList(((String) param.get("addMemoList")).split("╊"));
-			
+
 			if(!chargeList.isEmpty()) {
 				List<Map<String, Object>> addList = new ArrayList<>();
 				for(int i=0; i < codeList.size(); i++) {
@@ -168,7 +168,7 @@ public class OrderController {
 					tmp.put("code", codeList.get(i));
 					tmp.put("charge", chargeList.get(i));
 					tmp.put("memo", memoList.get(i));
-					
+
 					addList.add(tmp);
 				}
 
@@ -186,17 +186,17 @@ public class OrderController {
 					if(param.get("buyCarNum") != null && !"".equals(param.get("buyCarNum"))) {
 						orderService.insertAllocAddToCalc(param);
 					}
-					
-				}	
+
+				}
 			}
 		}
-		
+
 		//매출추가비용 저장
 		if(param.get("addSellCodeList") != null && param.get("outSellTaxCnt") == null && "00".equals(param.get("retCode"))) {
 			List<String> codeList = Arrays.asList(((String) param.get("addSellCodeList")).split("╊"));
 			List<String> chargeList = Arrays.asList(((String) param.get("addSellChargeList")).split("╊"));
 			List<String> memoList = Arrays.asList(((String) param.get("addSellMemoList")).split("╊"));
-			
+
 			if(!chargeList.isEmpty()) {
 				List<Map<String, Object>> addList = new ArrayList<>();
 				for(int i=0; i < codeList.size(); i++) {
@@ -204,7 +204,7 @@ public class OrderController {
 					tmp.put("code", codeList.get(i));
 					tmp.put("charge", chargeList.get(i));
 					tmp.put("memo", memoList.get(i));
-					
+
 					addList.add(tmp);
 				}
 
@@ -222,11 +222,11 @@ public class OrderController {
 					if(param.get("buyCarNum") != null && !"".equals(param.get("buyCarNum"))) {
 						orderService.insertAllocAddToCalc(param);
 					}
-					
-				}	
+
+				}
 			}
 		}
-		
+
 
 		//날씨정보 (접수-> 배차 시 추가정보 요청)
 		/*if(("00".equals(param.get("allocState")) || "".equals(param.get("allocState")) ) &&  param.get("buyCarNum") != null && !"".equals(param.get("buyCarNum"))) {
@@ -248,10 +248,10 @@ public class OrderController {
 			Map<String, Object> opiMap = restService.sendOpinetApi(apiParam);	
 			if(opiMap != null) cmmService.insertOpiInfo(opiMap);
 		}*/
-		
+
 		if ("Y".equals(param.get("sAreaSave"))) {
 			CustAddrVO sAddr = new CustAddrVO((String) param.get("custId")
-					, (String) param.get("deptId") 
+					, (String) param.get("deptId")
 					, (String) param.get("sComName")
 					, (String) param.get("sAddr")
 					, (String) param.get("sAddrDetail")
@@ -265,17 +265,17 @@ public class OrderController {
 					, (String) param.get("sGungu")
 					, (String) param.get("sDong")
 					, "O");
-				
-					
+
+
 			objectMapper = new ObjectMapper();
 			Map<String, Object> param1 = objectMapper.convertValue(sAddr, Map.class);
-			
+
 			custService.insertCustAddr(param1);
 		}
-		
+
 		if ("Y".equals(param.get("eAreaSave"))) {
 			CustAddrVO eAddr = new CustAddrVO((String) param.get("custId")
-					, (String) param.get("deptId") 
+					, (String) param.get("deptId")
 					, (String) param.get("eComName")
 					, (String) param.get("eAddr")
 					, (String) param.get("eAddrDetail")
@@ -289,24 +289,24 @@ public class OrderController {
 					, (String) param.get("eGungu")
 					, (String) param.get("eDong")
 					, "O");
-				   
+
 			objectMapper = new ObjectMapper();
 			Map<String, Object> param1 = objectMapper.convertValue(eAddr, Map.class);
-			
+
 			custService.insertCustAddr(param1);
 		}
-		
-		
+
+
 		resMsg = (String) param.get("retMsg");
-		
+
 		map.put("result", Boolean.TRUE);
 		map.put("data", param);
 		map.put("msg", resMsg);
-		
+
 		return "jsonView";
-		
+
 	}
-	
+
 	@PostMapping(value="/contents/order/data/orderList.do")
 	public String orderList(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
 							@RequestParam Map<String, Object> param) throws Exception {
@@ -315,7 +315,7 @@ public class OrderController {
 		//String deptId = login.getDeptId();
 
 		String allocState = String.valueOf(param.get("sAllocState"));
-		
+
 		if (param.get("sAllocState") != null && !"".equals(param.get("sAllocState"))) {
 			if ("01,04,05,12".indexOf(allocState) >= 0) {
 				param.put("driverState", allocState);
@@ -323,52 +323,52 @@ public class OrderController {
 				param.put("allocState", allocState);
 			}
 		}
-		
+
 		param.put("custId", custId);
 		param.put("deptId", param.get("sDeptId"));
-		
+
 		List<OrderVO> list = orderService.getOrderList(param);
 		Map<String,Object> count = orderService.getCnt(param);
-		
+
 		map.put("data", list);
 		map.put("total", count.get("retCnt"));
 		map.put("summary", count);
-		
+
 		return "jsonView";
 	}
 
 	@PostMapping(value="/contents/order/data/orderDetail.do")
 	public String orderDetail(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-							@RequestParam Map<String, Object> param) throws Exception {
+							  @RequestParam Map<String, Object> param) throws Exception {
 		LoginVO login = (LoginVO) session.getAttribute("userInfo");
 		String custId = login.getCustId();
 
 		param.put("custId", custId);
-		
+
 		OrderVO data = orderService.getOrderDetail(param);
-		
+
 		map.put("result", Boolean.TRUE);
 		map.put("data", data);
-		
+
 		return "jsonView";
 	}
-	
+
 	@PostMapping(value="/contents/order/data/orderStopList.do")
 	public String orderStopList(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
 								@RequestParam Map<String, Object> param) throws Exception {
-		
+
 		List<OrderStopVO> list = orderService.getOrderStop(param);
-		
+
 		map.put("result", Boolean.TRUE);
 		map.put("data", list);
-		
+
 		return "jsonView";
 	}
-	
+
 	@PostMapping(value="/contents/order/data/orderLbsList.do")
 	public String orderLbsList(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-								@RequestParam Map<String, Object> param) throws Exception {
-		
+							   @RequestParam Map<String, Object> param) throws Exception {
+
 		List<DrvLocVO> list = orderService.getOrderLbs(param);
 
 		if(list.isEmpty()) {
@@ -376,47 +376,47 @@ public class OrderController {
 			map.put("msg", "위치 정보가 없습니다.");
 		} else {
 			map.put("result", Boolean.TRUE);
-			map.put("data", list);	
+			map.put("data", list);
 		}
-		
+
 		return "jsonView";
 	}
-	
+
 	@PostMapping(value="/contents/order/data/orderStopFinish.do")
 	public String orderStopFinish(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-			@RequestParam Map<String, Object> param) throws Exception {
+								  @RequestParam Map<String, Object> param) throws Exception {
 
 		orderService.updateOrderStopFinish(param);
-		
+
 		map.put("result", Boolean.TRUE);
 		map.put("msg", "도착 처리 되었습니다.");
-		
+
 		return "jsonView";
 	}
-		
+
 	@GetMapping(value="/contents/order/view/viewLocation.do")
 	public String orderCar(HttpServletRequest request, HttpSession session, ModelMap model) {
 		return "contents/order/view/viewLocation";
-	}	
-	
+	}
+
 	@PostMapping(value="/contents/order/data/linkList.do")
 	public String linkList(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-							@RequestParam Map<String, Object> param) throws Exception {
+						   @RequestParam Map<String, Object> param) throws Exception {
 		List<Map<String, Object>> linkList = orderService.getLinkList(param);
 		int count = orderService.getLinkCnt(param);
-		
+
 		map.put("data", linkList);
 		map.put("total", count);
-		
+
 		return "jsonView";
 	}
-	
+
 	@PostMapping(value="/contents/order/data/linkWrite.do")
 	public String linkWrite(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
 							@RequestParam Map<String, Object> param) throws Exception{
-		
+
 		String resMsg = "";
-		
+
 		param.put("linkStatus", "11");
 		param.put("regId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
 		List<String> linkTypeList = Arrays.asList(((String) param.get("linkTypes")).split(","));
@@ -426,7 +426,7 @@ public class OrderController {
 		if ("ADDORDER".equals(param.get("command")) || "MODORDER".equals(param.get("command")) || "REOPENORDER".equals(param.get("command"))) {
 
 			HashMap<String, Object> linkDate = orderService.linkDateChk(param);
-			
+
 			if("00".equals(linkDate.get("retCode"))) {
 				map.put("result", Boolean.TRUE);
 				map.put("cnt", linkDate.get("retCnt"));
@@ -434,10 +434,10 @@ public class OrderController {
 			} else if("99".equals(linkDate.get("retCode"))) {
 				map.put("result", Boolean.FALSE);
 				map.put("msg", linkDate.get("retMsg"));
-				return "jsonView";	
+				return "jsonView";
 			}
-		} 
-		
+		}
+
 		for(int i=0; i < linkTypeList.size(); i++) {
 			//정보망 톤수 검증
 			param.put("linkTypes", linkTypeArr[i]);
@@ -449,9 +449,9 @@ public class OrderController {
 			} else if("99".equals(carTon.get("retCode"))) {
 				map.put("result", Boolean.FALSE);
 				map.put("msg", carTon.get("retMsg"));
-				return "jsonView";	
+				return "jsonView";
 			}
-			
+
 			//정보망 차종 검증		
 			HashMap<String, Object> carType = orderService.linkCarTypeChk(param);
 			if("00".equals(carType.get("retCode"))) {
@@ -461,35 +461,35 @@ public class OrderController {
 			} else if("99".equals(carType.get("retCode"))) {
 				map.put("result", Boolean.FALSE);
 				map.put("msg", carType.get("retMsg"));
-				return "jsonView";	
+				return "jsonView";
 			}
-			
+
 			if(param.get("linkTypes") != null) {
 				orderService.linkWrite(param);
 			}
 		}
 
 		if(param.get("linkTypes") == null) {
-	        param.put("linkTypes", param.get("linkType"));
-			orderService.linkWrite(param);	
+			param.put("linkTypes", param.get("linkType"));
+			orderService.linkWrite(param);
 		}
-		
+
 		if(!"00".equals(param.get("retCode"))) {
 			map.put("result", Boolean.FALSE);
 			map.put("msg", param.get("retMsg"));
 		} else {
 			map.put("result", Boolean.TRUE);
-			map.put("msg", param.get("retMsg"));	
+			map.put("msg", param.get("retMsg"));
 			map.put("oAllocId", param.get("oAllocId"));
 		}
-		
-		
-		return "jsonView";		
+
+
+		return "jsonView";
 	}
 
 	@PostMapping(value="/contents/order/data/orderState.do")
 	public String orderState(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-								@RequestParam Map<String, Object> param ) throws Exception {
+							 @RequestParam Map<String, Object> param ) throws Exception {
 
 		orderService.updateOrderState(param);
 
@@ -498,19 +498,19 @@ public class OrderController {
 			map.put("msg", param.get("retMsg"));
 		} else {
 			map.put("result", Boolean.TRUE);
-			map.put("msg", param.get("retMsg"));	
+			map.put("msg", param.get("retMsg"));
 		}
-		return "jsonView";		
+		return "jsonView";
 	}
-	
+
 	@PostMapping(value="/contents/order/data/orderAlloc.do")
 	public String orderAlloc(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-								@RequestParam Map<String, Object> param ) throws Exception {
+							 @RequestParam Map<String, Object> param ) throws Exception {
 
 		if("".equals(param.get("staffId")) || param.get("staffId") == null ) {
 			param.put("staffId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
 		}
-		
+
 		orderService.updateOrderAlloc(param);
 
 		if(!"00".equals(param.get("retCode"))) {
@@ -518,35 +518,35 @@ public class OrderController {
 			map.put("msg", param.get("retMsg"));
 		} else {
 			map.put("result", Boolean.TRUE);
-			map.put("msg", param.get("retMsg"));	
+			map.put("msg", param.get("retMsg"));
 		}
-		
-		return "jsonView";		
-	}	
-	
+
+		return "jsonView";
+	}
+
 	@PostMapping(value="/contents/order/data/allocState.do")
 	public String allocState(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-								@RequestParam Map<String, Object> param ) throws Exception {
+							 @RequestParam Map<String, Object> param ) throws Exception {
 
 		orderService.updateAllocState(param);
-		
+
 		if(!"00".equals(param.get("retCode"))) {
 			map.put("result", Boolean.FALSE);
 			map.put("msg", param.get("retMsg"));
 		} else {
 			map.put("result", Boolean.TRUE);
-			map.put("msg", param.get("retMsg"));	
+			map.put("msg", param.get("retMsg"));
 		}
-		
-		return "jsonView";		
+
+		return "jsonView";
 	}
-	
+
 	@PostMapping(value="/contents/order/data/getCharge.do")
 	public String getCharge(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
 							@RequestParam Map<String, Object> param) throws Exception{
-		
+
 		String resMsg = "";
-		
+
 		if("S".equals((String)param.get("mode"))) {
 			param.put("buyCustId", ((LoginVO) session.getAttribute("userInfo")).getCustId());
 			param.put("buyDeptId", ((LoginVO) session.getAttribute("userInfo")).getDeptId());
@@ -554,66 +554,66 @@ public class OrderController {
 			param.put("sellCustId", ((LoginVO) session.getAttribute("userInfo")).getCustId());
 			param.put("sellDeptId", ((LoginVO) session.getAttribute("userInfo")).getDeptId());
 		}
-		
+
 		BigInteger charge = orderService.getCharge(param);
-		
+
 		map.put("result", Boolean.TRUE);
 		map.put("charge", charge.toString());
-		
+
 		return "jsonView";
-		
+
 	}
-	
+
 	@PostMapping(value="/contents/order/data/linkCancelOrder.do")
 	public String linkCancelOrder(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-							@RequestParam Map<String, Object> param) throws Exception{
-		
+								  @RequestParam Map<String, Object> param) throws Exception{
+
 		param.put("regId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
-		
+
 		orderService.linkCancelOrder(param);
-		
+
 		if(!"00".equals(param.get("retCode"))) {
 			map.put("result", Boolean.FALSE);
 		} else {
 			map.put("result", Boolean.TRUE);
 		}
-		
-		
-		return "jsonView";		
+
+
+		return "jsonView";
 	}
 
 	@PostMapping(value="/contents/order/data/linkSettle.do")
 	public String linkSettle(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-							@RequestParam Map<String, Object> param) throws Exception{
+							 @RequestParam Map<String, Object> param) throws Exception{
 
 		param.put("regId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
-		
+
 		orderService.linkSettle(param);
-		
+
 		if("00".equals(param.get("retCode"))) {
 			map.put("result", Boolean.TRUE);
-			map.put("msg", param.get("retMsg"));	
+			map.put("msg", param.get("retMsg"));
 		} else if("99".equals(param.get("retCode"))) {
 			map.put("result", Boolean.FALSE);
-			map.put("msg", param.get("retMsg"));	
+			map.put("msg", param.get("retMsg"));
 		}
-		
-		return "jsonView";		
+
+		return "jsonView";
 	}
 
 	@GetMapping(value="/contents/order/view/driverOrderHistory.do")
 	public String driverOrderHistoryView(HttpServletRequest request, HttpSession session, ModelMap model) {
 		return "contents/order/view/driverOrderHistory";
-	}	
-	
+	}
+
 	@PostMapping(value="/contents/order/data/driverOrderHistory.do")
 	public String driverOrderHistory(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-							@RequestParam Map<String, Object> param) throws Exception {
+									 @RequestParam Map<String, Object> param) throws Exception {
 		LoginVO login = (LoginVO) session.getAttribute("userInfo");
 		String custId = login.getCustId();
 
 		String allocState = String.valueOf(param.get("sAllocState"));
-		
+
 		if (param.get("sAllocState") != null && !"".equals(param.get("sAllocState"))) {
 			if ("01,04,05,12".indexOf(allocState) >= 0) {
 				param.put("driverState", allocState);
@@ -621,18 +621,18 @@ public class OrderController {
 				param.put("allocState", allocState);
 			}
 		}
-		
+
 		param.put("custId", custId);
-		
+
 		List<Map<String,Object>> list = orderService.getDriverOrderHistoryList(param);
 		int count = orderService.getDriverOrderHistoryCnt(param);
-		
+
 		map.put("data", list);
 		map.put("total", count);
-		
+
 		return "jsonView";
 	}
-	
+
 	@GetMapping(value = "/contents/order/view/linkDriverView.do")
 	public String linkDriverView(HttpServletRequest request, HttpSession session, ModelMap model) {
 		return "contents/order/view/linkDriverView";
@@ -640,7 +640,7 @@ public class OrderController {
 
 	@PostMapping(value = "/contents/order/data/updateLinkDriver.do")
 	public String updateLinkDriver(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-			@RequestParam Map<String, Object> param) throws Exception {
+								   @RequestParam Map<String, Object> param) throws Exception {
 		LoginVO login = (LoginVO) session.getAttribute("userInfo");
 		String custId = login.getCustId();
 
@@ -662,10 +662,10 @@ public class OrderController {
 
 	@PostMapping(value = "/contents/order/data/priceDetail.do")
 	public String priceDetail(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-			@RequestParam Map<String, Object> param) throws Exception {
+							  @RequestParam Map<String, Object> param) throws Exception {
 
 		Map<String, Object> data = orderService.priceDetail(param);
-		
+
 		map.put("data", data);
 
 		return "jsonView";
@@ -675,78 +675,78 @@ public class OrderController {
 	public String orderSituation(HttpServletRequest request, HttpSession session, ModelMap model) {
 		LoginMenuVO loginMenu = EtcUtil.checkAuth(request, situationCode);
 		model.put("menuAuth", loginMenu);
-		
+
 		return "contents/order/orderSituation";
 	}
-	
+
 	@PostMapping(value="/contents/order/data/orderSituation.do")
 	public String orderSituation(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-							@RequestParam Map<String, Object> param) throws Exception {
+								 @RequestParam Map<String, Object> param) throws Exception {
 		LoginVO login = (LoginVO) session.getAttribute("userInfo");
 		String custId = login.getCustId();
-		
+
 		if(param.get("checkCarSctnCodes") != null) {
 			List<String> checkCarSctnCodes = Arrays.asList(((String) param.get("checkCarSctnCodes")).split(","));
 			List<Map<String, Object>> addList = new ArrayList<>();
 			for(int i=0; i < checkCarSctnCodes.size(); i++) {
 				Map<String, Object > tmp = new HashMap<>();
 				tmp.put("carSctnCode", checkCarSctnCodes.get(i));
-				
+
 				addList.add(tmp);
 			}
 			param.put("addList", addList);
 		}
 		param.put("custId", custId);
-		
+
 		List<OrderVO> list = orderService.getOrderSituation(param);
-		
+
 		map.put("data", list);
-		
+
 		return "jsonView";
 	}
-	
+
 	@GetMapping(value="/contents/order/view/orderHistory.do")
 	public String orderHistory(HttpServletRequest request, HttpSession session, ModelMap model) {
 		return "contents/order/view/orderHistory";
-	}	
+	}
 
 	@PostMapping(value="/contents/order/data/orderHistory.do")
 	public String orderHistoryData(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-							@RequestParam Map<String, Object> param) throws Exception {
+								   @RequestParam Map<String, Object> param) throws Exception {
 
 		List<Map<String,Object>> data = orderService.getOrderHistory(param);
 		int count = orderService.getOrderHistoryCnt(param);
-		
+
 		map.put("data", data);
 		map.put("total", count);
-		
+
 		return "jsonView";
 	}
-	
+
 	@GetMapping(value="/contents/order/freightControl.do")
 	public String freightControl(HttpServletRequest request, HttpSession session, ModelMap model) {
 		LoginMenuVO loginMenu = EtcUtil.checkAuth(request, freightControCode);
 		model.put("menuAuth", loginMenu);
-		
+
 		return "contents/order/freightControl";
-	}	
+	}
 
 	@PostMapping(value="/contents/order/data/freightControlList.do")
 	public String freightControlList(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-							@RequestParam Map<String, Object> param) throws Exception {
-		
+									 @RequestParam Map<String, Object> param) throws Exception {
+
 		if(!EtcUtil.checkAuth(request, freightControCode, "R")) {
 			map.put("result", Boolean.FALSE);
 			map.put("msg", "해당 권한이 없습니다.");
-			
+
 			return "jsonView";
 		}
-		
+
 		LoginVO login = (LoginVO) session.getAttribute("userInfo");
 		String custId = login.getCustId();
 
 		String allocState = String.valueOf(param.get("sAllocState"));
-		
+
 		if (param.get("sAllocState") != null && !"".equals(param.get("sAllocState"))) {
 			if ("01,04,05,12".indexOf(allocState) >= 0) {
 				param.put("driverState", allocState);
@@ -754,30 +754,30 @@ public class OrderController {
 				param.put("allocState", allocState);
 			}
 		}
-		
+
 		param.put("custId", custId);
 		param.put("deptId", param.get("sDeptId"));
-		
+
 		List<OrderVO> list = orderService.getFreightControlList(param);
 		int count = orderService.getFreightControlCnt(param);
 
 		map.put("result", Boolean.TRUE);
 		map.put("data", list);
 		map.put("total", count);
-		
+
 		return "jsonView";
 	}
 
 	@PostMapping(value="/contents/order/data/freightControlUpdate.do")
 	public String freightControlWrite(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
-			@RequestParam Map<String, Object> param) throws Exception {
+									  @RequestParam Map<String, Object> param) throws Exception {
 		if(!EtcUtil.checkAuth(request, freightControCode, "E") || !EtcUtil.checkAuth(request, freightControCode, "W")) {
 			map.put("result", Boolean.FALSE);
 			map.put("msg", "해당 권한이 없습니다.");
-			
+
 			return "jsonView";
 		}
-		
+
 		String jsonParam = String.valueOf(param.get("orderData"));
 
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -785,7 +785,7 @@ public class OrderController {
 
 		for(Iterator<Map<String, Object>> iter = readValue.iterator(); iter.hasNext();) {
 			Map<String, Object> data = iter.next();
-			
+
 			List<String> codeList = Arrays.asList("0023","0025","0371","0372","0294");
 			List<String> sellChargeList = Arrays.asList((String) data.get("sellWayPointCharge"), (String) data.get("sellStayCharge"),(String) data.get("sellHandWorkCharge"),(String) data.get("sellRoundCharge"),(String) data.get("sellOtherAddCharge"));
 			List<String> buyChargeList = Arrays.asList((String) data.get("wayPointCharge"), (String) data.get("stayCharge"),(String) data.get("handWorkCharge"),(String) data.get("roundCharge"),(String) data.get("otherAddCharge"));
@@ -794,7 +794,7 @@ public class OrderController {
 			Map<String, Object> param3 = new HashMap<>();
 			Map<String, Object> param4 = new HashMap<>();
 			Map<String, Object> param5 = new HashMap<>();
-			
+
 			List<Map<String, Object>> addSellList = new ArrayList<>();
 			List<Map<String, Object>> addBuyList = new ArrayList<>();
 
@@ -812,7 +812,7 @@ public class OrderController {
 				map.put("msg", param2.get("retMsg"));
 				return "jsonView";
 			}
-			
+
 			param3.put("sellCharge", data.get("sellCharge"));
 			param3.put("sellWeight", data.get("sellWeight"));
 			param3.put("sellCustId", data.get("sellCustId"));
@@ -828,16 +828,16 @@ public class OrderController {
 				map.put("msg", param3.get("retMsg"));
 				return "jsonView";
 			}
-			
+
 			if(param2.get("outTaxCnt") == null) {
 				for(int i=0; i < codeList.size(); i++) {
 					Map<String, Object > tmp = new HashMap<>();
 					tmp.put("code", codeList.get(i));
 					tmp.put("charge", buyChargeList.get(i));
-					
+
 					addBuyList.add(tmp);
 				}
-				
+
 				if(data.get("allocId") != "") {
 					param4.put("allocId", data.get("allocId"));
 				}else {
@@ -852,13 +852,13 @@ public class OrderController {
 				map.put("msg", "매입"+param2.get("retMsg"));
 				return "jsonView";
 			}
-				
+
 			if(param3.get("outTaxCnt") == null) {
 				for(int i=0; i < codeList.size(); i++) {
 					Map<String, Object > tmp2 = new HashMap<>();
 					tmp2.put("code", codeList.get(i));
 					tmp2.put("charge", sellChargeList.get(i));
-					
+
 					addSellList.add(tmp2);
 				}
 				param5.put("allocId", data.get("sellAllocId"));
@@ -871,7 +871,7 @@ public class OrderController {
 				map.put("msg", "매출"+param3.get("retMsg"));
 				return "jsonView";
 			}
-			
+
 			if(data.get("buyCarNum") != null && !"".equals(data.get("buyCarNum"))) {
 				orderService.insertAllocAddToCalc(param4);
 				orderService.insertAllocAddToCalc(param5);
@@ -880,7 +880,25 @@ public class OrderController {
 
 		map.put("result", Boolean.TRUE);
 		map.put("msg", "수정되었습니다.");
-		
+
+		return "jsonView";
+	}
+
+
+	@PostMapping(value="/contents/order/data/basicFare.do")
+	public String basicFare(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+							@RequestParam Map<String, Object> param ) throws Exception {
+
+		Map<String, Object> data = orderService.getBasicFare(param);
+		if(data != null){
+			map.put ("allocCharge", data.get("allocCharge"));
+			map.put("result", Boolean.TRUE);
+		}else{
+			map.put("allocChar ge", data);
+			map.put("result", Boolean.FALSE);
+		}
+//
+
 		return "jsonView";
 	}
 }
