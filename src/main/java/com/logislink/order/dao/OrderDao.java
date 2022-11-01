@@ -15,29 +15,29 @@ import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
 
 @Repository("orderDao")
 public class OrderDao extends EgovAbstractMapper {
-	
+
 	public List<OrderVO> getOrderList(Map<String, Object> map){
 		return selectList("orderDataNS.selectOrderArrange", map);
 	}
-	
+
 	public Map<String,Object> getCnt(Map<String, Object> map) {
 		return selectOne("orderDataNS.selectOrderCnt", map);
 	}
-	
+
 	public OrderVO getOrderDetail(Map<String, Object> map) {
 		return selectOne("orderDataNS.selectOrderDetail", map);
 	}
-	
+
 	public List<OrderStopVO> getOrderStop(Map<String, Object> map) {
 		return selectList("orderDataNS.selectOrderStop", map);
 	}
-	
+
 	public List<DrvLocVO> getOrderLbs(Map<String, Object> map) {
 		return selectList("orderDataNS.selectOrderLBS", map);
 	}
-	
+
 	public void orderWrite(Map<String, Object> map) {
-		update("orderDataNS.orderWrite", map);		
+		update("orderDataNS.orderWrite", map);
 	}
 	public void insertOrderStop(Map<String, Object> map) {
 		insert("orderDataNS.insertOrderStop", map);
@@ -46,40 +46,40 @@ public class OrderDao extends EgovAbstractMapper {
 	public void updateOrderStopFinish(Map<String, Object> map) {
 		update("orderDataNS.updateOrderStopFinish", map);
 	}
-	
+
 	public void updateOrderState(Map<String, Object> map) {
 		update("orderDataNS.updateOrderState", map);
 	}
-	
+
 	public void updateOrderAlloc(Map<String, Object> map) {
 		update("orderDataNS.updateOrderAlloc", map);
 	}
-	
+
 	public void updateAllocState(Map<String, Object> map) {
 		update("orderDataNS.updateAllocState", map);
 	}
-	
+
 	public int getAvgFare(Map<String, Object> map) {
 		String avgFare = selectOne("orderDataNS.getAvgFare", map);
 		return Integer.valueOf(avgFare);
 	}
-	
+
 	public void linkWrite(Map<String, Object> map) {
-		update("orderDataNS.linkWrite", map);		
+		update("orderDataNS.linkWrite", map);
 	}
-	
+
 	public List<Map<String, Object>> getLinkList(Map<String, Object> map) {
 		return selectList("orderDataNS.getLinkList", map);
 	}
-	
+
 	public Map<String, Object> selectAllocCharge(Map<String, Object> map) {
 		return selectOne("orderDataNS.selectAllocCharge", map);
 	}
-	
+
 	public BigInteger getCharge(Map<String, Object> map) {
 		return selectOne("orderDataNS.getCharge", map);
 	}
-	
+
 	public HashMap<String, Object> linkCarTypeChk(Map<String, Object> map) {
 		HashMap<String, Object> ret = selectOne("orderDataNS.linkCarTypeChk", map);
 		return ret;
@@ -107,7 +107,7 @@ public class OrderDao extends EgovAbstractMapper {
 		// TODO Auto-generated method stub
 		update("orderDataNS.linkCancelOrder", map);
 	}
-	
+
 	public void insertAllocAddToCalc(Map<String, Object> map) {
 		update("orderDataNS.insertAllocAddToCalc", map);
 	}
@@ -147,7 +147,7 @@ public class OrderDao extends EgovAbstractMapper {
 		// TODO Auto-generated method stub
 		return selectList("orderDataNS.getOrderSituation", map);
 	}
-	
+
 	public void insertOrderWeather(Map<String, String> map) {
 		insert("orderDataNS.insertOrderWeather", map);
 	}
@@ -173,5 +173,9 @@ public class OrderDao extends EgovAbstractMapper {
 		// TODO Auto-generated method stub
 		String cnt = selectOne("orderDataNS.getFreightControlCnt",map);
 		return Integer.valueOf(cnt);
+	}
+	public Map<String, Object> getBasicFare(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return selectOne("orderDataNS.getBasicFare", map);
 	}
 }
