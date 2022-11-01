@@ -3,7 +3,7 @@
 
 <mapper namespace="orderDataNS">	
 	<!-- 주선사/운송사 오더 리스트 -->
-   <select id="selectOrderArrange" parameterType="java.util.HashMap" resultType="orderVO">
+   <select id="selectOrderArrange" parameterType="java.util.HashMap" resultType="orderVO" fetchSize="1000">
 		SELECT AA.*
 		FROM (
 			SELECT
@@ -138,7 +138,7 @@
 					      FROM
 					            T_ORDER_ALLOC
 					      WHERE
-					            BUY_CUST_ID = #{custId} 
+					            BUY_CUST_ID = #{custId}
 					            <if test = 'deptId != null and !"".equals(deptId)'>AND BUY_DEPT_ID = #{deptId}</if>   
 					            <if test = 'userId != null and !"".equals(userId)'>AND BUY_STAFF_ID = #{userId}</if> 
 					   ) A
@@ -1935,19 +1935,148 @@
    </select>
    
    <update id="multOrderAllocUpdate" statementType="CALLABLE" parameterType="java.util.HashMap">
-   		{call UPDATE_MULT_ORDER_ALLOC(
-   									#{orderId}
-   							 	  ,	#{allocId}
-   							 	  ,	#{sellCharge}
-   							 	  ,	#{buyCharge}
-   							 	  ,	#{sellWeight}
-   							 	  ,	#{buyCustId}
-   							 	  ,	#{buyDeptId}
-   							 	  , #{loginId}
-							  	  , #{newAllocId, mode=OUT, jdbcType=NVARCHAR, javaType=String}
-							  	  , #{outTaxCnt, mode=OUT, jdbcType=INTEGER, javaType=int}
-							  	  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
-							      ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})   		
+   		{ call UPDATE_MULT_ORDER_ALLOC( 
+				#{orderId}
+		 	  ,	#{allocId}
+		 	  ,	#{sellCharge}
+		 	  ,	#{buyCharge}
+		 	  ,	#{sellWeight}
+		 	  ,	#{buyCustId}
+		 	  ,	#{buyDeptId}
+		 	  , #{loginId}
+    	  	  , #{newAllocId, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+    	  	  , #{outTaxCnt, mode=OUT, jdbcType=INTEGER, javaType=int}
+    	  	  , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
+    	      ,	#{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})   		
    		}
    </update>
+   
+    <!-- 거래처명으로 등록된 거래처인지 조회 -->
+    <select id="selectCustNameValid" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT
+          ISNULL(CUST_ID, '') AS custId
+          , ISNULL(DEPT_ID, '') AS deptId
+          , ISNULL(MANAGER, '') AS manager
+          , ISNULL(MOBILE, '') AS mobile
+        FROM T_CUST_DTL
+        WHERE 1 = 1
+        AND USE_YN = 'Y'
+        <!-- 거래처 타입이 '화주'인것만 조회 -->
+        AND SELL_BUY_SCTN = '01'
+        AND MNG_CUST_ID = #{loginCustId}
+        AND MNG_DEPT_ID = #{loginDeptId}
+        <if test='custName != null and !custName.equals("")'>
+          AND CUST_NAME = #{custName}
+        </if>
+    </select>
+    
+    <!-- 등록된 공통코드인지 조회 -->
+    <select id="selectCmmCodeValid" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT
+          ISNULL(CODE, '') AS code
+        FROM T_CODE
+        WHERE 1=1
+        AND USE_YN = 'Y'
+        <if test='gcode != null and !gcode.equals("")'>
+          AND GCODE = #{gcode}
+        </if>
+        <if test='cname != null and !cname.equals("")'>
+          AND CNAME = #{cname}
+        </if>
+    </select>
+    
+    <!-- 오더 간편등록 저장 -->
+   <insert id="insertOrderSheet" parameterType="java.util.HashMap">
+        INSERT INTO T_ORDER 
+        (
+          ORDER_ID, REQ_CUST_ID, REQ_DEPT_ID, REQ_STAFF_ID, REQ_TEL, CUST_ID, DEPT_ID
+          , S_COM_NAME, S_ADDR, S_DATE, S_SIDO, S_GUNGU, S_DONG, S_LAT, S_LON
+          , E_COM_NAME, E_ADDR, E_DATE, E_SIDO, E_GUNGU, E_DONG, E_LAT, E_LON
+          , DISTANCE, TIME
+          , CHARGE_TYPE, CAR_TYPE_CODE, CAR_TON_CODE, IN_OUT_SCTN, TRUCK_TYPE_CODE
+          , GOODS_NAME, GOODS_WEIGHT, GOODS_QTY, WEIGHT_UNIT_CODE
+          , REGID, REGDATE, ORDER_STATE
+        )
+        VALUES
+        <foreach collection="orderList" item="item" index="index" separator=",">
+            (
+                #{item.orderId, jdbcType=NVARCHAR}
+              , #{item.reqCustId, jdbcType=NVARCHAR}
+              , #{item.reqDeptId, jdbcType=NVARCHAR}
+              , #{item.reqStaffId, jdbcType=NVARCHAR}
+              , #{item.reqTel, jdbcType=NVARCHAR}
+              , #{loginCustId, jdbcType=NVARCHAR}
+              , #{loginDeptId, jdbcType=NVARCHAR}
+              
+              , #{item.sComName, jdbcType=NVARCHAR}
+              , #{item.sComAddr, jdbcType=NVARCHAR}
+              , #{item.sDate, jdbcType=NVARCHAR}
+              , #{item.sSido, jdbcType=NVARCHAR}
+              , #{item.sGungu, jdbcType=NVARCHAR}
+              , #{item.sDong, jdbcType=NVARCHAR}
+              , #{item.sLat, jdbcType=NVARCHAR}
+              , #{item.sLon, jdbcType=NVARCHAR}
+              
+              , #{item.eComName, jdbcType=NVARCHAR}
+              , #{item.eComAddr, jdbcType=NVARCHAR}
+              , #{item.eDate, jdbcType=NVARCHAR}
+              , #{item.eSido, jdbcType=NVARCHAR}
+              , #{item.eGungu, jdbcType=NVARCHAR}
+              , #{item.eDong, jdbcType=NVARCHAR}
+              , #{item.eLat, jdbcType=NVARCHAR}
+              , #{item.eLon, jdbcType=NVARCHAR}
+              
+              , #{item.distance, jdbcType=NVARCHAR}
+              , #{item.time, jdbcType=NVARCHAR}
+              
+              , #{item.chargeTypeCode}
+              , #{item.carTypeCode}
+              , #{item.carTonCode}
+              , '01'
+              , 'TR'
+              
+              , #{item.goodsName, jdbcType=NVARCHAR}
+              , 0
+              , 0
+              , 'TON'
+              
+              , #{item.regId, jdbcType=NVARCHAR}
+              , GETDATE()
+              , #{item.orderState, jdbcType=NVARCHAR}
+            )    
+        </foreach>
+    </insert>
+    
+    <insert id="insertOrderSheetAlloc" parameterType="java.util.HashMap">
+        INSERT INTO T_ORDER_ALLOC
+        (
+          ALLOC_ID, ORDER_ID
+          , SELL_CUST_ID, SELL_DEPT_ID
+          , BUY_CUST_ID, BUY_DEPT_ID, BUY_STAFF_ID
+          , ALLOC_CHARGE, ALLOC_FEE, ALLOC_STATE, ALLOC_DATE
+          , REGID, REGDATE
+        )
+        VALUES    
+    <foreach collection="orderList" item="item" index="index" separator=",">
+        (
+          #{item.allocId, jdbcType=NVARCHAR}
+          , #{item.orderId, jdbcType=NVARCHAR}
+          
+          , #{item.reqCustId, jdbcType=NVARCHAR}
+          , #{item.reqDeptId, jdbcType=NVARCHAR}
+          
+          , #{item.loginCustId, jdbcType=NVARCHAR}
+          , #{item.loginDeptId, jdbcType=NVARCHAR}
+          , #{item.regId, jdbcType=NVARCHAR}
+          
+          , '0'
+          , '0'
+          , '00'
+          , NULL
+          
+          , #{item.regId, jdbcType=NVARCHAR}
+          , GETDATE()
+        )
+    </foreach>
+  </insert>
 </mapper>
