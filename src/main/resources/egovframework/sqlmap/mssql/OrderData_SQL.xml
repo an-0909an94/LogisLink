@@ -1955,26 +1955,46 @@
 			TOP 1 B.ALLOC_CHARGE FROM dbo.T_ORDER AS a
 										  INNER JOIN
 									  T_ORDER_ALLOC AS B ON A.order_id =B.order_id
-		WHERE
-			A.REQ_CUST_ID  = #{reqCustId}
-		  and
-			A.REQ_DEPT_ID = #{reqDeptId}
-		  and
-			A.S_SIDO = #{sSido}
-		  and
-			A.S_GUNGU = #{sGungu}
-		  and
-			A.E_SIDO = #{eSido}
-		  and
-			A.E_GUNGU = #{eGungu}
-		  and
-			A.CAR_TYPE_CODE = #{carTypeCode}
-		  and
-			A.CAR_TON_CODE = #{carTonCode}
-		  and
-			A.custId = #{custId}
-		  AND
-			B.ALLOC_CHARGE != 0
+		WHERE 1=1
+		<if test="reqCustId != null and reqCustId != ''">
+		  	AND
+		    	A.REQ_CUST_ID  = #{reqCustId}
+		</if>
+		<if test="reqDeptId != null and reqDeptId != ''">
+			AND
+				A.REQ_DEPT_ID = #{reqDeptId}
+		</if>
+		<if test="sSido != null and sSido != ''">
+			AND
+				A.S_SIDO = #{sSido}
+		</if>
+		<if test="sGungu != null and sGungu != ''">
+			AND
+				A.S_GUNGU = #{sGungu}
+		</if>
+		<if test="eSido != null and eSido != ''">
+			AND
+				A.E_SIDO = #{eSido}
+		</if>
+		<if test="eGungu != null and eGungu != ''">
+			AND
+				A.E_GUNGU = #{eGungu}
+		</if>
+		<if test="carTypeCode != null and carTypeCode != ''">
+			AND
+				A.CAR_TYPE_CODE = #{carTypeCode}
+		</if>
+		<if test="carTonCode != null and carTonCode != ''">
+			AND
+				A.CAR_TON_CODE = #{carTonCode}
+		</if>
+		<if test="custId != null and custId != ''">
+			AND
+				A.CUST_ID = #{custId}
+		</if>
+			AND
+				B.ALLOC_CHARGE != 0
+
 		ORDER BY B.REGDATE DESC, B.ALLOC_ID DESC
 	</select>
 </mapper>
