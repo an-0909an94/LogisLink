@@ -2193,10 +2193,10 @@
 
     $('#f').validator().on('submit', function (e) {
 
-        ;
         if(!chkTEST){
             e.preventDefault();
             alert("등록된 거래처 명이 아닙니다.");
+            $("#sellCustName").focus().click();
             return;
         }
         if(!chkUID) {
