@@ -46,7 +46,7 @@ response.setHeader ("Cache-Control", "no-cache");
 <script type="text/javascript" src="<c:url value='/js/grid.js?v=2'/>"></script>
 <script type="text/javascript" src="<c:url value='/js/common.js?v=1'/>"></script>
 <script type="text/javascript" src="<c:url value='/js/util.js?v=7'/>"></script>
-<script type="text/javascript" src="<c:url value='/js/order.js?v=13'/>" ></script>
+<script type="text/javascript" src="<c:url value='/js/order.js?v=14'/>" ></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>" ></script>

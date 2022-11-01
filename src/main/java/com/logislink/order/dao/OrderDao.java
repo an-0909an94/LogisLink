@@ -174,4 +174,8 @@ public class OrderDao extends EgovAbstractMapper {
 		String cnt = selectOne("orderDataNS.getFreightControlCnt",map);
 		return Integer.valueOf(cnt);
 	}
+	public Map<String, Object> getBasicFare(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return selectOne("orderDataNS.getBasicFare", map);
+	}
 }

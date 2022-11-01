@@ -386,6 +386,7 @@ var MultiColumnComboBox = {
 
 //화주거래처 선택 콜백함수
 function changeSellCust(e){
+	chkTEST= true;
 	var dataItem = e.dataItem;
 	if(dataItem != null) {
 		$("#sellCustId").val(dataItem.custId);
@@ -434,8 +435,14 @@ function changeSellCust(e){
 			}else{
 				$("#custMngCodeName").val("블랙리스트");
 			}
+		}else{
+			//$("#sellCustName").val("");
+			chkTEST= false;
+			alert("등록되지 않은 거래처명입니다.");
+			return;
 		}
 	}
+
 }
 
 //운송사 선택 콜백함수

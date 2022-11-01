@@ -1,7 +1,5 @@
 package com.logislink.order.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
@@ -82,4 +80,6 @@ public interface OrderService {
 	public void multOrderAllocUpdate(Map<String, Object> map);
 	
 	public int getFreightControlCnt(Map<String, Object> map);
+
+	public Map<String, Object> getBasicFare(Map<String, Object> map);
 }

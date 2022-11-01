@@ -24,7 +24,11 @@
         <div class="form-group row">
             <label class="col-form-label big-name">차량번호</label>
             <div class="input-group input-group-sm col middle-name form-group">
+<%--
                 <input type="text" class="form-control form-control-sm" id="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required>
+--%>
+                <input type="text" class="form-control form-control-sm" id="carNum" maxlength="10" required>
+
                 <div class="help-block with-errors" style="position: absolute;"></div>
             </div>
         </div>
@@ -299,6 +303,7 @@
                                                     <input type="text" id="sTel" name="sTel" maxlength="13" class="form-control form-control-sm">
                                                 </div>
                                             </div>
+
 
                                             <div class="form-group row">
                                                 <label class="col-form-label"></label>
@@ -797,7 +802,11 @@
                                                 <input type="hidden" id="buyDriverId" name="buyDriverId">
                                                 <input type="hidden" id="carPayType" name="carPayType">
                                                 <strong>차량번호</strong>
+<%--
                                                 <input style="width: 100%;" type="text" name="buyCarNum" id="buyCarNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" placeholder="서울XX아XXXX">
+--%>
+                                                <input style="width: 100%;" type="text" name="buyCarNum" id="buyCarNum" maxlength="10" placeholder="서울XX아XXXX">
+
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                             <div class="input-group input-group-sm col middle-name form-group">
@@ -1065,6 +1074,7 @@
 </div>
 <script type="text/javascript">
 var chkUID =true;
+var chkTEST =true;
 var sellCustName, buyCustName;
 var reqStaff, buyStaff;
 var sComName, eComName;
@@ -1541,9 +1551,9 @@ $(document).ready(function(){
 	$('#carTonCode').change(function(){
 		var carTonCode = $(this).val();
 
-		if(carTonCode != "") {
+/*		if(carTonCode != "") {
 			getCharge("S");
-		}
+		}*/
 	});
 
 	$("#buyCustName").change(function() {
@@ -2183,12 +2193,17 @@ $('#sAddr, #eAddr').on('change', function() {
 
 $('#f').validator().on('submit', function (e) {
 
+    ;
+    if(!chkTEST){
+        e.preventDefault();
+        alert("등록된 거래처 명이 아닙니다.");
+        return;
+    }
     if(!chkUID) {
         e.preventDefault();
         chkUID =true;
         return;
     }
-
 
 	$("input[name$='Addr']").attr('readonly', true);
 	if (e.isDefaultPrevented()) {
@@ -2718,6 +2733,7 @@ function setSearchAddressInfo(data) {
                     $("#eDong").val(dong);
 				}
 			}
+            getBasicFare();
 		}
 	});
 }
@@ -2795,6 +2811,7 @@ function dummyAddressInfo(data) {
                     $("#eDong").val("");
 				}
 			}
+            getBasicFare();
 		}
 	});
 	/*
@@ -2890,6 +2907,16 @@ $('#sellCharge').on("input", function() {
         return;
     }
     $("#sellCharge").val(Util.formatNumberInput($("#sellCharge").val().trim()));
+});
+
+$('#buyChargeD').on("input", function() {
+    var buyChargeD = /^\d*$/;
+    if(!buyChargeD.test($("#buyChargeD").val().trim().replace(/,/g, ""))){
+        alert("\"지불운임\"에 숫자를 입력하시기 바랍니다.");
+        $("#buyChargeD").val("")
+        return;
+    }
+    $("#buyChargeD").val(Util.formatNumberInput($("#buyChargeD").val().trim()));
 });
 
 
@@ -3133,4 +3160,96 @@ $("#carTypeCode, #carTonCode").on("change", function(){
 		$("#buyCarTonCode").val($("#carTonCode").val());
 	}
 });
+
+$("#sComName,#eComName,#sellCustName,#carTypeCode,#carTonCode,#unitPriceType,#sellCharge").on("change", function(){
+    getBasicFare();
+});
+$("input[name='unitPriceType']:radio").change(function () {
+    getBasicFare();
+});
+
+
+function getBasicFare() {
+    var reqCustId = $("#sellCustId").val();
+    var reqDeptId = $("#sellDeptId").val();
+    var sSido = $("#sSido").val();
+    var sGungu = $("#sGungu").val();
+    var eSido = $("#eSido").val();
+    var eGungu = $("#eGungu").val();
+    var carTypeCode = $("#carTypeCode").val();
+    var carTonCode = $("#carTonCode").val();
+    var custId ="${sessionScope.userInfo.custId}";
+    var unitPriceType = $('input[name="unitPriceType"]:checked').val();
+
+    if(unitPriceType !="01" || reqCustId =="" || reqDeptId =="" || sSido =="" || sGungu ==""
+        || eSido =="" || eGungu =="" || carTypeCode =="" || carTonCode ==""){
+        return;
+    }
+
+    $.ajax({
+        url: "/contents/order/data/basicFare.do",
+        type: "POST",
+        dataType: "json",
+        data: {
+            reqCustId: reqCustId,
+            reqDeptId: reqDeptId,
+            sSido: sSido,
+            sGungu: sGungu,
+            eSido: eSido,
+            eGungu: eGungu,
+            carTypeCode: carTypeCode,
+            carTonCode: carTonCode,
+            custId: custId
+
+        },
+        success: function(data){
+            if(data.result) {
+                $("#sellCharge").val(Util.formatNumber(data.allocCharge));
+            }
+        }
+    });
+}
+
+
+function getBasicFareCommon(reqCustId,reqDeptId,sSido,sGungu,eSido,eGungu,carTypeCode,carTonCode,custId,unitPriceType) {
+
+/*    var reqCustId = $("#sellCustId").val();
+    var reqDeptId = $("#sellDeptId").val();
+    var sSido = $("#sSido").val()
+    var sGungu = $("#sGungu").val();
+    var eSido = $("#eSido").val();
+    var eGungu = $("#eGungu").val();
+    var carTypeCode = $("#carTypeCode").val();
+    var carTonCode = $("#carTonCode").val();
+    var custId ="${sessionScope.userInfo.custId}";
+    var unitPriceType = $('input[name="unitPriceType"]:checked').val();*/
+
+    if(unitPriceType !="01" || custId =="" || deptId =="" || sSido =="" || sGungu ==""
+        || eSido =="" || eGungu =="" || carTypeCode =="" || carTonCode ==""){
+        return;
+    }
+
+    $.ajax({
+        url: "/contents/order/data/basicFare.do",
+        type: "POST",
+        dataType: "json",
+        data: {
+            reqCustId: reqCustId,
+            reqDeptId: reqDeptId,
+            sSido: sSido,
+            sGungu: sGungu,
+            eSido: eSido,
+            eGungu: eGungu,
+            carTypeCode: carTypeCode,
+            carTonCode: carTonCode,
+            custId: custId
+
+        },
+        success: function(data){
+            if(data.result) {
+                $("#sellCharge").val(data.allocCharge)
+            }
+        }
+    });
+}
 </script>
