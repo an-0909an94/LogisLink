@@ -140,7 +140,7 @@
 	
 	<select id="selectTranDtlList" resultType="tranDtlVO" parameterType="java.util.HashMap">
 		SELECT 
-			ROW_NUMBER() OVER(ORDER BY TRD.RECEIPT_SEQ ASC) AS number,
+			ROW_NUMBER() OVER(ORDER BY (SELECT 1)) AS number,
 			TRD.ORDER_ID orderId,
 			TRD.ALLOC_ID allocId,
 			TRD.RECEIPT_ID receiptId,
