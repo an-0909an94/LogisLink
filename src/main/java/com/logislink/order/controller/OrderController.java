@@ -894,7 +894,7 @@ public class OrderController {
 			map.put ("allocCharge", data.get("allocCharge"));
 			map.put("result", Boolean.TRUE);
 		}else{
-			map.put("allocChar ge", data);
+			map.put("allocCharge", data);
 			map.put("result", Boolean.FALSE);
 		}
 //

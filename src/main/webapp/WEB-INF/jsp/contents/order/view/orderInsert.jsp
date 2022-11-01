@@ -3170,6 +3170,7 @@
 
 
     function getBasicFare() {
+
         var reqCustId = $("#sellCustId").val();
         var reqDeptId = $("#sellDeptId").val();
         var sSido = $("#sSido").val();

@@ -1952,9 +1952,10 @@
    </update>
 	<select id="getBasicFare" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT
-			TOP 1 B.ALLOC_CHARGE FROM dbo.T_ORDER AS a
-										  INNER JOIN
-									  T_ORDER_ALLOC AS B ON A.order_id =B.order_id
+			TOP 1 B.ALLOC_CHARGE as allocCharge
+		FROM dbo.T_ORDER AS a
+		INNER JOIN
+			T_ORDER_ALLOC AS B ON A.order_id =B.order_id
 		WHERE 1=1
 		<if test="reqCustId != null and reqCustId != ''">
 		  	AND
