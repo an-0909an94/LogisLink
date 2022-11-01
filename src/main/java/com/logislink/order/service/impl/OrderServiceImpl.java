@@ -237,4 +237,9 @@ public class OrderServiceImpl implements OrderService {
 		// TODO Auto-generated method stub
 		return orderDao.getFreightControlCnt(map);
 	}
+	@Override
+	public Map<String, Object> getBasicFare(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return orderDao.getBasicFare(map);
+	}
 }
