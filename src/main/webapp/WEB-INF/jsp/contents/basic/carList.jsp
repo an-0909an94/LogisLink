@@ -307,68 +307,63 @@ function goList() {
 
 	columns	= setPrivateData("A1410","car_list",userId,columns);
 
-	oGrid.setSearchData(param);
-	if(grid == null) {
-		oGrid.setGrid(columns);
-		grid = $("#car_list").data("kendoGrid");
-		//grid.bind("change", onChange);
-		grid.tbody.delegate('tr', 'dblclick', function(){
-			var dataItem = grid.dataItem($(this));
-			form_popup("E", dataItem);
-		});	
-	} else {
-		grid.setDataSource(oGrid.gridOption.dataSource);
+		oGrid.setSearchData(param);
+		if(grid == null) {
+			oGrid.setGrid(columns);
+			grid = $("#car_list").data("kendoGrid");
+			//grid.bind("change", onChange);
+			setOptionActive("A1410","car_list",userId);
+
+			grid.tbody.delegate('tr', 'dblclick', function(){
+				var dataItem = grid.dataItem($(this));
+				form_popup("E", dataItem);
+			});
+		} else {
+			grid.setDataSource(oGrid.gridOption.dataSource);
+		}
 	}
-	setOptionActive("A1410","car_list",userId);
-}
-/* 
-function onChange(e){
-	var row = this.select();
-	var data = this.dataItem(row);
-	
-	form_popup("E", data);
-}
- */
-function form_popup(mode, data) {
-	Util.insertCloseButton();
-	$('#group-list').addClass("block");
-	$('.insert_pop').addClass("block");
-	$('.insertClose').addClass("block");
-	init_pop(mode, data);
-}
+	/*
+    function onChange(e){
+        var row = this.select();
+        var data = this.dataItem(row);
 
-function form_popup_close() {
-    $('#group-list').removeClass("block");
-    $('.insert_pop').removeClass("block");
-	$('.insertClose').removeClass("block");
-}
-
-//excel download
-function goExcel(){
-	$("#loading").show();
-	var grid = $("#car_list").data("kendoGrid");
-	grid.saveAsExcel();
-}
-function onContextMenuSelect(e) {
-
-	var grid = $("#car_list").data("kendoGrid");
-	var data = grid.dataItem(e.target);
-	var row = grid.select();
-	var multiSelectedData = [];
-	var item = e.item.id;
-
-	for(var i = 0; i < row.length; i++) {
-		multiSelectedData.push(grid.dataItem(row[i]));
+        form_popup("E", data);
+    }
+     */
+	function form_popup(mode, data) {
+		Util.insertCloseButton();
+		$('#group-list').addClass("block");
+		$('.insert_pop').addClass("block");
+		$('.insertClose').addClass("block");
+		init_pop(mode, data);
 	}
-
-	switch (item) {
-		case "cSave" : // 리스트 현재설정 저장 버튼 이벤트
-			setPrivateSaveData("A1410", "car_list", userId);
-			break;
-		case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
-			setPrivatePanel("A1410", "car_list", userId);
-			break;
+	function form_popup_close() {
+		$('#group-list').removeClass("block");
+		$('.insert_pop').removeClass("block");
+		$('.insertClose').removeClass("block");
 	}
-}
-
+	//excel download
+	function goExcel(){
+		$("#loading").show();
+		var grid = $("#car_list").data("kendoGrid");
+		grid.saveAsExcel();
+	}
+	function onContextMenuSelect(e) {
+		var grid = $("#car_list").data("kendoGrid");
+		var data = grid.dataItem(e.target);
+		var row = grid.select();
+		var multiSelectedData = [];
+		var item = e.item.id;
+		for(var i = 0; i < row.length; i++) {
+			multiSelectedData.push(grid.dataItem(row[i]));
+		}
+		switch (item) {
+			case "cSave" : // 리스트 현재설정 저장 버튼 이벤트
+				setPrivateSaveData("A1410", "car_list", userId);
+				break;
+			case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
+				setPrivatePanel("A1410", "car_list", userId);
+				break;
+		}
+	}
 </script>
