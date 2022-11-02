@@ -305,23 +305,23 @@ function goList() {
 	param["emailYn"] = $("#s_emailYn").val();
 	param["accountYn"] = $("#s_accountYn").val();
 
-	columns	= setPrivateData("A1410","car_list",userId,columns);
+	//columns = setPrivateData("A1410", "car_list", userId, columns);
 
-		oGrid.setSearchData(param);
-		if(grid == null) {
-			oGrid.setGrid(columns);
-			grid = $("#car_list").data("kendoGrid");
-			//grid.bind("change", onChange);
-			setOptionActive("A1410","car_list",userId);
+	oGrid.setSearchData(param);
+	if (grid == null) {
+		oGrid.setGrid(columns);
+		grid = $("#car_list").data("kendoGrid");
+		//grid.bind("change", onChange);
+		//setOptionActive("A1410", "car_list", userId);
 
-			grid.tbody.delegate('tr', 'dblclick', function(){
-				var dataItem = grid.dataItem($(this));
-				form_popup("E", dataItem);
-			});
-		} else {
-			grid.setDataSource(oGrid.gridOption.dataSource);
-		}
+		grid.tbody.delegate('tr', 'dblclick', function () {
+			var dataItem = grid.dataItem($(this));
+			form_popup("E", dataItem);
+		});
+	} else {
+		grid.setDataSource(oGrid.gridOption.dataSource);
 	}
+}
 	/*
     function onChange(e){
         var row = this.select();
@@ -329,7 +329,8 @@ function goList() {
 
         form_popup("E", data);
     }
-     */
+	*/
+
 	function form_popup(mode, data) {
 		Util.insertCloseButton();
 		$('#group-list').addClass("block");
