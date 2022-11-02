@@ -305,14 +305,14 @@ function goList() {
 	param["emailYn"] = $("#s_emailYn").val();
 	param["accountYn"] = $("#s_accountYn").val();
 
-	//columns = setPrivateData("A1410", "car_list", userId, columns);
+	columns = setPrivateData("A1410", "car_list", userId, columns);
 
 	oGrid.setSearchData(param);
 	if (grid == null) {
 		oGrid.setGrid(columns);
 		grid = $("#car_list").data("kendoGrid");
 		//grid.bind("change", onChange);
-		//setOptionActive("A1410", "car_list", userId);
+		setOptionActive("A1410", "car_list", userId);
 
 		grid.tbody.delegate('tr', 'dblclick', function () {
 			var dataItem = grid.dataItem($(this));
