@@ -1,5 +1,51 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<style>
+    .bubble
+    {
+        z-index:100;
+        position: relative;
+        height: auto;
+        padding: 10px 10px 10px 10px;
+        background: #FFFFFF;
+        border-radius: 5px;
+        border: #7F7F7F solid 1px;
+        position: absolute;
+        font-size: 16px;
+        text-align: left;
+    }
+
+    .bubble:after
+    {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 0 16px 20px 17.5px;
+        border-color: #FFFFFF transparent;
+        display: block;
+        width: 0;
+        z-index: 1;
+        top: -18.5px;
+        left: 49px;
+    }
+
+    .bubble:before
+    {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 0 16px 20px 17.5px;
+        border-color: #7F7F7F transparent;
+        display: block;
+        width: 0;
+        z-index: 0;
+        top: -20px;
+        left: 49px;
+    }
+    span:hover + p.arrow_box {
+        display: block;
+    }
+</style>
 <div id="priceView" class="editor-warp p-0">
     <div class="modalEditor" id="addCust">
         <div style="padding-left: 30px; padding-right: 30px; padding-top: 20px; text-align: left;">
@@ -612,7 +658,9 @@
                                             <input id="unitCharge" name="unitCharge" type="text" class="form-control form-control-sm">
                                         </div>
                                         <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong class="required">기본운임(청구)</strong>
+                                            <strong class="required">기본운임(청구)</strong><%--<a id="ㅁㅁㅁ" class="k-pager-refresh k-button" style="margin-top: -5px; height: 19px; width: 19px;"> ? </a>
+                                            <div class="bubble">거래처명(화주), 상/하차지주소, 요청차종/톤수에 맞는 최근 청구운임(기본)을 불러옵니다.
+                                                ※ 최근 오더가 없는 경우는 0원으로, 경유비 등 추가운임은 제외</div>--%>
                                             <input id="sellCharge" name="sellCharge" type="text" class="form-control form-control-sm" onchange="sellSumCharge()" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
@@ -2590,6 +2638,9 @@
         }
 
         var orderId = $("#orderId").val();
+        var chkTalkYN = $("input[name='chkTalk']:checked").val();
+       // var buyStaffTel = $("#buyStaffTel").val().replace(/\-/g, "");
+
         if(result){
             if(driverState == '12'){
                 popDriverStateModal.data("kendoDialog").open();
@@ -2599,7 +2650,7 @@
                 url: "/contents/order/data/allocState.do",
                 type: "POST",
                 dataType: "json",
-                data: "orderId=" + orderId + "&allocId=" + allocId + "&allocState=" + driverState,
+                data: "orderId=" + orderId + "&allocId=" + allocId + "&allocState=" + driverState + "&chkTalkYN=" + chkTalkYN,
                 success: function(data){
                     if(data.result) {
                         alert(data.msg);
@@ -2621,6 +2672,9 @@
         var driverState = $("#driverState").val();
         var orderId = $("#orderId").val();
         var enterDate = $("#enterDatePicker").val();
+        var chkTalkYN = $("input[name='chkTalk']:checked").val();
+        //var buyStaffTel = $("#buyStaffTel").val().replace(/\-/g, "");
+
         if(type == "C"){
             allocId = $("#driverAllocId").val();	//type D: 직배차, C: 운송사배차
         }else{
@@ -2630,7 +2684,8 @@
             orderId : orderId,
             enterDate : enterDate,
             allocId : allocId,
-            allocState : driverState
+            allocState : driverState,
+            chkTalkYN : chkTalkYN
         };
 
         $.ajax({
@@ -2733,7 +2788,7 @@
                         $("#eDong").val(dong);
                     }
                 }
-                getBasicFare();
+                //getBasicFare();
             }
         });
     }
@@ -2811,7 +2866,7 @@
                         $("#eDong").val("");
                     }
                 }
-                getBasicFare();
+                //getBasicFare();
             }
         });
         /*
@@ -3161,12 +3216,12 @@
         }
     });
 
-    $("#sComName,#eComName,#sellCustName,#carTypeCode,#carTonCode,#unitPriceType,#sellCharge").on("change", function(){
+/*    $("#sComName,#eComName,#sellCustName,#carTypeCode,#carTonCode,#unitPriceType,#sellCharge").on("change", function(){
         getBasicFare();
     });
     $("input[name='unitPriceType']:radio").change(function () {
         getBasicFare();
-    });
+    });*/
 
 
     function getBasicFare() {
