@@ -2008,30 +2008,37 @@
         });
     }
 
-    function init(){
+    function init() {
         sellCustName.enable(true);
         $("#deptId").prop("disabled", false);
-        $('#sellCustName, #sellDeptName').on('change', function() {
-            if($("#sellCustName, #sellDeptName").val() != ''){
-                $("#prevDiv").css("display","contents");
+        $('#sellCustName, #sellDeptName').on('change', function () {
+            if ($("#sellCustName, #sellDeptName").val() != '') {
+                $("#prevDiv").css("display", "contents");
             }
         });
         $("#f")[0].reset();
         $("input[name=buyCarNum_input]").off("click");
         $("input[type=hidden]").val('');
         $("#f input[name=chargeType]:input[value=01]").prop("checked", true);
-        $(".priceCommission").attr("readonly",true);
+        $(".priceCommission").attr("readonly", true);
         $("#f input[name=allocKind]:input[value=D]").prop("checked", true);
         $("#divAllocC").hide();
         $("#divAllocD").show();
-        $("#prevDiv").css("display","none");
+        $("#prevDiv").css("display", "none");
         $("#sellCustName").attr("disabled", false);
         $("#reqAddr").attr("disabled", false);
         $("#reqAddr").next("i").children('img').attr("onclick", "popSearchPost('reqAddr')");
         $("#reqAddrDetail").attr("disabled", false);
+        var sDateDayGrid = $("#sDateDay").data("kendoDatePicker");
+        var eDateDayGrid = $("#eDateDay").data("kendoDatePicker");
+        if (typeof sDateDayGrid == "undefined" || sDateDayGrid == null){
 
-        $("#sDateDay").data("kendoDatePicker").value(new Date());
-        $("#eDateDay").data("kendoDatePicker").value(new Date());
+        }else{
+            $("#sDateDay").data("kendoDatePicker").value(new Date());
+            $("#eDateDay").data("kendoDatePicker").value(new Date());
+        }
+       // $("#sDateDay").data("kendoDatePicker").value(new Date());
+       // $("#eDateDay").data("kendoDatePicker").value(new Date());
 
         // form 초기화 시, timepicker data 사라짐 -> 다시 생성
         var sDateTime = "<strong class=\"required\">상차 시간</strong> " +
@@ -2639,7 +2646,7 @@
 
         var orderId = $("#orderId").val();
         var chkTalkYN = $("input[name='chkTalk']:checked").val();
-       // var buyStaffTel = $("#buyStaffTel").val().replace(/\-/g, "");
+        // var buyStaffTel = $("#buyStaffTel").val().replace(/\-/g, "");
 
         if(result){
             if(driverState == '12'){
@@ -3216,12 +3223,12 @@
         }
     });
 
-/*    $("#sComName,#eComName,#sellCustName,#carTypeCode,#carTonCode,#unitPriceType,#sellCharge").on("change", function(){
-        getBasicFare();
-    });
-    $("input[name='unitPriceType']:radio").change(function () {
-        getBasicFare();
-    });*/
+    /*    $("#sComName,#eComName,#sellCustName,#carTypeCode,#carTonCode,#unitPriceType,#sellCharge").on("change", function(){
+            getBasicFare();
+        });
+        $("input[name='unitPriceType']:radio").change(function () {
+            getBasicFare();
+        });*/
 
 
     function getBasicFare() {

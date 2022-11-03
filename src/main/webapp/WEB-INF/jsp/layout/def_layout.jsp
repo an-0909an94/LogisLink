@@ -51,7 +51,7 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>" ></script>
 	<script type="text/javascript" src="<c:url value='/js/bcPicker.js'/>" ></script>
-	<script type="text/javascript" src="<c:url value='/js/privateCommon.js?v=4'/>" ></script>
+	<script type="text/javascript" src="<c:url value='/js/privateCommon.js?v=5'/>" ></script>
 	<script type="text/javascript" src="<c:url value='/js/addr.js'/>" ></script>
 
 	<!-- validator JS -->
