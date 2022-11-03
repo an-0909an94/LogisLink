@@ -194,6 +194,7 @@ var headerTitle = ($("#headerTitle").text());
 var oGrid = null;	
 oGrid = new gridData("cust_list");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/custList.do");
 oGrid.setExcelFile("거래처관리리스트.xlsx");
 oGrid.setSelectable(true);

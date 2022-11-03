@@ -109,6 +109,7 @@ var headerTitle = ($("#headerTitle").text());
 var oGrid = null;	
 oGrid = new gridData("cust_addr_list");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/custAddrList.do");
 oGrid.setExcelFile("주소지관리.xlsx");
 oGrid.setPageable(true);

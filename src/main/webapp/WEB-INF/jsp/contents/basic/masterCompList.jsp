@@ -95,6 +95,7 @@ var headerTitle = ($("#headerTitle").text());
 var oGrid = null;	
 oGrid = new gridData("cust_mst_list");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/masterCompList.do");
 oGrid.setSelectable(true);
 oGrid.setExcelFile(headerTitle+"(" + new Date().yyyymmdd() + ").xlsx");
