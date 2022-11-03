@@ -43,7 +43,7 @@
 	<script type="text/javascript" src="<c:url value='/js/kendo.all.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/js/jszip.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/js/jquery.cookie.js'/>"></script>
-	<script type="text/javascript" src="<c:url value='/js/grid.js?v=2'/>"></script>
+	<script type="text/javascript" src="<c:url value='/js/grid.js?v=3'/>"></script>
 	<script type="text/javascript" src="<c:url value='/js/common.js?v=1'/>"></script>
 	<script type="text/javascript" src="<c:url value='/js/util.js?v=7'/>"></script>
 	<script type="text/javascript" src="<c:url value='/js/order.js?v=14'/>" ></script>
