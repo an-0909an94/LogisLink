@@ -313,7 +313,7 @@ function goList(searchType){
 		excelExport: function(e) {
 			if($("#loading").length > 0) $("#loading").hide();
 		},
-		sortable: true,
+		sortable: false,
 		reorderable: true,
 		groupable: false,
 		resizable: true,

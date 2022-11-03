@@ -281,6 +281,7 @@ oGrid.initGrid();
 oGrid.setSendUrl("/contents/basic/data/carList.do");
 oGrid.setPageable(true);
 oGrid.setSelectable(true);
+oGrid.setSortable(false);
 oGrid.setExcelFile(headerTitle+"(" + new Date().yyyymmdd() + ").xlsx");
 
 function goList() {

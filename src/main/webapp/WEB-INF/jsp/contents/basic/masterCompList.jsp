@@ -147,7 +147,7 @@ function create_comp() {
 /*
 $("#cust_mst_list").kendoGrid({
 	//height: 550,
-	sortable: true,
+	sortable: false,
 	reorderable: true,
 	groupable: false,
 	resizable: true,
