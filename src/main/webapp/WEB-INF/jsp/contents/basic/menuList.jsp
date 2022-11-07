@@ -204,6 +204,7 @@ var headerTitle = ($("#headerTitle").text());
 var oGrid = null;	
 oGrid = new gridData("grid");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/menuList.do");
 oGrid.setExcelFile(headerTitle+"(" + new Date().yyyymmdd() + ").xlsx");
 oGrid.setPageable(false);

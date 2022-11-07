@@ -15,7 +15,7 @@ function gridObj() {
 	this.pageable	= true;
 	this.pageSize	= 20;
 	this.selectable = false;
-	this.sortable	= true;
+	this.sortable	= false;
 	this.aggregate = [];
 	this.dataSource = [];
 }

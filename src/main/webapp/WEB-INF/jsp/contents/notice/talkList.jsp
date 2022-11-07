@@ -277,7 +277,7 @@ function goList() {
 }
 
 $("#popGrid").kendoGrid({
-	sortable: true,
+	sortable: false,
 	reorderable: true,
 	groupable: false,
 	resizable: true,

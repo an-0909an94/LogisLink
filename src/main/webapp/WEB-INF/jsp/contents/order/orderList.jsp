@@ -593,7 +593,7 @@
             },
             navigatable: true,
             selectable: true,
-            sortable : true,
+            sortable : false,
             pageable : true,
             resizable: true,
             scrollable: true,

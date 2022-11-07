@@ -254,6 +254,7 @@ var columns = [
 var oGrid = null;	
 oGrid = new gridData("comp_list");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/compDeptList.do?custId="+'${custId}');
 oGrid.setExcelFile("부서관리.xlsx");
 oGrid.setPageable(false);

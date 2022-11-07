@@ -95,6 +95,7 @@ var headerTitle = ($("#headerTitle").text());
 var oGrid = null;	
 oGrid = new gridData("cust_mst_list");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/masterCompList.do");
 oGrid.setSelectable(true);
 oGrid.setExcelFile(headerTitle+"(" + new Date().yyyymmdd() + ").xlsx");
@@ -147,7 +148,7 @@ function create_comp() {
 /*
 $("#cust_mst_list").kendoGrid({
 	//height: 550,
-	sortable: true,
+	sortable: false,
 	reorderable: true,
 	groupable: false,
 	resizable: true,

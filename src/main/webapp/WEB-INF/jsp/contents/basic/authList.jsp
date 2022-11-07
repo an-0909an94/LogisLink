@@ -184,17 +184,19 @@ var popColumns = [
 var oGrid = null;
 oGrid = new gridData("grid");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/authUserList.do");
 oGrid.setSelectable(true);
 oGrid.setPageable(false);
 oGrid.setGrid(userColumns);
 
+
 var oSubGrid = null;
 oSubGrid = new gridData("subGrid");
 oSubGrid.initGrid();
+oSubGrid.setSortable(false);
 oSubGrid.setSendUrl("/contents/basic/data/authList.do");
 oSubGrid.setEditable(false);
-oSubGrid.setSortable(false);
 oSubGrid.setPageable(false);
 oSubGrid.setGrid(menuColumns); 
 

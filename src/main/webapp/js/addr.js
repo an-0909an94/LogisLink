@@ -148,7 +148,7 @@ function dummyCommonAddressInfo(data,paramName) {
                 }
                 return;
             }
-            getBasicFare();
+            //getBasicFare();
         }
     });
     /*

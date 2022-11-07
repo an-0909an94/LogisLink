@@ -232,10 +232,12 @@ var codeColumns = [
 var oGrid = null;
 oGrid = new gridData("grid");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/codeGroupList.do");
 oGrid.setSelectable(true);
 oGrid.setPageable(false);
 oGrid.setGrid(groupColumns);
+
 
 var oSubGrid = null;
 oSubGrid = new gridData("subGrid");

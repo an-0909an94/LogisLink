@@ -156,7 +156,20 @@
 								</div>
 							</div>
 						</div><!-- /toolbar -->
+
+						<div style="min-width: 500px;">
+							<div style="height:calc(100vh - 409px)" id="car_list"></div>
+
+							<ul id="CarListContextMenu">
+								<li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
+								<li class="k-separator privateRClick"></li>
+								<li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
+							</ul>
+							<!-- /table -->
+						</div>
+						<!--
 						<div style="height:calc(100vh - 409px)" id="car_list"></div>
+						-->
 						<!-- /table -->
 					</div>
 				</div>
@@ -168,6 +181,18 @@
 	<!-- content -->
 </div>
 <script type="text/javascript">
+
+var userId='${sessionScope.userInfo.userId}';
+
+
+$("#CarListContextMenu").kendoContextMenu({
+	target: "#car_list",
+	filter: "tr[role='row']"
+});
+
+var contextMenu = $("#CarListContextMenu").data("kendoContextMenu");
+contextMenu.bind("select", onContextMenuSelect);
+
 $(document).ready(function(){ 	
 	$("#mobile, #telNum, #cid").val(Util.formatPhone($("#mobile, #telNum, #cid").val()));
 
@@ -239,6 +264,7 @@ var columns = [
 	{ field: "bankName", title: "은행명", width: 130 },
 	{ field: "bankCnnm", title: "예금주", width: 100 },
 	{ field: "bankAccount", title: "계좌번호", width: 150 },
+	{ field: "bankChkDate", title: "계좌확인일시", width: 160 },
 	{ field: "regdate", title: "등록일자", width: 170 },
 	{ field: "userId", title: "담당직원", width: 130 },
 	{ field: "memo", title: "메모", width: 157 },
@@ -252,6 +278,7 @@ var headerTitle = ($("#headerTitle").text());
 var oGrid = null;	
 oGrid = new gridData("car_list");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/carList.do");
 oGrid.setPageable(true);
 oGrid.setSelectable(true);
@@ -278,47 +305,67 @@ function goList() {
 	param["taxjoinYn"] = $("#s_taxjoinYn").val();
 	param["emailYn"] = $("#s_emailYn").val();
 	param["accountYn"] = $("#s_accountYn").val();
-	
+
+	columns = setPrivateData("A1410", "car_list", userId, columns);
+
 	oGrid.setSearchData(param);
-	if(grid == null) {
+	if (grid == null) {
 		oGrid.setGrid(columns);
 		grid = $("#car_list").data("kendoGrid");
 		//grid.bind("change", onChange);
-		grid.tbody.delegate('tr', 'dblclick', function(){
+		setOptionActive("A1410", "car_list", userId);
+
+		grid.tbody.delegate('tr', 'dblclick', function () {
 			var dataItem = grid.dataItem($(this));
 			form_popup("E", dataItem);
-		});	
+		});
 	} else {
 		grid.setDataSource(oGrid.gridOption.dataSource);
 	}
+}
+	/*
+    function onChange(e){
+        var row = this.select();
+        var data = this.dataItem(row);
 
-}
-/* 
-function onChange(e){
-	var row = this.select();
-	var data = this.dataItem(row);
-	
-	form_popup("E", data);
-}
- */
-function form_popup(mode, data) {
-	Util.insertCloseButton();
-	$('#group-list').addClass("block");
-	$('.insert_pop').addClass("block");
-	$('.insertClose').addClass("block");
-	init_pop(mode, data);
-}
+        form_popup("E", data);
+    }
+	*/
 
-function form_popup_close() {
-    $('#group-list').removeClass("block");
-    $('.insert_pop').removeClass("block");
-	$('.insertClose').removeClass("block");
-}
-
-//excel download
-function goExcel(){
-	$("#loading").show();
-	var grid = $("#car_list").data("kendoGrid");
-	grid.saveAsExcel();
-}
+	function form_popup(mode, data) {
+		Util.insertCloseButton();
+		$('#group-list').addClass("block");
+		$('.insert_pop').addClass("block");
+		$('.insertClose').addClass("block");
+		init_pop(mode, data);
+	}
+	function form_popup_close() {
+		$('#group-list').removeClass("block");
+		$('.insert_pop').removeClass("block");
+		$('.insertClose').removeClass("block");
+	}
+	//excel download
+	function goExcel(){
+		$("#loading").show();
+		var grid = $("#car_list").data("kendoGrid");
+		grid.saveAsExcel();
+	}
+	function onContextMenuSelect(e) {
+		var grid = $("#car_list").data("kendoGrid");
+		var data = grid.dataItem(e.target);
+		var row = grid.select();
+		var multiSelectedData = [];
+		var item = e.item.id;
+		for(var i = 0; i < row.length; i++) {
+			multiSelectedData.push(grid.dataItem(row[i]));
+		}
+		switch (item) {
+			case "cSave" : // 리스트 현재설정 저장 버튼 이벤트
+				setPrivateSaveData("A1410", "car_list", userId);
+				break;
+			case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
+				setPrivatePanel("A1410", "car_list", userId);
+				break;
+		}
+	}
 </script>

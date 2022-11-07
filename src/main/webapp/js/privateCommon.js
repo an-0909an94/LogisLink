@@ -622,7 +622,6 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
         
 		var isActive = false;
 		if(key.type == "keyup" && key.keyCode == 13) {
-			isActive = true;
 		} else if(key.type == "focusout") {
 			isActive = true;
 		}
@@ -715,6 +714,7 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 		if(SHOW_YN) {
 			var target = $(".privateRightPanel");
 	        if(target.has(e.target).length==0) {
+				$("#privateTbody").html("");
 	        	$(".privateRightPanel").hide();
 				SHOW_YN = false;
 	        } 
@@ -724,7 +724,9 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 	// 레이어 닫기 버튼 클릭 이벤트
 	$(".privateClose").off("click");
 	$(".privateClose").on("click", function() {
+		$("#privateTbody").html("");
 		$(".privateRightPanel").hide();
+		SHOW_YN = false;
 	});
 	
 	// 레이어 초기화 버튼 클릭 이벤트 
@@ -744,7 +746,8 @@ function setPrivatePanel(inPageId, inGridId, inUserId) {
 						sessionStorage.clear();
 						sessionStorage.setItem(stoId, JSON.stringify(data.colInfo));
 						$(".privateRightPanel").hide();
-						
+						$("#privateTbody").html("");
+						SHOW_YN = false;
 						goList();
 					} else {
 						alert("오류가 발생했습니다. 관리자에게 문의하세요.");

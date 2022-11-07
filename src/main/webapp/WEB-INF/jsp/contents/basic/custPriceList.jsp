@@ -177,6 +177,7 @@ var columns = [
 var oGrid = null;
 oGrid = new gridData("grid");
 oGrid.initGrid();
+oGrid.setSortable(false);
 oGrid.setSendUrl("/contents/basic/data/frtCostList.do");
 oGrid.setExcelFile("계약단가.xlsx");
 oGrid.setPageable(false);
