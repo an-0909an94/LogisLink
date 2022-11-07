@@ -1,34 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-/*    .arrow_box {
-        display: none;
-        position: absolute;
-        width: 100px;
-        padding: 8px;
-        left: 0;
-        -webkit-border-radius: 8px;
-        -moz-border-radius: 8px;
-        border-radius: 8px;
-        background: #333;
-        color: #fff;
-        font-size: 14px;
-    }
+    /*    .arrow_box {
+            display: none;
+            position: absolute;
+            width: 100px;
+            padding: 8px;
+            left: 0;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            border-radius: 8px;
+            background: #333;
+            color: #fff;
+            font-size: 14px;
+        }
 
-    .arrow_box:after {
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        margin-left: -10px;
-        border: solid transparent;
-        border-color: rgba(51, 51, 51, 0);
-        border-bottom-color: #333;
-        border-width: 10px;
-        pointer-events: none;
-        content: ' ';
-    }*/
+        .arrow_box:after {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            margin-left: -10px;
+            border: solid transparent;
+            border-color: rgba(51, 51, 51, 0);
+            border-bottom-color: #333;
+            border-width: 10px;
+            pointer-events: none;
+            content: ' ';
+        }*/
 
     .arrow_box
     {
@@ -691,9 +691,9 @@
                                         </div>
                                         <div class="input-group input-group-sm col middle-name form-group">
                                             <strong class="required">기본운임(청구)</strong>
-                                                    <a class="k-pager-refresh k-button"  onclick="getBasicFare();" style="margin-top: -5px; height: 19px; font-size: 12px;  background-color: #f3ee61">최근운임 불러오기</a>
-                                                    <p class="arrow_box">거래처명(화주), 상/하차지주소, 요청차종/톤수에 맞는 최근 청구운임(기본)을 불러옵니다.
-                                                        <br>※ 최근 오더가 없는 경우는 0원으로, 경유비 등 추가운임은 제외</p>
+                                            <a class="k-pager-refresh k-button"  onclick="getBasicFare();" style="margin-top: -5px; height: 19px; font-size: 12px;  background-color: #f3ee61">최근운임 불러오기</a>
+                                            <p class="arrow_box">거래처명(화주), 상/하차지주소, 요청차종/톤수에 맞는 최근 청구운임(기본)을 불러옵니다.
+                                                <br>※ 최근 오더가 없는 경우는 0원으로, 경유비 등 추가운임은 제외</p>
 
                                             <input id="sellCharge" name="sellCharge" type="text" class="form-control form-control-sm" onchange="sellSumCharge()" required>
                                             <div class="help-block with-errors"></div>
@@ -2071,8 +2071,8 @@
             $("#sDateDay").data("kendoDatePicker").value(new Date());
             $("#eDateDay").data("kendoDatePicker").value(new Date());
         }
-       // $("#sDateDay").data("kendoDatePicker").value(new Date());
-       // $("#eDateDay").data("kendoDatePicker").value(new Date());
+        // $("#sDateDay").data("kendoDatePicker").value(new Date());
+        // $("#eDateDay").data("kendoDatePicker").value(new Date());
 
         // form 초기화 시, timepicker data 사라짐 -> 다시 생성
         var sDateTime = "<strong class=\"required\">상차 시간</strong> " +
@@ -3281,7 +3281,7 @@
 
             if(unitPriceType !="01" || reqCustId =="" || reqDeptId =="" || sSido =="" || sGungu ==""
                 || eSido =="" || eGungu =="" || carTypeCode =="" || carTonCode ==""){
-                alert("해당 조건에 맞는 최근 청구운임이 존재하지 않습니다.");
+                alert("해당 필요 정보를 입력해 주세요.");
                 return;
             }
 
@@ -3304,6 +3304,8 @@
                 success: function(data){
                     if(data.result) {
                         $("#sellCharge").val(Util.formatNumber(data.allocCharge));
+                    }else{
+                        alert(111111);
                     }
                 }
             });
