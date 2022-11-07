@@ -3281,6 +3281,7 @@
 
             if(unitPriceType !="01" || reqCustId =="" || reqDeptId =="" || sSido =="" || sGungu ==""
                 || eSido =="" || eGungu =="" || carTypeCode =="" || carTonCode ==""){
+                alert("해당 조건에 맞는 최근 청구운임이 존재하지 않습니다.");
                 return;
             }
 
@@ -3307,6 +3308,7 @@
                 }
             });
         }else{
+            alert("해당 조건에 맞는 최근 청구운임이 존재하지 않습니다.");
             return
         }
 
