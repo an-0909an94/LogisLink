@@ -3305,7 +3305,7 @@
                     if(data.result) {
                         $("#sellCharge").val(Util.formatNumber(data.allocCharge));
                     }else{
-                        alert(111111);
+                        alert("해당 조건에 맞는 최근 청구운임이 존재하지 않습니다.");
                     }
                 }
             });
