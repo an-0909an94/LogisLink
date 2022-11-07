@@ -1,21 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-    .bubble
+/*    .arrow_box {
+        display: none;
+        position: absolute;
+        width: 100px;
+        padding: 8px;
+        left: 0;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        border-radius: 8px;
+        background: #333;
+        color: #fff;
+        font-size: 14px;
+    }
+
+    .arrow_box:after {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        margin-left: -10px;
+        border: solid transparent;
+        border-color: rgba(51, 51, 51, 0);
+        border-bottom-color: #333;
+        border-width: 10px;
+        pointer-events: none;
+        content: ' ';
+    }*/
+
+    .arrow_box
     {
+        display: none;
+        position: absolute;
         z-index:100;
-        position: relative;
         height: auto;
         padding: 10px 10px 10px 10px;
+        margin-top: 20px;
         background: #FFFFFF;
         border-radius: 5px;
         border: #7F7F7F solid 1px;
         position: absolute;
-        font-size: 16px;
+        font-size: 12px;
         text-align: left;
     }
 
-    .bubble:after
+    .arrow_box:after
     {
         content: '';
         position: absolute;
@@ -26,10 +57,10 @@
         width: 0;
         z-index: 1;
         top: -18.5px;
-        left: 49px;
+        left: 90px;
     }
 
-    .bubble:before
+    .arrow_box:before
     {
         content: '';
         position: absolute;
@@ -40,9 +71,10 @@
         width: 0;
         z-index: 0;
         top: -20px;
-        left: 49px;
+        left: 90px;
     }
-    span:hover + p.arrow_box {
+
+    a:hover + p.arrow_box {
         display: block;
     }
 </style>
@@ -658,9 +690,11 @@
                                             <input id="unitCharge" name="unitCharge" type="text" class="form-control form-control-sm">
                                         </div>
                                         <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong class="required">기본운임(청구)</strong><%--<a id="ㅁㅁㅁ" class="k-pager-refresh k-button" style="margin-top: -5px; height: 19px; width: 19px;"> ? </a>
-                                            <div class="bubble">거래처명(화주), 상/하차지주소, 요청차종/톤수에 맞는 최근 청구운임(기본)을 불러옵니다.
-                                                ※ 최근 오더가 없는 경우는 0원으로, 경유비 등 추가운임은 제외</div>--%>
+                                            <strong class="required">기본운임(청구)</strong>
+                                                    <a class="k-pager-refresh k-button"  onclick="getBasicFare();" style="margin-top: -5px; height: 19px; font-size: 12px;  background-color: #f3ee61">최근운임 불러오기</a>
+                                                    <p class="arrow_box">거래처명(화주), 상/하차지주소, 요청차종/톤수에 맞는 최근 청구운임(기본)을 불러옵니다.
+                                                        <br>※ 최근 오더가 없는 경우는 0원으로, 경유비 등 추가운임은 제외</p>
+
                                             <input id="sellCharge" name="sellCharge" type="text" class="form-control form-control-sm" onchange="sellSumCharge()" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
@@ -3232,45 +3266,50 @@
 
 
     function getBasicFare() {
+        var basicFareConfirm = confirm('최근 청구운임(기본)으로 설정하시겠습니까?');
+        if (basicFareConfirm) {
+            var reqCustId = $("#sellCustId").val();
+            var reqDeptId = $("#sellDeptId").val();
+            var sSido = $("#sSido").val();
+            var sGungu = $("#sGungu").val();
+            var eSido = $("#eSido").val();
+            var eGungu = $("#eGungu").val();
+            var carTypeCode = $("#carTypeCode").val();
+            var carTonCode = $("#carTonCode").val();
+            var custId ="${sessionScope.userInfo.custId}";
+            var unitPriceType = $('input[name="unitPriceType"]:checked').val();
 
-        var reqCustId = $("#sellCustId").val();
-        var reqDeptId = $("#sellDeptId").val();
-        var sSido = $("#sSido").val();
-        var sGungu = $("#sGungu").val();
-        var eSido = $("#eSido").val();
-        var eGungu = $("#eGungu").val();
-        var carTypeCode = $("#carTypeCode").val();
-        var carTonCode = $("#carTonCode").val();
-        var custId ="${sessionScope.userInfo.custId}";
-        var unitPriceType = $('input[name="unitPriceType"]:checked').val();
+            if(unitPriceType !="01" || reqCustId =="" || reqDeptId =="" || sSido =="" || sGungu ==""
+                || eSido =="" || eGungu =="" || carTypeCode =="" || carTonCode ==""){
+                return;
+            }
 
-        if(unitPriceType !="01" || reqCustId =="" || reqDeptId =="" || sSido =="" || sGungu ==""
-            || eSido =="" || eGungu =="" || carTypeCode =="" || carTonCode ==""){
-            return;
+            $.ajax({
+                url: "/contents/order/data/basicFare.do",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    reqCustId: reqCustId,
+                    reqDeptId: reqDeptId,
+                    sSido: sSido,
+                    sGungu: sGungu,
+                    eSido: eSido,
+                    eGungu: eGungu,
+                    carTypeCode: carTypeCode,
+                    carTonCode: carTonCode,
+                    custId: custId
+
+                },
+                success: function(data){
+                    if(data.result) {
+                        $("#sellCharge").val(Util.formatNumber(data.allocCharge));
+                    }
+                }
+            });
+        }else{
+            return
         }
 
-        $.ajax({
-            url: "/contents/order/data/basicFare.do",
-            type: "POST",
-            dataType: "json",
-            data: {
-                reqCustId: reqCustId,
-                reqDeptId: reqDeptId,
-                sSido: sSido,
-                sGungu: sGungu,
-                eSido: eSido,
-                eGungu: eGungu,
-                carTypeCode: carTypeCode,
-                carTonCode: carTonCode,
-                custId: custId
-
-            },
-            success: function(data){
-                if(data.result) {
-                    $("#sellCharge").val(Util.formatNumber(data.allocCharge));
-                }
-            }
-        });
     }
 
 
