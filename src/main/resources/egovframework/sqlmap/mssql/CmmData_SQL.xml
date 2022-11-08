@@ -310,11 +310,11 @@
     
     <select id="selectVacsSendAccountCheck" parameterType="java.util.HashMap" resultType="java.util.HashMap">
         SELECT
-          INP_ST AS inpSt
-          , INP_CD AS inpCd
-          , IBANK_CD AS iBankCd
-          , IACCT_NO AS iAcctNo
-          , IACCT_NM AS iAcctNm
+          ISNULL(INP_ST, '0') AS inpSt
+          , ISNULL(INP_CD, '') AS inpCd
+          , ISNULL(IBANK_CD, '') AS iBankCd
+          , ISNULL(IACCT_NO, '') AS iAcctNo
+          , ISNULL(IACCT_NM, '') AS iAcctNm
         FROM VACS_SEND
         WHERE 1=1
         AND TR_NO = #{trNo};

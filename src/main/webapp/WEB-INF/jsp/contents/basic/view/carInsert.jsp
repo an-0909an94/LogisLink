@@ -1,4 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<div class="text-center" id="loading" style="display:none;">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
 <div class="pop-layer">
     <div class="editor_wrap pop-layer" id="layer1">
 	    <div class="insertClose">
@@ -578,11 +585,10 @@
 			$.ajax({
 				url: "/contents/basic/data/insertCar.do",
 				type: "POST",
-				dataType: "json",
-				//data: param,
+				dataType: "JSON",
 				data: $("#f").serializeObject(),
-				success: function(data){
-					if(data.result) {
+				success: function(data) {
+					if (data.result) {
 						alert(data.msg);
 						init_popup_close();
 						goList();
@@ -669,7 +675,7 @@
     				isAccountCheck = true;
     				accountCheckDate = moment().format("YYYY-MM-DD HH:mm");
     				
-    				alert(data.msg + "\n계좌 정보를 저장하려면 '수정' 또는 '저장' 버튼을 눌러주세요.");
+    				alert(data.msg);
     				
     				// 버튼 비활성화
     				$("#accountCheckButton").data("kendoButton").enable(false);

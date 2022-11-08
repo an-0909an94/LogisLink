@@ -385,7 +385,7 @@ public class CmmController {
 		cmmService.insertVacsSendAccountCheck(param);
 		
 		// 세틀뱅크가 업데이트하는 동안 n초 대기
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		
 		// 세틀뱅크 테이블 업데이트 상태 조회
 		map.put("trNo", param.get("keyId").toString());
@@ -405,11 +405,11 @@ public class CmmController {
 					map.put("bankCnnm", bankCnnm);
 					map.put("bankAccount", bankAccount);
 					map.put("result", Boolean.TRUE);
-					map.put("msg", "사용 가능한 계좌입니다.");
+					map.put("msg", "사용 가능한 계좌입니다.\n계좌 정보를 저장하려면 '수정' 또는 '저장' 버튼을 눌러주세요.");
 				} else {
 					// 없는 계좌
 					map.put("result", Boolean.FALSE);
-					map.put("msg", "사용 하실 수 없는 계좌입니다.");
+					map.put("msg", "사용 하실 수 없는 계좌입니다.\n은행과 계좌번호를 올바르게 입력하세요.");
 				}
 			} else {
 				// 계좌 정보 조회 실패
