@@ -1,11 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-<div class="text-center" id="loading" style="display:none;">
-  <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-</div>
-
 <div class="pop-layer">
     <div class="editor_wrap pop-layer" id="layer1">
 	    <div class="insertClose">
@@ -350,8 +343,12 @@
                                    </div>
                                    <div class="input-group input-group-sm col middle-name form-group">
                                         <strong>&nbsp;</strong>
-                                        <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-check"></i>예금주확인</button>
+<!--                                         <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-check"></i>예금주확인</button> -->
 <!--                                         <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" style="border-radius:4px" class="form-control form-control-sm middle-button-dark">예금주확인</button> -->
+                                        <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark">
+                                            <i class="k-icon k-i-check"></i>예금주확인
+<!--                                             <span class="spinner-border spinner-border-sm"></span> -->
+                                        </button>
                                    </div>
                                </div>
                                
@@ -403,9 +400,6 @@
     </div><!-- wrap -->
 </div>
 <script type="text/javascript">
-	var isAccountCheck = false;
-	var accountCheckDate = null;
-	
     $(document).ready(function(){
     	$("#mngDeptId").on("change", function() {
     		Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "선택하세요");
@@ -418,7 +412,7 @@
     	});
     	
     	// 은행 변경 이벤트 핸들러
-    	$("#bankCode").on("change", function() {
+    	$("#bankCode").on("input", function() {
     		if ($(this).val() != "")
     			// 버튼 활성화
     			$("#accountCheckButton").data("kendoButton").enable(true);
@@ -428,7 +422,7 @@
     	});
     	
     	// 계좌번호 변경 이벤트 핸들러
-		$("#bankAccount").on("change", function() {
+		$("#bankAccount").on("input", function() {
 			if ($(this).val() != "")
     			// 버튼 활성화
     			$("#accountCheckButton").data("kendoButton").enable(true);
@@ -478,6 +472,30 @@
     	$("#memo").attr("disabled", false);
     	$("#useYn").attr("disabled", false);
     	$("#mngDeptId").prop("disabled", false);
+    	
+    	/**
+    	 * 예금주확인
+    	 */
+    	var isAccountCheck = false;
+    	var accountCheckDate = null;
+    	
+    	// 예금주확인 버튼 활성화
+		if (data.bankCheckDate != null && data.bankCheckDate != "") {
+			$("#accountCheckButton").data("kendoButton").enable(false);
+		}
+		else {
+			$("#accountCheckButton").data("kendoButton").enable(true);
+		}
+		
+		// 은행명과 게좌번호가 없으면 예금주확인 버튼 비활성화
+		if (
+			(data.bankCode == null || data.bankCode == "") &&
+			(data.bankAccount == null || data.bankAccount == "")
+		) {
+			$("#accountCheckButton").data("kendoButton").enable(false);
+		}
+		// 예금주확인 End
+		
     	if (g_mode == "N") {
     		$("#car_legend").text("차량 등록");
     		$("#btn_save").html($("#btn_save").html().replace('수정', '저장'));
@@ -516,21 +534,6 @@
     
     		if ("${menuAuth.editYn}" != "Y")
     			$("#btnSubmit").hide();
-    		
-    		// 예금주확인 버튼 활성화
-    		if (data.bankCheckDate != null && data.bankCheckDate != "") {
-    			$("#accountCheckButton").data("kendoButton").enable(false);
-    		}
-    		else {
-    			$("#accountCheckButton").data("kendoButton").enable(true);
-    		}
-    		
-    		// 은행명과 게좌번호가 없으면 예금주확인 버튼 비활성화
-    		if (
-    			(data.bankCode == null || data.bankCode == "") &&
-    			(data.bankAccount == null || data.bankAccount == "")
-    		)
-    			$("#accountCheckButton").data("kendoButton").enable(false);
     	}
     }
     
@@ -641,10 +644,12 @@
     	var bankCode = $("#bankCode").val();
     	var bankAccount = $("#bankAccount").val();
     	if (
-			(bankCode == null || bankCode == "") &&
+			(bankCode == null || bankCode == "") ||
 			(bankAccount == null || bankAccount == "")
-    	)
+    	) {
+    		alert("은행명 또는 계좌번호를 입력하지 않으면 예금주확인이 불가합니다.");
     		return;
+    	}
     	
     	var param = {
     		orgCd: "20070123",
@@ -667,8 +672,11 @@
     		beforeSend: function(xmlHttpRequest) {
     			xmlHttpRequest.setRequestHeader("AJAX", "true");
     			
-    			// 버튼 비활성화
-				$("#accountCheckButton").data("kendoButton").enable(false);
+    			// 버튼 상태 변경
+    			$("#accountCheckButton").data("kendoButton").enable(false);
+    			var spinnerIcon = "<span class=\"spinner-border spinner-border-sm\"></span>예금주확인중..";
+    			$("#accountCheckButton").html();
+    			$("#accountCheckButton").html(spinnerIcon);
     		},
     		success: function(data) {
     			if(data.result) {
@@ -678,7 +686,7 @@
     				alert(data.msg);
     				
     				// 버튼 비활성화
-    				$("#accountCheckButton").data("kendoButton").enable(false);
+//     				$("#accountCheckButton").data("kendoButton").enable(false);
     				
     				// 예금주 업데이트
     				$("#bankCnnm").val(data.bankCnnm);
@@ -690,13 +698,26 @@
     				alert(data.msg);
     				
     				// 버튼 활성화
-    				$("#accountCheckButton").data("kendoButton").enable(true);
+//     				$("#accountCheckButton").data("kendoButton").enable(true);
+    				
+    				// 예금주 업데이트
+    				$("#bankCnnm").val("");
+    				$("#bankCheckDate").val("");
     			}
     		},
-//     		error: function(e) {
-//     			alert("예금주조회에 실패했습니다.");
-//     		},
+    		error: function(e) {
+    			alert("예금주조회에 실패했습니다.");
+    		},
     		complete: function() {
+    			// 버튼 상태 변경
+    			if ($("#bankCheckDate").val() != "")
+    				$("#accountCheckButton").data("kendoButton").enable(false);
+    			else
+    				$("#accountCheckButton").data("kendoButton").enable(true);
+    			
+    			var checkIcon = "<i class=\"k-icon k-i-check\"></i>예금주확인";
+    			$("#accountCheckButton").html();
+    			$("#accountCheckButton").html(checkIcon);
     		}
     	});
     }

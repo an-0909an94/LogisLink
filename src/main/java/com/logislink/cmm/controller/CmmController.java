@@ -385,7 +385,7 @@ public class CmmController {
 		cmmService.insertVacsSendAccountCheck(param);
 		
 		// 세틀뱅크가 업데이트하는 동안 n초 대기
-		Thread.sleep(3000);
+		Thread.sleep(5000);
 		
 		// 세틀뱅크 테이블 업데이트 상태 조회
 		map.put("trNo", param.get("keyId").toString());
