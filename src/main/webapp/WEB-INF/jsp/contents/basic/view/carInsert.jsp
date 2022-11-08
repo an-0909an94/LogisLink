@@ -319,19 +319,32 @@
                                <div class="form-group row">
                                    <label class="col-form-label big-name">계좌정보</label>
                                    <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>은행명</strong>
-                                       <select class="custom-select col-12" id="bankCode" name="bankCode">
-                                       </select>
+                                        <strong>은행명</strong>
+                                        <select class="custom-select col-12" id="bankCode" name="bankCode"></select>
                                    </div>
                                    <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>예금주</strong>
-                                       <input type="text" class="form-control form-control-sm" id="bankCnnm" name="bankCnnm" maxlength="20" pattern="^(?=.{1,20}$).*" 
-                                       data-pattern-error="20자 이하로 입력해 주세요.">
+                                        <strong>계좌번호</strong>
+                                        <input type="text" class="form-control form-control-sm" id="bankAccount" name="bankAccount" maxlength="30" pattern="^(?=.{1,30}$).*" 
+                                            data-pattern-error="30자 이하로 입력해 주세요." onkeypress="return checkNumber(event)">
+                                   </div>
+                               </div>
+                               
+                               <div class="form-group row">
+                                   <label class="col-form-label"></label>
+                                   
+                                   <div class="input-group input-group-sm col middle-name form-group">
+                                        <strong>예금주</strong>
+                                        <input type="text" class="form-control form-control-sm" id="bankCnnm" name="bankCnnm" maxlength="20" pattern="^(?=.{1,20}$).*" 
+                                            data-pattern-error="20자 이하로 입력해 주세요." readonly>
                                    </div>
                                    <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>계좌번호</strong>
-                                       <input type="text" class="form-control form-control-sm" id="bankAccount" name="bankAccount" maxlength="30" pattern="^(?=.{1,30}$).*" 
-                                       data-pattern-error="30자 이하로 입력해 주세요.">
+                                        <strong>예금주조회일시</strong>
+                                        <input type="text" class="form-control form-control-sm" id="bankCheckDate" name="bankCheckDate" readonly>
+                                   </div>
+                                   <div class="input-group input-group-sm col middle-name form-group">
+                                        <strong>&nbsp;</strong>
+                                        <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-check"></i>예금주확인</button>
+<!--                                         <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" style="border-radius:4px" class="form-control form-control-sm middle-button-dark">예금주확인</button> -->
                                    </div>
                                </div>
                                
@@ -383,139 +396,185 @@
     </div><!-- wrap -->
 </div>
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#mngDeptId").on("change", function(){
-		Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "선택하세요");
-	});
+	var isAccountCheck = false;
+	var accountCheckDate = null;
 	
-	$("#taxjoinDate").kendoDatePicker({format:"yyyy-MM-dd"});
-});
+    $(document).ready(function(){
+    	$("#mngDeptId").on("change", function() {
+    		Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "선택하세요");
+    	});
+    	
+    	$("#taxjoinDate").kendoDatePicker({format:"yyyy-MM-dd"});
+    	
+    	$("#accountCheckButton").kendoButton({
+//     		icon: "check",
+    	});
+    	
+    	// 은행 변경 이벤트 핸들러
+    	$("#bankCode").on("change", function() {
+    		if ($(this).val() != "")
+    			// 버튼 활성화
+    			$("#accountCheckButton").data("kendoButton").enable(true);
+    		else
+    			// 버튼 비활성화
+    			$("#accountCheckButton").data("kendoButton").enable(false);
+    	});
+    	
+    	// 계좌번호 변경 이벤트 핸들러
+		$("#bankAccount").on("change", function() {
+			if ($(this).val() != "")
+    			// 버튼 활성화
+    			$("#accountCheckButton").data("kendoButton").enable(true);
+    		else
+    			// 버튼 비활성화
+    			$("#accountCheckButton").data("kendoButton").enable(false);
+    	});
+    });
+    
+    var g_mode = "";
+    
+    $("#mobile, #telNum, #cid").on("input", function(){
+    	$(this).val(Util.formatPhone($(this).val()));
+    });
+    
+    $('#bizNum').on('input', function() {
+    	var bizNum = $(this).val().replace(/[^\d]/g, '');
+    	var temp = bizNum.replace(/(\d{3})(\d{1,2})(\d{1,5})/, '$1-$2-$3');
+    	$(this).val(temp);
+    });
+    
+    function init_pop(mode, data) {
+    	g_mode = mode;
+    	init();
+    
+    	var $options = $("#s_dept > option").clone();
+    	$('#mngDeptId').html($options);
+    	$("#mngDeptId option[value='']").remove();
+    
+    	var $options2 = $("#s_carMngCode > option").clone();
+    	$('#carMngCode').html($options2);
+    	$("#carMngCode option[value='']").remove();
+    	
+    	Util.setCmmCode("select", "carTonCode", "CAR_TON_CD", "", "선택하세요");
+    	Util.setCmmCode("select", "carTypeCode", "CAR_TYPE_CD", "", "선택하세요");
+    	Util.setCmmCode("select", "bankCode", "BANK_CD", "", "선택하세요.");
+    	Util.setCmmCode("select", "carSctnCode", "CARGO_TRAN_CAR_SCTN_CD", "", "선택하세요");
+    	Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {}, "userId", "userName", "", "선택하세요");
+        Util.setCmmCode("select", "payType", "PAY_TYPE_CD", "N", "선택하세요");
+    	Util.setCmmCode("select", "carContractCode", "CAR_CONTRACT_CD", "01", "선택하세요");
+    	Util.setCmmCode("select", "carModifyCode", "CAR_MODIFY_CD", "", "선택하세요");
+    	
+    	$("#btnSubmit").show();
+    
+    	$("#carSctnCode").attr("disabled", false);
+    	$("#userId").attr("disabled", false);
+    	$("#memo").attr("disabled", false);
+    	$("#useYn").attr("disabled", false);
+    	$("#mngDeptId").prop("disabled", false);
+    	if (g_mode == "N") {
+    		$("#car_legend").text("차량 등록");
+    		$("#btn_save").html($("#btn_save").html().replace('수정', '저장'));
+    		$("#carNum").removeAttr("readonly");
+    		$("#carSctnCode").attr("disabled", false);
+    		$("#userId").attr("disabled", false);
+    		$("#memo").attr("disabled", false);
+    		$("#useYn").attr("disabled", false);
+    		$("#mngDeptId").prop("disabled", false);
+    		if("${menuAuth.writeYn}" != "Y")
+    			$("#btnSubmit").hide();
+    	} else {
+    		$("#car_legend").text("차량 수정");
+    		$("#btn_save").html($("#btn_save").html().replace('저장', '수정'));
+    		$("#carNum").attr("readonly",true);
+    		Util.setPageData(data);
+    		$("#mngDeptId").val(data.deptId);
+    		
+    		$("input[name=chkPushYn]").val(data.pushYn);
+    		btnChkData('chkPushYn');
+    		$("input[name=chkTalkYn]").val(data.talkYn);
+    		btnChkData('chkTalkYn');
+    
+    		$("#mngDeptId").prop("disabled", true);
+    		if (!$("#custId").val()) {
+    			$("#carSctnCode").attr("disabled", true);
+    			$("#userId").attr("disabled", true);
+    			$("#memo").attr("disabled", true);
+    			$("#useYn").attr("disabled", true);
+    		} else {
+    			$("#carSctnCode").attr("disabled", false);
+    			$("#userId").attr("disabled", false);
+    			$("#memo").attr("disabled", false);
+    			$("#useYn").attr("disabled", false);
+    		}
+    
+    		if ("${menuAuth.editYn}" != "Y")
+    			$("#btnSubmit").hide();
+    		
+    		// 예금주확인 버튼 활성화
+    		if (data.bankCheckDate != null && data.bankCheckDate != "") {
+    			$("#accountCheckButton").data("kendoButton").enable(false);
+    		}
+    		else {
+    			$("#accountCheckButton").data("kendoButton").enable(true);
+    		}
+    		
+    		// 은행명과 게좌번호가 없으면 예금주확인 버튼 비활성화
+    		if (
+    			(data.bankCode == null || data.bankCode == "") &&
+    			(data.bankAccount == null || data.bankAccount == "")
+    		)
+    			$("#accountCheckButton").data("kendoButton").enable(false);
+    	}
+    }
+    
+    function init() {
+    	/*Util.formReset("", [".editor input",".editor select"], {".editor #useYn": 'Y'});
+    	$("#vehicId").val('');
+    	$("#driverId").val('');
+    	$("#deptId").val('');
+    	$("#custId").val('');
+    	$("#carTonCode").empty();
+    	$("#carTypeCode").empty();
+    	$("#bankCode").empty();
+    	$("#carSctnCode").empty();
+    	$(".list-unstyled").remove();
+    	$("#carMngCode").empty();
+    	$("#carMngMemo").empty(); */
+    	$("#f")[0].reset();
+    	$("#chkTalkYn").val("Y");
+    	$("#chkPushYn").val("Y");
+    	btnChkData('chkPushYn');
+    	btnChkData('chkTalkYn');
+    }
+    
+    function popSearchPost(mode){
+    	addrFlag = arguments[0];
+    	Util.popSearchPost(mode);
+    }
+    
+    
+    $("#carSctnCode").change(function(){
+    	if ($(this).val() == '13' || $(this).val() == '11') {
+    		$("#payType").val("Y");
+    	} else {
+    		$("#payType").val("N");
+    	}
+    });
+    
+    $('#f').validator().on('submit', function (e) {
+    	if (e.isDefaultPrevented()) {
+    		alert("항목을 입력해 주세요.");
+    	} else {
+    		$("#mode").val(g_mode);
+     		var talkYn = $("#chkTalkYn").is(":checked") ? "Y" : "N";
+    		var pushYn = $("#chkPushYn").is(":checked") ? "Y" : "N";
 
-var g_mode = "";
-
-$("#mobile, #telNum, #cid").on("input", function(){
-	$(this).val(Util.formatPhone($(this).val()));
-});
-
-$('#bizNum').on('input', function() {
-	var bizNum = $(this).val().replace(/[^\d]/g, '');
-	var temp = bizNum.replace(/(\d{3})(\d{1,2})(\d{1,5})/, '$1-$2-$3');
-	$(this).val(temp);
-});
-
-function init_pop(mode, data) {
-	g_mode = mode;
-	init();
-
-	var $options = $("#s_dept > option").clone();
-	$('#mngDeptId').html($options);
-	$("#mngDeptId option[value='']").remove();
-
-	var $options2 = $("#s_carMngCode > option").clone();
-	$('#carMngCode').html($options2);
-	$("#carMngCode option[value='']").remove();
-	
-	Util.setCmmCode("select", "carTonCode", "CAR_TON_CD", "", "선택하세요");
-	Util.setCmmCode("select", "carTypeCode", "CAR_TYPE_CD", "", "선택하세요");
-	Util.setCmmCode("select", "bankCode", "BANK_CD", "", "선택하세요.");
-	Util.setCmmCode("select", "carSctnCode", "CARGO_TRAN_CAR_SCTN_CD", "", "선택하세요");
-	Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {}, "userId", "userName", "", "선택하세요");
-    Util.setCmmCode("select", "payType", "PAY_TYPE_CD", "N", "선택하세요");
-	Util.setCmmCode("select", "carContractCode", "CAR_CONTRACT_CD", "01", "선택하세요");
-	Util.setCmmCode("select", "carModifyCode", "CAR_MODIFY_CD", "", "선택하세요");
-	
-	$("#btnSubmit").show();
-
-	$("#carSctnCode").attr("disabled", false);
-	$("#userId").attr("disabled", false);
-	$("#memo").attr("disabled", false);
-	$("#useYn").attr("disabled", false);
-	$("#mngDeptId").prop("disabled", false);
-	if(g_mode == "N") {
-		$("#car_legend").text("차량 등록");
-		$("#btn_save").html($("#btn_save").html().replace('수정', '저장'));
-		$("#carNum").removeAttr("readonly");
-		$("#carSctnCode").attr("disabled", false);
-		$("#userId").attr("disabled", false);
-		$("#memo").attr("disabled", false);
-		$("#useYn").attr("disabled", false);
-		$("#mngDeptId").prop("disabled", false);
-		if("${menuAuth.writeYn}" != "Y")	$("#btnSubmit").hide();
-	}else{
-		$("#car_legend").text("차량 수정");
-		$("#btn_save").html($("#btn_save").html().replace('저장', '수정'));
-		$("#carNum").attr("readonly",true);
-		Util.setPageData(data);
-		$("#mngDeptId").val(data.deptId);
-		
-		$("input[name=chkPushYn]").val(data.pushYn);
-		btnChkData('chkPushYn');
-		$("input[name=chkTalkYn]").val(data.talkYn);
-		btnChkData('chkTalkYn');
-
-		$("#mngDeptId").prop("disabled", true);
-		if(!$("#custId").val()) {
-			$("#carSctnCode").attr("disabled", true);
-			$("#userId").attr("disabled", true);
-			$("#memo").attr("disabled", true);
-			$("#useYn").attr("disabled", true);
-		} else {
-			$("#carSctnCode").attr("disabled", false);
-			$("#userId").attr("disabled", false);
-			$("#memo").attr("disabled", false);
-			$("#useYn").attr("disabled", false);
-		}
-
-		if("${menuAuth.editYn}" != "Y")	$("#btnSubmit").hide();
-	}
-}
-
-function init() {
-	/*Util.formReset("", [".editor input",".editor select"], {".editor #useYn": 'Y'});
-	$("#vehicId").val('');
-	$("#driverId").val('');
-	$("#deptId").val('');
-	$("#custId").val('');
-	$("#carTonCode").empty();
-	$("#carTypeCode").empty();
-	$("#bankCode").empty();
-	$("#carSctnCode").empty();
-	$(".list-unstyled").remove();
-	$("#carMngCode").empty();
-	$("#carMngMemo").empty(); */
-	$("#f")[0].reset();
-	$("#chkTalkYn").val("Y");
-	$("#chkPushYn").val("Y");
-	btnChkData('chkPushYn');
-	btnChkData('chkTalkYn');
-}
-
-function popSearchPost(mode){
-	addrFlag = arguments[0];
-	Util.popSearchPost(mode);
-}
-
-
-$("#carSctnCode").change(function(){
-	if($(this).val() == '13' || $(this).val() == '11'){
-		$("#payType").val("Y");
-	}else{
-		$("#payType").val("N");
-	}
-});
-
-$('#f').validator().on('submit', function (e) {
-	  if (e.isDefaultPrevented()) {
-	    alert("항목을 입력해 주세요.")
-	  } else {
-		  $("#mode").val(g_mode);
- 		  var talkYn = $("#chkTalkYn").is(":checked") ? "Y" : "N";
-		  var pushYn = $("#chkPushYn").is(":checked") ? "Y" : "N";
-		  
-		  $("#talkYn").val(talkYn);
-		  $("#pushYn").val(pushYn);
-		  // 이벤트 초기화 (submit 동작 중단)
-		  e.preventDefault();
+    		$("#talkYn").val(talkYn);
+    		$("#pushYn").val(pushYn);
+    		
+    		// 이벤트 초기화 (submit 동작 중단)
+    		e.preventDefault();
+    		
 			$.ajax({
 				url: "/contents/basic/data/insertCar.do",
 				type: "POST",
@@ -532,42 +591,167 @@ $('#f').validator().on('submit', function (e) {
 					}
 				}
 			});
-	  }
-})
-
-function isValid() {
-	
-	return true;
-}
-
-function btnChk(id){
-	if(id.checked == true){
-		$(id).val("Y")
-	} else{
-		$(id).val("N")
-	}
-}
-
-function btnChkData(id){
-	if($("#"+id).val() == "N"){
-		$("input:checkbox[id='"+id+"']").prop("checked", false);
-	}else{
-		$("input:checkbox[id='"+id+"']").prop("checked", true);
-	}
-}
-
-function init_popup_close() {
-	form_popup_close();
-	init();
-}
-
-function setSearchAddressInfo(data) {
-	var zipNo = data.zipNo;
-	var addr = data.roadAddr; // 주소 변수
+    	}
+    })
     
-    $("#"+data.mode+"Post").val(zipNo);
-    $("#"+data.mode+"Addr").val(addr);
-    $("#"+data.mode+"AddrDetail").focus();
-}
+    function isValid() {
+    	
+    	return true;
+    }
+    
+    function btnChk(id){
+    	if(id.checked == true){
+    		$(id).val("Y")
+    	} else{
+    		$(id).val("N")
+    	}
+    }
+    
+    function btnChkData(id){
+    	if($("#"+id).val() == "N"){
+    		$("input:checkbox[id='"+id+"']").prop("checked", false);
+    	}else{
+    		$("input:checkbox[id='"+id+"']").prop("checked", true);
+    	}
+    }
+    
+    function init_popup_close() {
+    	form_popup_close();
+    	init();
+    }
+    
+    function setSearchAddressInfo(data) {
+    	var zipNo = data.zipNo;
+    	var addr = data.roadAddr; // 주소 변수
+        
+        $("#"+data.mode+"Post").val(zipNo);
+        $("#"+data.mode+"Addr").val(addr);
+        $("#"+data.mode+"AddrDetail").focus();
+    }
+    
+    // 예금주 조회
+    function bankCheck() {
+    	// 은행코드와 계좌번호가 없으면 조회 불가
+    	var bankCode = $("#bankCode").val();
+    	var bankAccount = $("#bankAccount").val();
+    	if (
+			(bankCode == null || bankCode == "") &&
+			(bankAccount == null || bankAccount == "")
+    	)
+    		return;
+    	
+    	var param = {
+    		orgCd: "20070123",
+    		trAmt: 0,
+    		trCd: "2001",
+    		module: "VA",
+    		inpSt: "0", 
+    		
+    		bankCd: bankCode,
+    		acctNo: bankAccount,
+    		acctNm: ""
+    	}
+    	
+    	$.ajax({
+    		url: "/cmm/accountCheck.do",
+    		type: "POST",
+    		dataType: "JSON",
+    		data: param,
+    		async: true,
+    		beforeSend: function(xmlHttpRequest) {
+    			xmlHttpRequest.setRequestHeader("AJAX", "true");
+    			
+    			// 버튼 비활성화
+				$("#accountCheckButton").data("kendoButton").enable(false);
+    		},
+    		success: function(data) {
+    			if(data.result) {
+    				isAccountCheck = true;
+    				accountCheckDate = moment().format("YYYY-MM-DD HH:mm");
+    				
+    				alert(data.msg + "\n계좌 정보를 저장하려면 '수정' 또는 '저장' 버튼을 눌러주세요.");
+    				
+    				// 버튼 비활성화
+    				$("#accountCheckButton").data("kendoButton").enable(false);
+    				
+    				// 예금주 업데이트
+    				$("#bankCnnm").val(data.bankCnnm);
+    				$("#bankCheckDate").val(accountCheckDate);
+    			} else {
+    				isAccountCheck = false;
+    				accountCheckDate = null;
+    				
+    				alert(data.msg);
+    				
+    				// 버튼 활성화
+    				$("#accountCheckButton").data("kendoButton").enable(true);
+    			}
+    		},
+//     		error: function(e) {
+//     			alert("예금주조회에 실패했습니다.");
+//     		},
+    		complete: function() {
+    		}
+    	});
+    }
+    
+    // 계좌번호 숫자만 입력
+    function checkNumber(event) {
+    	if(event.key == '.' || event.key == '-' || event.key >= 0 && event.key <= 9) {
+    		return true;
+    	}
+    	
+    	return false;
+	}
+    
+    // 예금주확인 드라이버 테이블 업데이트
+    function updateAccountCheck() {
+    	$.ajax({
+    		url: "/cmm/setAccountCheck.do",
+    		type: "POST",
+    		dataType: "JSON",
+    		data: param,
+    		async: true,
+    		beforeSend: function(xmlHttpRequest) {
+    			xmlHttpRequest.setRequestHeader("AJAX", "true");
+    			$("#loading").show();
+    		},
+    		success: function(data) {
+    			if(data.result) {
+    				isAccountCheck = true;
+    				accountCheckDate = moment();
+    				
+    				alert(data.msg);
+    				
+    				// 버튼 비활성화
+    				$("#accountCheckButton").data("kendoButton").enable(false);
+    				
+    				// 예금주 업데이트
+    				if (g_mode == "N") {
+//             			console.log("신규등록");
+            		} else {
+//             			console.log("정보변경");
+						// 기존 데이터 변경건의 경우 즉시 예금주확인 업데이트
+						
+            			param = {
+							vehicId: $("#vehicId").val(),
+							driverId: $("#driverId").val()
+						}
+            		}
+    			} else {
+    				isAccountCheck = false;
+    				accountCheckDate = null;
+    				
+    				alert(data.msg);
+    				
+    				// 버튼 활성화
+    				$("#accountCheckButton").data("kendoButton").enable(true);
+    			}
+    		},
+    		complete: function() {
+    			$("#loading").hide();
+    		}
+    	});
+    }
 
 </script>

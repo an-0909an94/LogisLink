@@ -38,4 +38,13 @@ public interface CmmService {
 	public List<AddrVO> getJibunAddr(Map<String, Object> map) throws Exception;
 
 	public int getAddrCnt(Map<String, Object> map) throws Exception;
+	
+	// 예금주 확인용 DB에 데이터 삽입
+	public String insertVacsSendAccountCheck(Map<String, Object> map);
+	
+	// 예금주 확인 결과 조회
+	public Map<String, Object> selectVacsSendAccountCheck(Map<String, Object> map);
+	
+	// 기사 계좌확인 결과 업데이트
+	public int updateDriverAccountCheck(Map<String, Object> map);
 }

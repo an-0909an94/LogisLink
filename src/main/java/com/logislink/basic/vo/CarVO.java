@@ -61,6 +61,7 @@ public class CarVO {
 	private String taxjoinDate;
 	private String carModifyCode;
 	private String carContractCode;
+	private String bankCheckDate;
 	
 	public int getrNum() {
 		return rNum;
@@ -421,5 +422,11 @@ public class CarVO {
 	}
 	public void setPostalAddrDetail(String postalAddrDetail) {
 		this.postalAddrDetail = postalAddrDetail;
+	}
+	public String getBankCheckDate() {
+		return bankCheckDate;
+	}
+	public void setBankCheckDate(String bankCheckDate) {
+		this.bankCheckDate = bankCheckDate;
 	}
 }

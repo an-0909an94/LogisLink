@@ -272,7 +272,7 @@
 		ORDER BY number ASC
 	</select>
 
-	<select id="selectAddrCnt" resultType="string" parameterType="java.util.HashMap">
+	<select id="selectAddrCnt" resultType="String" parameterType="java.util.HashMap">
 		SELECT
 		COUNT(1) retCnt
 		FROM( SELECT SIDO , GUGUN , DONG , RI ,
@@ -284,4 +284,54 @@
 			where FULLADDR LIKE RTRIM('%'+ #{fullAddr} +'%')
 		</if>
 	</select>
+  
+    <insert id="insertVacsSendAccountCheck" parameterType="java.util.HashMap">
+        DECLARE @seq INT = NEXT VALUE FOR SEQ_VACS_SEND;
+        DECLARE @trNo VARCHAR(6) = RIGHT('000000' + CAST(@seq AS VARCHAR), 6);
+        
+        DECLARE @trIl VARCHAR(8) = CONVERT(CHAR(8), GETDATE(), 112);
+        DECLARE @trSi VARCHAR(6) = REPLACE(CONVERT(CHAR(8), GETDATE(), 8), ':', '');
+        
+        INSERT VACS_SEND (
+            ORG_CD, TR_NO, TR_IL, TR_SI,
+            IBANK_CD, IACCT_NO, IACCT_NM,
+            TR_AMT, TR_CD, MODULE, INP_ST
+        )
+        VALUES (
+            #{orgCd}, @trNo, @trIl, @trSi,
+            #{bankCd}, #{acctNo}, #{acctNm},
+            #{trAmt}, #{trCd}, #{module}, #{inpSt}
+        );
+        
+        <selectKey resultType="java.lang.String" keyProperty="keyId" order="AFTER">
+            SELECT RIGHT('000000' + CAST((SELECT current_value FROM sys.sequences WHERE name = 'SEQ_VACS_SEND') AS VARCHAR), 6);
+        </selectKey>
+    </insert>
+    
+    <select id="selectVacsSendAccountCheck" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT
+          INP_ST AS inpSt
+          , INP_CD AS inpCd
+          , IBANK_CD AS iBankCd
+          , IACCT_NO AS iAcctNo
+          , IACCT_NM AS iAcctNm
+        FROM VACS_SEND
+        WHERE 1=1
+        AND TR_NO = #{trNo};
+    </select>
+    
+    <update id="updateDriverAccountCheck" parameterType="java.util.HashMap">
+        UPDATE T_DRIVER
+        SET
+          BANK_CODE = #{bankCode}
+          , BANK_CNNM = #{bankCnnm}
+          , BANK_ACCOUNT = #{bankAccount}
+          , BANKCHK_DATE = GETDATE()
+        WHERE 1=1
+        AND USE_YN = 'Y'
+        AND DRIVER_ID = #{driverId}
+        <if test='vehicId != null and !vehicId.equals("")'>
+          AND VEHIC_ID = #{vehicId}
+        </if>
+    </update>
 </mapper>

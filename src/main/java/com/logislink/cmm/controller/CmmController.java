@@ -15,6 +15,8 @@ import javax.xml.bind.DatatypeConverter;
 
 import com.logislink.basic.vo.AddrVO;
 import com.logislink.order.controller.OrderBundleController;
+
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +41,7 @@ import com.logislink.cmm.vo.FileVO;
 
 @Controller
 public class CmmController {
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	public static HashMap<String, ArrayList<CodeVO>> codeMap;
 	
@@ -364,5 +367,70 @@ public class CmmController {
 
 		return "jsonView";
 	}
+	
+	/**
+	 * 예금주 조회
+	 * 은행코드와 계좌번호로 예금주 조회
+	 * @param request
+	 * @param model
+	 * @param map
+	 * @param session
+	 * @param param
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping(value="/cmm/accountCheck.do")
+	public String accountCheck(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
+		// 예금주(계좌확인) 조회를 위해 세틀뱅크 테이블 데이터 삽입
+		cmmService.insertVacsSendAccountCheck(param);
+		
+		// 세틀뱅크가 업데이트하는 동안 n초 대기
+		Thread.sleep(1000);
+		
+		// 세틀뱅크 테이블 업데이트 상태 조회
+		map.put("trNo", param.get("keyId").toString());
+		Map<String, Object> accountCheckResult = null;
+		accountCheckResult = cmmService.selectVacsSendAccountCheck(map);
+		
+		if (accountCheckResult != null && accountCheckResult.size() > 0) {
+			String resultCode = accountCheckResult.get("inpCd").toString();
+			if (resultCode != null && resultCode != "") {
+				if (resultCode.equals("0000")) {
+					// 있는 계좌
+					String bankCode = accountCheckResult.get("iBankCd").toString();
+					String bankCnnm = accountCheckResult.get("iAcctNm").toString();
+					String bankAccount = accountCheckResult.get("iAcctNo").toString();
+					
+					map.put("bankCode", bankCode);
+					map.put("bankCnnm", bankCnnm);
+					map.put("bankAccount", bankAccount);
+					map.put("result", Boolean.TRUE);
+					map.put("msg", "사용 가능한 계좌입니다.");
+				} else {
+					// 없는 계좌
+					map.put("result", Boolean.FALSE);
+					map.put("msg", "사용 하실 수 없는 계좌입니다.");
+				}
+			} else {
+				// 계좌 정보 조회 실패
+				map.put("result", Boolean.FALSE);
+				map.put("msg", "예금주 조회에 실패했습니다.");
+			}
+		}
+		
+		return "jsonView";
+	}
 
+	@PostMapping(value="/cmm/setAccountCheck.do")
+	public String setDriverAccountCheck(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
+		int result = cmmService.updateDriverAccountCheck(param);
+		
+		if (result > 0) {
+			map.put("result", Boolean.TRUE);
+		} else {
+			map.put("result", Boolean.FALSE);
+		}
+		
+		return "jsonView";
+	}
 }

@@ -84,4 +84,22 @@ public class CmmDao extends EgovAbstractMapper{
 		String cnt = selectOne("cmmDataNS.selectAddrCnt",map);
 		return Integer.valueOf(cnt);
 	}
+	
+	// 계좌확인 데이터 삽입
+	public String insertVacsSendAccountCheck(Map<String, Object> map) {
+		insert("cmmDataNS.insertVacsSendAccountCheck", map);
+		
+		return map.get("keyId").toString();
+	}
+	
+	// 계좌확인 결과 조회
+	public Map<String, Object> selectVacsSendAccountCheck(Map<String, Object> map) {
+		return selectOne("cmmDataNS.selectVacsSendAccountCheck", map);
+	}
+	
+	// 기사 계좌확인 결과 업데이트 
+	public int updateDriverAccountCheck(Map<String, Object> map) {
+		int result = update("cmmDataNS.updateDriverAccountCheck", map);
+		return result;
+	}
 }

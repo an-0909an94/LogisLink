@@ -68,6 +68,7 @@
 						 , B.TAXJOIN_DATE	taxjoinDate
 						 , A.CAR_MODIFY_CODE carModifyCode
 						 , C.CAR_CONTRACT_CODE carContractCode
+                         , CONVERT(CHAR(16), B.BANKCHK_DATE, 20) bankCheckDate
 						<!--FROM T_VEHIC_MST A
 					   	INNER JOIN
 					   	T_DRIVER B ON A.DRIVER_ID = B.DRIVER_ID-->
@@ -347,6 +348,7 @@
 						  , #{bankCode}
 						  , #{bankCnnm}
 						  , #{bankAccount}
+                          , #{bankCheckDate}
 						  , #{useYn}
 						  , #{memo}
 						  , #{mode}

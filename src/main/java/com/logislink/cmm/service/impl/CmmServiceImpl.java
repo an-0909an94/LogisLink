@@ -97,4 +97,19 @@ public class CmmServiceImpl implements CmmService {
 	public int getAddrCnt(Map<String, Object> map) {
 		return cmmDao.getAddrCnt(map);
 	}
+	
+	@Override
+	public String insertVacsSendAccountCheck(Map<String, Object> map) {
+		return cmmDao.insertVacsSendAccountCheck(map);
+	}
+	
+	@Override
+	public Map<String, Object> selectVacsSendAccountCheck(Map<String, Object> map) {
+		return cmmDao.selectVacsSendAccountCheck(map);
+	}
+	
+	@Override
+	public int updateDriverAccountCheck(Map<String, Object> map) {
+		return cmmDao.updateDriverAccountCheck(map);
+	}
 }
