@@ -338,7 +338,7 @@
                                             data-pattern-error="20자 이하로 입력해 주세요." readonly>
                                    </div>
                                    <div class="input-group input-group-sm col middle-name form-group">
-                                        <strong>예금주조회일시</strong>
+                                        <strong>예금주확인일시</strong>
                                         <input type="text" class="form-control form-control-sm" id="bankCheckDate" name="bankCheckDate" readonly>
                                    </div>
                                    <div class="input-group input-group-sm col middle-name form-group">
@@ -706,6 +706,9 @@
     			}
     		},
     		error: function(e) {
+    			isAccountCheck = false;
+				accountCheckDate = null;
+				
     			alert("예금주조회에 실패했습니다.");
     		},
     		complete: function() {

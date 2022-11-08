@@ -264,7 +264,7 @@ var columns = [
 	{ field: "bankName", title: "은행명", width: 130 },
 	{ field: "bankCnnm", title: "예금주", width: 100 },
 	{ field: "bankAccount", title: "계좌번호", width: 150 },
-	{ field: "bankChkDate", title: "계좌확인일시", width: 160 },
+	{ field: "bankCheckDate", title: "예금주확인일시", width: 160 },
 	{ field: "regdate", title: "등록일자", width: 170 },
 	{ field: "userId", title: "담당직원", width: 130 },
 	{ field: "memo", title: "메모", width: 157 },
