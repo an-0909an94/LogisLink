@@ -324,8 +324,8 @@
                                    </div>
                                    <div class="input-group input-group-sm col middle-name form-group">
                                         <strong>계좌번호</strong>
-                                        <input type="text" class="form-control form-control-sm" id="bankAccount" name="bankAccount" maxlength="30" pattern="^(?=.{1,30}$).*" 
-                                            data-pattern-error="30자 이하로 입력해 주세요." onkeypress="return checkNumber(event)">
+                                            <input type="text" class="form-control form-control-sm" id="bankAccount" name="bankAccount" maxlength="30" pattern="^(?=.{1,30}$).*" 
+                                                data-pattern-error="30자 이하로 입력해 주세요." oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
                                    </div>
                                </div>
                                
@@ -724,15 +724,6 @@
     		}
     	});
     }
-    
-    // 계좌번호 숫자만 입력
-    function checkNumber(event) {
-		if (event.key >= "0" && event.key <= "9") {
-    		return true;
-    	}
-    	
-    	return false;
-	}
     
     // 예금주확인 드라이버 테이블 업데이트
     function updateAccountCheck() {
