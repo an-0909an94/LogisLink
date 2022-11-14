@@ -13,4 +13,6 @@ public interface LoginService {
 	public List<LoginMenuVO> getLoginMenu(Map<String, Object> map);
 	
 	public void updateLastLogin(Map<String, Object> map);
+
+	public void insertLoginTalk(Map<String, Object> map);
 }

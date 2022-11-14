@@ -36,4 +36,10 @@ public class LoginServiceImpl implements LoginService {
 		loginDao.updateLastLogin(map);
 	}
 
+	@Override
+	public void insertLoginTalk(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		loginDao.insertLoginTalk(map);
+	}
+
 }

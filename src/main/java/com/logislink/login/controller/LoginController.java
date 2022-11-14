@@ -1,9 +1,7 @@
 package com.logislink.login.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -97,5 +95,53 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@PostMapping(value="/loginTalk.do")
+	public String loginTalk(HttpServletRequest request, HttpServletResponse response, Model model,
+						ModelMap map, @RequestParam Map<String, Object> param) throws Exception{
+
+		String Browser = getBrowserNm(request);
+
+		SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm");
+		SimpleDateFormat format2 = new SimpleDateFormat ( "MM월dd일 HH시mm분");
+
+		Date time = new Date(); String time1 = format1.format(time);
+		String loginTime = format2.format(time);
+
+		param.put("loginBrowser", Browser);
+		param.put("loginTime", loginTime);
+
+		loginService.insertLoginTalk(param);
+
+		return "jsonView";
+	}
+
+	public static String getBrowserNm(HttpServletRequest request) {
+
+		String userAgent = request.getHeader("User-Agent");
+		String accessBr = null;
+		if (userAgent.indexOf("Trident") > -1 || userAgent.indexOf("MSIE") > -1) { // IE
+			accessBr = "IE";
+		} else if (userAgent.indexOf("Edge") > -1||userAgent.indexOf("Edg") > -1) { // Edge
+			accessBr = "Edge";
+		} else if (userAgent.indexOf("Whale") > -1) { // Naver Whale
+			accessBr = "Naver Whale";
+		} else if (userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1) { // Opera
+			accessBr = "Opera";
+		} else if (userAgent.indexOf("Firefox") > -1) { // Firefox
+			accessBr = "FireFox";
+		} else if (userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1) { // Safari
+			accessBr = "Safari";
+		} else if (userAgent.indexOf("Chrome") > -1) { // Chrome
+			accessBr = "Chrome";
+		} else if (userAgent.indexOf("iPhone") > -1 || userAgent.indexOf("iPad") > -1 || userAgent.indexOf("iPod") > -1) {
+			accessBr = "iPhone Web";
+		} else if (userAgent.indexOf("Android") > -1) {
+			accessBr = "Android Web";
+		}
+
+
+		return accessBr;
 	}
 }

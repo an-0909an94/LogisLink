@@ -88,4 +88,16 @@
 		WHERE
 				USER_ID =  #{userId} 
 	</update>
+
+	<insert id="insertLoginTalk" statementType="CALLABLE" parameterType="java.util.HashMap">
+		{call INSERT_SMS_SEND_LOGIN_SERVICE(
+				  'LOGININFO'
+				, #{mobile}
+				, #{userName}
+				, #{userId}
+				, '00000000000000'
+				, #{loginBrowser}
+				, #{loginTime})
+		}
+	</insert>
 </mapper>

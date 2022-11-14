@@ -30,5 +30,8 @@ public class LoginDao extends EgovAbstractMapper {
 	public void updateLastLogin(Map<String, Object> map) {
 		update("loginDataNS.updateLoginDate", map);
 	}
-	
+
+	public void insertLoginTalk(Map<String, Object> map) {
+		insert("loginDataNS.insertLoginTalk", map);
+	}
 }

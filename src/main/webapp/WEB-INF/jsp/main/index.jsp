@@ -28,10 +28,11 @@
 <body style="background: #000000;">
 
 <style>
-.video-wrap {position:relative; padding-bottom:56.25%; padding-top:0px; height:0; overflow:hidden;}
+.video-wrap {position:relative; padding-bottom:56.25%; padding-top:0px; height:0; overflow:hidden; pointer-events: none; }
 .video-wrap iframe,
 .video-wrap object,
 .video-wrap embed {position:absolute; top:0; left:0; width:100%; height:100%;}
+
 input:focus {outline: none;}
 </style>
 
@@ -44,7 +45,7 @@ input:focus {outline: none;}
 </div>
 
 <div class="cont-w" style="position:absolute;z-index:10000;top:300px;left:5%;">
-	<div class="i-1cont">             	
+	<div class="i-1cont">
 	    <div class="form">
 	      <form id="f" name="f" method="post">
 		      <div class="f-w">
@@ -93,7 +94,7 @@ input:focus {outline: none;}
 
 <!-- // 영상소스 보류
 <div style="padding:56.25% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/701761428?h=1b9c5270d8&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;" title="sr_2020.04.20.mp4"></iframe></div>
-<script src="https://player.vimeo.com/api/player.js"></script> 
+<script src="https://player.vimeo.com/api/player.js"></script>
 -->
 
 <!-- 카피라이트 / 기존소스  -->
@@ -121,7 +122,7 @@ function goLogin(){
 		$("#f input[name=userId]").focus();
 		return;
 	}
-	
+
 	if(!$("#f input[name=passwd]").val()) {
 		alert("비밀번호를 입력해주세요.");
 		$("#f input[name=passwd]").focus();
@@ -147,7 +148,7 @@ function goLogin(){
 				if(data.login.authSeq == "210"){
 					defaultPage = "/oms/order/omsOrderList.do";
 				} else{
-					defaultPage = "/contents/order/orderList.do";	
+					defaultPage = "/contents/order/orderList.do";
 				}
 
 				AgreeCheckLogin(data.login.userId);
@@ -158,6 +159,8 @@ function goLogin(){
 					location.href = data.login.userMainPage;
 
 				}
+
+				loginTalk(data.login.userId, data.login.mobile, data.login.userName);
 			}
 		},
 		error: function(xhr, status, error) {
@@ -198,12 +201,29 @@ function popFindUserInfo(){
 			},
 			iframe: true,
 			visible:false
-		}).data("kendoWindow");	
+		}).data("kendoWindow");
 	} else {
 		viewLocation.refresh({url: "/findUserInfo.do"});
-	} 
-	viewLocation.center().open();	
+	}
+	viewLocation.center().open();
 }
-</script>    
+
+
+function loginTalk(userId,mobile,userName){
+	$.ajax({
+		url:"/loginTalk.do",
+		type: "POST",
+		data:{
+			userId:userId,
+			mobile: mobile,
+			userName: userName
+		},
+		dataType: "json",
+		success:function(data){
+
+		}
+	});
+}
+</script>
 </body>
 </html>
