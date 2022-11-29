@@ -13,7 +13,7 @@ function gridObj() {
 	this.sendUrl	= "";
 	this.editable	= false;
 	this.pageable	= true;
-	this.pageSize	= 20;
+	this.pageSize	= 50;
 	this.selectable = false;
 	this.sortable	= false;
 	this.aggregate = [];

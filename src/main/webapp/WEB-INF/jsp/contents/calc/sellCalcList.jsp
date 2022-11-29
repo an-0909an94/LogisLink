@@ -924,7 +924,7 @@
                     	id: "orderId"
                     }
                 },
-                pageSize: 20,
+                pageSize: 50,
                 serverPaging: true,
                 serverFiltering: true,
                 error: function(e) {

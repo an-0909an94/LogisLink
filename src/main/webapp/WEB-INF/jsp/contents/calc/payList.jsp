@@ -377,7 +377,7 @@
                         return response.total;
                     }
                 },
-                pageSize: 20,
+                pageSize: 50,
                 serverPaging: true,
                 serverFiltering: true,
                 error: function(e) {
@@ -441,7 +441,7 @@
                         return response.total;
                     }
                 },
-                pageSize: 20,
+                pageSize: 50,
                 serverPaging: true,
                 serverFiltering: true,
                 error: function(e) {
@@ -505,7 +505,7 @@
 					return response.total;
 				}
 			},
-			pageSize: 20,
+			pageSize: 50,
 			serverPaging: true,
 			serverFiltering: true,
 			error: function(e) {
