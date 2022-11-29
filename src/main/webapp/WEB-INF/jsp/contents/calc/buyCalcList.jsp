@@ -2,9 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <style>
+/*
 #grid .k-grid-content {
 	max-height: calc(100vh - 452px)
 }
+*/
 
 .editHeader {
 	color: darkorange;
@@ -568,7 +570,7 @@
                         <!-- 툴바 끝 -->
                         <!-- 그리드 -->
                         <div style="min-width: 500px;">
-                            <div style="height: calc(100vh - 409px)" id="grid"></div>
+                            <div style="height:calc(100vh - 235px);" id="grid"></div>
 
                             <ul id="calcListContextMenu">
                                 <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
@@ -631,6 +633,12 @@
 	var changeResModalCust;
 
     $(document).ready(function() {
+
+        $(window).bind("resize", function() {
+            $("#grid").css("height", "calc(100vh - 235px)");
+            $("#grid").data("kendoGrid").resize();
+        });
+
     	var dateOption = {
             format: "yyyy-MM-dd",
             value: new Date(),

@@ -25,12 +25,17 @@
 	<title>로지스링크</title>
 	<!-- kendo ui CSS -->
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.common.min.css'/>">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.default-v2.min.css'/>">
+<%--	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.default-v2.min.css'/>">--%>
+<%--	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.default-v2_dev.min.css'/>">--%>
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.default-v3_dev.min.css'/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.default.min.css'/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.default.mobile.min.css'/>">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.min.css'/>">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css?v=2'/>">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css?v=7'/>">
+<%--	<link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.min.css'/>">--%>
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.min_dev.css'/>">
+<%--	<link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css?v=2'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css?v=7'/>">--%>
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/common_dev.css?v=2'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style_dev.css?v=7'/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/left.css?v=2'/>">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">

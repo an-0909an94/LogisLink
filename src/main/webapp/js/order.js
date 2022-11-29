@@ -265,7 +265,13 @@ var MultiColumnComboBox = {
 											$("#" + gbn + "Lon").val(data.item.lon);
 											$("#" + gbn + "Memo").val(data.item.orderMemo);
 											var combobox = $("#" + gbn + "Addr").data("kendoMultiColumnComboBox");
-											combobox.text(data.item.addr);
+
+											if(typeof combobox == "undefined" || combobox == null || combobox == ""){
+												//combobox.text(data.item.addr);
+											}else{
+												combobox.text(data.item.addr);
+											}
+
 
 										}
 									}

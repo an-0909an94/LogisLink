@@ -198,6 +198,10 @@ public class OrderVO {
 	   private String invId;
 	   //알림톡 사용여부 추가
 	   private String talkYn;
+
+	   private int finishCnt;
+
+	   private int taxCnt;
 	   
 	public String getOrderId() {
 		return orderId;
@@ -1302,4 +1306,20 @@ public class OrderVO {
 	public String getTalkYn() {	return talkYn;	}
 
 	public void setTalkYn(String talkYn) {	this.talkYn = talkYn;	}
+
+	public int getFinishCnt() {
+		return finishCnt;
+	}
+
+	public void setFinishCnt(int finishCnt) {
+		this.finishCnt = finishCnt;
+	}
+
+	public int getTaxCnt() {
+		return taxCnt;
+	}
+
+	public void setTaxCnt(int taxCnt) {
+		this.taxCnt = taxCnt;
+	}
 }

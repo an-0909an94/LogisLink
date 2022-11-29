@@ -6,11 +6,11 @@
     .myOrder {background: #FAFAD2}
     .isMemo {background: #f08080}
 
-    #grid .k-grid-content {max-height:calc(100vh - 471px)}
+    #grid .k-grid-content {max-height:100vh}
     .width6_5{
         width: 6.5%;
         align-self: center;
-        padding: 0.3em;
+
     }
 </style>
 <div class="insert_pop" style="display: none;">
@@ -19,13 +19,13 @@
 
 <div class="header">
     <div style="justify-content: space-between; display: flex;" class="summary p30">
-        <div class="hdr-tit">
+        <div class="hdr-tit" style ="padding: 5px; font-weight:bold;">
             <P id="headerTitle">배차관리</P>
         </div>
-        <div id="orderSimpleData" style="height: 30px;">
-            <span style="font-size: larger;">배차진행건수 : </span>
+        <div id="orderSimpleData">
+            <span style="font-size: 15px;font-weight:bold;">배차진행건수 : </span>
             <div style="display: contents;" class="col input-group i-name">
-                <i style="font-size: larger;" id="groupCount"></i>
+                <i style="font-size: 15px;font-weight:bold;" id="groupCount"></i>
             </div>
         </div>
     </div>
@@ -170,15 +170,15 @@
                         </select>
                     </div>
 
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+<%--                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>거래처 등급</strong>
                         <select class="custom-select col-12" id="sCustMngCode" name="sCustMngCode"></select>
-                    </div>
+                    </div>--%>
 
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+<%--                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>차주 등급</strong>
                         <select class="custom-select col-12" id="sCarMngCode" name="sCarMngCode"></select>
-                    </div>
+                    </div>--%>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>정보망확정여부</strong>
@@ -196,11 +196,11 @@
                         </label>
                     </div>
 
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
+                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:70px;min-width:70px;">
                         <strong>　</strong>
                         <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
+                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:80px;min-width:80px;">
                         <strong>　</strong>
                         <button onclick="searchReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
                     </div>
@@ -214,14 +214,14 @@
                         <!-- table -->
                         <div class="toolbar row">
                             <div class="tool_form col">
-                                <div class="btn-row" style="float:left;margin-top:24px;">
-                                    <div class="tool_group">
+                                <div class="btn-row" style="float:left;margin-top:12px;">
+                                    <div class="tool_group" style ="font-size: 13px">
                                         자동새로고침
                                         <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
-                                        <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;">
+                                        <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;margin-top:8px;">
                                             <span class="marble"></span>
                                             <span class="on">on</span>
-                                            <span class="off">off</span>
+                                            <span class="off" >off</span>
                                         </label>
                                     </div>
                                 </div>
@@ -245,8 +245,8 @@
                                 </div>
                             </div>
                         </div><!-- /toolbar -->
-                        <div style="min-width: 500px;">
-                            <div style="height:calc(100vh - 409px);" id="grid"></div>
+                        <div style="width: 100%">
+                            <div style="height:calc(100vh - 235px);" id="grid"></div>
 
                             <!-- 22.07.15 이건욱 그리드 개인화 설정 -->
                             <ul id="gridContextMenu">
@@ -288,12 +288,19 @@
     var autoRefresh;
     $(document).ready(function(){
 
+        $(window).bind("resize", function() {
+            $("#grid").css("height", "calc(100vh - 235px)");
+
+            $("#grid").data("kendoGrid").resize();
+        });
+
+
         Util.setCmmCode("select", "listSSido", "SIDO", "", "--상차지--");
         Util.setCmmCode("select", "listESido", "SIDO", "", "--하차지--");
         Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "--오더상태--");
         Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "--배차상태--");
-        Util.setCmmCode("select", "sCarMngCode", "CAR_MNG_CD", "", "--차주등급--");
-        Util.setCmmCode("select", "sCustMngCode", "CAR_MNG_CD", "", "--거래처등급--");
+       //Util.setCmmCode("select", "sCarMngCode", "CAR_MNG_CD", "", "--차주등급--");
+       // Util.setCmmCode("select", "sCustMngCode", "CAR_MNG_CD", "", "--거래처등급--");
         $("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
         $("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
         Util.setSearchDateForm();

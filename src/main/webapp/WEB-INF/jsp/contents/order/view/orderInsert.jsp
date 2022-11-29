@@ -506,6 +506,17 @@
                                             <select class="custom-select col-12" id="carTonCode" name="carTonCode" required></select>
                                             <div class="help-block with-errors"></div>
                                         </div>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong class="required">상차방법</strong>
+                                            <select class="custom-select col-12" id="sWayCode" name="sWayCode" required></select>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong class="required">하차방법</strong>
+                                            <select class="custom-select col-12" id="eWayCode" name="eWayCode" required></select>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-form-label big-name"></label>
@@ -521,7 +532,7 @@
                                             <!-- <div class="help-block with-errors"></div> -->
                                         </div>
                                         <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong> </strong>
+                                            <strong>&nbsp;</strong>
                                             <!-- <select class="custom-select col-12" id="weightUnitCode" name="weightUnitCode" required></select> -->
                                             <input class="form-control form-control-sm" id="weightUnitCode" name="weightUnitCode" value="TON" readonly>
                                             <div class="help-block with-errors"></div>
@@ -557,44 +568,48 @@
                                                     <input type="text" class="form-control form-control-sm" id="goodsQty" name="goodsQty">
                                                 </div>
                                                 <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong> </strong>
+                                                    <strong>&nbsp;</strong>
                                                     <select class="custom-select col-12" id="qtyUnitCode" name="qtyUnitCode"></select>
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong class="required">상차방법</strong>
-                                                    <select class="custom-select col-12" id="sWayCode" name="sWayCode" required></select>
-                                                    <div class="help-block with-errors"></div>
-                                                </div>
-
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong class="required">하차방법</strong>
-                                                    <select class="custom-select col-12" id="eWayCode" name="eWayCode" required></select>
-                                                    <div class="help-block with-errors"></div>
-                                                </div>
-
-                                                <div class="input-group input-group-sm col radio-or-checkBox form-group">
-                                                    <input type="checkbox" id="mixYn" name="mixYn" onclick="btnChk(this)">
-                                                    <label for="mixYn" class="insert-label"> <span>혼적</span>
-                                                    </label>
-                                                </div>
-
-                                                <div class="input-group input-group-sm col middle-name form-group form-group">
-                                                    <strong>혼적크기</strong>
-                                                    <select class="custom-select col-12" id="mixSize" name="mixSize"></select>
-                                                </div>
 
                                                 <div class="input-group input-group-sm col radio-or-checkBox form-group">
                                                     <input type="checkbox" id="returnYn" name="returnYn" onclick="btnChk(this)">
                                                     <label for="returnYn" class="insert-label"> <span>왕복</span>
                                                     </label>
                                                 </div>
+                                                <div class="input-group input-group-sm col radio-or-checkBox form-group">
+                                                    <input type="checkbox" id="mixYn" name="mixYn" onclick="btnChk(this)">
+                                                    <label for="mixYn" class="insert-label"> <span>혼적</span>
+                                                    </label>
+                                                </div>
+                                                <div class="input-group input-group-sm col middle-name form-group form-group">
+                                                    <strong>혼적크기</strong>
+                                                    <select class="custom-select col-12" id="mixSize" name="mixSize"></select>
+                                                </div>
+                                                <div class="input-group input-group-sm col radio-or-checkBox form-group">
+                                                    <input type="checkbox" id="dangerGoodsYn" name="dangerGoodsYn" onclick="btnChk(this)">
+                                                    <label for="dangerGoodsYn" class="insert-label"> <span>위험물</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="input-group input-group-sm col radio-or-checkBox form-group">
+                                                    <input type="checkbox" id="chemicalsYn" name="chemicalsYn" onclick="btnChk(this)">
+                                                    <label for="chemicalsYn" class="insert-label"> <span>유해물</span>
+                                                    </label>
+                                                </div>
+
+                                                <div class="input-group input-group-sm col radio-or-checkBox form-group">
+                                                    <input type="checkbox" id="foreignLicenseYn" name="foreignLicenseYn" onclick="btnChk(this)">
+                                                    <label for="foreignLicenseYn" class="insert-label"> <span>보세운송</span>
+                                                    </label>
+                                                </div>
                                             </div>
 
-                                            <div class="form-group row">
+<%--                                            <div class="form-group row">
                                                 <label class="col-form-label"></label>
                                                 <div style="display: block; text-align: left; margin: 0.3em;" class="input-group input-group-sm col radio-or-checkBox form-group">
                                                     <input type="checkbox" id="dangerGoodsYn" name="dangerGoodsYn" onclick="btnChk(this)">
@@ -613,7 +628,7 @@
                                                     <label for="foreignLicenseYn" class="insert-label"> <span>보세운송</span>
                                                     </label>
                                                 </div>
-                                            </div>
+                                            </div>--%>
                                         </div>
                                     </div>
                                     <!-- 화물 접기, 열기부분 -->
@@ -1165,6 +1180,9 @@
     var g_mode = "";
     var win = null;
     var lastDeptSeleted;
+    var finishCnt;
+    var taxCnt;
+
     var popColumns = [
         { field: "number", title: "No", width: 50 },
         { field: "sellCustName", title: "거래처명", width: 100 },
@@ -1686,6 +1704,11 @@
 
     function gridDataSet(data) {
         //init();
+
+
+        finishCnt = data.finishCnt;
+        taxCnt  = data.taxCnt;
+
         buyCarNum.value('');
         sellCustName.enable(false);
         $("#reqAddr").attr("disabled", true);
@@ -2043,6 +2066,7 @@
     }
 
     function init() {
+
         sellCustName.enable(true);
         $("#deptId").prop("disabled", false);
         $('#sellCustName, #sellDeptName').on('change', function () {
@@ -2063,6 +2087,9 @@
         $("#reqAddr").attr("disabled", false);
         $("#reqAddr").next("i").children('img').attr("onclick", "popSearchPost('reqAddr')");
         $("#reqAddrDetail").attr("disabled", false);
+
+        setFrtSelect(truckTypeData, "truckTypeCode", "01", "TR");
+
         var sDateDayGrid = $("#sDateDay").data("kendoDatePicker");
         var eDateDayGrid = $("#eDateDay").data("kendoDatePicker");
         if (typeof sDateDayGrid == "undefined" || sDateDayGrid == null){
@@ -2282,6 +2309,18 @@
 
     $('#f').validator().on('submit', function (e) {
 
+/*        alert(finishCnt + "111111111111111");
+        alert(taxCnt + "222222222222");*/
+
+        if(taxCnt > 0){
+            alert("이미 정산이 마감된 오더입니다.")
+            return;
+        }
+
+        if(finishCnt > 0){
+            alert("이미 세금계산서가 발행된 오더입니다.")
+            return;
+        }
         if(!chkTEST){
             e.preventDefault();
             alert("등록된 거래처 명이 아닙니다.");
@@ -2389,6 +2428,18 @@
             $("#deptId").prop("disabled", false);
             if($("#sellFee").val() == ""){
                 $("#sellFee").val("0");
+            }
+            if($("#sLat").val() == ""){
+                $("#sLat").val("0.0");
+            }
+            if($("#sLon").val() == ""){
+                $("#sLon").val("0.0");
+            }
+            if($("#eLat").val() == ""){
+                $("#eLat").val("0.0");
+            }
+            if($("#eLon").val() == ""){
+                $("#eLon").val("0.0");
             }
 
             //오더가 취소상태이면 재접수 후 수정 가능하도록
@@ -3126,7 +3177,7 @@
                 $("#payType option[value*='Y']").prop('disabled',false);
                 $("#payType").val('Y').prop("selected", true);
             }else{
-                $("#payType option[value*='Y']").prop('disabled',true);
+               // $("#payType option[value*='Y']").prop('disabled',true);
                 $("#payType").val('N').prop("selected", true);
             }
             //신규차량 등록시 빠른지급여부 미지급으로
@@ -3135,7 +3186,7 @@
                 $("#payType").val('Y').prop("selected", true);
             }
         }else{
-            $("#payType option[value*='Y']").prop('disabled',true);
+           // $("#payType option[value*='Y']").prop('disabled',true);
             $("#payType").val('N').prop("selected", true);
         }
     }

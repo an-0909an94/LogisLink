@@ -286,7 +286,7 @@
 								</div>
 							</div>
 						</div><!-- /toolbar -->
-						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 409px);">
+						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 235px);">
 							<div class="top-pane">
 								<div style="height: 100%;" id="grid"></div>
                                 
@@ -322,6 +322,9 @@
 	var paySeqList = [];
     
 	$(document).ready(function() {
+
+
+
 		Util.setCmmCode("select", "sOutKind", "OUT_KIND_CD", "", "선택해주세요.");
      	$("#splitter").kendoSplitter({
             orientation: "vertical",

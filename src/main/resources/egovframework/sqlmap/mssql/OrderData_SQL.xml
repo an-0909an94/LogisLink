@@ -576,6 +576,8 @@
 			 , C.TAX_EMAIL						reqTaxEmail
 			 , C.TAX_STAFF_NAME 				reqTaxStaffName
 			 , C.TAX_TELNUM						reqTaxTelNum
+			 , (SELECT COUNT(1) FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' AND FINISH_YN = 'Y' and CALC_TYPE_CODE = '0002') finishCnt
+			 , (SELECT COUNT(1) FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' AND TAXINV_YN = 'Y' and CALC_TYPE_CODE = '0002') taxCnt
 		FROM
 		   (
 		      SELECT 
@@ -695,7 +697,7 @@
 					WHERE ORDER_ID = #{orderId}
 				) A
 				INNER JOIN
-				T_ORDER_ALLOC B ON A.ORDER_ID = B.ORDER_ID AND B.ALLOC_STATE IN ('04', '05', '11')
+				T_ORDER_ALLOC B ON A.ORDER_ID = B.ORDER_ID AND B.ALLOC_STATE IN ('04', '05', '11', '12')
 				INNER JOIN
 				T_DRIVER_LOC_HISTORY C ON B.ALLOC_ID = C.ALLOC_ID AND B.DRIVER_ID = C.DRIVER_ID
 			ORDER BY
@@ -776,7 +778,7 @@
 		{call INSERT_ORDER_ALLOC_TALK(
 						    #{mode}
 						  , #{sellCustId}
-					    	  , #{orderId}
+					      , #{orderId}
 						  , #{allocId}
 						  , #{sellAllocId}
 						  , #{sellDeptId}	
