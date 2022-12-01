@@ -36,7 +36,8 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css?v=7'/>">--%>
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/common_dev.css?v=2'/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style_dev.css?v=7'/>">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/left.css?v=2'/>">
+<%--	<link rel="stylesheet" type="text/css" href="<c:url value='/css/left.css?v=2'/>">--%>
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/left_dev.css?v=2'/>">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/jquery-ui.css'/>">
@@ -56,7 +57,7 @@
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="<c:url value='/js/jquery-ui.js'/>" ></script>
 	<script type="text/javascript" src="<c:url value='/js/bcPicker.js'/>" ></script>
-	<script type="text/javascript" src="<c:url value='/js/privateCommon.js?v=5'/>" ></script>
+	<script type="text/javascript" src="<c:url value='/js/privateCommon.js?v=6'/>" ></script>
 	<script type="text/javascript" src="<c:url value='/js/addr.js'/>" ></script>
 
 	<!-- validator JS -->

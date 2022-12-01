@@ -204,6 +204,7 @@ tfoot th {
 .k-grid-header th {
     background-color: #E2E4E5;
     font-size: 12px;
+    padding: 2px;
     color: #000;
 }
 

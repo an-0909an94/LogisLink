@@ -307,7 +307,7 @@ function setOptionActive(inPageId, inGridId, inUserId) {
 			};
 		}
 		
-		var pagingCnt = 20;
+		var pagingCnt = 50;
 		// 사용자 페이징 설정 카운트 조회 후 세팅
 		if(tblInfo["PAGING_USE_YN"] == "Y") {
 			options["pageable"] = {

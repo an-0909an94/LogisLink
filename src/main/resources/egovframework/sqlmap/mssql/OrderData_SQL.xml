@@ -7,7 +7,13 @@
 		SELECT AA.*
 		FROM (
 			SELECT
-					ROW_NUMBER() OVER(ORDER BY AAA.regdate desc) number
+					ROW_NUMBER() OVER(ORDER BY
+					case when AAA.orderStateName ='접수' THEN 1
+	   					 when AAA.orderStateName NOT IN('접수','취소') THEN 2
+	   					 ELSE 3 END,
+	   					 AAA.sellCustName,
+	   					 AAA.regdate desc
+	   				) number
 				  , AAA.*
 			FROM
 				(
@@ -128,7 +134,7 @@
 					     , T.USER_NAME						regname
 					     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CARGO_TRAN_CAR_SCTN_CD' AND CODE = H.CAR_SCTN_CODE) carSctnName
 					     , ISNULL(REPLACE(CONVERT(CHAR(5),  B.RECEIPT_DATE, 10), '-' ,'.'), 'N') + '/' + ISNULL(REPLACE(CONVERT(CHAR(5),  B.PAPER_RECEIPT_DATE, 10), '-' ,'.'), 'N') receiptYn
-		    				
+
 					FROM
 					   (
 					      SELECT 

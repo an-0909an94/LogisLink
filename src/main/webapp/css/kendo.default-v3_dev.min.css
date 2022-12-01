@@ -340,8 +340,8 @@
     box-sizing: border-box;
     outline: 0;
     font-family: inherit;
-    /* font-size: 14px; */
-    line-height: 1.42857143;
+    font-size: 14px;
+    /* line-height: 1.42857143;
     /* display: block; */
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
@@ -8188,7 +8188,7 @@ kendo-sortable {
 
 .k-grid td,
 .k-grid th {
-    //padding: 2px 2px;
+    padding: 2px;
     border-style: solid;
     border-color: inherit;
     outline: 0;
@@ -8200,7 +8200,7 @@ kendo-sortable {
 
 .k-grid td:first-child,
 .k-grid th:first-child {
-    border-left-width: 0
+    border-left-width: 0;
 }
 
 .k-grid td:focus,
@@ -8674,6 +8674,7 @@ kendo-sortable {
 .k-grid-footer-wrap,
 .k-grid-header-wrap {
     width: 100%;
+    padding: ;
     border-width: 0 1px 0 0;
     border-style: solid;
     border-color: inherit;

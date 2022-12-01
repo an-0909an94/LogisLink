@@ -2312,7 +2312,7 @@
 /*        alert(finishCnt + "111111111111111");
         alert(taxCnt + "222222222222");*/
 
-        if(taxCnt > 0){
+/*        if(taxCnt > 0){
             alert("이미 정산이 마감된 오더입니다.")
             return;
         }
@@ -2320,7 +2320,7 @@
         if(finishCnt > 0){
             alert("이미 세금계산서가 발행된 오더입니다.")
             return;
-        }
+        }*/
         if(!chkTEST){
             e.preventDefault();
             alert("등록된 거래처 명이 아닙니다.");
