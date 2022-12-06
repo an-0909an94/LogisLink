@@ -706,7 +706,7 @@
                                         </div>
                                         <div class="input-group input-group-sm col middle-name form-group">
                                             <strong class="required">기본운임(청구)</strong>
-                                            <a class="k-pager-refresh k-button"  onclick="getBasicFare();" style="margin-top: -5px; height: 19px; font-size: 12px;  background-color: #f3ee61">최근운임 불러오기</a>
+                                            <a class="k-pager-refresh k-button" id ="latestFare" onclick="getBasicFare();" style="margin-top: -5px; height: 19px; font-size: 12px;  background-color: #f3ee61">최근운임 불러오기</a>
                                             <p class="arrow_box">거래처명(화주), 상/하차지주소, 요청차종/톤수에 맞는 최근 청구운임(기본)을 불러옵니다.
                                                 <br>※ 최근 오더가 없는 경우는 0원으로, 경유비 등 추가운임은 제외</p>
 
@@ -1180,8 +1180,8 @@
     var g_mode = "";
     var win = null;
     var lastDeptSeleted;
-    var finishCnt;
-    var taxCnt;
+/*    var finishCnt;
+    var taxCnt;*/
 
     var popColumns = [
         { field: "number", title: "No", width: 50 },
@@ -1706,8 +1706,8 @@
         //init();
 
 
-        finishCnt = data.finishCnt;
-        taxCnt  = data.taxCnt;
+/*        finishCnt = data.finishCnt;
+        taxCnt  = data.taxCnt;*/
 
         buyCarNum.value('');
         sellCustName.enable(false);
@@ -2004,6 +2004,92 @@
         }
         $("#timeTxt").val(timeTxt);
         driverCodeChk();
+
+        if(data.salesFinish =="Y" || data.salesTaxinv =="Y"){
+           // $('#carTypeCode').attr("readonly", true);
+/*            $("select[name=carTypeCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+            $("select[name=carTypeCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+
+            $("select[name=carTonCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+            $("select[name=carTonCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+
+            $("select[name=sWayCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+            $("select[name=sWayCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+
+            $("select[name=eWayCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+            $("select[name=eWayCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');*/
+
+/*            $('#goodsName').attr("readonly", true);
+            $('#goodsWeight').attr("readonly", true);*/
+            $('#sellCharge').attr("readonly", true);
+            $('#unitCharge').attr("readonly", true);
+            $('#latestFare').css('display', 'none');
+            //sellCharge
+//화물정보, 청구운임
+        }else{
+/*            $("select[name=carTypeCode]").removeAttr("onFocus");
+            $("select[name=carTypeCode]").removeAttr("onChange");
+
+            $("select[name=carTonCode]").removeAttr("onFocus");
+            $("select[name=carTonCode]").removeAttr("onChange");
+
+            $("select[name=sWayCode]").removeAttr("onFocus");
+            $("select[name=sWayCode]").removeAttr("onChange");
+
+            $("select[name=eWayCode]").removeAttr("onFocus");
+            $("select[name=eWayCode]").removeAttr("onChange");*/
+
+/*            $('#goodsName').attr("readonly", false);
+            $('#goodsWeight').attr("readonly", false);*/
+            $('#sellCharge').attr("readonly", false);
+            $('#unitCharge').attr("readonly", false);
+            $('#latestFare').css('display', '');
+        }
+
+        if(data.purchaseFinish =="Y" || data.purchaseTaxinv =="Y"){
+
+/*
+            $("select[name=carSctnCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+            $("select[name=carSctnCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+
+            $("select[name=linkSelect]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+            $("select[name=linkSelect]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+
+            $("select[name=buyCarTypeCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+            $("select[name=buyCarTypeCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+
+            $("select[name=buyCarTonCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+            $("select[name=buyCarTonCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+
+            $("select[name=payType]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+            $("select[name=payType]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+*/
+
+            $('#buyChargeD').attr("readonly", true);
+//배차정보, 지불운임
+        }else{
+/*            $("select[name=carSctnCode]").removeAttr("onFocus");
+            $("select[name=carSctnCode]").removeAttr("onChange");
+
+            $("select[name=linkSelect]").removeAttr("onFocus");
+            $("select[name=linkSelect]").removeAttr("onChange");
+
+            $("select[name=buyCarTypeCode]").removeAttr("onFocus");
+            $("select[name=buyCarTypeCode]").removeAttr("onChange");
+
+            $("select[name=buyCarTonCode]").removeAttr("onFocus");
+            $("select[name=buyCarTonCode]").removeAttr("onChange");
+
+            $("select[name=payType]").removeAttr("onFocus");
+            $("select[name=payType]").removeAttr("onChange");*/
+
+            $('#buyChargeD').attr("readonly", false);
+        }
+        //마감 및 계산서 상태값 저장
+/*        $("#salesFinish").val(data.salesFinish);
+        $("#salesTaxinv").val(data.salesTaxinv);
+        $("#purchaseFinish").val(data.purchaseFinish);
+        $("#purchaseTaxinv").val(data.purchaseTaxinv);*/
     }
 
     //이전거래
@@ -2067,6 +2153,7 @@
 
     function init() {
 
+
         sellCustName.enable(true);
         $("#deptId").prop("disabled", false);
         $('#sellCustName, #sellDeptName').on('change', function () {
@@ -2087,6 +2174,41 @@
         $("#reqAddr").attr("disabled", false);
         $("#reqAddr").next("i").children('img').attr("onclick", "popSearchPost('reqAddr')");
         $("#reqAddrDetail").attr("disabled", false);
+
+/*        $("select[name=carTypeCode]").removeAttr("onFocus");
+        $("select[name=carTypeCode]").removeAttr("onChange");
+
+        $("select[name=carTonCode]").removeAttr("onFocus");
+        $("select[name=carTonCode]").removeAttr("onChange");
+
+        $("select[name=sWayCode]").removeAttr("onFocus");
+        $("select[name=sWayCode]").removeAttr("onChange");
+
+        $("select[name=eWayCode]").removeAttr("onFocus");
+        $("select[name=eWayCode]").removeAttr("onChange");*/
+
+/*        $('#goodsName').attr("readonly", false);
+        $('#goodsWeight').attr("readonly", false);*/
+        $('#sellCharge').attr("readonly", false);
+        $('#unitCharge').attr("readonly", false);
+        $('#latestFare').css('display', '');
+
+/*        $("select[name=carSctnCode]").removeAttr("onFocus");
+        $("select[name=carSctnCode]").removeAttr("onChange");
+
+        $("select[name=linkSelect]").removeAttr("onFocus");
+        $("select[name=linkSelect]").removeAttr("onChange");
+
+        $("select[name=buyCarTypeCode]").removeAttr("onFocus");
+        $("select[name=buyCarTypeCode]").removeAttr("onChange");
+
+        $("select[name=buyCarTonCode]").removeAttr("onFocus");
+        $("select[name=buyCarTonCode]").removeAttr("onChange");
+
+        $("select[name=payType]").removeAttr("onFocus");
+        $("select[name=payType]").removeAttr("onChange");*/
+
+        $('#buyChargeD').attr("readonly", false);
 
         setFrtSelect(truckTypeData, "truckTypeCode", "01", "TR");
 

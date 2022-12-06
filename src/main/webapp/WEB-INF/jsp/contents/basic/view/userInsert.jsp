@@ -35,7 +35,7 @@
 	                            <label class="col-form-label"></label>
 	                            <div class="input-group input-group-sm col middle-name form-group">
 	                            	<strong class="required">아이디</strong>
-	                                <input type="text" class="form-control form-control-sm" id="userId" required>
+	                                <input type="text" class="form-control form-control-sm" id="userId" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g,'');" required>
                                     <div class="help-block with-errors"></div>
 	                            </div>
 	                            <div class="input-group input-group-sm col middle-name">

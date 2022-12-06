@@ -250,7 +250,7 @@ textarea {
 	                <div class="form-group">
 	                    <div class="input-group input-group-sm col middle-name form-group" style="margin-bottom: 0.375em;">
 	                    <strong class="required">아이디</strong>
-	                        <input type="text" class="form-control form-control-sm" name="userId" id="userId" required>
+	                        <input type="text" class="form-control form-control-sm" name="userId" id="userId" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g,'');"  required>
                             <div class="help-block with-errors"></div>
 	                    </div>
 	                    <div class="input-group input-group-sm col middle-name form-group">

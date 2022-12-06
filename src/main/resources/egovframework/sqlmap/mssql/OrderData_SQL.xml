@@ -582,8 +582,10 @@
 			 , C.TAX_EMAIL						reqTaxEmail
 			 , C.TAX_STAFF_NAME 				reqTaxStaffName
 			 , C.TAX_TELNUM						reqTaxTelNum
-			 , (SELECT COUNT(1) FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' AND FINISH_YN = 'Y' and CALC_TYPE_CODE = '0002') finishCnt
-			 , (SELECT COUNT(1) FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' AND TAXINV_YN = 'Y' and CALC_TYPE_CODE = '0002') taxCnt
+			 , (SELECT ISNULL(FINISH_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='01' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) salesFinish
+			 , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='01' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) salesTaxinv
+			 , (SELECT ISNULL(FINISH_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseFinish
+			 , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseTaxinv
 		FROM
 		   (
 		      SELECT 

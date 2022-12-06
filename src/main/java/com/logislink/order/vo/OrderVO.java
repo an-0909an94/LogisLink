@@ -198,10 +198,13 @@ public class OrderVO {
 	   private String invId;
 	   //알림톡 사용여부 추가
 	   private String talkYn;
-
 	   private int finishCnt;
-
 	   private int taxCnt;
+
+	   private String salesFinish;
+	   private String salesTaxinv;
+	   private String purchaseFinish;
+	   private String purchaseTaxinv;
 	   
 	public String getOrderId() {
 		return orderId;
@@ -1321,5 +1324,37 @@ public class OrderVO {
 
 	public void setTaxCnt(int taxCnt) {
 		this.taxCnt = taxCnt;
+	}
+
+	public String getSalesFinish() {
+		return salesFinish;
+	}
+
+	public void setSalesFinish(String salesFinish) {
+		this.salesFinish = salesFinish;
+	}
+
+	public String getSalesTaxinv() {
+		return salesTaxinv;
+	}
+
+	public void setSalesTaxinv(String salesTaxinv) {
+		this.salesTaxinv = salesTaxinv;
+	}
+
+	public String getPurchaseFinish() {
+		return purchaseFinish;
+	}
+
+	public void setPurchaseFinish(String purchaseFinish) {
+		this.purchaseFinish = purchaseFinish;
+	}
+
+	public String getPurchaseTaxinv() {
+		return purchaseTaxinv;
+	}
+
+	public void setPurchaseTaxinv(String purchaseTaxinv) {
+		this.purchaseTaxinv = purchaseTaxinv;
 	}
 }

@@ -85,13 +85,13 @@
 					T_CUST_MST
 				<where>
 					<if test='custId != null and !"".equals(custId)'>
-						CUST_ID = #{custId}
+						AND CUST_ID = #{custId}
 					</if>
 					<if test='bizName != null and !"".equals(bizName)'>
-						BIZ_NAME LIKE '%' + #{bizName} + '%'
+						AND BIZ_NAME LIKE '%' + #{bizName} + '%'
 					</if>
 					<if test='bizNum != null and !"".equals(bizNum)'>
-						BIZ_NUM LIKE '%' + REPLACE(#{bizNum}, '-', '') + '%'
+						AND BIZ_NUM LIKE '%' + REPLACE(#{bizNum}, '-', '') + '%'
 					</if>
 				</where>
 				) AAA
@@ -107,13 +107,13 @@
 			T_CUST_MST
 		<where>
 			<if test='custId != null and !"".equals(custId)'>
-				CUST_ID LIKE '%' + #{custId} + '%'
+				AND CUST_ID LIKE '%' + #{custId} + '%'
 			</if>
 			<if test='bizName != null and !"".equals(bizName)'>
-				BIZ_NAME LIKE '%' + #{bizName} + '%'
+				AND BIZ_NAME LIKE '%' + #{bizName} + '%'
 			</if>
 			<if test='bizNum != null and !"".equals(bizNum)'>
-				BIZ_NUM LIKE '%' + REPLACE(#{bizNum}, '-', '') + '%'
+				AND BIZ_NUM LIKE '%' + REPLACE(#{bizNum}, '-', '') + '%'
 			</if>
 		</where>
 	</select>
