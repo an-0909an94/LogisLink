@@ -7,13 +7,13 @@
 		SELECT AA.*
 		FROM (
 			SELECT
-					ROW_NUMBER() OVER(ORDER BY
-					case when AAA.orderStateName ='접수' THEN 1
-	   					 when AAA.orderStateName NOT IN('접수','취소') THEN 2
-	   					 ELSE 3 END,
-	   					 AAA.sellCustName,
-	   					 AAA.regdate desc
-	   				) number
+				ROW_NUMBER() OVER(ORDER BY
+		   			case when AAA.orderState ='00' THEN 1
+		   			when AAA.orderState NOT IN('00','09') THEN 2
+		   			ELSE 3 END,
+		   			AAA.custId,
+		   			AAA.regdate desc
+	   			) number
 				  , AAA.*
 			FROM
 				(
