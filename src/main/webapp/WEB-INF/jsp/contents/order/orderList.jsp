@@ -170,16 +170,6 @@
                         </select>
                     </div>
 
-<%--                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>거래처 등급</strong>
-                        <select class="custom-select col-12" id="sCustMngCode" name="sCustMngCode"></select>
-                    </div>--%>
-
-<%--                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>차주 등급</strong>
-                        <select class="custom-select col-12" id="sCarMngCode" name="sCarMngCode"></select>
-                    </div>--%>
-
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>정보망확정여부</strong>
                         <select class="custom-select col-12" id="sLinkSettleYn" name="sLinkSettleYn">
@@ -188,7 +178,15 @@
                             <option value="N">미확정</option>
                         </select>
                     </div>
-
+                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                        <strong>운임정보</strong>
+                        <select class="custom-select col-12" id="searchChargeType" name="searchChargeType">
+                            <option value="">선택해주세요.</option>
+                            <option value="01">인수증</option>
+                            <option value="02">선/착불</option>
+                            <option value="03">기사발행</option>
+                        </select>
+                    </div>
                     <div class="input-group input-group-sm col radio-or-checkBox ">
                         <input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
                         <label for="myOrder" class="label-margin">
@@ -299,8 +297,7 @@
         Util.setCmmCode("select", "listESido", "SIDO", "", "--하차지--");
         Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "--오더상태--");
         Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "--배차상태--");
-       //Util.setCmmCode("select", "sCarMngCode", "CAR_MNG_CD", "", "--차주등급--");
-       // Util.setCmmCode("select", "sCustMngCode", "CAR_MNG_CD", "", "--거래처등급--");
+
         $("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
         $("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
         Util.setSearchDateForm();
@@ -388,6 +385,7 @@
                 style: "text-align: right"
             }
         },
+
         { field: "sellCharge", title: "기본운임(청구)", width: 120, type: 'number',
             template: function(dataItem) {
                 return Util.formatNumber(dataItem.sellCharge);
@@ -534,6 +532,69 @@
         { field: "sellOtherAddMemo", title: "기타추가비(청구)메모", width: 150 },
         { field: "otherAddMemo", title: "기타추가비(지불)메모", width: 150 },
         { field: "memo", title: "메모", width: 150 },
+        { field: "profitCommission", title: "이익(수수료)", width: 100,
+            template: function(dataItem) {
+                if(dataItem.chargeType =='인수증'){
+                    if(dataItem.sellAmt ==''){
+                        dataItem.sellAmt = 0;
+                    }
+                    if(dataItem.buyAmt ==''){
+                        dataItem.buyAmt = 0;
+                    }
+                   var sellAmt = dataItem.sellAmt - dataItem.buyAmt;
+                    if(sellAmt == 0){
+                        return "0";
+                    }else{
+                        return Util.formatNumber(sellAmt)+"";
+                    }
+
+                }else{
+
+                    if(dataItem.sellFee ==0){
+                        return "0";
+                    }else{
+                        return Util.formatNumber(dataItem.sellFee)+"";
+                    }
+
+                }
+
+            }
+        },
+        { field: "profitRate", title: "이익률(%)", width: 100,
+            template: function(dataItem) {
+
+                if(dataItem.chargeType =='인수증'){
+                    if(dataItem.sellAmt ==''){
+                        dataItem.sellAmt = 0;
+                        return "확인필요";
+                    }else{
+                        if(dataItem.buyAmt ==''){
+                            dataItem.buyAmt = 0;
+                        }
+                        var sellAmt = dataItem.sellAmt - dataItem.buyAmt;
+                        if(sellAmt =="0"){
+                            return "확인필요";
+                        }else{
+                            var profitRate =  (sellAmt/dataItem.sellAmt)*100;
+                            profitRate= profitRate.toFixed(1) ;
+                            profitRate = profitRate.replace(/(.?0+$)/, "");
+                            return profitRate+"%";
+                        }
+                    }
+                }else{
+                    //dataItem.sellFee = -100;
+                    if(dataItem.sellFee > 0 ){
+                        return "100%";
+                    }else if(dataItem.sellFee == 0 ){
+                        return "0%";
+                    } else{
+                        return "-100%";
+                    }
+                }
+            }
+        },
+        { field: "modId", title: "최종수정자", width: 150 },
+        { field: "modDate", title: "최종수정일", width: 150 },
         { field: "driverStateName", hidden:true},
         { field: "orderState", hidden:true},
         { field: "orderStateName", hidden:true},
@@ -793,10 +854,6 @@
             var goodsWeight = selectedItem.item.goodsWeight;
             var eDateDay = selectedItem.item.eDateDay;
 
-            /* if(allocState != '00') {
-                alert("접수상태가 아닌 배차는 정보망 전송을 할 수 없습니다.");
-                return;
-            } */
             popupModal = $("#divSendLink").kendoWindow({
                 width: 850,
                 height: 729,
@@ -882,5 +939,29 @@
                 }
             }
         })
+    }
+
+    function choiceSelectBox(obj){
+        var nWidth = parseInt( obj.offsetWidth );
+        var nHeight = parseInt( obj.offsetHeight  );
+        var nLeft =  obj.offsetLeft;
+        var nTop = obj.offsetTop+obj.offsetHeight+2;
+
+        if( navigator.appName=="Microsoft Internet Explorer"){
+            nLeft += obj.offsetParent.offsetParent.offsetLeft + obj.offsetParent.offsetLeft;
+            nTop += obj.offsetParent.offsetParent.offsetTop + obj.offsetParent.offsetTop;
+        }
+
+        if( $("#testVal").css("visibility") =="hidden" ){
+
+            $("#testVal").css("left", nLeft) ;
+            $("#testVal").css("top", nTop) ;
+            $("#testVal").css("padding-left", "0px");
+            $("#testVal").css("width", nWidth);
+            $("#testVal").css("visibility", "visible");
+
+        }else{
+            $("#testVal").css("visibility", "hidden");
+        }
     }
 </script>

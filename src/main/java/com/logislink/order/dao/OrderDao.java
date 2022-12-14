@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ibatis.sqlmap.client.SqlMapClient;
+import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.mapping.ParameterMapping;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.springframework.stereotype.Repository;
 
 import com.logislink.basic.vo.DrvLocVO;
@@ -37,6 +42,16 @@ public class OrderDao extends EgovAbstractMapper {
 	}
 
 	public void orderWrite(Map<String, Object> map) {
+		SqlSession sqlSession = getSqlSession();
+		String sql = sqlSession.getConfiguration().getMappedStatement("orderDataNS.orderWrite").getBoundSql(map).getSql();
+		List<ParameterMapping> parameterMappings = sqlSession.getConfiguration().getMappedStatement("orderDataNS.orderWrite").getBoundSql(map).getParameterMappings();
+
+		for (ParameterMapping parameterMapping : parameterMappings) {
+			String param = (String) map.get(parameterMapping.getProperty());
+			sql = sql.replaceFirst("\\?", "'" + param + "'");
+		}
+
+		System.out.println("sql : " + sql);
 		update("orderDataNS.orderWrite", map);
 	}
 	public void insertOrderStop(Map<String, Object> map) {

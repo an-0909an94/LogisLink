@@ -205,6 +205,9 @@ public class OrderVO {
 	   private String salesTaxinv;
 	   private String purchaseFinish;
 	   private String purchaseTaxinv;
+
+	   private String modId;
+	   private String modDate;
 	   
 	public String getOrderId() {
 		return orderId;
@@ -1356,5 +1359,21 @@ public class OrderVO {
 
 	public void setPurchaseTaxinv(String purchaseTaxinv) {
 		this.purchaseTaxinv = purchaseTaxinv;
+	}
+
+	public String getModId() {
+		return modId;
+	}
+
+	public void setModId(String modId) {
+		this.modId = modId;
+	}
+
+	public String getModDate() {
+		return modDate;
+	}
+
+	public void setModDate(String modDate) {
+		this.modDate = modDate;
 	}
 }

@@ -1,12 +1,7 @@
 package com.logislink.order.controller;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -135,6 +130,11 @@ public class OrderController {
 
 
 		param.put("loginId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+
+
+		for (Map.Entry<String, Object> pair : param.entrySet()) {
+			System.out.println(String.format("Key is: %s, Value is : %s", pair.getKey(), pair.getValue()));
+		}
 		orderService.orderWrite(param);
 		/*
 		if(param.get("carSctnCode") != "") {

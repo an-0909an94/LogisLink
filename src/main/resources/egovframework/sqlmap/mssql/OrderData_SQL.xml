@@ -8,10 +8,10 @@
 		FROM (
 			SELECT
 				ROW_NUMBER() OVER(ORDER BY
-		   			case when AAA.orderState ='00' THEN 1
-		   			when AAA.orderState NOT IN('00','09') THEN 2
+		   			CASE WHEN AAA.orderState ='00' THEN 1
+	   				WHEN AAA.orderState NOT IN('00','09') THEN 2
 		   			ELSE 3 END,
-		   			AAA.regdate desc
+		   			AAA.regdate DESC
 	   			) number
 				  , AAA.*
 			FROM
@@ -133,7 +133,8 @@
 					     , T.USER_NAME						regname
 					     , (SELECT CNAME FROM T_CODE WHERE GCODE = 'CARGO_TRAN_CAR_SCTN_CD' AND CODE = H.CAR_SCTN_CODE) carSctnName
 					     , ISNULL(REPLACE(CONVERT(CHAR(5),  B.RECEIPT_DATE, 10), '-' ,'.'), 'N') + '/' + ISNULL(REPLACE(CONVERT(CHAR(5),  B.PAPER_RECEIPT_DATE, 10), '-' ,'.'), 'N') receiptYn
-
+	   					 , ISNULL((SELECT TOP 1 (SELECT USER_NAME FROM T_USER WHERE USER_ID = MOD_ID) modId FROM T_ORDER_HISTORY OH WHERE ORDER_ID = A.ORDER_ID and MOD_ID !='SYSTEM' ORDER BY HISTORY_SEQ DESC), '')  modId
+	   					 , ISNULL((SELECT TOP 1 CONVERT(CHAR(10),MOD_DATE, 23) FROM T_ORDER_HISTORY OH WHERE ORDER_ID = a.ORDER_ID and MOD_ID !='SYSTEM' ORDER BY HISTORY_SEQ DESC), '')  modDate
 					FROM
 					   (
 					      SELECT 
@@ -254,6 +255,9 @@
 						<if test="sMixYn != null and sMixYn != ''">
 							AND B.MIX_YN = #{sMixYn}
 						</if>
+					    <if test="searchChargeType != null and searchChargeType != ''">
+					    	AND B.CHARGE_TYPE = #{searchChargeType}
+				   		</if>
 					    <if test = "fromDate != null and fromDate != ''">
 				   			<choose>
 				   				<when test='searchDate == "regdate".toString()'>
@@ -410,6 +414,9 @@
 			</if>				
 			<if test="sLinkSettleYn != null and sLinkSettleYn != ''">
 				AND J.LINK_SETTLE_YN = #{sLinkSettleYn}
+			</if>
+			<if test="searchChargeType != null and searchChargeType != ''">
+				AND B.CHARGE_TYPE = #{searchChargeType}
 			</if>
 		   	<if test = "fromDate != null and fromDate != ''">
 		   		<choose>
