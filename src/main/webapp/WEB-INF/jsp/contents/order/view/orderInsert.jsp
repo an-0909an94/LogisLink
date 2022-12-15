@@ -2005,7 +2005,7 @@
         $("#timeTxt").val(timeTxt);
         driverCodeChk();
 
-        if(data.salesFinish =="Y" || data.salesTaxinv =="Y"){
+        if((data.salesFinish !="N"&& data.salesFinish !=null)|| (data.salesTaxinv !="N"&&data.salesTaxinv !=null)){
            // $('#carTypeCode').attr("readonly", true);
 /*            $("select[name=carTypeCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
             $("select[name=carTypeCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
@@ -2046,7 +2046,7 @@
             $('#latestFare').css('display', '');
         }
 
-        if(data.purchaseFinish =="Y" || data.purchaseTaxinv =="Y"){
+        if((data.purchaseFinish !="N"&&data.purchaseFinish !=null) || (data.purchaseTaxinv !="N"&&data.purchaseTaxinv !=null)){
 
 /*
             $("select[name=carSctnCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
