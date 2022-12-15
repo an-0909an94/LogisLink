@@ -6,6 +6,7 @@ public class SellCalcVO {
 	private String finishYn;
 	private String finishUserName;
 	private String allocDate;
+	private String sDate;
 	private String eDate;
 	private String custName;
 	private String bizName;
@@ -453,5 +454,11 @@ public class SellCalcVO {
 	}
 	public void setDepositSum(int depositSum) {
 		this.depositSum = depositSum;
+	}
+	public String getsDate() {
+		return sDate;
+	}
+	public void setsDate(String sDate) {
+		this.sDate = sDate;
 	}
 }

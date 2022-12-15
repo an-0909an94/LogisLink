@@ -2272,6 +2272,7 @@
 		{ field: "finishYn", title: "마감일", width: 80, editable: function (dataItem){} },
 		{ field: "finishUserName", title: "마감원", width: 100, editable: function (dataItem){} },
 		{ field: "allocDate", title: "배차일", width: 80, editable: function (dataItem){} },
+		{ field: "sDate", title: "상차일", width: 80, editable: function (dataItem){} },
 		{ field: "eDate", title: "하차일", width: 80, editable: function (dataItem){} },
 		{ field: "driverCarrierName", title: "소속운송사", width: 100, editable: function (dataItem){} },
 		{ field: "buyCustName", title: "차량번호(운송사)", width: 140, editable: function (dataItem){} },
