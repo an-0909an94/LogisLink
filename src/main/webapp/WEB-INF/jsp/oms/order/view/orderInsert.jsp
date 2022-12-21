@@ -584,16 +584,16 @@ function init_popup_close() {
 function gridDataSet(data) {
 	//더미 상/하차지 위도경도 세팅
 	if(data.sLat == ""){
-		data.sLat = "0.0"
+		data.sLat = "37.5302996530226"
 	}
 	if(data.sLon == ""){
-		data.sLon = "0.0"
+		data.sLon = "126.919577176287"
 	}
 	if(data.eLat == ""){
-		data.eLat = "0.0"
+		data.eLat = "37.5302996530226"
 	}
 	if(data.eLon == ""){
-		data.eLon = "0.0"
+		data.eLon = "126.919577176287"
 	}
 	Util.setPageData(data);
 
@@ -1107,16 +1107,16 @@ function dummyPopSearchPost(mode){
 
 function addrLatLonValidation(){
 	if($("#sLat").val() == "0E-13")
-	$("#sLat").val("0.0");
+	$("#sLat").val("37.5302996530226");
 	
 	if($("#eLat").val() == "0E-13")
-	$("#eLat").val("0.0");
+	$("#eLat").val("37.5302996530226");
 	
 	if($("#sLon").val() == "0E-12")
-	$("#sLon").val("0.0");
+	$("#sLon").val("126.919577176287");
 	
 	if($("#eLon").val() == "0E-12")
-	$("#eLon").val("0.0");
+	$("#eLon").val("126.919577176287");
 }
 
 

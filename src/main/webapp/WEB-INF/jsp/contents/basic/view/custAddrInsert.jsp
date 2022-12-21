@@ -129,9 +129,9 @@ function init_pop(mode, data) {
 		
 		g_seq = data.addrSeq;
 		if(data.lat == "0E-13")
-		data.lat = "0.0";	
+		data.lat = "37.5302996530226";
 		if(data.lon == "0E-12")
-		data.lon = "0.0";	
+		data.lon = "126.919577176287";
 		Util.setPageData(data);
 		
 
@@ -220,8 +220,8 @@ function dummyAddressInfo(data) {
 				$("#sido").val(data.sido);
                 $("#gungu").val(data.gungu);
                 $("#dong").val("");
-                $("#lat").val("0.0");
-                $("#lon").val("0.0");
+                $("#lat").val("37.5302996530226");
+                $("#lon").val("126.919577176287");
 			}
 		}
 	});

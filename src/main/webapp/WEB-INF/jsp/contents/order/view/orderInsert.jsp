@@ -129,7 +129,7 @@
 
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" class="k-pager-refresh k-button">
+                <button type="" class="k-pager-refresh k-button">
                     <b class="btn-b"><i class="k-icon k-i-check"></i><strong>배차등록</strong></b>
                 </button>
                 <a id="closeBtn" onclick="carFormClose();" class="k-pager-refresh k-button">
@@ -1721,16 +1721,16 @@
 
         //더미 상/하차지 위도경도 세팅
         if(data.sLat == ""){
-            data.sLat = "0.0"
+            data.sLat = "37.5302996530226"
         }
         if(data.sLon == ""){
-            data.sLon = "0.0"
+            data.sLon = "126.919577176287"
         }
         if(data.eLat == ""){
-            data.eLat = "0.0"
+            data.eLat = "37.5302996530226"
         }
         if(data.eLon == ""){
-            data.eLon = "0.0"
+            data.eLon = "126.919577176287"
         }
 
         //거래처명 세팅
@@ -2552,16 +2552,16 @@
                 $("#sellFee").val("0");
             }
             if($("#sLat").val() == ""){
-                $("#sLat").val("0.0");
+                $("#sLat").val("37.5302996530226");
             }
             if($("#sLon").val() == ""){
-                $("#sLon").val("0.0");
+                $("#sLon").val("126.919577176287");
             }
             if($("#eLat").val() == ""){
-                $("#eLat").val("0.0");
+                $("#eLat").val("37.5302996530226");
             }
             if($("#eLon").val() == ""){
-                $("#eLon").val("0.0");
+                $("#eLon").val("126.919577176287");
             }
 
             //오더가 취소상태이면 재접수 후 수정 가능하도록
@@ -3356,16 +3356,16 @@
 
     function addrLatLonValidation(){
         if($("#sLat").val() == "0E-13")
-            $("#sLat").val("0.0");
+            $("#sLat").val("37.5302996530226");
 
         if($("#eLat").val() == "0E-13")
-            $("#eLat").val("0.0");
+            $("#eLat").val("37.5302996530226");
 
         if($("#sLon").val() == "0E-12")
-            $("#sLon").val("0.0");
+            $("#sLon").val("126.919577176287");
 
         if($("#eLon").val() == "0E-12")
-            $("#eLon").val("0.0");
+            $("#eLon").val("126.919577176287");
     }
 
     function searchBuyCustSelectTrigger(e) {

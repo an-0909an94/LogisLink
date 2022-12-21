@@ -55,6 +55,16 @@ public class OrderDao extends EgovAbstractMapper {
 		update("orderDataNS.orderWrite", map);
 	}
 	public void insertOrderStop(Map<String, Object> map) {
+
+		SqlSession sqlSession = getSqlSession();
+		String sql = sqlSession.getConfiguration().getMappedStatement("orderDataNS.insertOrderStop").getBoundSql(map).getSql();
+		List<ParameterMapping> parameterMappings = sqlSession.getConfiguration().getMappedStatement("orderDataNS.insertOrderStop").getBoundSql(map).getParameterMappings();
+
+		for (ParameterMapping parameterMapping : parameterMappings) {
+			String param = (String) map.get(parameterMapping.getProperty());
+			sql = sql.replaceFirst("\\?", "'" + param + "'");
+		}
+
 		insert("orderDataNS.insertOrderStop", map);
 	}
 

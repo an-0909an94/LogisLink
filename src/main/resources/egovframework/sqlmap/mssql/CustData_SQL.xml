@@ -318,9 +318,13 @@
   				A.DEPT_ID AS deptId, 
   				A.ADDR_NAME AS addrName, 
   				A.ADDR AS addr, 
-  				A.ADDR_DETAIL AS addrDetail, 
-  				A.LAT AS lat, 
-  				A.LON AS lon, 
+  				A.ADDR_DETAIL AS addrDetail,
+				CASE A.LAT
+				WHEN 0 THEN '37.5302996530226'
+				ELSE A.LAT END AS lat,
+				CASE A.LON
+				WHEN 0 THEN '126.919577176287'
+				ELSE A.LON END AS lon,
   				A.STAFF_NAME AS staffName, 
   				A.STAFF_TEL AS staffTel, 
   				A.ORDER_MEMO AS orderMemo, 

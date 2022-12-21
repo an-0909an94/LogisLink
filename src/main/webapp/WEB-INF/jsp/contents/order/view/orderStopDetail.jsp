@@ -301,6 +301,10 @@ function getOrderStopData(){
 }
 
 function addData(){
+    if($("#eAddr").val() ==''){
+        alert("주소를 입력해 주세요")
+        return;
+    }
 	var rowData = $("#fStop").serializeObject();
 	rowData["weightUnitCode"] = "TON";
 	rowData["stopSeq"] = "";

@@ -211,8 +211,8 @@ function dummyAddressInfo(data) {
 				$("#sido").val(data.sido);
                 $("#gungu").val(data.gungu);
                 $("#dong").val("");
-                $("#lat").val("0.0");
-                $("#lon").val("0.0");
+                $("#lat").val("37.5302996530226");
+                $("#lon").val("126.919577176287");
 			}
 		}
 	});
