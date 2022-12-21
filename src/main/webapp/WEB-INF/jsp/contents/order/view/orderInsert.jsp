@@ -129,7 +129,7 @@
 
         <div class="editor_btns">
             <div class="padding">
-                <button type="" class="k-pager-refresh k-button">
+                <button type="submit" class="k-pager-refresh k-button">
                     <b class="btn-b"><i class="k-icon k-i-check"></i><strong>배차등록</strong></b>
                 </button>
                 <a id="closeBtn" onclick="carFormClose();" class="k-pager-refresh k-button">
