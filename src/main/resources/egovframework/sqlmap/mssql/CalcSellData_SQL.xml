@@ -12,6 +12,7 @@
           , FINISH_YN AS finishYn
           , FINISH_USER_NAME AS finishUserName
           , ALLOC_DATE AS allocDate
+          , S_DATE AS sDate
           , E_DATE AS eDate
           , IIF(CUST_NAME != '', CUST_NAME, CUST_NAME_EXCEPT) AS custName
           , IIF(CUST_NAME != '', BIZ_NAME, BIZ_NAME_EXCEPT) AS bizName
@@ -81,6 +82,7 @@
         	, IIF(TC2.SELL_CALC_DATE != '', TC2.SELL_CALC_DATE, 'N') AS FINISH_YN
         	, (SELECT USER_NAME FROM T_USER WHERE USER_ID = TC2.FINISH_USER_ID) AS FINISH_USER_NAME
         	, ISNULL(REPLACE(CONVERT(CHAR(5), TO2.ALLOC_DATE, 10), '-' ,'.'), '') AS ALLOC_DATE
+            , ISNULL(REPLACE(CONVERT(CHAR(5), TO2.S_DATE, 10), '-' ,'.'), '') AS S_DATE
         	, ISNULL(REPLACE(CONVERT(CHAR(5), TO2.E_DATE, 10), '-' ,'.'), '') AS E_DATE
             , TO2.ALLOC_DATE AS ALLOC_DATE_FULL
             , TO2.S_DATE AS S_DATE_FULL

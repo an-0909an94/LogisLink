@@ -17,6 +17,8 @@
 		, FINISH_USER_NAME AS finishUserName
 		-- 배차일
 		, ALLOC_DATE AS allocDate
+        -- 상차일
+        , S_DATE AS sDate
 		-- 하차일
 		, E_DATE AS eDate
 		/* 매입처 정보 -> 운송사 지정시 운송사 정보, 직접 배차시 기사 정보 (ALLOC_STATE == '10' -> 운송사지정) */
@@ -131,7 +133,8 @@
           , IIF(TC2.BUY_CALC_DATE != '', TC2.BUY_CALC_DATE, 'N') AS FINISH_YN
           , ISNULL((SELECT USER_NAME FROM T_USER WHERE USER_ID = TC2.FINISH_USER_ID), '') AS FINISH_USER_NAME
           , ISNULL(CONVERT(VARCHAR, TO2.ALLOC_DATE, 2), '') AS ALLOC_DATE
-          , ISNULL(CONVERT(VARCHAR, TO2.E_DATE, 2), '') AS E_DATE
+          , ISNULL(REPLACE(CONVERT(CHAR(5), TO2.S_DATE, 10), '-' ,'.'), '') AS S_DATE
+          , ISNULL(REPLACE(CONVERT(CHAR(5), TO2.E_DATE, 10), '-' ,'.'), '') AS E_DATE
           , TO2.ALLOC_DATE AS ALLOC_DATE_FULL
           , TO2.S_DATE AS S_DATE_FULL
           , TO2.E_DATE AS E_DATE_FULL

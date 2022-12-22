@@ -2522,6 +2522,7 @@
 		{ field: "finishYn", title: "마감일", width: 80, editable: function (dataItem){} },
 		{ field: "finishUserName", title: "마감원", width: 100, editable: function (dataItem){} },
 		{ field: "allocDate", title: "배차일", width: 80, editable: function (dataItem){} },
+		{ field: "sDate", title: "상차일", width: 80, editable: function (dataItem){} },
 		{ field: "eDate", title: "하차일", width: 80, editable: function (dataItem){} },
 		{ field: "custName", title: "화주(거래처)", width: 140, editable: function (dataItem){} },
 		{ field: "bizName", title: "거래처(계산서발행지)", width: 160, editable: function (dataItem){} },
@@ -2669,6 +2670,6 @@
 		{ field: "sellStayChargeId", hidden: true, editable: function (dataItem){} },
 		{ field: "sellHandworkChargeId", hidden: true, editable: function (dataItem){} },
 		{ field: "sellRoundChargeId", hidden: true, editable: function (dataItem){} },
-		{ field: "sellOtheraddChargeId", hidden: true, editable: function (dataItem){} },
+		{ field: "sellOtheraddChargeId", hidden: true, editable: function (dataItem){} }
 	];
 </script>

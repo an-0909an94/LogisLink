@@ -6,6 +6,7 @@ public class BuyCalcVO {
 	private String finishYn;
 	private String finishUserName;
 	private String allocDate;
+	private String sDate;
 	private String eDate;
 	
 	private String driverCarrierName;
@@ -626,5 +627,13 @@ public class BuyCalcVO {
 
 	public void setCalcTypeCode(String calcTypeCode) {
 		this.calcTypeCode = calcTypeCode;
+	}
+
+	public String getsDate() {
+		return sDate;
+	}
+
+	public void setsDate(String sDate) {
+		this.sDate = sDate;
 	}
 }
