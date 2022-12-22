@@ -30,7 +30,12 @@
 					REGID		regId,
 					MASTER_YN	masterYn,
 					LINK24_ID	link24Id,
-					DOUZONE_ID  douzoneId
+					DOUZONE_ID  douzoneId,
+					V.LINK_PASSWD_03	link24Pass,
+					V.LINK_USER_ID_21	man24Id,
+					V.LINK_PASSWD_21	man24Pass,
+					V.LINK_USER_ID_18	one24Id,
+					V.LINK_PASSWD_18	one24Pass
 				FROM
 					T_USER U
 				<where>
