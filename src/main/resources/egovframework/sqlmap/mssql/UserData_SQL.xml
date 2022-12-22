@@ -506,7 +506,7 @@
 			, #{item.useYN}				AS USE_YN
 			, #{item.talkYN}				AS TALK_YN
 			, #{item.memo}				AS MEMO
-			, #{item.regid}				AS REGID
+			, #{item.regId}				AS REGID
 			, getdate()				AS REGDATE
 			, #{item.editId}				AS EDITID
 			, getdate()				AS EDITDATE
