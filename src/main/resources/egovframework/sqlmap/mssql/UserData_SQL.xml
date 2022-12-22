@@ -6,70 +6,72 @@
 	<select id="selectUserList" parameterType="java.util.HashMap" resultType="userVO">
 		SELECT AA.*
 		FROM (
-			SELECT 
-				ROW_NUMBER() OVER(ORDER BY AAA.REGDATE DESC) AS number
-			  , AAA.*
-			FROM (
-				SELECT
-					CUST_ID		custId,
-					(SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = U.CUST_ID) bizName,
-					DEPT_ID		deptId,
-					(SELECT DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.DEPT_ID = U.DEPT_ID) deptName,
-					AUTH_SEQ	authSeq,
-					(SELECT AUTH_NAME FROM T_AUTH A WHERE A.AUTH_SEQ = U.AUTH_SEQ) authName,
-					USER_ID		userId,
-					USER_NAME	userName,
-					TELNUM		telNum,
-					EMAIL		email,
-					TALK_YN		talkYn,
-					MOBILE		mobile,
-					GRADE		grade,
-					USE_YN		useYn,
-					MEMO		memo,
-					convert(varchar, REGDATE, 120)		regDate,
-					REGID		regId,
-					MASTER_YN	masterYn,
-					LINK24_ID	link24Id,
-					DOUZONE_ID  douzoneId,
-					V.LINK_PASSWD_03	link24Pass,
-					V.LINK_USER_ID_21	man24Id,
-					V.LINK_PASSWD_21	man24Pass,
-					V.LINK_USER_ID_18	one24Id,
-					V.LINK_PASSWD_18	one24Pass
-				FROM
-					T_USER U
-				<where>
-					1=1
-					<if test='useYn != null and !"".equals(useYn)'>
-						AND USE_YN = #{useYn}
-					</if>
-					<if test='custId != null and !"".equals(custId)'>
-						AND CUST_ID = #{custId}
-					</if>
-					<!-- 22.06.27 이건욱 T11 > J41 추가 -->
-					<if test='searchUserValue != null and !searchUserValue.equals("")'>
-						<if test='searchUserType == "userId"'>
-							AND USER_ID LIKE '%' + #{searchUserValue} + '%'
-						</if>
-						<if test='searchUserType == "userName"'>
-							AND USER_NAME LIKE '%' + #{searchUserValue} + '%'
-						</if>
-						<if test='searchUserType == "userMobile"'>
-							AND MOBILE LIKE '%' + #{searchUserValue} + '%'
-						</if>
-					</if>
-					<!-- End -->
-					<if test='authSeq != null and !"".equals(authSeq)'>
-						AND AUTH_SEQ = #{authSeq}
-					</if>
-					<if test='deptId != null and !"".equals(deptId)'>
-						AND DEPT_ID = #{deptId}
-					</if>
-				</where>
-				) AAA
-			) AA
+		SELECT
+		ROW_NUMBER() OVER(ORDER BY AAA.REGDATE DESC) AS number
+		, AAA.*
+		FROM (
+		SELECT
+		U.CUST_ID		custId,
+		(SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = U.CUST_ID) bizName,
+		U.DEPT_ID		deptId,
+		(SELECT DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.DEPT_ID = U.DEPT_ID) deptName,
+		U.AUTH_SEQ	authSeq,
+		(SELECT AUTH_NAME FROM T_AUTH A WHERE A.AUTH_SEQ = U.AUTH_SEQ) authName,
+		U.USER_ID		userId,
+		U.USER_NAME	userName,
+		U.TELNUM		telNum,
+		U.EMAIL		email,
+		U.TALK_YN		talkYn,
+		U.MOBILE		mobile,
+		U.GRADE		grade,
+		U.USE_YN		useYn,
+		U.MEMO		memo,
+		convert(varchar, U.REGDATE, 120)		regDate,
+		U.REGID		regId,
+		U.MASTER_YN	masterYn,
+		U.LINK24_ID	link24Id,
+		U.DOUZONE_ID  douzoneId,
+		V.LINK_PASSWD_03	link24Pass,
+		V.LINK_USER_ID_21	man24Id,
+		V.LINK_PASSWD_21	man24Pass,
+		V.LINK_USER_ID_18	one24Id,
+		V.LINK_PASSWD_18	one24Pass
+		FROM
+		T_USER U
+		LEFT JOIN
+		V_USER_LINKT V ON U.USER_ID = V.USER_ID
+		<where>
+			1=1
+			<if test='useYn != null and !"".equals(useYn)'>
+				AND U.USE_YN = #{useYn}
+			</if>
+			<if test='custId != null and !"".equals(custId)'>
+				AND U.CUST_ID = #{custId}
+			</if>
+			<!-- 22.06.27 이건욱 T11 > J41 추가 -->
+			<if test='searchUserValue != null and !searchUserValue.equals("")'>
+				<if test='searchUserType == "userId"'>
+					AND U.USER_ID LIKE '%' + #{searchUserValue} + '%'
+				</if>
+				<if test='searchUserType == "userName"'>
+					AND U.USER_NAME LIKE '%' + #{searchUserValue} + '%'
+				</if>
+				<if test='searchUserType == "userMobile"'>
+					AND U.MOBILE LIKE '%' + #{searchUserValue} + '%'
+				</if>
+			</if>
+			<!-- End -->
+			<if test='authSeq != null and !"".equals(authSeq)'>
+				AND U.AUTH_SEQ = #{authSeq}
+			</if>
+			<if test='deptId != null and !"".equals(deptId)'>
+				AND U.DEPT_ID = #{deptId}
+			</if>
+		</where>
+		) AAA
+		) AA
 		WHERE number BETWEEN #{start} AND #{end}
-		ORDER BY number ASC 
+		ORDER BY number ASC
 	</select>
 	
 	<select id="selectUserCnt" resultType="string" parameterType="java.util.HashMap">
