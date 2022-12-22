@@ -178,52 +178,47 @@ public class UserController {
 		CargoNetVO cargoNetVO = new CargoNetVO();
 
 		boolean cargoNetFlag = false;
-		if(!(param.get("link24Id") == null || "".equals(param.get("link24Id")))  && !(param.get("link24Pass") == null || "".equals(param.get("link24Pass"))) ){
 
-			cargoNetVO.setUserId(param.get("userId").toString());
-			cargoNetVO.setLinkCd("03");
-			cargoNetVO.setLinkUserId(param.get("link24Id").toString());
-			cargoNetVO.setLinkPasswd(param.get("link24Pass").toString());
-			cargoNetVO.setUseYN(param.get("useYn").toString());
-			cargoNetVO.setTalkYN(param.get("talkYn").toString());
-			cargoNetVO.setMemo(param.get("memo").toString());
-			cargoNetVO.setRegId(((LoginVO) session.getAttribute("userInfo")).getUserId());
-			cargoNetVO.setEditId(((LoginVO) session.getAttribute("userInfo")).getUserId());
-			cargoNetAccountList.add(cargoNetVO);
-			cargoNetFlag = true;
-		}
-		if(!(param.get("man24Id") == null || "".equals(param.get("man24Id"))) && !(param.get("man24Pass") == null || "".equals(param.get("man24Pass")))){
-			cargoNetVO = new CargoNetVO();
-			cargoNetVO.setUserId(param.get("userId").toString());
-			cargoNetVO.setLinkCd("21");
-			cargoNetVO.setLinkUserId(param.get("man24Id").toString());
-			cargoNetVO.setLinkPasswd(param.get("man24Pass").toString());
-			cargoNetVO.setUseYN(param.get("useYn").toString());
-			cargoNetVO.setTalkYN(param.get("talkYn").toString());
-			cargoNetVO.setMemo(param.get("memo").toString());
-			cargoNetVO.setRegId(((LoginVO) session.getAttribute("userInfo")).getUserId());
-			cargoNetVO.setEditId(((LoginVO) session.getAttribute("userInfo")).getUserId());
-			cargoNetAccountList.add(cargoNetVO);
-			cargoNetFlag = true;
-		}
-		if(!(param.get("one24Id") == null || "".equals(param.get("one24Id"))) && !(param.get("one24Pass") == null || "".equals(param.get("one24Pass"))) ){
-			cargoNetVO = new CargoNetVO();
-			cargoNetVO.setUserId(param.get("userId").toString());
-			cargoNetVO.setLinkCd("18");
-			cargoNetVO.setLinkUserId(param.get("one24Id").toString());
-			cargoNetVO.setLinkPasswd(param.get("one24Pass").toString());
-			cargoNetVO.setUseYN(param.get("useYn").toString());
-			cargoNetVO.setTalkYN(param.get("talkYn").toString());
-			cargoNetVO.setMemo(param.get("memo").toString());
-			cargoNetVO.setRegId(((LoginVO) session.getAttribute("userInfo")).getUserId());
-			cargoNetVO.setEditId(((LoginVO) session.getAttribute("userInfo")).getUserId());
-			cargoNetAccountList.add(cargoNetVO);
-			cargoNetFlag = true;
-		}
+		cargoNetVO.setUserId(param.get("userId").toString());
+		cargoNetVO.setLinkCd("03");
+		cargoNetVO.setLinkUserId(param.get("link24Id").toString());
+		cargoNetVO.setLinkPasswd(param.get("link24Pass").toString());
+		cargoNetVO.setUseYN(param.get("useYn").toString());
+		cargoNetVO.setTalkYN(param.get("talkYn").toString());
+		cargoNetVO.setMemo(param.get("memo").toString());
+		cargoNetVO.setRegId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+		cargoNetVO.setEditId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+		cargoNetAccountList.add(cargoNetVO);
+
+		cargoNetVO = new CargoNetVO();
+		cargoNetVO.setUserId(param.get("userId").toString());
+		cargoNetVO.setLinkCd("21");
+		cargoNetVO.setLinkUserId(param.get("man24Id").toString());
+		cargoNetVO.setLinkPasswd(param.get("man24Pass").toString());
+		cargoNetVO.setUseYN(param.get("useYn").toString());
+		cargoNetVO.setTalkYN(param.get("talkYn").toString());
+		cargoNetVO.setMemo(param.get("memo").toString());
+		cargoNetVO.setRegId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+		cargoNetVO.setEditId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+		cargoNetAccountList.add(cargoNetVO);
+
+		cargoNetVO = new CargoNetVO();
+		cargoNetVO.setUserId(param.get("userId").toString());
+		cargoNetVO.setLinkCd("18");
+		cargoNetVO.setLinkUserId(param.get("one24Id").toString());
+		cargoNetVO.setLinkPasswd(param.get("one24Pass").toString());
+		cargoNetVO.setUseYN(param.get("useYn").toString());
+		cargoNetVO.setTalkYN(param.get("talkYn").toString());
+		cargoNetVO.setMemo(param.get("memo").toString());
+		cargoNetVO.setRegId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+		cargoNetVO.setEditId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+		cargoNetAccountList.add(cargoNetVO);
+		cargoNetFlag = true;
+
 		cargoNetAccountMap.put("list",cargoNetAccountList);
-		if(cargoNetFlag ) {
-			userService.insertUserCargoAccount(cargoNetAccountMap);
-		}
+		//if(cargoNetFlag ) {
+		userService.insertUserCargoAccount(cargoNetAccountMap);
+		//}
 		
 		map.put("result", Boolean.TRUE);
 		map.put("data", param);
