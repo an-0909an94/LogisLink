@@ -164,7 +164,7 @@ public class UserController {
 
 			String passwd = String.valueOf(param.get("passwd"));
 			passwd = EncUtil.sha256(passwd);
-			`
+
 			param.put("passwd", passwd);
 		}
 
