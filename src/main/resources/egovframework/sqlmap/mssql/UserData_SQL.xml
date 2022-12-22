@@ -493,5 +493,48 @@
 		SET K_VALUE = #{kValue}, K_DATE=GETDATE(), EXPIRE= #{expire}
 		WHERE K_NAME = #{kName}
 	</update>
+	<insert id="insertUserCargoAccount" parameterType="java.util.HashMap">
+		MERGE INTO
+		T_USER_LINKT T
+		USING (
+		<foreach collection="list" item="item" index="index" separator=" union ">
+			SELECT
+			#{item.userId}				AS USER_ID
+			, #{item.linkCd}				AS LINK_CD
+			, #{item.linkUserId}			AS LINK_USER_ID
+			, #{item.linkPasswd}			AS LINK_PASSWD
+			, #{item.useYN}				AS USE_YN
+			, #{item.talkYN}				AS TALK_YN
+			, #{item.memo}				AS MEMO
+			, #{item.regid}				AS REGID
+			, getdate()				AS REGDATE
+			, #{item.editId}				AS EDITID
+			, getdate()				AS EDITDATE
 
+		</foreach>
+		) AS S
+		ON
+		(T.USER_ID = S.USER_ID AND T.LINK_CD = S.LINK_CD)
+		WHEN MATCHED THEN
+		UPDATE SET
+			T.LINK_USER_ID			= S.LINK_USER_ID
+			, T.LINK_PASSWD			= S.LINK_PASSWD
+			, T.USE_YN				= S.USE_YN
+			, T.TALK_YN				= S.TALK_YN
+			, T.MEMO				= S.MEMO
+			, T.EDITID				= S.EDITID
+			, T.EDITDATE			= S.EDITDATE
+		WHEN NOT MATCHED THEN
+		INSERT
+		(
+			USER_ID, LINK_CD, LINK_USER_ID, LINK_PASSWD, USE_YN, TALK_YN
+			, MEMO, REGID, REGDATE, EDITID, EDITDATE
+		)
+		VALUES
+		(
+			S.USER_ID, S.LINK_CD, S.LINK_USER_ID, S.LINK_PASSWD, S.USE_YN ,S.TALK_YN
+			, S.MEMO, S.REGID, S.REGDATE, '', ''
+		);
+
+	</insert>
 </mapper>

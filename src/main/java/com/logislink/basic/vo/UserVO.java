@@ -31,6 +31,12 @@ public class UserVO {
 	private String orderMemo;
 	private String link24Id;
 	private String douzoneId;
+	private String link24Pass;
+	private String man24Id;
+	private String man24Pass;
+	private String one24Id;
+	private String one24Pass;
+
 	
 	public int getNumber() {
 		return number;
@@ -211,5 +217,45 @@ public class UserVO {
 	}
 	public void setDouzoneId(String douzoneId) {
 		this.douzoneId = douzoneId;
+	}
+
+	public String getLink24Pass() {
+		return link24Pass;
+	}
+
+	public void setLink24Pass(String link24Pass) {
+		this.link24Pass = link24Pass;
+	}
+
+	public String getMan24Id() {
+		return man24Id;
+	}
+
+	public void setMan24Id(String man24Id) {
+		this.man24Id = man24Id;
+	}
+
+	public String getMan24Pass() {
+		return man24Pass;
+	}
+
+	public void setMan24Pass(String man24Pass) {
+		this.man24Pass = man24Pass;
+	}
+
+	public String getOne24Id() {
+		return one24Id;
+	}
+
+	public void setOne24Id(String one24Id) {
+		this.one24Id = one24Id;
+	}
+
+	public String getOne24Pass() {
+		return one24Pass;
+	}
+
+	public void setOne24Pass(String one24Pass) {
+		this.one24Pass = one24Pass;
 	}
 }

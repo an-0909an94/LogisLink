@@ -146,10 +146,42 @@
 			                                <input type="text" class="form-control form-control-sm" id="link24Id">
 			                            </div>
 			                            <div class="input-group input-group-sm col middle-name">
-			                            	<strong>DOUZONE 아이디</strong>
-			                                <input type="text" class="form-control form-control-sm" id="douzoneId">
+			                            	<strong>24시콜 비밀번호</strong>
+			                                <input type="text" class="form-control form-control-sm" id="link24Pass">
 			                            </div>
 			                        </div>
+									<div class="form-group row">
+										<label class="col-form-label"></label>
+										<div class="input-group input-group-sm col middle-name">
+											<strong>화물맨 아이디</strong>
+											<input type="text" class="form-control form-control-sm" id="man24Id">
+										</div>
+										<div class="input-group input-group-sm col middle-name">
+											<strong>화물맨 비밀번호</strong>
+											<input type="text" class="form-control form-control-sm" id="man24Pass">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label"></label>
+										<div class="input-group input-group-sm col middle-name">
+											<strong>원콜 아이디</strong>
+											<input type="text" class="form-control form-control-sm" id="one24Id">
+										</div>
+										<div class="input-group input-group-sm col middle-name">
+											<strong>원콜 비밀번호</strong>
+											<input type="text" class="form-control form-control-sm" id="one24Pass">
+										</div>
+									</div>
+									<div class="form-group row">
+										<label class="col-form-label"></label>
+										<div class="input-group input-group-sm col middle-name">
+											<strong>DOUZONE 아이디</strong>
+											<input type="text" class="form-control form-control-sm" id="douzoneId">
+										</div>
+										<div class="input-group input-group-sm col middle-name">
+											<strong></strong>
+										</div>
+									</div>
 			                    </c:when>
 			                    <c:otherwise>
 			                    	<input type="hidden" id="link24Id">
@@ -309,6 +341,7 @@ $("#userId").keypress(function(){
 
 
 $('#f').validator().on('submit', function (e) {
+
 	if(typeof $("#btn_chkUserId").attr("disabled") == "undefined") {
 		if(!chkUID) {
 			e.preventDefault();
@@ -342,8 +375,13 @@ $('#f').validator().on('submit', function (e) {
 				regDate: $("#regDate").val(),
 				memo: $("#memo").val(),
 				mode: g_mode,
+				douzoneId: $("#douzoneId").val(),
 				link24Id: $("#link24Id").val(),
-				douzoneId: $("#douzoneId").val()
+				link24Pass: $("#link24Pass").val(),
+				man24Id: $("#man24Id").val(),
+				man24Pass: $("#man24Pass").val(),
+				one24Id: $("#one24Id").val(),
+				one24Pass: $("#one24Pass").val()
 			},
 			success: function(data){
 				if(data.result) {
@@ -410,4 +448,5 @@ $("#btnChgPasswd").click(function(e) {
 $("#mobile, #telNum").on("input", function(){
 	$(this).val(Util.formatPhone($(this).val()));
 });
+
 </script>

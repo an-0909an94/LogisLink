@@ -31,4 +31,6 @@ public interface UserService {
 
 	public UserOptionVO getUserOption(Map<String, Object> param);
 
+	public void insertUserCargoAccount(Map<String, Object> map);
+
 }

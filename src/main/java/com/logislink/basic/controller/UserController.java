@@ -1,5 +1,6 @@
 package com.logislink.basic.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.logislink.basic.vo.CargoNetVO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -162,13 +164,66 @@ public class UserController {
 
 			String passwd = String.valueOf(param.get("passwd"));
 			passwd = EncUtil.sha256(passwd);
-			
+			`
 			param.put("passwd", passwd);
 		}
-		
+
 		userService.insertUser(param);
-		
+
 		resMsg = (String) param.get("retMsg");
+
+		HashMap<String, Object> cargoNetAccountMap = new HashMap<String, Object>();
+
+		List<CargoNetVO> cargoNetAccountList = new ArrayList<CargoNetVO>();
+		CargoNetVO cargoNetVO = new CargoNetVO();
+
+		boolean cargoNetFlag = false;
+		if(!(param.get("link24Id") == null || "".equals(param.get("link24Id")))  && !(param.get("link24Pass") == null || "".equals(param.get("link24Pass"))) ){
+
+			cargoNetVO.setUserId(param.get("userId").toString());
+			cargoNetVO.setLinkCd("03");
+			cargoNetVO.setLinkUserId(param.get("link24Id").toString());
+			cargoNetVO.setLinkPasswd(param.get("link24Pass").toString());
+			cargoNetVO.setUseYN(param.get("useYn").toString());
+			cargoNetVO.setTalkYN(param.get("talkYn").toString());
+			cargoNetVO.setMemo(param.get("memo").toString());
+			cargoNetVO.setRegId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+			cargoNetVO.setEditId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+			cargoNetAccountList.add(cargoNetVO);
+			cargoNetFlag = true;
+		}
+		if(!(param.get("man24Id") == null || "".equals(param.get("man24Id"))) && !(param.get("man24Pass") == null || "".equals(param.get("man24Pass")))){
+			cargoNetVO = new CargoNetVO();
+			cargoNetVO.setUserId(param.get("userId").toString());
+			cargoNetVO.setLinkCd("21");
+			cargoNetVO.setLinkUserId(param.get("man24Id").toString());
+			cargoNetVO.setLinkPasswd(param.get("man24Pass").toString());
+			cargoNetVO.setUseYN(param.get("useYn").toString());
+			cargoNetVO.setTalkYN(param.get("talkYn").toString());
+			cargoNetVO.setMemo(param.get("memo").toString());
+			cargoNetVO.setRegId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+			cargoNetVO.setEditId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+			cargoNetAccountList.add(cargoNetVO);
+			cargoNetFlag = true;
+		}
+		if(!(param.get("one24Id") == null || "".equals(param.get("one24Id"))) && !(param.get("one24Pass") == null || "".equals(param.get("one24Pass"))) ){
+			cargoNetVO = new CargoNetVO();
+			cargoNetVO.setUserId(param.get("userId").toString());
+			cargoNetVO.setLinkCd("18");
+			cargoNetVO.setLinkUserId(param.get("one24Id").toString());
+			cargoNetVO.setLinkPasswd(param.get("one24Pass").toString());
+			cargoNetVO.setUseYN(param.get("useYn").toString());
+			cargoNetVO.setTalkYN(param.get("talkYn").toString());
+			cargoNetVO.setMemo(param.get("memo").toString());
+			cargoNetVO.setRegId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+			cargoNetVO.setEditId(((LoginVO) session.getAttribute("userInfo")).getUserId());
+			cargoNetAccountList.add(cargoNetVO);
+			cargoNetFlag = true;
+		}
+		cargoNetAccountMap.put("list",cargoNetAccountList);
+		if(cargoNetFlag ) {
+			userService.insertUserCargoAccount(cargoNetAccountMap);
+		}
 		
 		map.put("result", Boolean.TRUE);
 		map.put("data", param);
@@ -312,4 +367,5 @@ public class UserController {
 		return "jsonView";
 
 	}
+
 }

@@ -77,4 +77,10 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userDao.getUserOption(map);
 	}
+
+	@Override
+	public void insertUserCargoAccount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		userDao.insertUserCargoAccount(map);
+	}
 }

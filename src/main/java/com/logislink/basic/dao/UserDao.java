@@ -69,4 +69,7 @@ public class UserDao extends EgovAbstractMapper{
 		// TODO Auto-generated method stub
 		return selectOne("userDataNS.getUserOption", map);
 	}
+	public void insertUserCargoAccount(Map<String, Object> map) {
+		update("userDataNS.insertUserCargoAccount", map);
+	}
 }
