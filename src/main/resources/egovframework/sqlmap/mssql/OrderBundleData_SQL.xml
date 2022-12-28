@@ -26,30 +26,32 @@
    	</select>
    	
    	<select id="selectVehicId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-   		SELECT 
-   				A.VEHIC_ID
-   			  , A.DRIVER_ID
-   			  , B.CAR_NUM
-   			  , ISNULL(B.CAR_TON_CODE, '') CAR_TON_CODE
-   			  , ISNULL(B.CAR_TYPE_CODE, '') CAR_TYPE_CODE
-   			  , C.DRIVER_NAME
-   			  , C.MOBILE
-   		FROM 
-   			(
-   				SELECT VEHIC_ID, DRIVER_ID 
-   				FROM T_CUST_VEHIC 
-   				WHERE CUST_ID = #{loginCustId} AND DEPT_ID = #{loginDeptId} AND USE_YN = 'Y' 
-   			) A
-   			INNER JOIN
-   			T_VEHIC_MST B ON A.VEHIC_ID = B.VEHIC_ID AND A.DRIVER_ID = B.DRIVER_ID AND B.USE_YN = 'Y'
-   			INNER JOIN
-   			T_DRIVER C ON A.DRIVER_ID = C.DRIVER_ID
-   		WHERE
-   			B.CAR_NUM + '||' + C.MOBILE + '||' + C.DRIVER_NAME IN
-   			<foreach collection="vehicList" item="item" open="(" close=")" separator=",">
-   				#{item.carNum} + '||' + REPLACE(#{item.driverTel},'-','') + '||' + #{item.driverName}
-   			</foreach>
-   	</select>
+		SELECT
+		A.VEHIC_ID
+		, A.DRIVER_ID
+		, B.CAR_NUM
+		, ISNULL(B.CAR_TON_CODE, '') CAR_TON_CODE
+		, ISNULL(B.CAR_TYPE_CODE, '') CAR_TYPE_CODE
+		, C.DRIVER_NAME
+		, C.MOBILE
+		FROM
+		(
+		SELECT VEHIC_ID, DRIVER_ID
+		FROM T_CUST_VEHIC
+		WHERE CUST_ID = #{loginCustId} AND DEPT_ID = #{loginDeptId} AND USE_YN = 'Y'
+		) A
+		INNER JOIN
+		T_VEHIC_MST B ON A.VEHIC_ID = B.VEHIC_ID
+		AND B.USE_YN = 'Y'
+		-- AND A.DRIVER_ID = B.DRIVER_ID
+		INNER JOIN
+		T_DRIVER C ON A.DRIVER_ID = C.DRIVER_ID
+		WHERE
+		B.CAR_NUM + '||' + C.MOBILE + '||' + C.DRIVER_NAME IN
+		<foreach collection="vehicList" item="item" open="(" close=")" separator=",">
+			#{item.carNum} + '||' + REPLACE(#{item.driverTel},'-','') + '||' + #{item.driverName}
+		</foreach>
+	</select>
     
     <!-- 22.7.11 이건욱 T1 > J6 배차일괄등록 편의성 개선 (화주거래처명 조회) -->
     <!-- 로그인한 사용자가 접근 가능한 범주내에서 조회 -->
@@ -100,30 +102,32 @@
     <!-- 22.7.12 이건욱 T1 > J6 배차일괄등록 편의성 개선 (차량번호로 차량조회) -->
     <!-- 로그인한 사용자가 접근 가능한 범주내에서 조회 -->
     <select id="selectVehicInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-      SELECT A.VEHIC_ID vehicId, A.DRIVER_ID driverId, B.CAR_NUM carNum, B.CAR_TON_CODE carTonCode, B.CAR_TYPE_CODE carTypeCode, C.DRIVER_NAME driverName, C.MOBILE mobile
-      FROM (
-        SELECT VEHIC_ID, DRIVER_ID 
-        FROM T_CUST_VEHIC 
-        WHERE 1 = 1
-        AND USE_YN = 'Y'
-        AND CUST_ID = #{loginCustId}
-        AND DEPT_ID = #{loginDeptId}
-      ) A
-      INNER JOIN
-        T_VEHIC_MST B ON B.USE_YN = 'Y' AND B.VEHIC_ID = A.VEHIC_ID AND B.DRIVER_ID = A.DRIVER_ID
-      INNER JOIN
-        T_DRIVER C ON C.DRIVER_ID = A.DRIVER_ID
-      WHERE 1 = 1
-        <if test='carNum != null and !"carNum".equals("")'>
-          AND B.CAR_NUM = #{carNum, jdbcType=NVARCHAR}
-        </if>
-        <if test='driverName != null and !"driverName".equals("")'>
-          AND C.DRIVER_NAME = #{driverName, jdbcType=NVARCHAR}
-        </if>
-        <if test='driverTel != null and !"driverTel".equals("")'>
-          AND C.MOBILE = #{driverTel, jdbcType=NVARCHAR}
-        </if>
-    </select>
+		SELECT A.VEHIC_ID vehicId, A.DRIVER_ID driverId, B.CAR_NUM carNum, B.CAR_TON_CODE carTonCode, B.CAR_TYPE_CODE carTypeCode, C.DRIVER_NAME driverName, C.MOBILE mobile
+		FROM (
+		SELECT VEHIC_ID, DRIVER_ID
+		FROM T_CUST_VEHIC
+		WHERE 1 = 1
+		AND USE_YN = 'Y'
+		AND CUST_ID = #{loginCustId}
+		AND DEPT_ID = #{loginDeptId}
+		) A
+		INNER JOIN
+		T_VEHIC_MST B ON A.VEHIC_ID = B.VEHIC_ID
+		AND B.USE_YN = 'Y'
+		-- AND A.DRIVER_ID = B.DRIVER_ID
+		INNER JOIN
+		T_DRIVER C ON A.DRIVER_ID = C.DRIVER_ID
+		WHERE 1 = 1
+		<if test='carNum != null and !"carNum".equals("")'>
+			AND B.CAR_NUM = #{carNum, jdbcType=NVARCHAR}
+		</if>
+		<if test='driverName != null and !"driverName".equals("")'>
+			AND C.DRIVER_NAME = #{driverName, jdbcType=NVARCHAR}
+		</if>
+		<if test='driverTel != null and !"driverTel".equals("")'>
+			AND C.MOBILE = #{driverTel, jdbcType=NVARCHAR}
+		</if>
+	</select>
    
 	<insert id="insertOrder" parameterType="java.util.HashMap">
 		INSERT INTO
