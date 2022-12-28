@@ -491,6 +491,7 @@ public class OrderController {
 	public String orderState(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
 							 @RequestParam Map<String, Object> param ) throws Exception {
 
+		param.put("regid", ((LoginVO) session.getAttribute("userInfo")).getUserId());
 		orderService.updateOrderState(param);
 
 		if(!"00".equals(param.get("retCode"))) {
@@ -528,6 +529,7 @@ public class OrderController {
 	public String allocState(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
 							 @RequestParam Map<String, Object> param ) throws Exception {
 
+		param.put("regid", ((LoginVO) session.getAttribute("userInfo")).getUserId());
 		orderService.updateAllocState(param);
 
 		if(!"00".equals(param.get("retCode"))) {

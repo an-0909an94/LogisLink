@@ -147,7 +147,7 @@
 			                            </div>
 			                            <div class="input-group input-group-sm col middle-name">
 			                            	<strong>24시콜 비밀번호</strong>
-			                                <input type="text" class="form-control form-control-sm" id="link24Pass">
+			                                <input type="password" class="form-control form-control-sm" id="link24Pass">
 			                            </div>
 			                        </div>
 									<div class="form-group row">
@@ -158,7 +158,7 @@
 										</div>
 										<div class="input-group input-group-sm col middle-name">
 											<strong>화물맨 비밀번호</strong>
-											<input type="text" class="form-control form-control-sm" id="man24Pass">
+											<input type="password" class="form-control form-control-sm" id="man24Pass">
 										</div>
 									</div>
 									<div class="form-group row">
@@ -169,7 +169,7 @@
 										</div>
 										<div class="input-group input-group-sm col middle-name">
 											<strong>원콜 비밀번호</strong>
-											<input type="text" class="form-control form-control-sm" id="one24Pass">
+											<input type="password" class="form-control form-control-sm" id="one24Pass">
 										</div>
 									</div>
 									<div class="form-group row">
@@ -185,7 +185,12 @@
 			                    </c:when>
 			                    <c:otherwise>
 			                    	<input type="hidden" id="link24Id">
-			                    	<input type="hidden" id="douzoneId">
+			                    	<input type="hidden" id="link24Pass">
+									<input type="hidden" id="man24Id">
+									<input type="hidden" id="man24Pass">
+									<input type="hidden" id="one24Id">
+									<input type="hidden" id="one24Pass">
+									<input type="hidden" id="douzoneId">
 			                    </c:otherwise>
 							</c:choose>
 	                        <div class="form-group row">
@@ -262,7 +267,7 @@ function init_pop(mode, data) {
 		
 		Util.setSelectBox("/contents/basic/data/compDeptList.do", "deptId", {custId:data.custId}, "deptId", "deptName", "", "선택하세요");
 		Util.setPageData(data);
-		
+
 		var name = data.bizName;
 		custName.select(function(dataItem) {
 		    return dataItem.bizName === name;

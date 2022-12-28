@@ -77,6 +77,23 @@
     a:hover + p.arrow_box {
         display: block;
     }
+
+    #back{
+        position: absolute;
+        z-index: 9998;
+        background-color: #000000;
+        display:none;
+        left:0;
+        top:0;
+    }
+
+    #loadingBar{
+        position:absolute;
+        left:50%;
+        top: 40%;
+        display:none;
+        z-index:9999;
+    }
 </style>
 <div id="priceView" class="editor-warp p-0">
     <div class="modalEditor" id="addCust">
@@ -2614,6 +2631,12 @@
                     type: "POST",
                     dataType: "json",
                     data: $("#f").serialize(),
+                     beforeSend: function () {
+                        FunLoadingBarStart();      	//로딩바 생성
+                     }
+                    , complete: function () {
+                        FunLoadingBarEnd();			//로딩바 제거
+                     },
                     success: function(data){
                         if(data.result) {
                             alert(data.msg);
@@ -2687,6 +2710,7 @@
     }
     //배차 상태 변경
     function updateAllocState(type, state) {
+
         var allocId = $("#allocId").val();
         var orderId = $("#orderId").val();
         var chkTalkYN = $("input[name='chkTalk']:checked").val();
@@ -3530,5 +3554,27 @@
                 }
             }
         });
+    }
+
+    function FunLoadingBarStart() {
+        var backHeight = $(document).height();               	//뒷 배경의 상하 폭
+        var backWidth = window.document.body.clientWidth;		//뒷 배경의 좌우 폭
+
+        var backGroundCover = "<div id='back'></div>";			//뒷 배경을 감쌀 커버
+        var loadingBarImage = '';								//가운데 띄워 줄 이미지
+
+        loadingBarImage += "<div id='loadingBar'>";
+        loadingBarImage += "<img src='/images/ajax-loader.gif'/>"; //로딩 바 이미지
+        loadingBarImage += "</div>";
+
+        $('body').append(backGroundCover).append(loadingBarImage);
+
+        $('#back').css({ 'width': backWidth, 'height': backHeight, 'opacity': '0.3' });
+        $('#back').show();
+        $('#loadingBar').show();
+    }
+    function FunLoadingBarEnd() {
+        $('#back, #loadingBar').hide();
+        $('#back, #loadingBar').remove();
     }
 </script>
