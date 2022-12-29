@@ -610,7 +610,7 @@
             AND TC1.SELL_BUY_SCTN = '02'
             AND TC1.USE_YN = 'Y'
             --AND TO1.ORDER_STATE IN ('00','01','04','05','12')
-            AND TC1.MNG_CUST_ID = 'C20210802130835001'
+            AND TC1.MNG_CUST_ID = #{loginCustId}
             -- 담당부서 검색
             <if test = 'deptId != null and deptId != ""'>
               AND TC1.MNG_DEPT_ID = #{deptId}
