@@ -735,11 +735,27 @@ public class OrderBundleController {
 		Map<String, String> res = apiHelper.getLatLon(paramMap);
 
 		if (res == null) {
-			return null;
+			// 22.12.30 이건욱 행정구역상 등록된 주소지가 아니라도 위경도 값 입력 (로지스마일 서울사무소)
+			String lat = "37.5302996530226";
+			String lon = "126.919577176287";
+			String sido = "서울시";
+			String gungu = "영등포구";
+			String dong = "여의도동";
+			
+			result.put("lat", lat);
+			result.put("lon", lon);
+			result.put("sido", sido);
+			result.put("gungu", gungu);
+			result.put("dong", dong);
+			
+			return result;
+			
+			//return null;
 		} else {
 			String data = res.get("result");
 			JSONParser parser = new JSONParser(); 
 			JSONObject jsonObject = new JSONObject();
+			
 			String lat = "";
 			String lon = "";
 			String sido = "";
@@ -749,8 +765,22 @@ public class OrderBundleController {
 			jsonObject = (JSONObject)parser.parse(data);
 			JSONArray jsonArray = (JSONArray) jsonObject.get("documents");
 			
-			if(jsonArray.isEmpty()) {
-				return null;
+			if (jsonArray.isEmpty()) {
+				lat = "37.5302996530226";
+				lon = "126.919577176287";
+				sido = "서울시";
+				gungu = "영등포구";
+				dong = "여의도동";
+				
+				result.put("lat", lat);
+				result.put("lon", lon);
+				result.put("sido", sido);
+				result.put("gungu", gungu);
+				result.put("dong", dong);
+				
+				return result;
+				
+				//return null;
 			}
 			
 			JSONObject tmpObj = (JSONObject) jsonArray.get(0);
