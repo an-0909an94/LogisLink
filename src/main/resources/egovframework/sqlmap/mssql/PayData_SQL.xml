@@ -24,10 +24,10 @@
 				 , REPLACE(CONVERT(CHAR(5), F.REQ_PAY_DATE, 110),'-','.') reqPayDate
 				 , H.BIZ_NAME 			taxOwnerBizName
 				 , I.BIZ_NAME 			taxDriverBizName
-				 , G.BANK_CNNM 			bankCnnm
-		 		 , G.bankCode 			bankCode
-				 , G.BANK_ACCOUNT 		bankAccount
-				 , REPLACE(CONVERT(CHAR(8), G.BANKCHK_DATE, 2),'-','.') bankChkDate
+				 , ISNULL(A.BANK_CNNM, G.BANK_CNNM) bankCnnm
+                 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = ISNULL(A.BANK_CODE, G.BANK_CODE)) bankCode
+				 , ISNULL(A.BANK_ACCOUNT, G.BANK_ACCOUNT) bankAccount
+				 , REPLACE(CONVERT(CHAR(8), ISNULL(A.BANKCHK_DATE, G.BANKCHK_DATE), 2),'-','.') bankChkDate
 				 , A.CAR_NUM 			carNum
 				 , A.DRIVER_NAME		driverName
 				 , A.DRIVER_TEL 		driverTel
@@ -67,7 +67,8 @@
 						(SELECT USER_NAME FROM T_USER WHERE USER_ID = FINISH_ID) finishId,
 						(SELECT USER_NAME FROM T_USER WHERE USER_ID = OUTREQ_ID) outreqId,
 						(SELECT USER_NAME FROM T_USER WHERE USER_ID = OUT_ID) outId,
-                        WITHDRAWAL_DUE_DATE
+                        WITHDRAWAL_DUE_DATE,
+                        BANK_CNNM, BANK_ACCOUNT, BANKCHK_DATE, BANK_CODE
 				 FROM T_CALC_PAY
  				 WHERE USE_YN = 'Y' AND MNG_CUST_ID = #{loginCustId}
                     <if test="searchPeriodType != null and searchPeriodType != ''">
