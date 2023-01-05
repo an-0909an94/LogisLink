@@ -59,10 +59,10 @@
                         <strong>　</strong>
                         <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:80px;min-width:80px;">
+<%--                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:80px;min-width:80px;">
                         <strong>　</strong>
                         <button onclick="searchReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
-                    </div>
+                    </div>--%>
                 </div>
 
             </form>
