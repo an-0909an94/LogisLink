@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="deadLineDataNS">
+    <!-- 매입정산 리스트 조회 -->
+    <select id="deadLineList" parameterType="java.util.HashMap" resultType="deadLineVO">
+        SELECT ISNULL((SELECT CUST_NAME FROM T_CUST_DTL WHERE CUST_ID = to2.REQ_CUST_ID AND DEPT_ID = to2.REQ_DEPT_ID AND MNG_CUST_ID = to2.CUST_ID AND MNG_DEPT_ID = to2.DEPT_ID AND SELL_BUY_SCTN = '01'), '') AS custName -- 거래처명
+             , ISNULL((SELECT BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = to2.REQ_CUST_ID), '') AS bizName -- 매출처(계산서발행처)
+             , ISNULL((SELECT DEPT_NAME FROM T_CUST_DEPT WHERE CUST_ID = to2.CUST_ID AND DEPT_ID = to2.DEPT_ID), '') AS deptName -- 담당부서
+             , COUNT(DISTINCT A.ORDER_ID) AS allocCnt -- 배차건수(소계)
+             , SUM(A.sellAmt) AS sellAmt -- 매출액(소계)
+             , SUM(A.buyAmt) AS buyAmt -- 매입액(소계)
+             , SUM(A.sellAmt - A.buyAmt) AS profitAmt -- 이익(소계)
+             , 0 AS invCnt-- 계산서발행건수
+             , SUM(A.depositAmt) AS depositAmt -- 입금액(소계)
+             , COUNT(IIF(A.finishYn = 'Y', A.ORDER_ID, NULL)) AS allocCntF -- 배차건수(마감)
+             , SUM(IIF(A.finishYn = 'Y', A.sellAmt, 0)) AS sellAmtF -- 매출액(마감)
+             , SUM(IIF(A.finishYn = 'Y', A.buyAmt, 0)) AS buyAmtF -- 매입액(마감)
+             , SUM(IIF(A.finishYn = 'Y', A.sellAmt, 0) - IIF(A.finishYn = 'Y', A.buyAmt, 0)) AS profitAmtF -- 이익(마감)
+             , SUM(IIF(A.finishYn = 'Y', A.depositAmt, 0)) AS depositAmtF -- 매입액(마감)
+             , to2.REQ_CUST_ID -- 매출처(계산서발행처)
+             , to2.REQ_DEPT_ID -- 거래처
+             , to2.CUST_ID -- 로그인사용자회사
+             , to2.DEPT_ID -- 로그인사용자부서
+        FROM (
+                 SELECT to1.ORDER_ID
+                      , MAX(IIF(tc1.SELL_BUY_SCTN = '01', tc1.FINISH_YN, 'N')) finishYn
+                      , SUM(ISNULL(tc1.UNPAID_AMT,0) + ISNULL(tc1.DEPOSIT_AMT,0)) sellAmt
+                      , SUM(ISNULL(tc1.PAYABLE_AMT,0) + ISNULL(tc1.WITHDRAWAL_AMT,0)) buyAmt
+                      , SUM(IIF(tc1.DEPOSIT_USER_ID != '', ISNULL(tc1.UNPAID_AMT,0) + ISNULL(tc1.DEPOSIT_AMT,0), 0)) depositAmt
+                 FROM T_ORDER to1 ,
+                      T_CALC tc1
+                 WHERE 1=1
+                   AND to1.ORDER_ID = tc1.ORDER_ID
+                   AND to1.CUST_ID = tc1.MNG_CUST_ID
+                   AND to1.ORDER_STATE IN ('01','04','12','05') -- 01(배차), 04(출발), 12(입차), 05(도착)
+                   AND to1.CUST_ID = #{custId} -- 조건 : 로그인사용자 회사
+--           AND to1.DEPT_ID IN ('','') -- 조건 : 담당부서
+                    <if test = "fromDate != null and fromDate != ''">
+                        <choose>
+                            <when test='searchDate == "sDate".toString()'>
+                                AND to1.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                            </when>
+                            <when test='searchDate == "eDate".toString()'>
+                                AND to1.E_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                            </when>
+                        </choose>
+                    </if>
+                   --AND to1.S_DATE BETWEEN '2022-11-01' AND '2022-11-30' + ' 23:59:59' -- 조건 : 상차일자
+--          AND to1.E_DATE BETWEEN '2022-11-01' AND '2022-11-30' + ' 23:59:59' -- 조건 : 하차일자
+                   AND tc1.USE_YN = 'Y'
+--          AND to1.ORDER_ID IN ('O20221101085515159')
+--          AND to1.ORDER_ID IN ('O20221101085515159','O20221102084701803','O20221102084635800','O20221228163250300','O20221228163222299')
+--          AND to1.ORDER_ID IN ('O20221228163250300','O20221228163222299','O20221228161711295','O20221228161651293','O20221228161621291')
+--          AND to1.REQ_CUST_ID = 'C20210430170954001'
+--          AND to1.REQ_DEPT_ID = 'D20210803143825001'
+                 GROUP BY to1.ORDER_ID
+             ) A
+                 LEFT OUTER JOIN T_ORDER to2 ON A.ORDER_ID = to2.ORDER_ID
+        GROUP BY to2.REQ_CUST_ID
+               , to2.REQ_DEPT_ID
+               , to2.CUST_ID
+               , to2.DEPT_ID
+        ORDER BY SUM(A.sellAmt) DESC
+               , SUM(A.sellAmt - A.buyAmt)
+               , to2.REQ_CUST_ID
+               , to2.REQ_DEPT_ID
+               , to2.CUST_ID
+               , to2.DEPT_ID
+    </select>
+
+    <!-- 매입정산 리스트 카운트 조회 -->
+    <select id="deadLineListCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+        SELECT COUNT(*)FROM(
+                               SELECT ISNULL((SELECT CUST_NAME FROM T_CUST_DTL WHERE CUST_ID = to2.REQ_CUST_ID AND DEPT_ID = to2.REQ_DEPT_ID AND MNG_CUST_ID = to2.CUST_ID AND MNG_DEPT_ID = to2.DEPT_ID AND SELL_BUY_SCTN = '01'), '') AS custName -- 거래처명
+                                    , ISNULL((SELECT BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = to2.REQ_CUST_ID), '') AS bizName -- 매출처(계산서발행처)
+                                    , ISNULL((SELECT DEPT_NAME FROM T_CUST_DEPT WHERE CUST_ID = to2.CUST_ID AND DEPT_ID = to2.DEPT_ID), '') AS deptName -- 담당부서
+                                    , COUNT(DISTINCT A.ORDER_ID) AS allocCnt -- 배차건수(소계)
+                                    , SUM(A.sellAmt) AS sellAmt -- 매출액(소계)
+                                    , SUM(A.buyAmt) AS buyAmt -- 매입액(소계)
+                                    , SUM(A.sellAmt - A.buyAmt) AS profitAmt -- 이익(소계)
+                                    , 0 AS invCnt-- 계산서발행건수
+                                    , SUM(A.depositAmt) AS depositAmt -- 입금액(소계)
+                                    , COUNT(IIF(A.finishYn = 'Y', A.ORDER_ID, NULL)) AS allocCntF -- 배차건수(마감)
+                                    , SUM(IIF(A.finishYn = 'Y', A.sellAmt, 0)) AS sellAmtF -- 매출액(마감)
+                                    , SUM(IIF(A.finishYn = 'Y', A.buyAmt, 0)) AS buyAmtF -- 매입액(마감)
+                                    , SUM(IIF(A.finishYn = 'Y', A.sellAmt, 0) - IIF(A.finishYn = 'Y', A.buyAmt, 0)) AS profitAmtF -- 이익(마감)
+                                    , to2.REQ_CUST_ID -- 매출처(계산서발행처)
+                                    , to2.REQ_DEPT_ID -- 거래처
+                                    , to2.CUST_ID -- 로그인사용자회사
+                                    , to2.DEPT_ID -- 로그인사용자부서
+                               FROM (
+                                        SELECT to1.ORDER_ID
+                                             , MAX(IIF(tc1.SELL_BUY_SCTN = '01', tc1.FINISH_YN, 'N')) finishYn
+                                             , SUM(ISNULL(tc1.UNPAID_AMT,0) + ISNULL(tc1.DEPOSIT_AMT,0)) sellAmt
+                                             , SUM(ISNULL(tc1.PAYABLE_AMT,0) + ISNULL(tc1.WITHDRAWAL_AMT,0)) buyAmt
+                                             , SUM(IIF(tc1.DEPOSIT_USER_ID != '', ISNULL(tc1.UNPAID_AMT,0) + ISNULL(tc1.DEPOSIT_AMT,0), 0)) depositAmt
+                                        FROM T_ORDER to1 ,
+                                             T_CALC tc1
+                                        WHERE 1=1
+                                          AND to1.ORDER_ID = tc1.ORDER_ID
+                                          AND to1.CUST_ID = tc1.MNG_CUST_ID
+                                          AND to1.ORDER_STATE IN ('01','04','12','05') -- 01(배차), 04(출발), 12(입차), 05(도착)
+                                          AND to1.CUST_ID = #{custId} -- 조건 : 로그인사용자 회사
+--           AND to1.DEPT_ID IN ('','') -- 조건 : 담당부서
+                                            <if test = "fromDate != null and fromDate != ''">
+                                                <choose>
+                                                    <when test='searchDate == "sDate".toString()'>
+                                                        AND to1.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                                                    </when>
+                                                    <when test='searchDate == "eDate".toString()'>
+                                                        AND to1.E_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                                                    </when>
+                                                </choose>
+                                            </if>
+                                          --AND to1.S_DATE BETWEEN '2022-11-01' AND '2022-11-30' + ' 23:59:59' -- 조건 : 상차일자
+--          AND to1.E_DATE BETWEEN '2022-11-01' AND '2022-11-30' + ' 23:59:59' -- 조건 : 하차일자
+                                          AND tc1.USE_YN = 'Y'
+--          AND to1.ORDER_ID IN ('O20221101085515159')
+--          AND to1.ORDER_ID IN ('O20221101085515159','O20221102084701803','O20221102084635800','O20221228163250300','O20221228163222299')
+--          AND to1.ORDER_ID IN ('O20221228163250300','O20221228163222299','O20221228161711295','O20221228161651293','O20221228161621291')
+--          AND to1.REQ_CUST_ID = 'C20210430170954001'
+--          AND to1.REQ_DEPT_ID = 'D20210803143825001'
+                                        GROUP BY to1.ORDER_ID
+                                    ) A
+                                        LEFT OUTER JOIN T_ORDER to2 ON A.ORDER_ID = to2.ORDER_ID
+                               GROUP BY to2.REQ_CUST_ID
+                                      , to2.REQ_DEPT_ID
+                                      , to2.CUST_ID
+                                      , to2.DEPT_ID
+
+                           ) AS BB
+        ;
+
+    </select>
+</mapper>
