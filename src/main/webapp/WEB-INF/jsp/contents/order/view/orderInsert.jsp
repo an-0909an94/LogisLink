@@ -2477,6 +2477,7 @@
             alert("항목을 입력해 주세요.")
         } else {
             if($("#distance").val() ==""){
+                e.preventDefault();
                 alert("유효한 주소가 아닙니다");
                 return;
             }
@@ -2774,6 +2775,12 @@
             type: "POST",
             dataType: "json",
             data: "orderId=" + $("#orderId").val() + "&orderState=" + state,
+            beforeSend: function () {
+                FunLoadingBarStart();      	//로딩바 생성
+            }
+            , complete: function () {
+                FunLoadingBarEnd();			//로딩바 제거
+            },
             success: function(data){
                 if(data.result) {
                     alert(data.msg);
@@ -3139,6 +3146,12 @@
             type: "POST",
             dataType: "json",
             data: $("#f").serialize(),
+            beforeSend: function () {
+                FunLoadingBarStart();      	//로딩바 생성
+            }
+            , complete: function () {
+                FunLoadingBarEnd();			//로딩바 제거
+            },
             success: function(data){
                 if(data.result) {
                     alert(data.msg);
