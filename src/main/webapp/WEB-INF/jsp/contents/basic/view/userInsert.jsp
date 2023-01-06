@@ -137,8 +137,8 @@
 	                                <input type="text" class="form-control form-control-sm" id="regDate"  readonly="readonly">
 	                            </div>
 	                        </div>
-	                        <c:choose>
-								<c:when test="${mainCustId eq sessionScope.userInfo.custId }">
+<%--	                        <c:choose>--%>
+<%--								<c:when test="${mainCustId eq sessionScope.userInfo.custId }">--%>
 			                        <div class="form-group row">
 			                            <label class="col-form-label"></label>
 			                            <div class="input-group input-group-sm col middle-name">
@@ -182,7 +182,7 @@
 											<strong></strong>
 										</div>
 									</div>
-			                    </c:when>
+<%--			                    </c:when>
 			                    <c:otherwise>
 			                    	<input type="hidden" id="link24Id">
 			                    	<input type="hidden" id="link24Pass">
@@ -191,8 +191,8 @@
 									<input type="hidden" id="one24Id">
 									<input type="hidden" id="one24Pass">
 									<input type="hidden" id="douzoneId">
-			                    </c:otherwise>
-							</c:choose>
+			                    </c:otherwise>--%>
+<%--							</c:choose>--%>
 	                        <div class="form-group row">
                                 <label class="col-form-label"></label>
                                     <div class="col middle-name">

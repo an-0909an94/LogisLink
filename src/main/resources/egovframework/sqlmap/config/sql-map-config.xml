@@ -44,6 +44,8 @@
 
         <typeAlias  alias="buyCalcVO"  type="com.logislink.calc.vo.BuyCalcVO" />
 
+		<typeAlias  alias="deadLineVO"  type="com.logislink.deadLine.vo.DeadLineVO" />
+
 		<typeAlias  alias="addrVO"  type="com.logislink.basic.vo.AddrVO" />
 
 	</typeAliases>

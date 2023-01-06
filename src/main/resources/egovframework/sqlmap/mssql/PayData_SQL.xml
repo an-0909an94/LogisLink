@@ -25,7 +25,7 @@
 				 , H.BIZ_NAME 			taxOwnerBizName
 				 , I.BIZ_NAME 			taxDriverBizName
 				 , ISNULL(A.BANK_CNNM, G.BANK_CNNM) bankCnnm
-                 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = ISNULL(A.BANK_CODE, G.BANK_CODE)) bankCode
+                 , (SELECT CNAME FROM T_CODE WHERE GCODE = 'BANK_CD' AND CODE = ISNULL(A.BANK_CODE, G.bankCode)) bankCode
 				 , ISNULL(A.BANK_ACCOUNT, G.BANK_ACCOUNT) bankAccount
 				 , REPLACE(CONVERT(CHAR(8), ISNULL(A.BANKCHK_DATE, G.BANKCHK_DATE), 2),'-','.') bankChkDate
 				 , A.CAR_NUM 			carNum
