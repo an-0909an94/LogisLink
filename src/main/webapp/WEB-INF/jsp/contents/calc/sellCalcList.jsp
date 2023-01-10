@@ -22,6 +22,12 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label class="col-form-label modal-big-name">마감관리년월</label>
+                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
+                    <input style="padding: 0;" type="text" id="finishMngDate" name="finishMngDate" class="col-12">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="col-form-label modal-big-name">입금예정일자</label>
                 <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
                     <input style="padding: 0;" type="text" id="depositDueDate" name="depositDueDate" class="col-12">
@@ -1621,14 +1627,11 @@
     });
     
     function calcFinishModalOpen() {
-    	$("#finishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?<br />이미 처리된 건은 제외됩니다</p>");
+    	$("#finishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?<br /><span style='color:blue'>* 이미 처리된 건은 제외됩니다.</span></p>");
     	
-    	var dateOption = {
-            format : "yyyy-MM-dd",
-            value : new Date(),
-            dateInput : true
-        }
-    	$("#depositDueDate").kendoDatePicker(dateOption);
+    	/* 23.01.10 이건욱 마감관리년월추가 관리 */
+    	$("#finishMngDate").kendoDatePicker({ format: "yyyy-MM-01", start: "year", depth: "year", value: new Date(), dateInput: true });
+    	$("#depositDueDate").kendoDatePicker({ format: "yyyy-MM-dd", value: new Date(), dateInput: true });
     	
     	calcFinishModal.data("kendoDialog").open();
     }
@@ -1675,7 +1678,8 @@
     		data: {
     			mode: "Y",
     			calcIdList: calcIdList.toString(),
-    			depositDueDate: $("#depositDueDate").val()
+    			depositDueDate: $("#depositDueDate").val(),
+    			finishMngDate: $("#finishMngDate").val()
     		},
     		success: function(data) {
     			if (data.linkMessage.status == 0) {
@@ -2658,6 +2662,13 @@
 			},
 			editable: function (dataItem){}
 		},
+		{ field: "carNum", title: "차량번호", width: 120 },
+    	{ field: "driverName", title: "차주명", width: 120 },
+    	{ field: "driverTel", title: "전화번호", width: 160,
+    		template: function(dataItem) {
+    			return Util.formatPhone(dataItem.driverTel);
+    		} 
+    	},
 		
 		// 숨김항목
 		{ field: "mngCustId", hidden: true, editable: function (dataItem){} },

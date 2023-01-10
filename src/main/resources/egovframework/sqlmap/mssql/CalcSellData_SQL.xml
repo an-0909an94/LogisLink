@@ -53,6 +53,9 @@
           , DEPOSIT_DUE_DATE AS depositDueDate
           , DEPOSIT_DATE AS depositDate
           , DEPOSIT_USER_NAME AS depositUserName
+          , CAR_NUM AS carNum
+          , DRIVER_NAME AS driverName
+          , DRIVER_TEL AS driverTel
           
           -- 숨김항목
           , MNG_CUST_ID AS mngCustId
@@ -70,7 +73,6 @@
           , SELL_ROUND_CHARGE_ID AS sellRoundChargeId
           , SELL_OTHERADD_CHARGE_ID AS sellOtheraddChargeId
           , CHARGE_TYPE AS chargeTypeCode
-          , CAR_NUM AS carNum
           , VEHIC_ID AS vehicId
           , DRIVER_ID AS driverId
           , ALLOC_DATE_FULL AS allocDateFull
@@ -133,6 +135,9 @@
             , IIF(TC2.DEPOSIT_DUE_DATE != '', TC2.DEPOSIT_DUE_DATE, 'N') AS DEPOSIT_DUE_DATE
             , IIF(TC2.DEPOSIT_DATE != '', TC2.DEPOSIT_DATE, 'N') AS DEPOSIT_DATE
             , ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TC2.DEPOSIT_USER_ID = USER_ID), '') AS DEPOSIT_USER_NAME
+            , ISNULL(TOA.CAR_NUM, '') AS CAR_NUM
+            , ISNULL(TOA.DRIVER_NAME, '') AS DRIVER_NAME
+            , ISNULL(TOA.DRIVER_TEL, '') AS DRIVER_TEL
           
         	-- 숨김항목
         	, TC2.MNG_CUST_ID
@@ -152,7 +157,6 @@
             -- 청구구분
             , TO2.CHARGE_TYPE
             -- 기사정보
-            , ISNULL(TOA.CAR_NUM, '') AS CAR_NUM
             , ISNULL(TOA.VEHIC_ID, '') AS VEHIC_ID
             , ISNULL(TOA.DRIVER_ID, '') AS DRIVER_ID
   		  FROM (
@@ -878,6 +882,7 @@
             , #{editId}
             , #{calcIdList}
             , #{depositDueDate}
+            , #{finishMngDate}
             , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
             , #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
     }

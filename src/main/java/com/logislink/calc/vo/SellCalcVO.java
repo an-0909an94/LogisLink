@@ -55,6 +55,10 @@ public class SellCalcVO {
 	private String depositUserName;
 	private int depositVat;
 	private int depositSum;
+	private String carNum;
+	private String driverName;
+	private String driverTel;
+	private String finishMngDate;
 	
 	/* 숨김항목 */
 	private String mngCustId;
@@ -70,7 +74,6 @@ public class SellCalcVO {
 	private String sellRoundChargeId;
 	private String sellOtheraddChargeId;
 	private String chargeTypeCode;
-	private String carNum;
 	private String vehicId;
 	private String driverId;
 	private String allocDateFull;
@@ -460,5 +463,23 @@ public class SellCalcVO {
 	}
 	public void setsDate(String sDate) {
 		this.sDate = sDate;
+	}
+	public String getDriverName() {
+		return driverName;
+	}
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
+	}
+	public String getDriverTel() {
+		return driverTel;
+	}
+	public void setDriverTel(String driverTel) {
+		this.driverTel = driverTel;
+	}
+	public String getFinishMngDate() {
+		return finishMngDate;
+	}
+	public void setFinishMngDate(String finishMngDate) {
+		this.finishMngDate = finishMngDate;
 	}
 }

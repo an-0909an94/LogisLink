@@ -881,6 +881,7 @@
             , #{allocId}
             , #{calcIdList}
             , #{withdrawalDueDate}
+            , #{finishMngDate}
             , #{retCode, mode=OUT, jdbcType=NVARCHAR, javaType=String}
             , #{retMsg, mode=OUT, jdbcType=NVARCHAR, javaType=String})
     }

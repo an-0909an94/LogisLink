@@ -65,6 +65,8 @@ public class BuyCalcVO {
 	private String mngUserName;
 	private String deleteYn;
 	private String deleteUserName;
+	// 23.01.10 이건욱 마감관리일자
+	private String finishMngDate;
 	
 	/* 숨김항목 */
 	private String mngCustId;
@@ -635,5 +637,13 @@ public class BuyCalcVO {
 
 	public void setsDate(String sDate) {
 		this.sDate = sDate;
+	}
+
+	public String getFinishMngDate() {
+		return finishMngDate;
+	}
+
+	public void setFinishMngDate(String finishMngDate) {
+		this.finishMngDate = finishMngDate;
 	}
 }

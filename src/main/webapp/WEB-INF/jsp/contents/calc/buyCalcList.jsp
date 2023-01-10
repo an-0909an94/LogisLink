@@ -24,6 +24,12 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label class="col-form-label modal-big-name">마감관리년월</label>
+                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
+                    <input style="padding: 0;" type="text" id="finishMngDate" name="finishMngDate" class="col-12">
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="col-form-label modal-big-name">출금예정일자</label>
                 <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
                     <input style="padding: 0;" type="text" id="withdrawalDueDate" name="withdrawalDueDate" class="col-12">
@@ -1521,8 +1527,8 @@
      */
     calcFinishModal = $("#divCalcFinish");
     calcFinishModal.kendoDialog({
-        width: "400px",
-        height: "300px",
+    	width: "400px",
+    	height: "300px",
         visible: false,
         title: "매입마감",
         closable: true,
@@ -1530,15 +1536,11 @@
     });
     
     function calcFinishModalOpen() {
-    	$("#finishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?<br />이미 처리된 건은 제외됩니다</p>");
+    	$("#finishMessage").html("<p>선택된 (" + selectedList.size + ")건에 대한 마감 처리를 하시겠습니까?<br /><span style='color:blue'>* 이미 처리된 건은 제외됩니다.</span></p>");
     	
-    	var dateOption = {
-            format: "yyyy-MM-dd",
-            value: new Date(),
-            dateInput: true,
-            min: new Date()
-        }
-    	$("#withdrawalDueDate").kendoDatePicker(dateOption);
+    	/* 23.01.09 이건욱 마감관리년월 추가 관리 */
+    	$("#finishMngDate").kendoDatePicker({ format: "yyyy-MM-01", start: "year", depth: "year", value: new Date(), dateInput: true });
+    	$("#withdrawalDueDate").kendoDatePicker({ format: "yyyy-MM-dd", value: new Date(), dateInput: true, min: new Date() });
     	
     	calcFinishModal.data("kendoDialog").open();
     }
@@ -1550,8 +1552,11 @@
     $('#fCalcFinish').validator().on('submit', function(e) {
     	e.preventDefault();
     	
+    	/* 23.01.10 이건욱 마감관리년월 추가 관리 */
+    	var finishMngDate = $("#finishMngDate").val();
     	var withdrawalDueDate =  $("#withdrawalDueDate").val();
-    	var message = "지급예정일을 \"" + withdrawalDueDate + "\" 로 확정하고 마감처리를 하시겠습니까?";
+    	var message = "마감관리월을 \"" + finishMngDate + "\"" + ",\n"
+    		message += "지급예정일을 \"" + withdrawalDueDate + "\" 로 확정하고 마감처리를 하시겠습니까?";
     	if (!confirm(message))
     		return;
     	
@@ -1564,7 +1569,8 @@
 		var params = {
 		   "param": JSON.stringify(param),
 		   "mode": "Y",
-		   "withdrawalDueDate": withdrawalDueDate
+		   "withdrawalDueDate": withdrawalDueDate,
+		   "finishMngDate": finishMngDate
 		}
 		
 		$.ajax({
@@ -2196,7 +2202,7 @@
      		if (inputValue != "")
      			goList();
      	}
-     }
+    }
      
  	// 그리드 컨택스트 메뉴 처리
     function onContextMenuSelect(e) {
