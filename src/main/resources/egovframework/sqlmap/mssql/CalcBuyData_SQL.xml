@@ -100,6 +100,8 @@
 		, DELETE_DATE AS deleteYn
 		-- 삭제자
 		, DELETE_USER_NAME AS deleteUserName
+        -- 마감관리년월
+        , FINISH_MNG_DATE AS finishMngDate
         
         -- 숨김항목
         , MNG_CUST_ID AS mngCustId
@@ -201,6 +203,8 @@
           , ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TOA.REGID = USER_ID), '') AS ALLOC_USER_NAME
           , IIF(TC2.DELETE_DATE != '', TC2.DELETE_DATE, 'N') AS DELETE_DATE
           , ISNULL((SELECT MAX(USER_NAME) FROM T_USER WHERE TC2.DELETE_USER_ID = USER_ID), '') AS DELETE_USER_NAME
+          -- 마감관리년월
+          , IIF(TC2.FINISH_MNG_DATE != '', TC2.FINISH_MNG_DATE, 'N') AS FINISH_MNG_DATE
     
           -- 숨김항목
           , TC2.MNG_CUST_ID
@@ -272,6 +276,8 @@
             , MAX(T_CALC.REPORT_BIZ_NUM) AS REPORT_BIZ_NUM
             , MAX(T_CALC.DELETE_DATE) AS DELETE_DATE
             , MAX(T_CALC.DELETE_USER_ID) AS DELETE_USER_ID
+            -- 마감관리년월
+            , MAX(T_CALC.FINISH_MNG_DATE) AS FINISH_MNG_DATE
           FROM (
             SELECT
               TC1.ORDER_ID
@@ -331,6 +337,8 @@
               -- 삭제
               , ISNULL(CONVERT(VARCHAR, TC1.DELETE_DATE, 2), '') AS DELETE_DATE
               , ISNULL(TC1.DELETE_USER_ID, '') AS DELETE_USER_ID
+              -- 마감관리년월
+              , ISNULL(CONVERT(VARCHAR, TC1.FINISH_MNG_DATE, 2), '') AS FINISH_MNG_DATE
             FROM T_CALC TC1, T_ORDER TO1
             WHERE 1=1
               AND TC1.ORDER_ID = TO1.ORDER_ID

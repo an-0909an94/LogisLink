@@ -2412,6 +2412,7 @@
 		{ field: "mngUserName", title: "배차원", width: 100, editable: function (dataItem){} },
 		{ field: "deleteYn", title: "삭제일", width: 80, editable: function (dataItem){} },
 		{ field: "deleteUserName", title: "삭제자", width: 80, editable: function (dataItem){} },
+		{ field: "finishMngDate", title: "마감관리년월", width: 80, editable: function (dataItem){} },
 		
 		// 숨김항목
 		{ field: "mngCustId", hidden: true, editable: function (dataItem){} },

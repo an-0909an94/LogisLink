@@ -2669,6 +2669,7 @@
     			return Util.formatPhone(dataItem.driverTel);
     		} 
     	},
+    	{ field: "finishMngDate", title: "마감관리년월", width: 80, editable: function (dataItem){} },
 		
 		// 숨김항목
 		{ field: "mngCustId", hidden: true, editable: function (dataItem){} },
