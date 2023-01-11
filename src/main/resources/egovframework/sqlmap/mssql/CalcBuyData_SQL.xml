@@ -8,7 +8,7 @@
       T_BUY_CALC.*
     FROM (
       SELECT
-        ROW_NUMBER() OVER(ORDER BY ALLOC_DATE, ORDER_ID DESC) AS number
+        ROW_NUMBER() OVER(ORDER BY S_DATE, E_DATE, IIF(ALLOC_STATE = '10', CARRIER_NAME, CAR_NUM), ORDER_ID DESC) AS number
         -- 오더ID
 		, ORDER_ID AS orderId
 		-- 마감일
@@ -350,9 +350,30 @@
               <if test = 'deptId != null and deptId != ""'>
                 AND TC1.MNG_DEPT_ID = #{deptId}
               </if>
-              -- 배차일자 검색 -> 미처리이월건 포함 검색 시 배차일자검색 제외
+              -- 기간검색 -> 미처리이월건 포함 검색 시 기간검색 제외
               <if test = 'carryOver != "Y"'>
-                AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                <choose>
+                  <!-- 마감일 -->
+                  <when test = 'searchDateType == "finishDate"'>
+                    AND TC1.CALC_DATE IS NOT NULL
+                    AND TC1.CALC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </when>
+                  <!-- 상차일 -->
+                  <when test = 'searchDateType == "sDate"'>
+                    AND TO1.S_DATE IS NOT NULL
+                    AND TO1.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </when>
+                  <!-- 하차일 -->
+                  <when test = 'searchDateType == "eDate"'>
+                    AND TO1.E_DATE IS NOT NULL
+                    AND TO1.E_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </when>
+                  <!-- 배차일 -->
+                  <otherwise>
+                    AND TO1.ALLOC_DATE IS NOT NULL
+                    AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                  </otherwise>
+                </choose>
               </if>
               -- 거래처(주선/운송사) 검색
               <if test = 'custId != null and custId != ""'>
@@ -623,9 +644,30 @@
             <if test = 'deptId != null and deptId != ""'>
               AND TC1.MNG_DEPT_ID = #{deptId}
             </if>
-            -- 배차일자 검색 -> 미처리이월건 포함 검색 시 배차일자검색 제외
+            -- 기간검색 -> 미처리이월건 포함 검색 시 기간검색 제외
             <if test = 'carryOver != "Y"'>
-              AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+              <choose>
+                <!-- 마감일 -->
+                <when test = 'searchDateType == "finishDate"'>
+                  AND TC1.CALC_DATE IS NOT NULL
+                  AND TC1.CALC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </when>
+                <!-- 상차일 -->
+                <when test = 'searchDateType == "sDate"'>
+                  AND TO1.S_DATE IS NOT NULL
+                  AND TO1.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </when>
+                <!-- 하차일 -->
+                <when test = 'searchDateType == "eDate"'>
+                  AND TO1.E_DATE IS NOT NULL
+                  AND TO1.E_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </when>
+                <!-- 배차일 -->
+                <otherwise>
+                  AND TO1.ALLOC_DATE IS NOT NULL
+                  AND TO1.ALLOC_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+                </otherwise>
+              </choose>
             </if>
             -- 거래처(주선/운송사) 검색
             <if test = 'custId != null and custId != ""'>
