@@ -208,6 +208,7 @@ public class OrderVO {
 
 	   private String modId;
 	   private String modDate;
+	   private String externalInformation;
 	   
 	public String getOrderId() {
 		return orderId;
@@ -1375,5 +1376,13 @@ public class OrderVO {
 
 	public void setModDate(String modDate) {
 		this.modDate = modDate;
+	}
+
+	public String getExternalInformation() {
+		return externalInformation;
+	}
+
+	public void setExternalInformation(String externalInformation) {
+		this.externalInformation = externalInformation;
 	}
 }
