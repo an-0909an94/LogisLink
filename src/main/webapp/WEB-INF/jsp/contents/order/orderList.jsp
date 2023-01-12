@@ -252,8 +252,8 @@
                                 <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
                                 <li class="k-separator privateRClick"></li>
                                 <li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
-                                <li class="k-separator privateRClick"></li>
-                                <li id="custMod" class="privateRClick">화주변경</li>
+<%--                                <li class="k-separator privateRClick"></li>
+                                <li id="custMod" class="privateRClick">화주변경</li>--%>
                             </ul>
                             <!-- /table -->
                         </div>
@@ -928,9 +928,9 @@
             case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
                 setPrivatePanel("B2110", "grid", userId);
                 break;
-            case "custMod" : // 리스트 세부설정 변경 버튼 이벤트
+/*            case "custMod" : // 리스트 세부설정 변경 버튼 이벤트
                 setPrivatePanel("B2110", "grid", userId);
-                break;
+                break;*/
         }
     }
 
