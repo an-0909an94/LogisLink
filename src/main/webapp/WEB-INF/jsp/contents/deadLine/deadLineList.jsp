@@ -59,10 +59,19 @@
                         <strong>　</strong>
                         <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
                     </div>
-<%--                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:80px;min-width:80px;">
+                    <c:if test="${menuAuth.printYn eq 'Y'}">
+                        <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:80px;">
+                            <strong>　</strong>
+                           <%-- <button onclick="goExcel()"  type="button" class="form-control form-control-sm middle-button">엑셀출력</button>--%>
+                            <a href="#" class="form-control form-control-sm middle-button" onclick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+                        </div>
+                        <%--<a href="#" class="k-pager-refresh k-button" onclick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>--%>
+                    </c:if>
+                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:80px;min-width:80px;">
                         <strong>　</strong>
-                        <button onclick="searchReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
-                    </div>--%>
+                        <!--<button onclick="searchReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>-->
+                    </div>
+
                 </div>
 
             </form>
@@ -93,6 +102,7 @@
     $("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
     $("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
     Util.setSearchDateForm();
+    var headerTitle = ($("#headerTitle").text());
 
     $(document).ready(function() {
         // 리스트 출력
@@ -145,6 +155,15 @@
             dataBound: function(e) {
                 nonPrivateColumnCheck = e.sender.columns[0];
             },
+            excel: {
+            fileName: headerTitle+"(" + new Date().yyyymmdd() + ").xlsx",
+                proxyURL: "/cmm/saveGrid.do",
+                filterable: false,
+                allPages: true
+            },
+            excelExport: function(e) {
+                $("#loading").hide();
+            },
             navigatable: true,
             selectable: "cell",
             persistSelection: true,
@@ -164,8 +183,8 @@
 
         //  setOptionActive("C3130", "grid", userId);
 
-        grid.thead.on("click", "#orderAllCheck", orderAllCheckHandler);
-        grid.table.on("click", ".orderCheck", orderCheckHandler);
+/*        grid.thead.on("click", "#orderAllCheck", orderAllCheckHandler);
+        grid.table.on("click", ".orderCheck", orderCheckHandler);*/
     }
 
     var columns = [
@@ -341,9 +360,9 @@
                     },attributes: {
                         style: "text-align: right"
                     }
-                },
+                }
                 /*                { field: "", title: "계산서 수", width: 100 },*/
-                { field: "", title: "입금확인", width: 100 }
+                /*{ field: "", title: "입금확인", width: 100 }*/
             ]
         },
         {
@@ -408,4 +427,10 @@
             ]
         }
     ];
+
+    function goExcel(){
+        $("#loading").show();
+        var grid = $("#grid").data("kendoGrid");
+        grid.saveAsExcel();
+    }
 </script>

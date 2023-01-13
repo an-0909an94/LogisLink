@@ -129,6 +129,7 @@
                             <option value="sComName">상차지명</option>
                             <option value="eComName">하차지명</option>
                             <option value="orderId">오더ID</option>
+                            <option value="externalInformation">외부참고정보</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
@@ -251,6 +252,8 @@
                                 <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
                                 <li class="k-separator privateRClick"></li>
                                 <li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
+<%--                                <li class="k-separator privateRClick"></li>
+                                <li id="custMod" class="privateRClick">화주변경</li>--%>
                             </ul>
                             <!-- /table -->
                         </div>
@@ -595,6 +598,7 @@
         },
         { field: "modId", title: "최종수정자", width: 150 },
         { field: "modDate", title: "최종수정일", width: 150 },
+        { field: "externalInformation", title: "외부참고정보", width: 150 },
         { field: "driverStateName", hidden:true},
         { field: "orderState", hidden:true},
         { field: "orderStateName", hidden:true},
@@ -924,6 +928,9 @@
             case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
                 setPrivatePanel("B2110", "grid", userId);
                 break;
+/*            case "custMod" : // 리스트 세부설정 변경 버튼 이벤트
+                setPrivatePanel("B2110", "grid", userId);
+                break;*/
         }
     }
 

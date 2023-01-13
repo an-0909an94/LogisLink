@@ -137,6 +137,7 @@
 	   					-- , ISNULL((SELECT TOP 1 CONVERT(CHAR(20),MOD_DATE, 20) FROM T_ORDER_HISTORY OH WHERE ORDER_ID = a.ORDER_ID and MOD_ID !='SYSTEM' ORDER BY HISTORY_SEQ DESC), '')  modDate
 	   					 , ISNULL((SELECT USER_NAME FROM T_USER WHERE USER_ID = B.EDITID),T.USER_NAME) modId
 					     , ISNULL(CONVERT(CHAR(20),B.EDITDATE, 20), '') modDate
+	   					 , B.EXTERNAL_INFOMATION externalInformation
 					FROM
 					   (
 					      SELECT 
@@ -236,6 +237,9 @@
 								<when test='searchColumn == "eComName".toString()'>
 									AND B.E_COM_NAME LIKE '%' + #{searchValue} + '%'
 								</when>
+								<when test='searchColumn == "externalInformation".toString()'>
+									AND B.EXTERNAL_INFOMATION LIKE '%' + #{searchValue} + '%'
+								</when>
 							</choose>
 						</if>
 						<if test="driverValue != null and driverValue != ''">
@@ -270,7 +274,7 @@
 				   				</when>
 					   		</choose> 
 					    </if>
-					    <if test = 'myOrder == "Y"'>AND B.REGID = #{loginId}</if> 
+					    <if test = 'myOrder == "Y"'>AND B.REGID = #{loginId}</if>
 				) AAA 		
 			WHERE 1=1
 			<if test = "orderStopYn != null and orderStopYn != ''">
@@ -594,7 +598,8 @@
 			 , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='01' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) salesTaxinv
 			 , (SELECT ISNULL(FINISH_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseFinish
 			 , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseTaxinv
-		FROM
+			 , B.EXTERNAL_INFOMATION externalInformation
+			     FROM
 		   (
 		      SELECT 
 		             ORDER_ID     , ALLOC_ID      , SELL_CUST_ID   , SELL_DEPT_ID   , SELL_STAFF_ID
@@ -887,6 +892,7 @@
 						  , #{chemicalsYn}
 						  , #{foreignLicenseYn}
 						  , #{chkTalk}
+						  , #{externalInformation}
 						  , #{outBuyTaxCnt, mode=OUT, jdbcType=INTEGER, javaType=int}
 						  , #{outSellTaxCnt, mode=OUT, jdbcType=INTEGER, javaType=int}
 						  , #{buyAllocId, mode=OUT, jdbcType=NVARCHAR, javaType=String}

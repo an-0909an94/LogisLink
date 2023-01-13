@@ -142,7 +142,8 @@
 				  , GOODS_NAME			  , GOODS_WEIGHT		  , S_WAY_CODE			  , E_WAY_CODE					  , MIX_YN
 				  , MIX_SIZE			  , RETURN_YN			  , IN_OUT_SCTN			  , TRUCK_TYPE_CODE				  , CAR_TON_CODE
 				  , CAR_TYPE_CODE		  , DISTANCE			  , TIME				  , REGID						  , REGDATE
-				  , WEIGHT_UNIT_CODE	  , CHARGE_TYPE			  , ALLOC_DATE
+				  , WEIGHT_UNIT_CODE	  , CHARGE_TYPE			  , ALLOC_DATE			, EXTERNAL_INFOMATION
+				  , S_MEMO   			  , E_MEMO
 				)
 		VALUES
 		<foreach collection="orderList" item="item" index="index" separator=",">
@@ -197,6 +198,9 @@
 				  , (SELECT CODE FROM T_CODE  WHERE GCODE='CHARGE_TYPE_CD' AND CNAME=#{item.chargeType})
 				  , CASE WHEN ISNULL(#{item.allocDate}, '') = '' AND #{item.orderState, jdbcType=NVARCHAR} = '01' THEN GETDATE()
 				     WHEN ISNULL(#{item.allocDate}, '') = '' THEN NULL ELSE CAST(#{item.allocDate} AS DATETIME) END
+				, #{item.externalInformation, jdbcType=NVARCHAR}
+				, #{item.sMemo, jdbcType=NVARCHAR}
+				, #{item.eMemo, jdbcType=NVARCHAR}
 			)		  
 		</foreach>		
 	</insert>
