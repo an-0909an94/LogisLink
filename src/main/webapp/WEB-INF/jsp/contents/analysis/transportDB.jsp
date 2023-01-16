@@ -138,7 +138,6 @@
 	            template: "#=Util.formatNumber("+colName+")#"
 	        };
             console.log("jsson2:"+data.title)
-
 	        columns.push(data);
 	    }
 	    var grid = $("#grid").data("kendoGrid");
@@ -150,6 +149,10 @@
             console.log("jssona:");
 	    } else {
             console.log("jssonb:");
+            //oGrid.setGrid(columns);
+            grid.setOptions({
+                columns: columns
+            });
 	        grid.setDataSource(oGrid.gridOption.dataSource);
         }
 	}	
