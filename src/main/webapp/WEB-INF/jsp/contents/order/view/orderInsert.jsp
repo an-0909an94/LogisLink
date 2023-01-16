@@ -624,6 +624,12 @@
                                                     <label for="foreignLicenseYn" class="insert-label"> <span>보세운송</span>
                                                     </label>
                                                 </div>
+                                                <label class="col-form-label big-name"></label>
+                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                    <strong>외부참고정보</strong>
+                                                    <input style="width: 212.13px;" type="text" class="form-control form-control-sm" id="externalInformation" name="externalInformation">
+                                                    <div class="help-block with-errors"></div>
+                                                </div>
                                             </div>
 
 <%--                                            <div class="form-group row">
@@ -1811,7 +1817,7 @@
         }, 50);
 
         $("#sellFee").val(Util.formatNumberInput($("#sellFee").val()))
-
+        $("#externalInformation").val(data.externalInformation);
         //차량 세팅
         //carNum.value(data.carNum);
 
@@ -3124,7 +3130,8 @@
      * 오더 복사
      * @returns
      */
-    function orderCopy() {
+    function orderCopy(e) {
+
         $("#mode").val("C");
         var allocKind = $("#f input[name=allocKind]:checked").val();
         $("#buyCharge" + allocKind).val($("#buyCharge" + allocKind).val().replace(/,/g, ""));
@@ -3141,25 +3148,25 @@
         if($("#sellFee").val() == ""){
             $("#sellFee").val("0");
         }
-        $.ajax({
-            url: "/contents/order/data/orderWrite.do",
-            type: "POST",
-            dataType: "json",
-            data: $("#f").serialize(),
-            beforeSend: function () {
-                FunLoadingBarStart();      	//로딩바 생성
-            }
-            , complete: function () {
-                FunLoadingBarEnd();			//로딩바 제거
-            },
-            success: function(data){
-                if(data.result) {
-                    alert(data.msg);
-                    init_popup_close();
-                    goList();
+           $.ajax({
+                url: "/contents/order/data/orderWrite.do",
+                type: "POST",
+                dataType: "json",
+                data: $("#f").serialize(),
+                beforeSend: function () {
+                    FunLoadingBarStart();      	//로딩바 생성
                 }
-            }
-        })
+                , complete: function () {
+                    FunLoadingBarEnd();			//로딩바 제거
+                },
+                success: function (data) {
+                    if (data.result) {
+                        alert(data.msg);
+                        init_popup_close();
+                        goList();
+                    }
+                }
+            })
     }
 
     function otherChargeOpen(){

@@ -91,7 +91,7 @@ public class ExcelUtil {
 		int rowCnt = sheet.getPhysicalNumberOfRows();
 		// 헤더만 1차 검증
 		int cellCnt = sheet.getRow(0).getPhysicalNumberOfCells();
-		if (cellCnt != 35)
+		if (cellCnt != 36)
 			// 예외처리
 			throw new Exception("배차양식 엑셀 파일을 처리하는데 문제가 발생했습니다.\\n올바른 배차양식 엑셀 파일을 업로드 해주세요.");
 		
@@ -102,7 +102,7 @@ public class ExcelUtil {
 			
 			// 각 Row에서 컬럼 사이즈가 안맞으면 정지
 			cellCnt = row.getLastCellNum();
-			if (cellCnt != 35)
+			if (cellCnt != 36)
 				break;
 			
 			// 일정한 포맷이 없는 Row (빈 Row)가 있을 시 정지

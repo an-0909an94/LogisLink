@@ -441,8 +441,17 @@
                 
                 <!-- 검색 2라인 -->
                 <div class="form-group row">
+                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                        <strong>기간검색</strong>
+                        <select id="searchDateType" name="searchDateType" class="custom-select col-12">
+                            <option value="allocDate" selected>배차일자</option>
+                            <option value="sDate">상차일자</option>
+                            <option value="eDate">하차일자</option>
+                            <option value="finishDate">마감일자</option>
+                        </select>
+                    </div>
                     <div class="input-group input-group-sm col-1 middle-name">
-                        <strong>배차일자</strong>
+                        <strong>&nbsp;</strong>
                         <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
                     </div>
                     <span style="margin-top: 31px;">~</span>

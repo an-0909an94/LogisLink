@@ -399,7 +399,12 @@
 					}).appendTo(container);
 				},
 				headerTemplate : '<label class="requireHeader">운임구분</label>'
-			} ];
+			},
+            {
+                field : "externalInformation",
+                title : "외부참고정보",
+                width : 120
+            } ];
 
 	$(document).ready(
 			function() {
@@ -530,8 +535,9 @@
 					"returnYn" : data[i][33],
 					// 22.07.06 이건욱 T1 > J5, J6, J7 배차관리 기능개선
 					"chargeType" : data[i][34],
+                    "externalInformation" : data[i][35],
 					// 22.07.06 이건욱 T1 > J6 Row number 추가
-					"no" : data[i][35]
+					"no" : data[i][36]
 				}
 			}
 		}
