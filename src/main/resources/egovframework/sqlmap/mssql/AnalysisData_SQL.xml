@@ -436,4 +436,49 @@
 		</if>
 		GROUP BY S_SIDO, S_GUNGU, E_SIDO, E_GUNGU, CAR_TYPE_NAME, CAR_TON_CODE
 	</select>
+
+    <!-- 운송DB(user) -->
+    <select id="selectTransportDB" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+SELECT SUM(MST.TOTAL_CNT) OVER(PARTITION BY MST.bizName) "BIZ_TOTAL"
+    , MST.*
+FROM (SELECT A.bizName
+           , A.deptName
+           , SUM(A.orderCnt)                                                    "TOTAL_CNT"
+           , SUM(CASE WHEN LEFT(A.YYMM, 4) = #{searchYear} THEN 0 ELSE A.orderCnt END) "PRE_CNT"
+           , SUM(CASE WHEN LEFT(A.YYMM, 4) = #{searchYear} THEN A.orderCnt ELSE 0 END) "YY_CNT"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.01' THEN A.orderCnt ELSE 0 END)  "CNT_01"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.02' THEN A.orderCnt ELSE 0 END)  "CNT_02"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.03' THEN A.orderCnt ELSE 0 END)  "CNT_03"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.04' THEN A.orderCnt ELSE 0 END)  "CNT_04"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.05' THEN A.orderCnt ELSE 0 END)  "CNT_05"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.06' THEN A.orderCnt ELSE 0 END)  "CNT_06"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.07' THEN A.orderCnt ELSE 0 END)  "CNT_07"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.08' THEN A.orderCnt ELSE 0 END)  "CNT_08"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.09' THEN A.orderCnt ELSE 0 END)  "CNT_09"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.10' THEN A.orderCnt ELSE 0 END)  "CNT_10"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.11' THEN A.orderCnt ELSE 0 END)  "CNT_11"
+           , SUM(CASE WHEN A.YYMM = #{searchYear} + '.12' THEN A.orderCnt ELSE 0 END)  "CNT_12"
+      FROM (SELECT LEFT(CONVERT(nvarchar(50), to2.S_DATE, 102), 7)                       YYMM
+                 , to2.CUST_ID
+                 , to2.DEPT_ID
+                 , (SELECT BIZ_NAME FROM T_CUST_MST tcm WHERE tcm.CUST_ID = to2.CUST_ID) bizName
+                 , (SELECT DEPT_NAME
+                    FROM T_CUST_DEPT tcd
+                    WHERE tcd.CUST_ID = to2.CUST_ID
+                      AND tcd.DEPT_ID = to2.DEPT_ID)                                     deptName
+                 , COUNT(DISTINCT to2.ORDER_ID)                                          orderCnt
+            FROM T_ORDER to2
+               , T_ORDER_ALLOC toa
+            WHERE 1 = 1
+              AND to2.ORDER_ID = toa.ORDER_ID
+              AND to2.ORDER_STATE IN ('00', '01', '04', '05', '12') -- 00:접수, 01:배차, 04:출발, 05:도착, 09:취소, 12:입차
+              AND toa.ALLOC_CHARGE > 0
+              --     AND to2.S_DATE
+            GROUP BY LEFT(CONVERT(nvarchar(50), to2.S_DATE, 102), 7)
+                   , to2.CUST_ID
+                   , to2.DEPT_ID) A
+      WHERE A.YYMM BETWEEN '1999.01' AND #{searchYear}+'.12'
+      GROUP BY A.bizName, A.deptName) MST
+ORDER BY 1 DESC, 4 DESC
+    </select>
 </mapper>

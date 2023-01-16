@@ -64,4 +64,10 @@ public class AnalysisServiceImpl implements AnalysisService {
 		return analysisDao.selectFreightAnalysisMax(map);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectTransportDB(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return analysisDao.selectTransportDB(map);
+	}
+
 }

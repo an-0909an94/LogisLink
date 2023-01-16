@@ -23,6 +23,7 @@ import com.logislink.login.vo.LoginVO;
 public class AnalysisController {
 
 	private String freightAnalysisCode = "H8110";
+	private String trnasportDBAnalysisCode = "H8210";
 	
 	@Resource(name="analysisService")
 	private AnalysisService analysisService;
@@ -66,5 +67,26 @@ public class AnalysisController {
 		
 		return "jsonView";
 	}
+	
+	@GetMapping(value="/contents/analysis/transportDB.do")
+	public String transportDB(HttpServletRequest request, HttpSession session, ModelMap model) {
+		
+		LoginMenuVO loginMenu = EtcUtil.checkAuth(request, trnasportDBAnalysisCode);
+		model.put("menuAuth", loginMenu);
+				
+		return "contents/analysis/transportDB";
+	}
+	
+	@PostMapping(value="/contents/analysis/data/transportDB.do")
+	public String transportDBData(HttpServletRequest request, HttpSession session, 
+								ModelMap map, @RequestParam Map<String, Object> param) {
+
+		List<Map<String, Object>> data = analysisService.selectTransportDB(param);
+		
+		map.put("result", Boolean.TRUE);
+		map.put("data", data);
+		
+		return "jsonView";
+	}	
 
 }

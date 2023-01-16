@@ -20,4 +20,6 @@ public interface AnalysisService {
 	public List<Map<String, Object>> selectFreightAnalysisMin(Map<String, Object> map);
 	
 	public List<Map<String, Object>> selectFreightAnalysisMax(Map<String, Object> map);
+
+	public List<Map<String, Object>> selectTransportDB(Map<String, Object> param);
 }

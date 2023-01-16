@@ -41,4 +41,8 @@ public class AnalysisDao extends EgovAbstractMapper {
 	public List<Map<String, Object>> selectFreightAnalysisMax(Map<String, Object> map) {
 		return selectList("analysisDataNS.selectFreightAnalysisMax", map);
 	}
+
+	public List<Map<String, Object>> selectTransportDB(Map<String, Object> map) {
+		return selectList("analysisDataNS.selectTransportDB", map);
+	}
 }
