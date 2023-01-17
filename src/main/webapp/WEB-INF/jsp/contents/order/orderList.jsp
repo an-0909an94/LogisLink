@@ -252,8 +252,8 @@
                                 <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
                                 <li class="k-separator privateRClick"></li>
                                 <li id="dSave" class="privateRClick">리스트 세부설정 변경</li>
-<%--                                <li class="k-separator privateRClick"></li>
-                                <li id="custMod" class="privateRClick">화주변경</li>--%>
+                                <li class="k-separator privateRClick"></li>
+                                <li id="custMod" class="privateRClick">화주변경</li>
                             </ul>
                             <!-- /table -->
                         </div>
@@ -269,6 +269,39 @@
     <div id="divSendLink"></div>
     <div id="divOrderHistory"></div>
 </div>
+<!-- 화주변경 Modal -->
+<div id="divChangeReq" class="editor-warp p-0">
+    <form class="modalEditor" id="fChangeReq" data-toggle="validator" role="form" autocomplete="off">
+        <input type="hidden" name="modalCustId" id="modalCustId" class="hiddenValue">
+        <input type="hidden" name="modalDeptId" id="modalDeptId" class="hiddenValue">
+        <input type="hidden" name="modalManager" id="modalManager"  class="hiddenValue">
+        <input type="hidden" name="modalAllocList" id="modalAllocList"  class="hiddenValue">
+        <input type="hidden" name="modalOrderList" id="modalOrderList"  class="hiddenValue">
+        <input type="hidden" name="modalBizAddr" id="modalBizAddr"  class="hiddenValue">
+        <input type="hidden" name="modalBizAddrDetail" id="modalBizAddrDetail"  class="hiddenValue">
+        <input type="hidden" name="modalMobile" id="modalMobile"  class="hiddenValue">
+        <input type="hidden" name="modalOrderMemo" id="modalOrderMemo"  class="hiddenValue">
+        <div class="modalHeader">
+            <div class="form-group row">
+                <label class="col-form-label modal-big-name">화주</label>
+                <div class="input-group input-group-sm col-6 middle-name form-group">
+                    <input type="text" id="sModalCustName" name="modalCustName" style="width:100%;" required>
+                    <div class="help-block with-errors" ></div>
+                </div>
+                <div class="input-group input-group-sm col middle-name form-group">
+                    <input type="text" id="sModalDeptName" name="modalDeptName" class="form-control form-control-sm" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="editor_btns">
+            <div class="padding">
+                <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>변경</strong></b></button>
+                <a id="closeBtn" onclick="reqChangeModalClose();" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 화주변경 Modal End -->
 <script type="text/javascript">
     var viewLocation = null;
 
@@ -605,7 +638,11 @@
         { field: "staffId", hidden:true},
         { field: "regid", hidden:true},
         { field: "carMngMemo", hidden:true},
-        { field: "custMngMemo", hidden:true}
+        { field: "custMngMemo", hidden:true},
+        { field: "salesFinish", hidden:true},
+        { field: "salesTaxinv", hidden:true},
+        { field: "purchaseFinish", hidden:true},
+        { field: "purchaseTaxinv", hidden:true}
     ];
 
     function goList() {
@@ -928,12 +965,57 @@
             case "dSave" : // 리스트 세부설정 변경 버튼 이벤트
                 setPrivatePanel("B2110", "grid", userId);
                 break;
-/*            case "custMod" : // 리스트 세부설정 변경 버튼 이벤트
-                setPrivatePanel("B2110", "grid", userId);
-                break;*/
+            case "custMod" : // 리스트 세부설정 변경 버튼 이벤트
+                var grid = $("#grid").data("kendoGrid");
+                var dataItem = grid.dataItem(grid.select());
+                changeShipper(dataItem);
+                break;
         }
     }
 
+    reqChangeModal = $("#divChangeReq");
+    reqChangeModal.kendoDialog({
+        width: "500px",
+        height: "240px",
+        visible: false,
+        title: "화주변경",
+        closable: true,
+        modal: true
+    });
+
+    function changeShipper(dataItem){
+        if(dataItem ==null){
+            alert("화주변경 처리 될 오더를 선택해 주세요.");
+            return;
+        }
+        if(!$("#sDeptId").val()) {
+            alert("담당부서를 선택해주세요.");
+            return;
+        }
+        if(dataItem.salesFinish !="N" && dataItem.salesFinish !=null){
+            alert("매출 마감처리가 된 오더입니다.");
+            return;
+        }
+        if(dataItem.salesTaxinv !="N" && dataItem.salesTaxinv !=null){
+            alert("매출 세금계산서가 발행된 오더입니다.");
+            return;
+        }
+
+        var orderIdList = [];
+        var allocIdList = [];
+
+        orderIdList.push(dataItem.orderId);
+        allocIdList.push(dataItem.sellAllocId);
+
+        reqChangeModal.data("kendoDialog").open();
+        $("#modalAllocList").val(allocIdList);
+        $("#modalOrderList").val(orderIdList);
+
+        searchModalCustName = $("#sModalCustName").data("kendoMultiColumnComboBox");
+        // 22.09.22 이건욱: order.js의 공통 함수사용하지 않음.
+        searchModalCustName = setComboCustName("sModalCustName", "01", $("#sDeptId").val());
+        searchModalCustName.bind("select", onChangeSearchModalCust);
+    }
     //09-21 사용자 talk 사용여부 정보 추가
     function userTalkYn() {
         $.ajax({
@@ -971,4 +1053,125 @@
             $("#testVal").css("visibility", "hidden");
         }
     }
+
+    function setComboCustName(elementId, sellBuySctn, deptId) {
+        var comboCustName = $("#" + elementId).kendoMultiColumnComboBox({
+            dataTextField: "custName",
+            dataValueField: "custId",
+            filter: "contains",
+            minLength: 2,
+            autoBind: true,
+            dataSource: {
+                serverFiltering: true,
+                transport: {
+                    read : {
+                        url: "/contents/basic/data/custList.do",
+                        dataType: "json",
+                        type: "post",
+                        data: {
+                            useYn : "Y",
+                            sellBuySctn : sellBuySctn,
+                            deptId: deptId
+                        },
+                        beforeSend: function(req) {
+                            req.setRequestHeader("AJAX", true);
+                        }
+                    }
+                },
+                schema : {
+                    data : function(response) {
+                        return response.data;
+                    },
+                    total : function(response) {
+                        return response.total;
+                    }
+                }
+            },
+            popup: {
+                position: "top left"
+            },
+            columns: [
+                { field: "custName", title: "거래처명", width: "220" },
+                { field: "deptName", title: "부서명", width: "100" },
+                { field: "bizName", title: "계약사명", width: "220" },
+                { field: "ceo", title: "대표자", width: "100" },
+                { field: "bizNum", title: "사업자번호", width: "150" }
+            ]
+        }).data("kendoMultiColumnComboBox");
+
+        return comboCustName;
+    }
+
+    function onChangeSearchModalCust(e) {
+        var dataItem = e.dataItem;
+        if (dataItem != null) {
+            $("#sModalDeptName").val(dataItem.deptName);
+
+            $("#modalCustId").val(dataItem.custId);
+            $("#modalDeptId").val(dataItem.deptId);
+            $("#modalManager").val(dataItem.userId);
+            $("#modalBizAddr").val(dataItem.bizAddr);
+            $("#modalBizAddrDetail").val(dataItem.bizAddrDetail);
+            $("#modalMobile").val(dataItem.mobile);
+            $("#modalOrderMemo").val(dataItem.orderMemo);
+        }
+    }
+    $('#fChangeReq').validator().on('submit', function(e) {
+        if (e.isDefaultPrevented()) {
+            alert("항목을 입력해 주세요.");
+            e.preventDefault();
+            return;
+        }
+
+        var param = {
+            custId: $("#modalCustId").val(),
+            deptId: $("#modalDeptId").val(),
+            manager: $("#modalManager").val(),
+            allocList: $("#modalAllocList").val(),
+            orderList: $("#modalOrderList").val(),
+            bizAddr: $("#modalBizAddr").val(),
+            bizAddrDetail: $("#modalBizAddrDetail").val(),
+            mobile: $("#modalMobile").val(),
+            memo: $("#modalOrderMemo").val(),
+        };
+
+        if (confirm("화주를 변경하시겠습니까?\n삭제된 정산에 대해서는 화주변경을 할 수 없습니다.")) {
+            // 이벤트 초기화 (submit 동작 중단)
+            e.preventDefault();
+            $.ajax({
+                url: "/contents/calc/data/updateSellChangeReq.do",
+                type: "POST",
+                dataType: "json",
+                data: param,
+                success: function(data) {
+                    if (data.linkMessage.status == 0) {
+                        alert(data.linkMessage.message);
+                        goList();
+                        reqChangeModalClose();
+                    } else if (data.linkMessage.status == 1) {
+                        alert(data.linkMessage.message);
+                    } else {
+                        alert(data.linkMessage.message);
+                    }
+                }
+            });
+        }
+    });
+
+    function reqChangeModalClose() {
+        reqChangeModal.data("kendoDialog").close();
+        $("#modalCustId").val("");
+        $("#modalDeptId").val("");
+        $("#modalManager").val("");
+        $("#modalAllocList").val("");
+        $("#modalOrderList").val("");
+        $("#modalBizAddr").val("");
+        $("#modalBizAddrDetail").val("");
+        $("#modalMobile").val("");
+        $("#modalOrderMemo").val("");
+
+        $("#fChangeReq")[0].reset();
+        $(".list-unstyled").remove();
+    }
+
 </script>
