@@ -18,10 +18,11 @@
 			  , C.CUST_TYPE_CODE	custTypeCode
 			  , A.MOBILE
 			  , A.EMAIL
+			  , A.USER_IP		userIp
 		FROM 
 			(
 					SELECT	
-							CUST_ID, DEPT_ID, USER_ID, USER_NAME, AUTH_SEQ,	GRADE, MASTER_YN, USER_MAIN_PAGE, MOBILE, EMAIL
+							CUST_ID, DEPT_ID, USER_ID, USER_NAME, AUTH_SEQ,	GRADE, MASTER_YN, USER_MAIN_PAGE, MOBILE, EMAIL, USER_IP
 					FROM
 							T_USER
 					WHERE
@@ -85,6 +86,7 @@
 				T_USER
 		SET	
 				LAST_LOGIN_DATE = GETDATE()
+				, USER_IP = #{userIp}
 		WHERE
 				USER_ID =  #{userId} 
 	</update>

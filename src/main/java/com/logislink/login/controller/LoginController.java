@@ -21,6 +21,8 @@ import com.logislink.cmm.util.EncUtil;
 import com.logislink.login.service.LoginService;
 import com.logislink.login.vo.LoginMenuVO;
 import com.logislink.login.vo.LoginVO;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Controller
 public class LoginController {
@@ -38,6 +40,8 @@ public class LoginController {
 		passwd = EncUtil.sha256(passwd);
 		
 		param.put("passwd", passwd);
+		//사용자 IP param 추가
+		param.put("userIp", getUserIp());
 		
 		LoginVO login = loginService.getUser(param);
 		
@@ -52,7 +56,7 @@ public class LoginController {
 
 			//마지막 로그인 날짜를 저장한다.
 			loginService.updateLastLogin(param);
-			
+
 			//사용자 로그인 정보 저장
 			request.getSession().setAttribute("userInfo", login);
 			//사용자 별 메뉴 정보 저장
@@ -143,5 +147,41 @@ public class LoginController {
 
 
 		return accessBr;
+	}
+
+	public static String getUserIp() throws Exception {
+
+		String ip = null;
+		HttpServletRequest request =
+				((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+
+		ip = request.getHeader("X-Forwarded-For");
+
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("X-Real-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("X-RealIP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("REMOTE_ADDR");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+
+		return ip;
 	}
 }

@@ -15,6 +15,7 @@ public class LoginVO {
 	private String custTypeCode;
 	private String mobile;
 	private String email;
+	private String userIp;
 	
 	public String getCustId() {
 		return custId;
@@ -100,5 +101,12 @@ public class LoginVO {
 				+ ", deptName=" + deptName + ", userName=" + userName + ", authSeq=" + authSeq + ", grade=" + grade
 				+ ", masterYn=" + masterYn + "]";
 	}
-	
+
+	public String getUserIp() {
+		return userIp;
+	}
+
+	public void setUserIp(String userIp) {
+		this.userIp = userIp;
+	}
 }
