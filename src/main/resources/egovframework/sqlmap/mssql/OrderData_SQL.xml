@@ -137,11 +137,15 @@
 	   					-- , ISNULL((SELECT TOP 1 CONVERT(CHAR(20),MOD_DATE, 20) FROM T_ORDER_HISTORY OH WHERE ORDER_ID = a.ORDER_ID and MOD_ID !='SYSTEM' ORDER BY HISTORY_SEQ DESC), '')  modDate
 	   					 , ISNULL((SELECT USER_NAME FROM T_USER WHERE USER_ID = B.EDITID),T.USER_NAME) modId
 					     , ISNULL(CONVERT(CHAR(20),B.EDITDATE, 20), '') modDate
-					     , (SELECT ISNULL(FINISH_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='01' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) salesFinish
-					     , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='01' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) salesTaxinv
-					     , (SELECT ISNULL(FINISH_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseFinish
-					     , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseTaxinv
-	   					 , B.EXTERNAL_INFOMATION externalInformation
+					    -- , (SELECT ISNULL(FINISH_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='01' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) salesFinish
+					    -- , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='01' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) salesTaxinv
+					    -- , (SELECT ISNULL(FINISH_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseFinish
+					    -- , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseTaxinv
+	   					 , ISNULL(U.FINISH_YN, 'N') salesFinish
+						 , ISNULL(V.TAXINV_YN, 'N') salesTaxinv
+						 , ISNULL(W.FINISH_YN, 'N') purchaseFinish
+						 , ISNULL(X.TAXINV_YN, 'N') purchaseTaxinv
+					     , B.EXTERNAL_INFOMATION externalInformation
 					FROM
 					   (
 					      SELECT 
@@ -200,6 +204,14 @@
 					   T_USER S ON D.REGID = S.USER_ID
 					   INNER JOIN
 					   T_USER T ON B.REGID = T.USER_ID
+					   LEFT OUTER JOIN
+	   					T_CALC U ON U.ORDER_ID = A.ORDER_ID AND U.USE_YN = 'Y' and U.CALC_TYPE_CODE = '0002' and U.SELL_BUY_SCTN ='01' AND U.mng_cust_id = b.CUST_ID AND  U.mng_dept_id = b.DEPT_ID
+					   LEFT OUTER JOIN
+	   					T_CALC V ON V.ORDER_ID = A.ORDER_ID AND V.USE_YN = 'Y' and V.CALC_TYPE_CODE = '0002' and V.SELL_BUY_SCTN ='01' AND V.mng_cust_id = b.CUST_ID AND  V.mng_dept_id = b.DEPT_ID
+					   LEFT OUTER JOIN
+	   					T_CALC W ON W.ORDER_ID = A.ORDER_ID AND W.USE_YN = 'Y' and W.CALC_TYPE_CODE = '0002' and W.SELL_BUY_SCTN ='02' AND W.mng_cust_id = b.CUST_ID AND  W.mng_dept_id = b.DEPT_ID
+					   LEFT OUTER JOIN
+	   					T_CALC X ON X.ORDER_ID = A.ORDER_ID AND V.USE_YN = 'Y' and X.CALC_TYPE_CODE = '0002' and X.SELL_BUY_SCTN ='02' AND X.mng_cust_id = b.CUST_ID AND  X.mng_dept_id = b.DEPT_ID
 					WHERE
 						1=1
 						<if test='reqCustId != null and !"".equals(reqCustId)'>
