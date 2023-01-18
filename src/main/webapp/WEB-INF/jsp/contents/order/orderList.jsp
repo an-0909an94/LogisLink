@@ -992,7 +992,43 @@
             alert("담당부서를 선택해주세요.");
             return;
         }
-        if(dataItem.salesFinish !="N" && dataItem.salesFinish !=null){
+
+        $.ajax({
+            url: "/contents/order/data/orderDetail.do",
+            type: "POST",
+            dataType: "json",
+            data: "orderId=" + dataItem.orderId + "&sellAllocId=" + dataItem.sellAllocId + "&allocId=" + dataItem.allocId,
+            success: function(data) {
+                if(data.result) {
+
+                    if(data.data.salesFinish !="N" && data.data.salesFinish !=null){
+                        alert("매출 마감처리가 된 오더입니다.");
+                        return;
+                    }
+                    if(data.data.salesTaxinv !="N" && data.data.salesTaxinv !=null){
+                        alert("매출 세금계산서가 발행된 오더입니다.");
+                        return;
+                    }
+                    var orderIdList = [];
+                    var allocIdList = [];
+
+                    orderIdList.push(dataItem.orderId);
+                    allocIdList.push(dataItem.sellAllocId);
+
+                    reqChangeModal.data("kendoDialog").open();
+                    $("#modalAllocList").val(allocIdList);
+                    $("#modalOrderList").val(orderIdList);
+
+                    searchModalCustName = $("#sModalCustName").data("kendoMultiColumnComboBox");
+                    // 22.09.22 이건욱: order.js의 공통 함수사용하지 않음.
+                    searchModalCustName = setComboCustName("sModalCustName", "01", $("#sDeptId").val());
+                    searchModalCustName.bind("select", onChangeSearchModalCust);
+                }
+            }
+        });
+
+
+ /*       if(dataItem.salesFinish !="N" && dataItem.salesFinish !=null){
             alert("매출 마감처리가 된 오더입니다.");
             return;
         }
@@ -1000,21 +1036,8 @@
             alert("매출 세금계산서가 발행된 오더입니다.");
             return;
         }
+*/
 
-        var orderIdList = [];
-        var allocIdList = [];
-
-        orderIdList.push(dataItem.orderId);
-        allocIdList.push(dataItem.sellAllocId);
-
-        reqChangeModal.data("kendoDialog").open();
-        $("#modalAllocList").val(allocIdList);
-        $("#modalOrderList").val(orderIdList);
-
-        searchModalCustName = $("#sModalCustName").data("kendoMultiColumnComboBox");
-        // 22.09.22 이건욱: order.js의 공통 함수사용하지 않음.
-        searchModalCustName = setComboCustName("sModalCustName", "01", $("#sDeptId").val());
-        searchModalCustName.bind("select", onChangeSearchModalCust);
     }
     //09-21 사용자 talk 사용여부 정보 추가
     function userTalkYn() {
