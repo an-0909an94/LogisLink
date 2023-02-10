@@ -216,6 +216,7 @@
     </div><!-- wrap -->
 </div>
 <script type="text/javascript">
+	
 var g_mode = "";
 var chkUID = false;
 var custName, deptName;
