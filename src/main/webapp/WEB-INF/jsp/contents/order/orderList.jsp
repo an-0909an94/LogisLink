@@ -2,8 +2,8 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
     .cancel {color:#e54524 !important;}
-    .accept {color:#0065bd !important;}
-    .myOrder {background: #FAFAD2}
+    /*.accept {color:#0065bd !important;}*/
+    .myOrder {background: #fdf3cf}
     .isMemo {background: #f08080}
 
     #grid .k-grid-content {max-height:100vh}
@@ -17,15 +17,15 @@
     <%@ include file="./view/orderInsert.jsp" %>
 </div>
 
-<div class="header">
-    <div style="justify-content: space-between; display: flex;" class="summary p30">
-        <div class="hdr-tit" style ="padding: 5px; font-weight:bold;">
+<div class="header orderList">
+    <div class="summary">
+        <div class="hdr-tit" style ="font-weight:bold;">
             <P id="headerTitle">배차관리</P>
         </div>
         <div id="orderSimpleData">
-            <span style="font-size: 15px;font-weight:bold;">배차진행건수 : </span>
+            <span style="font-size: 16px; font-weight:bold; margin-right: 6px;">배차진행건수 </span>
             <div style="display: contents;" class="col input-group i-name">
-                <i style="font-size: 15px;font-weight:bold;" id="groupCount"></i>
+                <i id="groupCount"></i>
             </div>
         </div>
     </div>
@@ -45,21 +45,21 @@
                 <input type="hidden" name="locationEAddr" id="locationEAddr">
                 <input type="hidden" name="locationSAddrDetail" id="locationSAddrDetail">
                 <input type="hidden" name="locationEAddrDetail" id="locationEAddrDetail">
-                <div class="form-group row">
+                <div class="form-group row mt0">
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>등록일자</strong>
+                        
                         <select class="custom-select col-12" name="searchDate" id="searchDate">
                             <option value="sDate" selected>상차일자</option>
                             <option value="regdate">등록일자</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>　</strong>
+                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="margin-right: 0px;">
+                        
                         <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
                     </div>
-                    <span style="margin-top: 31px;">~</span>
+                    <span style="margin-top: 4px;">~</span>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>　</strong>
+                        
                         <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
                     </div>
 
@@ -89,27 +89,27 @@
                     </div>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>독차/혼적</strong>
+                        
                         <select class="form-control" class="custom-select col-12" id="sMixYn" name="sMixYn">
-                            <option value="">--독차/혼적--</option>
+                            <option value="">-독차/혼적-</option>
                             <option value="N">독차</option>
                             <option value="Y">혼적</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>배차상태</strong>
+                        
                         <select class="form-control" class="custom-select col-12" id="sAllocState" name="sAllocState">
-                            <option>--배차상태--</option>
+                            <option>-배차상태-</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>담당부서명</strong>
+                        
                         <select class="form-control" class="custom-select col-12" id="sDeptId" name="sDeptId">
                             <option>--부서명--</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>배차담당자</strong>
+                        
                         <select class="form-control" class="custom-select col-12" id="userId" name="userId"></select>
                     </div>
 
@@ -120,88 +120,89 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="input-group input-group-sm width6_5 middle-name div-min-col-1">
-                        <strong>검색조건</strong>
-                        <select class="custom-select col-12" id="searchColumn" name="searchColumn">
-                            <option value="sellCustName">거래처명</option>
-                            <option value="buyCustName">주선/운송사명</option>
-                            <option value="sComName">상차지명</option>
-                            <option value="eComName">하차지명</option>
-                            <option value="orderId">오더ID</option>
-                            <option value="externalInformation">외부참고정보</option>
-                        </select>
+                <div class="form-group row" style="justify-content: space-between;">
+	                <div class="row">
+	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
+	                        
+	                        <select class="custom-select col-12" id="searchColumn" name="searchColumn">
+	                            <option value="sellCustName">거래처명</option>
+	                            <option value="buyCustName">주선/운송사명</option>
+	                            <option value="sComName">상차지명</option>
+	                            <option value="eComName">하차지명</option>
+	                            <option value="orderId">오더ID</option>
+	                            <option value="externalInformation">외부참고정보</option>
+	                        </select>
+	                    </div>
+	                    <div class="input-group input-group-sm middle-name wd190 div-min-col-1">
+	                        
+	                        <input type="text" id="searchValue" name="searchValue" class="wd190 form-control form-control-sm searchValue">
+	                    </div>
+	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
+	                        
+	                        <select class="custom-select col-12 wd90" id="searchDriver" name="searchDriver">
+	                            <option value="carNum">차량번호</option>
+	                            <option value="driverName">차주명</option>
+	                        </select>
+	                    </div>
+	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd190">
+	                        
+	                        <input type="text" id="driverValue" name="driverValue" class="wd190 form-control form-control-sm searchValue">
+	                    </div>
+	
+	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
+	                        
+	                        <select class="form-control" class="wd90 custom-select col-12" id="listSSido" name="listSSido">
+	                            <option>상차지</option>
+	                        </select>
+	                    </div>
+	
+	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                        
+	                        <select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
+	                            <option>하차지</option>
+	                        </select>
+	                    </div>
+	
+	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                        
+	                        <select class="custom-select col-12" id="orderStopYn" name="orderStopYn">
+	                            <option value="">경유지 여부</option>
+	                            <option value="Y">있음</option>
+	                            <option value="N">없음</option>
+	                        </select>
+	                    </div>
+	
+	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                        
+	                        <select class="custom-select col-12" id="sLinkSettleYn" name="sLinkSettleYn">
+	                            <option value="">정보망 확정여부</option>
+	                            <option value="Y">확정</option>
+	                            <option value="N">미확정</option>
+	                        </select>
+	                    </div>
+	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                        
+	                        <select class="custom-select col-12" id="searchChargeType" name="searchChargeType">
+	                            <option value="">운임정보</option>
+	                            <option value="01">인수증</option>
+	                            <option value="02">선/착불</option>
+	                            <option value="03">기사발행</option>
+	                        </select>
+	                    </div>
+	                    <div class="input-group input-group-sm col radio-or-checkBox ">
+	                        <input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
+	                        <label for="myOrder" class="label-margin">
+	                            <span>내거래 보기</span>
+	                        </label>
+	                    </div>
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>　</strong>
-                        <input type="text" id="searchValue" name="searchValue" class="form-control form-control-sm searchValue">
-                    </div>
-                    <div class="input-group input-group-sm width6_5 middle-name div-min-col-1">
-                        <strong>차량검색</strong>
-                        <select class="custom-select col-12" id="searchDriver" name="searchDriver">
-                            <option value="carNum">차량번호</option>
-                            <option value="driverName">차주명</option>
-                        </select>
-                    </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>　</strong>
-                        <input type="text" id="driverValue" name="driverValue" class="form-control form-control-sm searchValue">
-                    </div>
-
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>상차지</strong>
-                        <select class="form-control" class="custom-select col-12" id="listSSido" name="listSSido">
-                            <option>상차지</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>하차지</strong>
-                        <select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
-                            <option>하차지</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>경유지 여부</strong>
-                        <select class="custom-select col-12" id="orderStopYn" name="orderStopYn">
-                            <option value="">선택해주세요.</option>
-                            <option value="Y">있음</option>
-                            <option value="N">없음</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>정보망확정여부</strong>
-                        <select class="custom-select col-12" id="sLinkSettleYn" name="sLinkSettleYn">
-                            <option value="">선택해주세요</option>
-                            <option value="Y">확정</option>
-                            <option value="N">미확정</option>
-                        </select>
-                    </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>운임정보</strong>
-                        <select class="custom-select col-12" id="searchChargeType" name="searchChargeType">
-                            <option value="">선택해주세요.</option>
-                            <option value="01">인수증</option>
-                            <option value="02">선/착불</option>
-                            <option value="03">기사발행</option>
-                        </select>
-                    </div>
-                    <div class="input-group input-group-sm col radio-or-checkBox ">
-                        <input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
-                        <label for="myOrder" class="label-margin">
-                            <span>내거래 보기</span>
-                        </label>
-                    </div>
-
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:70px;min-width:70px;">
-                        <strong>　</strong>
-                        <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-                    </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:80px;min-width:80px;">
-                        <strong>　</strong>
-                        <button onclick="searchReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
+					<div class="row">
+	                    <div class="btn_58 input-group-sm middle-name mr7">
+	                        <button onclick="goList()" type="button" class="btn_58 btn_b">검색</button>
+	                    </div>
+	                    <div class="btn_58 input-group input-group-sm middle-name mr0">
+	                        <button onclick="searchReset()" type="button" class="btn_58 btn_black">초기화</button>
+	                    </div>
                     </div>
                 </div>
             </form>
@@ -213,14 +214,13 @@
                         <!-- table -->
                         <div class="toolbar row">
                             <div class="tool_form col">
-                                <div class="btn-row" style="float:left;margin-top:12px;">
-                                    <div class="tool_group" style ="font-size: 13px">
-                                        자동새로고침
+                                <div class="btn-row" style="float:left;">
+                                    <div class="tool_group" style ="font-size: 12px;">자동새로고침
                                         <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
-                                        <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;margin-top:8px;">
+                                        <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;margin: 0 0 0 7px;">
                                             <span class="marble"></span>
-                                            <span class="on">on</span>
-                                            <span class="off" >off</span>
+                                            <span class="on">ON</span>
+                                            <span class="off" >OFF</span>
                                         </label>
                                     </div>
                                 </div>
@@ -228,16 +228,16 @@
                                     <div class="tool_group">
                                         <div class="padding">
                                             <c:if test="${mainCustId eq sessionScope.userInfo.custId }">
-                                                <a href="#" class="k-pager-refresh k-button" onclick="openSendLinkPop();"><b class="btn-b"><i class="k-icon k-i-hyperlink-globe"></i>정보망 전송</b></a>
+                                                <a href="#" class="k-pager-refresh k-button" onclick="openSendLinkPop();"><b class="btn-b">정보망 전송</b></a>
                                             </c:if>
                                             <!-- <a href="#" class="k-pager-refresh k-button" onclick="openTalkPop();"><b class="btn-b"><i class="k-icon k-i-email"></i>알림톡 전송</b></a> -->
-                                            <a href="#" class="k-pager-refresh k-button" onclick="popOrderViewLocation();"><b class="btn-b"><i class="k-icon k-i-marker-pin-target"></i>위치관제</b></a>
-                                            <a href="#" class="k-pager-refresh k-button" onclick="orderHistory();"><b class="btn-b"><i class="k-icon k-i-clock"></i>수정이력</b></a>
+                                            <a href="#" class="k-pager-refresh k-button" onclick="popOrderViewLocation();"><b class="btn-b">위치관제</b></a>
+                                            <a href="#" class="k-pager-refresh k-button" onclick="orderHistory();"><b class="btn-b">수정이력</b></a>
                                             <c:if test="${menuAuth.printYn eq 'Y'}">
-                                                <a href="#" class="k-pager-refresh k-button" onclick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+                                                <a href="#" class="k-pager-refresh k-button" onclick="goExcel();"><b class="btn-x">엑셀출력</b></a>
                                             </c:if>
                                             <c:if test="${menuAuth.writeYn eq 'Y'}">
-                                                <a href="#" class="k-pager-refresh k-button" onclick="form_popup('N', {});"><b class="btn-h"><i class="k-icon k-i-plus"></i>신규등록</b></a>
+                                                <a href="#" class="k-pager-refresh k-button" onclick="form_popup('N', {});"><b class="btn-h">신규등록</b></a>
                                             </c:if>
                                         </div>
                                     </div>
@@ -245,7 +245,8 @@
                             </div>
                         </div><!-- /toolbar -->
                         <div style="width: 100%">
-                            <div style="height:calc(100vh - 235px);" id="grid"></div>
+                        	<!-- /그리드반응형 -->
+                            <div style="height:calc(100vh - 320px)" id="grid"></div>
 
                             <!-- 22.07.15 이건욱 그리드 개인화 설정 -->
                             <ul id="gridContextMenu">
@@ -323,16 +324,17 @@
     $(document).ready(function(){
 
         $(window).bind("resize", function() {
-            $("#grid").css("height", "calc(100vh - 235px)");
+            //그리드반응형 $("#grid").css("height", "calc(100vh - 235px)");
+            $("#grid").css("height", "calc(100vh - 330px)");
 
             $("#grid").data("kendoGrid").resize();
         });
 
 
-        Util.setCmmCode("select", "listSSido", "SIDO", "", "--상차지--");
-        Util.setCmmCode("select", "listESido", "SIDO", "", "--하차지--");
+        Util.setCmmCode("select", "listSSido", "SIDO", "", "상차지");
+        Util.setCmmCode("select", "listESido", "SIDO", "", "하차지");
         Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "--오더상태--");
-        Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "--배차상태--");
+        Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "-배차상태-");
 
         $("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
         $("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
@@ -343,7 +345,7 @@
             Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "전체");
         });
 
-        Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서명--");
+        Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "-담당부서-");
 
         var $options = $("#sDeptId > option").clone();
         $('#deptId').append($options);
@@ -560,7 +562,7 @@
         { field: "linkSettleYn", title: "정보망확정여부", width: 120,
             template: "#if(linkSettleYn == 'Y') {# 확정 #} else {# 미확정 #} #"
         },
-        { field: "deptName", title: "담당부서", width: 160 },
+        { field: "deptName", title: " ", width: 160 },
         { field: "staffName", title: "배차원", width: 80 },
         { field: "regname", title: "최초등록자", width: 110 },
         { field: "orderId", title: "오더ID", width: 160 },
@@ -667,12 +669,12 @@
                     data : function(response) {
                         if(response.summary != null){
                             var	groupCount = ""
-                            groupCount = "<i style=\"color: #3f75c1\">접수 " + response.summary.registerOrderCount + "건</i>, " +
-                                "<i style=\"color: #000000\">배차 " + response.summary.dispatchOrderCount + "건</i>, " +
-                                "<i style=\"color: #e84524\">취소 " + response.summary.cancelOrderCount + "건</i>, " +
-                                "<i style=\"color: #3f75c1\">매출 " + Util.nvl(Util.formatNumber(response.summary.sumSellCharge),'0') + "원</i>, " +
-                                "<i style=\"color: #000000\">매입 " + Util.nvl(Util.formatNumber(response.summary.sumBuyCharge),'0') + "원</i>, " +
-                                "<i style=\"color: #e84524\">손익 " + Util.nvl(Util.formatNumber(response.summary.profitAndLoss),'0') + "원</i>";
+                            groupCount = "<i class=\"btn_b\">접수 " + response.summary.registerOrderCount + "건</i> " +
+                                "<i class=\"btn_g\">배차 " + response.summary.dispatchOrderCount + "건</i>" +
+                                "<i class=\"btn_gray\">취소 " + response.summary.cancelOrderCount + "건</i> " +
+                                "<i class=\"sumSellCharge\">매출" +  Util.nvl(Util.formatNumber(response.summary.sumSellCharge),"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>")  + "원,</i>" + 
+                                "<i class=\"sumBuyCharge\">매입 " + Util.nvl(Util.formatNumber(response.summary.sumBuyCharge), "<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i>, " +
+                                "<i class=\"profitAndLoss\">손익 " + Util.nvl(Util.formatNumber(response.summary.profitAndLoss),"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i>";
                             $("#groupCount").html(groupCount);
                         }
                         return response.data;

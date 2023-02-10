@@ -178,7 +178,7 @@
             </div>
             <div class="editor_btns">
                 <div class="padding">
-                    <a onclick="popDriverStateModalSubmit()" class="k-pager-refresh k-button">
+                    <a onclick="popDriverStateModalSubmit()" class="k-pager-refresh k-button btn_b">
                         <b class="btn-b"><i class="k-icon k-i-check"></i>저장</b>
                     </a>
                     <a id="closeBtn" onclick="popDriverStateModalClose()" class="k-pager-refresh k-button">
@@ -209,178 +209,200 @@
                             <input type="hidden" id="orderState" name="orderState">
                             <fieldset>
                                 <legend id="order_legend">오더 등록</legend>
-                                <div style="border:4px ridge; padding:0px 5px 0px 5px; margin:0px -10px 0px -10px;">
-                                    <div class="form-group row">
+                                <div class="editor_btns order_editor_btns" style="text-align: center;">
+	                                <div class="padding">
+	                                    <a id="orderDelete" onclick="updateOrderState('09')" class="k-pager-refresh k-button">
+	                                        <b class="btn-r"><span id="btn_state">오더취소</span></b>
+	                                    </a>
+	                                    <button type="submit" onclick="readonlyValidator();" class="k-pager-refresh k-button btn_58 btn_b" id="btnSubmit">
+	                                        <b class="btn-b"><strong id="btn_save">저장</strong></b>
+	                                    </button>
+	                                    <a id="orderCopy" onclick="orderCopy();" class="k-pager-refresh k-button">
+	                                        <b class="btn-b">복사</b>
+	                                    </a>
+	                                    <a onclick="form_popup_close();" class="k-pager-refresh k-button btn_58 btn_black">
+	                                        <b class="btn-g">닫기</b>
+	                                    </a>
+	                                </div>
+	                            </div>
+                                <div>
+                                    <div class="form-group row mr0 bortop pt10 pb10 pl8">
                                         <label class="col-form-label big-name">담당부서</label>
                                         <div class="input-group input-group-sm col-3 middle-name form-group">
-                                            <strong class="required">담당부서</strong>
+                                            <strong class="required" style="display: none;">담당부서</strong>
                                             <select id="deptId" name="deptId" class="custom-select col-12" required></select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <div class="form-group row gray_box mr0">
                                         <div class="col-form-label big-name big-name-div">
-                                            <div>화주</div>
-                                            <a id="owner" class="k-pager-refresh k-button openCloseBtn">화주추가열기</a>
+                                            <label class="col-form-label big-name">화주</label>
+                                            <a id="owner" class="k-pager-refresh k-button openCloseBtn" style="margin: 0px">화주추가열기</a>
                                         </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong class="required">거래처명</strong>
+                                        <div class="input-group input-group-sm wd190 middle-name form-group">
+                                            <strong>거래처명</strong>
                                             <input type="hidden" id="sellCustId" name="sellCustId">
                                             <input type="hidden" id="sellDeptId" name="sellDeptId">
                                             <input type="hidden" id="custPayType" name="custPayType">
-                                            <input style="width: 17.5rem;" name="sellCustName" id="sellCustName" type="text" required>
+                                            <input name="sellCustName" id="sellCustName" class="wd190" type="text" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
+                                        
                                         <!-- 22.07.05 이건욱 거래처명 선택시 부서명 -> 대표자명으로 변경 -->
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>대표자명</strong>
-                                            <input type="text" name="reqCeo" id="reqCeo" class="form-control form-control-sm" readonly>
+                                            <input type="text" name="reqCeo" id="reqCeo" class="form-control form-control-sm wd90" readonly>
                                         </div>
-                                        <div id="prevDiv" style="display: contents;" class="input-group input-group-sm col middle-name form-group">
-                                            <a id="prevOrder" href="javascript:popGridList();" style="margin-top: 20px; height: 31px; margin-top: 24px; height: 31px; background: #fff; border-radius: 4px; box-shadow: 0px 0px 2px 0px; color: #0A8DFF; font-weight: bolder;" class="k-pager-refresh k-button">이전거래</a>
+                                        <div id="prevDiv" style="display: contents;" class="input-group input-group-sm wd58 middle-name form-group">
+                                            <a id="prevOrder" href="javascript:popGridList();" style="margin-top: 20px; height: 26px; background: #3b3b3b; border-radius: 4px; color: #fff;" class="k-pager-refresh k-button">이전거래</a>
                                         </div>
-                                    </div>
-                                    <!-- 화주 접기, 열기 부분 -->
-                                    <div>
-                                        <div id="ownerOpenClose" class="openCloseDiv">
-                                            <div class="form-group row">
-                                                <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>거래처등급</strong>
-                                                    <input type="text" name="custMngCodeName" id="custMngCodeName" class="form-control form-control-sm" readonly>
-                                                </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>거래처등급사유</strong>
-                                                    <input type="text" name="custMngMemo" id="custMngMemo" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group row">
-                                                <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>주소</strong>
-                                                    <div class="textBox-in-icon">
-                                                        <input style="width: 17.5rem;" onclick="popSearchPost('reqAddr');" type="text" name="reqAddr" id="reqAddr" class="form-control form-control-sm addr-text-box" readonly>
-                                                        <i><img onclick="popSearchPost('reqAddr');" src="/images/icon/search.png"></i>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>상세주소</strong>
-                                                    <input type="text" name="reqAddrDetail" id="reqAddrDetail" class="form-control form-control-sm addr-text-box">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-form-label big-name"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>담당자</strong>
-                                                    <input type="hidden" name="sellStaffId" id="sellStaffId">
-                                                    <input style="width: 100%;" type="text" name="sellStaff" id="sellStaff">
-                                                </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>연락처</strong>
-                                                    <input type="text" name="reqTel" id="reqTel" maxlength="13" class="form-control form-control-sm">
-                                                    <div class="help-block with-errors"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-form-label big-name"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>사업자번호</strong>
-                                                    <input type="text" name="reqBizNum" id="reqBizNum" class="form-control form-control-sm" readonly>
-                                                </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>상호</strong>
-                                                    <input type="text" name="reqBizName" id="reqBizName" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-form-label big-name"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <!-- 22.07.05 이건욱 거래처명 선택시 부서명 -> 대표자명으로 변경 -->
-                                                    <strong>담당부서</strong>
-                                                    <input type="text" name="sellDeptName" id="sellDeptName" class="form-control form-control-sm" readonly>
-                                                </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>사업자주소</strong>
-                                                    <input type="text" name="reqBizAddr" id="reqBizAddr" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-form-label big-name"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>세금계산서 담당자</strong>
-                                                    <input type="text" name="reqTaxStaffName" id="reqTaxStaffName" class="form-control form-control-sm" readonly>
-                                                </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>세금계산서 전화번호</strong>
-                                                    <input type="text" name="reqTaxTelNum" id="reqTaxTelNum" class="form-control form-control-sm" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
-                                                    <strong>세금계산서 이메일</strong>
-                                                    <input type="text" name="reqTaxEmail" id="reqTaxEmail" class="form-control form-control-sm" readonly>
-                                                </div>
-                                                <div class="col input-group middle-name form-group">
-                                                    <strong>요청사항</strong>
-                                                    <input type="text" id="reqMemo" name="reqMemo" class="form-control form-control-sm">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        
+                                        <!-- 화주 접기, 열기 부분 -->
+	                                    <div>
+	                                        <div id="ownerOpenClose" class="openCloseDiv">
+	                                            <div class="form-group row mr0">
+	                                                <label class="col-form-label"></label>
+	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
+	                                                    <strong>거래처등급</strong>
+	                                                    <input type="text" name="custMngCodeName" id="custMngCodeName" class="wd90 form-control form-control-sm" readonly>
+	                                                </div>
+	                                                <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
+	                                                    <strong>거래처등급사유</strong>
+	                                                    <input type="text" name="custMngMemo" id="custMngMemo" class="wd90 form-control form-control-sm" readonly>
+	                                                </div>
+	                                            </div>
+	
+	                                            <div class="form-group row mr0">
+	                                                <label class="col-form-label"></label>
+	                                                <div class="input-group input-group-sm wd190 middle-name form-group">
+	                                                    <strong>주소</strong>
+	                                                    <div class="textBox-in-icon">
+	                                                        <input onclick="popSearchPost('reqAddr');" type="text" name="reqAddr" id="reqAddr" class="wd190 form-control form-control-sm addr-text-box" readonly>
+	                                                        <i><img onclick="popSearchPost('reqAddr');" src="/images/icon/icon_search.png"></i>
+	                                                    </div>
+	                                                </div>
+	
+	
+	                                                <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
+	                                                    <strong>상세주소</strong>
+	                                                    <input type="text" name="reqAddrDetail" id="reqAddrDetail" class="wd90 form-control form-control-sm addr-text-box">
+	                                                </div>
+	                                            </div>
+	
+	                                            <div class="form-group row mr0">
+	                                                <label class="col-form-label big-name"></label>
+	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
+	                                                    <strong>담당자</strong>
+	                                                    <input type="hidden" name="sellStaffId" id="sellStaffId">
+	                                                    <input style="width: 100%;" type="text" name="sellStaff" id="sellStaff">
+	                                                </div>
+	                                                <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
+	                                                    <strong>연락처</strong>
+	                                                    <input type="text" name="reqTel" id="reqTel" maxlength="13" class="wd90 form-control form-control-sm">
+	                                                    <div class="help-block with-errors"></div>
+	                                                </div>
+	                                            </div>
+	
+	                                            <div class="form-group row mr0">
+	                                                <label class="col-form-label big-name"></label>
+	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
+	                                                    <strong>사업자번호</strong>
+	                                                    <input type="text" name="reqBizNum" id="reqBizNum" class="wd90 form-control form-control-sm" readonly>
+	                                                </div>
+	                                                <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
+	                                                    <strong>상호</strong>
+	                                                    <input type="text" name="reqBizName" id="reqBizName" class="wd90 form-control form-control-sm" readonly>
+	                                                </div>
+	                                            </div>
+	
+	                                            <div class="form-group row mr0">
+	                                                <label class="col-form-label big-name"></label>
+	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
+	                                                    <!-- 22.07.05 이건욱 거래처명 선택시 부서명 -> 대표자명으로 변경 -->
+	                                                    <strong>담당부서</strong>
+	                                                    <input type="text" name="sellDeptName" id="sellDeptName" class="wd90 form-control form-control-sm" readonly>
+	                                                </div>
+	                                                <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
+	                                                    <strong>사업자주소</strong>
+	                                                    <input type="text" name="reqBizAddr" id="reqBizAddr" class="wd90 form-control form-control-sm" readonly>
+	                                                </div>
+	                                            </div>
+	
+	                                            <div class="form-group row mr0">
+	                                                <label class="col-form-label big-name"></label>
+	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
+	                                                    <strong>세금계산서 담당자</strong>
+	                                                    <input type="text" name="reqTaxStaffName" id="reqTaxStaffName" class="wd90 form-control form-control-sm" readonly>
+	                                                </div>
+	                                                <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
+	                                                    <strong>세금계산서 전화번호</strong>
+	                                                    <input type="text" name="reqTaxTelNum" id="reqTaxTelNum" class="wd90 form-control form-control-sm" readonly>
+	                                                </div>
+	                                            </div>
+	
+	                                            <div class="form-group row mr0">
+	                                                <label class="col-form-label"></label>
+	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
+	                                                    <strong>세금계산서 이메일</strong>
+	                                                    <input type="text" name="reqTaxEmail" id="reqTaxEmail" class="wd90 form-control form-control-sm" readonly>
+	                                                </div>
+	                                                <div class="wd190 input-group middle-name form-group mr0">
+	                                                    <strong>요청사항</strong>
+	                                                    <input type="text" id="reqMemo" name="reqMemo" class="wd190 form-control form-control-sm">
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <!-- 화주 접기, 열기 부분 -->
                                 </div>
-                                <!-- 화주 접기, 열기 부분 -->
-                                <div style="border:4px ridge; padding:0px 5px 0px 5px; margin:2px -10px 0px -10px;">
-                                    <div class="form-group row">
+                                    
+                                    
+                                
+                                
+                                <div class="gray_box">
+                                    <div class="form-group row mr0">
                                         <div class="col-form-label big-name big-name-div">
-                                            <div>상차</div>
-                                            <a id="startAddr" class="k-pager-refresh k-button openCloseBtn">상차추가열기</a>
+                                            <label class="col-form-label big-name">상차</label>
+                                            
                                         </div>
                                         <input type="hidden" name="sLat" id="sLat">
                                         <input type="hidden" name="sLon" id="sLon">
                                         <input type="hidden" name="sSido" id="sSido">
                                         <input type="hidden" name="sGungu" id="sGungu">
                                         <input type="hidden" name="sDong" id="sDong">
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="wd90 input-group middle-name form-group">
                                             <strong>상차지명</strong>
-                                            <input style="width: 100%;" type="text" id="sComName" name="sComName">
+                                            <input type="text" id="sComName" name="sComName">
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="col input-group middle-name form-group">
+                                        <div class="wd90 input-group middle-name form-group">
                                             <strong class="required">상차 일시</strong>
-                                            <input style="padding: 0;" type="text" id="sDateDay" name="sDateDay" class="col-12" required>
+                                            <input type="text" id="sDateDay" name="sDateDay" class="col-12" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="col input-group middle-name form-group" id="sTimeDiv">
+                                        <div class="wd90 input-group middle-name form-group" id="sTimeDiv">
                                             <strong class="required">상차 시간</strong>
-                                            <input style="padding: 0;" type="text" id="sDateTime" name="sDateTime" class="col-12" required>
+                                            <input type="text" id="sDateTime" name="sDateTime" class="col-12" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
-                                        <label class="col-form-label big-name"></label>
-                                        <div class="col input-group middle-name form-group">
+                                    <div class="form-group row mr0 pb15 mt10">
+                                        
+                                        <a id="startAddr" class="k-pager-refresh k-button openCloseBtn">상차추가열기</a>
+                                        <div class="wd190 input-group middle-name form-group">
                                             <strong class="required">주소</strong>
                                             <div class="textBox-in-icon">
                                                 <input style="width: 17.5rem;"  id="sAddr" name="sAddr" type="text">
-                                                <i><img onclick="dummyPopSearchPost('sAddr');" src="/images/icon/search.png"></i>
+                                                <i><img onclick="dummyPopSearchPost('sAddr');" src="/images/icon/icon_search.png"></i>
                                                 <!-- 											<input style="width:17.5rem;" onclick="popSearchPost('sAddr');" id="sAddr" name="sAddr" type="text" class="form-control form-control-sm addr-text-box" required readonly="readonly"> -->
                                                 <!-- 											<i><img onclick="popSearchPost('sAddr');" src="/images/icon/search.png"></i> -->
                                             </div>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="col input-group middle-name form-group">
+                                        <div class="wd90 input-group middle-name form-group">
                                             <strong>상세주소</strong>
-                                            <input type="text" id="sAddrDetail" name="sAddrDetail" class="form-control form-control-sm addr-text-box">
+                                            <input type="text" id="sAddrDetail" name="sAddrDetail" class="wd90 form-control form-control-sm addr-text-box">
                                         </div>
                                     </div>
 
@@ -389,27 +411,27 @@
                                         <div id="startAddrOpenClose" class="openCloseDiv">
                                             <div class="form-group row">
                                                 <label class="col-form-label big-name"></label>
-                                                <div class="col input-group middle-name form-group">
+                                                <div class="wd90 input-group middle-name form-group">
                                                     <strong>담당자</strong>
-                                                    <input type="text" id="sStaff" name="sStaff" class="form-control form-control-sm">
+                                                    <input type="text" id="sStaff" name="sStaff" class="wd90 form-control form-control-sm">
                                                 </div>
-                                                <div class="col input-group middle-name form-group">
+                                                <div class="wd90 input-group middle-name form-group">
                                                     <strong>연락처</strong>
-                                                    <input type="text" id="sTel" name="sTel" maxlength="13" class="form-control form-control-sm">
+                                                    <input type="text" id="sTel" name="sTel" maxlength="13" class="wd90 form-control form-control-sm">
                                                 </div>
                                             </div>
 
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mr0 mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="col input-group middle-name form-group">
+                                                <div class="wd190 input-group middle-name form-group">
                                                     <strong>상차지 메모</strong>
-                                                    <input type="text" id="sMemo" name="sMemo" class="form-control form-control-sm">
+                                                    <input type="text" id="sMemo" name="sMemo" class="wd190 form-control form-control-sm">
                                                 </div>
                                                 <c:if test="${addrAuth.writeYn eq 'Y'}">
                                                     <div class="col input-group radio-or-checkBox sAreaSave">
                                                         <input id="sAreaSave" name="sAreaSave" type="checkbox" onclick="btnChk(this)">
-                                                        <label for="sAreaSave" class="insert-label"> <span>주소지 저장</span>
+                                                        <label for="sAreaSave" class="insert-label"> <span style="font-size: 12px">주소지 저장</span>
                                                         </label>
                                                     </div>
                                                 </c:if>
@@ -418,87 +440,87 @@
                                     </div>
                                     <!-- 상차지 접기, 열기 부분 -->
 
-                                    <div class="form-group row ">
+                                    <div class="form-group row pt15 pb15 mr0 mt20 bortop">
                                         <input type="hidden" name="orderStopData" id="orderStopData">
                                         <label class="col-form-label big-name">경유지</label>
-                                        <div class="col input-group i-name">
-                                            <i style="font-size: large;" id="iStopTxt"></i>
-                                        </div>
+                                        
                                         <div class="col-3 input-group btn-name">
-                                            <a style="background: #fff; border-radius: 4px; box-shadow: 0px 0px 2px 0px; color: #0A8DFF; font-weight: bolder;" onClick="popOrderStopDetail();" class="k-pager-refresh k-button">자세히보기</a>
+                                            <a style="margin: 0px" onClick="popOrderStopDetail();" class="k-pager-refresh k-button openCloseBtn">자세히보기</a>
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row pt15 bortop mr0">
                                         <div class="col-form-label big-name big-name-div">
-                                            <div>하차</div>
-                                            <a id="endAddr" class="k-pager-refresh k-button openCloseBtn">하차추가열기</a>
+                                            <label class="col-form-label big-name">하차</label>
+                                            
                                         </div>
                                         <input type="hidden" name="eLat" id="eLat">
                                         <input type="hidden" name="eLon" id="eLon">
                                         <input type="hidden" name="eSido" id="eSido">
                                         <input type="hidden" name="eGungu" id="eGungu">
                                         <input type="hidden" name="eDong" id="eDong">
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm middle-name form-group wd90">
                                             <strong>하차지명</strong>
                                             <input style="width: 100%;" type="text" id="eComName" name="eComName">
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="col input-group middle-name form-group">
+                                        <div class="input-group middle-name form-group wd90">
                                             <strong class="required">하차 일시</strong>
                                             <input style="padding: 0;" type="text" id="eDateDay" name="eDateDay" class="col-12" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="col input-group middle-name form-group" id="eTimeDiv">
+                                        <div class="input-group middle-name form-group wd90" id="eTimeDiv">
                                             <strong class="required">하차 시간</strong>
                                             <input style="padding: 0;" type="text" id="eDateTime" name="eDateTime" class="col-12" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
+                                        <div class="input-group middle-name form-group col"></div>
                                     </div>
 
-                                    <div class="form-group row">
-                                        <label class="col-form-label big-name"></label>
-                                        <div class="col input-group middle-name form-group">
+                                    <div class="form-group row mr0 mt10">
+                                        
+										<a id="endAddr" class="k-pager-refresh k-button openCloseBtn">하차추가열기</a>
+                                        <div class="wd190 input-group middle-name form-group wd190">
                                             <strong class="required">주소</strong>
                                             <div class="textBox-in-icon">
                                                 <input style="width: 17.5rem;"  id="eAddr" name="eAddr" type="text">
-                                                <i><img onclick="dummyPopSearchPost('eAddr');" src="/images/icon/search.png"></i>
+                                                <i><img onclick="dummyPopSearchPost('eAddr');" src="/images/icon/icon_search.png"></i>
                                                 <!-- 											<input style="width:17.5rem;" onClick="" id="eAddr" name="eAddr" type="text" class="form-control form-control-sm addr-text-box" readonly="readonly" required> -->
                                                 <!-- 											<i><img onclick="popSearchPost('eAddr');" src="/images/icon/search.png"></i> -->
                                             </div>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="col input-group middle-name form-group">
+                                        <div class="wd90 input-group middle-name form-group">
                                             <strong>상세주소</strong>
-                                            <input type="text" id="eAddrDetail" name="eAddrDetail" class="form-control form-control-sm addr-text-box">
+                                            <input type="text" id="eAddrDetail" name="eAddrDetail" class="wd90 form-control form-control-sm addr-text-box">
                                         </div>
                                     </div>
 
                                     <!-- 하차지 접기, 열기 부분 -->
                                     <div>
                                         <div id="endAddrOpenClose" class="openCloseDiv">
-                                            <div class="form-group row">
+                                            <div class="form-group row mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="col input-group middle-name form-group">
+                                                <div class="wd90 input-group middle-name form-group">
                                                     <strong>담당자</strong>
                                                     <input type="text" id="eStaff" name="eStaff" class="form-control form-control-sm">
                                                 </div>
-                                                <div class="col input-group middle-name form-group">
-                                                    <strong>연락처</strong>
-                                                    <input type="text" id="eTel" name="eTel" maxlength="13" class="form-control form-control-sm">
+                                                <div class="wd90 input-group middle-name form-group">
+                                                    <strong style="display: none;">연락처</strong>
+                                                    <input type="text" id="eTel" name="eTel" maxlength="13" class="form-control form-control-sm mt21">
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mr0 mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="col input-group middle-name form-group">
+                                                <div class="wd290 input-group middle-name form-group">
                                                     <strong>하차지 메모</strong>
-                                                    <input type="text" id="eMemo" name="eMemo" class="form-control form-control-sm">
+                                                    <input type="text" id="eMemo" name="eMemo" class="wd290 form-control form-control-sm">
                                                 </div>
                                                 <c:if test="${addrAuth.writeYn eq 'Y'}">
                                                     <div class="col input-group radio-or-checkBox eAreaSave">
                                                         <input id="eAreaSave" name="eAreaSave" type="checkbox" onclick="btnChk(this)">
-                                                        <label for="eAreaSave" class="insert-label"> <span>주소지 저장</span>
+                                                        <label for="eAreaSave" class="insert-label" style="display: none"> <span>주소지 저장</span>
                                                         </label>
                                                     </div>
                                                 </c:if>
@@ -507,39 +529,41 @@
                                     </div>
                                     <!-- 하차지 접기, 열기 부분 -->
                                 </div>
-                                <div style="border:4px ridge; padding:0px 5px 0px 5px; margin:2px -10px 0px -10px;">
+                                <div class="gray_box">
                                     <div class="form-group row">
                                         <div class="col-form-label big-name big-name-div">
-                                            <div>화물</div>
-                                            <a id="cargo" class="k-pager-refresh k-button openCloseBtn">화물추가열기</a>
+                                            <label class="col-form-label big-name">화물</label>
+                                            
                                         </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong class="required">요청차종</strong>
                                             <select class="custom-select col-12" id="carTypeCode" name="carTypeCode" required></select>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong class="required">요청톤수</strong>
                                             <select class="custom-select col-12" id="carTonCode" name="carTonCode" required></select>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <label class="col-form-label"></label>
+                                        <a id="cargo" class="k-pager-refresh k-button openCloseBtn mt30">화물추가열기</a>
+                                        <div class="input-group input-group-sm wd90 mt10 middle-name form-group">
                                             <strong class="required">상차방법</strong>
                                             <select class="custom-select col-12" id="sWayCode" name="sWayCode" required></select>
                                             <div class="help-block with-errors"></div>
                                         </div>
 
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd90 mt10 mr0 middle-name form-group">
                                             <strong class="required">하차방법</strong>
                                             <select class="custom-select col-12" id="eWayCode" name="eWayCode" required></select>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-form-label big-name"></label>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                    <div class="form-group row mr0 pb15 mt10">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd190 middle-name form-group">
                                             <strong class="required">화물정보</strong>
-                                            <input style="width: 212.13px;" type="text" class="form-control form-control-sm" id="goodsName" name="goodsName" required>
+                                            <input type="text" class="form-control form-control-sm wd190" id="goodsName" name="goodsName" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
 
@@ -548,10 +572,10 @@
                                             <input type="text" class="form-control form-control-sm" id="goodsWeight" name="goodsWeight" pattern="^(\d*)[\.]?(\d{1,})?$" data-pattern-error='숫자와 "." 기호만 사용할 수 있습니다.'>
                                             <!-- <div class="help-block with-errors"></div> -->
                                         </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd58 middle-name form-group">
                                             <strong>&nbsp;</strong>
                                             <!-- <select class="custom-select col-12" id="weightUnitCode" name="weightUnitCode" required></select> -->
-                                            <input class="form-control form-control-sm" id="weightUnitCode" name="weightUnitCode" value="TON" readonly>
+                                            <input class="wd58 form-control form-control-sm" id="weightUnitCode" name="weightUnitCode" value="TON" readonly>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
@@ -561,36 +585,36 @@
                                         <div id="cargoOpenClose" class="openCloseDiv">
                                             <div class="form-group row">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong class="required">수출입구분</strong>
-                                                    <select id="inOutSctn" name="inOutSctn" class="custom-select col-12" required></select>
+                                                    <select id="inOutSctn" name="inOutSctn" class="custom-select col-12 wd90" required></select>
                                                     <div class="help-block with-errors"></div>
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
                                                     <strong class="required">운송유형</strong>
-                                                    <select id="truckTypeCode" name="truckTypeCode" class="custom-select col-12" required></select>
+                                                    <select id="truckTypeCode" name="truckTypeCode" class="custom-select col-12 wd90" required></select>
                                                     <div class="help-block with-errors"></div>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>운송품목</strong>
-                                                    <select style="width: 212.13px;" class="custom-select col-12" id="itemCode" name="itemCode"></select>
+                                                    <select style="width: 212.13px;" class="custom-select col-12 wd90" id="itemCode" name="itemCode"></select>
                                                 </div>
 
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>수량</strong>
-                                                    <input type="text" class="form-control form-control-sm" id="goodsQty" name="goodsQty">
+                                                    <input type="text" class="form-control form-control-sm wd90" id="goodsQty" name="goodsQty">
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
                                                     <strong>&nbsp;</strong>
-                                                    <select class="custom-select col-12" id="qtyUnitCode" name="qtyUnitCode"></select>
+                                                    <select class="custom-select col-12 wd90" id="qtyUnitCode" name="qtyUnitCode"></select>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mr0 mt10 mb20">
                                                 <label class="col-form-label"></label>
 
                                                 <div class="input-group input-group-sm col radio-or-checkBox form-group">
@@ -603,9 +627,9 @@
                                                     <label for="mixYn" class="insert-label"> <span>혼적</span>
                                                     </label>
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group form-group">
                                                     <strong>혼적크기</strong>
-                                                    <select class="custom-select col-12" id="mixSize" name="mixSize"></select>
+                                                    <select class="custom-select col-12 wd90" id="mixSize" name="mixSize"></select>
                                                 </div>
                                                 <div class="input-group input-group-sm col radio-or-checkBox form-group">
                                                     <input type="checkbox" id="dangerGoodsYn" name="dangerGoodsYn" onclick="btnChk(this)">
@@ -625,9 +649,9 @@
                                                     </label>
                                                 </div>
                                                 <label class="col-form-label big-name"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd190 mt10 middle-name form-group">
                                                     <strong>외부참고정보</strong>
-                                                    <input style="width: 212.13px;" type="text" class="form-control form-control-sm" id="externalInformation" name="externalInformation">
+                                                    <input type="text" class="form-control form-control-sm wd190" id="externalInformation" name="externalInformation">
                                                     <div class="help-block with-errors"></div>
                                                 </div>
                                             </div>
@@ -690,71 +714,64 @@
                                     <!--                                 </div> -->
 
                                     <!-- 기사발행 부분 -->
-                                    <div class="form-group row">
+                                    <div class="form-group row pt15 bortop mr0">
                                         <label class="col-form-label big-name">운임</label>
                                         <div class="input-group input-group-sm col middle-name">
                                             <div class="input-group input-group-sm col radio-or-checkBox">
                                                 <input value="01" id="chargeType01" name="chargeType" type="radio" checked>
-                                                <label for="chargeType01" class="label-margin"> <span style="font-size: 0.89rem;">인수증</span>
+                                                <label for="chargeType01" class="label-margin"> <span>인수증</span>
                                                 </label>
                                             </div>
                                             <div class="input-group input-group-sm col radio-or-checkBox">
                                                 <input value="02" id="chargeType02" name="chargeType" type="radio">
-                                                <label for="chargeType02" class="label-margin"> <span style="font-size: 0.89rem;">선/착불</span>
+                                                <label for="chargeType02" class="label-margin"> <span>선/착불</span>
                                                 </label>
                                             </div>
                                             <div class="input-group input-group-sm col radio-or-checkBox">
                                                 <input value="03" id="chargeType03" name="chargeType" type="radio">
-                                                <label for="chargeType03" class="label-margin"> <span style="font-size: 0.89rem;">기사발행</span>
+                                                <label for="chargeType03" class="label-margin"> <span>기사발행</span>
                                                 </label>
                                             </div>
                                             <div class="input-group input-group-sm col radio-or-checkBox">
                                                 <input value="01" id="unitPriceType01" name="unitPriceType" type="radio" checked>
-                                                <label for="unitPriceType01" class="label-margin"> <span style="font-size: 0.89rem;">대당단가</span>
+                                                <label for="unitPriceType01" class="label-margin"> <span>대당단가</span>
                                                 </label>
                                             </div>
                                             <div class="input-group input-group-sm col radio-or-checkBox">
                                                 <input value="02" id="unitPriceType02" name="unitPriceType" type="radio">
-                                                <label for="unitPriceType02" class="label-margin"> <span style="font-size: 0.89rem;">톤당단가</span>
+                                                <label for="unitPriceType02" class="label-margin"> <span>톤당단가</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row mt10">
                                         <label class="col-form-label"></label>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>단가입력</strong>
-                                            <input id="unitCharge" name="unitCharge" type="text" class="form-control form-control-sm">
+                                            <input id="unitCharge" name="unitCharge" type="text" class="form-control form-control-sm wd90">
                                         </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                             <strong class="required">기본운임(청구)</strong>
-                                            <a class="k-pager-refresh k-button" id ="latestFare" onclick="getBasicFare();" style="margin-top: -5px; height: 19px; font-size: 12px;  background-color: #f3ee61">최근운임 불러오기</a>
+                                            <a class="k-pager-refresh" id ="latestFare" onclick="getBasicFare();" style="margin-top: -5px; height: 19px; font-size: 12px; border-radius: 4px; padding: 2px 4px; background-color: #ffe67e; border:0px; position: absolute; top: 2px; right: 2px;">최근운임 불러오기</a>
                                             <p class="arrow_box">거래처명(화주), 상/하차지주소, 요청차종/톤수에 맞는 최근 청구운임(기본)을 불러옵니다.
                                                 <br>※ 최근 오더가 없는 경우는 0원으로, 경유비 등 추가운임은 제외</p>
 
-                                            <input id="sellCharge" name="sellCharge" type="text" class="form-control form-control-sm" onchange="sellSumCharge()" required>
+                                            <input id="sellCharge" name="sellCharge" type="text" class="form-control form-control-sm wd190" onchange="sellSumCharge()" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
-                                        <label class="col-form-label"></label>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                    <div class="form-group row mt10">
+                                        <a id="sellOtherChargeBtn" class="k-button btn-s openCloseBtn" href="javascript:sellOtherChargeOpen()"></a>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>청구중량(ton)</strong>
-                                            <input id="sellWeight" name="sellWeight" type="text" class="form-control form-control-sm">
+                                            <input id="sellWeight" name="sellWeight" type="text" class="form-control form-control-sm wd90">
                                         </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
                                             <strong class="priceCommission">수수료</strong>
-                                            <input id="sellFee" name="sellFee" type="text" class="form-control form-control-sm priceCommission" readonly>
+                                            <input id="sellFee" name="sellFee" type="text" class="form-control form-control-sm priceCommission wd90" readonly>
                                             <input id="sellFeeBack" type="hidden">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="col-form-label"></label>
-                                        <div class="input-group input-group-sm col">
-                                            <a style="width: 100%; height: 23px;" id="sellOtherChargeBtn" class="k-button btn-s" href="javascript:sellOtherChargeOpen()"></a>
                                         </div>
                                     </div>
 
@@ -764,86 +781,86 @@
                                             <input type="hidden" id="addSellCodeList" name="addSellCodeList" value="">
                                             <input type="hidden" id="addSellChargeList" name="addSellChargeList" value="">
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>경유비(청구)</strong>
-                                                    <input id="sellWayPointCharge" name="addSellCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
+                                                    <input id="sellWayPointCharge" name="addSellCharge" type="text" class="form-control form-control-sm wd90" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
                                                     <div class="help-block with-errors"></div>
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                     <strong>경유비 메모</strong>
-                                                    <input id="sellWayPointMemo" name="addSellMemo" type="text" class="form-control form-control-sm">
+                                                    <input id="sellWayPointMemo" name="addSellMemo" type="text" class="form-control form-control-sm wd190">
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>대기료(청구)</strong>
-                                                    <input id="sellStayCharge" name="addSellCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
+                                                    <input id="sellStayCharge" name="addSellCharge" type="text" class="form-control form-control-sm wd90" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
                                                     <div class="help-block with-errors"></div>
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                     <strong>대기료 메모</strong>
-                                                    <input id="sellStayMemo" name="addSellMemo" type="text" class="form-control form-control-sm">
+                                                    <input id="sellStayMemo" name="addSellMemo" type="text" class="form-control form-control-sm wd190">
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>수작업비(청구)</strong>
-                                                    <input id="sellHandWorkCharge" name="addSellCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
+                                                    <input id="sellHandWorkCharge" name="addSellCharge" type="text" class="form-control form-control-sm wd90" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
                                                     <div class="help-block with-errors"></div>
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                     <strong>수작업비 메모</strong>
-                                                    <input id="sellHandWorkMemo" name="addSellMemo" type="text" class="form-control form-control-sm">
+                                                    <input id="sellHandWorkMemo" name="addSellMemo" type="text" class="form-control form-control-sm wd190">
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>회차료(청구)</strong>
-                                                    <input id="sellRoundCharge" name="addSellCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
+                                                    <input id="sellRoundCharge" name="addSellCharge" type="text" class="form-control form-control-sm wd90" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
                                                     <div class="help-block with-errors"></div>
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                     <strong>회차료 메모</strong>
-                                                    <input id="sellRoundMemo" name="addSellMemo" type="text" class="form-control form-control-sm">
+                                                    <input id="sellRoundMemo" name="addSellMemo" type="text" class="form-control form-control-sm wd190">
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>기타추가비(청구)</strong>
-                                                    <input id="sellOtherAddCharge" name="addSellCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
+                                                    <input id="sellOtherAddCharge" name="addSellCharge" type="text" class="form-control form-control-sm wd90" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sellSumCharge()'>
                                                     <div class="help-block with-errors"></div>
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                     <strong>기타추가비 메모</strong>
-                                                    <input id="sellOtherAddMemo" name="addSellMemo" type="text" class="form-control form-control-sm">
+                                                    <input id="sellOtherAddMemo" name="addSellMemo" type="text" class="form-control form-control-sm wd190">
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row">
+                                            <div class="form-group row mt10">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd190 middle-name form-group">
                                                     <strong>청구운임(소계)</strong>
-                                                    <input id="addSumSellCharge" name="addSumSellCharge" type="text" class="form-control form-control-sm noColorReadonly" readonly>
+                                                    <input id="addSumSellCharge" name="addSumSellCharge" type="text" class="form-control form-control-sm noColorReadonly wd190" readonly>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div style="border:4px ridge; padding:0px 5px 0px 5px; margin:2px -10px 0px -10px;">
+                                <div class="gray_box">
                                     <div class="form-group row">
                                         <div class="col-form-label big-name big-name-div">
-                                            <div>배차</div>
-                                            <a id="allocD" class="k-pager-refresh k-button openCloseBtn">배차추가열기</a>
+                                            <label class="col-form-label big-name">배차</label>
+                                            
                                             <a id="allocC" style="display: none;" class="k-pager-refresh k-button openCloseBtn">배차추가열기</a>
                                         </div>
                                         <div class="input-group input-group-sm col radio-or-checkBox">
@@ -913,9 +930,9 @@
                                     <!-- 운송사지정 열기, 접기부분 -->
 
                                     <div id="divAllocD" style="display: none;">
-                                        <div class="form-group row">
+                                        <div class="form-group row mt10">
                                             <label class="col-form-label"></label>
-                                            <div class="input-group input-group-sm col middle-name form-group">
+                                            <div class="input-group input-group-sm wd90 middle-name form-group">
                                                 <input type="hidden" name="buyLinkYn" id="buyLinkYn">
                                                 <input type="hidden" name="linkType" id="linkType">
                                                 <input type="hidden" id="buyVehicId" name="buyVehicId">
@@ -929,42 +946,42 @@
 
                                                 <div class="help-block with-errors"></div>
                                             </div>
-                                            <div class="input-group input-group-sm col middle-name form-group">
+                                            <div class="input-group input-group-sm wd90 middle-name form-group">
                                                 <strong>차량구분</strong>
-                                                <select class="custom-select col-12" id="carSctnCode" name="carSctnCode"></select>
+                                                <select class="custom-select col-12 wd90" id="carSctnCode" name="carSctnCode"></select>
                                             </div>
                                             <div class="input-group input-group-sm col middle-name form-group">
                                                 <strong>정보망배차</strong>
                                                 <select class="custom-select col-12" id="linkSelect" name="linkSelect"></select>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="form-group row mt10">
                                             <label class="col-form-label"></label>
-                                            <div class="input-group input-group-sm col middle-name form-group">
+                                            <div class="input-group input-group-sm wd90 middle-name form-group">
                                                 <strong>차주성명</strong>
-                                                <input type="text" name="buyDriverName" id="buyDriverName" class="form-control form-control-sm">
+                                                <input type="text" name="buyDriverName" id="buyDriverName" class="form-control form-control-sm wd90">
                                             </div>
-                                            <div class="input-group input-group-sm col middle-name form-group">
+                                            <div class="input-group input-group-sm wd90 middle-name form-group">
                                                 <strong>휴대전화</strong>
-                                                <input type="text" name="buyDriverTel" id="buyDriverTel" class="form-control form-control-sm" maxlength="13">
+                                                <input type="text" name="buyDriverTel" id="buyDriverTel" class="form-control form-control-sm wd90" maxlength="13">
                                             </div>
-                                            <div class="input-group input-group-sm col middle-name form-group">
+                                            <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
                                                 <strong>지불운임</strong>
-                                                <a id="priceDetail" class="k-pager-refresh k-button" style="margin-top: -5px; height: 19px; width: 19px;"> ? </a>
-                                                <input id="buyChargeD" name="buyCharge" type="text" class="form-control form-control-sm" onchange="sumCharge()">
+                                                <a id="priceDetail" class="k-pager-refresh k-button" style="display:none; margin-top: -5px; height: 19px; width: 19px; position: absolute; top:0px; right:0px;"> ? </a>
+                                                <input id="buyChargeD" name="buyCharge" type="text" class="form-control form-control-sm wd90" onchange="sumCharge()">
                                             </div>
                                         </div>
-                                        <div class="form-group row">
-                                            <label class="col-form-label"></label>
-                                            <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="form-group row pb15 mr0 mt10">
+                                            <a id="allocD" class="k-pager-refresh k-button openCloseBtn">배차추가열기</a>
+                                            <div class="input-group input-group-sm wd90 middle-name form-group">
                                                 <strong>차주 차종</strong>
                                                 <select class="custom-select col-12" id="buyCarTypeCode" name="buyCarTypeCode"></select>
                                             </div>
-                                            <div class="input-group input-group-sm col middle-name form-group">
+                                            <div class="input-group input-group-sm wd90 middle-name form-group">
                                                 <strong>차주 톤수</strong>
                                                 <select class="custom-select col-12" id="buyCarTonCode" name="buyCarTonCode"></select>
                                             </div>
-                                            <div class="input-group input-group-sm col middle-name form-group">
+                                            <div class="input-group input-group-sm wd90 middle-name form-group">
                                                 <strong>빠른지급여부</strong>
                                                 <select class="custom-select col-12" id="payType" name="payType"></select>
                                             </div>
@@ -973,15 +990,15 @@
                                         <div id="allocDOpenClose" class="openCloseDiv">
                                             <div class="form-group row">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>차주 등급</strong>
                                                     <select class="custom-select col-12" id="carMngCode" name="carMngCode"></select>
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>차주등급사유</strong>
                                                     <input type="text" class="form-control form-control-sm" id="carMngMemo" name="carMngMemo">
                                                 </div>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>적재함길이</strong>
                                                     <input type="text" class="form-control form-control-sm" id="buyCargoBox" name="buyCargoBox" maxlength="30">
                                                 </div>
@@ -992,100 +1009,94 @@
 
                                     <!-- 배차 기타 정보 열기, 접기부분 -->
                                     <div id="driverOtherOpenClose" class="openCloseDiv">
-                                        <div class="form-group row">
-                                            <label class="col-form-label"></label>
-                                            <div class="col input-group middle-name form-group">
+                                        <div class="form-group row mt10">
+                                            <a style="height: 23px;" id="otherChargeBtn" class="k-button btn-s openCloseBtn" href="javascript:otherChargeOpen()"></a>
+                                            <div class="wd90 input-group middle-name form-group">
                                                 <strong>차주확인사항</strong>
                                                 <input id="driverMemo" name="driverMemo" type="text" class="form-control form-control-sm">
                                             </div>
-                                            <div class="input-group input-group-sm col middle-name form-group">
+                                            <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                 <strong>배차일자</strong>
                                                 <input type="text" style="padding: 0px; width: 100%;" id="allocDate" name="allocDate">
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <label class="col-form-label"></label>
-                                            <div class="input-group input-group-sm col">
-                                                <a style="width: 100%; height: 23px;" id="otherChargeBtn" class="k-button btn-s" href="javascript:otherChargeOpen()"></a>
-                                            </div>
-                                        </div>
 
                                         <div>
                                             <div id="otherCharge" style="display: none;">
                                                 <input type="hidden" id="addMemoList" name="addMemoList" value="">
                                                 <input type="hidden" id="addCodeList" name="addCodeList" value="">
                                                 <input type="hidden" id="addChargeList" name="addChargeList" value="">
-                                                <div class="form-group row">
+                                                <div class="form-group row mt10">
                                                     <label class="col-form-label"></label>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
                                                         <strong>경유비(지불)</strong>
-                                                        <input id="wayPointCharge" name="addCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <input id="wayPointCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
                                                         <div class="help-block with-errors"></div>
                                                     </div>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                         <strong>경유비 메모</strong>
-                                                        <input id="wayPointMemo" name="addMemo" type="text" class="form-control form-control-sm">
+                                                        <input id="wayPointMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group row">
+                                                <div class="form-group row mt10">
                                                     <label class="col-form-label"></label>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
                                                         <strong>대기료(지불)</strong>
-                                                        <input id="stayCharge" name="addCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <input id="stayCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
                                                         <div class="help-block with-errors"></div>
                                                     </div>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                         <strong>대기료 메모</strong>
-                                                        <input id="stayMemo" name="addMemo" type="text" class="form-control form-control-sm">
+                                                        <input id="stayMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group row">
+                                                <div class="form-group row mt10">
                                                     <label class="col-form-label"></label>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
                                                         <strong>수작업비(지불)</strong>
-                                                        <input id="handWorkCharge" name="addCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <input id="handWorkCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
                                                         <div class="help-block with-errors"></div>
                                                     </div>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                         <strong>수작업비 메모</strong>
-                                                        <input id="handWorkMemo" name="addMemo" type="text" class="form-control form-control-sm">
+                                                        <input id="handWorkMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group row">
+                                                <div class="form-group row mt10">
                                                     <label class="col-form-label"></label>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
                                                         <strong>회차료(지불)</strong>
-                                                        <input id="roundCharge" name="addCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <input id="roundCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
                                                         <div class="help-block with-errors"></div>
                                                     </div>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                         <strong>회차료 메모</strong>
-                                                        <input id="roundMemo" name="addMemo" type="text" class="form-control form-control-sm">
+                                                        <input id="roundMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group row">
+                                                <div class="form-group row mt10">
                                                     <label class="col-form-label"></label>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
                                                         <strong>기타추가비(지불)</strong>
-                                                        <input id="otherAddCharge" name="addCharge" type="text" class="form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <input id="otherAddCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
                                                         <div class="help-block with-errors"></div>
                                                     </div>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                                         <strong>기타추가비 메모</strong>
-                                                        <input id="otherAddMemo" name="addMemo" type="text" class="form-control form-control-sm">
+                                                        <input id="otherAddMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group row">
+                                                <div class="form-group row mt10">
                                                     <label class="col-form-label"></label>
-                                                    <div class="input-group input-group-sm col middle-name form-group">
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
                                                         <strong>지불운임(소계)</strong>
-                                                        <input id="addSumCharge" name="addSumCharge" type="text" class="form-control form-control-sm noColorReadonly" readonly>
+                                                        <input id="addSumCharge" name="addSumCharge" type="text" class="wd90 form-control form-control-sm noColorReadonly" readonly>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1133,16 +1144,16 @@
                                     </div>
                                     <!-- 배차 기타 정보 열기, 접기부분 -->
 
-                                    <div class="form-group row">
+                                    <div class="form-group row pt15 mr0 bortop mt10">
                                         <div class="col-form-label big-name big-name-div">
-                                            <div>기타</div>
-                                            <a id="other" class="k-pager-refresh k-button openCloseBtn">기타추가열기</a>
+                                            <label class="col-form-label big-name">기타</label>
+                                            <a id="other" class="k-pager-refresh k-button openCloseBtn">메모열기</a>
                                         </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd170 middle-name form-group km">
                                             <strong>거리(km)</strong>
-                                            <input id="distance" name="distance" type="text" class="form-control form-control-sm" readonly>
+                                            <input id="distance" name="distance" type="text" class="wd90 form-control form-control-sm" readonly>
                                         </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
+                                        <div class="input-group input-group-sm wd170 mr0 middle-name form-group time">
                                             <strong>시간</strong>
                                             <input id="time" name="time" type="hidden" class="form-control form-control-sm" readonly>
                                             <input id="timeTxt" name="timeTxt" type="text" class="form-control form-control-sm" readonly>
@@ -1154,31 +1165,16 @@
                                         <div id="otherOpenClose" class="openCloseDiv">
                                             <div class="form-group row">
                                                 <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm col middle-name form-group">
+                                                <div class="input-group input-group-sm wd190 middle-name form-group">
                                                     <strong>메모</strong>
-                                                    <textarea rows="4" id="memo" name="memo" class="form-control form-control-sm textarea"></textarea>
+                                                    <textarea rows="4" id="memo" name="memo" class="wd190 form-control form-control-sm textarea"></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </fieldset>
-                            <div class="editor_btns" style="text-align: center;">
-                                <div class="padding">
-                                    <a id="orderDelete" onclick="updateOrderState('09')" class="k-pager-refresh k-button">
-                                        <b class="btn-r"><span id="btn_state"><i class="k-icon k-i-delete"></i>오더취소</span></b>
-                                    </a>
-                                    <button type="submit" onclick="readonlyValidator();" class="k-pager-refresh k-button" id="btnSubmit">
-                                        <b class="btn-b"><i class="k-icon k-i-check"></i><strong id="btn_save">저장</strong></b>
-                                    </button>
-                                    <a id="orderCopy" onclick="orderCopy();" class="k-pager-refresh k-button">
-                                        <b class="btn-b"><i class="k-icon k-i-file"></i>복사</b>
-                                    </a>
-                                    <a onclick="form_popup_close();" class="k-pager-refresh k-button">
-                                        <b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b>
-                                    </a>
-                                </div>
-                            </div>
+                            
                         </form>
                     </div>
                     <!-- editor -->

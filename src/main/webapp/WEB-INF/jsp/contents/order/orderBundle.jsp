@@ -9,7 +9,7 @@
 }
 </style>
 
-<div class="header">
+<div class="header orderBundle">
     <div class="summary p30">
         <div class="hdr-tit">
             <P class="headerTitle">일괄등록</P>
@@ -23,10 +23,12 @@
                         <div class="input-group input-group-sm" style="padding: 0px;">
                             <div style="width: 100%;" class="filebox">
                                 <div class="option-area">
-                                    <input style="width: 90%;" class="upload-name" value="파일을 선택해 주세요." disabled="disabled">
-                                    <label for="uploadFile">파일등록</label>
+                                	<p>업로드 파일</p>
+                                	<label for="uploadFile">파일등록</label>
+                                    <input style="width: 87.5%;" class="upload-name" value="파일명.exel" disabled="disabled">
+                                    
                                     <input type="file" id="uploadFile" name="uploadFile" class="upload-hidden">
-                                    <button style="padding: .25rem .5rem; font-size: .875rem; line-height: 1.5; border-radius: .2rem;" class="btn btn-outline-secondary" type="button" onclick="fileUpload();">업로드</button>
+                                    <button style="padding: 3px 10px; background-color: #2a5dc4; color: #fff; margin-left: 10px; font-size: 12px; line-height: 1.5;" class="btn btn-outline-secondary" type="button" onclick="fileUpload();">업로드</button>
                                 </div>
                             </div>
                         </div>
@@ -45,11 +47,11 @@
                                     <div class="tool_group">
                                         <div class="padding">
                                             <a href="javascript:sampleDownload();" class="k-pager-refresh k-button">
-                                                <b class="btn-x"><i class="k-icon k-i-file-excel"></i>양식 다운로드</b>
+                                                <b class="btn-x">양식 다운로드</b>
                                             </a>
                                             <c:if test="${menuAuth.writeYn eq 'Y'}">
                                                 <a href="javascript:insertData();" class="k-pager-refresh k-button">
-                                                    <b class="btn-h"><i class="k-icon k-i-plus"></i>저장</b>
+                                                    <b class="btn-h">저장</b>
                                                 </a>
                                             </c:if>
                                         </div>

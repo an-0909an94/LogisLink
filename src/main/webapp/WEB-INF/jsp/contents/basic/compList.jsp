@@ -69,7 +69,7 @@
 	    </div>
 	</div>
 </div>
-<div class="header">
+<div class="header compList">
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<P id="headerTitle">조직정보</P>
@@ -82,108 +82,114 @@
                 <input type="hidden" id="dLinePointCode" name="dlinePointCode">
 				<div id="group-list" class="cont-wrapper">
 					<!--  -->
-						<div class="cont-b-head">
+						<div class="cont-b-head mb15">
 							<h4>회사정보</h4>
+							<c:if test="${custId ne 'newComp' && menuAuth.editYn eq 'Y'}">
+								<button type="submit" id="btnUpdateComp" class="btn_b">정보수정</button>
+							</c:if>
 						</div>
-						<div class="form-group row">
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong class="required">상호</strong>
-							    <input type="text" id="bizName" required>
-                                <div class="help-block with-errors"></div>
-							</div>
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong>업태</strong>
-							    <input type="text" id="bizCond">
-							</div>
-						</div>
-						
-						<div class="form-group row">
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong class="required">분류</strong>
-							    <select id="custTypeCode" style="font-size: initial;" required></select> 
-                                <div class="help-block with-errors"></div>
-							</div>
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong>업종</strong>
-							    <input type="text" id="bizKind">
-							</div>
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong class="required">과세유형</strong>
-							    <select id="bizTypeCode" style="font-size: initial;" required></select> 
-                                <div class="help-block with-errors"></div>
-							</div>
-						</div>
-						
-						<div class="form-group row">
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong class="required">사업자번호</strong>
-							    <input type="text" id="bizNum" maxlength="12" required>
-                                <div class="help-block with-errors"></div>
-							</div>
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong>종사업장번호</strong>
-							    <input type="text" id="bizNumSub">
-							</div>
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong class="required">대표자명</strong>
-							    <input type="text" id="ceo" required>
-                                <div class="help-block with-errors"></div>
-							</div>
-						</div>
-						
-						<div class="form-group row">
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong>우편번호(검색)</strong>
-							    <div class="textBox-in-icon">
-                                	<input style="border-radius: 0px 8px 8px 0px;" onClick="popSearchPost('');" type="text" class="form-control form-control-sm" id="bizPost">
-									<i><img style="width: 40px;margin-left: -49px;" onclick="popSearchPost('');" src="/images/icon/search.png"></i>
+							<div class="gray_box">
+							<div class="form-group row mt0">
+								<label class="big-name col-form-label">기본정보</label>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong class="required">상호</strong>
+								    <input type="text" id="bizName" required>
+	                                <div class="help-block with-errors"></div>
+								</div>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong>업태</strong>
+								    <input type="text" id="bizCond">
+								</div>
+								<div class="input-group input-group-sm middle-name wd90 mr10">
+								<strong class="required">분류</strong>
+								    <select id="custTypeCode" required></select> 
+	                                <div class="help-block with-errors"></div>
+								</div>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong>업종</strong>
+								    <input type="text" id="bizKind">
+								</div>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong class="required">과세유형</strong>
+								    <select id="bizTypeCode" required></select> 
+	                                <div class="help-block with-errors"></div>
 								</div>
 							</div>
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong>주소</strong>
-							    <input type="text" id="bizAddr">
+							
+							
+							<div class="form-group row mt10">
+								<label class="col-form-label"></label>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong class="required">사업자번호</strong>
+								    <input type="text" id="bizNum" maxlength="12" required>
+	                                <div class="help-block with-errors"></div>
+								</div>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong>종사업장번호</strong>
+								    <input type="text" id="bizNumSub">
+								</div>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong class="required">대표자명</strong>
+								    <input type="text" id="ceo" required>
+	                                <div class="help-block with-errors"></div>
+								</div>
 							</div>
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							<strong>상세주소</strong>
-							    <input type="text" id="bizAddrDetail">
+							
+							<div class="form-group row bortop mt20 pt20">
+								<label class="big-name col-form-label">상세주소</label>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong>우편번호(검색)</strong>
+								    <div class="textBox-in-icon">
+	                                	<input style="border-radius: 0px 8px 8px 0px;" onClick="popSearchPost('');" type="text" class="form-control form-control-sm" id="bizPost">
+										<i><img onclick="popSearchPost('');" src="/images/icon/icon_search.png"></i>
+									</div>
+								</div>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong>주소</strong>
+								    <input type="text" id="bizAddr">
+								</div>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<strong>상세주소</strong>
+								    <input type="text" id="bizAddrDetail">
+								</div>
+							</div>
+							
+							<div class="form-group row bortop mt20 pt20">
+								<label class="big-name col-form-label">계좌정보</label>
+								<div class="input-group input-group-sm middle-name wd190 mr10">
+	                            <strong>은행명</strong>
+	                                <select id="bankCode"></select>
+	                            </div>
+	                            <div class="input-group input-group-sm middle-name wd190 mr10">
+	                            <strong>예금주</strong>
+	                                <input type="text" id="bankCnnm">
+	                            </div>
+	                            <div class="input-group input-group-sm middle-name wd190 mr10">
+	                            <strong>계좌번호</strong>
+	                                <input type="text" id="bankAccount">
+	                            </div>
 							</div>
 						</div>
 						
-						<div class="form-group row">
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-                            <strong>은행명</strong>
-                                <select id="bankCode"></select>
-                            </div>
-                            <div class="input-group input-group-sm col-3 middle-name form-group">
-                            <strong>예금주</strong>
-                                <input type="text" id="bankCnnm">
-                            </div>
-                            <div class="input-group input-group-sm col-3 middle-name form-group">
-                            <strong>계좌번호</strong>
-                                <input type="text" id="bankAccount">
-                            </div>
-						</div>
-						
-						<div class="form-group row">
-							<div class="input-group input-group-sm col-3 middle-name form-group">
-							</div>
+						<div class="form-group row" style="display:none">
 							<div style="margin-top: -10px" class="input-group input-group-sm col-4 middle-name form-group">
 								<span class="button add_btn">
 								<c:if test="${custId eq 'newComp' && menuAuth.writeYn eq 'Y'}">
 									<button type="submit" id="btnUpdateComp">저장</button>
 								</c:if>		
-								<c:if test="${custId ne 'newComp' && menuAuth.editYn eq 'Y'}">
-									<button type="submit" id="btnUpdateComp">정보수정</button>
-									<button type="button" id="btnAddDept">부서추가</button>
-									<c:if test="${sessionScope.userInfo.authSeq eq '100' }">
-										<button type="button" id="btnCreateApiKey" onClick="createToken();">API키발급</button>
-										<button type="button" id="btnViewApiKey" onClick="oepnApiKey();" style="display:none;">API키확인</button>
-									</c:if>	
+								<c:if test="${sessionScope.userInfo.authSeq eq '100' }">
+									<button type="button" id="btnCreateApiKey" onClick="createToken();">API키발급</button>
+									<button type="button" id="btnViewApiKey" onClick="oepnApiKey();" style="display:none;">API키확인</button>
 								</c:if>	
 								</span>
 							</div>
 						</div>
-						
+						<div class="cont-b-head bortop mt20 pt20 mb15">
+							<h4>부서정보</h4>
+							<c:if test="${custId ne 'newComp' && menuAuth.editYn eq 'Y'}">
+								<button type="button" id="btnAddDept" class="openCloseBtn">부서추가</button>
+							</c:if>
+						</div>
 						<div class="k-wrap content">
 							<div class="lookup_table">
 								<div class="tool_btn col-auto">

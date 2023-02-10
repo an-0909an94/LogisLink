@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/media.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/style_V2.css">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.common.min.css'/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.default-v2.min.css'/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/kendo.default.min.css'/>">
@@ -41,7 +42,7 @@ input:focus {outline: none;}
 </div>
 
 <div style="position:absolute; width:100%; border:0px solid #e9e9e9;z-index:10000;top:120px;left:5%;">
-	<h2 style="padding-top:50px; font-size:50px; letter-spacing:-1.0px; color:#ffffff; text-shadow: 1px 1px 1px #000000;">최적의 운송 관리 시스템 로지스링크</h2>
+	<h2 style="padding-top:50px; font-size:50px; letter-spacing:-1.0px; color:#ffffff; text-shadow: 1px 1px 1px #000000;">최적의 운송 관리 시스템 <span>로지스링크</span></h2>
 </div>
 
 <div class="cont-w" style="position:absolute;z-index:10000;top:300px;left:5%;">

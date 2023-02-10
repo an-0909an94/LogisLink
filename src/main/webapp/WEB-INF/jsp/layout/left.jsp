@@ -182,9 +182,10 @@
 	</form>
 </div>
 <div id="side-nav" class="side-nav">
+<div class="side-nav-btn">접기</div>
 	<div class="logo-area">
 		<div class="">
-			<a href="${sessionScope.userInfo.userMainPage}"><img src="/images/logo.png" class="logo-title"></a>
+			<a href="${sessionScope.userInfo.userMainPage}"><img src="/images/logislink_logo.png" class="logo-title"></a>
 		</div>  
 	</div>            
 	<div class="nav">
@@ -197,15 +198,17 @@
 			<div class="manager-name">${sessionScope.userInfo.userName} </div>
            	<div class="manager-role">${sessionScope.userInfo.grade}</div>
            	<div class="carrier-name">${sessionScope.userInfo.bizName}</div>
+           	<div class="side-logout" style="">
+				<a href="/logout.do" class="side-logout-link">로그아웃</a>
+			</div>
+			<div class="mem-setting"><i id="userOption" class="k-icon k-i-gear" style="cursor: pointer;" title="업무초기값 설정"></i></div>
            	<div class="mem-setpage"><a href="javascript:setMainPage();" style="color:#ffffff;">현재페이지를 시작페이지로</a></div>
-           	<div class="mem-setting"><i id="userOption" class="k-icon k-i-gear" style="cursor: pointer;" title="업무초기값 설정"></i></div>
+           	
 		</div>
 	</div>
     <!-- mem-info-wrapper -->
 
-	<div class="side-logout" style="">
-		<a href="/logout.do" class="side-logout-link"><i class="k-icon k-i-logout"></i> 로그아웃</a>
-	</div>
+	
 </div>    
 
 <div id="popList"></div>
@@ -243,19 +246,63 @@ $(document).ready(function(){
 		$(".sub-li-wrap").slideUp(100);		
 				
 		if($(this).is(".backColor") === true) {
+			//닫기
 			$(this).next(".sub-li-wrap").removeClass("backColor");
 			$(this).removeClass("backColor");
+		
 		}
 		
 		else {
+			//열기
 			$(".nav-li").next(".sub-li-wrap").removeClass("backColor");
 			$(".nav-li").removeClass("backColor");
 			$(this).next(".sub-li-wrap").addClass("backColor");
 			$(this).addClass("backColor");
 			$(this).next(".sub-li-wrap").slideDown(100);
+			
 		}
 		
 	});
+	
+	$('.side-nav-btn').on('click',function(){
+		
+		$('.header').toggleClass('header-atv');
+		$('.side-nav-btn').toggleClass('side-nav-btn-atv');
+		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv');
+		$('.nav-li').toggleClass('backColor-atv').removeClass('backColor');
+		$('.logo-area .logo-title').toggleClass('logo-title-atv');
+		$('.side-nav').toggleClass('side-nav-atv');
+		$('.nav').toggleClass('nav-atv');
+		$('.nav-li').toggleClass('nav-li-atv');
+		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv');
+		$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv');
+		
+		// 로그인 정보
+		$('.mem-info-wrapper').toggleClass('mem-info-wrapper-atv');
+		$('.manager-name').toggleClass('none-atv');
+		$('.manager-role').toggleClass('none-atv');
+		$('.carrier-name').toggleClass('none-atv');
+		$('.side-logout a').toggleClass('side-logout-link-atv');
+		$('.mem-setpage a').toggleClass('side-logout-link-atv');
+		$('.mem-setpage').toggleClass('none-atv');
+		$('.side-logout').toggleClass('side-logout-link-atv');
+		$('.mem-info > .mem-setting i').toggleClass('icon-mem-setting-atv');
+		$('.mem-info > .mem-setting').toggleClass('mem-setting-atv');
+		$('.mem-info .manager-profile').toggleClass('manager-profile-atv');
+		
+		$('.insert_pop.block').toggleClass('block-atv');
+		$('.insert_pop').toggleClass('insert_pop-atv');
+		
+		// 그리드
+		$('.cont-body').toggleClass('cont-body-atv');
+		
+		
+	});
+	
+	$('.side-nav-btn').on('click',function(){
+		$('.insert_pop').removeClass('insert_pop.block').toggleClass('m-side-nav-atv');
+	})
+	
 	
 	//검색값 입력 후 enter key event
 	if($(".searchValue").length > 0) {
@@ -341,7 +388,7 @@ function setLeftmenu() {
 			s += "<div class=\"side-nav-ul\">";
 			s += "	<div class=\"nav-li\" id=\"nav-li" + item.menuSeq + "\">";
 			s += "		<span>";
-			s += "			<a class=\"dropBtn\"><img src=\"/images/menu/" + item.menuCode + ".png\">" + item.menuName + "</a>";
+			s += "			<span class=\"side-nav-img\"></span><a class=\"dropBtn\">" + item.menuName + "</a>";
 			s += "		</span>"; 
 			s += "	</div>";
 			s += "<ul class=\"sub-li-wrap\">";

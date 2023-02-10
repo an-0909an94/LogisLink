@@ -283,13 +283,13 @@
 
 <!-- 매출 정산관리 페이지 -->
 <div class="header">
-    <div style="justify-content: space-between; display: flex;" class="summary p30">
+    <div class="summary p30">
         <div class="hdr-tit">
             <P id="headerTitle">매출정산관리</P>
         </div>
         <div id="summaryData" style="height: 30px;">
             <div style="display: contents;" class="col input-group i-name">
-                <i style="font-size: larger;" id="groupCount"></i>
+                <i id="groupCount"></i>
             </div>
         </div>
     </div>
@@ -311,8 +311,7 @@
 
                 <!-- 검색 1라인 -->
                 <div class="form-group row">
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>정산마감여부</strong>
+                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sFinishYn" name="finishYn" class="custom-select col-12">
                             <option value="">--전체--</option>
                             <option value="Y">Y</option>
@@ -321,58 +320,48 @@
                     </div>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>거래처검색</strong>
                         <select id="searchCustType" name="searchCustType" class="custom-select col-12">
                             <!-- 공통코드로 구분함. -->
                             <option value="custName" selected>화주명</option>
                             <option value="orderId">오더ID</option>
                         </select>
                     </div>
-                    <div id="searchCustName" class="input-group input-group-sm col-2 middle-name">
-                        <strong>&nbsp;</strong>
+                    <div id="searchCustName" class="input-group input-group-sm wd190 mr10 middle-name">
                         <input type="text" id="sCustName" name="custName" style="width: 100%;">
                     </div>
-                    <div id="searchOrderId" class="input-group input-group-sm col-2 middle-name" style="display: none;">
-                        <strong>&nbsp;</strong>
+                    <div id="searchOrderId" class="input-group input-group-sm wd90 middle-name" style="display: none;">
                         <input type="text" id="sOrderId" name="orderId" class="form-control form-control-sm" onkeydown="searchOrderIdKeyDown(this)">
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>&nbsp;</strong>
                         <input type="text" id="sCustDeptName" name="custDeptName" class="form-control form-control-sm" readonly>
                     </div>
 
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>사업자검색</strong>
+                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="searchBizType" name="searchBizType" class="custom-select col-12">
                             <option value="bizName" selected>사업자상호</option>
                             <option value="bizNum">사업자번호</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm col-2 middle-name">
-                        <strong>&nbsp;</strong>
+                    <div class="input-group input-group-sm wd190 mr10 middle-name">
                         <input type="text" id="sBizName" name="bizName" style="width: 100%;">
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>&nbsp;</strong>
+                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sBizDeptName" name="bizDeptName" class="custom-select"></select>
                     </div>
 
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>청구구분</strong>
+                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sChargeType" name="chargeType" class="form-control custom-select col-12">
                             <option>--전체--</option>
                         </select>
                     </div>
 
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>담당부서명</strong>
+                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sDeptId" name="deptId" class="form-control custom-select col-12">
                             <option>--전체--</option>
                         </select>
                     </div>
 
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>배차담당자</strong>
+                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sUserId" name="userId" class="form-control custom-select col-12">
                             <option>--전체--</option>
                         </select>
@@ -380,99 +369,85 @@
                 </div>
 
                 <!-- 검색 2라인 -->
-                <div class="form-group row">
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>기간검색</strong>
-                        <select id="searchDateType" name="searchDateType" class="custom-select col-12">
-                            <option value="allocDate" selected>배차일자</option>
-                            <option value="sDate">상차일자</option>
-                            <option value="eDate">하차일자</option>
-                            <option value="depositDueDate">입금예정일자</option>
-                            <option value="depositDate">입금확인일자</option>
-                            <option value="finishDate">마감일자</option>
-                        </select>
-                    </div>
-                    <div class="input-group input-group-sm col-1 middle-name">
-                        <strong>&nbsp;</strong>
-                        <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
-                    </div>
-                    <span style="margin-top: 31px;">~</span>
-                    <div class="input-group input-group-sm col-1 middle-name">
-                        <strong>&nbsp;</strong>
-                        <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
-                    </div>
-
-                    <div class="input-group input-group-sm col radio-or-checkBox">
-                        <input type="radio" name="dateChk" id="today" value="0" checked />
-                        <label for="today" class="label-margin"> <span>오늘</span>
-                        </label>
-                    </div>
-                    <div class="input-group input-group-sm col radio-or-checkBox">
-                        <input type="radio" name="dateChk" id="yesterday" value="1" />
-                        <label for="yesterday" class="label-margin"> <span>어제</span>
-                        </label>
-                    </div>
-                    <div class="input-group input-group-sm col radio-or-checkBox">
-                        <input type="radio" name="dateChk" id="weekly" value="7" />
-                        <label for="weekly" class="label-margin"> <span>7일</span>
-                        </label>
-                    </div>
-                    <div class="input-group input-group-sm col radio-or-checkBox">
-                        <input type="radio" name="dateChk" id="monthly" value="30" />
-                        <label for="monthly" class="label-margin"> <span>30일</span>
-                        </label>
-                    </div>
-
-                    <!-- Hidden -->
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>&nbsp;</strong>
-                        <input type="text" class="form-control form-control-sm" hidden="true">
-                    </div>
-
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>입금확인여부</strong>
-                        <select id="sDepositYn" name="depositYn" class="custom-select col-12">
-                            <option value="">--전체--</option>
-                            <option value="Y">Y</option>
-                            <option value="N" selected>N</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>우편발송여부</strong>
-                        <select id="sPostYn" name="postYn" class="custom-select col-12">
-                            <option value="" selected>--전체--</option>
-                            <option value="Y">Y</option>
-                            <option value="N">N</option>
-                        </select>
-                    </div>
-                    
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>삭제여부</strong>
-                        <select id="sDeleteYn" name="deleteYn" class="custom-select col-12">
-                            <option value="">--전체--</option>
-                            <option value="Y">Y</option>
-                            <option value="N" selected>N</option>
-                        </select>
-                    </div>
-
-                    <div class="input-group input-group-sm col radio-or-checkBox ">
-                        <input id="carryOverYn" name="carryOver" type="checkbox" value="Y">
-                        <label for="carryOverYn" class="label-margin"> <span>미처리 이월건 포함</span>
-                        </label>
-                    </div>
-
-                    <div class="input-group input-group-sm col-1 middle-name" style="max-width: 90px; min-width: 90px;">
-                        <strong>&nbsp;</strong>
-                        <button onclick="goList()" type="button" style="border-radius: 4px" class="form-control form-control-sm middle-button-dark">
-                            <i class="k-icon k-i-search"></i>검색
-                        </button>
-                    </div>
-                    <div class="input-group input-group-sm col-1 middle-name" style="max-width: 90px; min-width: 90px;">
-                        <strong>&nbsp;</strong>
-                        <button onclick="fReset()" type="button" class="form-control form-control-sm middle-button">
-                            <i class="k-icon k-i-reset-sm"></i>초기화
-                        </button>
+                <div class="form-group row" style="justify-content: space-between">
+	                <div>
+	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+	                        <select id="searchDateType" name="searchDateType" class="custom-select col-12">
+	                            <option value="allocDate" selected>배차일자</option>
+	                            <option value="sDate">상차일자</option>
+	                            <option value="eDate">하차일자</option>
+	                            <option value="depositDueDate">입금예정일자</option>
+	                            <option value="depositDate">입금확인일자</option>
+	                            <option value="finishDate">마감일자</option>
+	                        </select>
+	                    </div>
+	                    <div class="input-group input-group-sm wd90 middle-name">
+	                        <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
+	                    </div>
+	                    <span>~</span>
+	                    <div class="input-group input-group-sm wd90 mr10 middle-name">
+	                        <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
+	                    </div>
+	
+	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                        <input type="radio" name="dateChk" id="today" value="0" checked />
+	                        <label for="today" class="label-margin"> <span>오늘</span>
+	                        </label>
+	                    </div>
+	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                        <input type="radio" name="dateChk" id="yesterday" value="1" />
+	                        <label for="yesterday" class="label-margin"> <span>어제</span>
+	                        </label>
+	                    </div>
+	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                        <input type="radio" name="dateChk" id="weekly" value="7" />
+	                        <label for="weekly" class="label-margin"> <span>7일</span>
+	                        </label>
+	                    </div>
+	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                        <input type="radio" name="dateChk" id="monthly" value="30" />
+	                        <label for="monthly" class="label-margin"> <span>30일</span>
+	                        </label>
+	                    </div>
+	
+	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+	                        <select id="sDepositYn" name="depositYn" class="custom-select col-12">
+	                            <option value="">--전체--</option>
+	                            <option value="Y">Y</option>
+	                            <option value="N" selected>N</option>
+	                        </select>
+	                    </div>
+	
+	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+	                        <select id="sPostYn" name="postYn" class="custom-select col-12">
+	                            <option value="" selected>--전체--</option>
+	                            <option value="Y">Y</option>
+	                            <option value="N">N</option>
+	                        </select>
+	                    </div>
+	                    
+	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+	                        <select id="sDeleteYn" name="deleteYn" class="custom-select col-12">
+	                            <option value="">--전체--</option>
+	                            <option value="Y">Y</option>
+	                            <option value="N" selected>N</option>
+	                        </select>
+	                    </div>
+	
+	                    <div class="input-group input-group-sm col radio-or-checkBox ">
+	                        <input id="carryOverYn" name="carryOver" type="checkbox" value="Y">
+	                        <label for="carryOverYn" class="label-margin"> <span>미처리 이월건 포함</span>
+	                        </label>
+	                    </div>
+					</div>
+					
+					<div class="row">
+	                    <div class="input-group-sm middle-name mr10">
+	                        <button onclick="goList()" type="button" class="form-control-sm btn_58 btn_b">검색</button>
+	                    </div>
+	                    <div class="input-group-sm middle-name">
+	                        <button onclick="fReset()" type="button" class="form-control-sm middle-button btn_58 btn_black">초기화</button>
+	                    </div>
                     </div>
                 </div>
             </form>
@@ -494,35 +469,35 @@
                                                 <div class="tool_group">
                                                     <div class="padding">
                                                         <a href="#" class="k-pager-refresh k-button" id="deleteCalc" onClick="deleteCalc()">
-                                                            <b class="btn-r"> <i class="k-icon k-i-trash"></i>삭제처리
+                                                            <b class="btn-r">삭제처리
                                                             </b>
                                                         </a>
                                                         <a href="#" class="k-pager-refresh k-button" id="changeReqCust" onClick="reqChangeModalOpen()">
-                                                            <b class="btn-b"> <i class="k-icon k-i-user"></i>화주변경
+                                                            <b class="btn-b">화주변경
                                                             </b>
                                                         </a>
                                                         <a href="#" class="k-pager-refresh k-button" id="changeSellCharge" onClick="changeSellCharge()">
-                                                            <b class="btn-b"> <i class="k-icon k-i-dollar"></i>청구운송비변경
+                                                            <b class="btn-b">청구운송비변경
                                                             </b>
                                                         </a>
                                                         <a href="#" class="k-pager-refresh k-button" id="tranReceiptComp" onClick="pubTranReceiptOpen()">
-                                                            <b class="btn-b"> <i class="k-icon k-i-paste-plain-text"></i>거래명세서발행
+                                                            <b class="btn-b">거래명세서발행
                                                             </b>
                                                         </a>
                                                         <a href="#" class="k-pager-refresh k-button" id="taxinvPostSend" onClick="taxinvPostSend()">
-                                                            <b class="btn-b"> <i class="k-icon k-i-txt"> </i>우편발송처리
+                                                            <b class="btn-b">우편발송처리
                                                             </b>
                                                         </a>
                                                         <a href="#" class="k-pager-refresh k-button" id="finishCalc" onClick="calcFinish()">
-                                                            <b class="btn-b"> <i class="k-icon k-i-edit"> </i>마감처리
+                                                            <b class="btn-b">마감처리
                                                             </b>
                                                         </a>
                                                         <a href="#" class="k-pager-refresh k-button" id="finishCalcPay" onClick="calcPayFinish()">
-                                                            <b class="btn-b"> <i class="k-icon k-i-edit"> </i>입금확인
+                                                            <b class="btn-h">입금확인
                                                             </b>
                                                         </a>
                                                         <a href="#" class="k-pager-refresh k-button" id="excelDownload" onClick="excelDownload()">
-                                                            <b class="btn-x"> <i class="k-icon k-i-file-excel"> </i>엑셀출력
+                                                            <b class="btn-x">엑셀출력
                                                             </b>
                                                         </a>
                                                     </div>
@@ -1197,7 +1172,7 @@
  	// 헤더에 요약정보 표시
     function getSummary(total, sumUnpaidAmt, sumDepositAmt) {
     	var groupCount = 
-			"<i style=\"color: #3f75c1\">매출 : " + Util.nvl(Util.formatNumber(total), '0') + "건 / " + 
+			"<i>매출 : " + Util.nvl(Util.formatNumber(total), '0') + "건 / " + 
 			Util.nvl(Util.formatNumber(sumUnpaidAmt), '0') + "원 / " + Util.nvl(Util.formatNumber(sumDepositAmt), '0') + "원</i>"
 		
 		$("#groupCount").html(groupCount);

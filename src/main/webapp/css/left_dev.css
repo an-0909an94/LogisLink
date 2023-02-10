@@ -1,9 +1,10 @@
 .side-nav {
     width: 207px;
     display: inline-block;
-    min-height: 100vh;
-    background-color: #002B57;
-    overflow:hidden;
+    min-height: 100vh; 
+    background: linear-gradient(0deg, #0cb3ea -10%, #1c54c4);
+    border-radius: 0 30px 0 0;
+    /* overflow:hidden; */
     z-index: 2000;
     position:relative;
 }
@@ -13,7 +14,7 @@
     display: inline-block;
     height: 100%;
     overflow: scroll;
-    padding: 30px;
+    padding: 63px 0px 0px 0px;
     -ms-overflow-style: none;
     /* IE and Edge */
     scrollbar-width: none;
@@ -25,26 +26,72 @@
     /* Chrome, Safari, Opera*/
 }
 
-.nav .side-nav-ul a {
-    font-size: 15px;
+.nav .side-nav-ul a.dropBtn{
+	font-size: 14px;
     color: #fff;
     cursor: pointer;
+    letter-spacing: -0.05em;
 }
 
-.nav .side-nav-ul a:hover {
-    font-size: 17px;
+.nav .side-nav-ul .sub-li-wrap a{
+    font-size: 12px;
     color: #fff;
+    cursor: pointer;
+    letter-spacing: -0.05em;
+    position: relative;
+}
+
+.nav .side-nav-ul .sub-li-wrap a::after{
+	/* content: ' '; */
+	display: block;
+	width: 100%;
+	height: 2px;
+	background-color: red;
+	
 }
 
 .nav .side-nav-ul li {
     text-align: left;
-    margin-top: 3px;
+    margin-top: 10px;
     list-style: none;
+}
+
+.nav .side-nav-ul li:first-of-type{
+	margin-top: 0px;
 }
 
 .nav .side-nav-ul span {
     display: block;
-    padding: 5px 0 5px 0;
+    padding: 10px 24px 10px 20px;
+    position: relative;
+}
+
+/* .nav .side-nav-ul span::after{
+	content: ' ';
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	top: 50%;
+	right: 10%;
+	transform: translateY(-50%);
+	background: url(/images/icon/icon_left_dev.png) no-repeat;
+	background-position: -3px -152px;
+	cursor: pointer;
+} */
+
+.nav .side-nav-ul span.arrow-up::after{
+	content: ' ';
+	width: 18px;
+	height: 18px;
+	position: absolute;
+	top: 50%;
+	right: 10%;
+	transform: translateY(-50%);
+	background: url(/images/icon/icon_left_dev.png) no-repeat;
+	transform: translateY(-50%) rotate(180deg);
+	background-position: -3px -152px;
+	cursor: pointer;
+	background-color: red;
 }
 
 #leftMenu {
@@ -52,14 +99,15 @@
 }
 
 .logo-title {
-    width:82px;
+    width:108px;
     height: auto;
-    margin:30px 0px 0px 30px;
+    margin:20px 0px 0px 24px;
 }
 
 .sub-li-wrap {
-    padding: 0px 10px 0px 30px;
+    padding: 15px 10px 15px 60px;
     display:none;
+    background-color: #3976d7;
 }
 
 .line {
@@ -98,91 +146,98 @@
 }
 
 .mem-info-wrapper {
-    width: 100%;
-    overflow: hidden;
-    border-top : 1px solid #224E7B;
-    border-bottom: 1px solid #224E7B;
+    width: 90%;
+    height: 150px;
+    padding: 20px 10px;
+    background-color: #0055cc;
+    margin: auto;
+    border-radius: 10px;
+    border: 1px solid #00a1e8;
+    box-sizing: border-box;
 }
 
 .mem-info {
-    margin: 45px 30px 133px;
-    overflow: hidden;
+	
+}
+
+.mem-info::after{
+	content: '';
+	clear: both;
+	display: block;
 }
 
 .mem-info > * {
     font-size: 14px;
     color: #fff;
 }
+
 .mem-info > .manager-role{
-    display: inline;
+    display: inline-block;
     margin-top: -4px;
     position: absolute;
-    text-align: right;
-    width: 50px;
-    margin-left: 57px
+    margin-left: 65px;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .mem-info > .manager-name{
-    display: inline;
-    margin-top: -4px;
+    display: inline-block;
+    margin: -4px 0 0 10px;
     position: absolute;
     text-align: left;
-    width: 47px;
-    margin-left: 10px;
+    width: 55px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.mem-info > .manager-profile{
-    width: 40px;
-    height: 40px;
-    display: inline-block;
-    border-radius: 100%;
-    background: #FFFFFF;
-    color:#808A94;
-    float:left;
     font-size: 18px;
-    text-align: center;
-    padding-top: 5px;
+    font-weight: bold;
 }
 
 .mem-info > .carrier-name {
     display: inline;
-    margin-left: 10px;
+    margin: 22px 0 0 10px;
     position: absolute;
-    margin-top: 22px;
-    width: 97px;
+    width: 105px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 12px;
+    font-weight: 400;
 }
 
 .mem-info > .mem-setpage {
-    position:absolute;
-    margin-top:148px;
     width:140px;
-    margin-left:0px;
     font-size:12px;
+    margin: 5px 0 0 0px;
+    display: inline-block;
+}
+
+.mem-info > .mem-setting i::before{
+	content: '';
+	position: absolute;
+	margin: 3px 0 0 0px;
+	width: 18px;
+	height: 18px;
+	background: url(/images/icon/icon_left_dev.png) no-repeat;
+	background-position: -3px -136px;
+	
 }
 
 .mem-info > .mem-setting {
-    position:absolute;
-    margin-top:144px;
-    width:50px;
-    text-align:right;
-    margin-left:114px;
+    width: 18px;
+    display: inline-block;
+    position: relative;
+    top: -3px;
 }
 
 .nav-li.backColor{
-    background-color: #001D3A;
-    margin-left: -30px;
+    background-color: #1f65d1;
     width: 207px;
 }
 
-.nav-li.backColor > span{
+/* .nav-li.backColor > span{
     margin-left: 30px;
-}
+} */
 
 .justify > a > img {
     padding-left: 9px
@@ -199,11 +254,50 @@ a.dropBtn {
     margin-right:15px;
 }
 
+#leftMenu span.side-nav-img{
+	width: 21px; 
+	height: 21px;
+    background-image: url(/images/icon/icon_left_dev.png);
+    background-position: 0px 0px;
+    display: inline-block;
+    padding: 0px;
+    top: 5px;
+    margin-right: 17px;
+}
+
+#leftMenu div.side-nav-ul:nth-of-type(2) span.side-nav-img{
+	background-position: 0px -19px;
+}
+
+#leftMenu div.side-nav-ul:nth-of-type(3) span.side-nav-img{
+	background-position: 0px -37px;
+}
+
+#leftMenu div.side-nav-ul:nth-of-type(4) span.side-nav-img{
+	background-position: 0px -57px;
+}
+
+#leftMenu div.side-nav-ul:nth-of-type(5) span.side-nav-img{
+	background-position: 0px -76px;
+}
+
+#leftMenu div.side-nav-ul:nth-of-type(6) span.side-nav-img{
+	background-position: 0px -95px;
+}
+
 .side-logout {
-    margin:30px;
+    position: relative;
+    top: -5px;
 }
 
 .side-logout-link {
     font-size:12px;
     color:#ffffff;
+	margin-left: 25px;
 }
+
+.side-logout-link:hover{
+	color:#fff;
+}
+
+

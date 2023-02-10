@@ -7,7 +7,7 @@
 .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2,
 .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11,
 .col-xl-12, .col-xl, .col-xl-auto {
-    padding: 0.1em;
+    padding: 0px;
 }
 /*
 form {
@@ -15,16 +15,18 @@ form {
 }
  */
 fieldset {
-    padding: 5px;
+    padding: 0px;
     border: 1px solid #888;
 }
 
 legend {
     width: auto;
     padding: 0px 0px;
-    margin: 0px;
-    font-size: 1rem;
+    margin: 0px 0 16px 0;
+    font-size: 20px;
     font-weight: bold;
+    color: #222 !important;
+   
 }
 
 textarea {
@@ -87,15 +89,7 @@ tfoot th {
 }
 
 .middle-button-dark {
-    background: #495057;
-    color:#fff;
-    border-radius: 4px;
-    border:1px solid #495057;
-    box-shadow: 0px 0px 2px 0px;
-}
-
-.middle-button-dark:hover {
-    background: #495057;
+    background: #2a5dc4;
     color:#fff;
     border-radius: 4px;
     border:1px solid #495057;
@@ -155,7 +149,7 @@ tfoot th {
     margin: 0 auto;
     background-color: #fff;
     border-radius: 3px;
-    padding: 30px;
+    padding: 30px 30px 25px 30px;
 }
 
 .box h2 {
@@ -202,7 +196,7 @@ tfoot th {
 }
 
 .k-grid-header th {
-    background-color: #E2E4E5;
+    background-color: #f6f6f6;
     font-size: 12px;
     padding: 2px;
     color: #000;
@@ -225,13 +219,14 @@ tfoot th {
 }
 
 .summary {
-    border-bottom: 1px solid #E2E4E5;
+    border-bottom: 2px solid #0063d3;
+    box-sizing: border-box;
+    padding: 25px 0 15px 0;
 }
 
 .contents {
-    padding: 10px;
+    padding: 15px 0 0 0;
     margin: 0 auto;
-    background-color: #EDF0F2;
 }
 
 html.k-webkit.k-webkit90 {
@@ -250,7 +245,7 @@ html.k-webkit.k-webkit90 {
 
 .contents label {
     padding-bottom: 10px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: normal;
 }
 
@@ -279,12 +274,12 @@ html.k-webkit.k-webkit90 {
 }
 
 .padding {
-    padding: 0.3em;
+    padding: 0px;
 }
 
 /* grid selected 색상 변경 */
 .k-grid td.k-state-selected, .k-grid tr.k-state-selected>td {
-    background-color: #ff7c0a;
+    background-color: #fdf3cf;
 }
 
 .k-grid td.k-state-focused {
@@ -308,12 +303,11 @@ html.k-webkit.k-webkit90 {
 .cont-wrapper-page-grid{
     margin-left: 0px;
     transition-duration: 1s;
-    padding: 0px 5px 0px;
     background-color: #fff;
 }
 
 .cont-wrapper-page-grid.block{
-    margin-left: 600px;
+    margin-left: 540px;
     transition-duration: 1s;
     padding: 10px;
     background-color: #fff;
@@ -328,7 +322,7 @@ html.k-webkit.k-webkit90 {
 }
 
 .insert_pop {
-    left: -393px;
+    left: -600px;
     top:0px;
     position:absolute;
     transition-duration: 1s;
@@ -351,8 +345,8 @@ fieldset {
     overflow: hidden;
     position: relative;
     display: inline-block;
-    width: 50px;
-    height: 18px;
+    width: 58px;
+    height: 26px;
     -webkit-border-radius: 13px;
     -moz-border-radius: 13px;
     border-radius: 13px;
@@ -387,8 +381,8 @@ fieldset {
     top: 1px;
     left: 1px;
     display: block;
-    width: 16px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     background-color: #fff;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -401,16 +395,14 @@ fieldset {
 .label_on-off .on {
     display: none;
     padding-left: 10px;
-    vertical-align: top;
 }
 
 .label_on-off .off {
-    padding-left: 25px;
-    vertical-align: top;
+    padding-left: 29px;
 }
 
 .input_on-off:checked + .label_on-off {
-    background-color: #0bba82;
+    background-color: #0293e6;
 }
 
 .input_on-off:checked + .label_on-off .on {
@@ -447,9 +439,9 @@ fieldset {
 }
 
 .big-name {
-    color: #b2b9c4;
+    color: #1d54c4;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 12px;
     align-self: center;
 }
 
@@ -466,6 +458,7 @@ fieldset {
 div#layer1 {
     height: 100vh;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .textarea {
@@ -497,8 +490,12 @@ div#layer1 {
 
 .radio-or-checkBox > .label-margin {
     align-self: flex-end;
-    margin: 0.3em;
+    margin: 0 8px 0 0;
     padding-bottom: 5px;
+}
+
+.radio-or-checkBox input[type="radio"] + label:last-of-type{
+	margin-right: 8.5px;
 }
 
 .radio-or-checkBox > .label-margin > input {
@@ -525,7 +522,7 @@ div#layer1 {
 }
 
 .textBox-in-icon > i > img{
-    width: 31px;
+    width: 26px;
     cursor: pointer;
 }
 
@@ -552,7 +549,7 @@ div#layer1 {
 
 /* 버튼 css */
 .btn-b {
-    color: #0A8DFF;
+    color: #222;
 }
 
 .btn-g {
@@ -560,11 +557,11 @@ div#layer1 {
 }
 
 .btn-h {
-    color: #ff7c0a;
+    color: #0041c4;
 }
 
 .btn-x{
-    color: #008d62;
+    color: #0cb175;
 }
 
 .btn-r {
@@ -580,12 +577,15 @@ div#layer1 {
 }
 
 .padding > .k-button {
-    width: 100px;
-    height: 30px;
+    width: 80px;
+    height: 26px;
     background: #fff;
     border-radius: 4px;
-    box-shadow: 0px 0px 2px 0px;
-    margin: 0.3em;
+    margin: 0 8px 0 0;
+}
+
+.padding > .k-button:last-of-type{
+	margin-right:0px;
 }
 
 .searchInputBox {
@@ -618,15 +618,16 @@ div#layer1 {
 .radio-or-checkBox input[type="checkbox"] + label{
     display:inline-block;
     position:relative;
-    padding-left:26px;
+    padding-left:20px;
     cursor:pointer;
+    top: -2px;
 }
 
 .radio-or-checkBox input[type="checkbox"] + label:before{
     content:'';
     position:absolute;
     left:0;
-    top:3px;
+    top:2px;
     width: 15px;
     height: 15px;
     text-align:center;
@@ -640,18 +641,23 @@ div#layer1 {
     content: '';
     position:absolute;
     top:3px;
-    left:0;
-    width: 15px;
-    height: 15px;
-    background-image: url('/images/icon/chk_btn.png');
+    left:-1.5px;
+    width: 21px;
+    height: 21px;
+    background-image: url(/images/icon/icon_left_dev.png);
+    background-position: -2px -200px;
     border-radius: 5px;
-    background-size: 15px;
+    background-size: 21px;
 }
 
 .insert-label {
     align-self: center;
     padding-bottom: 0;
     margin-bottom: -16px;
+}
+
+.myOrder{
+	background-color: #fff;
 }
 
 /* 권한관리 별도 설정 */
@@ -714,7 +720,7 @@ div#layer1 {
 .radio-or-checkBox input[type="radio"] + label{
     display:inline-block;
     position:relative;
-    padding-left:25px;
+    padding-left:20px;
     cursor:pointer;
 }
 
@@ -723,7 +729,7 @@ div#layer1 {
     '';
     position:
     absolute;
-    left:0; top:3px;
+    left:0; top:2px;
     width: 15px;
     height: 15px;
     text-align:
@@ -738,7 +744,7 @@ div#layer1 {
 .radio-or-checkBox input[type="radio"]:disabled + label:before{
     content:'';
     position:absolute;
-    left:0; top:3px;
+    left:0; top: 2px;
     width:20px;
     height:20px;
     text-align:center;
@@ -751,14 +757,15 @@ div#layer1 {
 
 .radio-or-checkBox input[type="radio"]:checked + label:after{
     content: '';
-    position:
-    absolute;
-    top:3px; left:0;
-    width: 15px;
-    height: 15px;
-    background-image: url('/images/icon/radio_btn.png');
+    position: absolute;
+    top: 2px;
+    left:-1.5px;
+    width: 21px;
+    height: 21px;
+    background-image: url(/images/icon/icon_left_dev.png);
+    background-position: -2px -209px;
     border-radius: 10px;
-    background-size: 15px;
+    background-size: 22px;
 }
 
 /* 날짜버튼 설정 */
@@ -812,6 +819,7 @@ div#layer1 {
 .insertClose {
     position: absolute;
     border-radius: 0px 10px 10px 0px;
+    top: 33px;
     left: calc(90%);
     transition-duration: 0.5s;
     transition-delay: 0.8s;
@@ -819,6 +827,7 @@ div#layer1 {
 
 .insertClose.block {
     position: absolute;
+    top: 33px;
     left: calc(100%);
     background: #002b57;
     color: white;
@@ -833,10 +842,14 @@ div#layer1 {
     FONT-VARIANT: JIS04;
     max-width: 100%;
     max-height: 100%;
+    border-top: 2px solid #434343;
+    box-sizing: border-box;
+    height:calc(100vh - 330px);
 }
 
 .div-min-col-1{
     min-width: 90px;
+    margin-right: 10px;
 }
 
 .middle-name strong {
@@ -867,9 +880,9 @@ div#layer1 {
     font-size: smaller;
     background: #fff !important;
     border-radius: 4px;
-    box-shadow: 0px 0px 2px 0px;
-    color: #0A8DFF !important;
-    height: 20px;
+    color: #222222 !important;
+    height: 26px;
+    border: 1px solid #222;
 }
 
 /* 열기, 접기 부분 */
@@ -879,7 +892,7 @@ div#layer1 {
 
 .big-name-div{
     width: 100px;
-    font-size: initial;
+    font-size: 12px;
 }
 
 .addr-text-box {
@@ -888,7 +901,7 @@ div#layer1 {
 }
 
 .form-group{
-    margin-bottom: 0;
+    margin: 5px 0 0 0;
 }
 
 .k-tooltip-content {

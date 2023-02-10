@@ -371,7 +371,7 @@ kendo-sortable {
 }
 
 .k-link{
-    font-size: 13px;
+    font-size: 12px;
 }
 .k-link:hover {
     color: inherit;
@@ -5867,7 +5867,7 @@ kendo-sortable {
     width: 3em;
 }
 .k-pager-sizes{
-    font-size: 13px;
+    font-size: 12px;
 }
 .k-pager-wrap .k-pager-sizes .k-dropdown,
 .k-pager-wrap .k-pager-sizes>select {
@@ -6097,8 +6097,9 @@ kendo-sortable {
 }
 
 .k-pager-numbers .k-state-selected {
-    color: #fff;
-    background-color: #ff6358
+    color: black;
+    border: 2px solid #0041c4;
+    background-color: transparent;
 }
 
 .k-button {
