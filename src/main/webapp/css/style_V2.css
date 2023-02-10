@@ -1,5 +1,177 @@
 @charset "UTF-8";
 
+/* 공통 S */
+
+/* width 값 조절 */
+.wd58{
+	width: 58px !important;
+}
+
+.wd90{
+	width: 90px !important;
+}
+
+.wd100{
+	width: 100px !important;
+}
+
+.wd170{
+	width: 170px !important;
+}
+
+.wd190{
+	width: 190px !important;
+}
+
+.wd290{
+	width: 290px !important;
+}
+
+/* padding 값 조절 */
+.p30 {
+    padding: 8px;
+}
+
+.pt10{
+	padding-top: 10px
+}
+
+.pt15{
+	padding-top: 15px
+}
+
+.pt20{
+	padding-top: 20px;
+}
+
+.pr8{
+	padding-right: 8px
+}
+
+.pl8{
+	padding-left: 8px
+}
+
+.pb10 {
+    padding-bottom: 10px !important;;
+}
+
+.pb15 {
+    padding-bottom: 15px;
+}
+
+.pb16 {
+    padding-bottom: 16px;
+}
+
+.pb20 {
+    padding-bottom: 20px;
+}
+
+.pb25 {
+    padding-bottom: 25px;
+}
+
+.pb30 {
+    padding-bottom: 30px;
+}
+
+.pb35 {
+    padding-bottom: 35px;
+}
+
+.pb50 {
+    padding-bottom: 50px;
+}
+
+/* margin 값 조절 */
+.mb15 {
+    margin-bottom: 15px !important;
+}
+
+.mb20 {
+    margin-bottom: 20px !important;
+}
+
+.mt0{
+	margin-top: 0px !important;
+}
+
+.mt10{
+	margin-top: 10px !important;
+}
+
+.mt15{
+	margin-top: 15px;
+}
+
+.mt20{
+	margin-top: 20px !important;;
+}
+
+.mt21{
+	margin-top: 21px;
+}
+
+.mt30{
+	margin-top: 30px !important;;
+}
+
+.mr0{
+	margin-right: 0px !important;
+}
+
+.mr7{
+	margin-right: 7px !important;
+}
+
+.mr10{
+	margin-right: 10px !important;
+}
+
+
+/* border 값  */
+.bortop{
+	border-top: 1px solid #dcdcdc;
+}
+
+/* 버튼  */
+.btn_58{
+	width: 58px !important;
+	height: 26px !important;
+	font-size: 12px;
+}
+
+.btn_b{
+	background-color: #2a5dc4 !important;
+	color: #fff;
+	padding: 4px 13px;
+}
+
+.btn_black{
+	background-color: #3b3b3b !important;
+	color: #fff !important;;
+	padding: 4px 0px;
+}
+
+#groupCount .btn_g{
+	background-color: #00a570 !important;;
+	color: #fff;
+	padding: 4px 13px;
+}
+
+#groupCount .btn_gray{
+	background-color: #dcdcdc !important;;
+	color: #626262 !important;;
+	padding: 4px 13px;
+}
+.btn_b{
+	background-color: #2a5dc4 !important;
+	color: #fff;
+	padding: 4px 13px;
+}
+/* 공통 E */
+
 /* 사이드메뉴 S */
 .side-nav-btn{
 	width: 30px;
@@ -658,3 +830,96 @@
 }
 
 /* 조직정보 E*/
+
+
+/* 로그인화면 S */
+
+.login_wrap{
+	display: flex;
+	align-items: center;
+	height: 100%;
+	background-color: #ebebeb;
+}
+
+.login_wrap .login_cont01{
+	width: 60%;
+	min-width: 890px;
+	height: 100%;
+	background: url(/images/login_img.png) no-repeat;
+	background-size: cover;
+	display: flex;
+	align-items: center;
+}
+
+.login_wrap .login_cont01 h2{
+	font-size: 0px;
+	width: 289px;
+	height: 126px;
+	background: url(/images/login_txt.png);
+	margin: auto;
+}
+
+.login_wrap .login_cont02{
+	width: 40%;
+	max-width: 500px;
+	height: 100%;
+	display: grid;
+	align-content: center;
+	position: relative;
+}
+
+.login_wrap .login_cont02 .logo{
+	margin: auto;
+}
+
+.login_wrap .login_cont02 label{
+	font-weight: 500;
+	font-size: 14px;
+}
+
+.login_wrap .login_cont02 label a{
+	color: #222;
+	text-decoration: none;
+}
+
+.login_wrap .login_cont02 input{
+	height: 40px;
+}
+
+.login_wrap .i-1cont .btn_b{
+	width: 250px;
+	height: 40px;
+	border-radius: 7px;
+}
+
+.login_wrap .i-1cont .btn_b button{
+	width: 100%;
+	height: 100%;
+	border: none;
+	font-size: 14px;
+}
+
+.login_wrap .copyRight{
+	color: #888888;
+	font-size: 12px;
+	text-align: center;
+	position: absolute;
+	bottom: 30px;
+}
+
+.login_wrap .i-1cont{
+	width: 250px;
+	margin: auto; 
+	color: #222;
+}
+
+.id_find a{
+	margin-right: 10px;
+}
+
+.id_find a:last-of-type{
+	margin-right: 0px;
+	margin-left: 10px;
+}
+
+/* 로그인화면 E */

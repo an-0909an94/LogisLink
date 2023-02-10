@@ -26,7 +26,7 @@
 	<script type="text/javascript" src="<c:url value='/js/jquery.min.js'/>"></script>
 	<script type="text/javascript" src="<c:url value='/js/kendo.all.min.js'/>"></script>
 </head>
-<body style="background: #000000;">
+<body>
 
 <style>
 .video-wrap {position:relative; padding-bottom:56.25%; padding-top:0px; height:0; overflow:hidden; pointer-events: none; }
@@ -37,42 +37,51 @@
 input:focus {outline: none;}
 </style>
 
-<div style="position:absolute;border:0px solid #e9e9e9;z-index:10000;top:10px;left:10px;">
-    <div class="logo"><img src="http://abt.logis-link.co.kr/images/logo.png"></div>
-</div>
 
-<div style="position:absolute; width:100%; border:0px solid #e9e9e9;z-index:10000;top:120px;left:5%;">
-	<h2 style="padding-top:50px; font-size:50px; letter-spacing:-1.0px; color:#ffffff; text-shadow: 1px 1px 1px #000000;">최적의 운송 관리 시스템 <span>로지스링크</span></h2>
-</div>
-
-<div class="cont-w" style="position:absolute;z-index:10000;top:300px;left:5%;">
-	<div class="i-1cont">
-	    <div class="form">
-	      <form id="f" name="f" method="post">
-		      <div class="f-w">
-		            <div class="id pb25">
-		                <label for="" class="pb10" style="display:block; text-shadow: 1px 1px 1px #000000;">아이디</label>
-		                <input type="text" name="userId" id="userId" onkeypress="if(event.which==13){goLogin();}" style="background-color:#ffffff; filter: zoom: 1; alpha(opacity=20);border:1px solid #797979;-webkit-box-shadow: 0 0 0 1000px #ffffff inset; -webkit-text-fill-color: #000000;">
-		            </div>
-		            <div class="pw pb50">
-		                <label for="" class="pb10" style="display:inline-block; text-shadow: 1px 1px 1px #000000;">비밀번호</label>
-		                <input type="password" name="passwd" id="passwd" onkeypress="if(event.which==13){goLogin();}" style="background-color:#ffffff; filter: zoom: 1; alpha(opacity=20);border:1px solid #797979;-webkit-box-shadow: 0 0 0 1000px #ffffff inset;-webkit-text-fill-color: #000000;">
-		            </div>
-		            <div class="go-log pb25">
-		                <button type="button" style="background-color:#fa0813; filter: zoom: 1; alpha(opacity=80);opacity: 0.8; border:0px solid #181818;" onclick="goLogin();">로그인</button>
-		            </div>
-		            <div class="id pb25">
-		                <label style="display: block;text-align:center;">
-		                <a href="/join.do" style="text-decoration: none; color:#ffffff; text-shadow: 1px 1px 1px #000000;">회원가입</a> |
-		                <a href="#" onclick="popFindUserInfo();" style="text-decoration: none; color:#ffffff; text-shadow: 1px 1px 1px #000000;">ID / 비밀번호 찾기</a>
-		                </label>
-		            </div>
-		      </div>
-	      </form>
+<div class="login_wrap">
+	<div class="login_cont01">
+		<h2>최적의 운송 관리 시스템 로지스링크</h2>
+	</div>
+	
+	<div class="login_cont02">
+		
+	    <div class="logo pb50">
+	    	<img src="/images/logislink_logo_b.png">
 	    </div>
+		
+		<div class="i-1cont">
+		    <div class="form">
+		      <form id="f" name="f" method="post">
+			      <div class="f-w">
+			            <div class="id pb20">
+			                <label for="" class="pb5" style="display:block;">아이디</label>
+			                <input type="text" name="userId" id="userId" onkeypress="if(event.which==13){goLogin();}" style="background-color:#ffffff; filter: zoom: 1; alpha(opacity=20);border:1px solid #797979;-webkit-box-shadow: 0 0 0 1000px #ffffff inset; -webkit-text-fill-color: #000000;">
+			            </div>
+			            <div class="pw pb30">
+			                <label for="" class="pb5" style="display:inline-block;">비밀번호</label>
+			                <input type="password" name="passwd" id="passwd" onkeypress="if(event.which==13){goLogin();}" style="background-color:#ffffff; filter: zoom: 1; alpha(opacity=20);border:1px solid #797979;-webkit-box-shadow: 0 0 0 1000px #ffffff inset;-webkit-text-fill-color: #000000;">
+			            </div>
+			            <div class="go-log btn_b">
+			                <button type="button" onclick="goLogin();">로그인</button>
+			            </div>
+			            <div class="id pt10 id_find">
+			                <label style="display: block;text-align:center;">
+			                <a href="/join.do">회원가입</a> |
+			                <a href="#" onclick="popFindUserInfo();">ID / 비밀번호 찾기</a>
+			                </label>
+			            </div>
+			      </div>
+		      </form>
+		    </div>
+		</div>
+		
+		<!-- 카피라이트 / 기존소스  -->
+		<div class="copyRight">
+			<span>로지스링크 | 전화 : 02-783-1436 | 메일: contact@logis-link.co.kr <br> | 서울시 영등포구 국회대로 70길 12 대산빌딩 1203호 | (c) 2021 Logislink All Rights Reserved</span>
+		</div>
+		
 	</div>
 </div>
-
 <!-- 팝업시 -->
 <!-- <div id="hd_pop" style="display:none;"> -->
 <!--     <div id="hd_pops_35" class="hd_pops" style="top:300px;left:50px"> -->
@@ -88,7 +97,7 @@ input:focus {outline: none;}
 
 
 <!-- 영상컨트롤 -->
-<div class="video-wrap">
+<div class="video-wrap" style="display: none;">
     <iframe id="video" width="100%" height="315" src="https://player.vimeo.com/video/701761428?background=1&autoplay=1&loop=1&byline=0&title=0&quality=720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen="" allow="autoplay"></iframe>
 </div>
 
@@ -98,10 +107,7 @@ input:focus {outline: none;}
 <script src="https://player.vimeo.com/api/player.js"></script>
 -->
 
-<!-- 카피라이트 / 기존소스  -->
-<div style="position:absolute; width:100%; padding:30px; text-align:center; bottom:0px; text-shadow: 1px 1px 1px #000000;">
-	<span style="color:#fbfbfc; font-size:14px;">로지스링크 | 전화 : 02-783-1436 | 메일: contact@logis-link.co.kr | 서울시 영등포구 국회대로 70길 12 대산빌딩 1203호 | (c) 2021 Logislink All Rights Reserved</span>
-</div>
+
 
 <div id="divFindUserInfo"></div>
 
