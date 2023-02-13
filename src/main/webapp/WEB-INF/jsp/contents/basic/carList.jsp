@@ -33,21 +33,21 @@
 						<option value="A.BIZ_NAME">--사업자상호--</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name">
+				<div class="input-group input-group-sm col-2 middle-name div-min-col-1">
 				<strong>　</strong>
-				    <input type="text" id="searchValue" name="searchValue" class="form-control form-control-sm searchValue">
+				    <input type="text" id="searchValue" name="searchValue" style = "width:100%" class="form-control form-control-sm searchValue">
 				</div>	
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+				<div class="input-group input-group-sm col-2 middle-name div-min-col-1">
 				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="dangerGoodsUseYn" name="dangerGoodsUseYn">
+				    <select class="custom-select col-12" id="dangerGoodsUseYn" name="dangerGoodsUseYn" style="width:100%">
 						<option value="" selected>--위험물 운송 가능 여부--</option>
 		                <option value="Y">가능</option>
 		                <option value="N">불가</option>
 				    </select>
 				</div>	
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+				<div class="input-group input-group-sm col-2 middle-name div-min-col-1">
 				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="chemicalsUseYn" name="chemicalsUseYn">
+				    <select class="custom-select col-12" id="chemicalsUseYn" name="chemicalsUseYn" style="width:100%">
 						<option value="" selected>--유해 화학물질 운송 가능 여부--</option>
 		                <option value="Y">가능</option>
 		                <option value="N">불가</option>
@@ -68,21 +68,27 @@
 		                <option value="Y">있음</option>
 		                <option value="N">없음</option>
 				    </select>
-				</div>		
+				</div>
+				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+					<strong>&nbsp;</strong>
+					<select class="form-control" class="custom-select col-12" id="s_useYn" name="s_useYn">
+						<option value="" selected>--사용여부--</option>
+						<option value="Y">정상</option>
+						<option value="N">해지</option>
+					</select>
+				</div>
+				<!--
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>&nbsp;</strong>
 				    <select class="form-control" class="custom-select col-12" id="s_carMngCode" name="s_carMngCode"></select>
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="form-control" class="custom-select col-12" id="s_useYn" name="s_useYn">
-						<option value="" selected>--사용여부--</option>
-						<option value="Y">정상</option>
-						<option value="N">해지</option>
-				    </select>
-				</div>
+				-->
 			</div>
 			<div class="form-group row">
+				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+					<strong>&nbsp;</strong>
+					<select class="form-control" class="custom-select col-12" id="s_carMngCode" name="s_carMngCode"></select>
+				</div>
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>&nbsp;</strong>
 				    <select class="custom-select col-12" id="s_carSctnCode" name="s_carSctnCode"> </select>

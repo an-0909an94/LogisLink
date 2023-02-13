@@ -17,11 +17,11 @@
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
 				<div class="form-group row">
 					<!-- 22.06.24 이건욱 T11 > J41 추가 -->
-					<div class="input-group input-group-sm col-2 middle-name">
+					<div class="input-group input-group-sm col-2 middle-name div-min-col-1">
 						<strong>조직</strong>
 						<input type="text" id="c_custName" name="custName" style="width:100%;">
 					</div>
-					<div class="input-group input-group-sm col-2 middle-name">
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 						<strong>&nbsp;</strong>
 						<select id="s_deptName" name="deptName" class="custom-select col-12 form-control">
 							<option value="">--부서--</option>
@@ -36,9 +36,9 @@
 					    	<option value="userMobile">핸드폰</option>
 					    </select>
 					</div>
-					<div class="input-group input-group-sm col-2 middle-name">
+					<div class="input-group input-group-sm col-2 middle-name div-min-col-1" >
 						<strong>&nbsp;</strong>
-				    	<input type="text" id="t_searchUserValue" name="searchUserValue" class="form-control form-control-sm searchValue">
+				    	<input type="text" id="t_searchUserValue" name="searchUserValue" style="width:100%" class="form-control form-control-sm searchValue">
 					</div>
 					<!-- End -->
 					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">

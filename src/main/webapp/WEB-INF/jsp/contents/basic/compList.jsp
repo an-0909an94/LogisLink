@@ -8,7 +8,7 @@
 			<div class="form-group row">
                 <label class="col-form-label modal-big-name">부서명</label>
                 <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="deptName" name="deptName">
+                    <input type="text" class="form-control form-control-sm" id="deptName" name="deptName" style="width:88%">
                 </div>
             </div>
 		</div>
@@ -197,7 +197,10 @@
 									<div class="toolbar row">
 										<div class="tool_form col">
 											<div class="row">
+												<!--
 												<div style="height:calc(100vh - 709px)" id="comp_list"></div>
+												-->
+												<div style="height:300px" id="comp_list"></div>
 											</div>
 										</div>
 									</div><!-- /toolbar -->

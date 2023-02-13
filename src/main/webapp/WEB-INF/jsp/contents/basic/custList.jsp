@@ -53,7 +53,7 @@
 				</div>
 				<div class="input-group input-group-sm col-2 middle-name div-min-col-1">
 				<strong>　</strong>
-				    <input type="text" id="searchValue" name="searchValue" class="form-control form-control-sm searchValue">
+				    <input type="text" id="searchValue" name="searchValue" style="width:100%" class="form-control form-control-sm searchValue">
 				</div>
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				<strong>&nbsp;</strong>

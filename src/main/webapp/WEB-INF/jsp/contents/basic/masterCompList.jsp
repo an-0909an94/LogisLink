@@ -14,20 +14,17 @@
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
 			<div class="form-group row">
-				<div class="input-group input-group-sm col-1 middle-name">
-				<strong>&nbsp;</strong>
+				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 				    <select class="custom-select col-12" id="searchColumn" name="searchColumn">
 						<option value="s_custId">--거래처ID--</option>
 						<option value="s_bizName">--상호--</option>
 						<option value="s_bizNum">--사업자번호--</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm col-3 middle-name">
-				<strong>　</strong>
-				    <input type="text" id="searchValue" name="searchValue" class="form-control form-control-sm searchValue">
+				<div class="input-group input-group-sm col-3 div-min-col-1 middle-name">
+				    <input type="text" id="searchValue" name="searchValue" style="width:100%" class="form-control form-control-sm searchValue">
 				</div>
 				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
 				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
 				</div>
 				
