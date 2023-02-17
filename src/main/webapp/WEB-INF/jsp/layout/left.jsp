@@ -256,13 +256,13 @@ $(document).ready(function(){
 		$(".sub-li-wrap").slideUp(100);		
 				
 		if($(this).is(".backColor") === true) {
-			//닫기
+			//메뉴 닫기
 			$(this).next(".sub-li-wrap").removeClass("backColor");
 			$(this).removeClass("backColor");
 		}
 		
 		else {
-			//열기
+			//메뉴 열기
 			$(".nav-li").next(".sub-li-wrap").removeClass("backColor");
 			$(".nav-li").removeClass("backColor");
 			$(this).next(".sub-li-wrap").addClass("backColor");
@@ -272,9 +272,9 @@ $(document).ready(function(){
 		
 	});
 	
+	
 	//nav 접기 펼치기
 	$('.side-nav-btn').on('click',function(){
-		//$('.sub-li-wrap').removeClass('sub-li-wrap-atv');
 		
 		//content 영역
 		$('.header').toggleClass('header-atv');
@@ -287,7 +287,8 @@ $(document).ready(function(){
 		$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv'); //접었을 때 메뉴 텍스트 삭제
 		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv'); //메뉴 우측 화살표 아이콘 돌아감
 		$('.nav-li').removeClass('backColor').toggleClass('backColor-atv');
-		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv');
+		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv')
+		
 		
 		
 		// 로그인 정보
@@ -312,10 +313,16 @@ $(document).ready(function(){
 		$('.cont-body').toggleClass('cont-body-atv');
 	});
 	
-	$('.side-nav-btn-atv').on('click',function(){
-		
-	})
+	$('.side-nav-btn').on('click',function(){
+		$('.sub-li-wrap-atv').hide()
+	});
 
+	// 이거 월요일에 해야댐
+	$('.nav-atv #leftMenu .side-nav-ul').on('click',function(){
+		console.log('하이');
+		$(this).children('.nav-li').addClass('see').removeClass('backColor-atv');
+	});
+	
 	
 	//검색값 입력 후 enter key event
 	if($(".searchValue").length > 0) {

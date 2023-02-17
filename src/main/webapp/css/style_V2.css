@@ -288,8 +288,14 @@
 }
 
 .nav-li.backColor-atv{
-	width: 90px !important;
+	width: 84% !important;
 	background-color: transparent;
+	cursor: pointer;
+	margin: auto;
+}
+
+.side-nav-ul-atv{
+	background-color: red;
 }
 
 .nav-li.backColor-atv:hover{
@@ -298,7 +304,11 @@
 	margin: 3px auto;
 	border-radius: 15px;
 	cursor: pointer;
-} /*접힌 메뉴에서 아이콘 호버*/
+}/*접힌 메뉴에서 아이콘 호버*/
+
+.see{
+	background-color: red;
+}
 
 .mem-info-wrapper-atv{
 	width: 80%;
