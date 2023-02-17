@@ -1,45 +1,47 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="oms_header">
-	<form id="fSearch" method="POST" autocomplete="off" onSubmit="return false;">
+<div class="oms_header omsOrderLocationList">
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<p style="display: inline;" id="headerTitle">상황실</p>
-			<div style="display: inline; float: right;" id="groupCount" class="hdr-tit"></div>
+		</div>
+		<div style="display: inline;" id="groupCount" class="hdr-tit"></div>
+	</div>
+	<div class="contents">
+		<form id="fSearch" method="POST" autocomplete="off" onSubmit="return false;">
 			<div style="display: inline; vertical-align: top;" class="hdr-tit">
-			    <input style="padding: 0;" type="text" id="fromDate" name="fromDate">
-				<span style="margin-top: 31px;">~</span>
-			    <input style="padding: 0;" type="text" id="toDate" name="toDate">
+			    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd90">
+				<span>~</span>
+			    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="wd90">
 		    	<c:if test="${masterYn eq 'Y'}">
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 mr10 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select col-12" id="deptId" name="deptId"></select>
 					</div>
 				</c:if>
-			    <button onclick="goList()" type="button" style="border-radius:4px;display: inherit;width: 90px;" class="form-control form-control-sm"><i class="k-icon k-i-search"></i>검색</button>
+			    <button onclick="goList()" type="button" style="display: inherit;" class="form-control form-control-sm wd90 mr10"><i class="k-icon k-i-search"></i>검색</button>
 			</div>
-			<div style="display: inline;" class="hdr-tit">자동새로고침
-            	<input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
+			<div style="display: inline;" class="hdr-tit autoRefresh">자동새로고침
+	           	<input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
 				<label for="autoRefresh" class="label_on-off" style="position: absolute;margin: 0px 0px 0px 6px;">
 				  <span class="marble"></span>
-				  <span class="on">on</span>
-				  <span class="off">off</span>
+				  <span class="on">ON</span>
+				  <span class="off">OFF</span>
 				</label>
 			</div>
+		    <input type="hidden" name="locationSLat" id="locationSLat">
+		    <input type="hidden" name="locationSLon" id="locationSLon">
+		    <input type="hidden" name="locationELat" id="locationELat">
+		    <input type="hidden" name="locationELon" id="locationELon">
+		    <input type="hidden" name="fromDate" id="fFromDate">
+		    <input type="hidden" name="toDate" id="fToDate">
+		</form>
+		<div id="group-list" class="cont-wrapper-page-grid mt15 bortop pt20">
+			<div id="location" style="width: 25%; float: left;">
+				<div id="map" class="map" style="min-height:846px;height:100%;margin-top:0px;"></div>
+			</div>
+	   		<div id="grid" style="width: 75%; float: right;"></div>
 		</div>
-	</div>
-	    <input type="hidden" name="locationSLat" id="locationSLat">
-	    <input type="hidden" name="locationSLon" id="locationSLon">
-	    <input type="hidden" name="locationELat" id="locationELat">
-	    <input type="hidden" name="locationELon" id="locationELon">
-	    <input type="hidden" name="fromDate" id="fFromDate">
-	    <input type="hidden" name="toDate" id="fToDate">
-	</form>
-	<div id="group-list" class="cont-wrapper-page-grid">
-		<div id="location" style="width: 25%; float: left;">
-			<div id="map" class="map" style="min-height:846px;height:100%;margin-top:0px;"></div>
-		</div>
-   		<div id="grid" style="width: 75%; float: right;"></div>
 	</div>
 </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b05648cb013320391f8186c36a97862f"></script>
@@ -285,13 +287,13 @@ function simpleOrderData(){
 		},
 		success: function(data){
 			var	groupCount = ""
-			groupCount = "<p style=\"color: #3f75c1; display: inline;\">접수 " + data.data.registerOrderCount + "건</p> , " +
-						 "<p style=\"color: #000000; display: inline;\">배차 " + data.data.dispatchOrderCount + "건</p> / " +
-						 "<p style=\"color: #000000; display: inline;\">입차 " + data.data.entranceOrderCount + "건</p> / " +
-						 "<p style=\"color: #000000; display: inline;\">이동 " + data.data.moveOrderCount + "건</p> / " +
-						 "<p style=\"color: #000000; display: inline;\">도착 " + data.data.arrivallOrderCount + "건</p> , " +
-						 "<p style=\"color: #e84524; display: inline;\">취소 " + data.data.cancelOrderCount + "건</p> , " + 
-						 "<p style=\"color: #000000; display: inline;\">운송비 " + Util.nvl(Util.formatNumber(data.data.sumBuyCharge),'0') + "원</p>";
+			groupCount = "<i class=\"btn_b\">접수 " + data.data.registerOrderCount + "건</i> " +
+						 "<i class=\"btn_g\">배차 " + data.data.dispatchOrderCount + "건</i> " +
+						 "<i class=\"btn_gray\">취소 " + data.data.cancelOrderCount + "건</i>" + 
+						 "<i style=\"color: #000000; display: inline; margin-left: 7px;\">입차 " + data.data.entranceOrderCount + "건</i>, " +
+						 "<i style=\"color: #000000; display: inline;\">이동 " + data.data.moveOrderCount + "건</i>, " +
+						 "<i style=\"color: #000000; display: inline;\">도착 " + data.data.arrivallOrderCount + "건</i>, " +
+						 "<i style=\"color: #000000; display: inline;\">운송비 " + Util.nvl(Util.formatNumber(data.data.sumBuyCharge),'0') + "원</i>";
 // 						 "<p style=\"color: #000000; display: inline;\">운송비 " + Util.nvl(Util.formatNumber(data.data.sumBuyCharge+data.data.sumAddCharge),'0') + "원</p>";
 			$("#groupCount").html(groupCount);
 		}

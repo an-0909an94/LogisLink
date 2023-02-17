@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="header">
+<div class="header orderSituation">
 	<div style="justify-content: space-between; display: flex;" class="summary p30">
 		<div class="hdr-tit">
 			<P id="headerTitle">상황실</P>
@@ -11,63 +11,53 @@
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt">
 			<input type="hidden" id="hoverText">
-			<div class="tool_form col">
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>담당부서</strong>
-				    <select class="form-control" class="custom-select col-12" id="deptId" name="deptId">
-				    	<option>--부서명--</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>담당자명</strong>
-				    <select class="form-control" class="custom-select col-12" id="userId" name="userId">
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo0" value="01" checked/>
-                   	<label for="carSctnCodeNo0" class="label-margin">
-                   		<span>직영차</span>
-                   	</label>
-                </div>
-                <div class="input-group input-group-sm col radio-or-checkBox">
-                 	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo12" value="12" checked/>
-                   	<label for="carSctnCodeNo12" class="label-margin">
-                   		<span>장기용차</span>
-                   	</label>
-                   </div>
-				<div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo09" value="09"/>
-                   	<label for="carSctnCodeNo09" class="label-margin">
-                   		<span>협력사차량</span>
-                   	</label>
-                </div>
-                <div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo11" value="11"/>
-                   	<label for="carSctnCodeNo11" class="label-margin">
-                   		<span>외부용차</span>
-                   	</label>
-                </div>
-                <div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo13" value="13"/>
-                   	<label for="carSctnCodeNo13" class="label-margin">
-                   		<span>차주Pool</span>
-                   	</label>
-                </div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
-				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-				</div>
-                <div class="btn-row" style="margin-top:32px;">
-					<div class="tool_group">
-					 	자동새로고침
-                        <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
-						<label for="autoRefresh" class="label_on-off" style="vertical-align:middle;">
-							<span class="marble"></span>
-						    <span class="on">on</span>
-						    <span class="off">off</span>
-						</label>
+			<div class="tool_form col row">
+				<div class="row">
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+					    <select class="form-control" class="custom-select col-12" id="deptId" name="deptId">
+					    	<option>--부서명--</option>
+					    </select>
+					</div>
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+					    <select class="form-control" class="custom-select col-12" id="userId" name="userId">
+					    </select>
+					</div>
+					<div class="input-group input-group-sm col radio-or-checkBox">
+	                   	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo0" value="01" checked/>
+	                   	<label for="carSctnCodeNo0" class="label-margin">
+	                   		<span>직영차</span>
+	                   	</label>
 	                </div>
-				</div>
+	                <div class="input-group input-group-sm col radio-or-checkBox">
+	                 	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo12" value="12" checked/>
+	                   	<label for="carSctnCodeNo12" class="label-margin">
+	                   		<span>장기용차</span>
+	                   	</label>
+	                   </div>
+					<div class="input-group input-group-sm col radio-or-checkBox">
+	                   	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo09" value="09"/>
+	                   	<label for="carSctnCodeNo09" class="label-margin">
+	                   		<span>협력사차량</span>
+	                   	</label>
+	                </div>
+	                <div class="input-group input-group-sm col radio-or-checkBox">
+	                   	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo11" value="11"/>
+	                   	<label for="carSctnCodeNo11" class="label-margin">
+	                   		<span>외부용차</span>
+	                   	</label>
+	                </div>
+	                <div class="input-group input-group-sm col radio-or-checkBox">
+	                   	<input type="checkbox" name="carSctnCodes" id="carSctnCodeNo13" value="13"/>
+	                   	<label for="carSctnCodeNo13" class="label-margin">
+	                   		<span>차주Pool</span>
+	                   	</label>
+	                </div>
+                </div>
+                <div class="row">
+					<div class="btn_58 input-group input-group-sm middle-name">
+					    <button onclick="goList()" type="button" style="border-radius:4px" class="btn_58 form-control-sm middle-button-dark">검색</button>
+					</div>
+                </div>
 			</div>
 			</form>                
 			<!--  -->
@@ -75,6 +65,17 @@
 				<!-- f-wrap -->
 				<div class="k-wrap content">
 					<div class="lookup_table">
+						<div class="btn-row">
+							<div class="tool_group">
+							 	자동새로고침
+		                        <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
+								<label for="autoRefresh" class="label_on-off" style="vertical-align:middle;">
+									<span class="marble"></span>
+								    <span class="on">ON</span>
+								    <span class="off">OFF</span>
+								</label>
+			                </div>
+						</div>
 						<div style="min-width: 500px;">
 							<div style="height:calc(100vh - 287px)" id="grid"></div>
 							<!-- /table -->

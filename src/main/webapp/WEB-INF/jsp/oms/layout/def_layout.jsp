@@ -31,6 +31,8 @@ response.setHeader ("Cache-Control", "no-cache");
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/bootstrap.min.css'/>">
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css'/>">
 <link rel="stylesheet" type="text/css" href="<c:url value='/css/omsStyle.css?v=2'/>">
+<link rel="stylesheet" type="text/css" href="/css/style_V2.css">
+<link rel="stylesheet" type="text/css" href="/css/left_dev.css">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 

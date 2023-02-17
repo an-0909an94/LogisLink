@@ -15,10 +15,10 @@
                     <div class="editor">
                     <form id="f" data-toggle="validator" role="form">
 	                    <fieldset>
-	                        <legend id="user_legend">사용자 등록</legend>
-	                        <div class="form-group row">
-	                            <label class="col-form-label big-name">기본정보</label>
-	                            <div class="input-group input-group-sm col middle-name form-group">
+	                        <legend id="user_legend">사용자등록</legend>
+	                        <div class="form-group row gray_box">
+	                            <label class="col-form-label big-name">로그인정보</label>
+	                            <!-- <div class="input-group input-group-sm col middle-name form-group">
 	                            	<strong class="required">조직</strong>
 									<input type="hidden" name="custId" id="custId">
 									<input type="text" style="width: 100%;" name="custName" id="custName" required>
@@ -29,42 +29,44 @@
 									<input type="hidden" name="deptId" id="deptId">
 									<input type="text" style="width: 100%;" name="deptName" id="deptName" required>
                                     <div class="help-block with-errors"></div>
-	                            </div>
-	                        </div>
-	                        <div class="form-group row">
-	                            <label class="col-form-label"></label>
-	                            <div class="input-group input-group-sm col middle-name form-group">
+	                            </div> -->
+	                            
+	                            <div class="input-group input-group-sm wd190 mr10 middle-name form-group">
 	                            	<strong class="required">아이디</strong>
-	                                <input type="text" class="form-control form-control-sm" id="userId" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g,'');" required>
+	                                <input type="text" class="wd190 form-control form-control-sm" id="userId" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g,'');" required>
                                     <div class="help-block with-errors"></div>
 	                            </div>
-	                            <div class="input-group input-group-sm col middle-name">
+	                            <div class="input-group input-group-sm middle-name">
 	                            	<strong>아이디확인</strong>
 	                                <button class="form-control form-control-sm a-text-center" id="btn_chkUserId">중복확인</button>
 	                            </div>
-	                        </div>
-	                        
-	                        <div class="form-group row chgPasswd">
+	                            
 	                            <label class="col-form-label"></label>
-	                            <div class="col middle-name">
-	                                <button class="form-control a-text-center" id="btnChgPasswd">비밀번호 변경</button>
-	                            </div>
-	                       	</div>
-	                       	<div class="form-group row writePasswd">
-	                            <label class="col-form-label"></label>
-	                            <div class="col input-group middle-name form-group">
+	                            
+	                            <div class="wd190 mr10 input-group middle-name form-group">
 	                            	<strong class="required">비밀번호</strong>
 	                                <input type="password" class="form-control form-control-sm" id="passwd" pattern="^(?=.{4,265}$).*" 
 	                                data-pattern-error="4자리 이상 입력해 주세요.">
                                     <div class="help-block with-errors"></div>
 	                            </div>
-	                            <div class="col input-group middle-name form-group">
+	                            <div class="wd190 input-group middle-name form-group">
 	                            	<strong class="required">비밀번호 확인</strong>
 	                                <input type="password" class="form-control form-control-sm" id="passwd_comfirm" data-match="#passwd" 
 	                                data-match-error="비밀번호가 일치하지 않습니다.">
 	                                <div class="help-block with-errors"></div>
 	                            </div>
-	                       	</div>
+	                        </div>
+	                        
+	                        <!-- <div class="form-group row chgPasswd">
+	                            <label class="col-form-label"></label>
+	                            <div class="col middle-name">
+	                                <button class="form-control a-text-center" id="btnChgPasswd">비밀번호 변경</button>
+	                            </div>
+	                       	</div> 
+	                       	<div class="form-group row writePasswd">
+	                            <label class="col-form-label"></label>
+	                            
+	                       	</div>-->
 	                       	
 	                        <div class="form-group row">
 	                            <label class="col-form-label"></label>

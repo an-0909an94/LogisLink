@@ -220,7 +220,7 @@
 	</form>
 </div>
 
-<div class="header">
+<div class="header freightControl">
 	<div style="justify-content: space-between; display: flex;" class="summary p30">
 		<div class="hdr-tit">
 			<P id="headerTitle">운임관리</P>
@@ -232,14 +232,12 @@
 				<input type="hidden" name="sCustId" id="sCustId" class="hiddenValue">
 				<input type="hidden" name="driverId" id="driverId" class="hiddenValue">
 				<input type="hidden" name="vehicId" id="vehicId" class="hiddenValue">
-				<div class="form-group row">
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>상차일자</strong>
+				<div class="form-group row mt0">
+					<div class="input-group-sm col-1 middle-name">
 						<input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
 					</div>
-					<span style="margin-top: 31px;">~</span>
+					<span>~</span>
 					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>　</strong>
 						<input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
 					</div>
 
@@ -269,26 +267,22 @@
 					</div>
 
 					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>배차상태</strong>
 						<select class="form-control" class="custom-select col-12" id="sAllocState" name="sAllocState">
 							<option>--배차상태--</option>
 						</select>
 					</div>
 
 					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>배차부서명</strong>
 						<select class="form-control" class="custom-select col-12" id="sDeptId" name="sDeptId">
 							<option>--부서명--</option>
 						</select>
 					</div>
 
 					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>배차담당자</strong>
 						<select class="form-control" class="custom-select col-12" id="userId" name="userId"></select>
 					</div>
 
 					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>매출마감여부</strong>
 						<select class="form-control" class="custom-select col-12" id="sellFinishYn" name="sellFinishYn">
 							<option value="">매출마감여부</option>
 							<option value="Y">Y</option>
@@ -297,7 +291,6 @@
 					</div>
 
 					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>매입마감여부</strong>
 						<select class="form-control" class="custom-select col-12" id="buyFinishYn" name="buyFinishYn">
 							<option value="">매입마감여부</option>
 							<option value="Y">Y</option>
@@ -306,7 +299,6 @@
 					</div>
 
 					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>빠른지급여부</strong>
 						<select class="form-control" class="custom-select col-12" id="reqPayYn" name="reqPayYn">
 							<option value="">빠른지급여부</option>
 							<option value="Y">Y</option>
@@ -314,53 +306,48 @@
 						</select>
 					</div>
 				</div>
-
-				<div class="form-group row">
-					<div class="input-group input-group-sm col-2 middle-name">
-						<strong>거래처(화주)</strong>
-						<input type="text" id="sCustName" name="sCustName" style="width:100%;">
+				
+				<div class="form-group row" style="justify-content: space-between">
+					<div class="row">
+						<div class="wd190 mr10 input-group input-group-sm middle-name">
+							<input type="text" id="sCustName" name="sCustName" style="width:100%;">
+						</div>
+	
+						<div class="wd190 mr10 input-group input-group-sm middle-name">
+							<input type="text" id="driverValue" name="driverValue" style="width:100%;">
+						</div>
+	
+						<div class="wd190 mr10 input-group input-group-sm middle-name">
+							<input type="text" id="sTax" name="sTax" style="width:100%;" class="form-control form-control-sm searchValue">
+						</div>
+	
+						<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+							<select class="form-control" class="custom-select col-12" id="listSSido" name="listSSido">
+								<option>상차지</option>
+							</select>
+						</div>
+	
+						<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+							<select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
+								<option>하차지</option>
+							</select>
+						</div>
+	
+						<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+							<select class="custom-select col-12" id="orderStopYn" name="orderStopYn">
+								<option value="">선택해주세요.</option>
+								<option value="Y">있음</option>
+								<option value="N">없음</option>
+							</select>
+						</div>
 					</div>
-
-					<div class="input-group input-group-sm col-2 middle-name">
-						<strong>차량번호</strong>
-						<input type="text" id="driverValue" name="driverValue" style="width:100%;">
-					</div>
-
-					<div class="input-group input-group-sm col-2 middle-name">
-						<strong>계산서발행지</strong>
-						<input type="text" id="sTax" name="sTax" style="width:100%;" class="form-control form-control-sm searchValue">
-					</div>
-
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>상차지</strong>
-						<select class="form-control" class="custom-select col-12" id="listSSido" name="listSSido">
-							<option>상차지</option>
-						</select>
-					</div>
-
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>하차지</strong>
-						<select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
-							<option>하차지</option>
-						</select>
-					</div>
-
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>경유지 여부</strong>
-						<select class="custom-select col-12" id="orderStopYn" name="orderStopYn">
-							<option value="">선택해주세요.</option>
-							<option value="Y">있음</option>
-							<option value="N">없음</option>
-						</select>
-					</div>
-
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
-						<strong>　</strong>
-						<button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-					</div>
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
-						<strong>　</strong>
-						<button onclick="fReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
+					<div class="row">
+						<div class="btn_58 input-group input-group-sm middle-name mr10">
+							<button onclick="goList()" type="button" style="border-radius:4px" class="btn_58 form-control-sm middle-button-dark">검색</button>
+						</div>
+						<div class="btn_58 input-group input-group-sm middle-name">
+							<button onclick="fReset()"  type="button" class="btn_58 form-control-sm middle-button">초기화</button>
+						</div>
 					</div>
 				</div>
 			</form>
@@ -377,8 +364,8 @@
 										<div class="padding">
 											<a href="#" class="k-pager-refresh k-button" id="receiptView" style="display: none;"><b class="btn-b"><i class="k-icon k-i-txt"></i>인수증 보기</b></a>
 											<a href="#" class="k-pager-refresh k-button" id="taxView" style="display: none;"><b class="btn-b"><i class="k-icon k-i-txt"></i>세금계산서 보기</b></a>
-											<a href="#" class="k-pager-refresh k-button" onClick="goUpdate();"><b class="btn-b"><i class="k-icon k-i-paste-plain-text"></i>일괄저장</b></a>
-											<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+											<a href="#" class="k-pager-refresh k-button" onClick="goUpdate();"><b class="btn-b">일괄저장</b></a>
+											<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x">엑셀출력</b></a>
 										</div>
 									</div>
 								</div>

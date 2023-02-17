@@ -6,28 +6,33 @@
     <span class="sr-only">Loading...</span>
   </div>
 </div>
-<div class="oms_header">	
+<div class="oms_header orderBundle">	
 	<div class="summary p30">
 		<div class="hdr-tit">
-			<P class="headerTitle">일괄등록</P>
+			<P class="headerTitle" id="headerTitle">일괄등록</P>
 		</div>
 	</div>
 	<div id="group-list" class="cont-wrapper-page-grid">
 		<div style="display: block;" class="form-group row oms_header_set">
 			<form id="f" name="f" method="post" enctype="multipart/form-data">
-			<div class="form-group row">
+			<div class="form-group row mt0">
 				<div class="col">
 					<div class="input-group input-group-sm" style="padding:0px;">
 						<div style="width: 100%;" class="filebox"> 
-		        			<div class="option-area">
-									<input style="width: 70%;" class="upload-name" value="파일을 선택해 주세요." disabled="disabled"> 
-									<label for="uploadFile">파일등록</label> 
+							<div class="input-group input-group-sm col middle-name form-group">
+			        			<div class="option-area">
+		       						<p>업로드 파일</p>
+		        					<label for="uploadFile" class="uploadFile btn_58">파일등록</label> 
+									<input class="upload-name" value="파일을 선택해 주세요." disabled="disabled">
 									<input type="file" id="uploadFile" name="uploadFile" class="upload-hidden"> 
-									<button onclick="fileUpload();" type="button">업로드</button>
-	                    		<c:if test="${menuAuth.writeYn eq 'Y'}">
-									<button onclick="insertData();" type="button" class="btn-primary">등록</button>
-								</c:if>
-								<button onclick="sampleDownload();" type="button">양식 다운로드</button>
+									<div style="float: right;">
+										<button onclick="fileUpload();" type="button" class="btn_b">업로드</button>
+			                    		<c:if test="${menuAuth.writeYn eq 'Y'}">
+											<button onclick="insertData();" type="button" class="btn-primary">등록</button>
+										</c:if>
+										<button onclick="sampleDownload();" type="button">양식 다운로드</button>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -35,7 +40,7 @@
 			</div>
 			</form>
 		</div>
-		<div class="cont-body">
+		<div class="cont-body bortop">
 			<div class="k-wrap content">
 				<div class="lookup_table">
 					<div id="grid" style="width:100%;"></div>

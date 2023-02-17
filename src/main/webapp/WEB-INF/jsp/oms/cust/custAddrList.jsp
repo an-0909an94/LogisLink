@@ -17,17 +17,15 @@
 				    <select class="form-control" class="custom-select col-12" id="s_dept" name="deptId"></select>
 				</div>
 			</c:if>
-			<div class="input-group input-group-sm col-1 middle-name form-group">
+			<div class="input-group input-group-sm wd90 mr10 middle-name form-group">
 				<select class="form-control" class="com-sel" id="s_select" name="select">
-					<option value="ADDR_NAME">--주소지명--</option>
+					<option value="ADDR_NAME">주소지명</option>
 					<option value="ADDR">--주소--</option>
 				</select> 
 			</div>
 			<div class="input-group input-group-sm col-4 middle-name form-group">
 				<input type="text" class="form-control form-control-sm searchValue" id="s_value" name="value">
 			</div>
-			
-			<div class="input-group input-group-sm col-2 middle-name form-group"></div>
 			
 			<div class="input-group input-group-sm col middle-name form-group">
 		        <div style="float: right;" class="option-area">
@@ -49,7 +47,7 @@
 		    </div>
 		</div>
 	</form>
-	<div id="group-list" class="cont-wrapper-page-grid">
+	<div id="group-list" class="cont-wrapper-page-grid bortop pt20">
    		<div style="height: 706px;" id="grid"></div>
 	</div>
 </div>

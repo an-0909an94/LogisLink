@@ -114,6 +114,7 @@ tfoot th {
  */
 .btn-row{
     float: right;
+    font-size: 12px;
 }
 
 .k-grid {

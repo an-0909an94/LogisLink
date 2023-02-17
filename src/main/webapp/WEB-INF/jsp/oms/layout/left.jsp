@@ -5,17 +5,16 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <style>
-    nav {
-        width: 107px;
+    .side-nav {
+        width: 90px;
         display: inline-block;
         height: 100%;
-        overflow: scroll;
-        background-color: #002B57;
+        background: linear-gradient(0deg, rgb(12, 179, 234) -10%, rgb(28, 84, 196));
         position: fixed;
+        border-radius: 0px 30px 0px 0px;
         top: 0;
         bottom: 0;
         left: 0;
-        padding: 20px;
         z-index: 2000;
 
         -ms-overflow-style: none;
@@ -38,14 +37,15 @@
     nav .side-nav-ul .nav-li span {
         text-align: center;
     }
-
-    nav .side-nav-ul span {
-        display: block;
-        padding: 10px 0 10px 0;
+    
+    .side-nav-ul.board{
+    	padding: 10px 0px;
     }
+    
     nav .side-nav-ul span a {
         text-align: center;
-        color: #8694A1;
+        color: #fff;
+        padding: 0px;
     }
     
     nav .side-nav-ul span a:hover {
@@ -76,26 +76,83 @@
         display: none;
     }
     
-    
-    .mem-info > .manager-profile > div {
-	    width: 40px;
-	    height: 40px;
-	    display: inline-block;
-	    border-radius: 100%;
-	    background: #FFFFFF;
-	    color: #808A94;
-	    font-size: 18px;
-	    text-align: center;
-	    padding-top: 5px;
-	}
-	
-	.mem-info {
-	    position: absolute;
-    	bottom: 20px;
-	}
 	
 	.nav-li:hover > span > a > h7 {
 		color: #fff;
+	}
+	
+	.side-nav .nav-li{
+		text-align: center;
+	}
+	
+	.side-nav .nav-li.logo img{
+		margin: 20px auto 0 auto;
+	}
+	
+	.side-nav-img{
+		width: 21px;
+		height: 21px;
+		background-image: url(/images/icon/icon_left_dev.png);
+		background-position: 0px 0px;
+		margin: auto;
+		display: block;	
+	}
+	
+	.mem-info-wrapper{
+		width: 80%;
+	}
+	
+	.mem-info > .manager-name,
+	.mem-info > .manager-role,
+	.mem-info > .carrier-name,
+	.mem-setting{
+		display: none;	
+	}
+	
+	.side-logout{
+		width: 23px;
+		left: 50%;
+		transform: translateX(-45%);
+	}
+		
+	.side-logout-link{
+		font-size: 0px;
+		margin: 0px;
+	}
+	
+	.side-logout-link::before{
+		width: 23px;
+		height: 21px;
+		background-size: 26px;
+		background-position: -1px -144px;
+		margin: 0px;
+	}
+	
+	.mem-info > .mem-setting{
+		widht: 21px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	
+	.mem-info > .mem-setting i::before{
+		width: 21px;
+		height: 21px;
+		background-size: 26px;
+		background-position: -3px -168px;
+		left: 50%;
+		transform: translateX(-50%);
+		margin: 0px;
+	}
+	
+	.mem-info .manager-profile{
+		width: 37px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	
+	.mem-setting img{
+		widht:21px;
+		height: 21px;
 	}
 }
 </style>
@@ -249,7 +306,7 @@
                 </div>
             </div>
         </div>    
-	    <div class="side-menu" id="leftmenu" style="margin-top:30px;">
+	    <div class="side-menu" id="leftmenu" style="margin-top:45px;">
 	        
 	       <!--  <div class="side-nav-ul order">
 	            <div class="nav-li">
@@ -323,20 +380,21 @@
 	            </div>
 	        </div> -->
 		</div>
-		
-		<div class="mem-info">
-            <div style="text-align: center;padding-bottom: 15px;" class="manager-profile">
-            	<div>${fn:substring(sessionScope.userInfo.userName, 0, 1)}</div>
-                <!-- <img src="" class="mem-pic"> -->
-            </div>
-            <div style="color: white;font-size: unset;width: 58px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="manager-name">${sessionScope.userInfo.userName} </div>
-            <div style="color: white;font-size: x-small;" class="manager-role">${sessionScope.userInfo.grade}</div>
-            <div style="color: white;font-size: x-small;" class="carrier-name">${sessionScope.userInfo.bizName}</div>
-            <div class="side-logout"><a style="color: white;" href="/logout.do" class="side-logout-link">로그아웃</a></div>
-			<div class="mem-setting" style="color: white;font-size: x-small;">
-				<i id="userOption" class="k-icon k-i-gear" style="cursor: pointer;" title="업무초기값 설정"></i>
-				<a href="javascript:setMainPage();"><img src="/images/home_icon.png" style="width:20px;height:20px;" title="시작페이지로 설정"></a>
-			</div>
+		<div class="mem-info-wrapper">
+			<div class="mem-info">
+	            <div style="text-align: center;padding-bottom: 15px;" class="manager-profile">
+	            	<div>${fn:substring(sessionScope.userInfo.userName, 0, 1)}</div>
+	                <!-- <img src="" class="mem-pic"> -->
+	            </div>
+	            <div style="color: white;font-size: unset;width: 58px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="manager-name">${sessionScope.userInfo.userName} </div>
+	            <div style="color: white;font-size: x-small;" class="manager-role">${sessionScope.userInfo.grade}</div>
+	            <div style="color: white;font-size: x-small;" class="carrier-name">${sessionScope.userInfo.bizName}</div>
+	            <div class="side-logout"><a style="color: white;" href="/logout.do" class="side-logout-link">로그아웃</a></div>
+				<div class="mem-setting" style="color: white;font-size: x-small;">
+					<i id="userOption" class="k-icon k-i-gear" style="cursor: pointer;" title="업무초기값 설정"></i>
+					<a class="mem-setting" href="javascript:setMainPage();"><img src="/images/home_icon.png" style="width:20px;height:20px;" title="시작페이지로 설정"></a>
+				</div>
+	        </div>
         </div>
         <!-- mem-info-wrapper -->
     </nav>
@@ -473,7 +531,9 @@ function setLeftMenu() {
 				tutorial3Type = item.tutorial3Type;
 				tutorial3Url = item.tutorial3Url;
 			}
-			s += "><img src=\"/images/menu/" + item.menuCode + ".png\"/><br />";
+			//s += "><img src=\"/images/menu/" + item.menuCode + ".png\"/><br />";
+			//s += "><img class=\"side-nav-img\" src=\"/images/icon/icon_left_dev.png\"/><br />";
+			s += "><span class=\"side-nav-img\"/>";
 			s += "<h7>"+item.menuName + "</h7></a>";
 			s += "		</span>";
 			s += "	</div>";

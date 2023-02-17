@@ -240,16 +240,12 @@
 	padding: 45px 0 0 0;
 }
 
-.nav-li-atv{
-	width: 90px
-}
-
 .nav .side-nav-ul a.dropBtn-atv{
 	display: none !important;
 }
 
 .sub-li-wrap-atv{
-	position: absolute;
+	position: absolute !important;;
 	left: 95px;
 	width: 115px;
 	margin-top: -30px;
@@ -258,6 +254,12 @@
 	border: 1px solid #8acdec;
 	box-sizing: border-box;
 	background-color: #0053cb;
+	z-index: 99;
+}
+
+.nav ul.sub-li-wrap-atv li a{
+	color: #fff;
+	font-size: 12px;
 }
 
 .header-atv{
@@ -269,11 +271,6 @@
 	width: 64px;
 	margin: 20px auto 0 auto;
 	display: block;
-}
-
-.nav-li.backColor-atv{
-	width: 90px !important;
-	background-color: transparent;
 }
 
 .side-nav-btn-atv{
@@ -290,13 +287,18 @@
 	margin: 3px auto;
 }
 
+.nav-li.backColor-atv{
+	width: 90px !important;
+	background-color: transparent;
+}
+
 .nav-li.backColor-atv:hover{
 	background-color: #3976d7;
 	width: 84% !important;
 	margin: 3px auto;
 	border-radius: 15px;
 	cursor: pointer;
-}
+} /*접힌 메뉴에서 아이콘 호버*/
 
 .mem-info-wrapper-atv{
 	width: 80%;
@@ -321,9 +323,7 @@
 	width: 21px;
 	height: 21px;
 	margin: 10px auto 0 auto;
-	position: relative;
-	left: 50%;
-	transform: translateX(-50%);
+	display: block;
 }
 
 .mem-info > .mem-setting i.icon-mem-setting-atv::before{
@@ -684,6 +684,23 @@
 	display: inline-block;
 	font-weight: bold;
 	margin-right: 5px;
+	margin-bottom: 0px;
+}
+
+.orderBundle .option-area{
+	justify-content: space-between;
+	align-items: center;
+}
+
+.orderBundle .form-group div label.uploadFile{
+	text-align: center;
+	padding: 0px;
+	line-height: 24px;
+	margin-bottom: 0px; 
+}
+
+.filebox .upload-name{
+	height: 26px;
 }
 
 .filebox label{
@@ -691,7 +708,6 @@
 	color: #222;
 	font-size: 12px;
 	border: 1px solid #d7d7d7;
-	
 }
 
 .filebox .upload-name{
@@ -923,3 +939,82 @@
 }
 
 /* 로그인화면 E */
+
+/* 상황실 S */
+.orderSituation .btn-row{
+	float: none;
+	margin-bottom: 15px;
+}
+
+.tool_group label{
+	margin: 0 0 0 7px;
+}
+
+.orderSituation .tool_form{
+	justify-content: space-between
+}
+/* 상황실 E */
+
+
+/* 운임관리 S */
+.freightControl .tool_form{
+	justify-content: space-between
+}
+
+/* 운임관리 E */
+
+/* 매입 S */
+.sellPurchaseDeadline .k-pager-refresh {
+	height: auto;
+}
+/* 매입 E */
+
+/* 업무초기값설정 */
+.k-dialog{
+	border-radius: 30px;
+	padding: 20px 0px;
+}
+
+.k-window-title{
+	display: inline-block;
+	font-size: 20px;
+	font-weight: bold;
+	letter-spacing: -1px;
+}
+
+.k-window .k-dialog-titlebar{
+	border: none;
+	background-color: #fff;	
+	display: block;
+	text-align: center;
+	padding: 0px 0 20px 0;
+}
+
+.k-window .k-window-actions{
+	position: absolute;
+	top: 22px;
+	right: 20px;
+}
+
+.k-i-close::before{
+	content: '';
+	width: 18px;
+	height: 18px;
+	background: url(/images/icon/btn_close.png);
+	display: block;
+}
+
+label.modal-big-name{
+	font-size: 14px;
+	color: #1d54c4;
+	text-align: left;
+	padding: 0px;
+}
+
+.modalEditor > .modalHeader{
+	padding: 0 16px;
+}
+
+.modalEditor .form-control[readonly]{
+	background-color: #fff;
+}

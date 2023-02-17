@@ -6,7 +6,7 @@
 <div class="insert_pop">
 	<jsp:include page="./view/userInsert.jsp" />
 </div>
-<div class="header">
+<div class="header userList">
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<P id="headerTitle">사용자관리</P>

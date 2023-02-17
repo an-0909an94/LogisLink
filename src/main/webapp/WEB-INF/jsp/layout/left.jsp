@@ -15,34 +15,38 @@
 	    <input type="hidden" name="defaultSLat" id="defaultSLat">
 	    <input type="hidden" name="defaultSLon" id="defaultSLon">
 		<div class="modalHeader">
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name" style="align-self: flex-end;">화주</label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
+            <div class="form-group row gray_box" style="margin-bottom: 0.225rem">
+                <label class="col-form-label modal-big-name">운송사</label>
+                <div class="input-group input-group-sm wd90 mr10 mt0 middle-name form-group" style="text-align: left;">
                 <strong>거래처명</strong>
                     <input style="width: 100%;" name="defaultReqCustName" id="defaultReqCustName" type="text">
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
+                <div class="input-group input-group-sm wd90 mr10 mt0 middle-name form-group" style="text-align: left;">
                 <strong>담당자</strong>
+                    <input style="width: 100%;" name="defaultReqStaff" id="defaultReqStaff" type="text">
+                </div>
+                <div class="input-group input-group-sm wd190 mt0 middle-name form-group" style="text-align: left;">
+                <strong>요청사항</strong>
                     <input style="width: 100%;" name="defaultReqStaff" id="defaultReqStaff" type="text">
                 </div>
             </div>
             
-			<div class="form-group row" style="margin-bottom: 0.225rem">
+			<!-- <div class="form-group row gray_box" style="margin-bottom: 0.225rem">
                 <label class="col-form-label modal-big-name"></label>
                 <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
                 <strong>주소</strong>
                 	<div class="textBox-in-icon">
 	                    <input id="defaultReqAddr" name="defaultReqAddr" type="text" class="form-control form-control-sm" readonly="readonly">
-						<i id="iDefaultReqAddr" style="right: -2%;"><img src="/images/icon/search.png"></i>
+						<i id="iDefaultReqAddr"><img src="/images/icon/icon_search.png"></i>
 					</div>
                 </div>
                 <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
                 	<strong>상세주소</strong>
                     <input type="text" id="defaultReqAddrDetail" name="defaultReqAddrDetail" class="form-control form-control-sm">
                 </div>
-            </div>
+            </div> 
             
-			<div class="form-group row" style="margin-bottom: 0.225rem">
+			<div class="form-group row gray_box" style="margin-bottom: 0.225rem">
                 <label class="col-form-label modal-big-name"></label>
                 <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
                 	<strong>연락처</strong>
@@ -52,33 +56,34 @@
                 	<strong>메모</strong>
                     <input type="text" id="defaultReqMemo" name="defaultReqMemo" class="form-control form-control-sm">
                 </div>
-            </div>
-			<div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name" style="align-self: flex-end;">상차지</label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
+            </div>-->
+			<div class="form-group row gray_box" style="margin-bottom: 0.225rem">
+                <label class="col-form-label modal-big-name">상차지</label>
+                <div class="input-group input-group-sm wd190 mr10 mt0 middle-name form-group" style="text-align: left;">
                 	<strong>상차지명</strong>
                     <input style="width: 100%;" name="defaultSComName" id="defaultSComName" type="text">
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
+                <div class="input-group input-group-sm wd190 mr10 mt0 middle-name form-group" style="text-align: left;">
                 	<strong>담당자</strong>
                     <input type="text" id="defaultSStaff" name="defaultSStaff" class="form-control form-control-sm">
                 </div>
+            
+				<div class="form-group row" style="margin-bottom: 0.225rem">
+	                <label class="col-form-label modal-big-name"></label>
+	                <div class="input-group input-group-sm wd190 mr10 middle-name form-group" style="text-align: left;">
+	                	<strong>주소</strong>
+						<div class="textBox-in-icon">
+							<input id="defaultSAddr" name="defaultSAddr" type="text" class="form-control form-control-sm" readonly="readonly">
+							<i id="iDefaultSAddr"><img src="/images/icon/icon_search.png"></i>
+						</div> 
+	                </div>
+	                <div class="input-group input-group-sm wd190 mr10 middle-name form-group" style="text-align: left;">
+	                <strong>상세주소</strong>
+	                    <input type="text" id="defaultSAddrDetail" name="defaultSAddrDetail" class="form-control form-control-sm">
+	                </div>
+	            </div>
             </div>
-			<div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name"></label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
-                	<strong>주소</strong>
-					<div class="textBox-in-icon">
-						<input id="defaultSAddr" name="defaultSAddr" type="text" class="form-control form-control-sm" readonly="readonly">
-						<i id="iDefaultSAddr" style="right: -2.3%;"><img src="/images/icon/search.png"></i>
-					</div> 
-                </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
-                <strong>상세주소</strong>
-                    <input type="text" id="defaultSAddrDetail" name="defaultSAddrDetail" class="form-control form-control-sm">
-                </div>
-            </div>
-			<div class="form-group row" style="margin-bottom: 0.225rem">
+			<!-- <div class="form-group row" style="margin-bottom: 0.225rem">
                 <label class="col-form-label modal-big-name"></label>
                 <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
                 <strong>연락처</strong>
@@ -88,64 +93,68 @@
                 <strong>메모</strong>
                     <input type="text" id="defaultSMemo" name="defaultSMemo" class="form-control form-control-sm">
                 </div>
-            </div>
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name" style="align-self: flex-end;">화물</label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
+            </div>-->
+            
+            <div class="form-group row gray_box" style="margin-bottom: 0.225rem">
+                <label class="col-form-label modal-big-name">화물</label>
+                <div class="input-group input-group-sm wd190 mr10 mt0 middle-name form-group" style="text-align: left;">
                 	<strong>요청차종</strong>
-                    <select class="custom-select col-12" id="defaultCarTypeCode" name="defaultCarTypeCode"></select>
+                    <select class="custom-select wd190" id="defaultCarTypeCode" name="defaultCarTypeCode"></select>
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
+                <div class="input-group input-group-sm wd190 mr10 mt0 middle-name form-group" style="text-align: left;">
                 	<strong>요청톤수</strong>
-                    <select class="custom-select col-12" id="defaultCarTonCode" name="defaultCarTonCode"></select>
+                    <select class="custom-select wd190" id="defaultCarTonCode" name="defaultCarTonCode"></select>
                 </div>
-            </div>
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name"></label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
-                	<strong>화물정보</strong>
-                    <input type="text" class="form-control form-control-sm" id="defaultGoodsName" name="defaultGoodsName">
-                </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
-                	<strong>중량(ton)</strong>
-                    <input type="text" class="form-control form-control-sm" id="defaultGoodsWeight" name="defaultGoodsWeight">
-                </div>
+            
+	            <div class="form-group row" style="margin-bottom: 0.225rem">
+	                <label class="col-form-label modal-big-name"></label>
+	                <div class="input-group input-group-sm wd190 mr10 middle-name form-group" style="text-align: left;">
+	                	<strong>화물정보</strong>
+	                    <input type="text" class="wd190 form-control form-control-sm" id="defaultGoodsName" name="defaultGoodsName">
+	                </div>
+	                <div class="input-group input-group-sm wd190 mr10 middle-name form-group" style="text-align: left;">
+	                	<strong>중량(ton)</strong>
+	                    <input type="text" class="wd190 form-control form-control-sm" id="defaultGoodsWeight" name="defaultGoodsWeight">
+	                </div>
+	            </div>
+	            
+	            
+	            <div class="form-group row" style="margin-bottom: 0.225rem">
+	                <label class="col-form-label modal-big-name"></label>
+	                <div class="input-group input-group-sm wd90 mr10 middle-name form-group" style="text-align: left;">
+	                	<strong class="required">수출입구분</strong>
+	                    <select id="defaultInOutSctn" name="defaultInOutSctn" class="custom-select col-12" required></select>
+	                    <div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	                <div class="input-group input-group-sm wd90 mr10 middle-name form-group" style="text-align: left;">
+	                	<strong class="required">운송유형</strong>
+	                    <select class="custom-select col-12" id="defaultTruckTypeCode" name="defaultTruckTypeCode" required></select>
+	                    <div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	
+	                <div class="input-group input-group-sm wd190 mr10 middle-name form-group" style="text-align: left;">
+	                	<strong>운송품목</strong>
+	                    <select class="custom-select wd190" id="defaultItemCode" name="defaultItemCode"></select>
+	                    <div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	            
+	            <div class="form-group row" style="margin-bottom: 0.225rem">
+	                <label class="col-form-label modal-big-name"></label>
+	                <div class="input-group input-group-sm wd190 mr10 middle-name form-group" style="text-align: left;">
+	                	<strong class="required">상차방법</strong>
+	                	<select class="custom-select wd190" id="defaultSWayCode"name="defaultSWayCode" required></select>
+	                	<div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	                <div class="input-group input-group-sm wd190 mr10 middle-name form-group" style="text-align: left;">
+	                	<strong class="required">하차방법</strong>
+	                    <select class="custom-select wd190" id="defaultEWayCode"name="defaultEWayCode" required></select>
+	                    <div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	            </div>
             </div>
             
-            
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name"></label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
-                	<strong class="required">수출입구분</strong>
-                    <select id="defaultInOutSctn" name="defaultInOutSctn" class="custom-select col-12" required></select>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
-                	<strong class="required">운송유형</strong>
-                    <select class="custom-select col-12" id="defaultTruckTypeCode" name="defaultTruckTypeCode" required></select>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
-                	<strong>운송품목</strong>
-                    <select class="custom-select col-12" id="defaultItemCode" name="defaultItemCode"></select>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-            </div>
-            
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name"></label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
-                	<strong class="required">상차방법</strong>
-                	<select class="custom-select col-12" id="defaultSWayCode"name="defaultSWayCode" required></select>
-                	<div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
-                	<strong class="required">하차방법</strong>
-                    <select class="custom-select col-12" id="defaultEWayCode"name="defaultEWayCode" required></select>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-            </div>
+            <!-- 
             <div class="form-group row" style="margin-bottom: 0.225rem">
                 <label class="col-form-label modal-big-name" style="align-self: flex-end;">운임</label>
                 <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
@@ -160,22 +169,23 @@
                 	<strong>청구운임</strong>
                     <input type="text" class="form-control form-control-sm" id="defaultSellCharge" name="defaultSellCharge">
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label modal-big-name" style="align-self: flex-end;">배차</label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
+            </div> -->
+            
+            <div class="form-group row gray_box">
+                <label class="col-form-label modal-big-name">배차</label>
+                <div class="input-group input-group-sm wd190 mr10 mt0 middle-name form-group" style="text-align: left;">
                 	<strong>지불운임</strong>
-                    <input type="text" class="form-control form-control-sm" id="defaultBuyCharge" name="defaultBuyCharge">
+                    <input type="text" class="wd190 form-control form-control-sm" id="defaultBuyCharge" name="defaultBuyCharge">
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left;">
+                <div class="input-group input-group-sm wd190 mr10 mt0 middle-name form-group" style="text-align: left;">
                 	<strong>차주확인사항</strong>
-                    <input type="text" class="form-control form-control-sm" id="defaultDriverMemo" name="defaultDriverMemo">
+                    <input type="text" class="wd190 form-control form-control-sm" id="defaultDriverMemo" name="defaultDriverMemo">
                 </div>
             </div>
 			<div class="editor_btns">
 				<div class="padding">
-			        <button type="submit" class="k-pager-refresh k-button"><strong><b id="codeBtnSave" class="btn-b"><i class="k-icon k-i-check"></i>저장</b></strong></button>
-			        <button type="button" onclick="userOptionModalClose()" class="k-pager-refresh k-button"><strong><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></strong></button>
+			        <button type="submit" class="k-pager-refresh k-button btn_b"><strong><b id="codeBtnSave" class="btn-b">저장</b></strong></button>
+			        <button type="button" onclick="userOptionModalClose()" class="k-pager-refresh k-button"><strong><b class="btn-g">닫기</b></strong></button>
 		        </div>
 	        </div>
 		</div>
@@ -249,7 +259,6 @@ $(document).ready(function(){
 			//닫기
 			$(this).next(".sub-li-wrap").removeClass("backColor");
 			$(this).removeClass("backColor");
-		
 		}
 		
 		else {
@@ -259,23 +268,27 @@ $(document).ready(function(){
 			$(this).next(".sub-li-wrap").addClass("backColor");
 			$(this).addClass("backColor");
 			$(this).next(".sub-li-wrap").slideDown(100);
-			
 		}
 		
 	});
 	
+	//nav 접기 펼치기
 	$('.side-nav-btn').on('click',function(){
+		//$('.sub-li-wrap').removeClass('sub-li-wrap-atv');
 		
+		//content 영역
 		$('.header').toggleClass('header-atv');
-		$('.side-nav-btn').toggleClass('side-nav-btn-atv');
-		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv');
-		$('.nav-li').toggleClass('backColor-atv').removeClass('backColor');
-		$('.logo-area .logo-title').toggleClass('logo-title-atv');
-		$('.side-nav').toggleClass('side-nav-atv');
-		$('.nav').toggleClass('nav-atv');
-		$('.nav-li').toggleClass('nav-li-atv');
+		
+		//nav 사이드메뉴 영역
+		$('.side-nav').toggleClass('side-nav-atv'); //nav 가로 사이즈 작아짐
+		$('.logo-area .logo-title').toggleClass('logo-title-atv'); //로고 사이즈 작아짐
+		$('.side-nav-btn').toggleClass('side-nav-btn-atv'); //접기열기 화살표 아이콘 돌아감
+		$('.nav').toggleClass('nav-atv'); //아이콘 작아짐
+		$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv'); //접었을 때 메뉴 텍스트 삭제
+		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv'); //메뉴 우측 화살표 아이콘 돌아감
+		$('.nav-li').removeClass('backColor').toggleClass('backColor-atv');
 		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv');
-		$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv');
+		
 		
 		// 로그인 정보
 		$('.mem-info-wrapper').toggleClass('mem-info-wrapper-atv');
@@ -290,19 +303,19 @@ $(document).ready(function(){
 		$('.mem-info > .mem-setting').toggleClass('mem-setting-atv');
 		$('.mem-info .manager-profile').toggleClass('manager-profile-atv');
 		
+		//오더등록
 		$('.insert_pop.block').toggleClass('block-atv');
 		$('.insert_pop').toggleClass('insert_pop-atv');
+		$('.insert_pop').removeClass('insert_pop.block').toggleClass('m-side-nav-atv');//nav 접기열기 버튼 클릭 시 오더등록 창
 		
 		// 그리드
 		$('.cont-body').toggleClass('cont-body-atv');
-		
-		
 	});
 	
-	$('.side-nav-btn').on('click',function(){
-		$('.insert_pop').removeClass('insert_pop.block').toggleClass('m-side-nav-atv');
+	$('.side-nav-btn-atv').on('click',function(){
+		
 	})
-	
+
 	
 	//검색값 입력 후 enter key event
 	if($(".searchValue").length > 0) {
@@ -316,8 +329,8 @@ $(document).ready(function(){
 	userOptionModal = $("#divUserOption");
 	
 	userOptionModal.kendoDialog({
-		width: "860px",
-		height: "895px",
+		width: "556px",
+		//height: "895px",
 		visible: false,
 		title: "업무 초기값 설정",
 		closable: true,

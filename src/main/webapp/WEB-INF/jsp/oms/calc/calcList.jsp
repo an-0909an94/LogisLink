@@ -47,46 +47,39 @@
 			<form id="fSearch" class="date-bnt" method="post">
 				<input type="hidden" name="custId" id="custId" class="hiddenValue">
 				<input type="hidden" name="deptId" id="deptId" class="hiddenValue">
-				<div class="form-group row oms_header_set">
-					<div class="input-group input-group-sm col-1 middle-name">
-					<span>배차일자</span>
+				<div class="form-group row">
+					<div class="input-group input-group-sm wd90 middle-name">
 					    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
 					</div>
-					<span style="margin-top: 31px;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
-					<div class="input-group input-group-sm col-1 middle-name">
-					<span>　</span>
+					<span>&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+					<div class="input-group input-group-sm wd90 mr10 middle-name">
 					    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
 					</div>
-					<div class="input-group input-group-sm col-1 middle-name">
-					<span>거래처명</span>
+					<div class="input-group input-group-sm wd90 mr10 middle-name">
 					    <select class="custom-select col-12" id="sellBuySctn" name="sellBuySctn">
 					        <option value="02" selected="selected">운송/주선사명</option>
 					    </select>
 					</div>
-					<div class="input-group input-group-sm col-2 middle-name">
-					<span>&nbsp;</span>
+					<div class="input-group input-group-sm wd190 mr10 middle-name">
 					    <input type="text" id="sCustName" name="sCustName" style="width:100%;">
 					</div>
-					<div class="input-group input-group-sm col-1 middle-name">
-					<span>&nbsp;</span>
+					<div class="input-group input-group-sm wd90 mr10 middle-name">
 	                	<input type="text" name="sSubName" id="sSubName" class="form-control form-control-sm" readonly>
 	                </div>
 					
-					<div class="input-group input-group-sm col-1 middle-name">
-					<span>정산유형</span>
+					<div class="input-group input-group-sm wd90 mr10 middle-name">
 					    <input type="hidden" id="inOutSctn" name="inOutSctn" value="02">
 					    <select class="custom-select col-12" id="sCalcTypeCode" name="calcTypeCode"></select>
 					</div>
 					
-					<div class="input-group input-group-sm col-1 middle-name">
-					<span>정산마감여부</span>
+					<div class="input-group input-group-sm wd90 middle-name">
 					    <select class="custom-select col-12" id="sFinishYn" name="finishYn">
-					        <option value="">--정산여부--</option>
+					        <option value="">정산여부</option>
 					        <option value="Y">Y</option>
 					        <option value="N">N</option>
 					    </select>
 					</div>
-				    <c:choose>
+				    <!--<c:choose>
 				    	<c:when test="${masterYn eq 'Y'}">
 							<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 								<span>&nbsp;</span>
@@ -97,7 +90,7 @@
 				    	<c:when test="${masterYn eq 'N'}">
 							<div class="input-group input-group-sm col-3 middle-name"></div>
 						</c:when>
-				    </c:choose>
+				    </c:choose>-->
 					<div class="input-group input-group-sm col middle-name form-group">
 				        <div style="float: right;" class="option-area">
 			                <div class="form-group">
@@ -105,7 +98,7 @@
 			                    	<button onclick="goList();" type="button" class="sch-more">검색</button>
 			                   	</c:if>
 			                   	<c:if test="${menuAuth.editYn eq 'Y'}">
-			                    	<button id="btnFinishCalc" type="button" class="sch-more">정산마감</button>
+			                    	<button id="btnFinishCalc" type="button" class="btn-default">정산마감</button>
 			                    </c:if>
 			                    <c:if test="${menuAuth.writeYn eq 'Y'}">
 			                    	<button id="calcInsert" type="button" class="btn-default">운송비추가등록</button>
@@ -166,7 +159,7 @@ $(document).ready(function(){
 	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true}); 
 	Util.setSearchDateForm();
 	
-	Util.setCmmCode("select", "sCalcTypeCode", "CALC_TYPE_CD", "", "--정산유형--");
+	Util.setCmmCode("select", "sCalcTypeCode", "CALC_TYPE_CD", "", "정산유형");
 	var $options = $("#sCalcTypeCode > option").clone();
 	$('#calcTypeCode').append($options);
 	$("#calcTypeCode option[value='0002']").remove();

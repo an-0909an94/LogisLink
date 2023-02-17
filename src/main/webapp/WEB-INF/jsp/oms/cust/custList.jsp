@@ -4,7 +4,7 @@
 <div class="insert_pop">
 	<%@ include file="./view/custInsert.jsp" %>
 </div>
-<div class="oms_header">
+<div class="oms_header omsCustList">
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<p id="headerTitle">운송사관리</p>
@@ -17,9 +17,9 @@
 				    <select class="form-control" class="custom-select col-12" id="s_dept" name="s_dept"></select>
 				</div>
 			</c:if>
-			<div class="input-group input-group-sm col-1 middle-name form-group">
+			<div class="input-group input-group-sm wd90 mr10 middle-name form-group">
 				<select class="form-control" class="com-sel" id="searchColumn" name="searchColumn">
-					<option value="s_custName">--거래처명--</option>
+					<option value="s_custName">거래처명</option>
 				</select> 
 			</div>
 			<div class="input-group input-group-sm col-4 middle-name form-group">
@@ -31,7 +31,7 @@
 			<div class="input-group input-group-sm col middle-name form-group">
 		        <div class="option-area">
 	                <div class="form-group">
-	                    <button onclick="goList();" type="button" class="sch-more">검색</button>
+	                    <button onclick="goList();" type="button" class="sch-more btn_b">검색</button>
 	                	<button onclick="custPrice();" type="button" class="btn-primary">계약단가</button>
 	                    <button onclick="goExcel();" type="button" class="btn-success">엑셀출력</button>
 	                </div>
@@ -39,7 +39,7 @@
 		    </div>
 		</div>
 	</form>
-	<div id="group-list" class="cont-wrapper-page-grid">
+	<div id="group-list" class="cont-wrapper-page-grid bortop pt20">
    		<div style="height: 706px;" id="cust_list"></div>
 	</div>
 </div>

@@ -3,7 +3,7 @@
 	<%@ include file="./view/orderInsert.jsp" %>
 </div>
 
-<div class="oms_header">
+<div class="oms_header omsOrderList">
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<p id="headerTitle">배차목록</p>
@@ -24,7 +24,7 @@
     <input type="hidden" name="locationSAddrDetail" id="locationSAddrDetail">
     <input type="hidden" name="locationEAddrDetail" id="locationEAddrDetail">
 		<div class="form-group row oms_header_set">
-			<div class="input-group input-group-sm col-1 middle-name form-group">
+			<div class="input-group input-group-sm wd90 mr10 middle-name form-group">
 				<select class="form-control" name="dateSelector">
 					<option value="REGDATE"selected="selected">등록일</option>
 			        <option value="S_DATE">상차일</option>
@@ -32,15 +32,15 @@
 				</select>
 			</div>
 			
-			<div class="input-group input-group-sm col-1 middle-name form-group">
+			<div class="input-group input-group-sm wd90 middle-name form-group">
 				<input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
 			</div>
-			<span style="height: 28px;margin-top: 7px;">~</span>
-			<div class="input-group input-group-sm col-1 middle-name form-group">
+			<span>~</span>
+			<div class="input-group input-group-sm wd90 mr10 middle-name form-group">
 				<input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
 			</div>
 			
-			<div class="input-group input-group-sm col-1 middle-name form-group">
+			<div class="input-group input-group-sm wd90 mr10 middle-name form-group">
 				<select class="form-control" name="addrSelector">
 					<option value="S_ADDR"selected="selected">상차지</option>
 			        <option value="E_ADDR">하차지</option>
@@ -55,12 +55,12 @@
 		        <div class="option-area">
 	                <div class="form-group">
 	                	<div class="input-group input-group-sm col radio-or-checkBox ">
-	                   	<input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
-	                   	<label for="myOrder" class="label-margin">
-	                   		<span>내거래 보기</span>
-	                   	</label>
+		                   	<input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
+		                   	<label for="myOrder" class="label-margin">
+		                   		<span>내거래 보기</span>
+		                   	</label>
 	                   </div>
-	                    <button onclick="goList();" type="button" class="sch-more">검색</button>
+	                    <button onclick="goList();" type="button" class="sch-more btn_b">검색</button>
 	                    <!-- <button class="btn-default">알림톡 전송</button> -->
 	                    <c:if test="${menuAuth.writeYn eq 'Y'}">
 	                    	<button onclick="form_popup('N', {})" type="button" class="btn-warning">신규등록</button>
@@ -76,7 +76,7 @@
 		    </div>
 		</div>
 	</form>
-	<div id="group-list" class="cont-wrapper-page-grid">
+	<div id="group-list" class="cont-wrapper-page-grid bortop pt20">
    		<div id="grid"></div>
 	</div>
     <div id="divViewLocation"></div>

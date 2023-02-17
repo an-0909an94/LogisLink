@@ -554,12 +554,10 @@
 				<input type="hidden" name="orderList" id="orderList" class="hiddenValue">
 			<div class="form-group row">
 				<div class="input-group input-group-sm col-1 middle-name">
-				<strong>배차일자</strong>
 				    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
 				</div>
-				<span style="margin-top: 31px;">~</span>
+				<span>~</span>
 				<div class="input-group input-group-sm col-1 middle-name">  
-				<strong>　</strong>
 				    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
 				</div>
 				
@@ -589,24 +587,20 @@
                 </div>
                 
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>상차지</strong>
 				    <select class="form-control" class="custom-select col-12" id="listSSido" name="listSSido">
 				    	<option>상차지</option>
 				    </select>
 				</div>
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>하차지</strong>
 				    <select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
 				    	<option>하차지</option>
 				    </select>
 				</div>
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>운송비항목</strong>
 				    <select class="custom-select col-12" id="sCalcTypeCode" name="calcTypeCode"></select>
 				</div>
 				
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>정산마감여부</strong>
 				    <select class="custom-select col-12" id="sFinishYn" name="finishYn">
 				        <option value="">--항목선택--</option>
 				        <option value="Y">Y</option>
@@ -615,7 +609,6 @@
 				</div>
 				
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>빠른지급여부</strong>
 				    <select class="custom-select col-12" id="sReqPayYn" name="reqPayYn">
 				        <option value="">--항목선택--</option>
 				        <option value="Y">Y</option>
@@ -624,85 +617,74 @@
 				</div>
                 
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>담당부서명</strong>
 				    <select class="form-control" class="custom-select col-12" id="sDeptId" name="sDeptId">
 				    	<option>--부서명--</option>
 				    </select>
 				</div>
 				
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>배차담당자</strong>
 				    <select class="form-control" class="custom-select col-12" id="sUserId" name="sUserId">
 				    	<option>--담당자--</option>
 				    </select>
 				</div>
 				
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>청구구분</strong>
 				    <select class="form-control" class="custom-select col-12" id="sChargeType" name="chargeType">
 				    	<option>--담당자--</option>
 				    </select>
 				</div>
 			</div>
-			<div class="form-group row">
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>부서별검색</strong>
-				    <select class="custom-select col-12" id="custType" name="custType">
-				        <option value="01">화주명</option>
-				        <option value="02">운송/주선사명</option>
-				        <option value="99">차량번호</option>
-				        <option value="orderId">오더ID</option>
-				    </select>
+			<div class="form-group row" style="justify-content: space-between">
+				<div class="row">
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+					    <select class="custom-select col-12" id="custType" name="custType">
+					        <option value="01">화주명</option>
+					        <option value="02">운송/주선사명</option>
+					        <option value="99">차량번호</option>
+					        <option value="orderId">오더ID</option>
+					    </select>
+					</div>
+					<div id="searchDiv" class="input-group input-group-sm col-2 middle-name">
+					    <input type="text" id="sCustName" name="sCustName" style="width:100%;">
+					</div>
+					<div style="display: none;" id="orderSearch" class="input-group input-group-sm col-2 middle-name">
+					    <input type="text" id="orderId" name="orderId" class="form-control form-control-sm">
+					</div>
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                	<input type="text" name="sSubName" id="sSubName" class="form-control form-control-sm" readonly>
+	                </div>
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+					    <select class="custom-select col-12" id="searchType" name="searchType">
+					        <option value="bizName">사업자상호</option>
+					        <option value="bizNum">사업자번호</option>
+					    </select>
+					</div>
+					<div class="input-group input-group-sm col-2 middle-name">
+					    <input type="text" id="bizName" name="bizName" style="width:100%;">
+					</div>
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                	<select name="sSubDept" id="sSubDept" class="custom-select"></select>
+	                </div>
+					
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+					    <select class="custom-select col-12" id="sSellBuySctn" name="sellBuySctn"></select>
+					</div>
+					
+					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+					    <select class="custom-select col-12" id="sUnitPriceType" name="unitPriceType">
+					    	<option value="">--항목선택--</option>
+					    	<option value="01">대당단가</option>
+					    	<option value="02">톤당단가</option>
+					    </select>
+					</div>
 				</div>
-				<div id="searchDiv" class="input-group input-group-sm col-2 middle-name">
-				<strong>&nbsp;</strong>
-				    <input type="text" id="sCustName" name="sCustName" style="width:100%;">
-				</div>
-				<div style="display: none;" id="orderSearch" class="input-group input-group-sm col-2 middle-name">
-				<strong>&nbsp;</strong>
-				    <input type="text" id="orderId" name="orderId" class="form-control form-control-sm">
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-                	<input type="text" name="sSubName" id="sSubName" class="form-control form-control-sm" readonly>
-                </div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>사업자검색</strong>
-				    <select class="custom-select col-12" id="searchType" name="searchType">
-				        <option value="bizName">사업자상호</option>
-				        <option value="bizNum">사업자번호</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-2 middle-name">
-				<strong>&nbsp;</strong>
-				    <input type="text" id="bizName" name="bizName" style="width:100%;">
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-                	<select name="sSubDept" id="sSubDept" class="custom-select"></select>
-                </div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>매출입항목</strong>
-				    <select class="custom-select col-12" id="sSellBuySctn" name="sellBuySctn"></select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>운임구분</strong>
-				    <select class="custom-select col-12" id="sUnitPriceType" name="unitPriceType">
-				    	<option value="">--항목선택--</option>
-				    	<option value="01">대당단가</option>
-				    	<option value="02">톤당단가</option>
-				    </select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
-				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
-				    <button onclick="fReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
+				<div class="row">
+					<div class="btn_58 mr10 input-group input-group-sm middle-name">
+					    <button onclick="goList()" type="button" style="border-radius:4px" class="btn_58 form-control-sm middle-button-dark">검색</button>
+					</div>
+					<div class="btn_58 input-group input-group-sm middle-name">
+					    <button onclick="fReset()"  type="button" class="btn_58 btn_black form-control-sm middle-button">초기화</button>
+					</div>
 				</div>
 			</div>
 			</form>                
@@ -718,28 +700,28 @@
 									<div class="tool_group">
 										<div class="padding">
 			 			                  	<c:if test="${menuAuth.printYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="vReceipt" style="display: none;"><b class="btn-b"><i class="k-icon k-i-txt"></i>인수증 보기</b></a>
+												<a href="#" class="k-pager-refresh k-button" id="vReceipt" style="display: none;"><b class="btn-b">인수증 보기</b></a>
 											</c:if>
 			 			                  	<c:if test="${menuAuth.printYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="vTax" style="display: none;"><b class="btn-b"><i class="k-icon k-i-txt"></i>세금계산서 보기</b></a>
+												<a href="#" class="k-pager-refresh k-button" id="vTax" style="display: none;"><b class="btn-b">세금계산서 보기</b></a>
 											</c:if>
 			 			                  	<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="btnChangeReq"><b class="btn-b"><i class="k-icon k-i-user"></i>화주변경</b></a>
+												<a href="#" class="k-pager-refresh k-button" id="btnChangeReq"><b class="btn-b">화주변경</b></a>
 											</c:if>
 			 			                  	<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="btnFinishCalc"><b class="btn-b"><i class="k-icon k-i-edit"></i>정산마감</b></a>
+												<a href="#" class="k-pager-refresh k-button" id="btnFinishCalc"><b class="btn-b">정산마감</b></a>
 											</c:if>
 											<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="btnChangeAmt"><b class="btn-b"><i class="k-icon k-i-dollar"></i>운송비 변경</b></a>
+												<a href="#" class="k-pager-refresh k-button" id="btnChangeAmt"><b class="btn-b">운송비 변경</b></a>
 											</c:if>
 											<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="btnTranReceipt"><b class="btn-b"><i class="k-icon k-i-paste-plain-text"></i>거래명세서</b></a>
+												<a href="#" class="k-pager-refresh k-button" id="btnTranReceipt"><b class="btn-b">거래명세서</b></a>
 											</c:if>
 											<c:if test="${menuAuth.printYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+												<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x">엑셀출력</b></a>
 											</c:if>
 											<c:if test="${menuAuth.writeYn eq 'Y'}">
-												<a href="#" id="calcInsert" class="k-pager-refresh k-button"><b class="btn-h"><i class="k-icon k-i-plus"></i>운송비추가등록</b></a>
+												<a href="#" id="calcInsert" class="k-pager-refresh k-button"><b class="btn-h">운송비추가등록</b></a>
 											</c:if>
 										</div>
 									</div>

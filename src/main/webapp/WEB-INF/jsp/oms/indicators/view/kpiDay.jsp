@@ -44,19 +44,16 @@ body {
 			<input type="hidden" name="orderStates" id="orderStates" class="hiddenValue">
 			<div class="form-group row">
 				<div class="input-group input-group-sm col-1 middle-name">
-					<span>　</span>
 				    <input style="width:100%; padding: 0;" type="text" id="searchMonth" name="searchMonth">
 				    <input type="hidden" id="fromDate" name="fromDate">
 				    <input type="hidden" id="toDate" name="toDate">
 				</div>
 				
 				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<span>거점 구분</span>
 				    <select class="form-control" class="custom-select col-12" id="reqDeptId" name="reqDeptId"></select>
 				</div>
 				
 				<div class="input-group input-group-sm col-2 middle-name">
-				<span>운송/주선사</span>
 				    <input type="text" id="sCustName" name="sCustName" style="width:100%;">
 				</div>
 	            
@@ -86,7 +83,7 @@ body {
 					<div style="float:left;margin-top:30px;">(단위:건 or %)</div>
 					<div style="float: right;" class="option-area">
 		                <div class="form-group">
-		                    <button onclick="goList();" type="button" class="sch-more">검색</button>
+		                    <button onclick="goList();" type="button" class="sch-more btn_b">검색</button>
 		                    <button onclick="goExcel();" type="button" class="btn-success">엑셀출력</button>
 		                </div>
 		            </div>

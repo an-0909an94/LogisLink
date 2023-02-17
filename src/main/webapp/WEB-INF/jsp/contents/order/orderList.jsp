@@ -217,7 +217,7 @@
                                 <div class="btn-row" style="float:left;">
                                     <div class="tool_group" style ="font-size: 12px;">자동새로고침
                                         <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
-                                        <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;margin: 0 0 0 7px;">
+                                        <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;">
                                             <span class="marble"></span>
                                             <span class="on">ON</span>
                                             <span class="off" >OFF</span>

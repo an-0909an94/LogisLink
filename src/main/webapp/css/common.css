@@ -51,7 +51,6 @@
 body {
     font-family: 'Noto Sans KR', sans-serif;
     overflow-x: hidden;
-    background-color: #EDF0F2;
     color: #222A31;
 	height: 100vh;
 	
@@ -77,10 +76,18 @@ body::-webkit-scrollbar {
     z-index: 100;
 }
 
+#headerTitle{
+	font-size: 24px;
+	font-weight: bold;
+	color: #1c54c4;
+	letter-spacing: -0.05em;
+}
+
 .hdr-tit p {
     font-size: 20px;
     color: #000;
     margin-bottom: 0;
+    
 }
 
 .f-wrap {

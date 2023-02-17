@@ -7,7 +7,13 @@
 .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2,
 .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11,
 .col-xl-12, .col-xl, .col-xl-auto {
-    padding: 0.3em;
+    /*padding: 0.3em;*/
+    padding: 0px;
+}
+
+.input-group-sm>.custom-select, .input-group-sm>.form-control, .input-group-sm>.input-group-append>.btn, .input-group-sm>.input-group-append>.input-group-text, .input-group-sm>.input-group-prepend>.btn, .input-group-sm>.input-group-prepend>.input-group-text
+{
+	font-size: 12px;
 }
 /* 
 form {
@@ -192,7 +198,7 @@ tfoot th {
 }
 
 .contents {
-	margin: 0 auto;
+	margin: 15px auto 0 auto;
 }
 
 html.k-webkit.k-webkit90 {
@@ -297,7 +303,7 @@ html .k-grid tr.k-alt:hover {
 }
 
 .insert_pop {
-  	left: -545px;
+  	left: -570px;
   	position:absolute;
     top: calc(25vh - 3px);
     width: 652px;
@@ -341,13 +347,13 @@ fieldset {
 }
 
 .label_on-off > * {
-    vertical-align: sub;
+    /*vertical-align: sub;*/
     -webkit-transition: all .3s;
     -moz-transition: all .3s;
     -ms-transition: all .3s;
     -o-transition: all .3s;
     transition: all .3s;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .label_on-off .marble {
@@ -377,7 +383,7 @@ fieldset {
 }
 
 .input_on-off:checked + .label_on-off {
-    background-color: #0bba82;
+    background-color: #0293e6;
 }
 
 .input_on-off:checked + .label_on-off .on {
@@ -453,8 +459,8 @@ div#layer1 {
 
 .radio-or-checkBox > .label-margin {
 	align-self: flex-end;
-	margin: 0.3em;
-	padding-bottom: 5px;
+	/*margin: 0.3em;
+	padding-bottom: 5px;*/
 }
 
 .radio-or-checkBox > .label-margin > input {
@@ -551,7 +557,7 @@ div#layer1 {
 .radio-or-checkBox input[type="checkbox"] + label{ 
 	display:inline-block;
 	 position:relative; 
-	 padding-left:26px; 
+	 padding-left:23px; 
 	 cursor:pointer; 
 } 
 
@@ -695,20 +701,19 @@ div#layer1 {
 }
 
 .oms_header {
-    width: calc(100% - 107px);
+    width: calc(100% - 90px);
     height:100vh;
     position: absolute;
     top: 0;
-    left: 107px;
+    left: 90px;
     background-color: #fff;
     display: inline-block;
     z-index: 100;
-    font-weight: bold;
+	padding: 15px 25px 0px 25px;
 }
 
 .oms_header_set {
-	padding: 30px;
-	height: 140.13px;
+	padding: 15px 0;
 }
 
 .option-area button {
@@ -857,4 +862,166 @@ a.k-link.k-pager-nav {
 /* 통계 툴팁 마우스 클릭 안되게 */
 .k-tooltip{
 	pointer-events : none;
+}
+
+/* oms */
+.input-group-sm>.form-control{
+	font-size: 12px;
+}
+
+.contents h4{
+	font-size: 20px;
+	padding: 0px;
+	margin: 0px;
+}
+
+#side-nav .side-nav-ul:nth-of-type(2) span.side-nav-img{
+	background-position: 0px -19px;
+}
+#side-nav .side-nav-ul:nth-of-type(3) span.side-nav-img{
+	background-position: 0px -19px;
+}
+#side-nav .side-nav-ul:nth-of-type(4) span.side-nav-img{
+	background-position: 0px -37px;
+}
+#side-nav .side-nav-ul:nth-of-type(6) span.side-nav-img{
+	background-position: 0px -19px;
+}
+#side-nav .side-nav-ul:nth-of-type(8) span.side-nav-img{
+	background-position: 0px -19px;
+}
+
+.omsOrderList .col-1{
+	padding: 0px;
+}
+
+.form-group{
+	margin-bottom: 0px
+}
+
+.option-area button{
+	width: 80px;
+	height: 26px;
+	border-radius: 4px;
+	font-size: 12px;
+	line-height: 12px;
+}
+
+.btn-success{
+	margin: 0 0 0 8px;
+}
+
+.btn-success:hover{
+	background-color: #218838;
+}
+
+/* oms_조직관리 */
+.omsCompList .cont-b-head{
+	display: flex;
+	justify-content: space-between;
+}
+
+.omsCompList .contents{
+	max-width: 1202px;
+	margin: 15px 0 0 0;
+}
+
+.omsCompList .contents label{
+	width: 215px;
+	font-size: 14px;
+	color: #1d54c4;
+	font-weight: bold;
+	align-self: flex-start;
+	padding: 0px;
+}
+
+.omsCompList span{
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0 0 4px 0;
+}
+
+.omsCompList .contents input, .omsCompList .contents select, .omsCompList .contents option{
+	height: 26px;
+	font-size: 12px;
+}
+
+.textBox-in-icon > i > img{
+	width: 26px;
+}
+
+.omsCompList .btn_b{
+	padding: 0px;
+}
+
+/* oms 배차관리 */
+.radio-or-checkBox input[type="checkbox"] + label:before{
+	width: 15px;
+	height: 15px;
+	top: 2px;
+}
+
+.radio-or-checkBox input[type="checkbox"]:checked + label:after{
+	background: url(/images/icon/icon_left_dev.png);
+	background-position: -3px -200px;
+}
+
+.omsOrderList .label-margin{
+	font-size: 12px;
+	margin: 0px;
+}
+
+/* 운송사관리 */
+.omsCustList .option-area{
+	float: right;
+}
+
+/* 상황실 */
+.omsOrderLocationList #group-list::after{
+	content: '';
+	clear: both;
+	display: block;	
+}
+
+.omsOrderLocationList #groupCount i{
+	border-radius: 20px;
+	font-size: 12px;
+}
+
+.omsOrderLocationList .autoRefresh{
+	font-size: 12px;
+}
+
+/* 일괄등록 */
+.orderBundle .cont-body .k-wrap{
+	padding: 0px;
+}
+
+.orderBundle .form-group div label.uploadFile{
+	display: inline-block !important
+}
+
+/* 지표관리 */
+.indicatorsGroup .nav-tabs{
+	padding: 0px;
+	width: 100%;
+	display: flex;
+}
+
+.radio-or-checkBox input[type="checkbox"] + label{
+	margin-right: 15px;
+	padding-left: 20px;
+	font-size: 12px;
+}
+
+.indicatorsGroup .radio-or-checkBox input[type="checkbox"] + label{
+	margin: 0px !important;
+}
+
+.indicatorsGroup .radio-or-checkBox > .label-margin > span{
+}
+
+button.sch-more{
+	background-color: #1c54c4;
+	color: #fff;
 }

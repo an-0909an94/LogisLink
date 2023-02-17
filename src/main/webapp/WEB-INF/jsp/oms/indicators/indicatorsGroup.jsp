@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="oms_header">
+<div class="oms_header indicatorsGroup">
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<p id="headerTitle">지표관리</p>
