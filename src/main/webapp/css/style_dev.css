@@ -827,6 +827,7 @@ div#layer1 {
 }
 
 .insertClose.block {
+	display:none;
     position: absolute;
     top: 33px;
     left: calc(100%);

@@ -257,38 +257,37 @@ $(document).ready(function(){
 				
 		if($(this).is(".backColor") === true) {
 			//메뉴 닫기
-			$(this).next(".sub-li-wrap").removeClass("backColor");
 			$(this).removeClass("backColor");
+			$(this)
+			
+			//$(this).next(".sub-li-wrap").removeClass("backColor");
 		}
 		
 		else {
 			//메뉴 열기
-			$(".nav-li").next(".sub-li-wrap").removeClass("backColor");
 			$(".nav-li").removeClass("backColor");
-			$(this).next(".sub-li-wrap").addClass("backColor");
+			$(this).addClass("backColor");
 			$(this).addClass("backColor");
 			$(this).next(".sub-li-wrap").slideDown(100);
+			
+			//$(".nav-li").next(".sub-li-wrap").removeClass("backColor");
+			//$(this).next(".sub-li-wrap").addClass("backColor");
 		}
-		
 	});
 	
 	
 	//nav 접기 펼치기
 	$('.side-nav-btn').on('click',function(){
 		
-		//content 영역
-		$('.header').toggleClass('header-atv');
-		
 		//nav 사이드메뉴 영역
 		$('.side-nav').toggleClass('side-nav-atv'); //nav 가로 사이즈 작아짐
+		$('.nav').toggleClass('nav-atv'); //nav 가로 사이즈 작아짐
 		$('.logo-area .logo-title').toggleClass('logo-title-atv'); //로고 사이즈 작아짐
 		$('.side-nav-btn').toggleClass('side-nav-btn-atv'); //접기열기 화살표 아이콘 돌아감
-		$('.nav').toggleClass('nav-atv'); //아이콘 작아짐
 		$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv'); //접었을 때 메뉴 텍스트 삭제
-		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv'); //메뉴 우측 화살표 아이콘 돌아감
-		$('.nav-li').removeClass('backColor').toggleClass('backColor-atv');
-		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv')
-		
+		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv'); //접었을 때 아이콘 작아짐
+		//$('.nav-li').toggleClass('backColor'); //메뉴 접었을 때 1depth 메뉴 색상 변경
+		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv'); //서브메뉴 디자인 변경
 		
 		
 		// 로그인 정보
@@ -309,21 +308,18 @@ $(document).ready(function(){
 		$('.insert_pop').toggleClass('insert_pop-atv');
 		$('.insert_pop').removeClass('insert_pop.block').toggleClass('m-side-nav-atv');//nav 접기열기 버튼 클릭 시 오더등록 창
 		
+		//content 영역
+		$('.header').toggleClass('header-atv');
+		
 		// 그리드
 		$('.cont-body').toggleClass('cont-body-atv');
 	});
 	
+	//펼쳐진 네비메뉴의 서브메뉴가 열린 상태에서 메뉴 접을 시 서브메뉴 없어짐
 	$('.side-nav-btn').on('click',function(){
-		$('.sub-li-wrap-atv').hide()
+		$('.sub-li-wrap-atv').hide();
 	});
 
-	// 이거 월요일에 해야댐
-	$('.nav-atv #leftMenu .side-nav-ul').on('click',function(){
-		console.log('하이');
-		$(this).children('.nav-li').addClass('see').removeClass('backColor-atv');
-	});
-	
-	
 	//검색값 입력 후 enter key event
 	if($(".searchValue").length > 0) {
 		$(".searchValue").on("keypress", function (event){

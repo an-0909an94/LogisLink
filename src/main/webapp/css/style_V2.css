@@ -186,7 +186,7 @@
 	font-size: 0px;
 	box-shadow: 0px 3px 8px rgb(0 0 0 / 55%);
 	cursor: pointer;
-}
+}/*접기버튼아이콘*/
 
 
 .side-logout-link::before{
@@ -197,7 +197,7 @@
 	height: 18px;
 	background: url(/images/icon/icon_left_dev.png) no-repeat;
 	background-position: -3px -115px;
-}
+}/*로그아웃아이콘*/
 
 .nav .side-nav-ul a.dropBtn::after{
 	content:'';
@@ -210,10 +210,22 @@
 	top: 50%;
 	right: 10%;
 	transform: translateY(-50%);
-	
-}
+}/*메뉴 화살표 아이콘 접힘 */
 
 .nav .side-nav-ul .nav-li.backColor a.dropBtn::after{
+	content:'';
+	width: 18px;
+	height: 18px;
+	color: black;
+	background: url(/images/icon/icon_left_dev.png);
+	background-position: -2px -152px;
+	position: absolute;
+	top: 50%;
+	right: 10%;
+	transform: translateY(-50%) rotate(180deg);
+}/*메뉴 화살표 아이콘 열림 */
+
+.nav .side-nav-ul .nav-li.backColor a.dropBtn-rr{
 	content:'';
 	width: 18px;
 	height: 18px;
@@ -242,7 +254,7 @@
 
 .nav .side-nav-ul a.dropBtn-atv{
 	display: none !important;
-}
+}/*접힌 메뉴 텍스트*/
 
 .sub-li-wrap-atv{
 	position: absolute !important;;
@@ -255,6 +267,10 @@
 	box-sizing: border-box;
 	background-color: #0053cb;
 	z-index: 99;
+}
+
+.sub-li-wrap-atv{
+	display: none;
 }
 
 .nav ul.sub-li-wrap-atv li a{
@@ -285,30 +301,32 @@
 	width: 21px;
 	display: block;
 	margin: 3px auto;
-}
+} /*접힌메뉴 아이콘 작아짐*/
 
-.nav-li.backColor-atv{
+/*.nav-li.backColor-atv{
 	width: 84% !important;
 	background-color: transparent;
 	cursor: pointer;
 	margin: auto;
+	background-color: red;
+}*/
+
+.nav-li.backColor-atv{
+	background-color: transparent;
+	background-color: red;
 }
 
 .side-nav-ul-atv{
 	background-color: red;
 }
 
-.nav-li.backColor-atv:hover{
+.side-nav-atv .nav-li:hover{
 	background-color: #3976d7;
 	width: 84% !important;
 	margin: 3px auto;
 	border-radius: 15px;
 	cursor: pointer;
 }/*접힌 메뉴에서 아이콘 호버*/
-
-.see{
-	background-color: red;
-}
 
 .mem-info-wrapper-atv{
 	width: 80%;

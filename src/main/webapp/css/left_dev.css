@@ -106,8 +106,8 @@
 
 .sub-li-wrap {
     padding: 15px 10px 15px 60px;
-    display:none;
     background-color: #3976d7;
+    display: none;
 }
 
 .line {
@@ -232,7 +232,6 @@
 
 .nav-li.backColor{
     background-color: #1f65d1;
-    /*width: 207px;*/
 }
 
 .justify > a > img {
