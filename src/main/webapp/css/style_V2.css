@@ -804,26 +804,27 @@
 }
 
 .k-pager-wrap .k-state-selected{
-	border: 2px solid #0041c4;
-	border-radius: 0px;
+	border-radius: 20px;
+	background-color: #e7e7e7;
 	width: 24px;
 	height: 24px;
 	color: #0063d3;
 }
 
-.k-pager-wrap .k-state-selected:hover{
-	border: 2px solid #0041c4 !important;
-}
-
+.k-pager-wrap .k-state-selected:hover,
 .k-pager-wrap .k-link:hover{
-	background-color: transparent;
-	color: #222;
-	border: none;
+	background-color: #e7e7e7 !important;
+	border: none !important;
 }
 
 .k-pager-numbers .k-link:focus,
 .k-pager-nav:focus{
-	box-shadow :none !important;;
+	box-shadow :none !important;
+}
+
+.k-dropdown .k-dropdown-wrap.k-state-hover, .k-dropdown .k-dropdown-wrap:hover{
+	background-color: transparent !important;
+	background-image: none !important;
 }
 /* 그리드 E */
 
