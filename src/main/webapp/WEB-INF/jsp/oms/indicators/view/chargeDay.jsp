@@ -40,24 +40,24 @@ body {
   </div>
 </div>
 
-<div id="group-list" class="cont-wrapper-page-grid">
+<div id="group-list" class="cont-wrapper-page-grid"><!-- 배차및운송비(일) -->
 	<div class="p30">
 		<form id="fSearch" class="date-bnt" method="post">
 			<input type="hidden" name="custId" id="custId" class="hiddenValue">
 			<input type="hidden" name="deptId" id="deptId" class="hiddenValue">
 			<input type="hidden" name="orderStates" id="orderStates" class="hiddenValue">
 			<div class="form-group row">
-				<div class="input-group input-group-sm col-1 middle-name">
+				<div class="input-group input-group-sm col-1 middle-name wd90">
 				    <input style="width:100%; padding: 0;" type="text" id="searchMonth" name="searchMonth">
 				    <input type="hidden" id="fromDate" name="fromDate">
 				    <input type="hidden" id="toDate" name="toDate">
 				</div>
 				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+				<div class="input-group-sm middle-name div-min-col-1 wd90" style="margin:0 10px">
 				    <select class="form-control" class="custom-select col-12" id="reqDeptId" name="reqDeptId"></select>
 				</div>
 				
-				<div class="input-group input-group-sm col-2 middle-name">
+				<div class="input-group input-group-sm col-2 middle-name" style="margin:0 10px 0 0">
 				    <input type="text" id="sCustName" name="sCustName" style="width:100%;">
 				</div>
 	            

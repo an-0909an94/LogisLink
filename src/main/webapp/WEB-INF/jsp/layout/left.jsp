@@ -258,7 +258,6 @@ $(document).ready(function(){
 		if($(this).is(".backColor") === true) {
 			//메뉴 닫기
 			$(this).removeClass("backColor");
-			$(this)
 			
 			//$(this).next(".sub-li-wrap").removeClass("backColor");
 		}
@@ -318,6 +317,7 @@ $(document).ready(function(){
 	//펼쳐진 네비메뉴의 서브메뉴가 열린 상태에서 메뉴 접을 시 서브메뉴 없어짐
 	$('.side-nav-btn').on('click',function(){
 		$('.sub-li-wrap-atv').hide();
+		$('.nav-li').removeClass('backColor');
 	});
 
 	//검색값 입력 후 enter key event

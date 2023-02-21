@@ -217,7 +217,7 @@
 	                                    <button type="submit" onclick="readonlyValidator();" class="k-pager-refresh k-button btn_58 btn_b" id="btnSubmit">
 	                                        <b class="btn-b"><strong id="btn_save">저장</strong></b>
 	                                    </button>
-	                                    <a id="orderCopy" onclick="orderCopy();" class="k-pager-refresh k-button">
+	                                    <a id="orderCopy" onclick="orderCopy();" class="k-pager-refresh k-button btn_b">
 	                                        <b class="btn-b">복사</b>
 	                                    </a>
 	                                    <a onclick="form_popup_close();" class="k-pager-refresh k-button btn_58 btn_black">
@@ -614,7 +614,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-group row mr0 mt10 mb20">
+                                            <div class="form-group row mr0 mt10">
                                                 <label class="col-form-label"></label>
 
                                                 <div class="input-group input-group-sm col radio-or-checkBox form-group">
@@ -627,11 +627,15 @@
                                                     <label for="mixYn" class="insert-label"> <span>혼적</span>
                                                     </label>
                                                 </div>
-                                                <div class="input-group input-group-sm wd90 middle-name form-group form-group">
+                                                <div class="input-group input-group-sm wd190 middle-name form-group form-group">
                                                     <strong>혼적크기</strong>
-                                                    <select class="custom-select col-12 wd90" id="mixSize" name="mixSize"></select>
+                                                    <select class="custom-select col-12 wd190" id="mixSize" name="mixSize"></select>
                                                 </div>
-                                                <div class="input-group input-group-sm col radio-or-checkBox form-group">
+                                            </div>
+                                            
+                                            <div class="form-group row mr0 mt10 mb20">
+                                            	<label class="col-form-label"></label>
+	                                            <div class="input-group input-group-sm col radio-or-checkBox form-group">
                                                     <input type="checkbox" id="dangerGoodsYn" name="dangerGoodsYn" onclick="btnChk(this)">
                                                     <label for="dangerGoodsYn" class="insert-label"> <span>위험물</span>
                                                     </label>
@@ -645,16 +649,15 @@
 
                                                 <div class="input-group input-group-sm col radio-or-checkBox form-group">
                                                     <input type="checkbox" id="foreignLicenseYn" name="foreignLicenseYn" onclick="btnChk(this)">
-                                                    <label for="foreignLicenseYn" class="insert-label"> <span>보세운송</span>
+                                                    <label for="foreignLicenseYn" class="insert-label mr10"> <span>보세운송</span>
                                                     </label>
                                                 </div>
-                                                <label class="col-form-label big-name"></label>
-                                                <div class="input-group input-group-sm wd190 mt10 middle-name form-group">
+                                                <div class="input-group input-group-sm wd90 middle-name form-group">
                                                     <strong>외부참고정보</strong>
-                                                    <input type="text" class="form-control form-control-sm wd190" id="externalInformation" name="externalInformation">
+                                                    <input type="text" class="form-control form-control-sm wd90" id="externalInformation" name="externalInformation">
                                                     <div class="help-block with-errors"></div>
                                                 </div>
-                                            </div>
+                                           	</div>
 
 <%--                                            <div class="form-group row">
                                                 <label class="col-form-label"></label>
@@ -753,7 +756,7 @@
                                         </div>
                                         <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
                                             <strong class="required">기본운임(청구)</strong>
-                                            <a class="k-pager-refresh" id ="latestFare" onclick="getBasicFare();" style="margin-top: -5px; height: 19px; font-size: 12px; border-radius: 4px; padding: 2px 4px; background-color: #ffe67e; border:0px; position: absolute; top: 2px; right: 2px;">최근운임 불러오기</a>
+                                            <a class="k-pager-refresh" id ="latestFare" onclick="getBasicFare();" style="margin-top: -5px; height: 19px; font-size: 12px; line-height: 12px; border-radius: 4px; padding: 2px 4px; background-color: #ffe67e; border:0px; position: absolute; top: 2px; right: 2px;">최근운임 불러오기</a>
                                             <p class="arrow_box">거래처명(화주), 상/하차지주소, 요청차종/톤수에 맞는 최근 청구운임(기본)을 불러옵니다.
                                                 <br>※ 최근 오더가 없는 경우는 0원으로, 경유비 등 추가운임은 제외</p>
 
@@ -763,7 +766,7 @@
                                     </div>
 
                                     <div class="form-group row mt10">
-                                        <a id="sellOtherChargeBtn" class="k-button btn-s openCloseBtn" href="javascript:sellOtherChargeOpen()"></a>
+                                        <a id="sellOtherChargeBtn" class="k-button openCloseBtn" href="javascript:sellOtherChargeOpen()"></a>
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>청구중량(ton)</strong>
                                             <input id="sellWeight" name="sellWeight" type="text" class="form-control form-control-sm wd90">
@@ -1009,13 +1012,13 @@
 
                                     <!-- 배차 기타 정보 열기, 접기부분 -->
                                     <div id="driverOtherOpenClose" class="openCloseDiv">
-                                        <div class="form-group row mt10">
-                                            <a style="height: 23px;" id="otherChargeBtn" class="k-button btn-s openCloseBtn" href="javascript:otherChargeOpen()"></a>
+                                        <div class="form-group row mt10 two_icon">
+                                            <a style="height: 23px;" id="otherChargeBtn" class="k-button openCloseBtn" href="javascript:otherChargeOpen()"></a>
                                             <div class="wd90 input-group middle-name form-group">
                                                 <strong>차주확인사항</strong>
                                                 <input id="driverMemo" name="driverMemo" type="text" class="form-control form-control-sm">
                                             </div>
-                                            <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
+                                            <div class="input-group input-group-sm wd190 mr0 middle-name form-group ">
                                                 <strong>배차일자</strong>
                                                 <input type="text" style="padding: 0px; width: 100%;" id="allocDate" name="allocDate">
                                             </div>
@@ -1147,21 +1150,25 @@
                                     <div class="form-group row pt15 mr0 bortop mt10">
                                         <div class="col-form-label big-name big-name-div">
                                             <label class="col-form-label big-name">기타</label>
-                                            <a id="other" class="k-pager-refresh k-button openCloseBtn">메모열기</a>
+                                           <!--  <a id="other" class="k-pager-refresh k-button openCloseBtn" style="position: absolute; margin-top: 30px;">메모열기</a>-->
                                         </div>
                                         <div class="input-group input-group-sm wd170 middle-name form-group km">
-                                            <strong>거리(km)</strong>
+                                            <strong style="margin:0px;">거리(km)</strong>
                                             <input id="distance" name="distance" type="text" class="wd90 form-control form-control-sm" readonly>
+                                            <div class="input-group input-group-sm wd190 middle-name form-group">
+                                                    <strong>메모</strong>
+                                                    <textarea rows="4" id="memo" name="memo" class="wd190 form-control form-control-sm textarea"></textarea>
+                                                </div>
                                         </div>
                                         <div class="input-group input-group-sm wd170 mr0 middle-name form-group time">
-                                            <strong>시간</strong>
+                                            <strong style="margin:0px;">시간</strong>
                                             <input id="time" name="time" type="hidden" class="form-control form-control-sm" readonly>
                                             <input id="timeTxt" name="timeTxt" type="text" class="form-control form-control-sm" readonly>
                                         </div>
                                         <div class="input-group input-group-sm col middle-name form-group"></div>
                                     </div>
 
-                                    <div>
+                                    <!-- <div>
                                         <div id="otherOpenClose" class="openCloseDiv">
                                             <div class="form-group row">
                                                 <label class="col-form-label"></label>
@@ -1172,7 +1179,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </fieldset>
                             
                         </form>

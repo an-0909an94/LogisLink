@@ -637,7 +637,8 @@
 	height: 26px;
 	background-color: #3b3b3b;
 	margin:0px;
-	border-radius: 7px
+	border-radius: 7px;
+	font-weight: 300;
 }
 
 .editor_btns .padding > .k-button strong,
@@ -665,7 +666,7 @@
 }
 
 .pop-layer .radio-or-checkBox input[type="checkbox"] + label{
-	padding-left: 15px;
+	padding-left: 20px;
 }
 
 .pop-layer .radio-or-checkBox input[type="checkbox"] + label:before{
@@ -701,6 +702,12 @@
 .pop-layer .btn_b,
 .pop-layer .btn_black{
 	color: #fff;
+}
+
+#distance,#timeTxt{
+	background-color: transparent;
+	border: none;
+	padding: 0px;
 }
 
 /* 오더등록 E */
@@ -779,6 +786,9 @@
 	top: 10px;
 }
 
+.two_icon .k-datetimepicker .k-select{
+	width: auto;
+}
 /* 일괄등록 E*/
 
 
