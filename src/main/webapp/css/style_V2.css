@@ -21,6 +21,11 @@
 
 .wd190{
 	width: 190px !important;
+	
+}
+
+.max-wd190{
+	max-width: 190px;
 }
 
 .wd290{
@@ -833,6 +838,14 @@
 .orderList #groupCount .btn_gray{
 	margin-left: 5px;
 }
+
+@media (max-width: 1536px){	
+	.media190{
+		width: 90px !important;
+	} 
+	
+}
+
 /* 배차관리 E*/
 
 

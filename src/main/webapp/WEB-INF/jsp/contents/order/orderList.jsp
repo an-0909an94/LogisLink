@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div class="form-group row" style="justify-content: space-between;">
-	                <div class="row">
+	                <div class="row" style="width: 81%;">
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
 	                        
 	                        <select class="custom-select col-12" id="searchColumn" name="searchColumn">
@@ -133,9 +133,9 @@
 	                            <option value="externalInformation">외부참고정보</option>
 	                        </select>
 	                    </div>
-	                    <div class="input-group input-group-sm middle-name wd190 div-min-col-1">
+	                    <div class="input-group input-group-sm middle-name wd190 div-min-col-1 media190">
 	                        
-	                        <input type="text" id="searchValue" name="searchValue" class="wd190 form-control form-control-sm searchValue">
+	                        <input type="text" id="searchValue" name="searchValue" class="form-control form-control-sm searchValue" style="width: 100%">
 	                    </div>
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
 	                        
@@ -144,9 +144,8 @@
 	                            <option value="driverName">차주명</option>
 	                        </select>
 	                    </div>
-	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd190">
-	                        
-	                        <input type="text" id="driverValue" name="driverValue" class="wd190 form-control form-control-sm searchValue">
+	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd190 media190">
+	                        <input type="text" id="driverValue" name="driverValue" class="form-control form-control-sm searchValue" style="width: 100%">
 	                    </div>
 	
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
@@ -180,21 +179,27 @@
 	                            <option value="N">미확정</option>
 	                        </select>
 	                    </div>
-	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                    <div class="input-group-sm col-1 middle-name div-min-col-1">
 	                        
-	                        <select class="custom-select col-12" id="searchChargeType" name="searchChargeType">
+	                        <select class="custom-select mr10" id="searchChargeType" name="searchChargeType">
 	                            <option value="">운임정보</option>
 	                            <option value="01">인수증</option>
 	                            <option value="02">선/착불</option>
 	                            <option value="03">기사발행</option>
 	                        </select>
+	                        
+	                        <!--  <input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
+	                        <label for="myOrder" class="label-margin">
+	                            <span>내거래 보기</span>
+	                        </label>-->
+	                        
 	                    </div>
-	                    <div class="input-group input-group-sm col radio-or-checkBox ">
+	                 	<div class="input-group input-group-sm col radio-or-checkBox ">
 	                        <input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
 	                        <label for="myOrder" class="label-margin">
 	                            <span>내거래 보기</span>
 	                        </label>
-	                    </div>
+	                    </div> 
                     </div>
 					<div class="row">
 	                    <div class="btn_58 input-group-sm middle-name mr7">
@@ -816,7 +821,7 @@
                 $("#btn_state").html("<i class=\"k-icon k-i-upload\"></i>오더접수");
                 $("#orderDelete").attr("onClick", "updateOrderState('00')");
             } else {
-                $("#btn_state").html("<i class=\"k-icon k-i-delete\"></i>오더취소");
+                $("#btn_state").html("오더취소");
                 $("#orderDelete").attr("onClick", "updateOrderState('09')");
             }
             $("#sAreaSave").parent(".radio-or-checkBox").css("display", "none");

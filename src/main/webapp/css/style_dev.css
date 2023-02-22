@@ -746,8 +746,8 @@ div#layer1 {
     content:'';
     position:absolute;
     left:0; top: 2px;
-    width:20px;
-    height:20px;
+    width: 15px;
+    height: 15px;
     text-align:center;
     background:#E3E3E3;
     border:1px solid #ccc;
