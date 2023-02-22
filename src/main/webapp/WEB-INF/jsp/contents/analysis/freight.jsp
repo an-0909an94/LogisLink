@@ -12,64 +12,54 @@
 	<div class="contents">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" name="fSearch" class="date-bnt" method="post">
-				<div class="form-group row">
+				<div class="form-group row mt0">
 					<input type="hidden" name="searchType" id="searchType">
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>배차기간</strong>
-					    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd90">
 					</div>
-					<span style="margin-top: 31px;">~</span>
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>　</strong>
-					    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
+					<span style="margin-right: 10px">~</span>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="wd90">
 					</div>
 					
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong class="required">출발지역</strong>
-					    <select class="form-control" class="custom-select col-12" id="sSido" name="sSido"></select>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					    <select class="form-control" class="custom-select wd90" id="sSido" name="sSido"></select>
 	                </div>
 	                
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>　</strong>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-2">
 					    <select id="sGungu" name="sGungu" class="form-control form-control-sm">
 	                  		<option value="" selected="selected">군/구</option>
 	                  		<option>출발지역 시/도 를 선택해 주세요.</option>
 	                  	</select>
 	                </div>
 	                
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>도착지역</strong>
-						<select class="form-control" class="custom-select col-12" id="eSido" name="eSido"></select>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="form-control" class="custom-select wd90" id="eSido" name="eSido"></select>
 	                </div>
 	                
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>　</strong>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 					    <select id="eGungu" name="eGungu" class="form-control form-control-sm">
 	                  		<option value="" selected="selected">군/구</option>
 	                  		<option>도착지역 시/도 를 선택해 주세요.</option>
 	                  	</select>
 	                </div> 
 	                
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>차주계약유형</strong>
-					    <select class="form-control" class="custom-select col-12" id="carContractCode" name="carContractCode"></select>
+					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+					    <select class="form-control" class="custom-select" style="width: 100%" id="carContractCode" name="carContractCode"></select>
 	                </div>
 	                
-	                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>차종</strong>
-					    <select class="form-control" class="custom-select col-12" id="carTypeName" name="carTypeName">
+	                <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					    <select class="form-control" class="custom-select wd90" id="carTypeName" name="carTypeName">
 					    	<option value="" selected="selected">차종</option>					    	
 					    </select>
 	                </div>
 	                
-	                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>운송품목</strong>
-					    <select class="form-control" class="custom-select col-12" id="itemCode" name="itemCode"></select>
+	                <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					    <select class="form-control" class="custom-select wd90" id="itemCode" name="itemCode"></select>
 	                </div>
 	                
-	                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>중량물구분</strong>
-					    <select id="weightTypeCode" name="weightTypeCode" class="form-control" class="custom-select col-12">
+	                <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					    <select id="weightTypeCode" name="weightTypeCode" class="form-control" class="custom-select wd90">
 					    	<option value="" selected="selected">중량물구분</option>
 					    	<option value="01">경량물</option>
 					    	<option value="02">표준물</option>
@@ -77,9 +67,8 @@
 					    </select>
 	                </div>
 	                
-	                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>운송소요시간</strong>
-					    <select id="arrivalTimeCode" name="arrivalTimeCode" class="form-control" class="custom-select col-12">
+	                <div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+					    <select id="arrivalTimeCode" name="arrivalTimeCode" class="form-control" class="custom-select" style="width: 100%">
 					    	<option value="" selected="selected">운송소요시간</option>
 					    	<option value="01">당착</option>
 					    	<option value="02">익착</option>
@@ -87,51 +76,55 @@
 	                </div>
                 </div>
                 
-				<div class="form-group row">
-	                
-	                <div class="middle-name" style="width: 0px; padding: 0em 0em 0em 0.3em;">
-						<strong>면허요건</strong>
-	                </div>
-					<div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="checkbox" name="general" id="general" value="Y" checked/>
-	                   	<label for="general" class="label-margin">
-	                   		<span>일반</span>
-	                   	</label>
-	                </div>
-	                <div class="input-group input-group-sm col radio-or-checkBox">
-	                 	<input type="checkbox" name="dangerGoodsYn" id="dangerGoodsYn" value="Y"/>
-	                   	<label for="dangerGoodsYn" class="label-margin">
-	                   		<span>위험물</span>
-	                   	</label>
-	                </div>
-					<div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="checkbox" name="chemicalsYn" id="chemicalsYn" value="Y"/>
-	                   	<label for="chemicalsYn" class="label-margin">
-	                   		<span>유해물</span>
-	                   	</label>
-	                </div>
-	                <div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="checkbox" name="foreignLicenseYn" id="foreignLicenseYn" value="Y"/>
-	                   	<label for="foreignLicenseYn" class="label-margin">
-	                   		<span>보세운송</span>
-	                   	</label>
-	                </div>
-	                
-	                <div class="middle-name" style="width: 0px; padding: 0em 0em 0em 0.3em;">
-						<strong>조회조건</strong>
-	                </div>
-					<div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="checkbox" name="our" id="our" value="Y" checked/>
-	                   	<label for="our" class="label-margin">
-	                   		<span>당사</span>
-	                   	</label>
-	                </div>
-	                <div class="input-group input-group-sm col radio-or-checkBox">
-	                 	<input type="checkbox" name="other" id="other" value="Y"/>
-	                   	<label for="other" class="label-margin">
-	                   		<span>타사</span>
-	                   	</label>
-	                </div>
+				<div class="form-group row" style="justify-content: space-between">
+	                <div>
+						<!--
+						<div class="middle-name" style="width: 0px; padding: 0em 0em 0em 0.3em;">
+							<strong>면허요건</strong>
+						</div>
+						-->
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="checkbox" name="general" id="general" value="Y" checked/>
+							<label for="general" class="label-margin">
+								<span>일반</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="checkbox" name="dangerGoodsYn" id="dangerGoodsYn" value="Y"/>
+							<label for="dangerGoodsYn" class="label-margin">
+								<span>위험물</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="checkbox" name="chemicalsYn" id="chemicalsYn" value="Y"/>
+							<label for="chemicalsYn" class="label-margin">
+								<span>유해물</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="checkbox" name="foreignLicenseYn" id="foreignLicenseYn" value="Y"/>
+							<label for="foreignLicenseYn" class="label-margin">
+								<span>보세운송</span>
+							</label>
+						</div>
+
+						<div class="middle-name" style="width: 0px; padding: 0em 0em 0em 0.3em;">
+							<strong>조회조건</strong>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="checkbox" name="our" id="our" value="Y" checked/>
+							<label for="our" class="label-margin">
+								<span>당사</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="checkbox" name="other" id="other" value="Y"/>
+							<label for="other" class="label-margin">
+								<span>타사</span>
+							</label>
+						</div>
+					</div>
+
 					<div class="tool_group">
 						<div class="padding">
 							<a href="#" class="k-pager-refresh k-button" onClick="goList('mode')"><b class="btn-b">최빈값</b></a>
@@ -140,7 +133,7 @@
 							<a href="#" class="k-pager-refresh k-button" onClick="goList('avgAll')"><b class="btn-b">평균값(all)</b></a>
 							<a href="#" class="k-pager-refresh k-button" onClick="goList('min')"><b class="btn-b">최소값</b></a>
 							<a href="#" class="k-pager-refresh k-button" onClick="goList('max')"><b class="btn-b">최대값</b></a>
-							<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+							<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x">엑셀출력</b></a>
 						</div>
 					</div>
                 </div>
@@ -175,11 +168,11 @@ var cntColList = [];
 var chargeCol, cntCol;
 
 $(document).ready(function(){
-    Util.setCmmCode("select", "sSido", "SIDO", "", "시/도");
+    Util.setCmmCode("select", "sSido", "SIDO", "", "출발 시/도");
 	$('#sSido').on('change', function() {
 		Util.setSelectBox("/cmm/getAreaCodeList.do", "sGungu", {sido:$("#sSido option:checked").text()}, "sigun", "sigun", "", "군/구");
 	});
-    Util.setCmmCode("select", "eSido", "SIDO", "", "시/도");
+    Util.setCmmCode("select", "eSido", "SIDO", "", "도착 시/도");
 	$('#eSido').on('change', function() {
 		Util.setSelectBox("/cmm/getAreaCodeList.do", "eGungu", {sido:$("#eSido option:checked").text()}, "sigun", "sigun", "", "군/구");
 	});

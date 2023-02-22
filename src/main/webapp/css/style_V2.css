@@ -15,6 +15,18 @@
 	width: 100px !important;
 }
 
+.wd110{
+	width: 110px !important;
+}
+
+.wd120{
+	width: 120px !important;
+}
+
+.wd140{
+	width: 140px !important;
+}
+
 .wd170{
 	width: 170px !important;
 }
@@ -28,8 +40,56 @@
 	max-width: 190px;
 }
 
+.wd200{
+	width: 200px !important;
+}
+
+.wd210{
+	width: 210px !important;
+}
+
+.wd228{
+	width: 228px !important;
+}
+
+.wd240{
+	width: 240px !important;
+}
+
+.wd285{
+	width: 285px !important;
+}
+
 .wd290{
 	width: 290px !important;
+}
+
+.wd310{
+	width: 310px !important;
+}
+
+.wd340{
+	width: 340px !important;
+}
+
+.wd360{
+	width: 360px !important;
+}
+
+.wd415{
+	width: 415px !important;
+}
+
+.wd420{
+	width: 420px !important;
+}
+
+.wd1000{
+	width: 1000px !important;
+}
+
+.hd100{
+	height: 100px !important;
 }
 
 /* padding 값 조절 */
@@ -55,6 +115,10 @@
 
 .pl8{
 	padding-left: 8px
+}
+
+.pb05{
+	padding-bottom: 5px; !important;
 }
 
 .pb10 {
@@ -90,6 +154,11 @@
 }
 
 /* margin 값 조절 */
+
+.mb10{
+	margin-bottom: 10px !important;
+}
+
 .mb15 {
     margin-bottom: 15px !important;
 }
@@ -134,6 +203,9 @@
 	margin-right: 10px !important;
 }
 
+.mr40{
+	margin-right: 40px !important;
+}
 
 /* border 값  */
 .bortop{
@@ -144,6 +216,30 @@
 .btn_58{
 	width: 58px !important;
 	height: 26px !important;
+	font-size: 12px;
+}
+
+.btn_75{
+	width: 75px !important;
+	height: 26px !important;
+	font-size: 12px;
+}
+
+.btn_95{
+	width: 95px !important;
+	height: 26px !important;
+	font-size: 12px;
+}
+
+.btn_100{
+	width: 105px !important;
+	height: 26px !important;
+	font-size: 12px;
+}
+
+.btn_27h{
+	width: 58px !important;
+	height: 27px !important;
 	font-size: 12px;
 }
 
@@ -158,6 +254,32 @@
 	color: #fff !important;;
 	padding: 4px 0px;
 }
+
+.btn_black_13{
+	background-color: #3b3b3b !important;
+	color: #fff !important;;
+	padding: 4px 13px;
+}
+
+
+.btn_g{
+	background-color: #fff !important;
+	border: 1px solid #0cb175 !important;
+	color: #0cb175 !important;
+	font-weight: bold;
+	padding: 4px 0px;
+}
+
+/*버튼 Gray 테두리 설정*/
+.btn_gra_tax{
+	background-color: #fff !important;
+	border: 1px solid #dddddd !important;
+	color: #000000;
+	font-size: 12px;
+	padding: 4px 0px;
+}
+
+
 
 #groupCount .btn_g{
 	background-color: #00a570 !important;;
@@ -561,6 +683,10 @@
     margin-right: 10px;
 }
 
+.div-min-col-2{
+	margin-right: 25px;
+}
+
 /* 오더등록 S */
 #layer1::-webkit-scrollbar{
 	display: none;
@@ -607,6 +733,13 @@
 .gray_box{
 	margin: 15px 0;
 	padding: 15px 8px;
+	background-color: #f6f6f6;
+	border-radius: 10px;
+}
+
+.gray_box_s{
+	margin: 1px 0;
+	padding: 15px 10px;
 	background-color: #f6f6f6;
 	border-radius: 10px;
 }
@@ -1065,6 +1198,10 @@ label.modal-big-name{
 
 .modalEditor > .modalHeader{
 	padding: 0 16px;
+}
+
+.modalEditor > .modalHeader50{
+	padding: 0 50px;
 }
 
 .modalEditor .form-control[readonly]{

@@ -6,70 +6,78 @@
 <div id="talkModal" class="editor-warp p-0">
 	<div class="modalEditor" id="addTalk">
 		<form id="modalForm" name="modalForm">
-			<div class="box" style="width: 100%">
-				<div style="float: left; width: 50%">				
-					<div class="form-group row">					
-						<div class="input-group input-group-sm col middle-name">
-						<strong style="padding-right: 1.5em;">템플릿</strong>
-						<select name="templateCode" id="templateCode">
-							<option value="">시스템 알림톡</option>
-						</select>
+			<div class="form-group col">
+				<div class="form-group row mb20">
+					<div style="float: left; width: 49%;padding-left:35px">
+						<div class="form-group mb10 gray_box">
+							<div class="input-group input-group-sm wd190 middle-name ">
+								<strong style="margin-left: 0em;padding-right: 1.5em;">템플릿</strong>
+								<select name="templateCode" id="templateCode" style="width:100%">
+									<option value="">시스템 알림톡</option>
+								</select>
+							</div>
 						</div>
-					</div>				
-					<div class="form-group row">
-						<div class="input-group input-group-sm col middle-name">
-						<strong>내용</strong>
-						    <textarea id="contents" name="contents" style="width: 100%;font-size: 16px;font-weight: 300;border: 1px solid #E8E9EB;border-radius: 5px;" rows="14" class="form-control form-control-sm textarea"></textarea>
+						<div class="form-group row ">
+							<div class="input-group input-group-sm col middle-name">
+								<textarea id="contents" name="contents"
+										  style="width: 100%;font-size: 16px;font-weight: 300;border: 1px solid #E8E9EB;border-radius: 5px;"
+										  rows="18"
+										  class="form-control textarea"></textarea>
+							</div>
+						</div>
+						<div class="form-group row" style="color:#0000ff;">
+							※ 알림톡 내용을 임의로 변경할 경우, 알림톡 발송이 되지 않을 수 있습니다.
 						</div>
 					</div>
-					<div class="form-group row" style="color:#0000ff;">
-						※ 알림톡 내용을 임의로 변경할 경우, 알림톡 발송이 되지 않을 수 있습니다.
+					<div style="float: right; width: 49%;padding-right:0px; padding-left:20px">
+						<div class="input-group input-group-sm col mb10 gray_box">
+							<strong style="margin-left: 0em; padding-right: 1.5em;">예약발송</strong>
+							<input class="wd340" id="reserve" type="text" name="reserve" style="width:100%; height: 24px;">
+							<input style="width: 24px; height: 24px;" type="checkbox" name="chkReserve" id="chkReserve" value="Y">
+						</div>
+						<div class="row gray_box">
+							<div class="input-group input-group-sm wd90 radio-or-checkBox ">
+								<strong style="margin-left: 0em; padding-right: 1.5em;">회원구분</strong>
+								<input id="driver" type="checkbox" name="custTypeCode" value="09">
+								<label for="driver" class="label-margin">
+									<span>차주</span>
+								</label>
+							</div>
+							<div class="input-group input-group-sm wd90 radio-or-checkBox ">
+								<input id="owner" type="checkbox" name="custTypeCode" value="04">
+								<label for="owner" class="label-margin">
+									<span>화주</span>
+								</label>
+							</div>
+							<div class="input-group input-group-sm wd90 radio-or-checkBox ">
+								<input id="carrier" type="checkbox" name="custTypeCode" value="01">
+								<label for="carrier" class="label-margin">
+									<span>주선사/운송사</span>
+								</label>
+							</div>
+						</div>
+
+						<div class="input-group input-group-sm col mb10 gray_box">
+							<strong style="margin-left: 0em; padding-right: 1.5em;">수신번호</strong>
+							<input class="input-group input-group-sm mr10 wd240 middle-name" id="recvNum" type="text" name="recvNum" maxlength="13">
+							<a style="width: 100%; height: 24px; margin-right:5px" href="javascript:addPhone();" class="k-pager-refresh k-button wd58">추가</a>
+							<a style="width: 100%; height: 24px;" href="javascript:removePhone();" class="k-pager-refresh k-button wd58">삭제</a>
+						</div>
+						<div class="splitter" style="border: 0; width: 100%; height: 323px;">
+							<div id="popGrid" style="border-radius: 5px;"></div>
+						</div>
 					</div>
 				</div>
-				<div style="float: right; width: 50%;">
-					<div class="input-group input-group-sm col">
-						<strong style="margin-left: 2.6em; padding-right: 1.5em;">예약발송</strong>
-	                   	<input id="reserve" type="text" name="reserve" style="width:69%; height: 24px;">
-						<input style="width: 24px; height: 24px;" type="checkbox" name="chkReserve" id="chkReserve" value="Y">
-	                </div>
-					<div class="input-group input-group-sm col radio-or-checkBox ">
-					<strong style="margin-left: 2.9em; padding-right: 1.5em;">회원구분</strong>
-	                   	<input id="driver" type="checkbox" name="custTypeCode" value="09">
-	                   	<label for="driver" class="label-margin">
-	                   		<span>차주</span>
-	                   	</label>
-	               	</div>
-	                <div class="input-group input-group-sm col radio-or-checkBox ">
-	                   	<input id="owner" type="checkbox" name="custTypeCode" value="04">
-	                   	<label for="owner" class="label-margin">
-	                   		<span>화주</span>
-	                   	</label>
-	              	</div>
-	                <div class="input-group input-group-sm col radio-or-checkBox ">
-	                   	<input id="carrier" type="checkbox" name="custTypeCode" value="01">
-	                   	<label for="carrier" class="label-margin">
-	                   		<span>주선사/운송사</span>
-	                   	</label>
-	                </div>
-	                <div class="input-group input-group-sm col">
-						<strong style="margin-left: 2.6em; padding-right: 1.5em;">수신번호</strong>
-	                   	<input id="recvNum" type="text" name="recvNum" maxlength="13">
-	                   	<a style="width: 15%; height: 24px;" href="javascript:addPhone();" class="k-pager-refresh k-button"><i class="k-icon k-i-plus"></i>추가</a>
-						<a style="width: 15%; height: 24px;" href="javascript:removePhone();" class="k-pager-refresh k-button"><i class="k-icon k-i-minus"></i>삭제</a>
-	                </div>   
-	                <div class="splitter" style="border: 0; width: 50%; height: 299px;">
-						<div id="popGrid" style="border-radius: 5px;"></div>
-					</div>
+				<div class="padding" style="text-align: center;">
+					<a style="width: 100%" href="#" class="k-pager-refresh k-button wd58" onclick="sendTalk();"><b class="btn-b">보내기</b></a>
+					<a onclick="searchMember();" style="width: 100%" href="#" class="k-pager-refresh k-button wd58"><b class="btn-b">회원검색</b></a>
+					<%--<a onclick="uploadFile();" style="width: 25%" href="#" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-file"></i>파일불러오기</b></a>--%>
 				</div>
 			</div>
 		</form>
-		<div class="padding" style="text-align: center;">
-			<a style="width: 25%" href="#" class="k-pager-refresh k-button" onclick="sendTalk();" ><b class="btn-b"><i class="k-icon k-i-email"></i>보내기</b></a>
-			<a onclick="searchMember();" style="width: 25%" href="#" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-zoom"></i>회원검색</b></a>
-			<%--<a onclick="uploadFile();" style="width: 25%" href="#" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-file"></i>파일불러오기</b></a>--%>
-		</div>
 	</div>
 </div>
+
 <div class="header">
 	<div class="summary p30">
 		<div class="hdr-tit">
@@ -80,64 +88,61 @@
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<div style="display: block;" class="form-group row">
 				<form id="fSearch" class="date-bnt">
-					<div class="form-group row">
-						<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-							<strong>등록일자</strong>
-						    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
+					<div class="form-group row mt0" style="justify-content: space-between">
+						<div>
+							<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+								<input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd90">
+							</div>
+							<span style="margin-top:25px;margin-right: 10px">~</span>
+							<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+								<input style="padding: 0;" type="text" id="toDate" name="toDate" class="wd90">
+							</div>
+
+							<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+								<input type="radio" name="dateChk" id="today" value="0" checked/>
+								<label for="today" class="label-margin">
+									<span>오늘</span>
+								</label>
+							</div>
+							<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+								<input type="radio" name="dateChk" id="yesterday" value="1"/>
+								<label for="yesterday" class="label-margin">
+									<span>어제</span>
+								</label>
+							</div>
+							<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+								<input type="radio" name="dateChk" id="weekly" value="7"/>
+								<label for="weekly" class="label-margin">
+									<span>7일</span>
+								</label>
+							</div>
+							<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+								<input type="radio" name="dateChk" id="monthly" value="30"/>
+								<label for="monthly" class="label-margin">
+									<span>30일</span>
+								</label>
+							</div>
+
+							<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+								<input type="text" class="form-control form-control-sm searchValue" id="s_mobile" placeholder="수신번호">
+							</div>
+
+							<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+								<input type="text" class="form-control form-control-sm searchValue" id="s_userName" placeholder="회원이름">
+							</div>
+
+							<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+								<select class="form-control" class="com-sel" id="s_isDone">
+									<option value="">--전송결과--</option>
+									<option value="2">발송성공</option>
+									<option value="4">발송실패</option>
+								</select>
+							</div>
 						</div>
-						<span style="margin-top: 31px;">~</span>
-						<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-							<strong>　</strong>
-						    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
-						</div>
-						
-						<div class="input-group input-group-sm col radio-or-checkBox">
-		                   	<input type="radio" name="dateChk" id="today" value="0" checked/>
-		                   	<label for="today" class="label-margin">
-		                   		<span>오늘</span>
-		                   	</label>
-		                </div>
-		                <div class="input-group input-group-sm col radio-or-checkBox">
-		                 	<input type="radio" name="dateChk" id="yesterday" value="1"/>
-		                   	<label for="yesterday" class="label-margin">
-		                   		<span>어제</span>
-		                   	</label>
-		                </div>
-						<div class="input-group input-group-sm col radio-or-checkBox">
-		                   	<input type="radio" name="dateChk" id="weekly" value="7"/>
-		                   	<label for="weekly" class="label-margin">
-		                   		<span>7일</span>
-		                   	</label>
-		                </div>
-		                <div class="input-group input-group-sm col radio-or-checkBox">
-		                   	<input type="radio" name="dateChk" id="monthly" value="30"/>
-		                   	<label for="monthly" class="label-margin">
-		               	   		<span>30일</span>
-		                   	</label>
-		                </div>
-						
-						<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-							<strong>수신번호</strong>
-			    			<input type="text" class="form-control form-control-sm searchValue" id="s_mobile">
-						</div>
-						
-						<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-							<strong>회원이름</strong>
-			    			<input type="text" class="form-control form-control-sm searchValue" id="s_userName">
-						</div>
-						
-						<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-							<strong>전송결과</strong>
-			    			<select class="form-control" class="com-sel" id="s_isDone">
-								<option value="">--전송결과--</option>
-								<option value="2">발송성공</option>
-								<option value="4">발송실패</option>
-							</select>
-						</div>
-						
-						<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-						<strong>　</strong>
-						    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
+						<div class="row">
+							<div class="input-group-sm middle-name">
+								<button onclick="goList()" type="button" class="form-control-sm btn_58 btn_b">검색</button>
+							</div>
 						</div>
 					</div>
 				</form>
@@ -158,8 +163,8 @@
 								<div class="btn-row">
 									<div class="tool_group">
 										<div class="padding">
-											<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
-											<a id="btnAddTalk" href="#" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-email"></i>talk전송</b></a>
+											<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x">엑셀출력</b></a>
+											<a id="btnAddTalk" href="#" class="k-pager-refresh k-button"><b class="btn-b">talk전송</b></a>
 										</div>
 									</div>
 								</div>
@@ -198,7 +203,7 @@ $(document).ready(function(){
 
 	modal.kendoDialog({
 		width: "1000px",
-		height: "600px",
+		height: "700px",
 		visible: false,
 		closable: true,
 		title: "알림톡 전송",

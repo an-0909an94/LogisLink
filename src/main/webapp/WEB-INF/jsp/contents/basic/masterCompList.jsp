@@ -13,22 +13,31 @@
 	<div class="contents">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
-			<div class="form-group row">
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				    <select class="custom-select col-12" id="searchColumn" name="searchColumn">
-						<option value="s_custId">--거래처ID--</option>
-						<option value="s_bizName">--상호--</option>
-						<option value="s_bizNum">--사업자번호--</option>
-				    </select>
+			<div class="form-group row mt0" style="justify-content: space-between">
+				<div>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="custom-select wd90" id="searchColumn" name="searchColumn">
+							<option value="s_custId">--거래처ID--</option>
+							<option value="s_bizName">--상호--</option>
+							<option value="s_bizNum">--사업자번호--</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd290 div-min-col-1 middle-name">
+						<input type="text" id="searchValue" name="searchValue" style="width:100%"
+							   class="form-control form-control-sm searchValue" placeholder="검색항목을 입력하세요">
+					</div>
 				</div>
-				<div class="input-group input-group-sm col-3 div-min-col-1 middle-name">
-				    <input type="text" id="searchValue" name="searchValue" style="width:100%" class="form-control form-control-sm searchValue">
+
+				<div class="row">
+					<div class="input-group-sm">
+						<button onclick="goList()" type="button" class="form-control-sm btn_58 btn_b">
+							검색
+						</button>
+					</div>
+					<!--
+					<div style="padding: 1em;" class="input-group input-group-sm col-1"></div>
+					-->
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-				</div>
-				
-				<div style="padding: 1em;" class="input-group input-group-sm col-1"></div>				
 			</div>
 			</form>   
 			<div class="cont-body">
@@ -42,10 +51,10 @@
 									<div class="tool_group">
 										<div class="padding">		
 											<c:if test="${menuAuth.printYn eq 'Y'}">
-											<a class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+											<a class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x">엑셀출력</b></a>
 											</c:if>
 											<c:if test="${menuAuth.writeYn eq 'Y'}">
-											<a class="k-pager-refresh k-button" onclick="create_comp()"><b class="btn-h"><i class="k-icon k-i-plus"></i>신규등록</b></a>
+											<a class="k-pager-refresh k-button" onclick="create_comp()"><b class="btn-h">신규등록</b></a>
 											</c:if>					
 										</div>
 									</div>

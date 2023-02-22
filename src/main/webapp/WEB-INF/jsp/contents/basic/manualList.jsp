@@ -18,47 +18,47 @@
 	<input type="hidden" id="hiddenGroupManualMode" name="groupManualMode">
 	<div class="modalEditor">
 		<div class="modalHeader">
-			<div class="form-group row">
+			<div class="form-group mb15">
                 <label class="col-form-label modal-big-name required">구분</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <select class="custom-select col-12" id="groupAppKind" name="groupAppKind" required>
+                <div class="input-group input-group-sm wd190 middle-name">
+                    <select class="custom-select wd190" id="groupAppKind" name="groupAppKind" required>
                     	<option value="">선택하세요.</option>
                     	<option value="A">주선사</option>
                     	<option value="O">화주</option>
                     	<option value="D">차주</option>
                     </select>
-                    <div class="help-block with-errors"></div>
+                    <div class="help-block with-errors wd190" style="width: 100%"></div>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group mb15">
                 <label class="col-form-label modal-big-name required">그룹코드명</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="groupManualCode" name="groupManualCode" type="text" required>
-                    <div class="help-block with-errors"></div>
+                <div class="input-group input-group-sm wd190 middle-name">
+                    <input type="text" class="form-control form-control-sm wd190" id="groupManualCode" name="groupManualCode" type="text" required>
+                    <div class="help-block with-errors wd190" style="width: 100%"></div>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group mb15">
                 <label class="col-form-label modal-big-name required">매뉴얼명</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="groupManualName" name="groupManualName" type="text" required>
-                    <div class="help-block with-errors"></div>
+                <div class="input-group input-group-sm wd190 middle-name">
+                    <input type="text" class="form-control form-control-sm wd190" id="groupManualName" name="groupManualName" type="text" required>
+                    <div class="help-block with-errors wd190" style="width: 100%"></div>
                 </div>
             </div>
-			<div class="form-group row">
+			<div class="form-group">
 	            <label class="col-form-label modal-big-name required">사용여부</label>
-	            <div class="input-group input-group-sm col middle-name form-group">
-	                <select class="custom-select col-12" id="groupManualUseYn" name="groupManualUseYn" required>
-	             	<option value="Y" selected="selected">Y</option>
+	            <div class="input-group input-group-sm wd190 middle-name">
+	                <select class="custom-select wd190" id="groupManualUseYn" name="groupManualUseYn" required>
+	             	<option value="Y" selected="selected" >Y</option>
 	             	<option value="N">N</option>
 	             </select>
-	             <div class="help-block with-errors"></div>
+	             <div class="help-block with-errors wd190" style="width: 100%"></div>
 	            </div>
 	        </div>
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit" class="k-pager-refresh k-button"><strong><b id="groupBtnSave" class="btn-b"><i class="k-icon k-i-check"></i>저장</b></strong></button>
-		        <a id="groupcloseBtn" onclick="groupModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <button type="submit" class="k-pager-refresh k-button"><strong><b id="groupBtnSave" class="btn-b">저장</b></strong></button>
+		        <a id="groupcloseBtn" onclick="groupModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</div>
@@ -71,10 +71,10 @@
 	<input type="hidden" id="hiddenManualMode" name="manualMode">
 	<div class="modalEditor">
 		<div class="modalHeader">
-			<div class="form-group row">
+			<div class="form-group mb15 mt0">
                 <label class="col-form-label modal-big-name required">구분</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <select class="custom-select col-12" id="manualAppKind" name="manualAppKind" required>
+                <div class="input-group input-group-sm wd190 middle-name">
+                    <select class="custom-select wd190" style="width: 100%" id="manualAppKind" name="manualAppKind" required>
                     	<option value="">선택하세요.</option>
                     	<option value="A">주선사</option>
                     	<option value="O">화주</option>
@@ -83,32 +83,32 @@
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-			<div class="form-group row">
+			<div class="form-group mb15">
                 <label class="col-form-label modal-big-name required">매뉴얼명</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <select class="custom-select col-12" id="manualName" name="manualName" required>
+                <div class="input-group input-group-sm wd190 middle-name">
+                    <select class="custom-select wd190" id="manualName" name="manualName" required>
                     	<option value="">구분을 선택해주세요.</option>
                     </select>
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group mb15">
                 <label class="col-form-label modal-big-name required">제목</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="manualTitle" name="manualTitle" required>
+                <div class="input-group input-group-sm wd190 middle-name">
+                    <input type="text" class="form-control form-control-sm wd190" id="manualTitle" name="manualTitle" required>
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group mb15">
                 <label class="col-form-label modal-big-name required">매뉴얼타입</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-					<div class="input-group input-group-sm col radio-or-checkBox">
+                <div class="input-group input-group-sm wd190 middle-name">
+					<div class="input-group input-group-sm wd190 radio-or-checkBox">
                     	<input id="manualTypeL" type="radio" name="manualType" value="L" onclick="changeType(this);" checked="checked">
                     	<label for="manualTypeL" class="label-margin">
                     	<span>url</span>
                     	</label>
                     </div>
-                    <div class="input-group input-group-sm col radio-or-checkBox">
+                    <div class="input-group input-group-sm wd190 radio-or-checkBox">
                     	<input id="manualTypeF" type="radio" name="manualType" value="F" onclick="changeType(this);">
                     	<label for="manualTypeF" class="label-margin">
                     	<span>파일</span>
@@ -116,36 +116,36 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group mb15">
                 <label class="col-form-label modal-big-name required">버전</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="manualVersion" name="manualVersion" required>
+                <div class="input-group input-group-sm wd190 middle-name">
+                    <input type="text" class="form-control form-control-sm wd190" id="manualVersion" name="manualVersion" required>
                     <div class="help-block with-errors"></div>
                 </div>
             </div>
             
-            <div class="form-group row" id="manualUrlL">
+            <div class="form-group mb15" id="manualUrlL">
                 <label class="col-form-label modal-big-name required">매뉴얼</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="manualUrlLink" name="manualUrl" required>
+                <div class="input-group input-group-sm wd190 middle-name">
+                    <input type="text" class="form-control form-control-sm wd190" id="manualUrlLink" name="manualUrl" required>
                     <div class="help-block with-errors"></div>
                 </div>
         	</div>
         	
-            <div class="form-group row" id="manualUrlF" style="height: 42.563px;">
+            <div class="form-group mb15" id="manualUrlF">
                 <label class="col-form-label modal-big-name required">매뉴얼</label>
-				<div class="input-group input-group-sm col middle-name form-group filebox" style="padding:0px; align-self: center;">
-					<input style="width: 72.1%;border: 1px solid #ced4da;" class="upload-name" value="파일을 선택해 주세요." disabled> 
+				<div class="input-group input-group-sm col wd90 filebox" style="padding:0px; align-self: center;">
+					<input style="width: 100%;border: 1px solid #ced4da;" class="upload-name wd140 mr10" value="파일을 선택해 주세요." disabled>
 					<label for="manualUrlFile" style="padding: 5.5px 0.75em;">파일등록</label>
 					<input type="file" id="manualUrlFile" name="manualUrl" class="upload-hidden" required="required">
-	                <div class="help-block with-errors"></div>
 				</div>
+				<div class="help-block with-errors"></div>
         	</div>
-        	
-			<div class="form-group row">
+
+			<div class="form-group mb15">
                 <label class="col-form-label modal-big-name required">사용여부</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <select class="custom-select col-12" id="manualUseYn" name="manualUseYn" required>
+                <div class="input-group input-group-sm wd190 middle-name">
+                    <select class="custom-select wd190" id="manualUseYn" name="manualUseYn" required>
 	                	<option value="Y" selected="selected">Y</option>
 	                	<option value="N">N</option>
 	                </select>
@@ -156,8 +156,8 @@
 		
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit" class="k-pager-refresh k-button"><strong><b id="manualBtnSave" class="btn-b"><i class="k-icon k-i-check"></i>저장</b></strong></button>
-		        <a id="manualCloseBtn" onclick="manualModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <button type="submit" class="k-pager-refresh k-button"><strong><b id="manualBtnSave" class="btn-b">저장</b></strong></button>
+		        <a id="manualCloseBtn" onclick="manualModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</div>
@@ -173,26 +173,28 @@
 	<div class="contents">
 		<div class="box" style="width: 100%;">
 			<div id="group-list" class="cont-wrapper">
-				<div class="form-group row">
-					<div class="input-group input-group-sm col-2 middle-name">
-					<strong>구분</strong>
-					    <select class="custom-select col-12" id="appKind" name="appKind">
-							<option value="A" selected="selected">주선사</option>
-							<option value="O">화주</option>
-							<option value="D">차주</option>
-					    </select>
+				<div class="form-group row" style="justify-content: space-between">
+					<div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="custom-select wd90" id="appKind" name="appKind">
+								<option value="A" selected="selected">주선사</option>
+								<option value="O">화주</option>
+								<option value="D">차주</option>
+							</select>
+						</div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="custom-select wd90" id="useYn" name="useYn">
+								<option value="" selected="selected">사용여부.</option>
+								<option value="Y">Y</option>
+								<option value="N">N</option>
+							</select>
+						</div>
 					</div>
-					<div class="input-group input-group-sm col-2 middle-name">
-					<strong>사용여부</strong>
-					    <select class="custom-select col-12" id="useYn" name="useYn">
-							<option value="" selected="selected">선택하세요.</option>
-							<option value="Y">Y</option>
-							<option value="N">N</option>
-					    </select>
-					</div>
-					<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-					<strong>　</strong>
-					    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
+					<div class="input-group-sm middle-name">
+						<!--
+					    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark">검색</button>
+					    -->
+						<button onclick="goList()" type="button" class="form-control-sm btn_58 btn_b">검색</button>
 					</div>
 				</div>	
 				<div class="cont-body">
@@ -202,9 +204,14 @@
 								<div class="tool_form col">
 									<div class="btn-row">
 										<div class="tool_group">
-											<div class="padding">
+											<div class="padding" style="margin-top: 20px">
+
+												<button type="button" id="insertManualGroup_btn" class="form-control-sm middle-button btn_100 btn_black_13"><strong>매뉴얼그룹생성</strong></button>
+												<button type="button" id="insertManual_btn" class="form-control-sm middle-button btn_100 btn_black_13"><strong>매뉴얼생성</strong></button>
+												<!--
 												<button type="button" id="insertManualGroup_btn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i><strong>매뉴얼그룹생성</strong></b></button>
-												<button type="button" id="insertManual_btn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i><strong>매뉴얼생성</strong></b></button> 
+												<button type="button" id="insertManual_btn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i><strong>매뉴얼생성</strong></b></button>
+												-->
 											</div>
 										</div>
 									</div>
@@ -213,7 +220,10 @@
 							<div style="min-width: 500px;">
 								<form id="f" name="f" method="post">
 									<input type="hidden" id="gridData" name="gridData">
+									<!--
 									<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 341px);">
+									-->
+									<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:500px;">
 										<div class="top-pane">
 											<div style="height: 100%;" id="grid"></div>
 										</div>
@@ -315,8 +325,8 @@ $(document).ready(function(){
 	});
 
 	manualGroupModal.kendoDialog({
-		width: "446px",
-		height: "353px",
+		width: "440px",
+		height: "320px",
 		visible: false,
 		title: "매뉴얼그룹생성",
 		closable: true,
@@ -336,8 +346,8 @@ $(document).ready(function(){
 	});
 
 	manualModal.kendoDialog({
-		width: "446px",
-		height: "492px",
+		width: "440px",
+		height: "470px",
 		visible: false,
 		title: "매뉴얼생성",
 		closable: true,

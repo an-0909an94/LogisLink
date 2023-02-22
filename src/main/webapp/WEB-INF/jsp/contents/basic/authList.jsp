@@ -3,44 +3,48 @@
 
 <div id="divAuthInsert" class="editor_wrap p-0">
 	<form id="modal" name="modal" data-toggle="validator" role="form" autocomplete="off">
-	<div class="modalEditor" id="authInsert">
-		<div id="popGrid"></div>
-		<div class="modalHeader">
-			<div class="form-group row">
-                <label class="col-form-label modal-big-name required">권한이름</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalAuthName" name="modalAuthName" type="text" required>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label modal-big-name required">권한코드</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalAuthSeq" name="modalAuthSeq"
-                    pattern="^[0-9]*$" data-pattern-error="숫자만 입력해 주세요." required>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-            </div>
+		<div class="modalEditor" id="authInsert">
+			<div id="popGrid"></div>
+			<div class="modalHeader">
+				<div class="form-group row">
+					<label class="col-form-label modal-big-name required">권한이름</label>
+					<div class="input-group input-group-sm wd290 middle-name"
+						 style="margin-bottom:20px">
+						<input type="text" class="form-control form-control-sm" style="width:100%"
+							   id="modalAuthName" name="modalAuthName" type="text" required>
+						<div style="position: absolute;" class="help-block with-errors"></div>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-form-label modal-big-name required">권한코드</label>
+					<div class="input-group input-group-sm wd290 middle-name">
+						<input type="text" class="form-control form-control-sm" style="width:100%"
+							   id="modalAuthSeq" name="modalAuthSeq"
+							   pattern="^[0-9]*$" data-pattern-error="숫자만 입력해 주세요." required>
+						<div style="position: absolute;" class="help-block with-errors"></div>
+					</div>
+				</div>
+			</div>
+			<div class="editor_btns">
+				<div class="padding">
+					<button type="submit" class="k-pager-refresh k-button"><b class="btn-b"><strong>저장</strong></b>
+					</button>
+					<a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b
+							class="btn-g">닫기</b></a>
+				</div>
+			</div>
 		</div>
-		<div class="editor_btns">
-			<div class="padding">
-		        <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>저장</strong></b></button>
-		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
-	        </div>
-	    </div>
-	</div>
 	</form>
 </div>
 
 <div class="header">
-	
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<P id="headerTitle">권한관리</P>
 		</div>
 	</div>
 	<div class="contents">
-		<div class="box" style="width: 100%;">
+		<div class="box mt0" style="width: 100%;">
 			<div id="group-list" class="cont-wrapper">
 				<div class="cont-body">
 					<div class="content">
@@ -51,13 +55,22 @@
 										<div class="tool_group">
 											<div class="padding">
 												<c:if test="${menuAuth.writeYn eq 'Y'}">
-													<button type="button" id="insert_btn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i><strong>권한생성</strong></b></button> 
+													<!--
+													<button type="button" id="insert_btn" class="button"><b class="form-control-sm btn_58 btn_b"><strong>권한생성</strong></b></button>
+													-->
+													<button type="button" id="insert_btn" class="form-control-sm middle-button btn_75 btn_black_13"><strong>권한생성</strong></button>
 												</c:if>
 												<c:if test="${menuAuth.editYn eq 'Y'}">
-													<a href="javascript:fSubmit('E');" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i>수정</b></a>
+													<!--
+													<a href="javascript:fSubmit('E');" class="button"><b class="form-control-sm btn_75 btn_b">수정</b></a>
+													-->
+													<button type="button" onclick="fSubmit('E');" class="form-control-sm middle-button btn_75 btn_black_13"><strong>수정</strong></button>
 												</c:if>
 												<c:if test="${menuAuth.deleteYn eq 'Y'}">
-													<a href="javascript:fSubmit('D');" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-cancel"></i>삭제</b></a>
+													<!--
+													<a href="javascript:fSubmit('D');" class="button"><b class="form-control-sm btn_58 btn_b">삭제</b></a>
+													-->
+													<button type="button" onclick="fSubmit('D');" class="form-control-sm middle-button btn_75 btn_black_13"><strong>삭제</strong></button>
 												</c:if>
 											</div>
 										</div>
@@ -219,7 +232,7 @@ $(document).ready(function(){
 
 	modal.kendoDialog({
 		width: "446px",
-		height: "280px",
+		height: "250px",
 		visible: false,
 		title: "권한생성",
 		closable: true,

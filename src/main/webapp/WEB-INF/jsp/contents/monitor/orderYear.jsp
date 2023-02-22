@@ -11,66 +11,79 @@
         <div id="group-list" class="cont-wrapper-page-grid">
             <form id="fSearch" class="date-bnt" method="post">
                 <input type="hidden" name="orderStates" id="orderStates">
-                <div class="input-group input-group-sm col-1 middle-name">
-                    <strong>오더접수년</strong>
-                    <input style="width: 100%; padding: 0px" id="searchYear" name="searchYear" data-role="datepicker" data-start="decade" data-depth="decade" data-format="yyyy" />
-                    <input type="hidden" id="fromDate" name="fromDate">
-                    <input type="hidden" id="toDate" name="toDate">
+                <div class="form-group row mt0" style="justify-content: space-between">
+                    <div>
+                        <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                            <input style="width: 100%; padding: 0px" id="searchYear" name="searchYear"
+                                   data-role="datepicker" data-start="decade" data-depth="decade"
+                                   data-format="yyyy"/>
+                            <input type="hidden" id="fromDate" name="fromDate">
+                            <input type="hidden" id="toDate" name="toDate">
+                        </div>
+                        <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                            <select class="form-control" class="custom-select col-12" id="s_dept"
+                                    name="deptId">
+                                <option>--부서명--</option>
+                            </select>
+                        </div>
+                        <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                            <select class="form-control" class="custom-select col-12" id="userId"
+                                    name="userId">
+                                <option>--담당자명--</option>
+                            </select>
+                        </div>
+                        <div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+                            <input type="checkbox" name="orderState" id="orderState05" value="05"/>
+                            <label for="orderState05" class="label-margin">
+                                <span>도착</span>
+                            </label>
+                        </div>
+                        <div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+                            <input type="checkbox" name="orderState" id="orderState01" value="01"/>
+                            <label for="orderState01" class="label-margin">
+                                <span>진행</span>
+                            </label>
+                        </div>
+                        <div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+                            <input type="checkbox" name="orderState" id="orderState00" value="00"/>
+                            <label for="orderState00" class="label-margin">
+                                <span>접수</span>
+                            </label>
+                        </div>
+                        <div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+                            <input type="checkbox" name="orderState" id="orderState09" value="09"/>
+                            <label for="orderState09" class="label-margin">
+                                <span>취소</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-group-sm middle-name mr10">
+                            <button onclick="goList();" type="button" class="form-control-sm middle-button btn_58 btn_b">검색</button>
+                        </div>
+                        <div class="input-group-sm middle-name">
+                            <button onclick="goExcel();" type="button" class="form-control-sm middle-button btn_27h btn_g">엑셀출력</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                    <strong>담당부서</strong>
-                    <select class="form-control" class="custom-select col-12" id="s_dept" name="deptId">
-                        <option>--부서명--</option>
-                    </select>
-                </div>
-                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                    <strong>배차담당자</strong>
-                    <select class="form-control" class="custom-select col-12" id="userId" name="userId">
-                        <option>--담당자명--</option>
-                    </select>
-                </div>
-                <div class="input-group input-group-sm col radio-or-checkBox">
-                    <input type="checkbox" name="orderState" id="orderState05" value="05" />
-                    <label for="orderState05" class="label-margin">
-                        <span>도착</span>
-                    </label>
-                </div>
-                <div class="input-group input-group-sm col radio-or-checkBox">
-                    <input type="checkbox" name="orderState" id="orderState01" value="01" />
-                    <label for="orderState01" class="label-margin">
-                        <span>진행</span>
-                    </label>
-                </div>
-                <div class="input-group input-group-sm col radio-or-checkBox">
-                    <input type="checkbox" name="orderState" id="orderState00" value="00" />
-                    <label for="orderState00" class="label-margin">
-                        <span>접수</span>
-                    </label>
-                </div>
-                <div class="input-group input-group-sm col radio-or-checkBox">
-                    <input type="checkbox" name="orderState" id="orderState09" value="09" />
-                    <label for="orderState09" class="label-margin">
-                        <span>취소</span>
-                    </label>
-                </div>
-                <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width: 90px; min-width: 90px;">
-                    <strong> </strong>
-                    <button onclick="goList()" type="button" style="border-radius: 4px" class="form-control form-control-sm middle-button-dark">
-                        <i class="k-icon k-i-search"></i>검색
-                    </button>
-                </div>
+
                 <div class="toolbar row">
                     <div class="tool_form col">
                         <div style="width: 80px; float: left; margin-top: 30px;">(단위:건)</div>
+                        <!--
                         <div class="btn-row">
                             <div class="tool_group">
                                 <div class="padding">
-                                    <a href="#" class="k-pager-refresh k-button" onClick="goExcel();">
-                                        <b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b>
+                                    <a href="#" class="k-pager-refresh k-button"
+                                       onClick="goExcel();">
+                                        <b class="btn-x"><i
+                                                class="k-icon k-i-file-excel"></i>엑셀출력</b>
                                     </a>
                                 </div>
                             </div>
                         </div>
+                        -->
                     </div>
                 </div>
                 <!-- /toolbar -->

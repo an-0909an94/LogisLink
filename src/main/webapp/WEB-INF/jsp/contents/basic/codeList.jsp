@@ -3,103 +3,108 @@
 
 <div id="divCodeGroupInsert" class="editor_wrap p-0">
 	<form id="modal" name="modal" action="post">
-	<div class="modalEditor" id="codeGroupInsert">
-		<div class="modalHeader">
-			<div class="form-group row">
-                <label class="col-form-label modal-big-name">그룹코드</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalGCode" name="modalGCode" type="text">
+		<div class="modalEditor" id="codeGroupInsert">
+			<div class="modalHeader">
+				<div class="form-group row mt0">
+					<label class="col-form-label modal-big-name">그룹코드</label>
+					<div class="input-group input-group-sm wd290 middle-name pb05">
+						<input type="text" class="form-control form-control-sm" style="width: 100%" id="modalGCode"
+							   name="modalGCode" type="text">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-form-label modal-big-name">그룹코드명</label>
+					<div class="input-group input-group-sm wd290 middle-name pb05">
+						<input type="text" class="form-control form-control-sm" style="width: 100%" id="modalGName"
+							   name="modalGName" type="text">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-form-label modal-big-name">메모</label>
+					<div class="input-group input-group-sm wd290 middle-name pb05">
+						<input type="text" class="form-control form-control-sm" style="width: 100%" id="modalMemo"
+							   name="modalMemo" type="text">
+					</div>
+				</div>
+				<!--
+                <div>
+                    <strong>그룹코드</strong>
+                    <input style="width: 303px;" id="modalGCode" type="text">
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label modal-big-name">그룹코드명</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalGName" name="modalGName" type="text">
+                <div>
+                    <strong>그룹코드명</strong>
+                    <input style="width: 303px;" id="modalGName" type="text">
                 </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label modal-big-name">메모</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalMemo" name="modalMemo" type="text">
+                <div>
+                    <strong>메모</strong>
+                    <input style="width: 303px;" id="modalMemo" type="text">
                 </div>
-            </div>
-            <!-- 
-			<div>
-				<strong>그룹코드</strong>
-				<input style="width: 303px;" id="modalGCode" type="text">
+                 -->
 			</div>
-			<div>
-				<strong>그룹코드명</strong>
-				<input style="width: 303px;" id="modalGName" type="text">
+			<div class="editor_btns">
+				<div class="padding">
+					<a id="groupSubmit" onclick="modalSubmit()" class="k-pager-refresh k-button"><b
+							id="groupBtnSave" class="btn-b">저장</b></a>
+					<a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b
+							class="btn-g">닫기</b></a>
+				</div>
 			</div>
-			<div>
-				<strong>메모</strong>
-				<input style="width: 303px;" id="modalMemo" type="text">
-			</div>
-			 -->
 		</div>
-		<div class="editor_btns">
-			<div class="padding">
-		        <a id="groupSubmit" onclick="modalSubmit()" class="k-pager-refresh k-button"><b id="groupBtnSave" class="btn-b"><i class="k-icon k-i-check"></i>저장</b></a>
-		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
-	        </div>
-	    </div>
-	</div>
 	</form>
 </div>
 
-<div id="divCodeInsert" class="editor_wrap p-0">
+<div id="divCodeInsert" class="editor_wrap">
 	<form id="modal" name="modal" action="post">
 	<div class="modalEditor" id="codeInsert">
 		<div class="modalHeader">
-			<div class="form-group row">
+			<div class="form-group row pb05">
                 <label class="col-form-label modal-big-name">그룹코드</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <select class="form-control form-control-sm" id="modalCodeGroup" name="modalCodeGroup"></select>
+                <div class="input-group input-group-sm wd120 middle-name">
+                    <select class="form-control form-control-sm" id="modalCodeGroup" name="modalCodeGroup" style="width: 100%"></select>
                 </div>
             </div>
-			<div class="form-group row">
+			<div class="form-group row pb05">
                 <label class="col-form-label modal-big-name">공통코드</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalCode" name="modalCode">
+                <div class="input-group input-group-sm wd120 middle-name mr40">
+                    <input type="text" class="form-control form-control-sm" id="modalCode" name="modalCode" style="width: 100%">
                 </div>
                 <label class="col-form-label modal-big-name">공통코드명</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalCName" name="modalCName">
+                <div class="input-group input-group-sm wd120 middle-name">
+                    <input type="text" class="form-control form-control-sm" id="modalCName" name="modalCName" style="width: 100%">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row pb05">
                 <label class="col-form-label modal-big-name">상위분류코드</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalPcCode" name="modalPcCode">
+                <div class="input-group input-group-sm wd120 middle-name mr40">
+                    <input type="text" class="form-control form-control-sm" id="modalPcCode" name="modalPcCode" style="width: 100%">
                 </div>
                 <label class="col-form-label modal-big-name">상위공통코드</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalPsCode" name="modalPsCode">
+                <div class="input-group input-group-sm wd120 middle-name">
+                    <input type="text" class="form-control form-control-sm" id="modalPsCode" name="modalPsCode" style="width: 100%">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row pb05">
                 <label class="col-form-label modal-big-name">메모</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalCodeMemo" name="modalCodeMemo">
+                <div class="input-group input-group-sm wd120 middle-name">
+                    <input type="text" class="form-control form-control-sm" id="modalCodeMemo" name="modalCodeMemo" style="width: 100%">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row pb05">
                 <label class="col-form-label modal-big-name">필터1</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalFilter1" name="modalFilter1">
+                <div class="input-group input-group-sm wd120 middle-name">
+                    <input type="text" class="form-control form-control-sm" id="modalFilter1" name="modalFilter1" style="width: 100%">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row pb05">
                 <label class="col-form-label modal-big-name">필터2</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalFilter2" name="modalFilter2">
+                <div class="input-group input-group-sm wd120 middle-name">
+                    <input type="text" class="form-control form-control-sm" id="modalFilter2" name="modalFilter2" style="width: 100%">
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row pb05">
                 <label class="col-form-label modal-big-name">필터3</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalFilter3" name="modalFilter3">
+                <div class="input-group input-group-sm wd120 middle-name">
+                    <input type="text" class="form-control form-control-sm" id="modalFilter3" name="modalFilter3" style="width: 100%">
                 </div>
             </div>
             
@@ -144,8 +149,8 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a id="codeSubmit" onclick="codeModalSubmit()" class="k-pager-refresh k-button"><b id="codeBtnSave" class="btn-b"><i class="k-icon k-i-check"></i>저장</b></a>
-		        <a id="closeBtn" onclick="codeModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <a id="codeSubmit" onclick="codeModalSubmit()" class="k-pager-refresh k-button"><b id="codeBtnSave" class="btn-b">저장</b></a>
+		        <a id="closeBtn" onclick="codeModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</div>
@@ -153,7 +158,7 @@
 </div>
 
 <div class="header">
-	
+
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<P id="headerTitle">코드관리</P>
@@ -170,13 +175,28 @@
 									<div class="btn-row">
 										<div class="tool_group">
 											<div class="padding">
-											
+
 												<c:if test="${menuAuth.writeYn eq 'Y'}">
-												<button type="button" id="insertCodeGroup_btn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i><strong>코드그룹생성</strong></b></button>
+													<!--
+													<button type="button" id="insertCodeGroup_btn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i><strong>코드그룹생성</strong></b></button>
+													-->
+													<button type="button" id="insertCodeGroup_btn"
+															class="form-control-sm middle-button btn_95 btn_black_13">
+														<strong>코드그룹생성</strong></button>
+
 												</c:if>
 												<c:if test="${menuAuth.writeYn eq 'Y'}">
-												<button type="button" id="insertCode_btn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i><strong>코드생성</strong></b></button> 
-												<!-- <a href="javascript:fSubmit();" class="k-pager-refresh k-button"><i class="k-icon k-i-check"></i>수정</a>-->
+													<!--
+													<button type="button" id="insertCode_btn"
+															class="k-pager-refresh k-button"><b
+															class="btn-b"><i
+															class="k-icon k-i-copy"></i><strong>코드생성</strong></b>
+													</button>
+													-->
+													<button type="button" id="insertCode_btn"
+															class="form-control-sm middle-button btn_95 btn_black_13">
+														<strong>코드생성</strong></button>
+													<!-- <a href="javascript:fSubmit();" class="k-pager-refresh k-button"><i class="k-icon k-i-check"></i>수정</a>-->
 												</c:if>
 											</div>
 										</div>
@@ -186,7 +206,8 @@
 							<div style="min-width: 500px;">
 								<form id="f" name="f" method="post">
 									<input type="hidden" id="gridData" name="gridData">
-									<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 280px);">
+									<div id="splitter"
+										 style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 280px);">
 										<div class="top-pane">
 											<div style="height: 100%;" id="grid"></div>
 										</div>
@@ -286,7 +307,7 @@ $(document).ready(function(){
 
 	codeGroupModal.kendoDialog({
 		width: "446px",
-		height: "330px",
+		height: "280px",
 		visible: false,
 		title: "코드그룹생성",
 		closable: true,
@@ -296,7 +317,7 @@ $(document).ready(function(){
 	
 	codeModal.kendoDialog({
 		width: "550px",
-		height: "555px",
+		height: "440px",
 		visible: false,
 		title: "코드생성",
 		closable: true,
