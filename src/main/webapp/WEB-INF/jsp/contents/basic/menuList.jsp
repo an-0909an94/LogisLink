@@ -8,16 +8,16 @@
 		<form id="fGuide" name="fGuide" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="menuSeq" id="mMenuSeq">
 			<c:forEach var="idx" begin="1" end="3">
-				<div class="form-group row">
+				<div class="form-group mt0">
 	                <label class="col-form-label modal-big-name">매뉴얼유형</label>
-	                <div class="input-group input-group-sm col middle-name form-group">
+	                <div class="input-group input-group-sm wd190 middle-name">
 						<div class="input-group input-group-sm col radio-or-checkBox">
 	                    	<input id="manual${idx}TypeL" type="radio" name="manual${idx}Type" value="L" onClick="changeType(this);" checked>
 	                    	<label for="manual${idx}TypeL" class="label-margin">
 	                    	<span>url</span>
 	                    	</label>
 	                    </div>
-	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                    <div class="input-group input-group-sm wd90 radio-or-checkBox">
 	                    	<input id="manual${idx}TypeF" type="radio" name="manual${idx}Type" value="F" onClick="changeType(this);" >
 	                    	<label for="manual${idx}TypeF" class="label-margin">
 	                    	<span>파일</span>
@@ -25,8 +25,8 @@
 	                    </div>
 	                </div>
 	                <label class="col-form-label modal-big-name">매뉴얼${idx}</label>
-	                <div class="input-group input-group-sm col middle-name form-group">
-	                    <input type="text" class="form-control form-control-sm" id="manual${idx}Url" name="manual${idx}Url" placeholder="http(s)://">
+	                <div class="input-group input-group-sm wd190 middle-name">
+	                    <input type="text" class="form-control form-control-sm" style="width:100%" id="manual${idx}Url" name="manual${idx}Url" placeholder="http(s)://">
 	                </div>
 	            </div>
 				<div class="form-group row attachedFiles" id="manualAttachedFile${idx}" style="display:none;" >
@@ -34,16 +34,16 @@
 			</c:forEach>
  			
 			<c:forEach var="idx" begin="1" end="3">
-				<div class="form-group row">
+				<div class="form-group form-group-sm">
 	                <label class="col-form-label modal-big-name">튜토리얼유형</label>
-	                <div class="input-group input-group-sm col middle-name form-group">
-						<div class="input-group input-group-sm col radio-or-checkBox">
+	                <div class="input-group input-group-sm wd190 middle-name">
+						<div class="input-group input-group-sm wd90 radio-or-checkBox">
 	                    	<input id="tutorial${idx}TypeL" type="radio" name="tutorial${idx}Type" value="L" onClick="changeType(this);" checked>
 	                    	<label for="tutorial${idx}TypeL" class="label-margin">
 	                    	<span>url</span>
 	                    	</label>
 	                    </div>
-	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                    <div class="input-group input-group-sm wd90 radio-or-checkBox">
 	                    	<input id="tutorial${idx}TypeF" type="radio" name="tutorial${idx}Type" value="F" onClick="changeType(this);" >
 	                    	<label for="tutorial${idx}TypeF" class="label-margin">
 	                    	<span>파일</span>
@@ -51,8 +51,8 @@
 	                    </div>
 	                </div>
 	                <label class="col-form-label modal-big-name">튜토리얼${idx}</label>
-	                <div class="input-group input-group-sm col middle-name form-group">
-	                    <input type="text" class="form-control form-control-sm" id="tutorial${idx}Url" name="tutorial${idx}Url" placeholder="http(s)://">
+	                <div class="input-group input-group-sm wd190 middle-name">
+	                    <input type="text" class="form-control form-control-sm" style="width:100%" id="tutorial${idx}Url" name="tutorial${idx}Url" placeholder="http(s)://">
 	                </div>
 	            </div>
 				<div class="form-group row attachedFiles" id="tutorialAttachedFile${idx}" style="display:none;" >	
@@ -62,8 +62,8 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="modalSubmit()" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i>저장</b></a>
-		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <a onclick="modalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">저장</b></a>
+		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</div>	
@@ -80,25 +80,73 @@
 				<div class="tool_form col">
 					<div class="btn-row">
 						<div class="tool_group">
-							<div class="padding">
+							<div class="padding" style="margin-bottom: 10px">
 								<c:if test="${menuAuth.writeYn eq 'Y'}">
-								<a class="k-pager-refresh k-button" onClick="viewGuide();" id="btnEdit"><b class="btn-b"><i class="k-icon k-i-info"></i>도움말관리</b></a>
-								</c:if>		
+									<!--
+									<a class="k-pager-refresh k-button" onClick="viewGuide();"
+									id="btnEdit"><b class="btn-b"><i class="k-icon k-i-info"></i>도움말관리</b></a>
+									-->
+
+									<button onclick="viewGuide();" type="button"
+											class="form-control-sm middle-button btn_75 btn_black div-min-col-1">
+										<strong>도움말관리</strong>
+									</button>
+								</c:if>
 								<c:if test="${menuAuth.writeYn eq 'Y'}">
-								<a class="k-button k-i-plus" onClick="fSubmit('N');" id="btnAdd"><b class="btn-b"><i class="k-icon k-i-plus"></i>추가</b></a>
+									<!--
+									<a class="k-button k-i-plus" onClick="fSubmit('N');"
+									id="btnAdd"><b class="btn-b"><i class="k-icon k-i-plus"></i>추가</b></a>
+									-->
+
+									<button onclick="fSubmit('N');" type="button"
+											class="form-control-sm middle-button btn_75 btn_black div-min-col-1">
+										<strong>추가</strong>
+									</button>
+
 								</c:if>
 								<c:if test="${menuAuth.editYn eq 'Y'}">
-								<a class="k-pager-refresh k-button" onClick="fSubmit('E');" id="btnEdit"><b class="btn-b"><i class="k-icon k-i-check"></i>수정</b></a>
-								</c:if>								
+									<!--
+									<a class="k-pager-refresh k-button" onClick="fSubmit('E');"
+									id="btnEdit"><b class="btn-b"><i
+									class="k-icon k-i-check"></i>수정</b></a>
+									-->
+
+									<button onclick="fSubmit('E');" type="button"
+											class="form-control-sm middle-button btn_75 btn_black div-min-col-1">
+										<strong>수정</strong>
+									</button>
+								</c:if>
 								<c:if test="${menuAuth.deleteYn eq 'Y'}">
-								<a class="k-pager-refresh k-button" onClick="fSubmit('D')" id="btnDel"><b class="btn-b"><i class="k-icon k-i-cancel"></i>삭제</b></a>
-								</c:if>								
+									<!--
+									<a class="k-pager-refresh k-button" onClick="fSubmit('D')"
+									id="btnDel"><b class="btn-b"><i
+									class="k-icon k-i-cancel"></i>삭제</b></a>
+									-->
+
+									<button onclick="fSubmit('D');" type="button"
+											class="form-control-sm middle-button btn_75 btn_black div-min-col-1">
+										<strong>삭제</strong>
+									</button>
+
+								</c:if>
 								<c:if test="${menuAuth.writeYn eq 'Y'}">
-								<a class="k-pager-refresh k-button" onClick="fSubmit('R')"><b class="btn-b"><i class="k-icon k-i-refresh"></i>초기화</b></a>
-								</c:if>								
+									<!--
+									<a class="k-pager-refresh k-button" onClick="fSubmit('R')"><b
+									class="btn-b"><i class="k-icon k-i-refresh"></i>초기화</b></a>
+									-->
+
+									<button onclick="fSubmit('D');" type="button"
+											class="form-control-sm middle-button btn_75 btn_black div-min-col-1">
+										<strong>초기화</strong>
+									</button>
+								</c:if>
 								<c:if test="${menuAuth.printYn eq 'Y'}">
-								<a class="k-button k-i-file-excel" onClick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
-								</c:if> 
+									<!--
+									<a class="k-button k-i-file-excel" onClick="goExcel();"><b
+									class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+									-->
+									<button onclick="goExcel();" type="button" class="form-control-sm middle-button btn_75 btn_g">엑셀출력</button>
+								</c:if>
 							</div>
 						</div>
 					</div>
@@ -110,60 +158,62 @@
 						<div class="cont-b-head">
 							<h4>메뉴정보</h4>
 						</div>
-						<div style="margin-right: 27px;">
+						<div style="margin-right: 27px;" class="gray_box">
 							<div class="form-group row">
-								<div class="input-group input-group-sm col middle-name">
-								<strong>메뉴구분</strong>
-								    <div class="input-group input-group-sm col">
-										<div class="input-group input-group-sm col radio-or-checkBox">
-					                    	<input id="depth1" type="radio" name="depth" value="1" checked>
-					                    	<label for="depth1" class="label-margin">
-					                    	<span>대메뉴</span>
-					                    	</label>
-					                    </div>
-					                    <div class="input-group input-group-sm col radio-or-checkBox">
-					                    	<input id="depth2" type="radio" name="depth" value="2">
-					                    	<label for="depth2" class="label-margin">
-					                    	<span>중메뉴</span>
-					                    	</label>
-					                    </div>
+								<div class="input-group input-group-sm wd228 middle-name div-min-col-1">
+									<strong>메뉴구분</strong>
+									<div class="input-group input-group-sm">
+										<div class="input-group input-group-sm wd90 radio-or-checkBox">
+											<input id="depth1" type="radio" name="depth" value="1"
+												   checked>
+											<label for="depth1" class="label-margin">
+												<span>대메뉴</span>
+											</label>
+										</div>
+										<div class="input-group input-group-sm wd90 radio-or-checkBox">
+											<input id="depth2" type="radio" name="depth" value="2">
+											<label for="depth2" class="label-margin">
+												<span>중메뉴</span>
+											</label>
+										</div>
 									</div>
 								</div>
-								<div class="input-group input-group-sm col middle-name">
-								<strong>대메뉴</strong>
-								    <select name="parentSeq" id="parentSeq"></select>
+								<div class="input-group input-group-sm wd228 middle-name">
+									<strong>대메뉴</strong>
+									<select name="parentSeq" id="parentSeq"></select>
 								</div>
 							</div>
 							<div class="form-group row">
-								<div class="input-group input-group-sm col middle-name">
-								<strong>메뉴코드</strong>
-								    <input name="menuCode" id="menuCode"/>
+								<div class="input-group input-group-sm wd228 middle-name div-min-col-1">
+									<strong>메뉴코드</strong>
+									<input name="menuCode" id="menuCode"/>
 								</div>
-								<div class="input-group input-group-sm col middle-name">
-								<strong>메뉴명</strong>
-								    <input name="menuName" id="menuName"/>
+								<div class="input-group input-group-sm wd228 middle-name">
+									<strong>메뉴명</strong>
+									<input name="menuName" id="menuName"/>
 								</div>
 							</div>
-							
+
 							<div class="form-group row">
-								<div class="input-group input-group-sm col middle-name">
-								<strong>메뉴권한</strong>
-								    <input type="text" name="authType" id="authType" value="R,W,E,D,P"/>
+								<div class="input-group input-group-sm wd228 middle-name div-min-col-1">
+									<strong>메뉴권한</strong>
+									<input type="text" name="authType" id="authType"
+										   value="R,W,E,D,P"/>
 								</div>
-								<div class="input-group input-group-sm col middle-name">
-								<strong>URL</strong>
-								    <input type="text" name="pageUrl" id="pageUrl" required/>
+								<div class="input-group input-group-sm wd228 middle-name">
+									<strong>URL</strong>
+									<input type="text" name="pageUrl" id="pageUrl" required/>
 								</div>
 							</div>
-							
+
 							<div class="form-group row">
-								<div class="input-group input-group-sm col middle-name">
-								<strong>메뉴번호</strong>
-								    <input type="text" name="menuSeq" id="menuSeq" required/>
+								<div class="input-group input-group-sm wd228 middle-name">
+									<strong>메뉴번호</strong>
+									<input type="text" name="menuSeq" id="menuSeq" required/>
 								</div>
-								<div class="input-group input-group-sm col middle-name"></div>
+								<div class="input-group input-group-sm wd228 middle-name"></div>
 							</div>
-						</div>	
+						</div>
 					</form>
 				</div>
 				<div id="splitter" style="min-height:660px; float:right; width:60%; border: 0;">
@@ -221,7 +271,7 @@ $(document).ready(function(){
 
 	GuideModal.kendoDialog({
 		width: "680px",
-		height: "600px",
+		height: "370px",
 		visible: false,
 		title: "도움말관리",
 		closable: true,

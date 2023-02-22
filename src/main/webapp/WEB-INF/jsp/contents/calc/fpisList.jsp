@@ -13,64 +13,66 @@
 	<div class="contents">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" name="fSearch" method="post" class="date-bnt">
-				<div class="form-group row">
-					<div class="input-group input-group-sm col-1 middle-name">
-					<strong>배차일자</strong>
-					    <select class="custom-select col-12">
-					        <option>배차일자</option>
-					    </select>
+				<div class="form-group row mt0" style="justify-content: space-between">
+					<div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="custom-select wd90">
+								<option>배차일자</option>
+							</select>
+						</div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
+								   class="wd90">
+						</div>
+						<span style="margin-right: 10px;">~</span>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<input style="padding: 0;" type="text" id="toDate" name="toDate"
+								   class="wd90">
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="today" value="0" checked/>
+							<label for="today" class="label-margin">
+								<span>오늘</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="yesterday" value="1"/>
+							<label for="yesterday" class="label-margin">
+								<span>어제</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="weekly" value="7"/>
+							<label for="weekly" class="label-margin">
+								<span>7일</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="monthly" value="30"/>
+							<label for="monthly" class="label-margin">
+								<span>30일</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="form-control" class="custom-select wd90" id="sDeptId"
+									name="sDeptId">
+								<option>--담당부서명--</option>
+							</select>
+						</div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="form-control" class="custom-select col-12" id="userId"
+									name="userId"></select>
+						</div>
 					</div>
-					<div class="input-group input-group-sm col-1 middle-name">
-					<strong>　</strong>
-					    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
+
+					<div class="row">
+						<div class="input-group input-group-sm middle-name">
+							<button onclick="goList()" type="button" class="form-control-sm btn_58 btn_b">검색</button>
+						</div>
 					</div>
-					<span style="margin-top: 31px;">~</span>
-					<div class="input-group input-group-sm col-1 middle-name">
-					<strong>　</strong>
-					    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
-					</div>
-						
-					<div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="radio" name="dateChk" id="today" value="0" checked/>
-	                   	<label for="today" class="label-margin">
-	                   		<span>오늘</span>
-	                   	</label>
-	                </div>
-	                   <div class="input-group input-group-sm col radio-or-checkBox">
-	                 	<input type="radio" name="dateChk" id="yesterday" value="1"/>
-	                   	<label for="yesterday" class="label-margin">
-	                   		<span>어제</span>
-	                   	</label>
-	                   </div>
-					<div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="radio" name="dateChk" id="weekly" value="7"/>
-	                   	<label for="weekly" class="label-margin">
-	                   		<span>7일</span>
-	                   	</label>
-	                </div>
-	                   <div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="radio" name="dateChk" id="monthly" value="30"/>
-	                   	<label for="monthly" class="label-margin">
-	                   		<span>30일</span>
-	                   	</label>
-	                </div>
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>담당부서명</strong>
-					    <select class="form-control" class="custom-select col-12" id="sDeptId" name="sDeptId">
-					    	<option>--부서명--</option>
-					    </select>
-					</div>
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>배차담당자</strong>
-					    <select class="form-control" class="custom-select col-12" id="userId" name="userId"></select>
-					</div>
-				
-					<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-					<strong>　</strong>
-					    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-					</div>
-	                <div style="padding: 1em;" class="input-group input-group-sm col-1"></div>
-	                
+
+					<!--<div style="padding: 1em;" class="input-group input-group-sm col-1"></div>-->
+
 				</div>
 			</form>
 				<!--  -->
@@ -84,7 +86,7 @@
 									<div class="btn-row">
 										<div class="tool_group">
 											<div class="padding">
-												<a href="javascript:goExcel();" class="k-pager-refresh k-button"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+												<a href="javascript:goExcel();" class="k-pager-refresh k-button wd100"><b class="btn-x">엑셀출력</b></a>
 											</div>
 										</div>
 									</div>

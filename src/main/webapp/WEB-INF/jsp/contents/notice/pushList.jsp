@@ -6,50 +6,56 @@
 <div id="pushModal" class="editor-warp p-0">
 	<div class="modalEditor" id="addPush">
 		<form id="modalForm" name="modalForm">
-			<div class="box" style="width: 100%">
-				<div style="float: left; width: 50%">
-					<div class="form-group row">
+			<div class="box mb15" style="width: 100%">
+				<div style="float: left; width: 49%;padding-left:35px">
+					<div class="form-group row gray_box">
 						<div class="input-group input-group-sm col middle-name">
 						<strong>제목</strong>
 						    <input id="title" name="title" style="height: 40px;width: 100%;font-size: 16px;font-weight: 300;border: 1px solid #E8E9EB;border-radius: 5px;"/>
 						</div>
 					</div>
 					
-					<div class="form-group row">
+					<div class="form-group row gray_box">
 						<div class="input-group input-group-sm col middle-name">
 						<strong>내용</strong>
-						    <textarea id="contents" name="contents" style="width: 100%;font-size: 16px;font-weight: 300;border: 1px solid #E8E9EB;border-radius: 5px;" rows="16" class="form-control form-control-sm textarea"></textarea>
+						    <textarea id="contents" name="contents" style="width: 100%;font-size: 16px;font-weight: 300;border: 1px solid #E8E9EB;border-radius: 5px;" rows="16" class="form-control textarea"></textarea>
 						</div>
 					</div>
 				</div>
-				<div style="float: right; width: 50%;">
-					<div class="input-group input-group-sm col radio-or-checkBox ">
-					<strong style="margin-left: 2.9em; padding-right: 1.5em;">회원구분</strong>
-	                   	<input id="driver" type="checkbox" name="custTypeCode" value="09">
-	                   	<label for="driver" class="label-margin">
-	                   		<span>차주</span>
-	                   	</label>
-	               	</div>
-	                <div class="input-group input-group-sm col radio-or-checkBox ">
-	                   	<input id="owner" type="checkbox" name="custTypeCode" value="04">
-	                   	<label for="owner" class="label-margin">
-	                   		<span>화주</span>
-	                   	</label>
-	              	</div>
-	                <div class="input-group input-group-sm col radio-or-checkBox ">
-	                   	<input id="carrier" type="checkbox" name="custTypeCode" value="01">
-	                   	<label for="carrier" class="label-margin">
-	                   		<span>주선사/운송사</span>
-	                   	</label>
-	                </div>
-	                <div class="splitter" style="border: 0; max-width: 50%; min-height: 449px;">
+				<div style="float: right; width: 49%;padding-right:35px">
+					<div class="mb20 gray_box">
+						<div class="input-group input-group-sm col radio-or-checkBox ">
+							<strong style="margin-left: 0em; padding-right: 1.5em;">회원구분</strong>
+							<input id="driver" type="checkbox" name="custTypeCode" value="09">
+							<label for="driver" class="label-margin">
+								<span>차주</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm col radio-or-checkBox ">
+							<input id="owner" type="checkbox" name="custTypeCode" value="04">
+							<label for="owner" class="label-margin">
+								<span>화주</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm col radio-or-checkBox ">
+							<input id="carrier" type="checkbox" name="custTypeCode" value="01">
+							<label for="carrier" class="label-margin">
+								<span>주선사/운송사</span>
+							</label>
+						</div>
+					</div>
+
+					<div class="splitter" style="border: 0; max-width: 100%; min-height: 460px;">
 						<div id="popGrid" style="border-radius: 5px;"></div>
 					</div>
 				</div>
+
+
+
 			</div>
 			<div class="padding" style="text-align: center;">
-				<a style="width: 25.5%" href="#" class="k-pager-refresh k-button" onclick="sendPush();" ><b class="btn-b"><i class="k-icon k-i-email"></i>보내기</b></a>
-				<a onclick="searchMember();" style="width: 25.5%" href="#" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-zoom"></i>회원검색</b></a>
+				<a style="width: 25.5%" href="#" class="k-pager-refresh k-button wd58" onclick="sendPush();" ><b class="btn-b">보내기</b></a>
+				<a onclick="searchMember();" style="width: 25.5%" href="#" class="k-pager-refresh k-button wd58"><b class="btn-g">회원검색</b></a>
 			</div>
 		</form>
 	</div>
@@ -62,60 +68,63 @@
 	</div>
 	<div class="contents">
 		<div id="group-list" class="cont-wrapper-page-grid">
-			<div class="form-group row">
-				<form id="fSearch" class="date-bnt" onSubmit="return false;">
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>등록일자</strong>
-					    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
+			<form id="fSearch" class="date-bnt" onSubmit="return false;">
+				<div class="form-group row mt0" style="justify-content: space-between">
+					<div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
+								   class="wd90">
+						</div>
+						<span style="margin-right: 10px">~</span>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<input style="padding: 0;" type="text" id="toDate" name="toDate"
+								   class="wd90">
+						</div>
+
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="today" value="0" checked/>
+							<label for="today" class="label-margin">
+								<span>오늘</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="yesterday" value="1"/>
+							<label for="yesterday" class="label-margin">
+								<span>어제</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="weekly" value="7"/>
+							<label for="weekly" class="label-margin">
+								<span>7일</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="monthly" value="30"/>
+							<label for="monthly" class="label-margin">
+								<span>30일</span>
+							</label>
+						</div>
+
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="custom-select col-12" name="isDone" id="isDone">
+								<option value="" selected="selected">--전송결과--</option>
+								<option value="Y">성공</option>
+								<option value="N">미전송</option>
+								<option value="F">실패</option>
+							</select>
+						</div>
 					</div>
-					<span style="margin-top: 31px;">~</span>
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-						<strong>　</strong>
-					    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
+
+					<div class="row">
+						<div class="input-group-sm middle-name">
+							<button onclick="goList()" type="button"
+									class="form-control-sm btn_58 btn_b">검색
+							</button>
+						</div>
 					</div>
-					
-					<div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="radio" name="dateChk" id="today" value="0" checked/>
-	                   	<label for="today" class="label-margin">
-	                   		<span>오늘</span>
-	                   	</label>
-	                </div>
-	                <div class="input-group input-group-sm col radio-or-checkBox">
-	                 	<input type="radio" name="dateChk" id="yesterday" value="1"/>
-	                   	<label for="yesterday" class="label-margin">
-	                   		<span>어제</span>
-	                   	</label>
-	                </div>
-					<div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="radio" name="dateChk" id="weekly" value="7"/>
-	                   	<label for="weekly" class="label-margin">
-	                   		<span>7일</span>
-	                   	</label>
-	                </div>
-	                <div class="input-group input-group-sm col radio-or-checkBox">
-	                   	<input type="radio" name="dateChk" id="monthly" value="30"/>
-	                   	<label for="monthly" class="label-margin">
-	               	   		<span>30일</span>
-	                   	</label>
-	                </div>
-	                						
-	                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-	                	<strong>전송결과</strong>
-					    <select class="custom-select col-12" name="isDone" id="isDone">
-					    	<option value="" selected="selected">--전송결과--</option>
-					        <option value="Y">성공</option>
-							<option value="N">미전송</option>
-							<option value="F">실패</option>
-					    </select>
-					</div>
-		                
-					<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-					<strong>　</strong>
-					    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-					</div>
-					
-				</form>
-			</div>
+				</div>
+			</form>
 			<!--  -->
 			<div class="cont-body">
 				<!-- f-wrap -->
@@ -127,8 +136,8 @@
 								<div class="btn-row">
 									<div class="tool_group">
 										<div class="padding">
-											<a href="#" class="k-pager-refresh k-button" onclick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
-											<a id="btnAddPush" href="#" class="k-pager-refresh k-button"><b class="btn-h"><i class="k-icon k-i-email"></i>push전송</b></a>
+											<a href="#" class="k-pager-refresh k-button" onclick="goExcel();"><b class="btn-x">엑셀출력</b></a>
+											<a id="btnAddPush" href="#" class="k-pager-refresh k-button"><b class="btn-h">push전송</b></a>
 										</div>
 									</div>
 								</div>
@@ -170,7 +179,7 @@ $(document).ready(function(){
 
 	modal.kendoDialog({
 		width: "1000px",
-		height: "670px",
+		height: "720px",
 		visible: false,
 		closable: true,
 		title: "앱 푸시 전송",

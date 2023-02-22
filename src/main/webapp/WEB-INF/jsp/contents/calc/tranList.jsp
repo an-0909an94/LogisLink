@@ -11,7 +11,7 @@
     <form id="fExportRecipt" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
         <div class="modalHeader">
             <div class="form-group row">
-                <div id="exportMessage" style="text-align: left; padding: 0px; font-size: 17px;">
+                <div id="exportMessage" style="text-align: center; padding: 0px; font-size: 17px; width:100%">
                 </div>
             </div>
             <div class="form-group row">
@@ -29,8 +29,8 @@
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" id="fExportReceiptBtn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>확인</strong></b></button>
-                <a onclick="exportReceiptClose();" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>취소</b></a>
+                <button type="submit" id="fExportReceiptBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>확인</strong></b></button>
+                <a onclick="exportReceiptClose();" class="k-pager-refresh k-button"><b class="btn-g">취소</b></a>
             </div>
         </div>
     </form>
@@ -46,57 +46,59 @@
 	<div class="contents">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt">
-			<div class="form-group row">
-				<div class="input-group input-group-sm col-2 middle-name">
-				<strong>발행일자</strong>
-				    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
+				<div class="form-group row mt0" style="justify-content: space-between">
+					<div>
+						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+							<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
+								   class="wd190">
+						</div>
+						<span style="margin-right: 10px;">~</span>
+						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+							<input style="padding: 0;" type="text" id="toDate" name="toDate"
+								   class="wd190">
+						</div>
+
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="today" value="0" checked/>
+							<label for="today" class="label-margin">
+								<span>오늘</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="yesterday" value="1"/>
+							<label for="yesterday" class="label-margin">
+								<span>어제</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="weekly" value="7"/>
+							<label for="weekly" class="label-margin">
+								<span>7일</span>
+							</label>
+						</div>
+						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+							<input type="radio" name="dateChk" id="monthly" value="30"/>
+							<label for="monthly" class="label-margin">
+								<span>30일</span>
+							</label>
+						</div>
+						<!-- 22.06.21 이건욱 T11 > J39 추가 -->
+						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+							<input type="text" id="supplierName" name="supplierName"
+								   style="width:100%;" placeholder="공급자">
+						</div>
+						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+							<input type="text" id="buyerName" name="buyerName" style="width:100%;" placeholder="공급받는자">
+						</div>
+						<!-- End -->
+					</div>
+					<div class="row">
+						<div class="input-group-sm middle-name mr10">
+							<button onclick="goList()" type="button" class="form-control-sm btn_58 btn_b">검색</button>
+						</div>
+					</div>
+					<!--<div style="padding: 1em;" class="input-group input-group-sm col-1"></div>-->
 				</div>
-				<span style="margin-top: 31px;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
-				<div class="input-group input-group-sm col-2 middle-name">
-				<strong>　</strong>
-				    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
-				</div>
-				
-				<div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="radio" name="dateChk" id="today" value="0" checked/>
-                   	<label for="today" class="label-margin">
-                   		<span>오늘</span>
-                   	</label>
-                </div>
-                   <div class="input-group input-group-sm col radio-or-checkBox">
-                 	<input type="radio" name="dateChk" id="yesterday" value="1"/>
-                   	<label for="yesterday" class="label-margin">
-                   		<span>어제</span>
-                   	</label>
-                   </div>
-				<div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="radio" name="dateChk" id="weekly" value="7"/>
-                   	<label for="weekly" class="label-margin">
-                   		<span>7일</span>
-                   	</label>
-                </div>
-                   <div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="radio" name="dateChk" id="monthly" value="30"/>
-                   	<label for="monthly" class="label-margin">
-                   		<span>30일</span>
-                   	</label>
-                </div>
-                <!-- 22.06.21 이건욱 T11 > J39 추가 -->
-				<div class="input-group input-group-sm col-2 middle-name">
-					<strong>공급자</strong>
-				    <input type="text" id="supplierName" name="supplierName" style="width:100%;">
-				</div>
-				<div class="input-group input-group-sm col-2 middle-name">
-					<strong>공급받는자</strong>
-				    <input type="text" id="buyerName" name="buyerName" style="width:100%;">
-				</div>
-				<!-- End -->
-				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-					<strong>　</strong>
-				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-				</div>
-                <div style="padding: 1em;" class="input-group input-group-sm col-1"></div>
-			</div>
 			</form>
 			<!--  -->
 			<div class="cont-body">
@@ -110,9 +112,9 @@
 									<div class="tool_group">
 										<div class="padding">
 											<!-- <a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-b"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a> -->
-											<a href="#" class="k-pager-refresh k-button" onClick="exportReceiptOpen();"><b class="btn-h"><i class="k-icon k-i-file-pdf"></i>명세서출력</b></a>
+												<a href="#" class="k-pager-refresh k-button wd90" onClick="exportReceiptOpen();"><b class="btn-h">명세서출력</b></a>
 											<c:if test="${menuAuth.deleteYn eq 'Y'}">
-											     <a href="#" class="k-pager-refresh k-button" onClick="goDel();"><b class="btn-r"><i class="k-icon k-i-delete"></i>삭제</b></a>
+												<a href="#" class="k-pager-refresh k-button wd90" onClick="goDel();"><b class="btn-r">삭제</b></a>
 											</c:if>
 										</div>
 									</div>
@@ -376,14 +378,14 @@ exportReceiptModal.kendoDialog({
 function exportReceiptOpen() {
 	var grid = $("#tranList").data("kendoGrid");
 	var selectedItem = grid.dataItem(grid.select());
-	
+
 	if (selectedItem == null) {
 		alert("발행할 명세서를 선택해주세요.");
 		return;
 	}
-	
+
 	$("#exportMessage").html("<p>출력할 파일 타입을 선택하세요.</p>");
-	
+
 	exportReceiptModal.data("kendoDialog").open();
 }
 

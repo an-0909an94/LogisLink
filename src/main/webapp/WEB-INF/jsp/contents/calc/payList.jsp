@@ -5,13 +5,14 @@
 	#calcList .k-grid-content {max-height:calc(100vh - 471px)}
 </style>
 
+<!--출금 요청-->
 <div id="outreqModal" class="editor-warp p-0">
 	<form class="modalEditor" id="fOutreqModal">
 		<div class="modalHeader">
 	        <div class="form-group row">
 	            <label class="col-form-label big-name">출금방법</label>
-				<div class="input-group input-group-sm col">
-				    <select class="form-control" class="custom-select col-12" id="outKind" name="outKind">
+				<div class="input-group-sm col">
+				    <select class="form-control" class="custom-select wd140" style="width: 80%" id="outKind" name="outKind">
 				    	<option value="F">펌뱅킹</option>
 				    	<option value="I">인터넷뱅킹</option>
 				    </select>
@@ -20,27 +21,28 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="outreqModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i>출금요청</b></a>
-		        <a onclick="outreqModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <a onclick="outreqModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">출금요청</b></a>
+		        <a onclick="outreqModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</form>
 </div>
 
+<!-- 지급반려 Modal -->
 <div id="payReturnModal" class="editor-warp p-0">
 	<form class="modalEditor" id="fPayReturnModal">
 		<div class="modalHeader">
 	        <div class="form-group row">
 	            <label class="col-form-label big-name">반려내용</label>
-				<div class="input-group input-group-sm col">
-					<textarea id="payReturnMemo" name="payReturnMemo" class="form-control form-control-sm textarea" rows="4"></textarea>
+				<div class="input-group input-group-sm wd310 middle-name">
+					<textarea id="payReturnMemo" name="payReturnMemo" class="form-control textarea" style="width: 100%" rows="4"></textarea>
 				</div>
 			</div>
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="payReturnModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i>반려요청</b></a>
-		        <a onclick="payReturnModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <a onclick="payReturnModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">반려요청</b></a>
+		        <a onclick="payReturnModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</form>
@@ -50,22 +52,22 @@
 <div id="divWithdrawalFinish" class="editor_wrap p-0">
     <form id="fWithdrawalFinish" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
         <input type="hidden" id="paySeqArr" name="paySeqArr" class="hiddenValue">
-        <div class="modalHeader">
+        <div class="modalHeader50">
             <div class="form-group row">
                 <div id="finishMessage" style="text-align: left; padding: 0px; font-size: 17px;">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label modal-big-name">출금처리일자</label>
-                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
+                <div style="text-align: left;" class="input-group input-group-sm col middle-name">
                     <input style="padding: 0;" type="text" id="withdrawalFinishDate" name="withdrawalFinishDate" class="col-12">
                 </div>
             </div>
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" id="fWithdrawalFinishSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>확인</strong></b></button>
-                <a onclick="withdrawalFinishModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>취소</b></a>
+                <button type="submit" id="fWithdrawalFinishSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>확인</strong></b></button>
+                <a onclick="withdrawalFinishModalClose()" class="k-pager-refresh k-button"><b class="btn-g">취소</b></a>
             </div>
         </div>
     </form>
@@ -83,15 +85,15 @@
             </div>
             <div class="form-group row">
                 <label class="col-form-label modal-big-name">출금예정일자</label>
-                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
+                <div style="text-align: left;" class="input-group input-group-sm col middle-name">
                     <input style="padding: 0;" type="text" id="withdrawalDueDate" name="withdrawalDueDate" class="col-12">
                 </div>
             </div>
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" id="fChangeWithdrawalDueDateSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>확인</strong></b></button>
-                <a onclick="changeWithdrawalDueDateModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>취소</b></a>
+                <button type="submit" id="fChangeWithdrawalDueDateSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>확인</strong></b></button>
+                <a onclick="changeWithdrawalDueDateModalClose()" class="k-pager-refresh k-button"><b class="btn-g">취소</b></a>
             </div>
         </div>
     </form>
@@ -121,127 +123,134 @@
 			<input type="hidden" name="hCarNum" id="hCarNum" class="hiddenValue">
 			<input type="hidden" name="bizTypeCd" id="bizTypeCd" value="01" class="hiddenValue">
 			<input type="hidden" name="orderList" id="orderList" class="hiddenValue">
-			<div class="form-group row">
-                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                <strong>기간검색</strong>
-                    <select id="searchPeriodType" name="searchPeriodType" class="form-control" class="custom-select col-12">
-                        <option value="dueDate" selected>지급예정일자</option>
-                        <option value="finishDate">마감일자</option>
-                    </select>
-                </div>
-				<div class="input-group input-group-sm col-2 middle-name">
-				<strong>&nbsp;</strong>
-				    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
+
+				<!-- 검색 1라인 -->
+				<div class="form-group row mt0">
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select id="searchPeriodType" name="searchPeriodType"
+								class="form-control wd100" class="custom-select ">
+							<option value="dueDate" selected>지급예정일자</option>
+							<option value="finishDate">마감일자</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+						<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
+							   class="wd190">
+					</div>
+					<span style="margin-right: 10px">~</span>
+					<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+						<input style="padding: 0;" type="text" id="toDate" name="toDate"
+							   class="wd190">
+					</div>
+
+					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+						<input type="radio" name="dateChk" id="today" value="0"/>
+						<label for="today" class="label-margin">
+							<span>오늘</span>
+						</label>
+					</div>
+					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+						<input type="radio" name="dateChk" id="yesterday" value="1" checked/>
+						<label for="yesterday" class="label-margin">
+							<span>어제</span>
+						</label>
+					</div>
+					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+						<input type="radio" name="dateChk" id="weekly" value="7"/>
+						<label for="weekly" class="label-margin">
+							<span>7일</span>
+						</label>
+					</div>
+					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+						<input type="radio" name="dateChk" id="monthly" value="30"/>
+						<label for="monthly" class="label-margin">
+							<span>30일</span>
+						</label>
+					</div>
+
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<input id="sFinishId" name="sFinishId"
+							   class="form-control form-control-sm wd100" placeholder="마감담당자">
+					</div>
+
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select class="form-control wd100" class="custom-select" id="payApproYn"
+								name="payApproYn">
+							<option value="" selected="selected">지급승인여부</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+						</select>
+					</div>
+
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<input id="outreqId" name="outreqId"
+							   class="form-control form-control-sm wd100" placeholder="출금요청자">
+					</div>
+
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select class="form-control wd100" class="custom-select" id="sOutKind"
+								name="sOutKind" ></select>
+					</div>
 				</div>
-				<span style="margin-top: 31px;">&nbsp;&nbsp;~&nbsp;&nbsp;</span>
-				<div class="input-group input-group-sm col-2 middle-name">
-				<strong>　</strong>
-				    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
+
+				<!-- 검색 2라인 -->
+				<div class="form-group row" style="justify-content: space-between">
+					<div>
+						<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+							<select class="form-control wd100" class="custom-select " id="outYn"
+									name="outYn">
+								<option value="">출금처리여부</option>
+								<option value="Y">Y</option>
+								<option value="N" selected="selected">N</option>
+							</select>
+						</div>
+
+						<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+							<select class="form-control wd100" class="custom-select" id="sSerach1"
+									name="sSerach1">
+								<option value="tax">계산서발행지</option>
+								<option value="bankCnnm">예금주</option>
+							</select>
+						</div>
+
+						<div class="input-group input-group-sm wd210 middle-name div-min-col-1">
+							<input id="sValue1" name="sValue1"
+								   class="form-control form-control-sm wd210 searchValue" placeholder="출금 처리 정보를 입력해주세요">
+						</div>
+
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="form-control" class="custom-select wd90" id="sSerach2"
+									name="sSerach2">
+								<option value="ceo">대표자명</option>
+								<option value="driverName">차주명</option>
+								<option value="carNum">차량번호</option>
+							</select>
+						</div>
+
+						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+							<input id="sValue2" name="sValue2"
+								   class="form-control form-control-sm wd190 searchValue" placeholder="ex> 대표자명,차주명, 차량번호...">
+						</div>
+
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="form-control" class="custom-select wd90" id="payreqYn"
+									name="payreqYn">
+								<option value="">빠른지급대상</option>
+								<option value="Y" selected="selected">Y</option>
+								<option value="N">N</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="input-group-sm middle-name mr10">
+							<button onclick="goList()" type="button" class="form-control-sm btn_58 btn_b">검색</button>
+						</div>
+						<div class="input-group-sm middle-name">
+							<button onclick="fReset()" type="button" class="form-control-sm btn_58 btn_black">초기화</button>
+						</div>
+					</div>
 				</div>
-				
-				<div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="radio" name="dateChk" id="today" value="0"/>
-                   	<label for="today" class="label-margin">
-                   		<span>오늘</span>
-                   	</label>
-                </div>
-                   <div class="input-group input-group-sm col radio-or-checkBox">
-                 	<input type="radio" name="dateChk" id="yesterday" value="1" checked/>
-                   	<label for="yesterday" class="label-margin">
-                   		<span>어제</span>
-                   	</label>
-                   </div>
-				<div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="radio" name="dateChk" id="weekly" value="7"/>
-                   	<label for="weekly" class="label-margin">
-                   		<span>7일</span>
-                   	</label>
-                </div>
-                   <div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="radio" name="dateChk" id="monthly" value="30"/>
-                   	<label for="monthly" class="label-margin">
-                   		<span>30일</span>
-                   	</label>
-                </div>
-                
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>마감담당자</strong>
-					<input id="sFinishId" name="sFinishId" class="form-control form-control-sm">
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>지급승인여부</strong>
-				    <select class="form-control" class="custom-select col-12" id="payApproYn" name="payApproYn">
-				    	<option value="" selected="selected">선택해주세요.</option>
-				    	<option value="Y">Y</option>
-				    	<option value="N">N</option>
-				    </select>
-				</div>
-                
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>출금요청자</strong>
-					<input id="outreqId" name="outreqId" class="form-control form-control-sm">
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>출금방법</strong>
-				    <select class="form-control" class="custom-select col-12" id="sOutKind" name="sOutKind"></select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>출금처리여부</strong>
-				    <select class="form-control" class="custom-select col-12" id="outYn" name="outYn">
-				    	<option value="">선택해주세요.</option>
-				    	<option value="Y">Y</option>
-				    	<option value="N" selected="selected">N</option>
-				    </select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>　</strong>
-				    <select class="form-control" class="custom-select col-12" id="sSerach1" name="sSerach1">
-				    	<option value="tax">계산서발행지</option>
-				    	<option value="bankCnnm">예금주</option>
-				    </select>
-				</div>
-				
-				<div class="input-group input-group-sm col-2 middle-name div-min-col-2">
-				<strong>　</strong>
-					<input id="sValue1" name="sValue1" class="form-control form-control-sm searchValue">
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>　</strong>
-				    <select class="form-control" class="custom-select col-12" id="sSerach2" name="sSerach2">
-				    	<option value="ceo">대표자명</option>
-				    	<option value="driverName">차주명</option>
-				    	<option value="carNum">차량번호</option>
-				    </select>
-				</div>
-				
-				<div class="input-group input-group-sm col-2 middle-name div-min-col-2">
-				<strong>　</strong>
-					<input id="sValue2" name="sValue2" class="form-control form-control-sm searchValue">
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>빠른지급대상</strong>
-				    <select class="form-control" class="custom-select col-12" id="payreqYn" name="payreqYn">
-				    	<option value="">선택해주세요.</option>
-				    	<option value="Y" selected="selected">Y</option>
-				    	<option value="N">N</option>
-				    </select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
-				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
-				    <button onclick="fReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
-				</div>
-			</div>
 			</form>                
 			<!--  -->
 			<div class="cont-body">
@@ -255,7 +264,7 @@
                                     <div class="tool_group">
                                         <div class="padding">
                                             <c:if test="${menuAuth.editYn eq 'Y'}">
-                                                <a href="#" class="k-pager-refresh k-button" onClick="changeWithdrawalDueDate()"><b class="btn-b"><i class="k-icon k-i-calendar"></i>출금예정일 변경</b></a>
+                                                <a href="#" class="k-pager-refresh k-button wd140" onClick="changeWithdrawalDueDate()"><b class="btn-b">출금예정일 변경</b></a>
                                             </c:if>
                                         </div>
                                     </div>
@@ -264,22 +273,22 @@
 									<div class="tool_group">
 										<div class="padding">
 											<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" onClick="payAppro()"><b class="btn-b"><i class="k-icon k-i-track-changes-accept"></i>지급승인</b></a>
+												<a href="#" class="k-pager-refresh k-button wd90" onClick="payAppro()"><b class="btn-b">지급승인</b></a>
 											</c:if>
 											<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" onClick="payReturn();"><b class="btn-b"><i class="k-icon k-i-track-changes-reject"></i>지급반려</b></a>
+												<a href="#" class="k-pager-refresh k-button wd90" onClick="payReturn();"><b class="btn-b">지급반려</b></a>
 											</c:if>
 											<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" onclick="outreqOpen()"><b class="btn-b"><i class="k-icon k-i-paste-plain-text"></i>출금요청</b></a>
+												<a href="#" class="k-pager-refresh k-button wd90" onclick="outreqOpen()"><b class="btn-b">출금요청</b></a>
 											</c:if>
 											<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" onclick="out()"><b class="btn-b"><i class="k-icon k-i-signature"></i>출금처리</b></a>
+												<a href="#" class="k-pager-refresh k-button wd90" onclick="out()"><b class="btn-b">출금처리</b></a>
 											</c:if>
 											<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" onClick="bankChk()"><b class="btn-b"><i class="k-icon k-i-accessibility"></i>예금주조회</b></a>
+												<a href="#" class="k-pager-refresh k-button wd90" onClick="bankChk()"><b class="btn-b">예금주조회</b></a>
 											</c:if>
 											<c:if test="${menuAuth.printYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+												<a href="#" class="k-pager-refresh k-button wd90" onClick="goExcel();"><b class="btn-x">엑셀출력</b></a>
 											</c:if>
 										</div>
 									</div>
@@ -325,7 +334,7 @@
 
 
 
-		Util.setCmmCode("select", "sOutKind", "OUT_KIND_CD", "", "선택해주세요.");
+		Util.setCmmCode("select", "sOutKind", "OUT_KIND_CD", "", "출금방법");
      	$("#splitter").kendoSplitter({
             orientation: "vertical",
             panes: [
@@ -695,7 +704,7 @@
 	payReturnModal = $("#payReturnModal");
 	payReturnModal.kendoDialog({
 		width: "500px",
-		height: "265px",
+		height: "230px",
 		visible: false,
 		title: "지급반려",
 		closable: true,
@@ -860,7 +869,7 @@
     changeWithdrawalDueDateModal = $("#divChangeWithdrawalDueDate");
     changeWithdrawalDueDateModal.kendoDialog({
         width: "400px",
-        height: "300px",
+        height: "240px",
         visible: false,
         title: "출금예정일 변경",
         closable: true,

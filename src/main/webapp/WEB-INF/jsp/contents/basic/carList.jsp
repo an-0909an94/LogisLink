@@ -16,16 +16,14 @@
 	<div class="contents">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
-			<div class="form-group row">
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="form-control" class="custom-select col-12" id="s_dept" name="s_dept">
+			<div class="form-group row mt0" style="display: inherit">
+				<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+				    <select class="form-control" class="custom-select wd90" id="s_dept" name="s_dept">
 				    	<option>--부서명--</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="searchColumn" name="searchColumn">
+				<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+				    <select class="custom-select wd90" id="searchColumn" name="searchColumn">
 						<option value="A.CAR_NUM">--차량번호--</option>
 						<option value="B.DRIVER_NAME">--이름--</option>
 						<option value="B.MOBILE">--연락처--</option>
@@ -33,45 +31,39 @@
 						<option value="A.BIZ_NAME">--사업자상호--</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm col-2 middle-name div-min-col-1">
-				<strong>　</strong>
-				    <input type="text" id="searchValue" name="searchValue" style = "width:100%" class="form-control form-control-sm searchValue">
+				<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+				    <input type="text" id="searchValue" name="searchValue" style = "width:100%" class="form-control form-control-sm searchValue" placeholder="검색항목을 입력하세요">
 				</div>	
-				<div class="input-group input-group-sm col-2 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="dangerGoodsUseYn" name="dangerGoodsUseYn" style="width:100%">
+				<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+				    <select class="custom-select wd190" id="dangerGoodsUseYn" name="dangerGoodsUseYn" style="width:100%">
 						<option value="" selected>--위험물 운송 가능 여부--</option>
 		                <option value="Y">가능</option>
 		                <option value="N">불가</option>
 				    </select>
 				</div>	
-				<div class="input-group input-group-sm col-2 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="chemicalsUseYn" name="chemicalsUseYn" style="width:100%">
+				<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+				    <select class="custom-select wd190" id="chemicalsUseYn" name="chemicalsUseYn" style="width:100%">
 						<option value="" selected>--유해 화학물질 운송 가능 여부--</option>
 		                <option value="Y">가능</option>
 		                <option value="N">불가</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="foreignLicenseUseYn" name="foreignLicenseUseYn">
+				<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+				    <select class="custom-select wd90" id="foreignLicenseUseYn" name="foreignLicenseUseYn">
 						<option value="">--보세면허 여부--</option>
 		                <option value="Y">있음</option>
 		                <option value="N">없음</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="forkliftUseYn" name="forkliftUseYn">
+				<div class="input-group input-group-sm wd140 middle-name div-min-col-1">
+				    <select class="custom-select wd140" id="forkliftUseYn" name="forkliftUseYn">
 						<option value="" selected>--지게차 면허 여부--</option>
 		                <option value="Y">있음</option>
 		                <option value="N">없음</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>&nbsp;</strong>
-					<select class="form-control" class="custom-select col-12" id="s_useYn" name="s_useYn">
+				<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<select class="form-control" class="custom-select wd90" id="s_useYn" name="s_useYn">
 						<option value="" selected>--사용여부--</option>
 						<option value="Y">정상</option>
 						<option value="N">해지</option>
@@ -84,60 +76,54 @@
 				</div>
 				-->
 			</div>
-			<div class="form-group row">
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					<strong>&nbsp;</strong>
-					<select class="form-control" class="custom-select col-12" id="s_carMngCode" name="s_carMngCode"></select>
+			<div class="form-group row" style="justify-content: space-between">
+				<div>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="form-control" class="custom-select wd90" id="s_carMngCode" name="s_carMngCode"></select>
+					</div>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="custom-select wd90" id="s_carSctnCode" name="s_carSctnCode"> </select>
+					</div>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="custom-select wd90" id="s_carTypeCode" name="s_carTypeCode"> </select>
+					</div>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="custom-select wd90" id="s_carTonCode" name="s_carTonCode"> </select>
+					</div>
+					<div class="input-group input-group-sm wd170 middle-name div-min-col-1">
+						<select class="custom-select wd170" id="s_payType" name="s_payType">
+							<option value="">--빠른지급 대상 여부--</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd170 middle-name div-min-col-1">
+						<select class="custom-select wd170" id="s_taxjoinYn" name="s_taxjoinYn">
+							<option value="">--스마트빌 회원가입--</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd140 middle-name div-min-col-1">
+						<select class="custom-select wd140" id="s_emailYn" name="s_emailYn">
+							<option value="">--이메일 유무--</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd140 middle-name div-min-col-1">
+						<select class="custom-select wd140" id="s_accountYn" name="s_accountYn">
+							<option value="">--계좌정보 유무--</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+						</select>
+					</div>
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="s_carSctnCode" name="s_carSctnCode"> </select>
-				</div>				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="s_carTypeCode" name="s_carTypeCode"> </select>
+				<div class="row">
+					<div class="input-group-sm middle-name" >
+						<button onclick="goList()" type="button" class="form-control-sm btn_58 btn_b">검색</button>
+					</div>
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="s_carTonCode" name="s_carTonCode"> </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="s_payType" name="s_payType">
-						<option value="">--빠른지급 대상 여부--</option>
-		                <option value="Y">Y</option>
-		                <option value="N">N</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="s_taxjoinYn" name="s_taxjoinYn">
-						<option value="">--스마트빌 회원가입--</option>
-		                <option value="Y">Y</option>
-		                <option value="N">N</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="s_emailYn" name="s_emailYn">
-						<option value="">--이메일 유무--</option>
-		                <option value="Y">Y</option>
-		                <option value="N">N</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="custom-select col-12" id="s_accountYn" name="s_accountYn">
-						<option value="">--계좌정보 유무--</option>
-		                <option value="Y">Y</option>
-		                <option value="N">N</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
-				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-				</div>
-				
 			</div>	
 			</form>  
 			<!--  -->
@@ -152,10 +138,10 @@
 									<div class="tool_group">
 										<div class="padding">
 											<c:if test="${menuAuth.printYn eq 'Y'}">
-											<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+											<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x">엑셀출력</b></a>
 											</c:if>
 											<c:if test="${menuAuth.writeYn eq 'Y'}">
-											<a href="#" class="k-pager-refresh k-button" onclick="form_popup('N', {})"><b class="btn-h"><i class="k-icon k-i-plus"></i>신규등록</b></a>
+											<a href="#" class="k-pager-refresh k-button" onclick="form_popup('N', {})"><b class="btn-h">신규등록</b></a>
 											</c:if>
 										</div>
 									</div>

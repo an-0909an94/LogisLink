@@ -4,38 +4,39 @@
 <div id="divAddDept" class="editor-warp p-0">
 	<div class="modalEditor" id="addDept">
 		<div id="popGrid"></div>
-		<div class="modalHeader">
+		<div class="modalHeader50">
 			<div class="form-group row">
                 <label class="col-form-label modal-big-name">부서명</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="deptName" name="deptName" style="width:88%">
+                <div class="input-group input-group-sm col middle-name">
+                    <input type="text" class="form-control form-control-sm" id="deptName" name="deptName" style="width:100%">
                 </div>
             </div>
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="modalSubmit()" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i>저장</b></a>
-		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <a onclick="modalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">저장</b></a>
+		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</div>	
 </div>
+
 <div id="divDetailDept" class="editor-warp p-0">
 	<div class="modalEditor" id="addDept">
 		<div id="popGrid"></div>
-		<div class="modalHeader">
+		<div class="modalHeader50">
 			<input type="hidden" id="modalCustId" name="modalCustId">
 			<input type="hidden" id="modalDeptId" name="modalDeptId">
 			<div class="form-group row">
                 <label class="col-form-label modal-big-name">부서명</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" id="modalDeptName" name="modalDeptName" readonly>
+                <div class="input-group input-group-sm col middle-name">
+                    <input type="text" class="form-control form-control-sm" id="modalDeptName" name="modalDeptName" style="width: 100%" readonly >
                 </div>
             </div>
 			<div class="form-group row">
                 <label class="col-form-label modal-big-name">사용여부</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <select class="form-control form-control-sm" id="modalUseYn" name="modalUseYn">
+                <div class="input-group input-group-sm col middle-name">
+                    <select class="form-control form-control-sm" id="modalUseYn" name="modalUseYn" style="width: 100%">
 						<option value="Y">Y</option>
 						<option value="N">N</option>
                     </select>
@@ -44,31 +45,33 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="detailModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i>저장</b></a>
-		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <a onclick="detailModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">저장</b></a>
+		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</div>
 </div>
+
 <div id="divApiModal" class="editor-warp p-0">
 	<div class="modalEditor" id="apiModal">		
-		<div class="modalHeader">
+		<div class="modalHeader50">
 			<div class="form-group row">
                 <label class="col-form-label modal-big-name">API Key</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <textarea id="oapiToken" name="oapiToken" class="form-control form-control-sm" rows="3" readonly>
+                <div class="input-group input-group-sm col middle-name">
+                    <textarea id="oapiToken" name="oapiToken" class="form-control form-control-sm" style="width: 100%" rows="3" readonly>
                     </textarea>
                 </div>
             </div>
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="copyApiKey();" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i>복사</b></a>
-		        <a id="closeBtn" onclick="apiModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <a onclick="copyApiKey();" class="k-pager-refresh k-button"><b class="btn-b">복사</b></a>
+		        <a id="closeBtn" onclick="apiModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</div>
 </div>
+
 <div class="header compList">
 	<div class="summary p30">
 		<div class="hdr-tit">
@@ -80,7 +83,7 @@
         	<form id="f" data-toggle="validator" role="form">
                 <input type="hidden" id="dLineDayCode" name="dlineDayCode">
                 <input type="hidden" id="dLinePointCode" name="dlinePointCode">
-				<div id="group-list" class="cont-wrapper">
+				<div id="group-list" class="cont-wrapper mt0">
 					<!--  -->
 						<div class="cont-b-head mb15">
 							<h4>회사정보</h4>
@@ -179,7 +182,7 @@
 								</c:if>		
 								<c:if test="${sessionScope.userInfo.authSeq eq '100' }">
 									<button type="button" id="btnCreateApiKey" onClick="createToken();">API키발급</button>
-									<button type="button" id="btnViewApiKey" onClick="oepnApiKey();" style="display:none;">API키확인</button>
+									<button type="button" id="btnViewApiKey" onClick="oepnApiKey();" style="display:none">API키확인</button>
 								</c:if>	
 								</span>
 							</div>
@@ -439,7 +442,7 @@ detailModal = $("#divDetailDept");
 
 detailModal.kendoDialog({
 	width: "446px",
-	height: "280px",
+	height: "220px",
 	visible: false,
 	title: "부서수정",
 	closable: true,
@@ -449,7 +452,7 @@ detailModal.kendoDialog({
 
 modal.kendoDialog({
 	width: "446px",
-	height: "225px",
+	height: "200px",
 	visible: false,
 	title: "부서추가",
 	closable: true,

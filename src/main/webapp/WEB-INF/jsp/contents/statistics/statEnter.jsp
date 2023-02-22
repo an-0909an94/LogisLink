@@ -11,64 +11,69 @@
 			<form id="fSearch" class="date-bnt">
 				<input type="hidden" name="custId" id="custId" class="hiddenValue">
 				<input type="hidden" name="maxSize" id="maxSize" class="hiddenValue">
-			<div class="form-group row">
-				<div class="input-group input-group-sm col-1 middle-name">
-				<strong>기간</strong>
-				    <select class="custom-select col-12" id="selDate" name="selDate">
-				        <option value="DAY">일별</option>
-				        <option value="WEEK">주간별</option>
-				        <option value="MONTH">월별</option>
-				        <option value="YEAR">연별</option>
-				        <option value="AT">기간지정</option>
-				    </select>
+				<div class="form-group row mt0" >
+					<div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="custom-select wd90" id="selDate" name="selDate">
+								<option value="DAY">일별</option>
+								<option value="WEEK">주간별</option>
+								<option value="MONTH">월별</option>
+								<option value="YEAR">연별</option>
+								<option value="AT">기간지정</option>
+							</select>
+						</div>
+						<div class="input-group input-group-sm wd290 middle-name div-min-col-1">
+							<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
+								   class="wd290" disabled="disabled">
+						</div>
+						<span style="margin-top: 25px; margin-right: 10px">~</span>
+						<div class="input-group input-group-sm wd290 middle-name div-min-col-1">
+							<input style="padding: 0;" type="text" id="toDate" name="toDate"
+								   class="wd290" disabled="disabled">
+						</div>
+					</div>
 				</div>
-				<div class="input-group input-group-sm col-3 middle-name">
-				<strong>　</strong>
-				    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12" disabled="disabled">
+				<div class="form-group row" style="justify-content: space-between">
+					<c:if test="${authChk}">
+						<div>
+							<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+								<select class="custom-select wd90" id="selCust" name="selCust">
+									<option value="custAll">내조직</option>
+									<option value="cust">고객사</option>
+								</select>
+							</div>
+							<div class="input-group input-group-sm wd290 middle-name">
+								<input type="text" id="sCustName" name="sCustName" style="width:100%;">
+							</div>
+						</div>
+					</c:if>
+					<div class="row">
+						<div class="input-group-sm middle-name mr10">
+							<button onclick="getSearch();" type="button"
+									class="form-control-sm btn_58 btn_b">검색
+							</button>
+						</div>
+						<div class="input-group-sm middle-name">
+							<button onclick="formReset();" type="button"
+									class="form-control-sm middle-button btn_58 btn_black">초기화
+							</button>
+						</div>
+					</div>
 				</div>
-				<span style="margin-top: 31px;">~</span>
-				<div class="input-group input-group-sm col-3 middle-name">
-				<strong>　</strong>
-				    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12" disabled="disabled">
-				</div>
-			</div>
-			<div class="form-group row">
-				<c:if test="${authChk}">
-				<div class="input-group input-group-sm col-1 middle-name">
-				<strong>고객사</strong>
-				    <select class="custom-select col-12" id="selCust" name="selCust">
-				        <option value="custAll">내조직</option>
-				        <option value="cust">고객사</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-3 middle-name">
-				<strong>　</strong>
-				    <input type="text" id="sCustName" name="sCustName" style="width:100%;">
-				</div>
-                <div style="padding: 1em;" class="input-group input-group-sm col-1"></div>
-				</c:if>
-				<div class="input-group input-group-sm col-1 middle-name">
-				<strong>　</strong>
-				    <button onclick="getSearch();" type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-check"></i>검색</button>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name">
-				<strong>　</strong>
-				    <button onclick="formReset();"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-check"></i>초기화</button>
-				</div>
-				
-				<div style="padding: 1em;" class="input-group input-group-sm col-1"></div>				
-			</div>
-			</form>                
+			</form>
 			<!--  -->
 			<div class="cont-body">
 				<!-- f-wrap -->
 				<div class="k-wrap content">
 					<div class="lookup_table">
 						<div class="k-content wide">
-					        <div id="chart"></div>
-					    </div>
+							<div id="chart"></div>
+						</div>
 						<div style="min-width: 500px;">
+							<div style="height:246px;" id="grid"></div>
+							<!--
 							<div style="height:calc(100vh - 741px);" id="grid"></div>
+							-->
 							<!-- /table -->
 						</div>
 					</div>

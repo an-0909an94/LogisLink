@@ -2,117 +2,141 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="pop-layer">
-    <div class="editor_wrap pop-layer" id="layer1">
-	    <div class="insertClose">
-	    	<a class="insertCloseButton k-icon k-i-close" onclick="init_popup_close();"></a>
-	    </div>
-        <!-- wrap -->
-        <div class="k-tabstrip-wrapper">
-            <div id="editor_tabs" class="tabs_wrap k-widget k-tabstrip k-floatwrap k-tabstrip-top" data-role="tabstrip"
-                tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
-                <!-- content -->
-                <div class="tab-content k-content k-state-active" id="editor_tabs-1" role="tabpanel"
-                    aria-expanded="true" style="display: block;">
-                    <div class="editor">
-                        <fieldset>
-		                    <legend id="board_legend">공지사항 등록</legend>
-	                   		<form method="post" name="f" id="f" data-toggle="validator" role="form" autocomplete="off">
-		                       <input type="hidden" name="boardSeq" id="boardSeq">
-		                       <input type="hidden" name="boardTarget" id="boardTarget">
-		                       <input type="hidden" name="custId" id="custId">
-	                               <div class="form-group row">
-	                                   <label class="col-form-label big-name">등록정보</label>
-	                                   <div class="input-group input-group-sm col middle-name form-group">
-	                                   <strong>등록자</strong>
-	                                       <input type="text" class="form-control form-control-sm" name="userName" id="userName" readonly>
-	                                   </div>
-	                                   <div class="input-group input-group-sm col middle-name form-group">
-	                                   <strong>등록일자</strong>
-	                                       <input type="text" class="form-control form-control-sm" name="regdate" id="regdate" readonly>
-	                                   </div>
-	                                   <div class="input-group input-group-sm col middle-name form-group">
-	                                   <strong>조회수</strong>
-	                                       <input type="text" class="form-control form-control-sm" name="readCnt" id="readCnt" readonly>
-	                                   </div>
-	                               </div>
-	                               
-	                               <div class="form-group row">
-	                                   	<label class="col-form-label big-name required">게시기간</label>	                                   
-	                                   	<div class="input-group input-group-sm col middle-name form-group">
-	                              			<input type="text"name="popSdate" id="popSdate" style="width: 100%" required>                             			
-	                                   	</div>
-										<span style="margin-top:10px">~</span>           
-	                                   	<div class="input-group px;ut-group-sm col middle-name form-group">
-	                                  		<input type="text" name="popEdate" id="popEdate" style="width: 100%" required>
-	                                  	</div>	
-	                               </div>    
-	                               
-	                               <div class="form-group row">	                               
-	                                   	<label class="col-form-label big-name">게시대상</label>
-	                                   	
-										<div class="input-group input-group-sm col radio-or-checkBox ">										
-						                   	<input id="chkBoardTarget09" type="checkbox" name="chkBoardTarget" value="09">
-						                   	<label style="padding-right: 1.5em;" for="chkBoardTarget09" class="label-margin">
-						                   		<span>차주</span>
-						                   	</label>
-						                   </div>
-						                <div class="input-group input-group-sm col radio-or-checkBox ">
-						                   	<input id="chkBoardTarget04" type="checkbox" name="chkBoardTarget" value="04">
-						                   	<label style="padding-right: 1.5em;" for="chkBoardTarget04" class="label-margin">
-						                   		<span>화주</span>
-						                   	</label>
-						                   </div>
-						                <div class="input-group input-group-sm col radio-or-checkBox ">
-						                   	<input id="chkBoardTarget03" type="checkbox" name="chkBoardTarget" value="03">
-						                   	<label style="padding-right: 1.5em;" for="chkBoardTarget03" class="label-margin">
-						                   		<span>운송사</span>
-						                   	</label>
-						                   </div>
-						                <div class="input-group input-group-sm col radio-or-checkBox ">
-						                   	<input id="chkBoardTarget02" type="checkbox" name="chkBoardTarget" value="02">
-						                   	<label style="padding-right: 1.5em;" for="chkBoardTarget02" class="label-margin">
-						                   		<span>주선사</span>
-						                   	</label>
-						                </div>   
-	                               </div>
-	                               
-	                               <div class="form-group row">
-	                                   <label class="col-form-label modal-big-name required">제목</label>
-	                                   <div class="input-group input-group-sm col middle-name form-group">
-	                                       <input type="text" class="form-control form-control-sm" name="title" id="title" required>
-	                                       <div class="help-block with-errors"></div>
-	                                   </div>
-	                               </div>
-	                               
-	                               <div class="form-group row">
-	                                   <label class="col-form-label modal-big-name required">내용</label>
-	                                   <div class="input-group input-group-sm col middle-name form-group">
-	                                       <textarea rows="22" class="form-control form-control-sm textarea" name="content" id="content" required></textarea>
-	                                       <div class="help-block with-errors"></div>
-	                                   </div>
-	                               </div>
-	                        	<button id="detailSubmit" type="submit"></button>
-	                        </form>
-	                        <form id="fileForm" name="fileForm" method="post" enctype="multipart/form-data">
-	                           <input name="fileBoardSeq" id="fileBoardSeq" type="hidden">
-	                           <div id="fileList"></div>
-	                           <div class="editor_btns" style="text-align:center;">
-			                       <div class="padding">
-			                       	   <c:if test="${menuAuth.deleteYn eq 'Y'}">
-			                       	   <a onclick="boardDelete();" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-cancel"></i>삭제</b></a>
-			                       	   </c:if>
-			                       	   <c:if test="${menuAuth.writeYn eq 'Y'}">
-									   <a onclick="detailForm();" class="k-pager-refresh k-button" id="btnSave"><b class="btn-b" id="btn_save"><i class="k-icon k-i-check"></i>저장</b></a>
-									   </c:if>
-			                       	   <c:if test="${menuAuth.editYn eq 'Y'}">
-									   <a onclick="detailForm();" class="k-pager-refresh k-button" id="btnEdit"><b class="btn-b" id="btn_edit"><i class="k-icon k-i-check"></i>수정</b></a>
-									   </c:if>
-									   <a onclick="init_popup_close();" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
-							       </div>
-						       </div>
+	<div class="editor_wrap pop-layer" id="layer1">
+		<div class="insertClose">
+			<a class="insertCloseButton k-icon k-i-close" onclick="init_popup_close();"></a>
+		</div>
+		<!-- wrap -->
+		<div class="k-tabstrip-wrapper">
+			<div id="editor_tabs" class="tabs_wrap k-widget k-tabstrip k-floatwrap k-tabstrip-top"
+				 data-role="tabstrip"
+				 tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
+				<!-- content -->
+				<div class="tab-content k-content k-state-active" id="editor_tabs-1" role="tabpanel"
+					 aria-expanded="true" style="display: block;">
+					<div class="editor">
+						<fieldset>
+							<div class="editor_btns order_editor_btns" style="text-align:center;">
+								<div class="padding">
+									<c:if test="${menuAuth.deleteYn eq 'Y'}">
+										<a onclick="boardDelete();"
+										   class="k-pager-refresh k-button"><b class="btn-b">삭제</b></a>
+									</c:if>
+									<c:if test="${menuAuth.writeYn eq 'Y'}">
+										<a onclick="detailForm();" class="k-pager-refresh k-button"
+										   id="btnSave"><b class="btn-b" id="btn_save">저장</b></a>
+									</c:if>
+									<c:if test="${menuAuth.editYn eq 'Y'}">
+										<a onclick="detailForm();" class="k-pager-refresh k-button"
+										   id="btnEdit"><b class="btn-b" id="btn_edit">수정</b></a>
+									</c:if>
+									<a onclick="init_popup_close();"
+									   class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
+								</div>
+							</div>
+							<legend id="board_legend">공지사항 등록</legend>
+							<form method="post" name="f" id="f" data-toggle="validator" role="form"
+								  autocomplete="off" class="mb10">
+								<input type="hidden" name="boardSeq" id="boardSeq">
+								<input type="hidden" name="boardTarget" id="boardTarget">
+								<input type="hidden" name="custId" id="custId">
+								<div class="form-group row mb10 gray_box">
+									<label class="col-form-label big-name">등록정보</label>
+									<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+										<strong>등록자</strong>
+										<input type="text" class="form-control form-control-sm"
+											   name="userName" id="userName" style="width: 100%" readonly>
+									</div>
+									<div class="input-group input-group-sm wd140 middle-name div-min-col-1">
+										<strong>등록일자</strong>
+										<input type="text" class="form-control form-control-sm"
+											   name="regdate" id="regdate" style="width: 100%" readonly>
+									</div>
+									<div class="input-group input-group-sm wd90 middle-name">
+										<strong>조회수</strong>
+										<input type="text" class="form-control form-control-sm"
+											   name="readCnt" id="readCnt" style="width:100%" readonly>
+									</div>
+								</div>
+
+								<div class="form-group row mb10 gray_box">
+									<label class="col-form-label big-name required">게시기간</label>
+									<div class="input-group input-group-sm wd140 middle-name div-min-col-2">
+										<input type="text" name="popSdate" id="popSdate"
+											   style="width: 100%" required>
+									</div>
+									<span style="margin-top:0px;margin-right:25px">~</span>
+									<div class="input-group px;ut-group-sm wd140 middle-name">
+										<input type="text" name="popEdate" id="popEdate"
+											   style="width: 100%" required>
+									</div>
+								</div>
+
+								<div class="form-group row mb10 gray_box">
+									<label class="col-form-label big-name">게시대상</label>
+									<div class="input-group input-group-sm wd90 radio-or-checkBox ">
+										<input id="chkBoardTarget09" type="checkbox"
+											   name="chkBoardTarget" value="09">
+										<label style="padding-right: 1.5em;" for="chkBoardTarget09"
+											   class="label-margin">
+											<span>차주</span>
+										</label>
+									</div>
+									<div class="input-group input-group-sm wd90 radio-or-checkBox ">
+										<input id="chkBoardTarget04" type="checkbox"
+											   name="chkBoardTarget" value="04">
+										<label style="padding-right: 1.5em;" for="chkBoardTarget04"
+											   class="label-margin">
+											<span>화주</span>
+										</label>
+									</div>
+									<div class="input-group input-group-sm wd90 radio-or-checkBox ">
+										<input id="chkBoardTarget03" type="checkbox"
+											   name="chkBoardTarget" value="03">
+										<label style="padding-right: 1.5em;" for="chkBoardTarget03"
+											   class="label-margin">
+											<span>운송사</span>
+										</label>
+									</div>
+									<div class="input-group input-group-sm wd90 radio-or-checkBox ">
+										<input id="chkBoardTarget02" type="checkbox"
+											   name="chkBoardTarget" value="02">
+										<label style="padding-right: 1.5em;" for="chkBoardTarget02"
+											   class="label-margin">
+											<span>주선사</span>
+										</label>
+									</div>
+								</div>
+
+								<div class="form-group row mb10 gray_box">
+									<label class="col-form-label modal-big-name required">제목</label>
+									<div class="input-group input-group-sm wd340 middle-name form-group">
+										<input type="text" class="form-control form-control-sm"
+											   name="title" style="width:100%" id="title" required>
+										<div class="help-block with-errors"></div>
+									</div>
+								</div>
+
+								<div class="form-group row gray_box" style="margin-bottom: 0px">
+									<label class="col-form-label modal-big-name required">내용</label>
+									<div class="input-group input-group-sm wd340 middle-name">
+										<textarea rows="22"
+												  class="form-control textarea"
+												  name="content" style="width:100%" id="content"
+												  required></textarea>
+										<div class="help-block with-errors"></div>
+									</div>
+								</div>
+								<!--기능 확인 요청 : Junghwan.Hwang 2023-02-22 -->
+								<button id="detailSubmit" type="submit"></button>
 							</form>
-                        </fieldset>
-                    </div>
+							<form id="fileForm" name="fileForm" method="post"
+								  enctype="multipart/form-data">
+								<input name="fileBoardSeq" id="fileBoardSeq" type="hidden">
+								<div id="fileList" class="form-group mt0 gray_box"></div>
+							</form>
+						</fieldset>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -205,7 +229,7 @@ function fileList(boardSeq){
 			if(data.result) {
 				var item, i=0;
 				for (i=0; item = data.data[i]; i++){
-					s += "<div class=\"form-group row\">";
+					s += "<div class=\"form-group row \">";
 					s += "<label class=\"col-form-label modal-big-name\">첨부파일</label>";
 					s += "<div class=\"input-group input-group-sm col middle-name form-group\">";
 					if(item.fileName == null){

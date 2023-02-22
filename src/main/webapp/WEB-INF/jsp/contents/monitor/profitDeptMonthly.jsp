@@ -10,27 +10,40 @@
     <div class="contents">
         <div id="group-list" class="cont-wrapper-page-grid">
             <form id="fSearch" class="date-bnt" method="post">
-                <div class="input-group input-group-sm col-1 middle-name">
-                    <strong>배차월</strong>
-                    <input style="width: 100%; padding: 0;" type="text" id="searchMonth" name="searchMonth">
-                    <input type="hidden" id="fromDate" name="fromDate">
-                    <input type="hidden" id="toDate" name="toDate">
+                <div class="form-group row mt0" style="justify-content: space-between">
+                    <div>
+                        <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                            <input style="width: 100%; padding: 0;" type="text" id="searchMonth"
+                                   name="searchMonth">
+                            <input type="hidden" id="fromDate" name="fromDate">
+                            <input type="hidden" id="toDate" name="toDate">
+                        </div>
+
+                        <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                            <select class="form-control" class="custom-select col-12" id="s_dept"
+                                    name="deptId">
+                                <option>--부서명--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-group-sm middle-name mr10">
+                            <button onclick="goList();" type="button"
+                                    class="form-control-sm middle-button btn_58 btn_b">검색
+                            </button>
+                        </div>
+                        <div class="input-group-sm middle-name">
+                            <button onclick="goExcel();" type="button"
+                                    class="form-control-sm middle-button btn_27h btn_g">엑셀출력
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                    <strong>담당부서</strong>
-                    <select class="form-control" class="custom-select col-12" id="s_dept" name="deptId">
-                        <option>--부서명--</option>
-                    </select>
-                </div>
-                <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width: 90px; min-width: 90px;">
-                    <strong> </strong>
-                    <button onclick="goList()" type="button" style="border-radius: 4px" class="form-control form-control-sm middle-button-dark">
-                        <i class="k-icon k-i-search"></i>검색
-                    </button>
-                </div>
+
                 <div class="toolbar row">
                     <div class="tool_form col">
                         <div style="width: 80px; float: left; margin-top: 30px;">(단위:원)</div>
+                        <!--
                         <div class="btn-row">
                             <div class="tool_group">
                                 <div class="padding">
@@ -40,6 +53,7 @@
                                 </div>
                             </div>
                         </div>
+                        -->
                     </div>
                 </div>
                 <!-- /toolbar -->

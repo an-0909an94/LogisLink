@@ -13,384 +13,408 @@
                     aria-expanded="true" style="display: block;">
                     <div class="editor">
                    		<form name="f" id="f" method="post" data-toggle="validator" role="form" autocomplete="off">
-                   		   <input class="inputHidden" id="mode" name="mode">           		
-	                       <input class="inputHidden" id="vehicId" name="vehicId">
-	                       <input class="inputHidden" id="driverId" name="driverId">
-	                       <input class="inputHidden" id="deptId" name="deptId">
-	                       <input class="inputHidden" id="custId" name="custId">
-	                       <input class="inputHidden" id="custVehicSeq" name="custVehicSeq">
-                           <fieldset>
-                               <legend id="car_legend">차량 등록</legend>
-                                <div class="form-group row">
-                                    <label class="col-form-label big-name">담당부서</label>
-                                    <div class="input-group input-group-sm col middle-name form-group">
-                                    	<strong class="required">담당부서</strong>
-                                    	<select id="mngDeptId" name="mngDeptId" class="custom-select col-12" required></select>
-                                    </div>
-                                    <div class="input-group input-group-sm col middle-name form-group">
-                                    <strong>담당자명</strong>
-                                        <select class="custom-select col-12" id="userId" name="userId"></select>
+                            <input class="inputHidden" id="mode" name="mode">
+                            <input class="inputHidden" id="vehicId" name="vehicId">
+                            <input class="inputHidden" id="driverId" name="driverId">
+                            <input class="inputHidden" id="deptId" name="deptId">
+                            <input class="inputHidden" id="custId" name="custId">
+                            <input class="inputHidden" id="custVehicSeq" name="custVehicSeq">
+                            <fieldset>
+                                <div class="editor_btns order_editor_btns" style="text-align:center;">
+                                    <div class="padding">
+                                       <button type="submit" class="k-pager-refresh k-button" id="btnSubmit"><b class="btn-b"><strong id="btn_save">저장</strong></b></button>
+                                       <a onclick="init_popup_close();" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
                                     </div>
                                 </div>
-                                
-                               <div class="form-group row">
-                                   <label class="col-form-label big-name">기본정보</label>                                   
-                                   <div id="carNumber" class="input-group input-group-sm col middle-name form-group">
-                                   <strong class="required">차량번호</strong>
-                                       <input type="text" class="form-control form-control-sm" id="carNum" name="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$"
-                                       data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required placeholder="서울XX아XXXX">
-                                       <div class="help-block with-errors"></div>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong class="required">차주성명</strong>
-                                       <input type="text" class="form-control form-control-sm" id="driverName" name="driverName" maxlength="20"  pattern="^(?=.{1,20}$).*" 
-	                                	data-pattern-error="20자 이하로 입력해 주세요." required>
-                                       <div class="help-block with-errors"></div>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong class="required">차량구분</strong>
-                                       <select class="custom-select col-12" id="carSctnCode" name="carSctnCode" required></select>
-                                       <div class="help-block with-errors"></div>
-                                   </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                               	<label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>전화번호</strong>
-                                       <input type="text" class="form-control form-control-sm" id="telNum" name="telNum" maxlength="13">
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong class="required">휴대전화</strong>
-                                       <input type="text" class="form-control form-control-sm" id="mobile" name="mobile" maxlength="13" required>
-                                       <div class="help-block with-errors"></div>
-                                   </div>
-								<div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>알림톡 수신여부</strong>
-                                    <input type="hidden" id="talkYn" name="talkYn">
-									<input type="checkbox" id="chkTalkYn" name="chkTalkYn" class="input_on-off" value="Y">
-									<label for="chkTalkYn" class="label_on-off">
-										<span class="marble"></span>
-										<span class="on">on</span>
-										<span class="off">off</span>
-									</label>
-								</div>
-                               </div>
-                               
-                               <div class="form-group row">
-                               	<label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong class="required">차종</strong>
-                                       <select class="custom-select col-12" id="carTypeCode" name="carTypeCode" required></select>
-                                       <div class="help-block with-errors"></div>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong class="required">톤수</strong>
-                                       <select class="custom-select col-12" id="carTonCode" name="carTonCode" required></select>
-                                       <div class="help-block with-errors"></div>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>적재함길이</strong>
-                                       <input type="text" class="form-control form-control-sm" id="cargoBox" name="cargoBox" maxlength="30">
-                                   </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                                   <label class="col-form-label"></label>
-                                 <!--   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>담당직원</strong>
-                                       <select class="custom-select col-12" id="userId" name="userId"></select>
-                                   </div> -->
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong class="required">사용여부</strong>
-                                       <select class="custom-select col-12" id="useYn" name="useYn" required>
-                                           <option value=''>선택해주세요.</option>
-                                           <option value="Y" selected>사용</option>
-                                           <option value="N">미사용</option>
-                                       </select>
-                                       <div class="help-block with-errors"></div>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>등록일자</strong>
-                                       <input type="text" class="form-control form-control-sm" readonly="readonly" id="regdate" name="regdate">
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>해지일자</strong>
-                                       <input type="text" class="form-control form-control-sm" readonly="readonly" id="disuseDate">
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>혼적선호여부</strong>
-                                       <select class="custom-select col-12" id="mixPreferYn" name="mixPreferYn" required>
-                                           <option value="Y" selected>선호</option>
-                                           <option value="N">비선호</option>
-                                   	   </select>	
-                                   </div>
-                              	</div>
-                              	
-                              	<div class="form-group row">
-                                   <label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>위험물 운송여부</strong>
-                                       <select class="custom-select col-12" id="dangerGoodsYn" name="dangerGoodsYn">
-                                           <option value='' selected>선택해주세요.</option>
-                                           <option value="Y">가능</option>
-                                           <option value="N">불가</option>
-                                       </select>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>화학물 운송여부</strong>
-                                       <select class="custom-select col-12" id="chemicalsYn" name="chemicalsYn">
-                                           <option value='' selected>선택해주세요.</option>
-                                           <option value="Y">가능</option>
-                                           <option value="N">불가</option>
-                                       </select>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>보세면허 여부</strong>
-                                       <select class="custom-select col-12" id="foreignLicenseYn" name="foreignLicenseYn">
-                                           <option value='' selected>선택해주세요.</option>
-                                           <option value="Y">있음</option>
-                                           <option value="N">없음</option>
-                                       </select>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>지게차면허 여부</strong>
-                                       <select class="custom-select col-12" id="forkliftYn" name="forkliftYn">
-                                           <option value='' selected>선택해주세요.</option>
-                                           <option value="Y">있음</option>
-                                           <option value="N">없음</option>
-                                       </select>
-                                   </div>
-                              	</div>
-                              	
-                               <div class="form-group row">
-                               	<label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>이메일</strong>
-                                       <input type="text" class="form-control form-control-sm" id="driverEmail" name="driverEmail">
-                                       <div class="help-block with-errors"></div>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>스마트빌가입일</strong>
-                                       <input type="text" id="taxjoinDate" name="taxjoinDate" style="width: 100%">
-                                       <div class="help-block with-errors"></div>
-                                   </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                               	<label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>차주계약유형</strong>
-                                       <select class="custom-select col-12" id="carContractCode" name="carContractCode"></select>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>차량개조상태</strong>
-                                       <select class="custom-select col-12" id="carModifyCode" name="carModifyCode"></select>
-                                   </div>
-                               </div>
-                               
-							   <div class="form-group row">
-                                   <label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>우편물 우편번호(검색)</strong>
-                                       <div class="textBox-in-icon">
-                                        <input onClick="popSearchPost('postal');" type="text" class="form-control form-control-sm" readonly="readonly" id="postalPost" name="postalPost">
-										<i><img onclick="popSearchPost('postal');" src="/images/icon/search.png"></i>
-										</div>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-	                                   <strong>우편물 주소</strong>
-	                                   <div class="textBox-in-icon">
-	                                       <input type="text" class="form-control form-control-sm" id="postalAddr" name="postalAddr" maxlength="50" pattern="^(?=.{1,50}$).*" 
-	                                       data-pattern-error="50자 이하로 입력해 주세요.">
-	                                   </div>
-	                               </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                                   <label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>우편물 상세주소</strong>
-                                       <input type="text" class="form-control form-control-sm" id="postalAddrDetail" name="postalAddrDetail" maxlength="50" pattern="^(?=.{1,50}$).*" 
-                                       data-pattern-error="50자 이하로 입력해 주세요.">
-                                   </div>
-                               </div>
-                              	
-                               <div class="form-group row">
-                                   <label class="col-form-label big-name">사업자정보</label>
-                                   <div class="input-group input-group-sm col middle-name form-group form-group">
-                                   <strong>사업자상호</strong>
-                                       <input type="text" class="form-control form-control-sm" id="bizName" name="bizName" maxlength="50" pattern="^(?=.{1,50}$).*" 
-	                                	data-pattern-error="50자 이하로 입력해 주세요.">
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group form-group">
-                                   <strong>사업자번호</strong>
-                                       <input type="text" class="form-control form-control-sm" id="bizNum" name="bizNum" maxlength="12" pattern="^(?=.{1,12}$).*" 
-	                                	data-pattern-error="12자 이하로 입력해 주세요.">
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>종사업장번호</strong>
-                                       <input type="text" class="form-control form-control-sm" id="subBizNum" name="subBizNum" maxlength="10" pattern="^(?=.{1,10}$).*" 
-	                                	data-pattern-error="10자 이하로 입력해 주세요.">
-                                   </div>
-                               </div>
-                               
-								<div class="form-group row">
-                                   <label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>대표자명</strong>
-                                       <input type="text" class="form-control form-control-sm" id="ceo" name="ceo" maxlength="20" pattern="^(?=.{1,20}$).*" 
-	                               	   data-pattern-error="20자 이하로 입력해 주세요.">
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>업태</strong>
-                                       <input type="text" class="form-control form-control-sm" id="bizCond" name="bizCond" maxlength="20" pattern="^(?=.{1,20}$).*" 
-	                                   data-pattern-error="20자 이하로 입력해 주세요.">
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>업종</strong>
-                                       <input type="text" class="form-control form-control-sm" id="bizKind" name="bizKind" maxlength="20" pattern="^(?=.{1,20}$).*" 
-	                                   data-pattern-error="20자 이하로 입력해 주세요.">
-                                   </div>
-                               </div>
-                               
-								<div class="form-group row">
-                                   <label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>우편번호(검색)</strong>
-                                       <div class="textBox-in-icon">
-                                        <input onClick="popSearchPost('biz');" type="text" class="form-control form-control-sm" readonly="readonly" id="bizPost" name="bizPost">
-										<i><img onclick="popSearchPost('biz');" src="/images/icon/search.png"></i>
-										</div>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-	                                   <strong>주소</strong>
-	                                   <div class="textBox-in-icon">
-	                                       <input type="text" class="form-control form-control-sm" id="bizAddr" name="bizAddr" maxlength="50" pattern="^(?=.{1,50}$).*" 
-	                                       data-pattern-error="50자 이하로 입력해 주세요.">
-	                                   </div>
-	                               </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                                   <label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>상세주소</strong>
-                                       <input type="text" class="form-control form-control-sm" id="bizAddrDetail" name="bizAddrDetail" maxlength="50" pattern="^(?=.{1,50}$).*" 
-                                       data-pattern-error="50자 이하로 입력해 주세요.">
-                                   </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                                   <label class="col-form-label big-name">APP사용정보</label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>CID</strong>
-                                       <input type="text" class="form-control form-control-sm" id="cid" name="cid"  maxlength="13">
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>기기모델</strong>
-                                       <input type="text" class="form-control form-control-sm" id="deviceModel" name="deviceModel" readonly="readonly">
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>OS</strong>
-                                       <input type="text" class="form-control form-control-sm" id="deviceOs" name="deviceOs" readonly="readonly">
-                                   </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                                   <label class="col-form-label"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>APP 설치버전</strong>
-                                       <input type="text" class="form-control form-control-sm" id="appVersion" name="appVersion" readonly="readonly">
-                                   </div>
-									<div class="input-group input-group-sm col middle-name form-group">
-	                                   <strong>APP PUSH 수신여부</strong>
-	                                    <input type="hidden" id="pushYn" name="pushYn">
-										<input type="checkbox" id="chkPushYn" name="chkPushYn" class="input_on-off" value="Y">
-										<label for="chkPushYn" class="label_on-off">
-											<span class="marble"></span>
-											<span class="on">on</span>
-											<span class="off">off</span>
-										</label>
-									</div>
-									<div class="input-group input-group-sm col middle-name form-group"></div>
-                               </div>
+                                <legend id="car_legend">차량 등록</legend>
+                                <div class="form-group row gray_box">
+                                    <label class="col-form-label big-name">담당부서</label>
+                                    <div class="input-group input-group-sm wd90 middle-name form-group">
+                                     <strong class="required">담당부서</strong>
+                                     <select id="mngDeptId" name="mngDeptId" class="custom-select " required></select>
+                                    </div>
+                                    <div class="input-group input-group-sm wd90 middle-name form-group">
+                                    <strong>담당자명</strong>
+                                        <select class="custom-select " id="userId" name="userId"></select>
+                                    </div>
+                                </div>
+                                <div class="mt20"></div>
+                                <div class="form-group row gray_box">
+                                    <div class="form-group row">
+                                        <label class="col-form-label big-name">기본정보</label>
+                                        <div id="carNumber" class="input-group input-group-sm col middle-name form-group">
+                                            <strong class="required">차량번호</strong>
+                                            <input type="text" style="text-indent:0px" class="form-control form-control-sm" id="carNum" name="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$"
+                                                   data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required placeholder="서울XX아XXXX">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong class="required">차주성명</strong>
+                                            <input type="text" class="form-control form-control-sm" id="driverName" name="driverName" maxlength="20"  pattern="^(?=.{1,20}$).*"
+                                                   data-pattern-error="20자 이하로 입력해 주세요." required>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong class="required">차량구분</strong>
+                                            <select class="custom-select col-12" id="carSctnCode" name="carSctnCode" required></select>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
 
-                               <div class="form-group row">
-                                   <label class="col-form-label big-name">계좌정보</label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                        <strong>은행명</strong>
-                                        <select class="custom-select col-12" id="bankCode" name="bankCode"></select>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                        <strong>계좌번호</strong>
-                                            <input type="text" class="form-control form-control-sm" id="bankAccount" name="bankAccount" maxlength="30" pattern="^(?=.{1,30}$).*" 
-                                                data-pattern-error="30자 이하로 입력해 주세요." oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
-                                   </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                                   <label class="col-form-label"></label>
-                                   
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                        <strong>예금주</strong>
-                                        <input type="text" class="form-control form-control-sm" id="bankCnnm" name="bankCnnm" maxlength="20" pattern="^(?=.{1,20}$).*" 
-                                            data-pattern-error="20자 이하로 입력해 주세요." readonly>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                        <strong>예금주확인일시</strong>
-                                        <input type="text" class="form-control form-control-sm" id="bankCheckDate" name="bankCheckDate" readonly>
-                                   </div>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                        <strong>&nbsp;</strong>
-<!--                                         <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-check"></i>예금주확인</button> -->
-<!--                                         <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" style="border-radius:4px" class="form-control form-control-sm middle-button-dark">예금주확인</button> -->
-                                        <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark">
-                                            <i class="k-icon k-i-check"></i>예금주확인
-<!--                                             <span class="spinner-border spinner-border-sm"></span> -->
-                                        </button>
-                                   </div>
-                               </div>
-                               
-                               <div class="form-group row">
-	                               <label class="col-form-label"></label>
-	                               <div class="input-group input-group-sm col middle-name form-group">
-		                               <strong>빠른지급여부</strong>
-		                               <select class="custom-select col-12" id="payType" name="payType"></select>
-	                               </div>
-	                               <div class="input-group input-group-sm col middle-name form-group">
-		                               <strong>빠른지급사유</strong>
-		                               <input id="payMemo" name="payMemo" type="text" class="form-control form-control-sm">
-	                               </div>
-                               </div>
-                               
-                               <div class="form-group row">
-                                   <label class="col-form-label big-name">기타</label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>차량관리등급</strong>
-                                       <select class="custom-select col-12" id="carMngCode" name="carMngCode">
-                                       </select>
-                                   </div>
-                                   <div class="col middle-name form-group">
-                                   <strong>관리등급사유</strong>
-                                       <input type="text" id="carMngMemo" name="carMngMemo" class="form-control form-control-sm textarea" maxlength="1000">
-                                 	</div>
-                  	       	   </div>
-                  	       	   
-                  	       	   <div class="form-group row">
-                                   <label class="col-form-label big-name"></label>
-                                   <div class="input-group input-group-sm col middle-name form-group">
-                                   <strong>메모</strong>
-                                       <textarea class="form-control form-control-sm textarea" rows="4" id="memo" name="memo" maxlength="3000"></textarea>
-                                   </div>
-                  	       	   </div>
-                           </fieldset>
-                           <div class="editor_btns" style="text-align:center;">
-		                       <div class="padding">
-								   <button type="submit" class="k-pager-refresh k-button" id="btnSubmit"><b class="btn-b"><i class="k-icon k-i-check"></i><strong id="btn_save">저장</strong></b></button>
-								   <a onclick="init_popup_close();" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
-						       </div>
-					       </div>
+                                    <div class="form-group row mt10">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong>전화번호</strong>
+                                            <input type="text" style="text-indent:0px" class="form-control form-control-sm" id="telNum" name="telNum" maxlength="13">
+                                        </div>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong class="required">휴대전화</strong>
+                                            <input type="text" style="text-indent:0px" class="form-control form-control-sm" id="mobile" name="mobile" maxlength="13" required>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong>알림톡 수신여부</strong>
+                                            <input type="hidden" id="talkYn" name="talkYn">
+                                            <input type="checkbox" id="chkTalkYn" name="chkTalkYn" class="input_on-off" value="Y">
+                                            <label for="chkTalkYn" class="label_on-off">
+                                                <span class="marble"></span>
+                                                <span class="on">on</span>
+                                                <span class="off">off</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row ">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong class="required">차종</strong>
+                                            <select class="custom-select col-12" id="carTypeCode" name="carTypeCode" required></select>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong class="required">톤수</strong>
+                                            <select class="custom-select col-12" id="carTonCode" name="carTonCode" required></select>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>적재함길이</strong>
+                                            <input type="text" class="form-control form-control-sm" id="cargoBox" name="cargoBox" maxlength="30">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row mt10">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong class="required">사용여부</strong>
+                                            <select class="custom-select col-12" id="useYn" name="useYn" required>
+                                                <option value=''>선택해주세요.</option>
+                                                <option value="Y" selected>사용</option>
+                                                <option value="N">미사용</option>
+                                            </select>
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>혼적선호여부</strong>
+                                            <select class="custom-select col-12" id="mixPreferYn" name="mixPreferYn" required>
+                                                <option value="Y" selected>선호</option>
+                                                <option value="N">비선호</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group row mt10">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                            <strong>등록일자</strong>
+                                            <input type="text" style="width:100%" class="form-control form-control-sm" readonly="readonly" id="regdate" name="regdate">
+                                        </div>
+                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                            <strong>해지일자</strong>
+                                            <input type="text" style="width:100%" class="form-control form-control-sm" readonly="readonly" id="disuseDate">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row pt15 pb15 mr0 mt20 bortop">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>위험물 운송여부</strong>
+                                            <select class="custom-select col-12" id="dangerGoodsYn" name="dangerGoodsYn">
+                                                <option value='' selected>선택해주세요.</option>
+                                                <option value="Y">가능</option>
+                                                <option value="N">불가</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>화학물 운송여부</strong>
+                                            <select class="custom-select col-12" id="chemicalsYn" name="chemicalsYn">
+                                                <option value='' selected>선택해주세요.</option>
+                                                <option value="Y">가능</option>
+                                                <option value="N">불가</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>보세면허 여부</strong>
+                                            <select class="custom-select col-12" id="foreignLicenseYn" name="foreignLicenseYn">
+                                                <option value='' selected>선택해주세요.</option>
+                                                <option value="Y">있음</option>
+                                                <option value="N">없음</option>
+                                            </select>
+                                        </div>
+                                        <label class="col-form-label"></label>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>지게차면허 여부</strong>
+                                            <select class="custom-select col-12" id="forkliftYn" name="forkliftYn">
+                                                <option value='' selected>선택해주세요.</option>
+                                                <option value="Y">있음</option>
+                                                <option value="N">없음</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>차주계약유형</strong>
+                                            <select class="custom-select col-12" id="carContractCode" name="carContractCode"></select>
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>차량개조상태</strong>
+                                            <select class="custom-select col-12" id="carModifyCode" name="carModifyCode"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row mt10">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                            <strong>이메일</strong>
+                                            <input type="text" style="width:100%" class="form-control form-control-sm" id="driverEmail" name="driverEmail">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                        <div class="input-group input-group-sm wd100 middle-name form-group">
+                                            <strong>스마트빌가입일</strong>
+                                            <input type="text" id="taxjoinDate" name="taxjoinDate" style="width: 100%">
+                                            <div class="help-block with-errors"></div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group row mt10">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                            <strong>우편물 우편번호(검색)</strong>
+                                            <div class="textBox-in-icon">
+                                                <input onClick="popSearchPost('postal');" type="text" class="form-control form-control-sm" readonly="readonly" id="postalPost" name="postalPost">
+                                                <i><img onclick="popSearchPost('postal');" src="/images/icon/search.png"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd290 middle-name form-group">
+                                            <strong>우편물 주소</strong>
+                                            <div class="textBox-in-icon">
+                                                <input type="text" style="width:100%" class="form-control form-control-sm" id="postalAddr" name="postalAddr" maxlength="50" pattern="^(?=.{1,50}$).*"
+                                                       data-pattern-error="50자 이하로 입력해 주세요.">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd290 middle-name form-group">
+                                            <strong>우편물 상세주소</strong>
+                                            <input type="text" style="width:100%" class="form-control form-control-sm" id="postalAddrDetail" name="postalAddrDetail" maxlength="50" pattern="^(?=.{1,50}$).*"
+                                                   data-pattern-error="50자 이하로 입력해 주세요.">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt10"></div>
+                                <div class="form-group row gray_box">
+                                    <div class="form-group row">
+                                        <label class="col-form-label big-name">사업자정보</label>
+                                        <div class="input-group input-group-sm col middle-name form-group form-group">
+                                            <strong>사업자상호</strong>
+                                            <input type="text" class="form-control form-control-sm" id="bizName" name="bizName" maxlength="50" pattern="^(?=.{1,50}$).*"
+                                                   data-pattern-error="50자 이하로 입력해 주세요.">
+                                        </div>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong>대표자명</strong>
+                                            <input type="text" class="form-control form-control-sm" id="ceo" name="ceo" maxlength="20" pattern="^(?=.{1,20}$).*"
+                                                   data-pattern-error="20자 이하로 입력해 주세요.">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label big-name"></label>
+                                        <div class="input-group input-group-sm wd140 middle-name form-group form-group">
+                                            <strong>사업자번호</strong>
+                                            <input type="text" class="form-control form-control-sm" id="bizNum" name="bizNum" maxlength="12" pattern="^(?=.{1,12}$).*"
+                                                   data-pattern-error="12자 이하로 입력해 주세요.">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong>업태</strong>
+                                            <input type="text" class="form-control form-control-sm" id="bizCond" name="bizCond" maxlength="20" pattern="^(?=.{1,20}$).*"
+                                                   data-pattern-error="20자 이하로 입력해 주세요.">
+                                        </div>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong>업종</strong>
+                                            <input type="text" class="form-control form-control-sm" id="bizKind" name="bizKind" maxlength="20" pattern="^(?=.{1,20}$).*"
+                                                   data-pattern-error="20자 이하로 입력해 주세요.">
+                                        </div>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong>종사업장번호</strong>
+                                            <input type="text" class="form-control form-control-sm" id="subBizNum" name="subBizNum" maxlength="10" pattern="^(?=.{1,10}$).*"
+                                                   data-pattern-error="10자 이하로 입력해 주세요.">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                            <strong>우편번호(검색)</strong>
+                                            <div class="textBox-in-icon">
+                                                <input onClick="popSearchPost('biz');" type="text" class="form-control form-control-sm" readonly="readonly" id="bizPost" name="bizPost">
+                                                <i><img onclick="popSearchPost('biz');" src="/images/icon/search.png"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd290 middle-name form-group">
+                                            <strong>주소</strong>
+                                            <div class="textBox-in-icon">
+                                                <input type="text" style="width:100%" class="form-control form-control-sm" id="bizAddr" name="bizAddr" maxlength="50" pattern="^(?=.{1,50}$).*"
+                                                       data-pattern-error="50자 이하로 입력해 주세요.">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd290 middle-name form-group">
+                                            <strong>상세주소</strong>
+                                            <input type="text" style="width:100%" class="form-control form-control-sm" id="bizAddrDetail" name="bizAddrDetail" maxlength="50" pattern="^(?=.{1,50}$).*"
+                                                   data-pattern-error="50자 이하로 입력해 주세요.">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt10"></div>
+
+                                <div class="form-group row gray_box">
+                                    <div class="form-group row">
+                                        <label class="col-form-label big-name">APP사용정보</label>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>CID</strong>
+                                            <input type="text" class="form-control form-control-sm" id="cid" name="cid"  maxlength="13">
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>기기모델</strong>
+                                            <input type="text" class="form-control form-control-sm" id="deviceModel" name="deviceModel" readonly="readonly">
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>OS</strong>
+                                            <input type="text" class="form-control form-control-sm" id="deviceOs" name="deviceOs" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>APP 설치버전</strong>
+                                            <input type="text" class="form-control form-control-sm" id="appVersion" name="appVersion" readonly="readonly">
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>APP PUSH 수신여부</strong>
+                                            <input type="hidden" id="pushYn" name="pushYn">
+                                            <input type="checkbox" id="chkPushYn" name="chkPushYn" class="input_on-off" value="Y">
+                                            <label for="chkPushYn" class="label_on-off">
+                                                <span class="marble"></span>
+                                                <span class="on">on</span>
+                                                <span class="off">off</span>
+                                            </label>
+                                        </div>
+                                        <div class="input-group input-group-sm col middle-name form-group"></div>
+                                    </div>
+                                </div>
+                                <div class="mt10"></div>
+
+                                <div class="form-group row gray_box">
+                                    <div class="form-group row">
+                                        <label class="col-form-label big-name">계좌정보</label>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>은행명</strong>
+                                            <select class="custom-select " id="bankCode" name="bankCode"></select>
+                                        </div>
+                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                            <strong>계좌번호</strong>
+                                            <input type="text" style="width:100%" class="form-control form-control-sm" id="bankAccount" name="bankAccount" maxlength="30" pattern="^(?=.{1,30}$).*"
+                                                   data-pattern-error="30자 이하로 입력해 주세요." oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>예금주</strong>
+                                            <input type="text" class="form-control form-control-sm" id="bankCnnm" name="bankCnnm" maxlength="20" pattern="^(?=.{1,20}$).*"
+                                                   data-pattern-error="20자 이하로 입력해 주세요." readonly>
+                                        </div>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>예금주확인일시</strong>
+                                            <input type="text" class="form-control form-control-sm" id="bankCheckDate" name="bankCheckDate" readonly>
+                                        </div>
+                                        <div class="input-group input-group-sm col middle-name form-group">
+                                            <strong>&nbsp;</strong>
+                                            <!--                                      <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-check"></i>예금주확인</button> -->
+                                            <!--                                      <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" style="border-radius:4px" class="form-control form-control-sm middle-button-dark">예금주확인</button> -->
+                                            <button id="accountCheckButton" name="accountCheckButton" onclick="bankCheck()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark">
+                                                <i class="k-icon k-i-check"></i>예금주확인
+                                                <!--                                          <span class="spinner-border spinner-border-sm"></span> -->
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>빠른지급여부</strong>
+                                            <select class="custom-select col-12" id="payType" name="payType"></select>
+                                        </div>
+                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                            <strong>빠른지급사유</strong>
+                                            <input id="payMemo" style="width:100%" name="payMemo" type="text" class="form-control form-control-sm">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt10"></div>
+
+                                <div class="form-group row gray_box">
+                                    <div class="form-group row">
+                                        <label class="col-form-label big-name">기타</label>
+                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                            <strong>차량관리등급</strong>
+                                            <select class="custom-select" id="carMngCode" name="carMngCode">
+                                            </select>
+                                        </div>
+                                        <div class="middle-name wd140 form-group">
+                                            <strong>관리등급사유</strong>
+                                            <input type="text" id="carMngMemo" name="carMngMemo" class="form-control form-control-sm textarea" maxlength="1000">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row mt10">
+                                        <label class="col-form-label"></label>
+                                        <div class="input-group input-group-sm wd290 middle-name">
+                                            <strong>메모</strong>
+                                            <textarea style="width:100%" class="form-control textarea" rows="4" id="memo" name="memo" maxlength="3000"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
                         </form>
                     </div>
                     <!-- editor -->

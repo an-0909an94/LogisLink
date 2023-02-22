@@ -10,155 +10,154 @@
        <div class="enter_form" style="padding: 1.875em;">
           <!-- 공급자/공급받는자 정보 -->
           <div style="display: inline-block; width: 100%">
-	          <div style="width: 50%; float: left;">
+	          <div style="width: 49%; float: left;padding-right:10px" class="gray_box ">
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name">공급자</label>
 	                 <div class="input-group input-group-sm col middle-name form-group">
-	                 <strong>사업자명</strong>
-	                 	<input class="form-control form-control-sm" id="supplierBizName" name="supplierBizName" type="text" readonly>
+	                 	<strong>사업자명</strong>
+	                 	<input class="form-control form-control-sm wd420" id="supplierBizName" name="supplierBizName" type="text" readonly>
 	                 </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>사업자번호</strong>
-		                 <input type="text" name="supplierBizNo" id="supplierBizNo" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="supplierBizNo" id="supplierBizNo" class="form-control form-control-sm wd200" readonly>
 		             </div>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>종사업장번호</strong>
-		                 <input type="text" name="supplierBizSubNo" id="supplierBizSubNo" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="supplierBizSubNo" id="supplierBizSubNo" class="form-control form-control-sm wd200" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>대표자</strong>
-		                 <input type="text" name="supplierCeo" id="supplierCeo" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="supplierCeo" id="supplierCeo" class="form-control form-control-sm wd200" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 	                 <div class="input-group input-group-sm col middle-name form-group">
 	                 <strong>사업장주소</strong>
-	                 	<input id="supplierAddr" name="supplierAddr" type="text" class="form-control form-control-sm" readonly>
+	                 	<input id="supplierAddr" name="supplierAddr" type="text" class="form-control form-control-sm wd420" readonly>
 	                 </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>업태</strong>
-		                 <input type="text" name="supplierBizType" id="supplierBizType" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="supplierBizType" id="supplierBizType" class="form-control form-control-sm wd200" readonly>
 		             </div>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>업종</strong>
-		                 <input type="text" name="supplierBizClass" id="supplierBizClass" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="supplierBizClass" id="supplierBizClass" class="form-control form-control-sm wd200" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>담당자</strong>
-		                 <input type="text" name="supplierMemName" id="supplierMemName" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="supplierMemName" id="supplierMemName" class="form-control form-control-sm wd200" readonly>
 		             </div>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>연락처</strong>
-		                 <input type="text" name="supplierMemTel" id="supplierMemTel" class="form-control form-control-sm" maxlength="13" readonly>
+		                 <input type="text" name="supplierMemTel" id="supplierMemTel" class="form-control form-control-sm wd200" maxlength="13" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>이메일</strong>
-		                 <input type="text" name="supplierMemEmail" id="supplierMemEmail" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="supplierMemEmail" id="supplierMemEmail" class="form-control form-control-sm wd200" readonly>
 		             </div>
 	              </div>
 	          </div>
-	          
-	          <div style="width: 50%; float: right;">
+
+	          <div style="width: 49%; float: right;" class="gray_box">
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name">공급받는자</label>
 	                 <div class="input-group input-group-sm col middle-name form-group">
 	                 <strong>사업자명</strong>
-	                 	<input class="form-control form-control-sm" id="buyerBizName" name="buyerBizName" type="text" style="width:100%;" readonly>
+	                 	<input class="form-control form-control-sm wd420" id="buyerBizName" name="buyerBizName" type="text" style="width:100%;" readonly>
 	                 </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>사업자번호</strong>
-		                 <input type="text" name="buyerBizNo" id="buyerBizNo" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="buyerBizNo" id="buyerBizNo" class="form-control form-control-sm wd200" readonly>
 		             </div>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>종사업장번호</strong>
-		                 <input type="text" name="buyerBizSubNo" id="buyerBizSubNo" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="buyerBizSubNo" id="buyerBizSubNo" class="form-control form-control-sm wd200" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>대표자</strong>
-		                 <input type="text" name="buyerCeo" id="buyerCeo" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="buyerCeo" id="buyerCeo" class="form-control form-control-sm wd200" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 	                 <div class="input-group input-group-sm col middle-name form-group">
 	                 <strong>사업장주소</strong>
-	                 	<input id="buyerAddr" name="buyerAddr" type="text" class="form-control form-control-sm" readonly>
+	                 	<input id="buyerAddr" name="buyerAddr" type="text" class="form-control form-control-sm wd420" readonly>
 	                 </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>업태</strong>
-		                 <input type="text" name="buyerBizType" id="buyerBizType" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="buyerBizType" id="buyerBizType" class="form-control form-control-sm wd200" readonly>
 		             </div>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>업종</strong>
-		                 <input type="text" name="buyerBizClass" id="buyerBizClass" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="buyerBizClass" id="buyerBizClass" class="form-control form-control-sm wd200" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>담당자</strong>
-		                 <input type="text" name="buyerMemName" id="buyerMemName" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="buyerMemName" id="buyerMemName" class="form-control form-control-sm wd200" readonly>
 		             </div>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>연락처</strong>
-		                 <input type="text" name="buyerMemTel" id="buyerMemTel" class="form-control form-control-sm" maxlength="13" readonly>
+		                 <input type="text" name="buyerMemTel" id="buyerMemTel" class="form-control form-control-sm wd200" maxlength="13" readonly>
 		             </div>
 	              </div>
-	              
+
 	              <div style="height: 50px;" class="form-group row">
 	                 <label class="col-form-label big-name"></label>
 		             <div class="input-group input-group-sm col middle-name form-group">
 		             <strong>이메일</strong>
-		                 <input type="text" name="buyerMemEmail" id="buyerMemEmail" class="form-control form-control-sm" readonly>
+		                 <input type="text" name="buyerMemEmail" id="buyerMemEmail" class="form-control form-control-sm wd200" readonly>
 		             </div>
 	              </div>
 	          </div>
-			  <div id="brokerInfoDiv" style="width: 100%" class="form-group row">
-			  <label class="col-form-label big-name">수탁자</label>
+			  <div id="brokerInfoDiv" style="width: 100%;height:100%" class="form-group row hd100 gray_box">
+				  <label class="col-form-label big-name">수탁자</label>
 				  <div class="input-group input-group-sm col middle-name form-group">
-				  <strong>&nbsp;</strong>
-				     <textarea name="brokerInfo" id="brokerInfo" class="form-control form-control-sm textarea" readonly="readonly" rows="3"></textarea>
+				     <textarea name="brokerInfo" id="brokerInfo" class="form-control textarea wd1000" style="height: 100%" readonly="readonly" rows="3"></textarea>
 				  </div>
 			  </div>
           </div>
-          <div class="col" id="inGridDiv">
-             <table class="form_table" style="width:100%">
+          <div class="col" id="inGridDiv" style="padding-top: 10px" class="gray_box">
+             <table class="form_table" style="width:100%;border-collapse: separate">
                 <tbody>
                 	<tr>
 	                   <th style="padding: 5px 0px;">작성일자</th>
@@ -170,13 +169,13 @@
 	                   <th>구분</th>
 	                </tr>
 	                <tr>
-	                   <td><input type="text" class="col" id="writeDate" name="writeDate" readonly="readonly"></td>
-	                   <td><input type="text" class="col" placeholder="0" id="supprice" name="supprice" value="0" readonly="readonly" style="text-align:right;"></td>
-	                   <td><input type="text" class="col" placeholder="0" id="tax" name="tax" value="0" readonly="readonly" style="text-align:right;"></td>
-	                   <td><input type="text" class="col" placeholder="0" id="totPrice" name="totPrice" value="0" readonly="readonly" style="text-align:right;"></td>
-	                   <td><input type="text" class="col" id="remarks" name="remarks" readonly="readonly"></td>
+	                   <td><input type="text" class="col btn_gra_tax" 					id="writeDate" 	name="writeDate" 			readonly="readonly" style="text-align:right;"></td>
+	                   <td><input type="text" class="col btn_gra_tax" placeholder="0" 	id="supprice" 	name="supprice" value="0" 	readonly="readonly" style="text-align:right;"></td>
+	                   <td><input type="text" class="col btn_gra_tax" placeholder="0" 	id="tax" 		name="tax" 		value="0" 	readonly="readonly" style="text-align:right;"></td>
+	                   <td><input type="text" class="col btn_gra_tax" placeholder="0" 	id="totPrice" 	name="totPrice" value="0" 	readonly="readonly" style="text-align:right;"></td>
+	                   <td><input type="text" class="col btn_gra_tax" 					id="remarks" 	name="remarks" 				readonly="readonly" style="text-align:right;"></td>
 	                   <td>
-	                      <div class="form-check-inline col">
+	                      <div class="form-check-inline btn_gra_tax" style="border-radius:10px;width:100%">
 	                          <div class="input-group input-group-sm col radio-or-checkBox">
 				            	<input value="01" id="pubForm01" name="pubForm" type="radio" disabled="disabled">
 				            	<label for="pubForm01" class="label-margin">
@@ -195,7 +194,7 @@
 	             </tbody>
              </table>
           </div>
-          <table class="form_table" style="width:100%" id="taxDtlTbl">
+          <table class="form_table" style="width:100%;border-collapse: separate" id="taxDtlTbl">
              <tr>
                 <!-- <th>선택</th> -->
                 <th style="padding: 5px 0px;">등록일자</th>
@@ -212,10 +211,11 @@
     </form>
 </div>
 
+<!-- 운송비 변경 -->
 <div id="divChangeAmt" class="editor-warp p-0">
 	<form class="modalEditor" id="fChangeAmt" data-toggle="validator" role="form" autocomplete="off">
 		<input type="hidden" name="allocList" id="allocList">
-		<div class="modalHeader">
+		<div class="modalHeader50">
 <!-- 			<div class="form-group row">
                <label class="col-form-label modal-big-name">운송사명</label>
                <div class="input-group input-group-sm col middle-name form-group">
@@ -231,124 +231,134 @@
                </div>
            </div> -->
            <div class="form-group row">
-               <label class="col-form-label modal-big-name">운송비</label>
-               <div class="input-group input-group-sm col middle-name form-group">
-                   <input type="text" id="modalAllocCharge" class="form-control form-control-sm" type="text" required>
+               <label class="col-form-label modal-big-name" style="width:80px">운송비</label>
+               <div class="input-group input-group-sm wd240 middle-name" style="width: 100%">
+                   <input type="text" id="modalAllocCharge" class="form-control form-control-sm" type="text" style="width: 100%" required>
 				   <div class="help-block with-errors" ></div>
                </div>
            </div>
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>변경</strong></b></button>
-		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><strong>변경</strong></b></button>
+		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
     </form>
 </div>
 
+<!-- 정산 등록 -->
 <div id="divCalcInsert" class="editor_wrap p-0">
 	<form class="modalEditor" id="fCalc" data-toggle="validator" role="form" autocomplete="off">
 		<input type="hidden" name="fCalcMode" id="fCalcMode" class="hiddenValue">
-		<div class="modalHeader">
+		<div class="modalHeader50">
 			<div class="form-group row">
                 <label class="col-form-label modal-big-name">운송비항목</label>
-                <div class="input-group input-group-sm col middle-name form-group">
+                <div class="input-group input-group-sm wd240 middle-name">
                     <!-- <input type="text" class="form-control form-control-sm" type="text"> -->
-                    <select name="calcTypeCode" id="calcTypeCode" class="custom-select col-12" required></select>
+                    <select name="calcTypeCode" id="calcTypeCode" class="custom-select col-12" style="width: 100%" required></select>
 					<div class="help-block with-errors" ></div>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label modal-big-name">정산금액</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" type="text" id="calcCharge" required>
+                <div class="input-group input-group-sm wd240 middle-name">
+                    <input type="text" class="form-control form-control-sm" type="text" id="calcCharge" style="width: 100%" required>
 					<div class="help-block with-errors" ></div>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-form-label modal-big-name">메모</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" type="text" id="memo" required>
+                <div class="input-group input-group-sm wd240 middle-name">
+                    <input type="text" class="form-control form-control-sm" type="text" id="memo" style="width: 100%" required>
 					<div class="help-block with-errors" ></div>
                 </div>
             </div>
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit" id="fCalcSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>저장</strong></b></button>
-		        <a onclick="calcModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <button type="submit" id="fCalcSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>저장</strong></b></button>
+		        <a onclick="calcModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</form>
 </div>
 
+<!-- 정산 수정 -->
 <div id="divCalcDetail" class="editor_wrap p-0">
 	<form class="modalEditor" id="calcDetailForm" data-toggle="validator" role="form" autocomplete="off">
 		<input type="hidden" name="detailFormCalcId" id="detailFormCalcId" class="hiddenValue">
-		<div class="modalHeader">
+		<div class="modalHeader50">
             <div class="form-group row">
-                <label class="col-form-label modal-big-name" style="width: 130px">어플명</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" name="appName" id="appName">
+                <label class="col-form-label modal-big-name" style="width: 120px">어플명</label>
+                <div class="input-group input-group-sm wd210 middle-name form-group">
+                    <input type="text" class="form-control form-control-sm" style="width: 100%" name="appName" id="appName">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-form-label modal-big-name" style="width: 130px">마감 시 메모</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" name="finishMemo" id="finishMemo">
+                <label class="col-form-label modal-big-name" style="width: 120px">마감 시 메모</label>
+                <div class="input-group input-group-sm wd210 middle-name form-group">
+                    <input type="text" class="form-control form-control-sm" style="width: 100%" name="finishMemo" id="finishMemo">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-form-label modal-big-name" style="width: 130px">참고내용1</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" name="refContent1" id="refContent1">
+                <label class="col-form-label modal-big-name" style="width: 120px">참고내용1</label>
+                <div class="input-group input-group-sm wd210 middle-name form-group">
+                    <input type="text" class="form-control form-control-sm" style="width: 100%" name="refContent1" id="refContent1">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-form-label modal-big-name" style="width: 130px">참고내용2</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" name="refContent2" id="refContent2">
+                <label class="col-form-label modal-big-name" style="width: 120px">참고내용2</label>
+                <div class="input-group input-group-sm wd210 middle-name form-group">
+                    <input type="text" class="form-control form-control-sm" style="width: 100%" name="refContent2" id="refContent2">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-form-label modal-big-name" style="width: 130px">신고용 사업자번호</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" name="reportBizNum" id="reportBizNum" maxlength="12">
+                <label class="col-form-label modal-big-name" style="width: 120px">신고용 사업자번호</label>
+                <div class="input-group input-group-sm wd210 middle-name form-group">
+                    <input type="text" class="form-control form-control-sm" style="width: 100%" name="reportBizNum" id="reportBizNum" maxlength="12">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-form-label modal-big-name" style="width: 130px">신고용 사업자명</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input type="text" class="form-control form-control-sm" name="reportBizName" id="reportBizName">
+                <label class="col-form-label modal-big-name" style="width: 120px">신고용 사업자명</label>
+                <div class="input-group input-group-sm wd210 middle-name form-group">
+                    <input type="text" class="form-control form-control-sm" style="width: 100%" name="reportBizName" id="reportBizName">
                 </div>
             </div>
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="button" onclick="detailCalcUpdate()" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>저장</strong></b></button>
-		        <a onclick="calcDetailClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <button type="button" onclick="detailCalcUpdate()" class="k-pager-refresh k-button"><b class="btn-b"><strong>저장</strong></b></button>
+		        <a onclick="calcDetailClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</form>
 </div>
 
+<!-- 거래명세서 -->
 <div id="divTranReceipt" class="editor_wrap p-0">
-	<form class="modalEditor" id="fTranReceipt" data-toggle="validator" role="form" autocomplete="off">
+	<form class="modalEditor" id="fTranReceipt" data-toggle="validator" role="form"
+		  autocomplete="off">
 		<input type="hidden" name="tranMode" id="tranMode" class="hiddenValue">
 		<input type="hidden" name="tranCustId" id="tranCustId" class="hiddenValue">
 		<input type="hidden" name="tranDeptId" id="tranDeptId" class="hiddenValue">
 		<input type="hidden" name="tranSupplierCustId" id="tranSupplierCustId" class="hiddenValue">
 		<input type="hidden" name="tranSupplierDeptId" id="tranSupplierDeptId" class="hiddenValue">
-		<input type="hidden" name="tranSupplierVehicId" id="tranSupplierVehicId" class="hiddenValue">
-		<input type="hidden" name="tranSupplierDriverId" id="tranSupplierDriverId" class="hiddenValue">
-		<input type="hidden" name="tranSupplierBizName" id="tranSupplierBizName" class="hiddenValue">
+		<input type="hidden" name="tranSupplierVehicId" id="tranSupplierVehicId"
+			   class="hiddenValue">
+		<input type="hidden" name="tranSupplierDriverId" id="tranSupplierDriverId"
+			   class="hiddenValue">
+		<input type="hidden" name="tranSupplierBizName" id="tranSupplierBizName"
+			   class="hiddenValue">
 		<input type="hidden" name="tranSupplierBizNo" id="tranSupplierBizNo" class="hiddenValue">
-		<input type="hidden" name="tranSupplierBizSubNo" id="tranSupplierBizSubNo" class="hiddenValue">
+		<input type="hidden" name="tranSupplierBizSubNo" id="tranSupplierBizSubNo"
+			   class="hiddenValue">
 		<input type="hidden" name="tranSupplierCeo" id="tranSupplierCeo" class="hiddenValue">
 		<input type="hidden" name="tranSupplierAddr" id="tranSupplierAddr" class="hiddenValue">
-		<input type="hidden" name="tranSupplierBizType" id="tranSupplierBizType" class="hiddenValue">
-		<input type="hidden" name="tranSupplierBizClass" id="tranSupplierBizClass" class="hiddenValue">
+		<input type="hidden" name="tranSupplierBizType" id="tranSupplierBizType"
+			   class="hiddenValue">
+		<input type="hidden" name="tranSupplierBizClass" id="tranSupplierBizClass"
+			   class="hiddenValue">
 		<input type="hidden" name="tranBuyerCustId" id="tranBuyerCustId" class="hiddenValue">
 		<input type="hidden" name="tranBuyerDeptId" id="tranBuyerDeptId" class="hiddenValue">
 		<input type="hidden" name="tranBuyerVehicId" id="tranSupplierVehicId" class="hiddenValue">
@@ -361,140 +371,207 @@
 		<input type="hidden" name="tranBuyerBizType" id="tranBuyerBizType" class="hiddenValue">
 		<input type="hidden" name="tranBuyerBizClass" id="tranBuyerBizClass" class="hiddenValue">
 		<input type="hidden" name="tranRemarksDefault" id="tranRemarksDefault" class="hiddenValue">
-		<div class="modalHeader">
-            <div style="width: 50%; float: left;" class="form-group row">
-                <label class="col-form-label modal-big-name">발행 구분</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <select name="tranBizTypeCd" id="tranBizTypeCd" class="custom-select col-12">
-                    	<option value="01" selected="selected">과세(부가세별도)</option>
-                    	<option value="02">비과세</option>
-                    </select>
-                </div>
-            </div>
+		<div class="modalHeader col">
+			<div class="row">
+				<div style="width: 49%; float: left;" class="form-group row div-min-col-1">
+					<!-- 발행 구분 -->
+					<div class="row gray_box_s" style="width:100%">
+						<label class="col-form-label modal-big-name">발행 구분</label>
+						<div class="input-group input-group-sm wd240 middle-name">
+							<select name="tranBizTypeCd" id="tranBizTypeCd" style="width: 100%" class="custom-select">
+								<option value="01" selected="selected">과세(부가세별도)</option>
+								<option value="02">비과세</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div style="width: 49%; float: right;" class="form-group row">
+					<!-- 세금계산서 -->
+					<div class="row gray_box_s" style="width:100%">
+						<label class="col-form-label modal-big-name">세금계산서</label>
+						<div class="input-group input-group-sm wd240 middle-name">
+							<select name="taxYn" id="taxYn" style="width:100%" class="custom-select">
+								<option value="N" selected="selected">미발행</option>
+								<option value="Y">발행</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<div class="form-group row">
-                <label class="col-form-label modal-big-name">세금계산서</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <select name="taxYn" id="taxYn" class="custom-select col-12">
-                    	<option value="N" selected="selected">미발행</option>
-                    	<option value="Y">발행</option>
-                    </select>
-                </div>
-            </div>
-            <div style="width: 50%; float: left;" class="form-group row">
-                <label class="col-form-label modal-big-name">청구 구분</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <select name="tranPubForm" id="tranPubForm" class="custom-select col-12" disabled="disabled">
-                    	<option value="01">영수</option>
-                    	<option value="02" selected="selected">청구</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label modal-big-name">비고</label>
-                <div class="input-group input-group-sm col middle-name form-group">
-                    <input class="form-control form-control-sm" type="text" id="tranRemarks" name="tranRemarks" disabled="disabled">
-                </div>
-            </div>
-            
-            <div style="display: inline-block;">
-            	<div style="float: left; width: 50%;">
-		            <div class="form-group row">
-		                <label class="col-form-label big-name">다중표시</label>
-		                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-		                    <select name="itemTotalType" id="itemTotalType" class="custom-select col-12" disabled="disabled">
-		                    	<option value="0" selected="selected">단건</option>
-		                    	<option value="1">다중</option>
-		                    </select>
-		                </div>
-		            </div>
-		            
-		            <div class="form-group row">
-		                <label class="col-form-label big-name">공급자</label>
-		                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-		                <strong class="required">담당자</strong>
-		                    <input type="text" name="tranSupplierMemName" id="tranSupplierMemName" class="form-control form-control-sm" disabled="disabled">
-                            <div  class="help-block with-errors"></div>
-		                </div>
-		                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-		                <strong class="required">연락처</strong>
-		                    <input type="text" name="tranSupplierMemTel" id="tranSupplierMemTel" class="form-control form-control-sm" disabled="disabled" maxlength="13">
-                            <div  class="help-block with-errors"></div>
-		                </div>
-		            </div>
-		            
-		            <div class="form-group row">
-		                <label class="col-form-label big-name"></label>
-		                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-		                <strong class="required">이메일</strong>
-		                    <input type="text" name="tranSupplierMemEmail" id="tranSupplierMemEmail" class="form-control form-control-sm" disabled="disabled">
-                            <div  class="help-block with-errors"></div>
-		                </div>
-		            </div>
-	            </div>
-            
-            	<div style="float: right; width: 50%;">
-		            <div class="form-group row">
-		                <label class="col-form-label big-name">발행일자</label>
-		                <div class="input-group input-group-sm col-2 middle-name">
-	                        <input type="checkbox" id="taxDateYn" name="taxDateYn" class="input_on-off">
-							<label for="taxDateYn" class="label_on-off">
-								<span class="marble"></span>
-								<span class="on">on</span>
-								<span class="off">off</span>
-							</label>
-                        </div>
-		                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-	                        <input style="padding: 0;" type="text" id="taxDate" name="taxDate" class="col-12" disabled="disabled">
-		                </div>
-		            </div>
-		            
-		            <div class="form-group row">
-		                <label class="col-form-label big-name">공급받는자</label>
-		                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-		                <strong class="required">담당자</strong>
-		                    <input type="text" name="tranBuyerMemName" id="tranBuyerMemName" class="form-control form-control-sm" disabled="disabled">
-                            <div  class="help-block with-errors"></div>
-		                </div>
-		                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-		                <strong class="required">연락처</strong>
-		                    <input type="text" name="tranBuyerMemTel" id="tranBuyerMemTel" class="form-control form-control-sm"  maxlength="13" disabled="disabled">
-                            <div  class="help-block with-errors"></div>
-		                </div>
-		            </div>
-		            
-		            <div class="form-group row">
-		                <label class="col-form-label big-name"></label>
-		                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-		                <strong class="required">이메일</strong>
-		                    <input type="text" name="tranBuyerMemEmail" id="tranBuyerMemEmail" class="form-control form-control-sm" disabled="disabled">
-                            <div  class="help-block with-errors"></div>
-		                </div>
-		            </div>
-		    	</div>
-	    	</div>
-    	
-            <div class="form-group row">
-                <label class="col-form-label big-name">공급받는자<br/>주소</label>
-                <div style="text-align: left;" class="input-group input-group-sm col-2 middle-name form-group">
-                <strong>우편물 우편번호</strong>
-                    <input type="text" name="tranBuyerPostalPost" id="tranBuyerPostalPost" class="form-control form-control-sm" readonly="readonly">
-                </div>
-                <div style="text-align: left;" class="input-group input-group-sm col middle-name form-group">
-                <strong>우편물 주소</strong>
-                    <input type="text" name="tranBuyerPostalAddr" id="tranBuyerPostalAddr" class="form-control form-control-sm" readonly="readonly">
-                </div>
-                <div style="text-align: left;" class="input-group input-group-sm col-3 middle-name form-group">
-                <strong>우편물 상세주소</strong>
-                    <input type="text" name="tranBuyerPostalAddrDetail" id="tranBuyerPostalAddrDetail" class="form-control form-control-sm" readonly="readonly">
-                </div>
-            </div>
+				<div style="width: 49%; float: left;" class="form-group row div-min-col-1">
+					<!-- 청구 구분 -->
+					<div class="row gray_box_s" style="width:100%">
+						<label class="col-form-label modal-big-name">청구 구분</label>
+						<div class="input-group input-group-sm wd240 middle-name">
+							<select name="tranPubForm" id="tranPubForm" class="custom-select" style="width: 100%" disabled="disabled">
+								<option value="01">영수</option>
+								<option value="02" selected="selected">청구</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div style="width: 49%; float: right;" class="form-group row ">
+					<!-- 비고 -->
+					<div class="row gray_box_s" style="width:100%">
+						<label class="col-form-label modal-big-name">비고</label>
+						<div class="input-group input-group-sm wd240 middle-name">
+							<input name="tranRemarks" id="tranRemarks" class="form-control form-control-sm" type="text"  style="width: 100%" disabled="disabled">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div style="width: 49%; float: left;" class="form-group row div-min-col-1">
+					<!-- 다중표시 -->
+					<div class="row gray_box_s" style="width:100%">
+						<label class="col-form-label big-name">다중표시</label>
+						<div style="text-align: left;" class="input-group input-group-sm wd240 middle-name">
+							<select name="itemTotalType" id="itemTotalType" style="width: 100%" class="custom-select" disabled="disabled">
+								<option value="0" selected="selected">단건</option>
+								<option value="1">다중</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div style="width: 49%; float: right;" class="form-group row">
+					<!-- 발행일자 -->
+					<div class="row gray_box_s" style="width:100%">
+						<div class="form-group row">
+							<label class="col-form-label big-name">발행일자</label>
+							<div class="input-group input-group-sm wd90 middle-name">
+								<input type="checkbox" id="taxDateYn" name="taxDateYn" style="width: 100%" class="input_on-off">
+								<label for="taxDateYn" class="label_on-off">
+									<span class="marble"></span>
+									<span class="on">on</span>
+									<span class="off">off</span>
+								</label>
+							</div>
+							<div style="text-align: center;width: 150px" class="input-group input-group-sm middle-name">
+								<input style="padding: 0;width: 100%" type="text" id="taxDate" name="taxDate" class="" disabled="disabled">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<div style="width: 49%; float: left;" class="form-group row div-min-col-1">
+					<!-- 공급자 -->
+					<div class="row gray_box_s">
+						<div class="form-group row">
+							<label class="col-form-label big-name">공급자</label>
+							<div style="text-align: left;"
+								 class="input-group input-group-sm wd90 middle-name div-min-col-1">
+								<strong class="required">담당자</strong>
+								<input type="text" name="tranSupplierMemName"
+									   id="tranSupplierMemName"
+									   style="width: 100%"
+									   class="form-control form-control-sm" disabled="disabled">
+								<div class="help-block with-errors"></div>
+							</div>
+							<div style="text-align: left;"
+								 class="input-group input-group-sm wd140 middle-name">
+								<strong class="required">연락처</strong>
+								<input type="text" name="tranSupplierMemTel"
+									   id="tranSupplierMemTel"
+									   style="width: 100%"
+									   class="form-control form-control-sm" disabled="disabled"
+									   maxlength="13">
+								<div class="help-block with-errors"></div>
+							</div>
+
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label big-name">  </label>
+							<div style="text-align: left;"
+								 class="input-group input-group-sm wd190 middle-name">
+								<strong class="required">이메일</strong>
+								<input type="text" name="tranSupplierMemEmail"
+									   id="tranSupplierMemEmail"
+									   style="width: 100%"
+									   class="form-control form-control-sm"
+									   disabled="disabled">
+								<div class="help-block with-errors"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div style="width: 49%; float: right;" class="form-group row">
+					<!-- 공급받는자 -->
+					<div class="row gray_box_s">
+						<div class="form-group row">
+							<label class="col-form-label big-name">공급받는자</label>
+							<div style="text-align: left;"
+								 class="input-group input-group-sm wd90 middle-name div-min-col-1">
+								<strong class="required">담당자</strong>
+								<input type="text" name="tranBuyerMemName" id="tranBuyerMemName"
+									   style="width: 100%"
+									   class="form-control form-control-sm" disabled="disabled">
+								<div class="help-block with-errors"></div>
+							</div>
+							<div style="text-align: left;"
+								 class="input-group input-group-sm wd140 middle-name">
+								<strong class="required">연락처</strong>
+								<input type="text" name="tranBuyerMemTel" id="tranBuyerMemTel"
+									   style="width: 100%"
+									   class="form-control form-control-sm" maxlength="13"
+									   disabled="disabled">
+								<div class="help-block with-errors"></div>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-form-label big-name"></label>
+							<div style="text-align: left;"
+								 class="input-group input-group-sm wd190 middle-name">
+								<strong class="required">이메일</strong>
+								<input type="text" name="tranBuyerMemEmail" id="tranBuyerMemEmail"
+									   style="width: 100%"
+									   class="form-control form-control-sm" disabled="disabled">
+								<div class="help-block with-errors"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 공급받는자 주소-->
+			<div class="form-group row">
+				<div class="row gray_box_s">
+					<label class="col-form-label big-name">공급받는자<br/>주소</label>
+					<div style="text-align: left" class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<strong>우편물 우편번호</strong>
+						<input type="text" name="tranBuyerPostalPost" id="tranBuyerPostalPost"
+							   class="form-control form-control-sm" style="width: 100%" readonly="readonly">
+					</div>
+					<div style="text-align: left" class="input-group input-group-sm wd415 middle-name div-min-col-1">
+						<strong>우편물 주소</strong>
+						<input type="text" name="tranBuyerPostalAddr" id="tranBuyerPostalAddr"
+							   class="form-control form-control-sm" style="width: 100%" readonly="readonly">
+					</div>
+					<div style="text-align: left" class="input-group input-group-sm wd100 middle-name">
+						<strong>우편물 상세주소</strong>
+						<input type="text" name="tranBuyerPostalAddrDetail"
+							   id="tranBuyerPostalAddrDetail" class="form-control form-control-sm"
+							   style="width:100%" readonly="readonly">
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit" id="fTranReceiptSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>발행</strong></b></button>
-		        <a onclick="tranReceiptcalcModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
-	        </div>
-	    </div>
+				<button type="submit" id="fTranReceiptSubmitBtn" class="k-pager-refresh k-button"><b
+						class="btn-b"><strong>발행</strong></b></button>
+				<a onclick="tranReceiptcalcModalClose()" class="k-pager-refresh k-button"><b
+						class="btn-g">닫기</b></a>
+			</div>
+		</div>
 	</form>
 </div>
 
@@ -509,22 +586,22 @@
 		<input type="hidden" name="modalBizAddrDetail" id="modalBizAddrDetail"  class="hiddenValue">
 		<input type="hidden" name="modalMobile" id="modalMobile"  class="hiddenValue">
 		<input type="hidden" name="modalOrderMemo" id="modalOrderMemo"  class="hiddenValue">
-		<div class="modalHeader">
+		<div class="modalHeader50">
 			<div class="form-group row">
-               <label class="col-form-label modal-big-name">화주</label>
-               <div class="input-group input-group-sm col-6 middle-name form-group">
+               <label class="col-form-label modal-big-name" style="width: 60px">화주</label>
+               <div class="input-group input-group-sm wd240 middle-name div-min-col-1">
                    <input type="text" id="sModalCustName" name="sModalCustName" style="width:100%;" required>
 				   <div class="help-block with-errors" ></div>
                </div>
-               <div class="input-group input-group-sm col middle-name form-group">
-                   <input type="text" name="sModalSubName" id="sModalSubName" class="form-control form-control-sm" readonly>
+               <div class="input-group input-group-sm wd90 middle-name">
+                   <input type="text" name="sModalSubName" id="sModalSubName" class="form-control form-control-sm" style="width: 100%" readonly>
                </div>
            </div>
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>변경</strong></b></button>
-		        <a id="closeBtn" onclick="reqModalClose();" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+		        <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><strong>변경</strong></b></button>
+		        <a id="closeBtn" onclick="reqModalClose();" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
     </form>
@@ -552,141 +629,151 @@
 				<input type="hidden" name="hCarNum" id="hCarNum" class="hiddenValue">
 				<input type="hidden" name="bizTypeCd" id="bizTypeCd" value="01" class="hiddenValue">
 				<input type="hidden" name="orderList" id="orderList" class="hiddenValue">
-			<div class="form-group row">
-				<div class="input-group input-group-sm col-1 middle-name">
-				    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
-				</div>
-				<span>~</span>
-				<div class="input-group input-group-sm col-1 middle-name">  
-				    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
-				</div>
-				
-				<div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="radio" name="dateChk" id="today" value="0" checked/>
-                   	<label for="today" class="label-margin">
-                   		<span>오늘</span>
-                   	</label>
-                </div>
-                   <div class="input-group input-group-sm col radio-or-checkBox">
-                 	<input type="radio" name="dateChk" id="yesterday" value="1"/>
-                   	<label for="yesterday" class="label-margin">
-                   		<span>어제</span>
-                   	</label>
-                   </div>
-				<div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="radio" name="dateChk" id="weekly" value="7"/>
-                   	<label for="weekly" class="label-margin">
-                   		<span>7일</span>
-                   	</label>
-                </div>
-                   <div class="input-group input-group-sm col radio-or-checkBox">
-                   	<input type="radio" name="dateChk" id="monthly" value="30"/>
-                   	<label for="monthly" class="label-margin">
-                   		<span>30일</span>
-                   	</label>
-                </div>
-                
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				    <select class="form-control" class="custom-select col-12" id="listSSido" name="listSSido">
-				    	<option>상차지</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				    <select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
-				    	<option>하차지</option>
-				    </select>
-				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				    <select class="custom-select col-12" id="sCalcTypeCode" name="calcTypeCode"></select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				    <select class="custom-select col-12" id="sFinishYn" name="finishYn">
-				        <option value="">--항목선택--</option>
-				        <option value="Y">Y</option>
-				        <option value="N">N</option>
-				    </select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				    <select class="custom-select col-12" id="sReqPayYn" name="reqPayYn">
-				        <option value="">--항목선택--</option>
-				        <option value="Y">Y</option>
-				        <option value="N">N</option>
-				    </select>
-				</div>
-                
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				    <select class="form-control" class="custom-select col-12" id="sDeptId" name="sDeptId">
-				    	<option>--부서명--</option>
-				    </select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				    <select class="form-control" class="custom-select col-12" id="sUserId" name="sUserId">
-				    	<option>--담당자--</option>
-				    </select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				    <select class="form-control" class="custom-select col-12" id="sChargeType" name="chargeType">
-				    	<option>--담당자--</option>
-				    </select>
-				</div>
-			</div>
-			<div class="form-group row" style="justify-content: space-between">
-				<div class="row">
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					    <select class="custom-select col-12" id="custType" name="custType">
-					        <option value="01">화주명</option>
-					        <option value="02">운송/주선사명</option>
-					        <option value="99">차량번호</option>
-					        <option value="orderId">오더ID</option>
-					    </select>
+
+				<!-- 검색 1라인 -->
+				<div class="form-group row mt0">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
+							   class="wd90">
 					</div>
-					<div id="searchDiv" class="input-group input-group-sm col-2 middle-name">
-					    <input type="text" id="sCustName" name="sCustName" style="width:100%;">
+					<span style="margin-right: 10px;">~</span>
+
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<input style="padding: 0;" type="text" id="toDate" name="toDate"
+							   class="wd90">
 					</div>
-					<div style="display: none;" id="orderSearch" class="input-group input-group-sm col-2 middle-name">
-					    <input type="text" id="orderId" name="orderId" class="form-control form-control-sm">
+
+					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+						<input type="radio" name="dateChk" id="today" value="0" checked/>
+						<label for="today" class="label-margin">
+							<span>오늘</span>
+						</label>
 					</div>
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-	                	<input type="text" name="sSubName" id="sSubName" class="form-control form-control-sm" readonly>
-	                </div>
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					    <select class="custom-select col-12" id="searchType" name="searchType">
-					        <option value="bizName">사업자상호</option>
-					        <option value="bizNum">사업자번호</option>
-					    </select>
+
+					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+						<input type="radio" name="dateChk" id="yesterday" value="1"/>
+						<label for="yesterday" class="label-margin">
+							<span>어제</span>
+						</label>
 					</div>
-					<div class="input-group input-group-sm col-2 middle-name">
-					    <input type="text" id="bizName" name="bizName" style="width:100%;">
+
+					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+						<input type="radio" name="dateChk" id="weekly" value="7"/>
+						<label for="weekly" class="label-margin">
+							<span>7일</span>
+						</label>
 					</div>
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-	                	<select name="sSubDept" id="sSubDept" class="custom-select"></select>
-	                </div>
-					
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					    <select class="custom-select col-12" id="sSellBuySctn" name="sellBuySctn"></select>
+					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
+						<input type="radio" name="dateChk" id="monthly" value="30"/>
+						<label for="monthly" class="label-margin">
+							<span>30일</span>
+						</label>
 					</div>
-					
-					<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-					    <select class="custom-select col-12" id="sUnitPriceType" name="unitPriceType">
-					    	<option value="">--항목선택--</option>
-					    	<option value="01">대당단가</option>
-					    	<option value="02">톤당단가</option>
-					    </select>
+
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="form-control" class="custom-select wd90" id="listSSido"
+								name="listSSido">
+							<option>상차지</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="form-control" class="custom-select wd90" id="listESido"
+								name="listESido">
+							<option>하차지</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+						<select class="custom-select" style="width:100%"id="sCalcTypeCode"
+								name="calcTypeCode"></select>
+					</div>
+
+					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+						<select class="custom-select" style="width:100%" id="sFinishYn" name="finishYn">
+							<option value="">정산마감여부</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+						<select class="custom-select" style="width:100%" id="sReqPayYn" name="reqPayYn">
+							<option value="">빠른지급여부</option>
+							<option value="Y">Y</option>
+							<option value="N">N</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="form-control" class="custom-select wd90" id="sDeptId"
+								name="sDeptId">
+							<option>--부서명--</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="form-control" class="custom-select wd90" id="sUserId"
+								name="sUserId">
+							<option>--담당자--</option>
+						</select>
+					</div>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="form-control" class="custom-select wd90" id="sChargeType"
+								name="chargeType">
+							<option>--청구구문--</option>
+						</select>
 					</div>
 				</div>
-				<div class="row">
-					<div class="btn_58 mr10 input-group input-group-sm middle-name">
-					    <button onclick="goList()" type="button" style="border-radius:4px" class="btn_58 form-control-sm middle-button-dark">검색</button>
+
+				<!-- 검색 2라인 -->
+				<div class="form-group row" style="justify-content: space-between">
+					<div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="custom-select wd90" id="custType" name="custType">
+								<option value="01">화주명</option>
+								<option value="02">운송/주선사명</option>
+								<option value="99">차량번호</option>
+								<option value="orderId">오더ID</option>
+							</select>
+						</div>
+						<div id="searchDiv" class="input-group input-group-sm wd290 middle-name div-min-col-1">
+							<input type="text" id="sCustName" name="sCustName" style="width:100%;" placeholder="ex> 화주명, 운송/주선사명, 차량번호, 오더ID">
+						</div>
+						<div style="display: none;" id="orderSearch" class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<input type="text" id="orderId" name="orderId" class="form-control form-control-sm">
+						</div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<input type="text" name="sSubName" id="sSubName" class="form-control form-control-sm" readonly>
+						</div>
+						<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+							<select class="custom-select" style="width: 100%" id="searchType" name="searchType">
+								<option value="bizName">사업자상호</option>
+								<option value="bizNum">사업자번호</option>
+							</select>
+						</div>
+						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+							<input type="text" id="bizName" name="bizName" style="width:100%;" placeholder="사업자 상호,번호를 입력하세요">
+						</div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select name="sSubDept" id="sSubDept" class="custom-select"></select>
+						</div>
+						<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+							<select class="custom-select" style="width: 100%" id="sSellBuySctn" name="sellBuySctn"></select>
+						</div>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="custom-select wd90" id="sUnitPriceType" name="unitPriceType">
+								<option value="">--운임구분--</option>
+								<option value="01">대당단가</option>
+								<option value="02">톤당단가</option>
+							</select>
+						</div>
 					</div>
-					<div class="btn_58 input-group input-group-sm middle-name">
-					    <button onclick="fReset()"  type="button" class="btn_58 btn_black form-control-sm middle-button">초기화</button>
+
+					<div class="row">
+						<div class="input-group-sm middle-name mr10">
+							<button onclick="goList()" type="button" class="form-control-sm btn_58 btn_b">검색</button>
+						</div>
+						<div class="input-group-sm middle-name">
+							<button onclick="fReset()"  type="button" class="form-control-sm middle-button btn_58 btn_black">초기화</button>
+						</div>
 					</div>
 				</div>
-			</div>
 			</form>                
 			<!--  -->
 			<div class="cont-body">
@@ -700,28 +787,28 @@
 									<div class="tool_group">
 										<div class="padding">
 			 			                  	<c:if test="${menuAuth.printYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="vReceipt" style="display: none;"><b class="btn-b">인수증 보기</b></a>
+												<a href="#" class="k-pager-refresh k-button wd100" id="vReceipt" style="display: none;"><b class="btn-b">인수증 보기</b></a>
 											</c:if>
 			 			                  	<c:if test="${menuAuth.printYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="vTax" style="display: none;"><b class="btn-b">세금계산서 보기</b></a>
+												<a href="#" class="k-pager-refresh k-button wd100" id="vTax" style="display: none;"><b class="btn-b">세금계산서 보기</b></a>
 											</c:if>
 			 			                  	<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="btnChangeReq"><b class="btn-b">화주변경</b></a>
+												<a href="#" class="k-pager-refresh k-button wd100" id="btnChangeReq"><b class="btn-b">화주변경</b></a>
 											</c:if>
 			 			                  	<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="btnFinishCalc"><b class="btn-b">정산마감</b></a>
+												<a href="#" class="k-pager-refresh k-button wd100" id="btnFinishCalc"><b class="btn-b">정산마감</b></a>
 											</c:if>
 											<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="btnChangeAmt"><b class="btn-b">운송비 변경</b></a>
+												<a href="#" class="k-pager-refresh k-button wd100" id="btnChangeAmt"><b class="btn-b">운송비 변경</b></a>
 											</c:if>
 											<c:if test="${menuAuth.editYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" id="btnTranReceipt"><b class="btn-b">거래명세서</b></a>
+												<a href="#" class="k-pager-refresh k-button wd100" id="btnTranReceipt"><b class="btn-b">거래명세서</b></a>
 											</c:if>
 											<c:if test="${menuAuth.printYn eq 'Y'}">
-												<a href="#" class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x">엑셀출력</b></a>
+												<a href="#" class="k-pager-refresh k-button wd100" onClick="goExcel();"><b class="btn-x">엑셀출력</b></a>
 											</c:if>
 											<c:if test="${menuAuth.writeYn eq 'Y'}">
-												<a href="#" id="calcInsert" class="k-pager-refresh k-button"><b class="btn-h">운송비추가등록</b></a>
+												<a href="#" id="calcInsert" class="k-pager-refresh k-button wd100"><b class="btn-h">운송비추가등록</b></a>
 											</c:if>
 										</div>
 									</div>
@@ -801,18 +888,18 @@ $(document).ready(function(){
     
 	Util.setSearchDateForm();
 
-    Util.setCmmCode("select", "listSSido", "SIDO", "", "--항목선택--");
-    Util.setCmmCode("select", "listESido", "SIDO", "", "--항목선택--");
-	Util.setCmmCode("select", "sCalcTypeCode", "CALC_TYPE_CD", "", "--항목선택--");
-	Util.setCmmCode("select", "sSellBuySctn", "SELL_BUY_SCTN", "", "--항목선택--");
-	Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "", "--항목선택--");
+    Util.setCmmCode("select", "listSSido", "SIDO", "", "--상차지--");
+    Util.setCmmCode("select", "listESido", "SIDO", "", "--하차지--");
+	Util.setCmmCode("select", "sCalcTypeCode", "CALC_TYPE_CD", "", "--운송비항목--");
+	Util.setCmmCode("select", "sSellBuySctn", "SELL_BUY_SCTN", "", "--매출입항목--");
+	Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "", "--청구구문--");
 	var $options = $("#sCalcTypeCode > option").clone();
 	$('#calcTypeCode').append($options);
 	$("#calcTypeCode option[value='0002']").remove();
 	
-	Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", {deptId:$(this).val()}, "userId", "userName", "", "선택하세요");
+	Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", {deptId:$(this).val()}, "userId", "userName", "", "--담당자--");
 	$("#sDeptId").on("change", function(){
-		Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", {deptId:$(this).val()}, "userId", "userName", "", "선택하세요");
+		Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", {deptId:$(this).val()}, "userId", "userName", "", "--담당자--");
 	});
 	
 	goList();
@@ -835,7 +922,7 @@ $(document).ready(function(){
 
 	detailModal.kendoDialog({
 		width: "446px",
-		height: "510px",
+		height: "380px",
 		visible: false,
 		title: "정산수정",
 		closable: true,
@@ -882,7 +969,7 @@ $(document).ready(function(){
 	
 	calcModal.kendoDialog({
 		width: "446px",
-		height: "350px",
+		height: "260px",
 		visible: false,
 		title: "정산등록",
 		closable: true,
@@ -896,7 +983,7 @@ $(document).ready(function(){
 
 	tranReceiptModal.kendoDialog({
 		width: "800px",
-		height: "483px",
+		height: "600px",
 		visible: false,
 		title: "거래명세서",
 		closable: true,
@@ -1466,7 +1553,7 @@ modalButton.click(function() {
 
 modal.kendoDialog({
 	width: "450px",
-	height: "250px",
+	height: "200px",
 	visible: false,
 	closable: false,
 	title: "운송비 변경",
@@ -1548,7 +1635,7 @@ reqChangeModalButton.click(function () {
 
 	reqChangeModal.kendoDialog({
 	width: "500px",
-	height: "240px",
+	height: "200px",
 	visible: false,
 	title: "화주변경",
 	closable: true,
@@ -2348,15 +2435,15 @@ function viewTax(invId, taxinvYn, orderId, allocId){
 			$('#taxDtlTbl tr:gt(0)').remove();
 			for(var i=0; i<data.data2.length; i++){
 				var str = "";
-				str += "<tr>" + 
-			        "<td><input type='text' class='col' id='itemDate'       name='itemDate'     value='" + data.data2[i].itemDate + "'		readonly></td>" +
-			        "<td><input type='text' class='col' id='itemName'       name='itemName'     value='" + data.data2[i].itemName + "'		readonly></td>" +
-			        "<td><input type='text' class='col' id='itemType'       name='itemType'     value='" + data.data2[i].itemType + "'		readonly></td>" +
-			        "<td><input type='text' class='col' id='itemQty'        name='itemQty'      value='" + data.data2[i].itemQty + "'		readonly></td>" +
-			        "<td><input type='text' class='col' id='itemPrice'      name='itemPrice'    value='" + Util.formatNumber(data.data2[i].itemSupprice) + "'	readonly></td>" +
-			        "<td><input type='text' class='col' id='itemSupprice'   name='itemSupprice' value='" + Util.formatNumber(data.data2[i].itemSupprice) + "'	readonly></td>" +
-			        "<td><input type='text' class='col' id='itemTax'  		name='itemTax'      value='" + Util.formatNumber(data.data2[i].itemTax) + "'		readonly></td>" +
-			        "<td><input type='text' class='col' id='itemRemarks'    name='itemRemarks'  value='" + data.data2[i].itemRemarks + "'	readonly></td>" +
+				str += "<tr>" +
+			        "<td><input type='text' class='col btn_gra_tax' id='itemDate'       name='itemDate'     value='" + data.data2[i].itemDate 							+ "'readonly style='text-align:right;'></td>" +
+			        "<td><input type='text' class='col btn_gra_tax' id='itemName'       name='itemName'     value='" + data.data2[i].itemName 							+ "'readonly style='text-align:right;'></td>" +
+			        "<td><input type='text' class='col btn_gra_tax' id='itemType'       name='itemType'     value='" + data.data2[i].itemType 							+ "'readonly style='text-align:right;'></td>" +
+			        "<td><input type='text' class='col btn_gra_tax' id='itemQty'        name='itemQty'      value='" + data.data2[i].itemQty 							+ "'readonly style='text-align:right;'></td>" +
+			        "<td><input type='text' class='col btn_gra_tax' id='itemPrice'      name='itemPrice'    value='" + Util.formatNumber(data.data2[i].itemSupprice) 	+ "'readonly style='text-align:right;'></td>" +
+			        "<td><input type='text' class='col btn_gra_tax' id='itemSupprice'   name='itemSupprice' value='" + Util.formatNumber(data.data2[i].itemSupprice) 	+ "'readonly style='text-align:right;'></td>" +
+			        "<td><input type='text' class='col btn_gra_tax' id='itemTax'  		name='itemTax'      value='" + Util.formatNumber(data.data2[i].itemTax) 		+ "'readonly style='text-align:right;'></td>" +
+			        "<td><input type='text' class='col btn_gra_tax' id='itemRemarks'    name='itemRemarks'  value='" + data.data2[i].itemRemarks 						+ "'readonly style='text-align:right;'></td>" +
 			     "</tr>";
 			    tax += data.data2[i].itemTax;
 			    supprice += data.data2[i].itemSupprice;

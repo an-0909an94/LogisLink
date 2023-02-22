@@ -335,7 +335,7 @@ $(document).ready(function(){
 		width: "556px",
 		//height: "895px",
 		visible: false,
-		title: "업무 초기값 설정",
+		title: "개인 정보",
 		closable: true,
 		modal: false,
 		close: function(){

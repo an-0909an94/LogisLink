@@ -1,106 +1,141 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="editor_wrap pop-layer" id="layer1">
     <div class="insertClose">
-    	<a class="insertCloseButton k-icon k-i-close" onclick="init_popup_close();"></a>
+        <a class="insertCloseButton k-icon k-i-close" onclick="init_popup_close();"></a>
     </div>
     <!-- wrap -->
     <div class="k-tabstrip-wrapper">
-        <div id="editor_tabs" class="tabs_wrap k-widget k-tabstrip k-floatwrap k-tabstrip-top" data-role="tabstrip"
-            tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
+        <div id="editor_tabs" class="tabs_wrap k-widget k-tabstrip k-floatwrap k-tabstrip-top"
+             data-role="tabstrip"
+             tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
             <!-- content -->
             <div class="tab-content k-content k-state-active" id="editor_tabs-1" role="tabpanel"
-                aria-expanded="true" style="display: block;">
+                 aria-expanded="true" style="display: block;">
                 <div class="editor">
                     <form id="f" data-toggle="validator" role="form">
                         <fieldset>
                             <legend id="addr_legend">주소지 등록</legend>
-                            <div class="form-group row">
-                                <label class="col-form-label big-name">주소</label>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong class="required">주소지명</strong>
-                                    <input type="text" class="form-control form-control-sm" id="addrName" required>
-                                    <div class="help-block with-errors"></div>
+                            <div class="editor_btns order_editor_btns" style="text-align:center;">
+                                <div class="padding">
+                                    <!-- <a onclick="submit" class="k-pager-refresh k-button" id="btn_save"><b class="btn-b"><i class="k-icon k-i-check"></i>저장</b></a> -->
+                                    <button type="button" onclick="addrDelete(g_seq);"
+                                            class="k-pager-refresh k-button" id="btnDelete"><b
+                                            class="btn-b"><strong>삭제</strong></b>
+                                    </button>
+                                    <button type="submit" class="k-pager-refresh k-button"
+                                            id="btnSubmit"><b class="btn-b"><strong
+                                            id="btn_save">저장</strong></b></button>
+                                    <a onclick="init_popup_close();" class="k-pager-refresh k-button"><b
+                                            class="btn-g">닫기</b></a>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-form-label"></label>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong class="required">주소(검색)</strong>
-                                    <div class="textBox-in-icon">
-                                     <input onClick="popSearchPost();" type="text" class="form-control form-control-sm" id="addr" readonly="readonly" required>
-                                   	 	<div class="help-block with-errors"></div>
-							<i><img onclick="popSearchPost();" src="/images/icon/search.png"></i>
-						</div>
+                            <div class="row gray_box">
+                                <div class="form-group row mb10">
+                                    <label class="col-form-label big-name">주소</label>
+                                    <div class="input-group input-group-sm wd290 middle-name">
+                                        <strong class="required">주소지명</strong>
+                                        <input type="text" class="form-control form-control-sm"
+                                               id="addrName" style="width:100%" required>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
                                 </div>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong>상세주소</strong>
-                                    <input type="text" class="form-control form-control-sm" id="addrDetail">
+                                <div class="form-group row mb10">
+                                    <label class="col-form-label"></label>
+                                    <div class="input-group input-group-sm wd285 middle-name">
+                                        <strong class="required">주소(검색)</strong>
+                                        <div class="textBox-in-icon">
+                                            <input onClick="popSearchPost();" type="text"
+                                                   class="form-control form-control-sm" id="addr"
+                                                   readonly="readonly" required>
+                                            <div class="help-block with-errors"></div>
+                                            <i><img onclick="popSearchPost();"
+                                                    src="/images/icon/search.png"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb10">
+                                    <label class="col-form-label"></label>
+                                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                                        <strong>시도</strong>
+                                        <input type="text" class="form-control form-control-sm"
+                                               style="width: 100%"
+                                               id="sido" readonly>
+                                    </div>
+                                    <div class="input-group input-group-sm wd90 middle-name">
+                                        <strong>군구</strong>
+                                        <input type="text" class="form-control form-control-sm"
+                                               style="width: 100%"
+                                               id="gungu" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb10">
+                                    <label class="col-form-label"></label>
+                                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                                        <strong>동/거리명</strong>
+                                        <input type="text" class="form-control form-control-sm"
+                                               style="width: 100%"
+                                               id="dong" readonly>
+                                    </div>
+                                    <div class="input-group input-group-sm wd190 middle-name">
+                                        <strong>상세주소</strong>
+                                        <input type="text" class="form-control form-control-sm"
+                                               style="width: 100%"
+                                               id="addrDetail">
+                                    </div>
+                                </div>
+                                <div class="form-group row pb30">
+                                    <label class="col-form-label"></label>
+                                    <div class="input-group input-group-sm wd140 middle-name div-min-col-1">
+                                        <strong>위도</strong>
+                                        <input type="text" class="form-control form-control-sm" id="lat"
+                                               style="width: 100%;text-indent: 0px"
+                                               readonly>
+                                    </div>
+                                    <div class="input-group input-group-sm wd140 middle-name">
+                                        <strong>경도</strong>
+                                        <input type="text" class="form-control form-control-sm" id="lon"
+                                               style="width: 100%; text-indent: 0px"
+                                               readonly>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-form-label"></label>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong>시도</strong>
-                                    <input type="text" class="form-control form-control-sm" id="sido" readonly>
-                                </div>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong>군구</strong>
-                                    <input type="text" class="form-control form-control-sm" id="gungu" readonly>
-                                </div>
-                           	</div>
-                            <div class="form-group row">
-                                <label class="col-form-label"></label>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong>동/거리명</strong>
-                                    <input type="text" class="form-control form-control-sm" id="dong" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row pb30">
-                                <label class="col-form-label"></label>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong>위도</strong>
-                                    <input type="text" class="form-control form-control-sm" id="lat" readonly>
-                                </div>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong>경도</strong>
-                                    <input type="text" class="form-control form-control-sm" id="lon" readonly>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row pb30">
+
+                            <div class="row gray_box">
                                 <label class="col-form-label big-name">담당자</label>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong>담당자명</strong>
-                                    <input type="text" class="form-control form-control-sm" id="staffName">
+                                <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                                    <strong>담당자명</strong>
+                                    <input type="text" class="form-control form-control-sm"
+                                           style="width: 100%"
+                                           id="staffName">
                                 </div>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong>연락처</strong>
-                                    <input type="text" class="form-control form-control-sm" id="staffTel" maxlength="13">
+                                <div class="input-group input-group-sm wd140 middle-name">
+                                    <strong>연락처</strong>
+                                    <input type="text" class="form-control form-control-sm"
+                                           style="width: 100%"
+                                           id="staffTel" maxlength="13">
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="row gray_box">
                                 <label class="col-form-label big-name">메모</label>
-                                <div class="input-group input-group-sm col middle-name form-group">
-                                <strong>메모</strong>
-                                    <input type="text" class="form-control form-control-sm" id="orderMemo">
+                                <div class="input-group input-group-sm wd290 middle-name">
+                                    <!--
+                                    <input type="text" class="form-control form-control-sm"
+                                           style="width: 100%"
+                                           id="orderMemo">
+                                           -->
+                                    <textarea rows="4" style="width:100%" class="form-control textarea" id="orderMemo"></textarea>
                                 </div>
                             </div>
                         </fieldset>
-                        <div class="editor_btns" style="text-align:center;">
-        	    <div class="padding">
-			        <!-- <a onclick="submit" class="k-pager-refresh k-button" id="btn_save"><b class="btn-b"><i class="k-icon k-i-check"></i>저장</b></a> -->
-			        <button type="button" onclick="addrDelete(g_seq);" class="k-pager-refresh k-button" id="btnDelete"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>삭제</strong></b></button>
-        	    	<button type="submit" class="k-pager-refresh k-button" id="btnSubmit"><b class="btn-b"><i class="k-icon k-i-check"></i><strong id="btn_save">저장</strong></b></button>
-		            <a onclick="init_popup_close();" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
-			    </div>
-	    	</div>
                     </form>
                 </div>
                 <!-- editor -->
             </div>
         </div><!-- content -->
     </div>
-</div><!-- wrap -->
+</div>
+<!-- wrap -->
 
 <script type="text/javascript">
 $(document).ready(function(){ 	
