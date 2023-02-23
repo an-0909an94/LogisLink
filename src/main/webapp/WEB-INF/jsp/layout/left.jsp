@@ -4,6 +4,79 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+<script>
+	// $(document).ready(function () {
+	// 	if ($.cookie('my_cookie') == 'mini-nav') {  //쿠키에 저장된 값
+	// 		$('.side-nav-btn').toggleClass('side-nav-btn-atv');
+	// 		$('.nav').toggleClass('nav-atv');
+	// 		$('.side-nav').toggleClass('side-nav-atv');
+	// 		$('.logo-area .logo-title').toggleClass('logo-title-atv');
+	// 		$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv');
+	// 		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv');
+	// 		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv');
+	// 		$('.mem-info-wrapper').toggleClass('mem-info-wrapper-atv');
+	// 		$('.manager-name').toggleClass('none-atv');
+	// 		$('.manager-role').toggleClass('none-atv');
+	// 		$('.carrier-name').toggleClass('none-atv');
+	// 		$('.side-logout a').toggleClass('side-logout-link-atv');
+	// 		$('.mem-setpage a').toggleClass('side-logout-link-atv');
+	// 		$('.mem-setpage').toggleClass('none-atv');
+	// 		$('.side-logout').toggleClass('side-logout-link-atv');
+	// 		$('.mem-info > .mem-setting i').toggleClass('icon-mem-setting-atv');
+	// 		$('.mem-info > .mem-setting').toggleClass('mem-setting-atv');
+	// 		$('.mem-info .manager-profile').toggleClass('manager-profile-atv');
+	// 		$('.insert_pop.block').toggleClass('block-atv');
+	// 		$('.insert_pop').toggleClass('insert_pop-atv');
+	// 		$('.insert_pop').removeClass('insert_pop.block').toggleClass('m-side-nav-atv');
+	// 		$('.header').toggleClass('header-atv');
+	// 		$('.cont-body').toggleClass('cont-body-atv');
+	// 		$('.sub-li-wrap-atv').hide();
+	// 		$('.nav-li').removeClass('backColor');
+	// 	}
+	//
+	// 	$('.side-nav-btn').on('click', function() {
+	// 		$(this).toggleClass('side-nav-btn-atv');
+	// 		if ($('.side-nav-btn').hasClass('side-nav-btn-atv')){
+	// 			$.cookie('my_cookie', 'mini-nav', {path: '/', secure: false});
+	// 			alert('쿠키를 추가합니다.')
+	// 		} else {
+	// 			$(this).toggleClass('side-nav-btn');
+	// 			$.removeCookie('my_cookie', {path: '/'});
+	// 			alert('쿠키를 삭제합니다..')
+	// 		}
+	// 		//GNB 사이즈 작아짐
+	// 		$('.side-nav-btn').toggleClass('side-nav-btn-atv');
+	// 		$('.nav').toggleClass('nav-atv');
+	// 		$('.side-nav').toggleClass('side-nav-atv');
+	// 		$('.logo-area .logo-title').toggleClass('logo-title-atv');
+	// 		$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv');
+	// 		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv');
+	// 		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv');
+	// 		$('.mem-info-wrapper').toggleClass('mem-info-wrapper-atv');
+	// 		$('.manager-name').toggleClass('none-atv');
+	// 		$('.manager-role').toggleClass('none-atv');
+	// 		$('.carrier-name').toggleClass('none-atv');
+	// 		$('.side-logout a').toggleClass('side-logout-link-atv');
+	// 		$('.mem-setpage a').toggleClass('side-logout-link-atv');
+	// 		$('.mem-setpage').toggleClass('none-atv');
+	// 		$('.side-logout').toggleClass('side-logout-link-atv');
+	// 		$('.mem-info > .mem-setting i').toggleClass('icon-mem-setting-atv');
+	// 		$('.mem-info > .mem-setting').toggleClass('mem-setting-atv');
+	// 		$('.mem-info .manager-profile').toggleClass('manager-profile-atv');
+	// 		$('.insert_pop.block').toggleClass('block-atv');
+	// 		$('.insert_pop').toggleClass('insert_pop-atv');
+	// 		$('.insert_pop').removeClass('insert_pop.block').toggleClass('m-side-nav-atv');
+	// 		$('.header').toggleClass('header-atv');
+	// 		$('.cont-body').toggleClass('cont-body-atv');
+	// 		$('.sub-li-wrap-atv').hide();//GNB 미니에서 메뉴안보임
+	// 		$('.nav-li').removeClass('backColor');
+	// 	});
+	// });
+</script>
+
+
+
+
 <div id="divUserOption" class="editor-warp p-0" style="display: none;">
 	<form class="modalEditor" id="fUserOption" data-toggle="validator" role="form" autocomplete="off">
 		<input type="hidden" name="defaultReqCustId" id="defaultReqCustId">
@@ -273,23 +346,15 @@ $(document).ready(function(){
 			//$(this).next(".sub-li-wrap").addClass("backColor");
 		}
 	});
-	
-	
-	//nav 접기 펼치기
-	$('.side-nav-btn').on('click',function(){
-		
-		//nav 사이드메뉴 영역
-		$('.side-nav').toggleClass('side-nav-atv'); //nav 가로 사이즈 작아짐
-		$('.nav').toggleClass('nav-atv'); //nav 가로 사이즈 작아짐
-		$('.logo-area .logo-title').toggleClass('logo-title-atv'); //로고 사이즈 작아짐
-		$('.side-nav-btn').toggleClass('side-nav-btn-atv'); //접기열기 화살표 아이콘 돌아감
-		$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv'); //접었을 때 메뉴 텍스트 삭제
-		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv'); //접었을 때 아이콘 작아짐
-		//$('.nav-li').toggleClass('backColor'); //메뉴 접었을 때 1depth 메뉴 색상 변경
-		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv'); //서브메뉴 디자인 변경
-		
-		
-		// 로그인 정보
+    //쿠키가 받을 값
+	function toggleGNBSize() {
+		$('.side-nav-btn').toggleClass('side-nav-btn-atv');
+		$('.nav').toggleClass('nav-atv');
+		$('.side-nav').toggleClass('side-nav-atv');
+		$('.logo-area .logo-title').toggleClass('logo-title-atv');
+		$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv');
+		$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv');
+		$('.sub-li-wrap').toggleClass('sub-li-wrap-atv');
 		$('.mem-info-wrapper').toggleClass('mem-info-wrapper-atv');
 		$('.manager-name').toggleClass('none-atv');
 		$('.manager-role').toggleClass('none-atv');
@@ -301,24 +366,82 @@ $(document).ready(function(){
 		$('.mem-info > .mem-setting i').toggleClass('icon-mem-setting-atv');
 		$('.mem-info > .mem-setting').toggleClass('mem-setting-atv');
 		$('.mem-info .manager-profile').toggleClass('manager-profile-atv');
-		
-		//오더등록
 		$('.insert_pop.block').toggleClass('block-atv');
 		$('.insert_pop').toggleClass('insert_pop-atv');
-		$('.insert_pop').removeClass('insert_pop.block').toggleClass('m-side-nav-atv');//nav 접기열기 버튼 클릭 시 오더등록 창
-		
-		//content 영역
+		$('.insert_pop').removeClass('insert_pop.block').toggleClass('m-side-nav-atv');
 		$('.header').toggleClass('header-atv');
-		
-		// 그리드
 		$('.cont-body').toggleClass('cont-body-atv');
-	});
-	
-	//펼쳐진 네비메뉴의 서브메뉴가 열린 상태에서 메뉴 접을 시 서브메뉴 없어짐
-	$('.side-nav-btn').on('click',function(){
 		$('.sub-li-wrap-atv').hide();
 		$('.nav-li').removeClass('backColor');
+	}
+
+	if ($.cookie('my_cookie') == 'mini-nav') {  // 쿠키 이름과 벨류
+		toggleGNBSize();
+	}
+
+	$('.side-nav-btn').on('click', function() {
+		$(this).toggleClass('side-nav-btn-atv');
+		if ($('.side-nav-btn').hasClass('side-nav-btn-atv')){
+			$.cookie('my_cookie', 'mini-nav', {path: '/', secure: false});
+			alert('쿠키를 추가합니다.')
+		} else {
+			$('.side-nav-btn-atv').hasClass('side-nav-btn');
+			$.removeCookie('my_cookie', {path: '/'});
+			alert('쿠키를 삭제합니다..')
+		}
+		// GNB 사이즈 작아짐
+		toggleGNBSize();
 	});
+
+
+
+	//펼쳐진 네비메뉴의 서브메뉴가 열린 상태에서 메뉴 접을 시 서브메뉴 없어짐
+
+
+	//nav 접기 펼치기
+	// $('.side-nav-btn').on('click',function(){
+	//
+	// 	//nav 사이드메뉴 영역
+	// 	$('.side-nav').toggleClass('side-nav-atv'); //nav 가로 사이즈 작아짐
+	// 	$('.nav').toggleClass('nav-atv'); //nav 가로 사이즈 작아짐
+	// 	$('.logo-area .logo-title').toggleClass('logo-title-atv'); //로고 사이즈 작아짐
+	// 	//$('.side-nav-btn').toggleClass('side-nav-btn-atv');
+	//  $('.sub-li-wrap-atv').hide();
+	//  $('.nav-li').removeClass('backColor');
+	//
+	//
+	// 	$('.nav .side-nav-ul a.dropBtn').toggleClass('dropBtn-atv'); //접었을 때 메뉴 텍스트 삭제
+	// 	$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv'); //접었을 때 아이콘 작아짐
+	// 	//$('.nav-li').toggleClass('backColor'); //메뉴 접었을 때 1depth 메뉴 색상 변경
+	// 	$('.sub-li-wrap').toggleClass('sub-li-wrap-atv'); //서브메뉴 디자인 변경
+	//
+	//
+	// 	// 로그인 정보
+	// 	$('.mem-info-wrapper').toggleClass('mem-info-wrapper-atv');
+	// 	$('.manager-name').toggleClass('none-atv');
+	// 	$('.manager-role').toggleClass('none-atv');
+	// 	$('.carrier-name').toggleClass('none-atv');
+	// 	$('.side-logout a').toggleClass('side-logout-link-atv');
+	// 	$('.mem-setpage a').toggleClass('side-logout-link-atv');
+	// 	$('.mem-setpage').toggleClass('none-atv');
+	// 	$('.side-logout').toggleClass('side-logout-link-atv');
+	// 	$('.mem-info > .mem-setting i').toggleClass('icon-mem-setting-atv');
+	// 	$('.mem-info > .mem-setting').toggleClass('mem-setting-atv');
+	// 	$('.mem-info .manager-profile').toggleClass('manager-profile-atv');
+	//
+	// 	//오더등록
+	// 	$('.insert_pop.block').toggleClass('block-atv');
+	// 	$('.insert_pop').toggleClass('insert_pop-atv');
+	// 	$('.insert_pop').removeClass('insert_pop.block').toggleClass('m-side-nav-atv');//nav 접기열기 버튼 클릭 시 오더등록 창
+	//
+	// 	//content 영역
+	// 	$('.header').toggleClass('header-atv');
+	//
+	// 	// 그리드
+	// 	$('.cont-body').toggleClass('cont-body-atv');
+	// });
+
+
 
 	//검색값 입력 후 enter key event
 	if($(".searchValue").length > 0) {
@@ -724,4 +847,5 @@ $("#defaultUnitCharge, #defaultSellCharge, #defaultBuyCharge").on("input", funct
 $("#defaultReqTel, #defaultSTel").on("input", function(){
 	$(this).val(Util.formatPhone($(this).val()));
 });
+
 </script>
