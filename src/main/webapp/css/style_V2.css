@@ -852,24 +852,25 @@
 
 
 /* 일괄등록 S*/
-.option-area>p{
+.option-area p{
 	font-size: 12px;
 	display: inline-block;
 	font-weight: bold;
-	margin-right: 5px;
-	margin-bottom: 0px;
+	margin: 0 7px 0 0px;
 }
 
 .orderBundle .option-area{
+	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
 .orderBundle .form-group div label.uploadFile{
 	text-align: center;
-	padding: 0px;
 	line-height: 24px;
-	margin-bottom: 0px; 
+	margin: 0 7px 0 0; 
+	padding: 3px 6px;
+	font-weight: 500;
 }
 
 .filebox .upload-name{
@@ -924,9 +925,48 @@
 	top: 10px;
 }
 
-.two_icon .k-datetimepicker .k-select{
+.k-datetimepicker .k-select{
 	width: auto;
 }
+
+.orderBundle input.upload-name{
+	color: #333;
+}
+
+.orderBundle .option-area::after{
+	content: '';
+	clear: both;
+	display: block;
+}
+
+.option-area-box-01{
+	width: 94%
+}
+
+.option-area-box-01>div{
+	width: 87%;;
+	display: inline-block;
+	position: relative;
+}
+
+.option-area-box-01 .btn_close{
+	width: 15px;
+	height: 15px;
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-43%);
+	cursor: pointer;
+}
+
+.option-area-box-01 .upload-name{
+	width: 100%;
+}
+
+.orderBundle .k-grid tbody tr:hover{
+	background-color: #fdf3cf;
+}
+
 /* 일괄등록 E*/
 
 
@@ -1206,4 +1246,8 @@ label.modal-big-name{
 
 .modalEditor .form-control[readonly]{
 	background-color: #fff;
+}
+
+input::placeholder{
+	color: #333;
 }

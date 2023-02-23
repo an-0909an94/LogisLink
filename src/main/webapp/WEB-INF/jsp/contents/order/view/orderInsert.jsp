@@ -259,7 +259,7 @@
                                         <!-- 화주 접기, 열기 부분 -->
 	                                    <div>
 	                                        <div id="ownerOpenClose" class="openCloseDiv">
-	                                            <div class="form-group row mr0">
+	                                            <div class="form-group row mr0 mt10">
 	                                                <label class="col-form-label"></label>
 	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
 	                                                    <strong>거래처등급</strong>
@@ -271,7 +271,7 @@
 	                                                </div>
 	                                            </div>
 	
-	                                            <div class="form-group row mr0">
+	                                            <div class="form-group row mr0 mt10">
 	                                                <label class="col-form-label"></label>
 	                                                <div class="input-group input-group-sm wd190 middle-name form-group">
 	                                                    <strong>주소</strong>
@@ -288,7 +288,7 @@
 	                                                </div>
 	                                            </div>
 	
-	                                            <div class="form-group row mr0">
+	                                            <div class="form-group row mr0 mt10">
 	                                                <label class="col-form-label big-name"></label>
 	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
 	                                                    <strong>담당자</strong>
@@ -302,7 +302,7 @@
 	                                                </div>
 	                                            </div>
 	
-	                                            <div class="form-group row mr0">
+	                                            <div class="form-group row mr0 mt10">
 	                                                <label class="col-form-label big-name"></label>
 	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
 	                                                    <strong>사업자번호</strong>
@@ -314,7 +314,7 @@
 	                                                </div>
 	                                            </div>
 	
-	                                            <div class="form-group row mr0">
+	                                            <div class="form-group row mr0 mt10">
 	                                                <label class="col-form-label big-name"></label>
 	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
 	                                                    <!-- 22.07.05 이건욱 거래처명 선택시 부서명 -> 대표자명으로 변경 -->
@@ -327,7 +327,7 @@
 	                                                </div>
 	                                            </div>
 	
-	                                            <div class="form-group row mr0">
+	                                            <div class="form-group row mr0 mt10">
 	                                                <label class="col-form-label big-name"></label>
 	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
 	                                                    <strong>세금계산서 담당자</strong>
@@ -339,7 +339,7 @@
 	                                                </div>
 	                                            </div>
 	
-	                                            <div class="form-group row mr0">
+	                                            <div class="form-group row mr0 mt10">
 	                                                <label class="col-form-label"></label>
 	                                                <div class="input-group input-group-sm wd90 middle-name form-group">
 	                                                    <strong>세금계산서 이메일</strong>

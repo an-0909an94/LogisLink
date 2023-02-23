@@ -383,11 +383,11 @@ $(document).ready(function(){
 		$(this).toggleClass('side-nav-btn-atv');
 		if ($('.side-nav-btn').hasClass('side-nav-btn-atv')){
 			$.cookie('my_cookie', 'mini-nav', {path: '/', secure: false});
-			alert('쿠키를 추가합니다.')
+			//alert('쿠키를 추가합니다.')
 		} else {
 			$('.side-nav-btn-atv').hasClass('side-nav-btn');
 			$.removeCookie('my_cookie', {path: '/'});
-			alert('쿠키를 삭제합니다..')
+			//alert('쿠키를 삭제합니다..')
 		}
 		// GNB 사이즈 작아짐
 		toggleGNBSize();

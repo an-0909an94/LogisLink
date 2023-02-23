@@ -818,7 +818,7 @@
             $("#orderCopy").css("display","");
             $("#orderDelete").css("display","");
             if(data.orderState == "09") {
-                $("#btn_state").html("<i class=\"k-icon k-i-upload\"></i>오더접수");
+                $("#btn_state").html("오더접수");
                 $("#orderDelete").attr("onClick", "updateOrderState('00')");
             } else {
                 $("#btn_state").html("오더취소");

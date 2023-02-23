@@ -22,13 +22,19 @@
                     <div class="col">
                         <div class="input-group input-group-sm" style="padding: 0px;">
                             <div style="width: 100%;" class="filebox">
-                                <div class="option-area input-group input-group-sm">
-                                	<p>업로드 파일</p>
-                                	<label for="uploadFile" class="uploadFile btn_58">파일등록</label>
-                                    <input style="width: 87.5%;" class="upload-name" value="파일명.exel" disabled="disabled">
-                                    
-                                    <input type="file" id="uploadFile" name="uploadFile" class="upload-hidden">
-                                    <button style="padding: 3px 10px;" class="btn_58 btn_b btn-outline-secondary" type="button" onclick="fileUpload();">업로드</button>
+                                <div class="option-area">
+	                               	<div class="option-area-box-01">
+	                                	<p>업로드 파일</p>
+	                                	<label for="uploadFile" class="uploadFile btn_58">파일선택</label>
+	                                   	<div>
+		                                   	<input type="search" class="upload-name" value="파일명.exel" disabled="disabled">
+		                                   	<img src="/images/icon/close.png" class="btn_close">
+	                                   	</div>
+	                                    <input type="file" id="uploadFile" name="uploadFile" class="upload-hidden">
+	                                </div>
+	                               	<div class="option-area-box-02">   	
+	                                   	<button style="padding: 3px 10px;" class="btn_58 btn_b btn-outline-secondary" type="button" onclick="fileUpload();">업로드</button>
+	                                </div>
                                 </div>
                             </div>
                         </div>
