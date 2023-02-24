@@ -13,7 +13,14 @@ import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
 
 @Repository("userDao")
 public class UserDao extends EgovAbstractMapper{
-	
+
+
+	public UserVO selectUserOne(Map<String, Object>map){
+		UserVO userOne = selectOne("userDataNS.selectUserOne",map);
+
+		return userOne;
+	}
+
 	public List<UserVO> selectUserList(Map<String, Object> map) {
 		List<UserVO> userList = selectList("userDataNS.selectUserList", map);
 		
