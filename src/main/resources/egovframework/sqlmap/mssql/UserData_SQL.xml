@@ -73,7 +73,54 @@
 		WHERE number BETWEEN #{start} AND #{end}
 		ORDER BY number ASC
 	</select>
-	
+
+	<select id="selectUserOne" parameterType="java.util.HashMap" resultType="userVO">
+		SELECT AA.*
+		FROM (
+					 SELECT
+						 ROW_NUMBER() OVER(ORDER BY AAA.REGDATE DESC) AS number
+			, AAA.*
+					 FROM (
+									SELECT
+										U.CUST_ID		custId,
+										(SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = U.CUST_ID) bizName,
+										U.DEPT_ID		deptId,
+										(SELECT DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.DEPT_ID = U.DEPT_ID) deptName,
+										U.AUTH_SEQ		authSeq,
+										(SELECT AUTH_NAME FROM T_AUTH A WHERE A.AUTH_SEQ = U.AUTH_SEQ) authName,
+										U.USER_ID		userId,
+										U.USER_NAME		userName,
+										U.TELNUM		telNum,
+										U.EMAIL			email,
+										U.TALK_YN		talkYn,
+										U.MOBILE		mobile,
+										U.GRADE			grade,
+										U.USE_YN		useYn,
+										U.MEMO			memo,
+										convert(varchar, U.REGDATE, 120)		regDate,
+										U.REGID			regId,
+										U.MASTER_YN		masterYn,
+										U.LINK24_ID		link24Id,
+										U.DOUZONE_ID	douzoneId,
+										V.LINK_PASSWD_03	link24Pass,
+										V.LINK_USER_ID_21	man24Id,
+										V.LINK_PASSWD_21	man24Pass,
+										V.LINK_USER_ID_18	one24Id,
+										V.LINK_PASSWD_18	one24Pass
+									FROM
+										T_USER U
+											LEFT JOIN
+										V_USER_LINKT V ON U.USER_ID = V.USER_ID
+									WHERE
+										1=1 AND
+										U.CUST_ID = #{custId} AND
+										U.DEPT_ID = #{deptId} AND
+										U.USER_ID = #{userId} AND
+										U.USER_NAME = #{userName}
+								) AAA
+				 ) AA
+	</select>
+
 	<select id="selectUserCnt" resultType="string" parameterType="java.util.HashMap">
 		SELECT 
 			COUNT(1) retCnt

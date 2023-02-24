@@ -44,6 +44,20 @@ public class UserController {
 	@Resource(name="compService")
 	private CompService compService;
 
+	@PostMapping(value="/contents/basic/data/userOne.do")
+	public String getUserOne(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+		@RequestParam Map<String, Object> param ) throws Exception {
+
+		UserVO userOne = userService.getUserOne(param);
+
+		map.put("result", Boolean.TRUE);
+		map.put("data", userOne);
+		map.put("total", 1);
+		map.put("msg", "");
+
+		return "jsonView";
+	}
+
 	@GetMapping(value="/contents/basic/userList.do")
 	public String getUserList(HttpServletRequest request, HttpSession session, ModelMap model) {
 		LoginVO loginUserInfo = ((LoginVO) session.getAttribute("userInfo"));

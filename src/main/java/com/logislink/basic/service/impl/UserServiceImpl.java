@@ -17,7 +17,12 @@ import com.logislink.basic.vo.UserVO;
 public class UserServiceImpl implements UserService {
 	@Resource(name="userDao")
 	private UserDao userDao;
-	
+
+	@Override
+	public UserVO getUserOne(Map<String, Object> map) {
+		return userDao.selectUserOne(map);
+	}
+
 	@Override
 	public List<UserVO> getUserList(Map<String, Object> map) {
 		return userDao.selectUserList(map);
