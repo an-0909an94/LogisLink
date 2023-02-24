@@ -32,7 +32,7 @@
 					<div style="float: right; width: 49%;padding-right:0px; padding-left:20px">
 						<div class="input-group input-group-sm col mb10 gray_box">
 							<strong style="margin-left: 0em; padding-right: 1.5em;">예약발송</strong>
-							<input class="wd340" id="reserve" type="text" name="reserve" style="width:100%; height: 24px;">
+							<input class="wd330" id="reserve" type="text" name="reserve" style="width:100%; height: 24px;">
 							<input style="width: 24px; height: 24px;" type="checkbox" name="chkReserve" id="chkReserve" value="Y">
 						</div>
 						<div class="row gray_box">

@@ -16,32 +16,35 @@
 					 aria-expanded="true" style="display: block;">
 					<div class="editor">
 						<fieldset>
-							<div class="editor_btns order_editor_btns" style="text-align:center;">
-								<div class="padding">
-									<c:if test="${menuAuth.deleteYn eq 'Y'}">
-										<a onclick="boardDelete();"
-										   class="k-pager-refresh k-button"><b class="btn-b">삭제</b></a>
-									</c:if>
-									<c:if test="${menuAuth.writeYn eq 'Y'}">
-										<a onclick="detailForm();" class="k-pager-refresh k-button"
-										   id="btnSave"><b class="btn-b" id="btn_save">저장</b></a>
-									</c:if>
-									<c:if test="${menuAuth.editYn eq 'Y'}">
-										<a onclick="detailForm();" class="k-pager-refresh k-button"
-										   id="btnEdit"><b class="btn-b" id="btn_edit">수정</b></a>
-									</c:if>
-									<a onclick="init_popup_close();"
-									   class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
+							<div class="userInsert_top">
+								<legend id="user_legend">공지사항 등록</legend>
+								<div class="editor_btns order_editor_btns" style="text-align:center;">
+									<div class="padding">
+										<c:if test="${menuAuth.deleteYn eq 'Y'}">
+											<a onclick="boardDelete();"
+											   class="k-pager-refresh k-button"><b class="btn-b">삭제</b></a>
+										</c:if>
+										<c:if test="${menuAuth.writeYn eq 'Y'}">
+											<a onclick="detailForm();" class="k-pager-refresh k-button btn_b"
+											   id="btnSave"><b class="" id="btn_save">저장</b></a>
+										</c:if>
+										<c:if test="${menuAuth.editYn eq 'Y'}">
+											<a onclick="detailForm();" class="k-pager-refresh k-button btn_b"
+											   id="btnEdit"><b class="" id="btn_edit">수정</b></a>
+										</c:if>
+										<a onclick="init_popup_close();"
+										   class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
+									</div>
 								</div>
 							</div>
-							<legend id="board_legend">공지사항 등록</legend>
+
 							<form method="post" name="f" id="f" data-toggle="validator" role="form"
 								  autocomplete="off" class="mb10">
 								<input type="hidden" name="boardSeq" id="boardSeq">
 								<input type="hidden" name="boardTarget" id="boardTarget">
 								<input type="hidden" name="custId" id="custId">
-								<div class="form-group row mb10 gray_box">
-									<label class="col-form-label big-name">등록정보</label>
+								<div class="form-group row mb10 pt10 pb10 pl8 mt77 gray_box">
+									<label class="col-form-label modal-big-name">등록정보</label>
 									<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 										<strong>등록자</strong>
 										<input type="text" class="form-control form-control-sm"
@@ -60,7 +63,7 @@
 								</div>
 
 								<div class="form-group row mb10 gray_box">
-									<label class="col-form-label big-name required">게시기간</label>
+									<label class="col-form-label modal-big-name required">게시기간</label>
 									<div class="input-group input-group-sm wd140 middle-name div-min-col-2">
 										<input type="text" name="popSdate" id="popSdate"
 											   style="width: 100%" required>
@@ -73,7 +76,7 @@
 								</div>
 
 								<div class="form-group row mb10 gray_box">
-									<label class="col-form-label big-name">게시대상</label>
+									<label class="col-form-label modal-big-name">게시대상</label>
 									<div class="input-group input-group-sm wd90 radio-or-checkBox ">
 										<input id="chkBoardTarget09" type="checkbox"
 											   name="chkBoardTarget" value="09">
@@ -234,7 +237,7 @@ function fileList(boardSeq){
 					s += "<div class=\"input-group input-group-sm col middle-name form-group\">";
 					if(item.fileName == null){
 					s += "<div class=\"filebox\">";
-					s += "<input id=\"upload-name" + item.files + "\" class=\"upload-name col-9\" value=\"파일을 선택해 주세요.\" disabled=\"disabled\">";
+					s += "<input id=\"upload-name" + item.files + "\" class=\"upload-name wd275\" value=\"파일을 선택해 주세요.\" disabled=\"disabled\">";
 					if("${menuAuth.writeYn}" == "Y"){
 						s += "<label onclick=\"fileName("+ item.files +")\" for=\"ex_filename" + item.files + "\">파일등록</label>";
 					}

@@ -43,7 +43,7 @@
 			</div>
 			<div class="editor_btns">
 				<div class="padding">
-					<a id="groupSubmit" onclick="modalSubmit()" class="k-pager-refresh k-button"><b
+					<a id="groupSubmit" onclick="modalSubmit()" class="k-pager-refresh k-button btn_b"><b
 							id="groupBtnSave" class="btn-b">저장</b></a>
 					<a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b
 							class="btn-g">닫기</b></a>
@@ -149,7 +149,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a id="codeSubmit" onclick="codeModalSubmit()" class="k-pager-refresh k-button"><b id="codeBtnSave" class="btn-b">저장</b></a>
+		        <a id="codeSubmit" onclick="codeModalSubmit()" class="k-pager-refresh k-button btn_b"><b id="codeBtnSave" class="btn-b">저장</b></a>
 		        <a id="closeBtn" onclick="codeModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>

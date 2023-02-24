@@ -1077,7 +1077,7 @@ $('#fUserOption').validator().on('submit', function (e) {
 	  			}
 	  		});
 		}
-		
+
 	}
 });
 

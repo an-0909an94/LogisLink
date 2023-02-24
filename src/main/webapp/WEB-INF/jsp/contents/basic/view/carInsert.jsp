@@ -20,16 +20,18 @@
                             <input class="inputHidden" id="custId" name="custId">
                             <input class="inputHidden" id="custVehicSeq" name="custVehicSeq">
                             <fieldset>
-                                <div class="editor_btns order_editor_btns" style="text-align:center;">
-                                    <div class="padding">
-                                       <button type="submit" class="k-pager-refresh k-button btn_58 btn_b" id="btnSubmit">
-                                           <b class="btn-b"><strong id="btn_save">저장</strong></b>
-                                       </button>
-                                       <a onclick="init_popup_close();" class="k-pager-refresh k-button btn_58"><b class="btn-g">닫기</b></a>
+                                <div class="userInsert_top">
+                                    <div class="editor_btns order_editor_btns" style="text-align:center;">
+                                        <div class="padding">
+                                            <button type="submit" class="k-pager-refresh k-button btn_58 btn_b" id="btnSubmit">
+                                                <b><strong id="btn_save">저장</strong></b>
+                                            </button>
+                                            <a onclick="init_popup_close();" class="k-pager-refresh k-button btn_58"><b>닫기</b></a>
+                                        </div>
                                     </div>
+                                    <legend id="user_legend">차량 등록</legend>
                                 </div>
-                                <legend id="car_legend">차량 등록</legend>
-                                <div class="form-group row gray_box">
+                                <div class="form-group row pt10 pb10 pl8 mt77 gray_box">
                                     <label class="col-form-label modal-big-name">담당부서</label>
                                     <div class="input-group input-group-sm wd90 middle-name form-group">
                                      <strong class="required">담당부서</strong>
@@ -41,8 +43,8 @@
                                     </div>
                                 </div>
                                 <div class="mt20"></div>
-                                <div class="form-group row gray_box">
-                                    <div class="form-group row">
+                                <div class="row gray_box">
+                                    <div class="row">
                                         <label class="col-form-label modal-big-name">기본정보</label>
                                         <div id="carNumber" class="input-group input-group-sm col middle-name form-group">
                                             <strong class="required">차량번호</strong>
@@ -236,8 +238,8 @@
                                 </div>
 
                                 <div class="mt10"></div>
-                                <div class="form-group row gray_box">
-                                    <div class="form-group row">
+                                <div class="row gray_box">
+                                    <div class="row">
                                         <label class="col-form-label modal-big-name">사업자정보</label>
                                         <div class="input-group input-group-sm col middle-name form-group form-group">
                                             <strong>사업자상호</strong>
@@ -308,8 +310,8 @@
                                 </div>
                                 <div class="mt10"></div>
 
-                                <div class="form-group row gray_box">
-                                    <div class="form-group row">
+                                <div class="row gray_box">
+                                    <div class="row">
                                         <label class="col-form-label modal-big-name">APP사용정보</label>
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>CID</strong>
@@ -345,8 +347,8 @@
                                 </div>
                                 <div class="mt10"></div>
 
-                                <div class="form-group row gray_box">
-                                    <div class="form-group row">
+                                <div class="row gray_box">
+                                    <div class="row">
                                         <label class="col-form-label modal-big-name">계좌정보</label>
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>은행명</strong>
@@ -394,8 +396,8 @@
                                 </div>
                                 <div class="mt10"></div>
 
-                                <div class="form-group row gray_box">
-                                    <div class="form-group row">
+                                <div class="row gray_box">
+                                    <div class="row">
                                         <label class="col-form-label modal-big-name">기타</label>
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>차량관리등급</strong>

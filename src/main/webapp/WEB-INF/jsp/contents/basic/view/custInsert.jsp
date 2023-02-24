@@ -38,18 +38,27 @@
                     aria-expanded="true" style="display: block;">
                     <div class="editor">
                         <form id="f" data-toggle="validator" role="form">
-					    	<input type="hidden" id="custId" name="custId">
                             <fieldset>
-                                <legend id="cust_legend">거래처 등록</legend>
-                                <div class="editor_btns order_editor_btns" style="text-align:center;">
-                                    <div class="padding">
-                                        <button type="submit" class="k-pager-refresh k-button btn_58 btn_b" id="btn_saveCust">
-                                            <b class="btn-b"><strong id="btn_save">저장</strong></b>
-                                        </button>
-                                        <a onclick="init_popup_close();" class="k-pager-refresh k-button btn_58"><b class="btn-g">닫기</b></a>
+                                <div class="userInsert_top">
+                                    <input type="hidden" id="custId" name="custId">
+                                    <legend id="user_legend">거래처 등록</legend>
+                                    <div class="editor_btns order_editor_btns"
+                                         style="text-align:center;">
+                                        <div class="padding">
+                                            <button type="submit"
+                                                    class="k-pager-refresh k-button btn_58 btn_b"
+                                                    id="btn_saveCust">
+                                                <b class="btn-b"><strong
+                                                        id="btn_save">저장</strong></b>
+                                            </button>
+                                            <a onclick="init_popup_close();"
+                                               class="k-pager-refresh k-button btn_58"><b
+                                                    class="btn-g">닫기</b></a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-group row gray_box">
+
+                                <div class="form-group row pt10 pb10 pl8 mt77 gray_box">
                                     <label class="col-form-label modal-big-name">사업자조회</label>
 
                                     <div class="input-group input-group-sm wd290 middle-name form-group">

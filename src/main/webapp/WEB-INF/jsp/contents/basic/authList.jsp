@@ -27,7 +27,7 @@
 			</div>
 			<div class="editor_btns">
 				<div class="padding">
-					<button type="submit" class="k-pager-refresh k-button"><b class="btn-b"><strong>저장</strong></b>
+					<button type="submit" class="k-pager-refresh k-button btn_b"><b class=""><strong>저장</strong></b>
 					</button>
 					<a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b
 							class="btn-g">닫기</b></a>
@@ -64,7 +64,7 @@
 													<!--
 													<a href="javascript:fSubmit('E');" class="button"><b class="form-control-sm btn_75 btn_b">수정</b></a>
 													-->
-													<button type="button" onclick="fSubmit('E');" class="form-control-sm middle-button btn_75 btn_black_13"><strong>수정</strong></button>
+													<button type="button" onclick="fSubmit('E');" class="form-control-sm middle-button btn_75 btn_b"><strong>수정</strong></button>
 												</c:if>
 												<c:if test="${menuAuth.deleteYn eq 'Y'}">
 													<!--

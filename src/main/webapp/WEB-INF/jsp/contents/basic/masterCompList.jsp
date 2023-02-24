@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-	#cust_mst_list .k-grid-content {max-height:calc(100vh)}
+	#cust_mst_list .k-grid-content {max-height:calc(100vh - 250px)}
 </style>
 <div class="header">
 	<div class="summary p30">
@@ -61,7 +61,7 @@
 								</div>
 							</div>
 						</div><!-- /toolbar -->
-						<div style="height:calc(100vh - 240px)" id="cust_mst_list"></div>
+						<div style="height:calc(100vh - 250px)" id="cust_mst_list"></div>
 						<!-- /table -->
 					</div>
 				</div>
@@ -81,7 +81,7 @@
 $(document).ready(function(){
 
 	$(window).bind("resize", function() {
-		$("#cust_mst_list").css("height", "calc(100vh - 240px)");
+		$("#cust_mst_list").css("height", "calc(100vh - 250px)");
 
 		$("#cust_mst_list").data("kendoGrid").resize();
 	});
