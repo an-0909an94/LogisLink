@@ -23,12 +23,27 @@
 	width: 120px !important;
 }
 
+.wd130{
+	width: 130px !important;
+}
+
 .wd140{
 	width: 140px !important;
+}
+.wd150{
+	width: 150px !important;
+}
+
+.wd160{
+	width: 160px !important;
 }
 
 .wd170{
 	width: 170px !important;
+}
+
+.wd175{
+	width: 175px !important;
 }
 
 .wd190{
@@ -56,6 +71,14 @@
 	width: 240px !important;
 }
 
+.wd260{
+	width: 260px !important;
+}
+
+.wd270{
+	width: 270px !important;
+}
+
 .wd285{
 	width: 285px !important;
 }
@@ -76,6 +99,10 @@
 	width: 360px !important;
 }
 
+.wd370{
+	width: 370px !important;
+}
+
 .wd415{
 	width: 415px !important;
 }
@@ -88,6 +115,11 @@
 	width: 1000px !important;
 }
 
+.wd230{
+	width: 230px !important;
+}
+
+
 .hd100{
 	height: 100px !important;
 }
@@ -95,6 +127,10 @@
 /* padding 값 조절 */
 .p30 {
     padding: 8px;
+}
+
+.p0{
+	padding: 0px !important;
 }
 
 .pt10{
@@ -155,6 +191,7 @@
 
 /* margin 값 조절 */
 
+
 .mb10{
 	margin-bottom: 10px !important;
 }
@@ -169,6 +206,10 @@
 
 .mt0{
 	margin-top: 0px !important;
+}
+
+.mt5{
+	margin-top: 5px !important;
 }
 
 .mt10{
@@ -189,6 +230,10 @@
 
 .mt30{
 	margin-top: 30px !important;;
+}
+
+.mt77{
+	margin-top: 77px !important;;
 }
 
 .mr0{
@@ -265,8 +310,6 @@
 .btn_g{
 	background-color: #fff !important;
 	border: 1px solid #0cb175 !important;
-	color: #0cb175 !important;
-	font-weight: bold;
 	padding: 4px 0px;
 }
 
@@ -687,7 +730,7 @@
 	margin-right: 25px;
 }
 
-/* 오더등록 S */
+/* 오더수정 S */
 #layer1::-webkit-scrollbar{
 	display: none;
 }
@@ -718,7 +761,7 @@
 }
 
 .k-tabstrip-wrapper{
-	width: 540px;
+	width: 500px;
 }
 
 .big-name{
@@ -731,8 +774,8 @@
 }
 
 .gray_box{
-	margin: 15px 0;
-	padding: 15px 8px;
+	margin: 5px 0;
+	padding: 7px 8px;
 	background-color: #f6f6f6;
 	border-radius: 10px;
 }
@@ -784,12 +827,6 @@
 	color: #fff;
 }
 
-.order_editor_btns{
-	position: absolute;
-	top: 35px;
-	right: 30px;
-}
-
 .editor_btns .padding > #orderDelete{
 	background-color: #dc3545;
 }
@@ -800,7 +837,7 @@
 }
 
 .gray_box  .openCloseBtn{
-	margin: 22px 20px 0 0;
+	margin: 22px 10px 0 0;
 }
 
 .pop-layer .radio-or-checkBox input[type="checkbox"] + label{
@@ -848,7 +885,34 @@
 	padding: 0px;
 }
 
-/* 오더등록 E */
+.orderInsert_top{
+	position: fixed;
+	width: 480px;
+	z-index: 999;
+	padding-top: 20px;
+	display:flex;
+	justify-content: space-between;
+	background-color: white;
+}
+
+.form-control-sm{
+	font-size: 12px;
+}
+
+.k-dateinput-wrap .k-input, .k-dropdown-wrap .k-input, .k-multiselect-wrap .k-input, .k-numeric-wrap .k-input, .k-picker-wrap .k-input{
+	padding: 0px;
+	
+}
+
+.k-picker-wrap .k-input{
+	text-indent: 5px;
+}
+
+.k-tabstrip-wrapper label.col-form-label{
+	width: 90px;
+}
+
+/* 오더수정 E */
 
 
 /* 일괄등록 S*/
@@ -857,12 +921,6 @@
 	display: inline-block;
 	font-weight: bold;
 	margin: 0 7px 0 0px;
-}
-
-.orderBundle .option-area{
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
 }
 
 .orderBundle .form-group div label.uploadFile{
@@ -933,22 +991,6 @@
 	color: #333;
 }
 
-.orderBundle .option-area::after{
-	content: '';
-	clear: both;
-	display: block;
-}
-
-.option-area-box-01{
-	width: 94%
-}
-
-.option-area-box-01>div{
-	width: 87%;;
-	display: inline-block;
-	position: relative;
-}
-
 .option-area-box-01 .btn_close{
 	width: 15px;
 	height: 15px;
@@ -959,18 +1001,31 @@
 	cursor: pointer;
 }
 
-.option-area-box-01 .upload-name{
-	width: 100%;
-}
-
 .orderBundle .k-grid tbody tr:hover{
 	background-color: #fdf3cf;
 }
 
+.search-box{
+	width: 25%;
+	position: relative;
+}
+
+.btn-outline-secondary{
+	padding: 3px 10px;
+	float: right;
+}
+
+.option-area-box-01 button{
+	margin-top: 2px;
+}
 /* 일괄등록 E*/
 
 
 /* 그리드 S */
+.accept{
+	color: #2a5dc4 !important;
+}
+
 .k-pager-numbers .k-link{
 	color: #222;	
 	width: 24px;
@@ -1161,6 +1216,11 @@
 .id_find a:last-of-type{
 	margin-right: 0px;
 	margin-left: 10px;
+}
+
+.login_wrap .login_cont02 input::placeholder{
+	font-size: 14px;
+	color: #aaaaaa;
 }
 
 /* 로그인화면 E */

@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div class="form-group row" style="justify-content: space-between;">
-	                <div class="row" style="width: 81%;">
+	                <div class="row" style="width: 83%;">
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
 	                        
 	                        <select class="custom-select col-12" id="searchColumn" name="searchColumn">
@@ -162,18 +162,18 @@
 	                        </select>
 	                    </div>
 	
-	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                    <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
 	                        
-	                        <select class="custom-select col-12" id="orderStopYn" name="orderStopYn">
+	                        <select class="custom-select wd100" id="orderStopYn" name="orderStopYn">
 	                            <option value="">경유지 여부</option>
 	                            <option value="Y">있음</option>
 	                            <option value="N">없음</option>
 	                        </select>
 	                    </div>
 	
-	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                    <div class="input-group input-group-sm wd120 middle-name div-min-col-1">
 	                        
-	                        <select class="custom-select col-12" id="sLinkSettleYn" name="sLinkSettleYn">
+	                        <select class="custom-select wd120" id="sLinkSettleYn" name="sLinkSettleYn">
 	                            <option value="">정보망 확정여부</option>
 	                            <option value="Y">확정</option>
 	                            <option value="N">미확정</option>
@@ -251,7 +251,7 @@
                         </div><!-- /toolbar -->
                         <div style="width: 100%">
                         	<!-- /그리드반응형 -->
-                            <div style="height:calc(100vh - 320px)" id="grid"></div>
+                            <div style="height:calc(100vh - 275px)" id="grid"></div>
 
                             <!-- 22.07.15 이건욱 그리드 개인화 설정 -->
                             <ul id="gridContextMenu">
@@ -330,7 +330,7 @@
 
         $(window).bind("resize", function() {
             //그리드반응형 $("#grid").css("height", "calc(100vh - 235px)");
-            $("#grid").css("height", "calc(100vh - 330px)");
+            $("#grid").css("height", "calc(100vh - 275px)");
 
             $("#grid").data("kendoGrid").resize();
         });

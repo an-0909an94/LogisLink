@@ -308,7 +308,7 @@ html.k-webkit.k-webkit90 {
 }
 
 .cont-wrapper-page-grid.block{
-    margin-left: 540px;
+    margin-left: 490px;
     transition-duration: 1s;
     padding: 10px;
     background-color: #fff;
@@ -432,7 +432,7 @@ fieldset {
 
 .modalEditor > .editor_btns {
     padding-top: 31px;
-    text-align: center;
+    text-align: flex-start;
 }
 
 .modalEditor > .editor_btns > #closeBtn {
@@ -518,7 +518,7 @@ div#layer1 {
     position: absolute;
     top: 50.5%;
     transform: translateY(-50%);
-    right: -4%;
+    right: -3%;
     margin-right: 0.5em;
 }
 
@@ -879,7 +879,7 @@ div#layer1 {
     -khtml-user-select: none;
     -webkit-user-select: none;
     user-select: none;
-    font-size: smaller;
+    font-size: 12px;
     background: #fff !important;
     border-radius: 4px;
     color: #222222 !important;

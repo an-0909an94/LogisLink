@@ -129,10 +129,6 @@ label {
     font-weight: 300;
 }
 
-input {
-    text-indent: 10px;
-}
-
 input:focus::-webkit-input-placeholder {
     opacity: 0;
 }

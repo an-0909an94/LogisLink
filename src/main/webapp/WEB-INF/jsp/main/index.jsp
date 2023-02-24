@@ -54,12 +54,12 @@ input:focus {outline: none;}
 		      <form id="f" name="f" method="post">
 			      <div class="f-w">
 			            <div class="id pb20">
-			                <label for="" class="pb5" style="display:block;">아이디</label>
-			                <input type="text" name="userId" id="userId" onkeypress="if(event.which==13){goLogin();}" style="background-color:#ffffff; filter: zoom: 1; alpha(opacity=20);border:1px solid #797979;-webkit-box-shadow: 0 0 0 1000px #ffffff inset; -webkit-text-fill-color: #000000;">
+			                <label for="" class="pb5" style="display:block;" >아이디</label>
+			                <input type="text" name="userId" id="userId" placeholder="아이디를 입력하세요." oninput="handleOnInput(this)" onkeypress="if(event.which==13){goLogin();}" style="background-color:#ffffff; filter: zoom: 1; alpha(opacity=20);border:1px solid #797979;-webkit-box-shadow: 0 0 0 1000px #ffffff inset; -webkit-text-fill-color: #000000;">
 			            </div>
 			            <div class="pw pb30">
 			                <label for="" class="pb5" style="display:inline-block;">비밀번호</label>
-			                <input type="password" name="passwd" id="passwd" onkeypress="if(event.which==13){goLogin();}" style="background-color:#ffffff; filter: zoom: 1; alpha(opacity=20);border:1px solid #797979;-webkit-box-shadow: 0 0 0 1000px #ffffff inset;-webkit-text-fill-color: #000000;">
+			                <input type="password" name="passwd" id="passwd" placeholder="비밀번호를 입력하세요." onkeypress="if(event.which==13){goLogin();}" style="background-color:#ffffff; filter: zoom: 1; alpha(opacity=20);border:1px solid #797979;-webkit-box-shadow: 0 0 0 1000px #ffffff inset;-webkit-text-fill-color: #000000;">
 			            </div>
 			            <div class="go-log btn_b">
 			                <button type="button" onclick="goLogin();">로그인</button>
@@ -231,6 +231,10 @@ function loginTalk(userId,mobile,userName){
 		}
 	});
 }
+
+//function handleOnInput(e)  {
+	//  e.value = e.value.replace(/[^A-Za-z]/ig, '')
+	//}
 </script>
 </body>
 </html>
