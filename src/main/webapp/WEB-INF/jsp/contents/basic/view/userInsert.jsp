@@ -15,6 +15,7 @@
                     <div class="editor">
                     <form id="f" data-toggle="validator" role="form">
 	                    <fieldset>
+							<div class="userInsert_top">
 	                        <legend id="user_legend">사용자 등록</legend>
 							<div class="editor_btns order_editor_btns" style="text-align: center;">
 								<div class="padding">
@@ -24,7 +25,8 @@
 									<a onclick="init_popup_close();" class="k-pager-refresh k-button btn_58"><b class="btn-g">닫기</b></a>
 								</div>
 							</div>
-							<div class="form-group row gray_box">
+							</div>
+							<div class="form-group row bortop pt10 pb10 pl8 mt77">
 								<div class="form-group row">
 									<label class="col-form-label modal-big-name">기본정보</label>
 									<div class="input-group input-group-sm wd140 middle-name form-group">
