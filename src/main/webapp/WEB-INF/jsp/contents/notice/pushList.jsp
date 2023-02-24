@@ -4,7 +4,7 @@
 	#pushList .k-grid-content {max-height:calc(100vh)}
 </style>
 <div id="pushModal" class="editor-warp p-0">
-	<div class="modalEditor" id="addPush">
+	<div class="modalEditor modal-block" id="addPush">
 		<form id="modalForm" name="modalForm">
 			<div class="box mb15" style="width: 100%">
 				<div style="float: left; width: 49%;padding-left:35px">

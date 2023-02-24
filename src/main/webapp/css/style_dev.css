@@ -429,11 +429,14 @@ fieldset {
     left: 33px;
 }
 .modalEditor {
-    display: block;
+    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+}
+.modal-block {
+    display: block;
 }
 
 .modalEditor > .modalHeader {
