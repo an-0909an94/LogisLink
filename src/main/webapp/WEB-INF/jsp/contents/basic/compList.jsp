@@ -14,8 +14,8 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="modalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">저장</b></a>
-		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
+		        <a onclick="modalSubmit()" class="k-pager-refresh k-button btn_b"><b>저장</b></a>
+		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b>닫기</b></a>
 	        </div>
 	    </div>
 	</div>	

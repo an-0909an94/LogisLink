@@ -9,6 +9,10 @@
 .col-xl-12, .col-xl, .col-xl-auto {
     padding: 0px;
 }
+
+.font-14 {
+    font-size: 14px !important;
+}
 /*
 form {
     font-size: 0.8rem;
@@ -423,6 +427,13 @@ fieldset {
 
 .input_on-off:checked + .label_on-off .marble {
     left: 33px;
+}
+.modalEditor {
+    display: block;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .modalEditor > .modalHeader {
@@ -850,7 +861,6 @@ div#layer1 {
 .k-grid {
     FONT-VARIANT: JIS04;
     max-width: 100%;
-    max-height: calc(39vw - 400px);
     border-top: 2px solid #434343;
     box-sizing: border-box;
     height:calc(100vh - 330px);
@@ -861,7 +871,6 @@ div#layer1 {
     .k-grid {
         FONT-VARIANT: JIS04;
         max-width: 100%;
-        max-height: calc(45vw - 400px);
         border-top: 2px solid #434343;
         box-sizing: border-box;
         height:calc(100vh - 330px);

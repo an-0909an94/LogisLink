@@ -23,30 +23,30 @@
 					</div>
 				</div>
 				<div style="float: right; width: 49%;padding-right:35px">
-					<div class="mb20 gray_box">
+					<div class="gray_box">
 						<div class="input-group input-group-sm col radio-or-checkBox ">
 							<strong style="margin-left: 0em; padding-right: 1.5em;">회원구분</strong>
 							<input id="driver" type="checkbox" name="custTypeCode" value="09">
-							<label for="driver" class="label-margin">
+							<label for="driver" class="label-margin font-14">
 								<span>차주</span>
 							</label>
 						</div>
 						<div class="input-group input-group-sm col radio-or-checkBox ">
 							<input id="owner" type="checkbox" name="custTypeCode" value="04">
-							<label for="owner" class="label-margin">
+							<label for="owner" class="label-margin font-14">
 								<span>화주</span>
 							</label>
 						</div>
 						<div class="input-group input-group-sm col radio-or-checkBox ">
 							<input id="carrier" type="checkbox" name="custTypeCode" value="01">
-							<label for="carrier" class="label-margin">
+							<label for="carrier" class="label-margin font-14">
 								<span>주선사/운송사</span>
 							</label>
 						</div>
 					</div>
 
 					<div class="splitter" style="border: 0; max-width: 100%; min-height: 460px;">
-						<div id="popGrid" style="border-radius: 5px;"></div>
+						<div id="popGrid" style="border-radius: 5px;width: 455px; height: 439px;"></div>
 					</div>
 				</div>
 

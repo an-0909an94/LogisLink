@@ -50,6 +50,10 @@
 	width: 190px !important;
 	
 }
+.wd220{
+	width: 220px !important;
+
+}
 
 .max-wd190{
 	max-width: 190px;
@@ -905,14 +909,16 @@
 	padding: 0px;
 }
 
-.orderInsert_top{
+.userInsert_top,.orderInsert_top {
 	position: fixed;
 	width: 480px;
 	z-index: 999;
 	padding-top: 20px;
-	display:flex;
+	display: flex;
 	justify-content: space-between;
 	background-color: white;
+	padding-bottom: 17px;
+	border-bottom: 1px solid #ddd;
 }
 
 .form-control-sm{
@@ -930,6 +936,7 @@
 
 .k-tabstrip-wrapper label.col-form-label{
 	width: 90px;
+	display: block;
 }
 
 /* 오더수정 E */
