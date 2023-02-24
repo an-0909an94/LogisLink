@@ -412,8 +412,18 @@
 	transition: 0.2s;
 }
 
+.GnbMini{
+	width: 90px !important;
+	display: inline-block;
+	min-height: 100vh;
+	background-color: #002B57;
+	overflow:hidden;
+	z-index: 2000;
+	position:relative;
+}
+
 .side-nav-atv{
-	width: 90px;	
+	width: 90px !important;
 }
 
 .nav-atv{
