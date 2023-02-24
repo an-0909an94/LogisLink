@@ -4,7 +4,7 @@
 <style>
 /*
 #grid .k-grid-content {
-	max-height: calc(100vh - 452px)
+	max-height: calc(100vh - 260px)
 }
 */
 
@@ -298,13 +298,13 @@
 	                      <div class="form-check-inline btn_gra_tax" style="border-radius:10px;width:100%">
 	                          <div class="input-group input-group-sm col radio-or-checkBox">
 				            	<input value="01" id="pubForm01" name="pubForm" type="radio" disabled="disabled">
-				            	<label for="pubForm01" class="label-margin">
+				            	<label for="pubForm01" class="label-margin" style="padding-bottom: 0px">
 				            	<span>영수</span>
 				            	</label>
 				             </div>
 				             <div class="input-group input-group-sm col radio-or-checkBox">
 				            	<input value="02" id="pubForm02" name="pubForm" type="radio" disabled="disabled">
-				            	<label for="pubForm02" class="label-margin">
+				            	<label for="pubForm02" class="label-margin" style="padding-bottom: 0px">
 				            	<span>청구</span>
 				               	</label>
 				             </div>
@@ -382,8 +382,8 @@
                             <option value="orderId">오더ID</option>
                         </select>
                     </div>
-                    <div id="searchCustName" class="input-group input-group-sm wd190 middle-name div-min-col-1">
-                        <input type="text" id="sCustName" name="custName" style="width: 100%;" placeholder="매입처 정보를 검색해 주세요">
+                    <div id="searchCustName" class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+                        <input type="text" id="sCustName" name="custName" style="width: 100%;" placeholder="매입처 정보를 검색해 주세요" class="p-input">
                     </div>
                     <div id="searchOrderId" class="input-group input-group-sm wd90 middle-name div-min-col-1" style="display: none;">
                         <input type="text" id="sOrderId" name="orderId" class="form-control form-control-sm" onkeydown="searchOrderIdKeyDown(this)">
@@ -392,14 +392,14 @@
                         <input type="text" id="sCustDeptName" name="custDeptName" class="form-control form-control-sm" readonly>
                     </div>
 
-                    <div class="input-group input-group-sm wd140 middle-name div-min-col-1">
-                        <select id="searchBizType" name="searchBizType" class="custom-select wd140">
+                    <div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+                        <select id="searchBizType" name="searchBizType" class="custom-select wd190 media190">
                             <option value="bizName" selected>사업자상호</option>
                             <option value="bizNum">사업자번호</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-                        <input type="text" id="sBizName" name="bizName" style="width: 100%;" placeholder="사업자 정보를 검색해 주세요">
+                    <div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+                        <input type="text" id="sBizName" name="bizName" style="width: 100%;" placeholder="사업자 정보를 검색해 주세요" class="p-input">
                     </div>
                     <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sBizDeptName" name="bizDeptName" class="custom-select"></select>
@@ -426,7 +426,7 @@
                 
                 <!-- 검색 2라인 -->
                 <div class="form-group row" style="justify-content: space-between">
-                    <div>
+                    <div class="row">
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <select id="searchDateType" name="searchDateType" class="custom-select wd90">
                                 <option value="allocDate" selected>배차일자</option>
@@ -435,10 +435,10 @@
                                 <option value="finishDate">마감일자</option>
                             </select>
                         </div>
-                        <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                        <div class="input-group input-group-sm wd90 middle-name">
                             <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd90">
                         </div>
-                        <span style="padding-right:10px">~</span>
+                        <span>~</span>
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <input style="padding: 0;" type="text" id="toDate" name="toDate" class="wd90">
                         </div>
@@ -464,10 +464,11 @@
                         </div>
 
                         <!-- Hidden -->
+                        <!--
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-                            <strong>&nbsp;</strong>
                             <input type="text" class="form-control form-control-sm" hidden="true">
                         </div>
+                        -->
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <select id="sFastPayYn" name="fastPayYn" class="custom-select" style="width:100px">
                                 <option value="" selected>빠른지급여부</option>
@@ -558,7 +559,7 @@
                         <!-- 툴바 끝 -->
                         <!-- 그리드 -->
                         <div style="min-width: 500px;">
-                            <div style="height:calc(100vh - 235px);" id="grid"></div>
+                            <div style="height:calc(100vh - 260px);" id="grid"></div>
 
                             <ul id="calcListContextMenu">
                                 <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
@@ -623,7 +624,7 @@
     $(document).ready(function() {
 
         $(window).bind("resize", function() {
-            $("#grid").css("height", "calc(100vh - 235px)");
+            $("#grid").css("height", "calc(100vh - 260px)");
             $("#grid").data("kendoGrid").resize();
         });
 
@@ -1297,8 +1298,10 @@
  	// 헤더에 요약정보 표시
     function getSummary(total, sumPayableAmt, sumWithdrawalAmt) {
     	var groupCount = 
-			"<i style=\"color: #3f75c1\">매입 : " + Util.nvl(Util.formatNumber(total), '0') + "건 / " + 
-			Util.nvl(Util.formatNumber(sumPayableAmt), '0') + "원 / " + Util.nvl(Util.formatNumber(sumWithdrawalAmt), '0') + "원</i>"
+			"<i class=\"sumBuyCharge\">매입 : " +
+            Util.nvl(Util.formatNumber(total),              "<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건 / " +
+			Util.nvl(Util.formatNumber(sumPayableAmt),      "<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 / " +
+            Util.nvl(Util.formatNumber(sumWithdrawalAmt),   "<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i>"
 		
 		$("#groupCount").html(groupCount);
     }

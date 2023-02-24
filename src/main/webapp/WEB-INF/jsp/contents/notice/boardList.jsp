@@ -19,13 +19,13 @@
 				<div class="form-group row mt0" style="justify-content: space-between">
 					<div>
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-							<select class="custom-select col-12" id="searchColumn" name="searchColumn">
+							<select class="custom-select wd90" id="searchColumn" name="searchColumn">
 								<option value="USER_NAME">--등록자--</option>
 								<option value="TITLE">--제목--</option>
 								<option value="CONTENT">--내용--</option>
 							</select>
 						</div>
-						<div class="input-group input-group-sm wd290 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd290 media290 middle-name div-min-col-1">
 							<input type="text" style="width:100%" id="searchValue" name="searchValue"
 								   class="form-control form-control-sm searchValue" placeholder="검색할 항목을 입력하세요">
 						</div>

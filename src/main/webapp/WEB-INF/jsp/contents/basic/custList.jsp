@@ -43,14 +43,14 @@
 							<option>--부서명--</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
-						<select class="custom-select wd100" id="searchColumn" name="searchColumn">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="custom-select wd90" id="searchColumn" name="searchColumn">
 							<option value="s_custName" selected>--거래처명--</option>
 							<option value="s_bizName" selected>--사업자상호--</option>
 							<option value="s_bizNum" selected>--사업자번호--</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd210 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 						<input type="text" id="searchValue" name="searchValue" style="width:100%" class="form-control form-control-sm searchValue" placeholder="검색항목을 입력하세요">
 					</div>
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
@@ -61,7 +61,7 @@
 						<select class="form-control" class="custom-select" id="s_sellBuySctn" name="s_sellBuySctn">
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select" style="width:100%" id="s_custMngCode" name="s_custMngCode"></select>
 					</div>
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
@@ -74,7 +74,7 @@
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select wd90" id="s_userId" name="s_userId"></select>
 					</div>
-					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select" style="width:100%" id="s_payYn" name="s_payYn">
 							<option value="">--빠른지급여부--</option>
 							<option value="Y">Y</option>
@@ -114,7 +114,7 @@
 								</div>
 							</div>
 						</div><!-- /toolbar -->
-						<div style="height:calc(100vh - 344px)" id="cust_list"></div>
+						<div style="height:calc(100vh - 240px)" id="cust_list"></div>
 						<!-- /table -->
 					</div>
 				</div>
@@ -129,7 +129,15 @@
 <script type="text/javascript">
 var chkUID = false;
 $(document).ready(function(){
-    $('.insert_pop').css('display', 'block');
+
+	$(window).bind("resize", function() {
+		$("#cust_list").css("height", "calc(100vh - 240px)");
+
+		$("#cust_list").data("kendoGrid").resize();
+	});
+
+
+	$('.insert_pop').css('display', 'block');
     Util.setCmmCode("select", "s_custTypeCode", "CUST_TYPE_CD", "", "--분류--");
     Util.setCmmCode("select", "s_sellBuySctn", "SELL_BUY_SCTN", "", "--구분--");
     Util.setCmmCode("select", "s_custMngCode", "CAR_MNG_CD", "", "--거래처등급--");

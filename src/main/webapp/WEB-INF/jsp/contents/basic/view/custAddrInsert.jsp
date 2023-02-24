@@ -31,7 +31,7 @@
                             </div>
                             <div class="row gray_box">
                                 <div class="form-group row mb10">
-                                    <label class="col-form-label big-name">주소</label>
+                                    <label class="col-form-label modal-big-name">주소</label>
                                     <div class="input-group input-group-sm wd290 middle-name">
                                         <strong class="required">주소지명</strong>
                                         <input type="text" class="form-control form-control-sm"
@@ -102,7 +102,7 @@
                             </div>
 
                             <div class="row gray_box">
-                                <label class="col-form-label big-name">담당자</label>
+                                <label class="col-form-label modal-big-name">담당자</label>
                                 <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                                     <strong>담당자명</strong>
                                     <input type="text" class="form-control form-control-sm"
@@ -117,7 +117,7 @@
                                 </div>
                             </div>
                             <div class="row gray_box">
-                                <label class="col-form-label big-name">메모</label>
+                                <label class="col-form-label modal-big-name">메모</label>
                                 <div class="input-group input-group-sm wd290 middle-name">
                                     <!--
                                     <input type="text" class="form-control form-control-sm"

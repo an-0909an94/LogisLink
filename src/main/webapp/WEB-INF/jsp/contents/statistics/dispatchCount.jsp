@@ -11,10 +11,10 @@
 			<form id="fSearch" class="date-bnt">
 				<input type="hidden" name="custId" id="custId" class="hiddenValue">
 				<input type="hidden" name="maxSize" id="maxSize" class="hiddenValue">
-				<div class="form-group row mt0">
+				<div class="form-group row mt0 div-min-col-1">
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 
-						<select class="custom-select col-1" id="selDate" name="selDate">
+						<select class="custom-select wd90" id="selDate" name="selDate">
 							<option value="DAY">일별</option>
 							<option value="WEEK">주간별</option>
 							<option value="MONTH">월별</option>
@@ -22,18 +22,18 @@
 							<option value="AT">기간지정</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd290 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd290 media290 middle-name">
 						<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
 							   class="col-12" disabled="disabled">
 					</div>
-					<span style="margin-right:10px">~</span>
-					<div class="input-group input-group-sm wd290 middle-name">
+					<span>~</span>
+					<div class="input-group input-group-sm wd290 media290 middle-name">
 						<input style="padding: 0;" type="text" id="toDate" name="toDate"
 							   class="col-12" disabled="disabled">
 					</div>
 				</div>
 				<div class="form-group row" style="justify-content: space-between">
-					<div>
+					<div class="row">
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select wd90" id="selTon" name="selTon">
 							</select>
@@ -45,7 +45,7 @@
 									<option value="cust">고객사</option>
 								</select>
 							</div>
-							<div class="input-group input-group-sm wd290 middle-name div-min-col-1">
+							<div class="input-group input-group-sm wd290 media290 middle-name div-min-col-1">
 								<input type="text" id="sCustName" name="sCustName"
 									   style="width:100%;">
 							</div>

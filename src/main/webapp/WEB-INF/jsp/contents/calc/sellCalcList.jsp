@@ -383,20 +383,20 @@
                         </select>
                     </div>
 
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <select id="searchCustType" name="searchCustType" class="custom-select col-12">
+                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                        <select id="searchCustType" name="searchCustType" class="custom-select wd90">
                             <!-- 공통코드로 구분함. -->
                             <option value="custName" selected>화주명</option>
                             <option value="orderId">오더ID</option>
                         </select>
                     </div>
-                    <div id="searchCustName" class="input-group input-group-sm wd190 mr10 middle-name">
+                    <div id="searchCustName" class="input-group input-group-sm wd190 media190 mr10 middle-name">
                         <input type="text" id="sCustName" name="custName" style="width: 100%;">
                     </div>
                     <div id="searchOrderId" class="input-group input-group-sm wd90 middle-name" style="display: none;">
                         <input type="text" id="sOrderId" name="orderId" class="form-control form-control-sm" onkeydown="searchOrderIdKeyDown(this)">
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <input type="text" id="sCustDeptName" name="custDeptName" class="form-control form-control-sm" readonly>
                     </div>
 
@@ -406,7 +406,7 @@
                             <option value="bizNum">사업자번호</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm wd190 mr10 middle-name">
+                    <div class="input-group input-group-sm wd190 media190 mr10 middle-name">
                         <input type="text" id="sBizName" name="bizName" style="width: 100%;">
                     </div>
                     <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
@@ -434,7 +434,7 @@
 
                 <!-- 검색 2라인 -->
                 <div class="form-group row" style="justify-content: space-between">
-	                <div>
+	                <div class="row">
 	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 	                        <select id="searchDateType" name="searchDateType" class="custom-select col-12">
 	                            <option value="allocDate" selected>배차일자</option>
@@ -453,22 +453,22 @@
 	                        <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
 	                    </div>
 	
-	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                    <div class="input-group input-group-sm wd90 radio-or-checkBox">
 	                        <input type="radio" name="dateChk" id="today" value="0" checked />
 	                        <label for="today" class="label-margin"> <span>오늘</span>
 	                        </label>
 	                    </div>
-	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                    <div class="input-group input-group-sm wd90 radio-or-checkBox">
 	                        <input type="radio" name="dateChk" id="yesterday" value="1" />
 	                        <label for="yesterday" class="label-margin"> <span>어제</span>
 	                        </label>
 	                    </div>
-	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                    <div class="input-group input-group-sm wd90 radio-or-checkBox">
 	                        <input type="radio" name="dateChk" id="weekly" value="7" />
 	                        <label for="weekly" class="label-margin"> <span>7일</span>
 	                        </label>
 	                    </div>
-	                    <div class="input-group input-group-sm col radio-or-checkBox">
+	                    <div class="input-group input-group-sm wd90 radio-or-checkBox">
 	                        <input type="radio" name="dateChk" id="monthly" value="30" />
 	                        <label for="monthly" class="label-margin"> <span>30일</span>
 	                        </label>
@@ -498,7 +498,7 @@
 	                        </select>
 	                    </div>
 	
-	                    <div class="input-group input-group-sm col radio-or-checkBox ">
+	                    <div class="input-group input-group-sm wd90 radio-or-checkBox ">
 	                        <input id="carryOverYn" name="carryOver" type="checkbox" value="Y">
 	                        <label for="carryOverYn" class="label-margin"> <span>미처리 이월건 포함</span>
 	                        </label>
@@ -575,7 +575,7 @@
                         <!-- 툴바 끝 -->
                         <!-- 그리드 -->
                         <div style="width: 100%">
-                            <div style="height:calc(100vh - 235px);" id="grid"></div>
+                            <div style="height:calc(100vh - 260px);" id="grid"></div>
 
                             <ul id="calcListContextMenu">
                                 <li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
@@ -638,7 +638,7 @@
     $(document).ready(function() {
 
         $(window).bind("resize", function() {
-            $("#grid").css("height", "calc(100vh - 235px)");
+            $("#grid").css("height", "calc(100vh - 260px)");
 
             $("#grid").data("kendoGrid").resize();
         });
@@ -1236,8 +1236,10 @@
  	// 헤더에 요약정보 표시
     function getSummary(total, sumUnpaidAmt, sumDepositAmt) {
     	var groupCount = 
-			"<i>매출 : " + Util.nvl(Util.formatNumber(total), '0') + "건 / " + 
-			Util.nvl(Util.formatNumber(sumUnpaidAmt), '0') + "원 / " + Util.nvl(Util.formatNumber(sumDepositAmt), '0') + "원</i>"
+			"<i class=\"sumSellCharge\">매출 : " +
+            Util.nvl(Util.formatNumber(total),          "<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건 / " +
+			Util.nvl(Util.formatNumber(sumUnpaidAmt),   "<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 / " +
+            Util.nvl(Util.formatNumber(sumDepositAmt),  "<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i>"
 		
 		$("#groupCount").html(groupCount);
     }

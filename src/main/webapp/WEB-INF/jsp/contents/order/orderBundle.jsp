@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <!-- /toolbar -->
-                        <div id="grid" style="width: 100%; height: calc(100vh - 320px);"></div>
+                        <div id="grid" style="width: 100%; height: calc(100vh - 240px);"></div>
                         <!-- /table -->
                     </div>
                 </div>
@@ -78,7 +78,14 @@
 </div>
 <div id="popValidation"></div>
 <script type="text/javascript">
-	var validator = $("#grid").kendoValidator().data("kendoValidator");
+
+    $(window).bind("resize", function() {
+      $("#grid").css("height", "calc(100vh - 240px)");
+
+      $("#grid").data("kendoGrid").resize();
+    });
+
+    var validator = $("#grid").kendoValidator().data("kendoValidator");
 
 	var carTypeData = Util.getComCode("CAR_TYPE_CD");
 	var carTonData = Util.getComCode("CAR_TON_CD");

@@ -90,10 +90,10 @@
 				<form id="fSearch" class="date-bnt">
 					<div class="form-group row mt0" style="justify-content: space-between">
 						<div>
-							<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<div class="input-group input-group-sm wd90 middle-name ">
 								<input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd90">
 							</div>
-							<span style="margin-top:25px;margin-right: 10px">~</span>
+							<span>~</span>
 							<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 								<input style="padding: 0;" type="text" id="toDate" name="toDate" class="wd90">
 							</div>

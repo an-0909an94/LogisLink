@@ -18,8 +18,8 @@
 				<div class="form-group row mt0" style="justify-content: space-between">
 					<div>
 						<!-- 22.06.24 이건욱 T11 > J41 추가 -->
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-							<input type="text" id="c_custName" name="custName" style="width:100%;"
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+							<input type="text" id="c_custName" name="custName" style="width:100%;" class="p-input"
 								   placeholder="조직">
 						</div>
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
@@ -37,7 +37,7 @@
 								<option value="userMobile">핸드폰</option>
 							</select>
 						</div>
-						<div class="input-group input-group-sm wd210 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 							<input type="text" id="t_searchUserValue" name="searchUserValue"
 								   style="width:100%"
 								   class="form-control form-control-sm searchValue" placeholder="검색항목을 입력하세요">
@@ -94,7 +94,7 @@
 							</div>
 						</div><!-- /toolbar -->
 						<div style="min-width: 500px;">
-							<div style="height:calc(100vh - 344px)" id="user_list"></div>
+							<div style="height:calc(100vh - 240px)" id="user_list"></div>
 							<!-- /table -->
 						</div>
 					</div>
@@ -108,7 +108,14 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() { 	
+$(document).ready(function() {
+
+	$(window).bind("resize", function() {
+		$("#user_list").css("height", "calc(100vh - 240px)");
+
+		$("#user_list").data("kendoGrid").resize();
+	});
+
 	// 22.06.24 이건욱 T11 > J41 추가
 	var authChk = ${authChk};
 	var adminChk = ${adminChk};

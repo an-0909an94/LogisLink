@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-	#calcList .k-grid-content {max-height:calc(100vh - 471px)}
+	#calcList .k-grid-content {max-height:calc(100vh - 260px)}
 </style>
 
 <!--출금 요청-->
@@ -126,21 +126,21 @@
 
 				<!-- 검색 1라인 -->
 				<div class="form-group row mt0">
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select id="searchPeriodType" name="searchPeriodType"
-								class="form-control wd100" class="custom-select ">
+								class="form-control wd90" class="custom-select ">
 							<option value="dueDate" selected>지급예정일자</option>
 							<option value="finishDate">마감일자</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name">
 						<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
-							   class="wd190">
+							   class="wd90">
 					</div>
-					<span style="margin-right: 10px">~</span>
-					<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+					<span>~</span>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<input style="padding: 0;" type="text" id="toDate" name="toDate"
-							   class="wd190">
+							   class="wd90">
 					</div>
 
 					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
@@ -168,13 +168,13 @@
 						</label>
 					</div>
 
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<input id="sFinishId" name="sFinishId"
-							   class="form-control form-control-sm wd100" placeholder="마감담당자">
+							   class="form-control form-control-sm wd90" placeholder="마감담당자">
 					</div>
 
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
-						<select class="form-control wd100" class="custom-select" id="payApproYn"
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="form-control wd90" class="custom-select" id="payApproYn"
 								name="payApproYn">
 							<option value="" selected="selected">지급승인여부</option>
 							<option value="Y">Y</option>
@@ -182,22 +182,22 @@
 						</select>
 					</div>
 
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<input id="outreqId" name="outreqId"
-							   class="form-control form-control-sm wd100" placeholder="출금요청자">
+							   class="form-control form-control-sm wd90" placeholder="출금요청자">
 					</div>
 
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
-						<select class="form-control wd100" class="custom-select" id="sOutKind"
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="form-control wd90" class="custom-select" id="sOutKind"
 								name="sOutKind" ></select>
 					</div>
 				</div>
 
 				<!-- 검색 2라인 -->
 				<div class="form-group row" style="justify-content: space-between">
-					<div>
-						<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
-							<select class="form-control wd100" class="custom-select " id="outYn"
+					<div class="row">
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="form-control wd90" class="custom-select " id="outYn"
 									name="outYn">
 								<option value="">출금처리여부</option>
 								<option value="Y">Y</option>
@@ -205,17 +205,17 @@
 							</select>
 						</div>
 
-						<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
-							<select class="form-control wd100" class="custom-select" id="sSerach1"
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+							<select class="form-control wd90" class="custom-select" id="sSerach1"
 									name="sSerach1">
 								<option value="tax">계산서발행지</option>
 								<option value="bankCnnm">예금주</option>
 							</select>
 						</div>
 
-						<div class="input-group input-group-sm wd210 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 							<input id="sValue1" name="sValue1"
-								   class="form-control form-control-sm wd210 searchValue" placeholder="출금 처리 정보를 입력해주세요">
+								   class="form-control form-control-sm wd190 media190 searchValue" placeholder="출금 처리 정보를 입력해주세요">
 						</div>
 
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
@@ -227,9 +227,9 @@
 							</select>
 						</div>
 
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 							<input id="sValue2" name="sValue2"
-								   class="form-control form-control-sm wd190 searchValue" placeholder="ex> 대표자명,차주명, 차량번호...">
+								   class="form-control form-control-sm wd190 media190 searchValue " placeholder="ex> 대표자명,차주명, 차량번호...">
 						</div>
 
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
@@ -295,7 +295,7 @@
 								</div>
 							</div>
 						</div><!-- /toolbar -->
-						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 235px);">
+						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 260px);">
 							<div class="top-pane">
 								<div style="height: 100%;" id="grid"></div>
                                 
@@ -332,10 +332,9 @@
     
 	$(document).ready(function() {
 
-
-
 		Util.setCmmCode("select", "sOutKind", "OUT_KIND_CD", "", "출금방법");
-     	$("#splitter").kendoSplitter({
+
+		$("#splitter").kendoSplitter({
             orientation: "vertical",
             panes: [
             	{resizable:true},
@@ -965,11 +964,11 @@
     			if (data.result) {
     				// 요약정보 표시
     				var groupCount = 
-            			"<i style=\"color: #000000\">전체 : " + Util.nvl(Util.formatNumber(data.data.tCount), '0') + "건</i> / " + 
-            			"<i style=\"color: #e84524\">미지급금 : " + Util.nvl(Util.formatNumber(data.data.tPayableAmt), '0') + "원</i> / " + 
-            			"<i style=\"color: #3f75c1\">출금액 : " + Util.nvl(Util.formatNumber(data.data.tWithdrawalAmt), '0') + "원 (" + 
-            			"펌뱅킹 : " + Util.nvl(Util.formatNumber(data.data.fWithdrawalAmt), '0') + "원 / " + 
-            			"인터넷뱅킹 : "	 + Util.nvl(Util.formatNumber(data.data.iWithdrawalAmt), '0') + "원)</i>";
+            			"<i style=\"color: #000000\">전체 : " 		+ 	Util.nvl(Util.formatNumber(data.data.tCount), 			"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건</i> / " +
+            			"<i style=\"color: #e84524\">미지급금 : " 	+ 	Util.nvl(Util.formatNumber(data.data.tPayableAmt), 		"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i> / " +
+            			"<i style=\"color: #3f75c1\">출금액 : " 		+ 	Util.nvl(Util.formatNumber(data.data.tWithdrawalAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 (" +
+            										"펌뱅킹 : " 		+ 	Util.nvl(Util.formatNumber(data.data.fWithdrawalAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 / " +
+            										"인터넷뱅킹 : "	+ 	Util.nvl(Util.formatNumber(data.data.iWithdrawalAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원)</i>";
             			
     				$("#groupCount").html(groupCount);
     			}

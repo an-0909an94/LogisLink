@@ -11,7 +11,7 @@
             <form id="fSearch" class="date-bnt" method="post">
                 <input type="hidden" name="orderStates" id="orderStates">
                 <div class="form-group row mt0" style="justify-content: space-between">
-                    <div>
+                    <div class="row">
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <input style="width: 100%; padding: 0;" type="text" id="searchMonth" name="searchMonth">
                             <input type="hidden" id="fromDate" name="fromDate">

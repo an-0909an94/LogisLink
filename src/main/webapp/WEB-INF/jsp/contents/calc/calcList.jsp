@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-	#calcList .k-grid-content {max-height:calc(100vh - 452px)}
+	#calcList .k-grid-content {max-height:calc(100vh - 260px)}
 </style>
 
 <div id="divTaxInvoice" class="editor-warp p-0">
@@ -178,13 +178,13 @@
 	                      <div class="form-check-inline btn_gra_tax" style="border-radius:10px;width:100%">
 	                          <div class="input-group input-group-sm col radio-or-checkBox">
 				            	<input value="01" id="pubForm01" name="pubForm" type="radio" disabled="disabled">
-				            	<label for="pubForm01" class="label-margin">
+				            	<label for="pubForm01" class="label-margin" style="padding-bottom: 0px">
 				            	<span>영수</span>
 				            	</label>
 				             </div>
 				             <div class="input-group input-group-sm col radio-or-checkBox">
 				            	<input value="02" id="pubForm02" name="pubForm" type="radio" disabled="disabled">
-				            	<label for="pubForm02" class="label-margin">
+				            	<label for="pubForm02" class="label-margin" style="padding-bottom: 0px">
 				            	<span>청구</span>
 				               	</label>
 				             </div>
@@ -215,7 +215,7 @@
 <div id="divChangeAmt" class="editor-warp p-0">
 	<form class="modalEditor" id="fChangeAmt" data-toggle="validator" role="form" autocomplete="off">
 		<input type="hidden" name="allocList" id="allocList">
-		<div class="modalHeader50">
+		<div class="modalHeader">
 <!-- 			<div class="form-group row">
                <label class="col-form-label modal-big-name">운송사명</label>
                <div class="input-group input-group-sm col middle-name form-group">
@@ -632,11 +632,11 @@
 
 				<!-- 검색 1라인 -->
 				<div class="form-group row mt0">
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name">
 						<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
 							   class="wd90">
 					</div>
-					<span style="margin-right: 10px;">~</span>
+					<span>~</span>
 
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<input style="padding: 0;" type="text" id="toDate" name="toDate"
@@ -682,19 +682,19 @@
 							<option>하차지</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="custom-select" style="width:100%"id="sCalcTypeCode"
 								name="calcTypeCode"></select>
 					</div>
 
-					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="custom-select" style="width:100%" id="sFinishYn" name="finishYn">
 							<option value="">정산마감여부</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="custom-select" style="width:100%" id="sReqPayYn" name="reqPayYn">
 							<option value="">빠른지급여부</option>
 							<option value="Y">Y</option>
@@ -723,7 +723,7 @@
 
 				<!-- 검색 2라인 -->
 				<div class="form-group row" style="justify-content: space-between">
-					<div>
+					<div class="row">
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select wd90" id="custType" name="custType">
 								<option value="01">화주명</option>
@@ -732,8 +732,8 @@
 								<option value="orderId">오더ID</option>
 							</select>
 						</div>
-						<div id="searchDiv" class="input-group input-group-sm wd290 middle-name div-min-col-1">
-							<input type="text" id="sCustName" name="sCustName" style="width:100%;" placeholder="ex> 화주명, 운송/주선사명, 차량번호, 오더ID">
+						<div id="searchDiv" class="input-group input-group-sm wd290 media290 middle-name div-min-col-1">
+							<input type="text" id="sCustName" name="sCustName" style="width:100%;" placeholder="ex> 화주명, 운송/주선사명, 차량번호, 오더ID" class="p-input">
 						</div>
 						<div style="display: none;" id="orderSearch" class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<input type="text" id="orderId" name="orderId" class="form-control form-control-sm">
@@ -741,19 +741,19 @@
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<input type="text" name="sSubName" id="sSubName" class="form-control form-control-sm" readonly>
 						</div>
-						<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select" style="width: 100%" id="searchType" name="searchType">
 								<option value="bizName">사업자상호</option>
 								<option value="bizNum">사업자번호</option>
 							</select>
 						</div>
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-							<input type="text" id="bizName" name="bizName" style="width:100%;" placeholder="사업자 상호,번호를 입력하세요">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+							<input type="text" id="bizName" name="bizName" style="width:100%;" placeholder="사업자 상호,번호를 입력하세요" class="p-input">
 						</div>
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select name="sSubDept" id="sSubDept" class="custom-select"></select>
 						</div>
-						<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select" style="width: 100%" id="sSellBuySctn" name="sellBuySctn"></select>
 						</div>
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
@@ -816,7 +816,7 @@
 							</div>
 						</div><!-- /toolbar -->
 						<div style="min-width: 500px;">
-							<div style="height:calc(100vh - 409px)" id="calcList"></div>
+							<div style="height:calc(100vh - 260px)" id="calcList"></div>
 							
 							<ul id="calcListContextMenu">
                                 <!-- 22.07.15 이건욱 그리드 개인화 설정 -->
@@ -865,6 +865,13 @@ var errChk = false;
 
 // 22.07.15 이건욱 그리드 개인화 설정 -> 접속 사용자 아이디 세션 get 
 var userId = '${sessionScope.userInfo.userId}';
+
+$(window).bind("resize", function() {
+	$("#calcList").css("height", "calc(100vh - 260px)");
+
+	$("#calcList").data("kendoGrid").resize();
+});
+
 
 $("#calcListContextMenu").kendoContextMenu({
 	target: "#calcList",
@@ -1387,10 +1394,14 @@ function getSummary() {
 		success: function(data){
 			if(data.result == true) {
 				var	groupCount = ""
-				groupCount = "<i style=\"color: #3f75c1\">매출 : " + Util.nvl(Util.formatNumber(data.data.sellCnt), '0') + "건 / " + 
-							Util.nvl(Util.formatNumber(data.data.unpaidAmt), '0') + "원 / " + Util.nvl(Util.formatNumber(data.data.depositAmt), '0') + "원</i> | " +
-							 "<i style=\"color: #000000\">매입 " +  Util.nvl(Util.formatNumber(data.data.buyCnt), '0') + "건 / " + 
-							 Util.nvl(Util.formatNumber(data.data.payableAmt), '0') + "원 / " + Util.nvl(Util.formatNumber(data.data.withdrawAmt), '0') + "원</i> ";
+				groupCount = "<i class=\"sumSellCharge\">매출 : " +
+							Util.nvl(Util.formatNumber(data.data.sellCnt), 		"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건 / " +
+							Util.nvl(Util.formatNumber(data.data.unpaidAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 / " +
+							Util.nvl(Util.formatNumber(data.data.depositAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i> | " +
+							"<i class=\"sumBuyCharge\">매입 " +
+							Util.nvl(Util.formatNumber(data.data.buyCnt), 		"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건 / " +
+							Util.nvl(Util.formatNumber(data.data.payableAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 / " +
+							Util.nvl(Util.formatNumber(data.data.withdrawAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i> ";
 				$("#groupCount").html(groupCount);	
 			}
 			

@@ -666,6 +666,10 @@
 	box-sizing: border-box;
 }
 
+.p-input::placeholder{
+	color: #6d6d6d;
+}/*Placeholder 색 변경*/
+
 .input-group.input-group-sm.col-1.middle-name.div-min-col-1{
 	margin-right: 10px;
 }
@@ -835,6 +839,12 @@
 .editor_btns .padding > .k-button strong,
 .editor_btns .padding > .k-button b{
 	color: #fff;
+}
+
+.order_editor_btns{
+	position: absolute;
+	top: 35px;
+	right: 30px;
 }
 
 .editor_btns .padding > #orderDelete{
@@ -1078,10 +1088,12 @@
 }
 
 @media (max-width: 1536px){	
-	.media190{
+	.media190 {
 		width: 90px !important;
-	} 
-	
+	}
+	.media290{
+		width: 90px !important;
+	}
 }
 
 /* 배차관리 E*/

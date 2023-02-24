@@ -88,18 +88,37 @@
 						<div class="cont-b-head mb15">
 							<h4>회사정보</h4>
 							<c:if test="${custId ne 'newComp' && menuAuth.editYn eq 'Y'}">
+								<!--
 								<button type="submit" id="btnUpdateComp" class="btn_b">정보수정</button>
+								-->
 							</c:if>
+
+							<div class="row">
+								<c:if test="${custId eq 'newComp' && menuAuth.writeYn eq 'Y'}">
+									<button type="submit" id="btnUpdateComp" class="btn_b">저장</button>
+								</c:if>
+								<c:if test="${custId ne 'newComp' && menuAuth.editYn eq 'Y'}">
+									<button type="submit" id="btnUpdateComp" class="btn_b" style="margin-left:10px">정보수정</button>
+									<!--
+									<button type="button" id="btnAddDept" class="btn_b">부서추가</button>
+									-->
+									<c:if test="${sessionScope.userInfo.authSeq eq '100' }">
+										<button type="button" id="btnCreateApiKey" class="btn_b" style="margin-left:10px" onClick="createToken();">API키발급</button>
+										<button type="button" id="btnViewApiKey" class="btn_b" style="margin-left:10px" onClick="oepnApiKey();" style="display:none;">API키확인</button>
+									</c:if>
+								</c:if>
+							</div>
+
 						</div>
 							<div class="gray_box">
 							<div class="form-group row mt0">
 								<label class="big-name col-form-label">기본정보</label>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 								<strong class="required">상호</strong>
 								    <input type="text" id="bizName" required>
 	                                <div class="help-block with-errors"></div>
 								</div>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 								<strong>업태</strong>
 								    <input type="text" id="bizCond">
 								</div>
@@ -108,11 +127,11 @@
 								    <select id="custTypeCode" required></select> 
 	                                <div class="help-block with-errors"></div>
 								</div>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 								<strong>업종</strong>
 								    <input type="text" id="bizKind">
 								</div>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 								<strong class="required">과세유형</strong>
 								    <select id="bizTypeCode" required></select> 
 	                                <div class="help-block with-errors"></div>
@@ -122,16 +141,16 @@
 							
 							<div class="form-group row mt10">
 								<label class="col-form-label"></label>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 								<strong class="required">사업자번호</strong>
 								    <input type="text" id="bizNum" maxlength="12" required>
 	                                <div class="help-block with-errors"></div>
 								</div>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 								<strong>종사업장번호</strong>
 								    <input type="text" id="bizNumSub">
 								</div>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 								<strong class="required">대표자명</strong>
 								    <input type="text" id="ceo" required>
 	                                <div class="help-block with-errors"></div>
@@ -143,15 +162,15 @@
 								<div class="input-group input-group-sm middle-name wd190 mr10">
 								<strong>우편번호(검색)</strong>
 								    <div class="textBox-in-icon">
-	                                	<input style="border-radius: 0px 8px 8px 0px;" onClick="popSearchPost('');" type="text" class="form-control form-control-sm" id="bizPost">
+	                                	<input style="border-radius: 0px 8px 8px 0px;" onClick="popSearchPost('');" type="text" class="form-control form-control-sm wd190" id="bizPost">
 										<i><img onclick="popSearchPost('');" src="/images/icon/icon_search.png"></i>
 									</div>
 								</div>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 								<strong>주소</strong>
 								    <input type="text" id="bizAddr">
 								</div>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 								<strong>상세주소</strong>
 								    <input type="text" id="bizAddrDetail">
 								</div>
@@ -159,15 +178,15 @@
 							
 							<div class="form-group row bortop mt20 pt20">
 								<label class="big-name col-form-label">계좌정보</label>
-								<div class="input-group input-group-sm middle-name wd190 mr10">
+								<div class="input-group input-group-sm middle-name wd190 media190 mr10">
 	                            <strong>은행명</strong>
 	                                <select id="bankCode"></select>
 	                            </div>
-	                            <div class="input-group input-group-sm middle-name wd190 mr10">
+	                            <div class="input-group input-group-sm middle-name wd190 media190 mr10">
 	                            <strong>예금주</strong>
 	                                <input type="text" id="bankCnnm">
 	                            </div>
-	                            <div class="input-group input-group-sm middle-name wd190 mr10">
+	                            <div class="input-group input-group-sm middle-name wd190 media190 mr10">
 	                            <strong>계좌번호</strong>
 	                                <input type="text" id="bankAccount">
 	                            </div>
@@ -226,6 +245,12 @@ $(document).ready(function(){
 	Util.setCmmCode("select", "custTypeCode", "CUST_TYPE_CD", "01", "선택");
 	Util.setCmmCode("select", "bizTypeCode", "BIZ_TYPE_CD", "", "선택하세요");
     Util.setCmmCode("select", "bankCode", "BANK_CD", "", "선택하세요");
+
+	$(window).bind("resize", function() {
+		$("#comp_list").css("height", "calc(100vh - 529px");
+
+		$("#comp_list").data("kendoGrid").resize();
+	});
 
  	$.ajax({
 		url: "/contents/basic/data/compList.do?custId="+'${custId}',

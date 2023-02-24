@@ -14,10 +14,10 @@
 			<form id="fSearch" name="fSearch" class="date-bnt" method="post">
 				<div class="form-group row mt0">
 					<input type="hidden" name="searchType" id="searchType">
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name">
 					    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd90">
 					</div>
-					<span style="margin-right: 10px">~</span>
+					<span>~</span>
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 					    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="wd90">
 					</div>
@@ -26,7 +26,7 @@
 					    <select class="form-control" class="custom-select wd90" id="sSido" name="sSido"></select>
 	                </div>
 	                
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-2">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 					    <select id="sGungu" name="sGungu" class="form-control form-control-sm">
 	                  		<option value="" selected="selected">군/구</option>
 	                  		<option>출발지역 시/도 를 선택해 주세요.</option>
@@ -44,7 +44,7 @@
 	                  	</select>
 	                </div> 
 	                
-					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 					    <select class="form-control" class="custom-select" style="width: 100%" id="carContractCode" name="carContractCode"></select>
 	                </div>
 	                
@@ -67,7 +67,7 @@
 					    </select>
 	                </div>
 	                
-	                <div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+	                <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 					    <select id="arrivalTimeCode" name="arrivalTimeCode" class="form-control" class="custom-select" style="width: 100%">
 					    	<option value="" selected="selected">운송소요시간</option>
 					    	<option value="01">당착</option>
@@ -77,7 +77,7 @@
                 </div>
                 
 				<div class="form-group row" style="justify-content: space-between">
-	                <div>
+	                <div class="row">
 						<!--
 						<div class="middle-name" style="width: 0px; padding: 0em 0em 0em 0.3em;">
 							<strong>면허요건</strong>
@@ -138,7 +138,7 @@
 					</div>
                 </div>
                 
-				<div class="form-group row" style="padding: 0.625em 0em 0.625em 0em;">
+				<div class="form-group row" style="padding: 0.625em 0em 0.625em 0em;height: 48px">
 				    <table id="simpleDataRow">
 				        <thead>
 				            <tr>
@@ -151,7 +151,7 @@
 				        </thead>
 				    </table>
 				</div>
-				<div id="grid" style="height:calc(100vh - 388px)"></div>
+				<div id="grid" style="height:calc(100vh - 350px)"></div>
 			</form>
 		</div>
 	</div>

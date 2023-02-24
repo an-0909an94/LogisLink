@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-	#cust_addr_list .k-grid-content {max-height:calc(100vh)}
+	#cust_addr_list .k-grid-content {max-height:calc(100vh - 240px)}
 </style>
 
 <div class="insert_pop">
@@ -30,7 +30,7 @@
 							<option value="ADDR_NAME">--주소지명--</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd290 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 						<input type="text" id="searchValue" name="searchValue" style="width:100%" class="form-control form-control-sm searchValue" placeholder="검색항목을 입력하세요">
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 							</div>
 						</div><!-- /toolbar -->
 						<div style="min-width: 500px;">
-							<div style="height:calc(100vh - 344px);" id="cust_addr_list"></div>
+							<div style="height:calc(100vh - 240px);" id="cust_addr_list"></div>
 							<!-- /table -->
 						</div>
 					</div>
@@ -82,7 +82,14 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function(){ 
+$(document).ready(function(){
+
+	$(window).bind("resize", function() {
+		$("#cust_addr_list").css("height", "calc(100vh - 240px)");
+
+		$("#cust_addr_list").data("kendoGrid").resize();
+	});
+
 	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn:'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서선택--");
 	
  	goList();

@@ -71,15 +71,15 @@
 										<input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
 										<label for="autoRefresh" class="label_on-off" style="vertical-align:middle;">
 											<span class="marble"></span>
-											<span class="on">on</span>
-											<span class="off">off</span>
+											<span class="on">ON</span>
+											<span class="off">OFF</span>
 										</label>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div style="min-width: 500px;">
-							<div style="height:calc(100vh - 287px)" id="grid"></div>
+						<div class="row">
+							<div style="height:calc(100vh - 240px)" id="grid"></div>
 							<!-- /table -->
 						</div>
 					</div>
@@ -108,6 +108,13 @@ var day = ("0" + date.getDate()).slice(-2);
 var toDay = year + month + day;
 
 $(document).ready(function(){
+
+	$(window).bind("resize", function() {
+		$("#grid").css("height", "calc(100vh - 240px)");
+
+		$("#grid").data("kendoGrid").resize();
+	});
+
 	Util.setSelectBox("/contents/basic/data/compDeptList.do", "deptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", '${sessionScope.userInfo.deptId}', "전체부서");
 	Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "${sessionScope.userInfo.userId}", "전체");
 	$("#deptId").on("change", function(){ 

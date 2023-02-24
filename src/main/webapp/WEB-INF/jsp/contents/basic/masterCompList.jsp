@@ -22,7 +22,7 @@
 							<option value="s_bizNum">--사업자번호--</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd290 div-min-col-1 middle-name">
+					<div class="input-group input-group-sm wd190 media190 div-min-col-1 middle-name">
 						<input type="text" id="searchValue" name="searchValue" style="width:100%"
 							   class="form-control form-control-sm searchValue" placeholder="검색항목을 입력하세요">
 					</div>
@@ -61,7 +61,7 @@
 								</div>
 							</div>
 						</div><!-- /toolbar -->
-						<div style="height:calc(100vh - 344px)" id="cust_mst_list"></div>
+						<div style="height:calc(100vh - 240px)" id="cust_mst_list"></div>
 						<!-- /table -->
 					</div>
 				</div>
@@ -78,7 +78,14 @@
 
 <script type="text/javascript">
 
-$(document).ready(function(){ 	
+$(document).ready(function(){
+
+	$(window).bind("resize", function() {
+		$("#cust_mst_list").css("height", "calc(100vh - 240px)");
+
+		$("#cust_mst_list").data("kendoGrid").resize();
+	});
+
  	goList();
 });
 

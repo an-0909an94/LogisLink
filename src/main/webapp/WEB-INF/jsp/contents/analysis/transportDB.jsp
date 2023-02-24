@@ -11,7 +11,7 @@
         <div id="group-list" class="cont-wrapper-page-grid">
             <form id="fSearch" class="date-bnt" method="post">
                 <div class="row mt0" style="justify-content: space-between">
-                    <div>
+                    <div class="row">
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <input style="width: 100%; padding: 0px" id="searchYear" name="searchYear" data-role="datepicker" data-start="decade" data-depth="decade" data-format="yyyy" />
                             <input type="hidden" id="fromDate" name="fromDate">
@@ -22,10 +22,10 @@
                                 <option>--부서명--</option>
                             </select>
                         </div>
-                        <div class="input-group input-group-sm wd290 middle-name div-min-col-1">
+                        <div class="input-group input-group-sm wd290 media290 middle-name div-min-col-1">
                             <input type="hidden" id="sCustId" name="sCustId">
                             <input type="hidden" id="sDeptId" name="sDeptId">
-                            <input type="text" id="sCustName" name="sCustName" style="width: 100%;" placeholder="거래처명">
+                            <input type="text" id="sCustName" name="sCustName" style="width: 100%;" placeholder="거래처명" class="p-input">
                         </div>
                     </div>
                     <div class="row">

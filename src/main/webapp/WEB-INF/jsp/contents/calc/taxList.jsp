@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <style>
-	#taxList .k-grid-content {max-height:calc(100vh)}
-	
+	#taxList .k-grid-content {max-height:calc(100vh - 260px)}
+
 	.etax {color:#0065bd !important;} 
 </style>
 
@@ -359,13 +359,13 @@
 								<div class="input-group input-group-sm col radio-or-checkBox">
 									<input value="01" id="pubForm01" name="pubForm" type="radio"
 										   checked>
-									<label for="pubForm01" class="label-margin">
+									<label for="pubForm01" class="label-margin" style="padding-bottom: 0px">
 										<span>영수</span>
 									</label>
 								</div>
-								<div class="input-group input-group-sm col radio-or-checkBox">
+								<div class="input-group input-group-sm col radio-or-checkBox" >
 									<input value="02" id="pubForm02" name="pubForm" type="radio">
-									<label for="pubForm02" class="label-margin">
+									<label for="pubForm02" class="label-margin" style="padding-bottom: 0px">
 										<span>청구</span>
 									</label>
 								</div>
@@ -448,14 +448,14 @@
 			<form id="fSearch" name="fSearch" method="post" class="date-bnt">
 				<!-- 검색 1 라인 -->
 				<div class="form-group row mt0">
-					<div class="input-group input-group-sm wd190 middle-name">
+					<div class="input-group input-group-sm wd90 middle-name">
 						<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
-							   class="wd190">
+							   class="wd90">
 					</div>
-					<span style="margin-right: 10px;margin-left: 10px">~</span>
-					<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+					<span>~</span>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<input style="padding: 0;" type="text" id="toDate" name="toDate"
-							   class="wd190 ">
+							   class="wd90">
 					</div>
 
 					<div class="input-group input-group-sm wd90 radio-or-checkBox">
@@ -483,28 +483,28 @@
 						</label>
 					</div>
 
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
-						<select class="custom-select wd100" id="pubType" name="pubType">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="custom-select wd90" id="pubType" name="pubType">
 							<option value="S" selected>매출</option>
 							<option value="R">매입</option>
 						</select>
 					</div>
 
-					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
-						<select class="custom-select wd120" id="sLoadStatus" name="sLoadStatus">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="custom-select wd90" id="sLoadStatus" name="sLoadStatus">
 							<option value="" selected>전자발행여부</option>
 							<option value="0">일반</option>
 							<option value="1">전자</option>
 						</select>
 					</div>
 
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1"
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1"
 						 style="min-width: 100px; max-width: 100px">
 						<input type="text" id="s_issueId" name="s_issueId"
 							   class="form-control form-control-sm wd100" placeholder="승인번호">
 					</div>
 
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1"
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1"
 						 style="min-width: 100px; max-width: 100px">
 						<input type="text" id="s_mngCarNum" name="s_mngCarNum"
 							   class="form-control form-control-sm wd100" placeholder="차량번호">
@@ -513,19 +513,19 @@
 				<!-- 검색 2 라인 -->
 				<!-- 22.06.22 이건욱 T11 > J40 추가 -->
 				<div class="form-group row" style="justify-content: space-between">
-					<div>
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+					<div class="row">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 							<input type="text" id="supplierName" name="supplierName"
-								   style="width:100%;" placeholder="공급자">
+								   style="width:100%;" placeholder="공급자" class="p-input">
 						</div>
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-							<input type="text" id="buyerName" name="buyerName" style="width:100%;" placeholder="공급받는자">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+							<input type="text" id="buyerName" name="buyerName" style="width:100%;" placeholder="공급받는자" class="p-input">
 						</div>
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-							<input type="text" id="regCustName" name="regCustName" style="width:100%;" placeholder="발행업체">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+							<input type="text" id="regCustName" name="regCustName" style="width:100%;" placeholder="발행업체" class="p-input">
 						</div>
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-							<select class="form-control custom-select wd190" id="regName"
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+							<select class="form-control custom-select wd190 media190" id="regName"
 									name="regName"></select>
 						</div>
 					</div>
@@ -558,7 +558,7 @@
 							</div>
 						</div><!-- /toolbar -->
 						<div style="min-width: 500px;">
-							<div style="height:calc(100vh - 344px)" id="taxList"></div>
+							<div style="height:calc(100vh - 260px)" id="taxList"></div>
 						</div>
 					</div>
 				</div>
@@ -580,7 +580,13 @@ $(document).ready(function() {
  	$("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
 	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true}); 
 	Util.setSearchDateForm();
-	
+
+	$(window).bind("resize", function() {
+		$("#taxList").css("height", "calc(100vh - 250px)");
+
+		$("#taxList").data("kendoGrid").resize();
+	});
+
 	// 22.06.22 이건욱 T11 > J40 추가
 	// 공급자
 	Util.setBizName("supplierName", "");

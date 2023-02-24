@@ -43,12 +43,14 @@
                                 <legend id="cust_legend">거래처 등록</legend>
                                 <div class="editor_btns order_editor_btns" style="text-align:center;">
                                     <div class="padding">
-                                        <button type="submit" class="k-pager-refresh k-button" id="btn_saveCust"><b class="btn-b"><strong id="btn_save">저장</strong></b></button>
-                                        <a onclick="init_popup_close();" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
+                                        <button type="submit" class="k-pager-refresh k-button btn_58 btn_b" id="btn_saveCust">
+                                            <b class="btn-b"><strong id="btn_save">저장</strong></b>
+                                        </button>
+                                        <a onclick="init_popup_close();" class="k-pager-refresh k-button btn_58"><b class="btn-g">닫기</b></a>
                                     </div>
                                 </div>
                                 <div class="form-group row gray_box">
-                                    <label class="col-form-label big-name">사업자조회</label>
+                                    <label class="col-form-label modal-big-name">사업자조회</label>
 
                                     <div class="input-group input-group-sm wd290 middle-name form-group">
                                         <strong class="required">사업자번호</strong>
@@ -68,7 +70,7 @@
 		                        </div>
                                 <div class="mt20"></div>
                                 <div class="form-group row gray_box">
-                                    <label class="col-form-label big-name">우리회사<br>담당자</label>
+                                    <label class="col-form-label modal-big-name">우리회사<br>담당자</label>
                                     <div class="input-group input-group-sm wd140 middle-name form-group">
                                     	<strong class="required">담당부서</strong>
                                     	<select id="mngDeptId" name="mngDeptId" class="custom-select wd140" required></select>
@@ -82,7 +84,7 @@
                                 <div class="mt20"></div>
                                 <div class="gray_box">
                                     <div class="form-group row">
-                                        <label class="col-form-label big-name">기본정보</label>
+                                        <label class="col-form-label modal-big-name">기본정보</label>
                                         <div class="input-group input-group-sm wd190 middle-name form-group">
                                             <strong class="required">거래처명</strong>
                                             <input type="text" class="form-control form-control-sm" style="width:100%" id="custName" required>
@@ -201,7 +203,7 @@
                                 <div class="mt20"></div>
                                 <div class="gray_box">
                                     <div class="form-group row">
-                                        <label class="col-form-label big-name">사업자정보</label>
+                                        <label class="col-form-label modal-big-name">사업자정보</label>
                                         <div class="input-group input-group-sm wd140 middle-name form-group">
                                             <strong class="required">상호</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="bizName" required>
@@ -286,7 +288,7 @@
                                 </div>
                                 <div class="mt20"></div>
                                 <div style="position: relative;" class="form-group row gray_box" id="deptGroup">
-                                    <label class="col-form-label big-name">부서</label>
+                                    <label class="col-form-label modal-big-name">부서</label>
                                     <!-- <a style="display:none;position: absolute;top: 50%;transform: translateY(-99%);left: 0%;margin-left: 2.4em;background: #fff;border-radius: 4px;box-shadow: 0px 0px 2px 0px;color: #0A8DFF;font-weight: bolder;" 
                                     class="k-pager-refresh k-button" id="btnAddDept">신규추가</a>-->
                                     <div class="input-group input-group-sm wd140 middle-name form-group" style="width:100%" id="divDeptSelect">
@@ -295,7 +297,7 @@
                                 <div class="mt20"></div>
                                 <div class="gray_box">
                                     <div class="form-group row">
-                                        <label class="col-form-label big-name">부서정보</label>
+                                        <label class="col-form-label modal-big-name">부서정보</label>
                                         <div class="input-group input-group-sm wd100 middle-name form-group">
                                             <strong>세금계산서 담당자</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="taxStaffName">
@@ -341,7 +343,7 @@
                                 <div class="mt20"></div>
                                 <div class="gray_box">
                                     <div class="form-group row">
-                                        <label class="col-form-label big-name">거래처 담당자</label>
+                                        <label class="col-form-label modal-big-name">거래처 담당자</label>
                                         <div class="input-group input-group-sm wd140 middle-name form-group">
                                             <strong class="required">담당자명</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="userName" required>
@@ -391,10 +393,10 @@
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>알림톡 수신여부</strong>
                                             <input type="checkbox" id="talk" name="talk" class="input_on-off">
-                                            <label for="talk" class="label_on-off">
+                                            <label for="talk" class="label_on-off" style="vertical-align:middle;">
                                                 <span class="marble"></span>
-                                                <span class="on">on</span>
-                                                <span class="off">off</span>
+                                                <span class="on">ON</span>
+                                                <span class="off">OFF</span>
                                             </label>
                                         </div>
                                     </div>

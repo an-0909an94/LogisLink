@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-	#car_list .k-grid-content {max-height:calc(100vh - 471px)}
+	#car_list .k-grid-content {max-height:calc(100vh - 240px)}
 </style>
 <div class="insert_pop">
 	<jsp:include page="./view/carInsert.jsp" />
 </div>
 <div class="header">
-	
 	<div class="summary p30">
 		<div class="hdr-tit">
 			<P id="headerTitle">차량관리</P>
@@ -31,18 +30,18 @@
 						<option value="A.BIZ_NAME">--사업자상호--</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-				    <input type="text" id="searchValue" name="searchValue" style = "width:100%" class="form-control form-control-sm searchValue" placeholder="검색항목을 입력하세요">
+				<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+				    <input type="text" id="searchValue" name="searchValue" class="form-control form-control-sm searchValue wd190 media190" placeholder="검색항목을 입력하세요">
 				</div>	
-				<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-				    <select class="custom-select wd190" id="dangerGoodsUseYn" name="dangerGoodsUseYn" style="width:100%">
+				<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+				    <select class="custom-select wd190 media190" id="dangerGoodsUseYn" name="dangerGoodsUseYn" style="width:100%">
 						<option value="" selected>--위험물 운송 가능 여부--</option>
 		                <option value="Y">가능</option>
 		                <option value="N">불가</option>
 				    </select>
 				</div>	
-				<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-				    <select class="custom-select wd190" id="chemicalsUseYn" name="chemicalsUseYn" style="width:100%">
+				<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+				    <select class="custom-select wd190 media190" id="chemicalsUseYn" name="chemicalsUseYn" style="width:100%">
 						<option value="" selected>--유해 화학물질 운송 가능 여부--</option>
 		                <option value="Y">가능</option>
 		                <option value="N">불가</option>
@@ -55,8 +54,8 @@
 		                <option value="N">없음</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm wd140 middle-name div-min-col-1">
-				    <select class="custom-select wd140" id="forkliftUseYn" name="forkliftUseYn">
+				<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+				    <select class="custom-select wd190 media190" id="forkliftUseYn" name="forkliftUseYn">
 						<option value="" selected>--지게차 면허 여부--</option>
 		                <option value="Y">있음</option>
 		                <option value="N">없음</option>
@@ -90,30 +89,30 @@
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="custom-select wd90" id="s_carTonCode" name="s_carTonCode"> </select>
 					</div>
-					<div class="input-group input-group-sm wd170 middle-name div-min-col-1">
-						<select class="custom-select wd170" id="s_payType" name="s_payType">
+					<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+						<select class="custom-select wd190 media190" id="s_payType" name="s_payType">
 							<option value="">--빠른지급 대상 여부--</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd170 middle-name div-min-col-1">
-						<select class="custom-select wd170" id="s_taxjoinYn" name="s_taxjoinYn">
+					<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+						<select class="custom-select wd190 media190" id="s_taxjoinYn" name="s_taxjoinYn">
 							<option value="">--스마트빌 회원가입--</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd140 middle-name div-min-col-1">
-						<select class="custom-select wd140" id="s_emailYn" name="s_emailYn">
-							<option value="">--이메일 유무--</option>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="custom-select wd90" id="s_emailYn" name="s_emailYn">
+							<option value="">이메일 유무</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd140 middle-name div-min-col-1">
-						<select class="custom-select wd140" id="s_accountYn" name="s_accountYn">
-							<option value="">--계좌정보 유무--</option>
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+						<select class="custom-select wd90" id="s_accountYn" name="s_accountYn">
+							<option value="">계좌정보 유무</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
@@ -150,7 +149,7 @@
 						</div><!-- /toolbar -->
 
 						<div style="min-width: 500px;">
-							<div style="height:calc(100vh - 409px)" id="car_list"></div>
+							<div style="height:calc(100vh - 240px)" id="car_list"></div>
 
 							<ul id="CarListContextMenu">
 								<li id="cSave" class="privateRClick">리스트 현재설정 저장</li>
@@ -185,7 +184,14 @@ $("#CarListContextMenu").kendoContextMenu({
 var contextMenu = $("#CarListContextMenu").data("kendoContextMenu");
 contextMenu.bind("select", onContextMenuSelect);
 
-$(document).ready(function(){ 	
+$(document).ready(function(){
+
+	$(window).bind("resize", function() {
+		$("#car_list").css("height", "calc(100vh - 240px)");
+
+		$("#car_list").data("kendoGrid").resize();
+	});
+
 	$("#mobile, #telNum, #cid").val(Util.formatPhone($("#mobile, #telNum, #cid").val()));
 
 	Util.setCmmCode("select", "s_carMngCode", "CAR_MNG_CD", "", "--차량등급--");

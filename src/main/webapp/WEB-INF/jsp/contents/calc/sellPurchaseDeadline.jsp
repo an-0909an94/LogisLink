@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-	#sellPurchDeadstyle .k-grid-content {max-height:calc(100vh - 452px)}
+	#sellPurchDeadstyle .k-grid-content {max-height:calc(100vh - 310px)}
 </style>
 
 
@@ -179,13 +179,13 @@
 	                      <div class="form-check-inline btn_gra_tax" style="border-radius:10px;width:100%">
 	                          <div class="input-group input-group-sm col radio-or-checkBox">
 				            	<input value="01" id="pubForm01" name="pubForm" type="radio" disabled="disabled">
-				            	<label for="pubForm01" class="label-margin">
+				            	<label for="pubForm01" class="label-margin" style="padding-bottom: 0px">
 				            	<span>영수</span>
 				            	</label>
 				             </div>
 				             <div class="input-group input-group-sm col radio-or-checkBox">
 				            	<input value="02" id="pubForm02" name="pubForm" type="radio" disabled="disabled">
-				            	<label for="pubForm02" class="label-margin">
+				            	<label for="pubForm02" class="label-margin" style="padding-bottom: 0px">
 				            	<span>청구</span>
 				               	</label>
 				             </div>
@@ -228,10 +228,10 @@
 
 				<!-- 검색 1라인-->
 				<div class="form-group row mt0">
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name">
 				    	<input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd90">
 					</div>
-						<span style="margin-right: 10px;">~</span>
+						<span>~</span>
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 				    	<input style="padding: 0;" type="text" id="toDate" name="toDate" class="wd90">
 					</div>
@@ -280,7 +280,7 @@
 				    	<select class="form-control" class="custom-select wd90" id="userId" name="userId"></select>
 					</div>
 				
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 				    	<select class="form-control" class="custom-select" style="width:100%" id="sellFinishYn" name="sellFinishYn">
 				    		<option value="">매출마감여부</option>
 				    		<option value="Y">Y</option>
@@ -288,7 +288,7 @@
 				    	</select>
 					</div>
 				
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 				    	<select class="form-control" class="custom-select" style="width:100%" id="buyFinishYn" name="buyFinishYn">
 				    		<option value="">매입마감여부</option>
 				    		<option value="Y">Y</option>
@@ -296,7 +296,7 @@
 				    	</select>
 					</div>
 				
-					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 				    	<select class="form-control" class="custom-select" style="width: 100%" id="reqPayYn" name="reqPayYn">
 				    	<option value="">빠른지급여부</option>
 				    	<option value="Y">Y</option>
@@ -307,16 +307,16 @@
 
 				<!-- 검색 2라인 -->
 				<div class="form-group row" style="justify-content: space-between">
-					<div>
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-							<input type="text" id="driverValue" name="driverValue" style="width:100%;" placeholder="차량번호">
+					<div class="row">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+							<input type="text" id="driverValue" name="driverValue" style="width:100%;" placeholder="차량번호" class="p-input">
 						</div>
 
-						<div class="input-group input-group-sm wd290 middle-name div-min-col-1">
-							<input type="text" id="sCustName" name="sCustName" style="width:100%;" placeholder="거래처(화주)">
+						<div class="input-group input-group-sm wd290 media290 middle-name div-min-col-1">
+							<input type="text" id="sCustName" name="sCustName" style="width:100%;" placeholder="거래처(화주)" class="p-input">
 						</div>
 
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 							<input type="text" id="sTax" name="sTax" style="width:100%;" class="form-control form-control-sm searchValue" placeholder="계산서 발행지">
 						</div>
 
@@ -332,7 +332,7 @@
 							</select>
 						</div>
 
-						<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select" id="orderStopYn" style="width: 100%" name="orderStopYn">
 								<option value="">경유지여부</option>
 								<option value="Y">있음</option>
@@ -403,10 +403,10 @@
 						        </thead>
 						    </table>
 						</div>
+						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 310px);">
 						<!--
-						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 472px);">
-						-->
 						<div id="splitter" class="col" style="min-width: 500px; max-width: 100vw; min-height:100vh">
+						-->
 							<div class="top-pane">
 								<div style="height: 100%;" id="selPurDead"></div>
 							</div>
@@ -442,6 +442,13 @@ var searchCar;
 var submitChk = true;
 
 var userId='${sessionScope.userInfo.userId}';
+
+$(window).bind("resize", function() {
+	$("#splitter").css("height", "calc(100vh - 310px)");
+
+	$("#splitter").data("kendoGrid").resize();
+});
+
 
 $("#sellPurchDeadContextMenu").kendoContextMenu({
 	target: "#selPurDead",

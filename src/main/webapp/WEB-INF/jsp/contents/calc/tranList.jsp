@@ -48,14 +48,14 @@
 			<form id="fSearch" class="date-bnt">
 				<div class="form-group row mt0" style="justify-content: space-between">
 					<div>
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd90 middle-name">
 							<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
-								   class="wd190">
+								   class="wd90">
 						</div>
-						<span style="margin-right: 10px;">~</span>
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+						<span>~</span>
+						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<input style="padding: 0;" type="text" id="toDate" name="toDate"
-								   class="wd190">
+								   class="wd90">
 						</div>
 
 						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
@@ -83,12 +83,12 @@
 							</label>
 						</div>
 						<!-- 22.06.21 이건욱 T11 > J39 추가 -->
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 							<input type="text" id="supplierName" name="supplierName"
-								   style="width:100%;" placeholder="공급자">
+								   style="width:100%;" placeholder="공급자" class="p-input">
 						</div>
-						<div class="input-group input-group-sm wd190 middle-name div-min-col-1">
-							<input type="text" id="buyerName" name="buyerName" style="width:100%;" placeholder="공급받는자">
+						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+							<input type="text" id="buyerName" name="buyerName" style="width:100%;" placeholder="공급받는자" class="p-input">
 						</div>
 						<!-- End -->
 					</div>
@@ -121,7 +121,7 @@
 								</div>
 							</div>
 						</div><!-- /toolbar -->
-						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 344px);">
+						<div id="splitter" style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 260px);">
 							<div class="top-pane">
 								<div style="height: 100%;" id="tranList"></div>
 							</div>
