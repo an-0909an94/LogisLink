@@ -272,16 +272,16 @@
 					<div class="input-group input-group-sm wd140 mr10 mt0 middle-name"
 						 style="text-align: left;">
 						<strong class="required">조직</strong>
-						<input type="hidden" name="custId" id="custId">
-						<input type="text" style="width: 100%;" name="custName" id="custName"
+						<input type="hidden" name="custId" id="_custId">
+						<input type="text" style="width: 100%;" name="custName" id="_custName"
 							   required>
 						<div class="help-block with-errors"></div>
 					</div>
 					<div class="input-group input-group-sm wd140 mr10 mt0 middle-name"
 						 style="text-align: left;">
 						<strong class="required">소속부서</strong>
-						<input type="hidden" name="deptId" id="deptId">
-						<input type="text" style="width: 100%;" name="deptName" id="deptName"
+						<input type="hidden" name="deptId" id="_deptId">
+						<input type="text" style="width: 100%;" name="_deptName" id="_deptName"
 							   required>
 						<div class="help-block with-errors"></div>
 					</div>
@@ -289,23 +289,23 @@
 				<div class="form-group row">
 					<div class="form-group row">
 						<label class="col-form-label modal-big-name"></label>
-						<div class="input-group input-group-sm wd140 mr10 mt0 middle-name" style="text-align: left;">
+						<div class="input-group input-group-sm wd140 mr10 mt0 middle-name form-group" style="text-align: left;">
 							<strong class="required">아이디</strong>
-							<input class="" type="text" style="width: 100%" id="userId" name="userId" readonly>
+							<input class="form-group form-group-sm" type="text" style="width: 100%; font-size: 14px" id="_userId" name="userId" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g,'');" required>
 						</div>
 						<div class="row">
 							<div class="input-group input-group-sm middle-name wd140 mr10 mt0 chgPasswd"
 								 style="text-align: left;">
 								<strong style="height: 18px"></strong>
 								<button style="width: 100%" class="form-control a-text-center"
-										id="btnChgPasswd">비밀번호 변경
+										id="_btnChgPasswd">비밀번호 변경
 								</button>
 							</div>
 							<div class="input-group input-group-sm middle-name wd140 mr10 mt0 writePasswd"
 								 style="text-align: left;">
 								<strong class="required">비밀번호</strong>
 								<input type="password" style="width: 100%"
-									   class="form-control form-control-sm" id="passwd"
+									   class="form-control form-control-sm" id="_passwd"
 									   pattern="^(?=.{4,265}$).*"
 									   data-pattern-error="4자리 이상 입력해 주세요.">
 								<div class="help-block with-errors"></div>
@@ -319,12 +319,12 @@
 						 style="text-align: left;">
 						<strong>이름</strong>
 						<input style="width: 100%" type="text" class="form-control form-control-sm"
-							   id="userName">
+							   id="_userName" readonly="readonly" >
 					</div>
 					<div class="input-group input-group-sm wd90 mr10 mt0 middle-name"
 						 style="text-align: left;">
 						<strong class="required">권한</strong>
-						<select style="width: 100%" class="custom-select" id="authSeq"
+						<select style="width: 100%" class="custom-select" id="_authSeq"
 								required></select>
 						<div class="help-block with-errors"></div>
 					</div>
@@ -333,7 +333,7 @@
 						<strong>직급</strong>
 						<input style="width: 100%;text-align: left" type="text"
 							   class="form-control form-control-sm"
-							   id="grade">
+							   id="_grade">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -342,14 +342,14 @@
 						 style="text-align: left;">
 						<strong class="required">휴대전화</strong>
 						<input style="width: 100%" type="text" class="form-control form-control-sm"
-							   id="mobile" maxlength="13" required>
+							   id="_mobile" maxlength="13" required>
 						<div class="help-block with-errors"></div>
 					</div>
 					<div class="input-group input-group-sm wd140 mr10 mt0 middle-name"
 						 style="text-align: left;">
 						<strong>전화번호</strong>
 						<input style="width: 100%" type="text" class="form-control form-control-sm"
-							   id="telNum" maxlength="13">
+							   id="_telNum" maxlength="13">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -358,14 +358,14 @@
 						 style="text-align: left;">
 						<strong>이메일</strong>
 						<input style="width: 100%" type="text" class="form-control form-control-sm"
-							   id="email">
+							   id="_email">
 					</div>
 					<div class="input-group input-group-sm wd140 mr10 mt0 middle-name"
 						 style="text-align: left">
 						<strong>등록일</strong>
 						<input style="width: 100%;background-color:#E9ECEF" type="text"
 							   class="form-control form-control-sm"
-							   id="regDate" readonly="readonly">
+							   id="_regDate" readonly="readonly">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -374,13 +374,13 @@
 						 style="text-align: left;">
 						<strong>24시콜 아이디</strong>
 						<input style="width: 100%" type="text" class="form-control form-control-sm"
-							   id="link24Id">
+							   id="_link24Id">
 					</div>
 					<div class="input-group input-group-sm wd140 mr10 mt0 middle-name"
 						 style="text-align: left;">
 						<strong>24시콜 비밀번호</strong>
 						<input style="width: 100%" type="password"
-							   class="form-control form-control-sm" id="link24Pass">
+							   class="form-control form-control-sm" id="_link24Pass">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -389,13 +389,13 @@
 						 style="text-align: left;">
 						<strong>화물맨 아이디</strong>
 						<input style="width:100%" type="text" class="form-control form-control-sm"
-							   id="man24Id">
+							   id="_man24Id">
 					</div>
 					<div class="input-group input-group-sm wd140 mr10 mt0 middle-name"
 						 style="text-align: left;">
 						<strong>화물맨 비밀번호</strong>
 						<input style="width: 100%" type="password"
-							   class="form-control form-control-sm" id="man24Pass">
+							   class="form-control form-control-sm" id="_man24Pass">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -404,13 +404,13 @@
 						 style="text-align: left;">
 						<strong>원콜 아이디</strong>
 						<input style="width: 100%" type="text" class="form-control form-control-sm"
-							   id="one24Id">
+							   id="_one24Id">
 					</div>
 					<div class="input-group input-group-sm wd140 mr10 mt0 middle-name"
 						 style="text-align: left;">
 						<strong>원콜 비밀번호</strong>
 						<input style="width: 100%" type="password"
-							   class="form-control form-control-sm" id="one24Pass">
+							   class="form-control form-control-sm" id="_one24Pass">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -419,14 +419,14 @@
 						 style="text-align: left;">
 						<strong>DOUZONE 아이디</strong>
 						<input style="width: 100%" type="text" class="form-control form-control-sm"
-							   id="douzoneId">
+							   id="_douzoneId">
 					</div>
 					<div class="input-group input-group-sm wd140 mr10 mt0 middle-name"
 						 style="text-align: left;">
 						<strong>알림톡 수신여부</strong>
-						<input style="width: 100%" type="checkbox" id="talkYn" name="talkYn"
+						<input style="width: 100%" type="checkbox" id="_talkYn" name="talkYn"
 							   class="input_on-off" value="Y">
-						<label for="talkYn" class="label_on-off">
+						<label for="_talkYn" class="label_on-off">
 							<span class="marble"></span>
 							<span class="on">on</span>
 							<span class="off">off</span>
@@ -439,14 +439,14 @@
 						 style="text-align: left;">
 						<strong>메모</strong>
 						<textarea rows="4" style="width: 100%" class="form-control textarea"
-								  id="memo" name="memo"></textarea>
+								  id="_memo" name="memo"></textarea>
 					</div>
 				</div>
 			</div>
 			<div class="editor_btns">
 				<div class="padding">
 					<button type="submit" class="k-pager-refresh k-button btn_b"><strong><b
-							id="privBtnSave" class="btn-b">저장</b></strong></button>
+							id="privBtnSave">저장</b></strong></button>
 					<button type="button" onclick="PrivateClose()"
 							class="k-pager-refresh k-button"><strong><b
 							class="btn-g">닫기</b></strong></button>
@@ -603,10 +603,7 @@ $(document).ready(function(){
 		toggleGNBSize();
 	});
 
-
-
 	//펼쳐진 네비메뉴의 서브메뉴가 열린 상태에서 메뉴 접을 시 서브메뉴 없어짐
-
 
 	//nav 접기 펼치기
 	// $('.side-nav-btn').on('click',function(){
@@ -651,8 +648,6 @@ $(document).ready(function(){
 	// 	$('.cont-body').toggleClass('cont-body-atv');
 	// });
 
-
-
 	//검색값 입력 후 enter key event
 	if($(".searchValue").length > 0) {
 		$(".searchValue").on("keypress", function (event){
@@ -676,7 +671,6 @@ $(document).ready(function(){
 		}
 	});
 
-
 	userPrivateModal = $("#divUserPrivate");
 
 	userPrivateModal.kendoDialog({
@@ -690,7 +684,6 @@ $(document).ready(function(){
 			$("#fUserPrivate")[0].reset();
 		}
 	});
-
 
 	$("#defaultInOutSctn").on("change", function(){
 		setFrtSelect(defaultTruckTypeData, "defaultTruckTypeCode", $(this).val(), "");
@@ -1083,9 +1076,51 @@ $('#fUserOption').validator().on('submit', function (e) {
 
 $('#fUserPrivate').validator().on('submit',function (e) {
 	if (e.isDefaultPrevented()) {
+		//debugger;
 		alert("항목을 입력해 주세요.")
 	}else {
-		alert("Check");
+		//debugger;
+		e.preventDefault();
+
+		$.ajax({
+			url: "/contents/basic/data/insertUser.do",
+			type: "POST",
+			dataType: "json",
+			data: {
+				custId: $("#_custId").val(),
+				deptId: $("#_deptId").val(),
+				userId: $("#_userId").val(),
+				passwd: $("#_passwd").val(),
+				userName: $("#_userName").val(),
+				authSeq: $("#_authSeq").val(),
+				grade: $("#_grade").val(),
+				telNum: $("#_telNum").val().replace(/\-/g, ""),
+				mobile: $("#_mobile").val().replace(/\-/g, ""),
+				talkYn: $("#_talkYn").is(":checked") ? "Y" : "N",
+				email: $("#_email").val(),
+				regDate: $("#_regDate").val(),
+				memo: $("#_memo").val(),
+				douzoneId: $("#_douzoneId").val(),
+				link24Id: $("#_link24Id").val(),
+				link24Pass: $("#_link24Pass").val(),
+				man24Id: $("#_man24Id").val(),
+				man24Pass: $("#_man24Pass").val(),
+				one24Id: $("#_one24Id").val(),
+				one24Pass: $("#_one24Pass").val(),
+
+				masterYn: mMasterYn,
+				useYn: "Y",
+				mode: "E"
+			},
+			success: function(data){
+				if(data.result) {
+					alert(data.msg);
+					PrivateClose();
+				} else {
+					alert(data.msg);
+				}
+			}
+		});
 	}
 });
 
@@ -1098,37 +1133,38 @@ $("#defaultReqTel, #defaultSTel").on("input", function(){
 });
 
 // 개인정보 확인 Source - Junghwan.Hwang
-$("#btnChgPasswd").click(function(e) {
+$("#_btnChgPasswd").click(function(e) {
 	e.preventDefault();
 	$(".chgPasswd").css("display","none");
 	$(".writePasswd").css("display","");
 
-	$("#passwd").parent().css("display","block");
+	$("#_passwd").parent().css("display","block");
 	//$("#passwd_comfirm").parent().css("display","none");
 })
 
-$("#mobile, #telNum").on("input", function(){
+$("#_mobile, #_telNum").on("input", function(){
 	$(this).val(Util.formatPhone($(this).val()));
 });
 
 function initPriv(){
 
 	// custName, deptName 초기화
-	custName = Util.setBizName("custName", mCustId);
-	deptName = Util.setDeptName("deptName", mCustId);
+	custName = Util.setBizName("_custName", mCustId);
+	deptName = Util.setDeptName("_deptName", mCustId);
 
 	custName.value("");
 	deptName.value("");
 	custName.readonly(false);
 
-	$("#userId").attr("readonly",true);
-	$("#userId").attr("disabled",true);
-	$("#regDate").attr("readonly",true);
-	$("#regDate").prop("disabled",true);
+	$("#_userId").attr("readonly",true);
+	$("#_userId").prop("disabled",true);
+
+	$("#_regDate").attr("readonly",true);
+	$("#_regDate").prop("disabled",true);
 
 	$(".list-unstyled").remove();
 
-	$("#passwd").parent().css("display","none");
+	$("#_passwd").parent().css("display","none");
 	$(".chgPasswd").css("display","block");
 	$(".writePasswd").css("display","none");
 }
@@ -1148,7 +1184,8 @@ function InformPriv(){
 		success: function(data){
 			if(data.result) {
 
-				Util.setPageData(data.data);
+				//Util.setPageData(data.data);
+				setPrivData(data.data);
 
 				custName.value(data.data.bizName);
 				custName.trigger("change");
@@ -1163,7 +1200,7 @@ function InformPriv(){
 				//});
 				//$("#userId").val(mUserId);
 
-				$("#deptName").data("kendoMultiColumnComboBox").text(data.data.deptName);
+				$("#_deptName").data("kendoMultiColumnComboBox").text(data.data.deptName);
 				deptName.value(data.data.deptName);
 
 				custName.enable(false);
@@ -1174,14 +1211,14 @@ function InformPriv(){
 				//  return dataItem.deptName === dept;
 				//});
 
-				Util.setSelectBox("/contents/basic/data/userAuthList.do", "authSeq", {custId:data.data.custId, authSeq:data.data.authSeq}, "authSeq", "authName", data.data.authSeq, "선택하세요");
+				Util.setSelectBox("/contents/basic/data/userAuthList.do", "_authSeq", {custId:data.data.custId, authSeq:data.data.authSeq}, "authSeq", "authName", data.data.authSeq, "선택하세요");
 
-				$("#authSeq").prop("disabled",true);
+				$("#_authSeq").prop("disabled",true);
 
 				if(data.data.talkYn == "Y") {
-					$("#talkYn").prop("checked", true);
+					$("#_talkYn").prop("checked", true);
 				} else {
-					$("#talkYn").prop("checked", false);
+					$("#_talkYn").prop("checked", false);
 				}
 
 				if(data.data.masterYn == "Y") {
@@ -1189,6 +1226,23 @@ function InformPriv(){
 				} else {
 					mMasterYn = 'N';
 				}
+			}
+		}
+	});
+}
+
+function setPrivData(json){
+	$.each(json,function (key,value) {
+		value = Util.nvl(value,'');
+		if($("#_" + key).length > 0){
+			if (key.toLowerCase().indexOf('tel') != -1 || key.toLowerCase().indexOf('mobile') != -1 || key.toLowerCase().indexOf('fax') != -1) {
+				$("#_" + key).val(Util.formatPhone(value));
+			} else if (key.toLowerCase().indexOf('biznum') != -1) {
+				$("#_" + key).val(Util.formatBizNum(value));
+			} else if (key.toLowerCase().indexOf('charge') != -1 && key != "chargeTypeCode") {
+				$("#_" + key).val(Util.formatNumber(value));
+			} else {
+				$("#_" + key).val(value);
 			}
 		}
 	});
