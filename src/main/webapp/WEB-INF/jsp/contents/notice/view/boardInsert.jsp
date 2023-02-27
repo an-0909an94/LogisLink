@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div class="pop-layer">
+<div class="pop-layer boardInsert">
 	<div class="editor_wrap pop-layer" id="layer1">
 		<div class="insertClose">
 			<a class="insertCloseButton k-icon k-i-close" onclick="init_popup_close();"></a>
@@ -39,11 +39,11 @@
 							</div>
 
 							<form method="post" name="f" id="f" data-toggle="validator" role="form"
-								  autocomplete="off" class="mb10">
+								  autocomplete="off">
 								<input type="hidden" name="boardSeq" id="boardSeq">
 								<input type="hidden" name="boardTarget" id="boardTarget">
 								<input type="hidden" name="custId" id="custId">
-								<div class="form-group row mb10 pt10 pb10 pl8 mt77 gray_box">
+								<div class="form-group row mb10 pt10 pb10 pl8 mt100 gray_box mr0">
 									<label class="col-form-label modal-big-name">등록정보</label>
 									<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 										<strong>등록자</strong>
@@ -55,27 +55,27 @@
 										<input type="text" class="form-control form-control-sm"
 											   name="regdate" id="regdate" style="width: 100%" readonly>
 									</div>
-									<div class="input-group input-group-sm wd90 middle-name">
+									<div class="input-group input-group-sm wd120 middle-name">
 										<strong>조회수</strong>
 										<input type="text" class="form-control form-control-sm"
 											   name="readCnt" id="readCnt" style="width:100%" readonly>
 									</div>
 								</div>
 
-								<div class="form-group row mb10 gray_box">
+								<div class="form-group row mb10 gray_box mr0">
 									<label class="col-form-label modal-big-name required">게시기간</label>
-									<div class="input-group input-group-sm wd140 middle-name div-min-col-2">
+									<div class="input-group input-group-sm wd90 mr0 middle-name div-min-col-2">
 										<input type="text" name="popSdate" id="popSdate"
 											   style="width: 100%" required>
 									</div>
-									<span style="margin-top:0px;margin-right:25px">~</span>
-									<div class="input-group px;ut-group-sm wd140 middle-name">
+									<span style="margin-top:0px">~</span>
+									<div class="input-group px;ut-group-sm wd90 middle-name">
 										<input type="text" name="popEdate" id="popEdate"
 											   style="width: 100%" required>
 									</div>
 								</div>
 
-								<div class="form-group row mb10 gray_box">
+								<div class="form-group row mb10 gray_box mr0">
 									<label class="col-form-label modal-big-name">게시대상</label>
 									<div class="input-group input-group-sm wd90 radio-or-checkBox ">
 										<input id="chkBoardTarget09" type="checkbox"
@@ -111,18 +111,18 @@
 									</div>
 								</div>
 
-								<div class="form-group row mb10 gray_box">
+								<div class="form-group row mb10 gray_box mr0">
 									<label class="col-form-label modal-big-name required">제목</label>
-									<div class="input-group input-group-sm wd340 middle-name form-group">
+									<div class="input-group input-group-sm wd360 middle-name form-group">
 										<input type="text" class="form-control form-control-sm"
 											   name="title" style="width:100%" id="title" required>
 										<div class="help-block with-errors"></div>
 									</div>
 								</div>
 
-								<div class="form-group row gray_box" style="margin-bottom: 0px">
+								<div class="form-group row gray_box mr0" style="margin-bottom: 0px">
 									<label class="col-form-label modal-big-name required">내용</label>
-									<div class="input-group input-group-sm wd340 middle-name">
+									<div class="input-group input-group-sm wd360 middle-name">
 										<textarea rows="22"
 												  class="form-control textarea"
 												  name="content" style="width:100%" id="content"
@@ -136,7 +136,7 @@
 							<form id="fileForm" name="fileForm" method="post"
 								  enctype="multipart/form-data">
 								<input name="fileBoardSeq" id="fileBoardSeq" type="hidden">
-								<div id="fileList" class="form-group mt0 gray_box"></div>
+								<div id="fileList" class="form-group mt0 gray_box mr0"></div>
 							</form>
 						</fieldset>
 					</div>
@@ -232,12 +232,12 @@ function fileList(boardSeq){
 			if(data.result) {
 				var item, i=0;
 				for (i=0; item = data.data[i]; i++){
-					s += "<div class=\"form-group row \">";
+					s += "<div class=\"form-group row mb10 mr0\">";
 					s += "<label class=\"col-form-label modal-big-name\">첨부파일</label>";
 					s += "<div class=\"input-group input-group-sm col middle-name form-group\">";
 					if(item.fileName == null){
 					s += "<div class=\"filebox\">";
-					s += "<input id=\"upload-name" + item.files + "\" class=\"upload-name wd275\" value=\"파일을 선택해 주세요.\" disabled=\"disabled\">";
+					s += "<input id=\"upload-name" + item.files + "\" class=\"upload-name wd290\" value=\"파일을 선택해 주세요.\" disabled=\"disabled\">";
 					if("${menuAuth.writeYn}" == "Y"){
 						s += "<label onclick=\"fileName("+ item.files +")\" for=\"ex_filename" + item.files + "\">파일등록</label>";
 					}

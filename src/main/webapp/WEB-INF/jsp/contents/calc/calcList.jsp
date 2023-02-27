@@ -682,19 +682,19 @@
 							<option>하차지</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd160 middle-name div-min-col-1">
 						<select class="custom-select" style="width:100%"id="sCalcTypeCode"
 								name="calcTypeCode"></select>
 					</div>
 
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
 						<select class="custom-select" style="width:100%" id="sFinishYn" name="finishYn">
 							<option value="">정산마감여부</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
 						<select class="custom-select" style="width:100%" id="sReqPayYn" name="reqPayYn">
 							<option value="">빠른지급여부</option>
 							<option value="Y">Y</option>
@@ -704,19 +704,19 @@
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select wd90" id="sDeptId"
 								name="sDeptId">
-							<option>--부서명--</option>
+							<option>부서명</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="form-control" class="custom-select wd90" id="sUserId"
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select class="form-control custom-select wd100" id="sUserId"
 								name="sUserId">
-							<option>--담당자--</option>
+							<option>담당자</option>
 						</select>
 					</div>
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select wd90" id="sChargeType"
 								name="chargeType">
-							<option>--청구구문--</option>
+							<option>청구구문</option>
 						</select>
 					</div>
 				</div>
@@ -724,8 +724,8 @@
 				<!-- 검색 2라인 -->
 				<div class="form-group row" style="justify-content: space-between">
 					<div class="row">
-						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-							<select class="custom-select wd90" id="custType" name="custType">
+						<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+							<select class="custom-select wd110" id="custType" name="custType">
 								<option value="01">화주명</option>
 								<option value="02">운송/주선사명</option>
 								<option value="99">차량번호</option>
@@ -758,7 +758,7 @@
 						</div>
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select wd90" id="sUnitPriceType" name="unitPriceType">
-								<option value="">--운임구분--</option>
+								<option value="">운임구분</option>
 								<option value="01">대당단가</option>
 								<option value="02">톤당단가</option>
 							</select>
@@ -886,7 +886,7 @@ $(document).ready(function(){
 	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true}); 
 	$("#taxDate").kendoDatePicker({format:"yyyyMMdd", value : new Date(), dateInput: true});
 	
-	Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId: "${sessionScope.userInfo.deptId}", useYn:'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서명--");
+	Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId: "${sessionScope.userInfo.deptId}", useYn:'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "부서명");
 	//Util.setSelectBox("/contents/basic/data/custList.do", "modalReqList", {useYn :"Y", sellBuySctn: $("#custType").val()}, "custId", "custName", "", "선택해주세요.");
 	searchModalCustName = $("#sModalCustName").data("kendoMultiColumnComboBox");
 	searchModalCustName = MultiColumnComboBox.setCustName("sModal", $("#custType").val(), $("#sDeptId").val());
@@ -895,18 +895,18 @@ $(document).ready(function(){
     
 	Util.setSearchDateForm();
 
-    Util.setCmmCode("select", "listSSido", "SIDO", "", "--상차지--");
-    Util.setCmmCode("select", "listESido", "SIDO", "", "--하차지--");
-	Util.setCmmCode("select", "sCalcTypeCode", "CALC_TYPE_CD", "", "--운송비항목--");
-	Util.setCmmCode("select", "sSellBuySctn", "SELL_BUY_SCTN", "", "--매출입항목--");
-	Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "", "--청구구문--");
+    Util.setCmmCode("select", "listSSido", "SIDO", "", "상차지");
+    Util.setCmmCode("select", "listESido", "SIDO", "", "하차지");
+	Util.setCmmCode("select", "sCalcTypeCode", "CALC_TYPE_CD", "", "운송비항목");
+	Util.setCmmCode("select", "sSellBuySctn", "SELL_BUY_SCTN", "", "매출입항목");
+	Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "", "청구구문");
 	var $options = $("#sCalcTypeCode > option").clone();
 	$('#calcTypeCode').append($options);
 	$("#calcTypeCode option[value='0002']").remove();
 	
-	Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", {deptId:$(this).val()}, "userId", "userName", "", "--담당자--");
+	Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", {deptId:$(this).val()}, "userId", "userName", "", "담당자");
 	$("#sDeptId").on("change", function(){
-		Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", {deptId:$(this).val()}, "userId", "userName", "", "--담당자--");
+		Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", {deptId:$(this).val()}, "userId", "userName", "", "담당자");
 	});
 	
 	goList();
@@ -1394,13 +1394,13 @@ function getSummary() {
 		success: function(data){
 			if(data.result == true) {
 				var	groupCount = ""
-				groupCount = "<i class=\"sumSellCharge\">매출 : " +
-							Util.nvl(Util.formatNumber(data.data.sellCnt), 		"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건 / " +
-							Util.nvl(Util.formatNumber(data.data.unpaidAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 / " +
+				groupCount = "<i class=\"sumSellCharge\">매출  " +
+							Util.nvl(Util.formatNumber(data.data.sellCnt), 		"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건  " +
+							Util.nvl(Util.formatNumber(data.data.unpaidAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원  " +
 							Util.nvl(Util.formatNumber(data.data.depositAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i> | " +
 							"<i class=\"sumBuyCharge\">매입 " +
-							Util.nvl(Util.formatNumber(data.data.buyCnt), 		"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건 / " +
-							Util.nvl(Util.formatNumber(data.data.payableAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 / " +
+							Util.nvl(Util.formatNumber(data.data.buyCnt), 		"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건  " +
+							Util.nvl(Util.formatNumber(data.data.payableAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원  " +
 							Util.nvl(Util.formatNumber(data.data.withdrawAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i> ";
 				$("#groupCount").html(groupCount);	
 			}

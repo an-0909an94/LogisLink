@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<style>
-    .image_sizeK{
-      height:25px;
-      margin-right: 5px;
-      left: 90px;
-    }
-</style>
-<div class="pop-layer">
+
+<div class="pop-layer custInsert">
     <!--
     <div id="divAddDept" class="editor-warp p-0">
 		<div class="modalEditor" id="addDept">
@@ -24,7 +18,7 @@
 		</div>
 	</div>
 	-->
-    <div class="editor_wrap pop-layer" id="layer1">
+    <div class="editor_wrap pop-layer custInsert-pop-layer" id="layer1">
 	    <div class="insertClose">
 	    	<a class="insertCloseButton k-icon k-i-close" onclick="init_popup_close();"></a>
 	    </div>
@@ -58,7 +52,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row pt10 pb10 pl8 mt77 gray_box">
+                                <div class="form-group row pt10 pb10 pl8 mt100 gray_box mr0">
                                     <label class="col-form-label modal-big-name">사업자조회</label>
 
                                     <div class="input-group input-group-sm wd290 middle-name form-group">
@@ -66,7 +60,7 @@
                                         <font size="1em" color="black">사업자번호/상호로 검색 가능합니다.</font>
                                         <div class="textBox-in-icon">
 	                                        <input type="text" class="form-control form-control-sm " name="bizNum" id="bizNum" maxlength="12" required readonly>
-										    <i><img class = "image_sizeK" src="/images/icon/search.png" id="searchBizinfo"></i>
+										    <i><img class = "image_sizeK" src="/images/icon/icon_search.png" id="searchBizinfo"></i>
 										</div>
                                         <div class="help-block with-errors"></div>
                                     </div>
@@ -77,45 +71,43 @@
 		                            </div>
 		                            -->
 		                        </div>
-                                <div class="mt20"></div>
-                                <div class="form-group row gray_box">
+                                <div class="form-group row gray_box mr0 mt5">
                                     <label class="col-form-label modal-big-name">우리회사<br>담당자</label>
-                                    <div class="input-group input-group-sm wd140 middle-name form-group">
+                                    <div class="input-group input-group-sm wd160 middle-name form-group">
                                     	<strong class="required">담당부서</strong>
-                                    	<select id="mngDeptId" name="mngDeptId" class="custom-select wd140" required></select>
+                                    	<select id="mngDeptId" name="mngDeptId" class="custom-select wd160" required></select>
                                     </div>
-                                    <div class="input-group input-group-sm wd100 middle-name form-group">
+                                    <div class="input-group input-group-sm wd120 middle-name form-group">
                                     <strong class="required">담당자명</strong>
-                                        <select class="custom-select wd100" id="manager" required></select>
+                                        <select class="custom-select wd120" id="manager" required></select>
                                         <div class="help-block with-errors"></div>
                                     </div>
                                 </div>
-                                <div class="mt20"></div>
-                                <div class="gray_box">
+                                <div class="gray_box mt5">
                                     <div class="form-group row">
                                         <label class="col-form-label modal-big-name">기본정보</label>
-                                        <div class="input-group input-group-sm wd190 middle-name form-group">
+                                        <div class="input-group input-group-sm wd290 middle-name form-group">
                                             <strong class="required">거래처명</strong>
                                             <input type="text" class="form-control form-control-sm" style="width:100%" id="custName" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label big-name"></label>
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong class="required">거래처 구분</strong>
                                             <select class="custom-select col-12" id="sellBuySctn" required></select>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                        <div class="input-group input-group-sm wd110 middle-name form-group">
                                             <strong class="required">거래처 분류</strong>
-                                            <select class="custom-select col-12 middle-name" id="custTypeCode" required></select>
+                                            <select class="custom-select wd110 middle-name" id="custTypeCode" required></select>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                        <div class="input-group input-group-sm wd70 middle-name form-group">
                                             <strong class="required">사용여부</strong>
-                                            <select class="custom-select col-12" id="useYn" required>
+                                            <select class="custom-select wd70" id="useYn" required>
                                                 <option value="Y">Y</option>
                                                 <option value="N">N</option>
                                             </select>
@@ -123,33 +115,33 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>거래처등급</strong>
                                             <select class="custom-select col-12" id="custMngCode" name="custMngCode"></select>
                                         </div>
-                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                        <div class="input-group input-group-sm wd190 middle-name form-group">
                                             <strong>거래처등급사유</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="custMngMemo">
                                         </div>
 
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>빠른지급여부</strong>
                                             <select class="custom-select col-12" id="payType" name="payType"></select>
                                         </div>
-                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                        <div class="input-group input-group-sm wd190 middle-name form-group">
                                             <strong>빠른지급사유</strong>
                                             <input id="payMemo" name="payMemo" type="text" style="width:100%" class="form-control form-control-sm">
                                         </div>
                                     </div>
 
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <!-- 22.06.17 이건욱 T5 > J13, J14추가 -->
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
@@ -168,7 +160,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd140 middle-name form-group">
                                             <strong>등록일자</strong>
@@ -180,17 +172,17 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd140 middle-name form-group">
                                             <strong>우편물 우편번호(검색)</strong>
                                             <div class="textBox-in-icon">
                                                 <input onClick="popSearchPost('postal');" type="text" class="form-control form-control-sm" readonly="readonly" id="postalPost" name="postalPost">
-                                                <i><img onclick="popSearchPost('postal');" src="/images/icon/search.png"></i>
+                                                <i><img onclick="popSearchPost('postal');" src="/images/icon/icon_search.png"></i>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd290 middle-name form-group">
                                             <strong>우편물 주소</strong>
@@ -200,7 +192,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd290 middle-name form-group">
                                             <strong>우편물 상세주소</strong>
@@ -209,24 +201,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt20"></div>
-                                <div class="gray_box">
+                                <div class="gray_box mt5">
                                     <div class="form-group row">
                                         <label class="col-form-label modal-big-name">사업자정보</label>
-                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                        <div class="input-group input-group-sm wd170 middle-name form-group">
                                             <strong class="required">상호</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="bizName" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
 
-                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                        <div class="input-group input-group-sm wd110 mr0 middle-name form-group">
                                             <strong class="required">대표자명</strong>
-                                            <input type="text" class="form-control form-control-sm" id="ceo" required>
+                                            <input type="text" class="form-control form-control-sm wd110" id="ceo" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
 
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
@@ -243,43 +234,45 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row mt5 mr0">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong class="required">과세유형</strong>
                                             <select class="custom-select col-12" id="bizTypeCode" required></select>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                        <div class="input-group input-group-sm wd190 middle-name form-group">
                                             <strong>은행명</strong>
-                                            <select class="custom-select col-12" id="bankCode"></select>
+                                            <select class="custom-select wd190" id="bankCode"></select>
                                         </div>
-                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                        <label class="col-form-label"></label>
+                                        
+                                    </div>
+
+                                    <div class="form-group row mt5">
+                                    	<label class="col-form-label"></label>
+                                    	<div class="input-group input-group-sm wd90 middle-name form-group mr10">
                                             <strong>예금주</strong>
                                             <input type="text" class="form-control form-control-sm" id="bankCnnm">
                                         </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label class="col-form-label"></label>
-                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                        <div class="input-group input-group-sm wd190 middle-name form-group">
                                             <strong>계좌번호</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="bankAccount">
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label big-name"></label>
                                         <div class="input-group input-group-sm wd140 middle-name form-group">
                                             <strong>우편번호(검색)</strong>
                                             <div class="textBox-in-icon">
                                                 <input onClick="popSearchPost('biz');" type="text" class="form-control form-control-sm" id="bizPost" readonly="readonly">
-                                                <i><img onclick="popSearchPost('biz');" src="/images/icon/search.png" id="searchBizPost"></i>
+                                                <i><img onclick="popSearchPost('biz');" src="/images/icon/icon_search.png" id="searchBizPost"></i>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label big-name"></label>
                                         <div class="input-group input-group-sm wd290 middle-name form-group">
                                             <strong>주소</strong>
@@ -287,7 +280,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd290 middle-name form-group">
                                             <strong>상세주소</strong>
@@ -295,49 +288,47 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt20"></div>
-                                <div style="position: relative;" class="form-group row gray_box" id="deptGroup">
+                                <div style="position: relative;" class="form-group row gray_box mt5 mr0" id="deptGroup">
                                     <label class="col-form-label modal-big-name">부서</label>
                                     <!-- <a style="display:none;position: absolute;top: 50%;transform: translateY(-99%);left: 0%;margin-left: 2.4em;background: #fff;border-radius: 4px;box-shadow: 0px 0px 2px 0px;color: #0A8DFF;font-weight: bolder;" 
                                     class="k-pager-refresh k-button" id="btnAddDept">신규추가</a>-->
                                     <div class="input-group input-group-sm wd140 middle-name form-group" style="width:100%" id="divDeptSelect">
                                     </div>  
                                 </div>
-                                <div class="mt20"></div>
-                                <div class="gray_box">
+                                <div class="gray_box mt5">
                                     <div class="form-group row">
                                         <label class="col-form-label modal-big-name">부서정보</label>
-                                        <div class="input-group input-group-sm wd100 middle-name form-group">
+                                        <div class="input-group input-group-sm wd110 middle-name form-group">
                                             <strong>세금계산서 담당자</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="taxStaffName">
                                         </div>
-                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                        <div class="input-group input-group-sm wd170 middle-name form-group">
                                             <strong>세금계산서 전화번호</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="taxTelNum" maxlength="13">
                                         </div>
 
                                     </div>
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label big-name"></label>
-                                        <div class="input-group input-group-sm wd190 middle-name form-group">
+                                        <div class="input-group input-group-sm wd290 middle-name form-group">
                                             <strong>세금계산서 이메일</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="taxEmail">
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label big-name"></label>
-                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                        <div class="input-group input-group-sm wd110 middle-name form-group">
                                             <strong>주요운송품목</strong>
-                                            <select class="custom-select col-12" id="itemCode"></select>
+                                            <select class="custom-select wd110" id="itemCode"></select>
                                         </div>
-                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                        <div class="input-group input-group-sm wd170 middle-name form-group">
                                             <strong>팩스번호</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="fax">
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd140 middle-name div-min-col-1">
                                             <strong>거래처 메모</strong>
@@ -349,51 +340,48 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt20"></div>
-                                <div class="gray_box">
+                                <div class="gray_box mt5">
                                     <div class="form-group row">
                                         <label class="col-form-label modal-big-name">거래처 담당자</label>
-                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                        <div class="input-group input-group-sm wd170 middle-name form-group">
                                             <strong class="required">담당자명</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="userName" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                        <div class="input-group input-group-sm wd110 middle-name form-group">
                                             <strong>직급</strong>
-                                            <input type="text" class="form-control form-control-sm" id="grade">
+                                            <input type="text" class="form-control form-control-sm wd110" id="grade">
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
-                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                        <div class="input-group input-group-sm wd110 middle-name form-group">
                                             <strong class="required">휴대전화</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="mobile" maxlength="13" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="input-group input-group-sm wd140 middle-name form-group">
+                                        <div class="input-group input-group-sm wd170 middle-name form-group">
                                             <strong>전화번호</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="telNum" maxlength="13">
                                         </div>
                                     </div>
 
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
-                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                        <div class="input-group input-group-sm wd110 middle-name form-group">
                                             <strong>아이디</strong>
-                                            <input type="text" class="form-control form-control-sm" id="userId">
+                                            <input type="text" class="form-control form-control-sm wd110" id="userId">
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        <div class="input-group input-group-sm wd90 middle-name form-group">
+                                        <div class="input-group input-group-sm wd170 middle-name form-group">
                                             <strong>비밀번호</strong>
-                                            <input type="password" class="form-control form-control-sm" id="passwd"  pattern="^(?=.{4,265}$).*"
+                                            <input type="password" class="form-control form-control-sm wd170" id="passwd"  pattern="^(?=.{4,265}$).*"
                                                    data-pattern-error="4자리 이상 입력해 주세요.">
                                         </div>
                                     </div>
 
-
-
-                                    <div class="form-group row mt10">
+                                    <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd190 middle-name form-group">
                                             <strong>이메일</strong>

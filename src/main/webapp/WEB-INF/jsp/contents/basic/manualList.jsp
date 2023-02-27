@@ -13,7 +13,7 @@
 }
 </style>
 
-<div id="divManualGroupModal" class="editor_wrap p-0">
+<div id="divManualGroupModal" class="editor_wrap p-0 menuList">
 	<form id="groupModal" name="groupModal" action="post" data-toggle="validator">
 	<input type="hidden" id="hiddenGroupManualMode" name="groupManualMode">
 	<div class="modalEditor">
@@ -22,7 +22,7 @@
                 <label class="col-form-label modal-big-name required">구분</label>
                 <div class="input-group input-group-sm wd190 middle-name">
                     <select class="custom-select wd190" id="groupAppKind" name="groupAppKind" required>
-                    	<option value="">선택하세요.</option>
+                    	<option value="">선택하세요</option>
                     	<option value="A">주선사</option>
                     	<option value="O">화주</option>
                     	<option value="D">차주</option>
@@ -174,7 +174,7 @@
 		<div class="box" style="width: 100%;">
 			<div id="group-list" class="cont-wrapper">
 				<div class="form-group row" style="justify-content: space-between">
-					<div>
+					<div class="row">
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select wd90" id="appKind" name="appKind">
 								<option value="A" selected="selected">주선사</option>
@@ -184,7 +184,7 @@
 						</div>
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select wd90" id="useYn" name="useYn">
-								<option value="" selected="selected">사용여부.</option>
+								<option value="" selected="selected">사용여부</option>
 								<option value="Y">Y</option>
 								<option value="N">N</option>
 							</select>

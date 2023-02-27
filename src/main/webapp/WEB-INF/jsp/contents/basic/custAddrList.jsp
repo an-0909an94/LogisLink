@@ -15,19 +15,19 @@
 			<P id="headerTitle">주소지 관리</P>
 		</div>
 	</div>
-	<div class="contents">
+	<div class="contents custAddList">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
 			<div class="form-group row mt0" style="justify-content: space-between">
-				<div>
+				<div class="row">
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select wd90" id="s_dept" name="s_dept">
-							<option value="">--부서명--</option>
+							<option value="">부서명</option>
 						</select>
 					</div>
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="custom-select wd90" id="searchColumn" name="searchColumn">
-							<option value="ADDR_NAME">--주소지명--</option>
+							<option value="ADDR_NAME">주소지명</option>
 						</select>
 					</div>
 					<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
@@ -90,7 +90,7 @@ $(document).ready(function(){
 		$("#cust_addr_list").data("kendoGrid").resize();
 	});
 
-	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn:'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서선택--");
+	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn:'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "부서선택");
 	
  	goList();
 });

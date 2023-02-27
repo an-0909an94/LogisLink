@@ -8,11 +8,11 @@
 		<form id="modalForm" name="modalForm">
 			<div class="form-group col">
 				<div class="form-group row mb20">
-					<div style="float: left; width: 49%;padding-left:35px">
+					<div style="float: left; width: 490px; padding-left:35px; padding-right: 10px;">
 						<div class="form-group mb10 gray_box">
-							<div class="input-group input-group-sm wd190 middle-name ">
+							<div class="input-group input-group-sm middle-name" style="display: flex;">
 								<strong style="margin-left: 0em;padding-right: 1.5em;">템플릿</strong>
-								<select name="templateCode" id="templateCode" style="width:100%">
+								<select name="templateCode" id="templateCode" style="width:200px; font-size: 12px;">
 									<option value="">시스템 알림톡</option>
 								</select>
 							</div>
@@ -25,14 +25,14 @@
 										  class="form-control textarea"></textarea>
 							</div>
 						</div>
-						<div class="form-group row" style="color:#0000ff;">
+						<div class="form-group row" style="color:#2a5dc4; font-size: 12px;">
 							※ 알림톡 내용을 임의로 변경할 경우, 알림톡 발송이 되지 않을 수 있습니다.
 						</div>
 					</div>
-					<div style="float: right; width: 49%;padding-right:0px; padding-left:20px">
+					<div style="float: right; width: 490px; padding-right:35px; padding-left:10px">
 						<div class="input-group input-group-sm col mb10 gray_box">
 							<strong style="margin-left: 0em; padding-right: 1.5em;">예약발송</strong>
-							<input class="wd330" id="reserve" type="text" name="reserve" style="width:100%; height: 24px;">
+							<input class="wd270 mr10" id="reserve" type="text" name="reserve" style="width:100%; height: 24px;">
 							<input style="width: 24px; height: 24px;" type="checkbox" name="chkReserve" id="chkReserve" value="Y">
 						</div>
 						<div class="row gray_box">
@@ -59,11 +59,11 @@
 
 						<div class="input-group input-group-sm col mb10 gray_box">
 							<strong style="margin-left: 0em; padding-right: 1.5em;">수신번호</strong>
-							<input class="input-group input-group-sm mr10 wd240 middle-name" id="recvNum" type="text" name="recvNum" maxlength="13">
+							<input class="input-group input-group-sm mr10 wd200 middle-name" id="recvNum" type="text" name="recvNum" maxlength="13">
 							<a style="width: 100%; height: 24px; margin-right:5px" href="javascript:addPhone();" class="k-pager-refresh k-button wd58">추가</a>
 							<a style="width: 100%; height: 24px;" href="javascript:removePhone();" class="k-pager-refresh k-button wd58">삭제</a>
 						</div>
-						<div class="splitter" style="border: 0; width: 100%; height: 323px;">
+						<div class="splitter" style="border: 0; width: 100%; height: 368px;">
 							<div id="popGrid" style="border-radius: 5px;"></div>
 						</div>
 					</div>
@@ -89,7 +89,7 @@
 			<div style="display: block;" class="form-group row">
 				<form id="fSearch" class="date-bnt">
 					<div class="form-group row mt0" style="justify-content: space-between">
-						<div>
+						<div class="row">
 							<div class="input-group input-group-sm wd90 middle-name ">
 								<input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd90">
 							</div>
@@ -133,7 +133,7 @@
 
 							<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 								<select class="form-control" class="com-sel" id="s_isDone">
-									<option value="">--전송결과--</option>
+									<option value="">전송결과</option>
 									<option value="2">발송성공</option>
 									<option value="4">발송실패</option>
 								</select>

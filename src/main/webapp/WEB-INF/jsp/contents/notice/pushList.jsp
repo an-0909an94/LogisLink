@@ -11,7 +11,7 @@
 					<div class="form-group row gray_box">
 						<div class="input-group input-group-sm col middle-name">
 						<strong>제목</strong>
-						    <input id="title" name="title" style="height: 40px;width: 100%;font-size: 16px;font-weight: 300;border: 1px solid #E8E9EB;border-radius: 5px;"/>
+						    <input id="title" name="title" style="padding-left:10px; height: 40px;width: 100%;font-size: 16px;font-weight: 300;border: 1px solid #E8E9EB;border-radius: 5px;"/>
 						</div>
 					</div>
 					
@@ -70,7 +70,7 @@
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
 				<div class="form-group row mt0" style="justify-content: space-between">
-					<div>
+					<div class="row">
 						<div class="input-group input-group-sm wd90 middle-name">
 							<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
 								   class="wd90">
@@ -108,7 +108,7 @@
 
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select col-12" name="isDone" id="isDone">
-								<option value="" selected="selected">--전송결과--</option>
+								<option value="" selected="selected">전송결과</option>
 								<option value="Y">성공</option>
 								<option value="N">미전송</option>
 								<option value="F">실패</option>

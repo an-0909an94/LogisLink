@@ -15,19 +15,19 @@
 	<div class="contents">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
-			<div class="form-group row mt0" style="display: inherit">
-				<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-				    <select class="form-control" class="custom-select wd90" id="s_dept" name="s_dept">
-				    	<option>--부서명--</option>
+			<div class="form-group row mt0">
+				<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+				    <select class="form-control custom-select wd100" id="s_dept" name="s_dept">
+				    	<option>부서명</option>
 				    </select>
 				</div>
 				<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 				    <select class="custom-select wd90" id="searchColumn" name="searchColumn">
-						<option value="A.CAR_NUM">--차량번호--</option>
-						<option value="B.DRIVER_NAME">--이름--</option>
-						<option value="B.MOBILE">--연락처--</option>
-						<option value="A.BIZ_NUM">--사업자번호--</option>
-						<option value="A.BIZ_NAME">--사업자상호--</option>
+						<option value="A.CAR_NUM">차량번호</option>
+						<option value="B.DRIVER_NAME">이름</option>
+						<option value="B.MOBILE">연락처</option>
+						<option value="A.BIZ_NUM">사업자번호</option>
+						<option value="A.BIZ_NAME">사업자상호</option>
 				    </select>
 				</div>
 				<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
@@ -35,35 +35,35 @@
 				</div>	
 				<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 				    <select class="custom-select wd190 media190" id="dangerGoodsUseYn" name="dangerGoodsUseYn" style="width:100%">
-						<option value="" selected>--위험물 운송 가능 여부--</option>
+						<option value="" selected>위험물 운송 가능 여부</option>
 		                <option value="Y">가능</option>
 		                <option value="N">불가</option>
 				    </select>
 				</div>	
 				<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 				    <select class="custom-select wd190 media190" id="chemicalsUseYn" name="chemicalsUseYn" style="width:100%">
-						<option value="" selected>--유해 화학물질 운송 가능 여부--</option>
+						<option value="" selected>유해 화학물질 운송 가능 여부</option>
 		                <option value="Y">가능</option>
 		                <option value="N">불가</option>
 				    </select>
 				</div>
-				<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-				    <select class="custom-select wd90" id="foreignLicenseUseYn" name="foreignLicenseUseYn">
-						<option value="">--보세면허 여부--</option>
+				<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+				    <select class="custom-select wd110" id="foreignLicenseUseYn" name="foreignLicenseUseYn">
+						<option value="">보세면허 여부</option>
 		                <option value="Y">있음</option>
 		                <option value="N">없음</option>
 				    </select>
 				</div>
 				<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 				    <select class="custom-select wd190 media190" id="forkliftUseYn" name="forkliftUseYn">
-						<option value="" selected>--지게차 면허 여부--</option>
+						<option value="" selected>지게차 면허 여부</option>
 		                <option value="Y">있음</option>
 		                <option value="N">없음</option>
 				    </select>
 				</div>
 				<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 					<select class="form-control" class="custom-select wd90" id="s_useYn" name="s_useYn">
-						<option value="" selected>--사용여부--</option>
+						<option value="" selected>사용여부</option>
 						<option value="Y">정상</option>
 						<option value="N">해지</option>
 					</select>
@@ -76,9 +76,9 @@
 				-->
 			</div>
 			<div class="form-group row" style="justify-content: space-between">
-				<div>
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="form-control" class="custom-select wd90" id="s_carMngCode" name="s_carMngCode"></select>
+				<div class="row">
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select class="form-control wd100" class="custom-select wd100" id="s_carMngCode" name="s_carMngCode"></select>
 					</div>
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="custom-select wd90" id="s_carSctnCode" name="s_carSctnCode"> </select>
@@ -91,27 +91,27 @@
 					</div>
 					<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 						<select class="custom-select wd190 media190" id="s_payType" name="s_payType">
-							<option value="">--빠른지급 대상 여부--</option>
+							<option value="">빠른지급 대상 여부</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
 					</div>
 					<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 						<select class="custom-select wd190 media190" id="s_taxjoinYn" name="s_taxjoinYn">
-							<option value="">--스마트빌 회원가입--</option>
+							<option value="">스마트빌 회원가입</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="custom-select wd90" id="s_emailYn" name="s_emailYn">
+					<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+						<select class="custom-select wd110" id="s_emailYn" name="s_emailYn">
 							<option value="">이메일 유무</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="custom-select wd90" id="s_accountYn" name="s_accountYn">
+					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+						<select class="custom-select wd120" id="s_accountYn" name="s_accountYn">
 							<option value="">계좌정보 유무</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
@@ -194,11 +194,11 @@ $(document).ready(function(){
 
 	$("#mobile, #telNum, #cid").val(Util.formatPhone($("#mobile, #telNum, #cid").val()));
 
-	Util.setCmmCode("select", "s_carMngCode", "CAR_MNG_CD", "", "--차량등급--");
-	Util.setCmmCode("select", "s_carSctnCode", "CARGO_TRAN_CAR_SCTN_CD", "", "--차량구분--");
-	Util.setCmmCode("select", "s_carTypeCode", "CAR_TYPE_CD", "", "--차종--");
-	Util.setCmmCode("select", "s_carTonCode", "CAR_TON_CD", "", "--톤수--");
-	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn: 'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서명--");
+	Util.setCmmCode("select", "s_carMngCode", "CAR_MNG_CD", "", "차량등급");
+	Util.setCmmCode("select", "s_carSctnCode", "CARGO_TRAN_CAR_SCTN_CD", "", "차량구분");
+	Util.setCmmCode("select", "s_carTypeCode", "CAR_TYPE_CD", "", "차종");
+	Util.setCmmCode("select", "s_carTonCode", "CAR_TON_CD", "", "톤수");
+	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn: 'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "부서명");
 
  	goList();
 });

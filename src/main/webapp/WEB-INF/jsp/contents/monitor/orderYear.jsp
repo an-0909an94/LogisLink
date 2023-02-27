@@ -23,13 +23,13 @@
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <select class="form-control" class="custom-select col-12" id="s_dept"
                                     name="deptId">
-                                <option>--부서명--</option>
+                                <option>부서명</option>
                             </select>
                         </div>
-                        <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-                            <select class="form-control" class="custom-select col-12" id="userId"
+                        <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+                            <select class="form-control custom-select wd100" id="userId"
                                     name="userId">
-                                <option>--담당자명--</option>
+                                <option>담당자명</option>
                             </select>
                         </div>
                         <div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
@@ -117,12 +117,12 @@ $(document).ready(function() {
 		deptId: deptId,
 		useYn: 'Y'
 	}
-	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", sDeptParam, "deptId", "deptName", deptId, "--부서명--");
+	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", sDeptParam, "deptId", "deptName", deptId, "부서명");
 	
 	var sUserParam = {
 		deptId: deptId
 	}
-	Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", sUserParam, "userId", "userName", "", "--담당자명--");
+	Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", sUserParam, "userId", "userName", "", "담당자명");
 	
 	goList();
 });
@@ -431,7 +431,7 @@ function goExcel() {
 	
 // 22.07.04 이건욱 모니터링 > 배차운송 (월) 조회조건 변경 (배차 담당자 외 제외)
 $("#s_dept").on("change", function(){
-	Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", { deptId: $(this).val() }, "userId", "userName", "", "--담당자명--");
+	Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", { deptId: $(this).val() }, "userId", "userName", "", "담당자명");
 });
 </script>
 <style>

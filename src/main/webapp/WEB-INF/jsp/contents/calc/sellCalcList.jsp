@@ -377,7 +377,7 @@
                 <div class="form-group row mt0">
                     <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sFinishYn" name="finishYn" class="custom-select col-12">
-                            <option value="">--전체--</option>
+                            <option value="">전체</option>
                             <option value="Y">Y</option>
                             <option value="N" selected>N</option>
                         </select>
@@ -415,19 +415,19 @@
 
                     <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sChargeType" name="chargeType" class="form-control custom-select col-12">
-                            <option>--전체--</option>
+                            <option>전체</option>
                         </select>
                     </div>
 
-                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-                        <select id="sDeptId" name="deptId" class="form-control custom-select col-12">
-                            <option>--전체--</option>
+                    <div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+                        <select id="sDeptId" name="deptId" class="form-control custom-select wd110">
+                            <option>전체</option>
                         </select>
                     </div>
 
-                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-                        <select id="sUserId" name="userId" class="form-control custom-select col-12">
-                            <option>--전체--</option>
+                    <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+                        <select id="sUserId" name="userId" class="form-control custom-select wd100">
+                            <option>전체</option>
                         </select>
                     </div>
                 </div>
@@ -435,8 +435,8 @@
                 <!-- 검색 2라인 -->
                 <div class="form-group row" style="justify-content: space-between">
 	                <div class="row">
-	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-	                        <select id="searchDateType" name="searchDateType" class="custom-select col-12">
+	                    <div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+	                        <select id="searchDateType" name="searchDateType" class="custom-select wd110">
 	                            <option value="allocDate" selected>배차일자</option>
 	                            <option value="sDate">상차일자</option>
 	                            <option value="eDate">하차일자</option>
@@ -476,7 +476,7 @@
 	
 	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 	                        <select id="sDepositYn" name="depositYn" class="custom-select col-12">
-	                            <option value="">--전체--</option>
+	                            <option value="">전체</option>
 	                            <option value="Y">Y</option>
 	                            <option value="N" selected>N</option>
 	                        </select>
@@ -484,7 +484,7 @@
 	
 	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 	                        <select id="sPostYn" name="postYn" class="custom-select col-12">
-	                            <option value="" selected>--전체--</option>
+	                            <option value="" selected>전체</option>
 	                            <option value="Y">Y</option>
 	                            <option value="N">N</option>
 	                        </select>
@@ -492,7 +492,7 @@
 	                    
 	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 	                        <select id="sDeleteYn" name="deleteYn" class="custom-select col-12">
-	                            <option value="">--전체--</option>
+	                            <option value="">전체</option>
 	                            <option value="Y">Y</option>
 	                            <option value="N" selected>N</option>
 	                        </select>
@@ -661,19 +661,19 @@
             deptId: deptId,
             useYn: 'Y'
         }
-        Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", deptOption, "deptId", "deptName", deptId, "--전체--");
+        Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", deptOption, "deptId", "deptName", deptId, "전체");
         
         // 배차 담당자 셀렉트 박스
-        Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", { deptId: $(this).val() }, "userId", "userName", "", "--전체--");
+        Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", { deptId: $(this).val() }, "userId", "userName", "", "전체");
         $("#sDeptId").on("change", function(){
-            Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", { deptId: $(this).val() }, "userId", "userName", "", "--전체--");
+            Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", { deptId: $(this).val() }, "userId", "userName", "", "전체");
         });
 
         // 선택 날짜값에 따라 기간 설정
         Util.setSearchDateForm();
         
         // 청구구분 셀랙트 박스
-        Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "01", "--전체--");
+        Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "01", "전체");
         
         // 컨트롤 기본값 설정
         $("input:checkbox[id='carryOverYn']").prop("checked", true);

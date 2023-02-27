@@ -46,9 +46,9 @@
                 <input type="hidden" name="locationSAddrDetail" id="locationSAddrDetail">
                 <input type="hidden" name="locationEAddrDetail" id="locationEAddrDetail">
                 <div class="form-group row mt0">
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                    <div class="input-group input-group-sm wd110 middle-name div-min-col-1">
                         
-                        <select class="custom-select col-12" name="searchDate" id="searchDate">
+                        <select class="custom-select wd110" name="searchDate" id="searchDate">
                             <option value="sDate" selected>상차일자</option>
                             <option value="regdate">등록일자</option>
                         </select>
@@ -91,26 +91,26 @@
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         
                         <select class="form-control" class="custom-select col-12" id="sMixYn" name="sMixYn">
-                            <option value="">-독차/혼적-</option>
+                            <option value="">독차/혼적</option>
                             <option value="N">독차</option>
                             <option value="Y">혼적</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                    <div class="input-group input-group-sm wd120 middle-name div-min-col-1">
                         
-                        <select class="form-control" class="custom-select col-12" id="sAllocState" name="sAllocState">
-                            <option>-배차상태-</option>
+                        <select class="form-control wd120 custom-select col-12" id="sAllocState" name="sAllocState">
+                            <option>배차상태</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         
                         <select class="form-control" class="custom-select col-12" id="sDeptId" name="sDeptId">
-                            <option>--부서명--</option>
+                            <option>-부서명</option>
                         </select>
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                    <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
                         
-                        <select class="form-control" class="custom-select col-12" id="userId" name="userId"></select>
+                        <select class="form-control custom-select wd100" id="userId" name="userId"></select>
                     </div>
 
                     <div class="input-group input-group-sm col radio-or-checkBox ">
@@ -122,9 +122,9 @@
                 </div>
                 <div class="form-group row" style="justify-content: space-between;">
 	                <div class="row" style="width: 83%;">
-	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
+	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd110">
 	                        
-	                        <select class="custom-select col-12" id="searchColumn" name="searchColumn">
+	                        <select class="custom-select wd110" id="searchColumn" name="searchColumn">
 	                            <option value="sellCustName">거래처명</option>
 	                            <option value="buyCustName">주선/운송사명</option>
 	                            <option value="sComName">상차지명</option>
@@ -338,8 +338,8 @@
 
         Util.setCmmCode("select", "listSSido", "SIDO", "", "상차지");
         Util.setCmmCode("select", "listESido", "SIDO", "", "하차지");
-        Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "--오더상태--");
-        Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "-배차상태-");
+        Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "오더상태");
+        Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "배차상태");
 
         $("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
         $("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
@@ -350,7 +350,7 @@
             Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "전체");
         });
 
-        Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "-담당부서-");
+        Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "담당부서");
 
         var $options = $("#sDeptId > option").clone();
         $('#deptId').append($options);

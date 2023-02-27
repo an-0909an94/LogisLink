@@ -236,7 +236,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row gray_box mr0">
-                                        <div class="col-form-label big-name wd70">
+                                        <div class="col-form-label big-name wd90">
                                             <label class="col-form-label big-name wd90">화주</label>
                                             <a id="owner" class="k-pager-refresh k-button openCloseBtn" style="margin: 0px">화주추가열기</a>
                                         </div>

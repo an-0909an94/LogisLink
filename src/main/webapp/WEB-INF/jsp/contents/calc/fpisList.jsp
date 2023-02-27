@@ -14,7 +14,7 @@
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" name="fSearch" method="post" class="date-bnt">
 				<div class="form-group row mt0" style="justify-content: space-between">
-					<div>
+					<div class="row">
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select wd90">
 								<option>배차일자</option>
@@ -56,11 +56,11 @@
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="form-control" class="custom-select wd90" id="sDeptId"
 									name="sDeptId">
-								<option>--담당부서명--</option>
+								<option>담당부서명</option>
 							</select>
 						</div>
-						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-							<select class="form-control" class="custom-select col-12" id="userId"
+						<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+							<select class="form-control custom-select wd100" id="userId"
 									name="userId"></select>
 						</div>
 					</div>
@@ -182,7 +182,7 @@ $(document).ready(function(){
 		Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "전체");
 	});
 	
-	Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서명--");
+	Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "부서명");
     
 	goList();
 

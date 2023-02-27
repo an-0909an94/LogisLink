@@ -490,8 +490,8 @@
 						</select>
 					</div>
 
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="custom-select wd90" id="sLoadStatus" name="sLoadStatus">
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select class="custom-select wd100" id="sLoadStatus" name="sLoadStatus">
 							<option value="" selected>전자발행여부</option>
 							<option value="0">일반</option>
 							<option value="1">전자</option>
@@ -521,11 +521,11 @@
 						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 							<input type="text" id="buyerName" name="buyerName" style="width:100%;" placeholder="공급받는자" class="p-input">
 						</div>
-						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
+						<div class="input-group input-group-sm wd200 media190 middle-name div-min-col-1">
 							<input type="text" id="regCustName" name="regCustName" style="width:100%;" placeholder="발행업체" class="p-input">
 						</div>
-						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
-							<select class="form-control custom-select wd190 media190" id="regName"
+						<div class="input-group input-group-sm wd210 media190 middle-name div-min-col-1">
+							<select class="form-control custom-select wd210 media190" id="regName"
 									name="regName"></select>
 						</div>
 					</div>
@@ -595,9 +595,9 @@ $(document).ready(function() {
 	// 발행업체
 	Util.setBizName("regCustName", "");
 	// 발행자
-	Util.setSelectBox("/contents/basic/data/userNameListCust.do", "regName", { custId:$("#regCustName").val() }, "userId", "userName", "", "--발행자--");
+	Util.setSelectBox("/contents/basic/data/userNameListCust.do", "regName", { custId:$("#regCustName").val() }, "userId", "userName", "", "발행자");
 	$("#regCustName").on("change", function(){ 
-		Util.setSelectBox("/contents/basic/data/userNameListCust.do", "regName", { custId:$("#regCustName").val() }, "userId", "userName", "", "--발행자--");
+		Util.setSelectBox("/contents/basic/data/userNameListCust.do", "regName", { custId:$("#regCustName").val() }, "userId", "userName", "", "발행자");
 	});
 	// End
 	

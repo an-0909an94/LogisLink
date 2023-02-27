@@ -113,7 +113,7 @@ var menuColumns = [
 	{ field: "readYn", title: "조회", width: 100, editable:function(e) {return false;}, 
 	    headerTemplate: '<div class="auth-radio-or-checkBox">'
 		 + 					'<input style="width: 13px;height: 13px;" type="checkbox" name="readAllCheck" id="readAllCheck" class="readAllCheck"/>'
-	     + 					'<label style="display: inline;font-size: 14px;" for="readAllCheck">조회</label>'
+	     + 					'<label style="display: inline;font-size: 12px;" for="readAllCheck">조회</label>'
 	     + 				'</div>',
 	    
 		template: "#if(parentSeq==0){#<div class='auth-radio-or-checkBox'>"
@@ -128,7 +128,7 @@ var menuColumns = [
 	{ field: "writeYn", title: "추가", width: 100, editable:function(e) {return false;}, 
 		headerTemplate: '<div class="auth-radio-or-checkBox">'
 		+ 					'<input style="width: 13px;height: 13px;" type="checkbox" name="writeAllCheck" id="writeAllCheck" class="writeAllCheck"/>'
-	    + 					'<label style="display: inline;font-size: 14px;" for="writeAllCheck">추가</label>'
+	    + 					'<label style="display: inline;font-size: 12px;" for="writeAllCheck">추가</label>'
 		+ 				'</div>',
 		     
 		template: "#if(parentSeq==0){#<div class='auth-radio-or-checkBox'>"
@@ -143,7 +143,7 @@ var menuColumns = [
 	{ field: "editYn", title: "수정", width: 100, editable:function(e) {return false;},
 		headerTemplate: '<div class="auth-radio-or-checkBox">'
 			 + 				'<input style="width: 13px;height: 13px;" type="checkbox" name="editAllCheck" id="editAllCheck" class="editAllCheck"/>'
-		     + 				'<label style="display: inline;font-size: 14px;" for="editAllCheck">수정</label>'
+		     + 				'<label style="display: inline;font-size: 12px;" for="editAllCheck">수정</label>'
 			 +			'</div>',
 		     
 		template: "#if(parentSeq==0){#<div class='auth-radio-or-checkBox'>"
@@ -158,7 +158,7 @@ var menuColumns = [
 	{ field: "deleteYn", title: "삭제", width: 100, editable:function(e) {return false;}, 
 		headerTemplate: '<div class="auth-radio-or-checkBox">'
 			 +				'<input style="width: 13px;height: 13px;" type="checkbox" name="deleteAllCheck" id="deleteAllCheck" class="deleteAllCheck"/>'
-		     +				'<label style="display: inline;font-size: 14px;" for="deleteAllCheck">삭제</label>'
+		     +				'<label style="display: inline;font-size: 12px;" for="deleteAllCheck">삭제</label>'
 			 +			'</div>',
 		     
 		template: "#if(parentSeq==0){#<div class='auth-radio-or-checkBox'>"
@@ -173,7 +173,7 @@ var menuColumns = [
 	{ field: "printYn", title: "출력", width: 100, editable:function(e) {return false;},
 		headerTemplate: '<div class="auth-radio-or-checkBox">'
 			 +				'<input style="width: 13px;height: 13px;" type="checkbox" name="printAllCheck" id="printAllCheck" class="printAllCheck"/>'
-		     +				'<label style="display: inline;font-size: 14px;" for="printAllCheck">출력</label>'
+		     +				'<label style="display: inline;font-size: 12px;" for="printAllCheck">출력</label>'
 			 +			'</div>',
 		     
 		template: "#if(parentSeq==0){#<div class='auth-radio-or-checkBox'>"

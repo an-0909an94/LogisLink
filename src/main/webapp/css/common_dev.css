@@ -110,7 +110,7 @@ button {
     position: absolute;
     left: 207px;
     z-index: 1000;
-    width: 540px;
+    /*width: 540px;*/
     height: 100%;
 }
 

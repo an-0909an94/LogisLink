@@ -14,12 +14,12 @@
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
 			<div class="form-group row mt0" style="justify-content: space-between">
-				<div>
+				<div class="row">
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="custom-select wd90" id="searchColumn" name="searchColumn">
-							<option value="s_custId">--거래처ID--</option>
-							<option value="s_bizName">--상호--</option>
-							<option value="s_bizNum">--사업자번호--</option>
+							<option value="s_custId">거래처ID</option>
+							<option value="s_bizName">상호</option>
+							<option value="s_bizNum">사업자번호</option>
 						</select>
 					</div>
 					<div class="input-group input-group-sm wd190 media190 div-min-col-1 middle-name">

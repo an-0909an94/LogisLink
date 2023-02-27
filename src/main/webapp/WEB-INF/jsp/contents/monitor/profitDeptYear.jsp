@@ -22,7 +22,7 @@
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <select class="form-control" class="custom-select wd90" id="s_dept"
                                     name="deptId">
-                                <option>--부서명--</option>
+                                <option>부서명</option>
                             </select>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
 							deptId : '${sessionScope.userInfo.deptId}',
 							useYn : 'Y'
 						}, "deptId", "deptName",
-						"${sessionScope.userInfo.deptId}", "--부서명--");
+						"${sessionScope.userInfo.deptId}", "부서명");
 				Util.setSelectBox("/contents/basic/data/userNameList.do",
 						"userId", {
 							deptId : '${sessionScope.userInfo.deptId}'

@@ -16,7 +16,7 @@
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
 				<div class="form-group row mt0" style="justify-content: space-between">
-					<div>
+					<div class="row">
 						<!-- 22.06.24 이건욱 T11 > J41 추가 -->
 						<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
 							<input type="text" id="c_custName" name="custName" style="width:100%;" class="p-input"
@@ -25,13 +25,13 @@
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select id="s_deptName" name="deptName"
 									class="custom-select wd90 form-control">
-								<option value="">--부서--</option>
+								<option value="">부서</option>
 							</select>
 						</div>
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select id="s_searchUserType" name="searchUserType"
 									class="custom-select wd90 form-control">
-								<option value="">--사용자--</option>
+								<option value="">사용자</option>
 								<option value="userId">아이디</option>
 								<option value="userName">이름</option>
 								<option value="userMobile">핸드폰</option>
@@ -46,13 +46,13 @@
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select id="s_authSeq" name="s_authSeq"
 									class="custom-select wd90 form-control">
-								<option value="">--권한--</option>
+								<option value="">권한</option>
 							</select>
 						</div>
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select id="s_useYn" name="s_useYn"
 									class="custom-select wd90 form-control">
-								<option value="">--사용여부--</option>
+								<option value="">사용여부</option>
 								<option value='Y'>사용</option>
 								<option value='N'>미사용</option>
 								<option value='W'>대기</option>
@@ -133,7 +133,7 @@ $(document).ready(function() {
 		Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", { custId: custId, deptId: deptId, useYn: 'Y' }, "deptId", "deptName", deptId, "");
 	} else {
 		// 슈퍼관리자의 경우 권한별 조회도 함께 제공
-		Util.setSelectBox("/contents/basic/data/allAuthList.do", "s_authSeq", {}, "authSeq", "authName", "", "--권한--");
+		Util.setSelectBox("/contents/basic/data/allAuthList.do", "s_authSeq", {}, "authSeq", "authName", "", "권한");
 	}
 	// End
 	
@@ -238,9 +238,9 @@ $("#c_custName").change(function() {
 	var custId = $(this).val();
 	
 	if (custId == null || custId == "") {
-		Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", "", "deptId", "deptName", "", "--부서--");
+		Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", "", "deptId", "deptName", "", "부서");
 	} else {
-		Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", { custId: custId, useYn: 'Y' }, "deptId", "deptName", "", "--부서--");
+		Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_deptName", { custId: custId, useYn: 'Y' }, "deptId", "deptName", "", "부서");
 	}
 });
 // End

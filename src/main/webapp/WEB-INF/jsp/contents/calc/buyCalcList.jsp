@@ -366,16 +366,16 @@
             
                 <!-- 검색 1라인 -->
                 <div class="form-group row mt0">
-                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-                        <select id="sFinishYn" name="finishYn" class="custom-select wd90">
-                            <option value="">--정산마감여부--</option>
+                    <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+                        <select id="sFinishYn" name="finishYn" class="custom-select wd100">
+                            <option value="">정산마감여부</option>
                             <option value="Y">Y</option>
                             <option value="N" selected>N</option>
                         </select>
                     </div>
 
-                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-                        <select id="searchCustType" name="searchCustType" class="custom-select wd90">
+                    <div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+                        <select id="searchCustType" name="searchCustType" class="custom-select wd110">
                             <!-- 공통코드로 구분함. -->
                             <option value="carNum" selected>차량번호</option>
                             <option value="custName">운송/주선사명</option>
@@ -392,8 +392,8 @@
                         <input type="text" id="sCustDeptName" name="custDeptName" class="form-control form-control-sm" readonly>
                     </div>
 
-                    <div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
-                        <select id="searchBizType" name="searchBizType" class="custom-select wd190 media190">
+                    <div class="input-group input-group-sm wd100  middle-name div-min-col-1">
+                        <select id="searchBizType" name="searchBizType" class="custom-select wd100 ">
                             <option value="bizName" selected>사업자상호</option>
                             <option value="bizNum">사업자번호</option>
                         </select>
@@ -407,19 +407,19 @@
 
                     <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sChargeType" name="chargeType" class="form-control custom-select wd90">
-                            <option>--청구구분--</option>
+                            <option>청구구분</option>
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sDeptId" name="deptId" class="form-control custom-select wd90">
-                            <option>--담당부서명--</option>
+                            <option>담당부서명</option>
                         </select>
                     </div>
 
-                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-                        <select id="sUserId" name="userId" class="form-control custom-select wd90">
-                            <option>--배차담당자--</option>
+                    <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+                        <select id="sUserId" name="userId" class="form-control custom-select wd100">
+                            <option>배차담당자</option>
                         </select>
                     </div>
                 </div>
@@ -469,8 +469,8 @@
                             <input type="text" class="form-control form-control-sm" hidden="true">
                         </div>
                         -->
-                        <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-                            <select id="sFastPayYn" name="fastPayYn" class="custom-select" style="width:100px">
+                        <div class="input-group input-group-sm wd100 mr10 middle-name div-min-col-1">
+                            <select id="sFastPayYn" name="fastPayYn" class="custom-select wd100">
                                 <option value="" selected>빠른지급여부</option>
                                 <option value="Y">Y</option>
                                 <option value="N">N</option>
@@ -478,7 +478,7 @@
                         </div>
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <select id="sDeleteYn" name="deleteYn" class="custom-select">
-                                <option value="">-삭제여부-</option>
+                                <option value="">삭제여부</option>
                                 <option value="Y">Y</option>
                                 <option value="N" selected>N</option>
                             </select>
@@ -645,19 +645,19 @@
             deptId: deptId,
             useYn: 'Y'
         }
-        Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", deptOption, "deptId", "deptName", deptId, "--전체--");
+        Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", deptOption, "deptId", "deptName", deptId, "전체");
      	
 		// 배차 담당자 셀렉트 박스
-        Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", { deptId: $(this).val() }, "userId", "userName", "", "--전체--");
+        Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", { deptId: $(this).val() }, "userId", "userName", "", "전체");
         $("#sDeptId").on("change", function(){
-            Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", { deptId: $(this).val() }, "userId", "userName", "", "--전체--");
+            Util.setSelectBox("/contents/basic/data/userNameList.do", "sUserId", { deptId: $(this).val() }, "userId", "userName", "", "전체");
         });
         
      	// 선택 날짜값에 따라 기간 설정
         Util.setSearchDateForm();
         
         // 청구구분 셀랙트 박스
-        Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "01", "--전체--");
+        Util.setCmmCode("select", "sChargeType", "CHARGE_TYPE_CD", "01", "전체");
         
      	// 컨트롤 기본값 설정
      	$("input:checkbox[id='carryOverYn']").prop("checked", true);

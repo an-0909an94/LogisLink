@@ -7,6 +7,14 @@
 	width: 58px !important;
 }
 
+.wd70{
+	width: 70px !important;
+}
+
+.wd80{
+	width: 80px !important;
+}
+
 .wd90{
 	width: 90px !important;
 }
@@ -246,6 +254,14 @@
 
 .mt77{
 	margin-top: 77px !important;;
+}
+
+.mt80{
+	margin-top: 80px !important;;
+}
+
+.mt100{
+	margin-top: 100px !important;;
 }
 
 .mr0{
@@ -676,6 +692,7 @@
 	height: 25px;
 	border-left: 1px solid #c5c5c5;
 	box-sizing: border-box;
+	background-color: red !important;
 }
 
 .p-input::placeholder{
@@ -855,8 +872,9 @@
 
 .order_editor_btns{
 	position: absolute;
-	top: 35px;
-	right: 30px;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 0px;
 }
 
 .editor_btns .padding > #orderDelete{
@@ -917,7 +935,7 @@
 	padding: 0px;
 }
 
-.userInsert_top,.orderInsert_top {
+.userInsert_top, .orderInsert_top {
 	position: fixed;
 	width: 480px;
 	z-index: 999;
@@ -926,7 +944,7 @@
 	justify-content: space-between;
 	background-color: white;
 	padding-bottom: 17px;
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid #dcdcdc;
 }
 
 .form-control-sm{
@@ -964,6 +982,7 @@
 	margin: 0 7px 0 0; 
 	padding: 3px 6px;
 	font-weight: 500;
+	font-size: 12px;
 }
 
 .filebox .upload-name{
@@ -1138,6 +1157,7 @@
 	font-size: 12px;
 	height: 26px;
 	border: 1px solid #bbbbbb;
+	padding: 0 0 0 5px;
 }
 
 .compList .contents label{
@@ -1348,3 +1368,108 @@ label.modal-big-name{
 input::placeholder{
 	color: #333;
 }
+
+/* 메뉴관리 S*/
+.menuList select{
+	font-size: 12px !important;
+	color: red !important;
+}
+/* 메뉴관리 E*/
+
+.userInsert .userInsert_top{
+	border-bottom: 1px solid #dcdcdc;
+}
+
+/* 공지사항 등록 S */
+.boardInsert .pop-layer .radio-or-checkBox input[type="checkbox"] + label:before,
+.boardInsert .pop-layer .radio-or-checkBox input[type="checkbox"]:checked + label:after{
+	top: 4px;
+}
+
+.boardInsert .radio-or-checkBox > .label-margin > span{
+	font-size: 12px;
+}
+
+.boardInsert .filebox label{
+	font-size: 12px;
+	padding: 3px 8px;
+	height: auto;
+	margin-left: 10px;
+}
+/* 공지사항 등록 E */
+
+/* 거래처 등록 S */
+.custInsert .k-tabstrip-wrapper, 
+.custInsert.pop-layer,
+.custInsert-pop-layer{
+	width: 440px !important;
+}
+
+.custInsert .userInsert_top{
+	width: 420px;
+}
+
+.custList .cont-wrapper-page-grid.block{
+	margin-left: 430px;
+}
+/* 거래처 등록 E */
+
+/*사용자 등록 S*/
+.userInsert .k-tabstrip-wrapper,
+.userInsert.pop-layer,
+.userInsert .pop-layer,
+.userInsert .insert_pop{
+	width: 450px !important;
+}
+
+.userList .cont-wrapper-page-grid.block{
+	margin-left: 440px;
+}
+
+.userInsert .userInsert_top{
+	width: 430px;
+}
+/*사용자 등록 E*/
+
+/* 주소지 등록 S */
+.custAddInsert.pop-layer,
+.custAddInsert .k-tabstrip-wrapper{
+	width: 450px !important;
+}
+
+.custAddList .cont-wrapper-page-grid.block{
+	margin-left: 440px !important;
+}
+
+.custAddInsert .userInsert_top{
+	width: 430px;
+}
+/* 주소지 등록 E */
+
+/* 알림톡 전송 S */
+#talkModal .k-datetimepicker .k-select{
+	height: 22px;
+}
+
+#talkModal .radio-or-checkBox > .label-margin{
+	padding-bottom: 0px;
+}
+
+#talkModal  .k-grid-header .k-header-column-menu{
+	bottom: -1px;
+}
+/* 알림톡 전송 E */
+
+/* 앱푸시전송 S */
+#pushModal .radio-or-checkBox > .label-margin > span{
+	font-size: 12px;
+}
+
+#pushModal .radio-or-checkBox > .label-margin{
+	padding-bottom: 0px;
+}
+
+#pushModal .k-grid-header .k-header-column-menu{
+	bottom: -1px;
+}
+/* 앱푸시전송 E */

@@ -33,21 +33,21 @@
 			<P id="headerTitle">거래처관리</P>
 		</div>
 	</div>
-	<div class="contents">
+	<div class="contents custList">
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
 			<div class="form-group row mt0" style="justify-content: space-between">
-				<div>
+				<div class="row">
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select wd90" id="s_dept" name="s_dept">
-							<option>--부서명--</option>
+							<option>부서명</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="custom-select wd90" id="searchColumn" name="searchColumn">
-							<option value="s_custName" selected>--거래처명--</option>
-							<option value="s_bizName" selected>--사업자상호--</option>
-							<option value="s_bizNum" selected>--사업자번호--</option>
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select class="custom-select wd100" id="searchColumn" name="searchColumn">
+							<option value="s_custName" selected>거래처명</option>
+							<option value="s_bizName" selected>사업자상호</option>
+							<option value="s_bizNum" selected>사업자번호</option>
 						</select>
 					</div>
 					<div class="input-group input-group-sm wd190 media190 middle-name div-min-col-1">
@@ -66,7 +66,7 @@
 					</div>
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select wd90" id="s_useYn" name="s_useYn">
-							<option value="">--사용여부--</option>
+							<option value="">사용여부</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
@@ -74,9 +74,9 @@
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select wd90" id="s_userId" name="s_userId"></select>
 					</div>
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select" style="width:100%" id="s_payYn" name="s_payYn">
-							<option value="">--빠른지급여부--</option>
+							<option value="">빠른지급여부</option>
 							<option value="Y">Y</option>
 							<option value="N">N</option>
 						</select>
@@ -138,14 +138,14 @@ $(document).ready(function(){
 
 
 	$('.insert_pop').css('display', 'block');
-    Util.setCmmCode("select", "s_custTypeCode", "CUST_TYPE_CD", "", "--분류--");
-    Util.setCmmCode("select", "s_sellBuySctn", "SELL_BUY_SCTN", "", "--구분--");
-    Util.setCmmCode("select", "s_custMngCode", "CAR_MNG_CD", "", "--거래처등급--");
+    Util.setCmmCode("select", "s_custTypeCode", "CUST_TYPE_CD", "", "분류");
+    Util.setCmmCode("select", "s_sellBuySctn", "SELL_BUY_SCTN", "", "구분");
+    Util.setCmmCode("select", "s_custMngCode", "CAR_MNG_CD", "", "거래처등급");
 
 	Util.setSelectBox("/contents/basic/data/compDeptList.do", "s_dept", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn:'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서명--");
-    Util.setSelectBox("/contents/basic/data/userNameList.do", "s_userId", {deptId:$("#s_dept").val()}, "userId", "userName", "", "--담당자--");
+    Util.setSelectBox("/contents/basic/data/userNameList.do", "s_userId", {deptId:$("#s_dept").val()}, "userId", "userName", "", "담당자");
 	$("#s_dept").on("change", function(){
-		Util.setSelectBox("/contents/basic/data/userNameList.do", "s_userId", {deptId:$(this).val()}, "userId", "userName", "", "--담당자--");
+		Util.setSelectBox("/contents/basic/data/userNameList.do", "s_userId", {deptId:$(this).val()}, "userId", "userName", "", "담당자");
 	});
 
 	goList();

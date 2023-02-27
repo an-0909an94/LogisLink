@@ -126,9 +126,9 @@
 
 				<!-- 검색 1라인 -->
 				<div class="form-group row mt0">
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
 						<select id="searchPeriodType" name="searchPeriodType"
-								class="form-control wd90" class="custom-select ">
+								class="form-control wd100" class="custom-select ">
 							<option value="dueDate" selected>지급예정일자</option>
 							<option value="finishDate">마감일자</option>
 						</select>
@@ -173,8 +173,8 @@
 							   class="form-control form-control-sm wd90" placeholder="마감담당자">
 					</div>
 
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="form-control wd90" class="custom-select" id="payApproYn"
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select class="form-control wd100" class="custom-select" id="payApproYn"
 								name="payApproYn">
 							<option value="" selected="selected">지급승인여부</option>
 							<option value="Y">Y</option>
@@ -196,8 +196,8 @@
 				<!-- 검색 2라인 -->
 				<div class="form-group row" style="justify-content: space-between">
 					<div class="row">
-						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-							<select class="form-control wd90" class="custom-select " id="outYn"
+						<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+							<select class="form-control wd100" class="custom-select " id="outYn"
 									name="outYn">
 								<option value="">출금처리여부</option>
 								<option value="Y">Y</option>
@@ -205,8 +205,8 @@
 							</select>
 						</div>
 
-						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-							<select class="form-control wd90" class="custom-select" id="sSerach1"
+						<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+							<select class="form-control wd100" class="custom-select" id="sSerach1"
 									name="sSerach1">
 								<option value="tax">계산서발행지</option>
 								<option value="bankCnnm">예금주</option>
@@ -232,8 +232,8 @@
 								   class="form-control form-control-sm wd190 media190 searchValue " placeholder="ex> 대표자명,차주명, 차량번호...">
 						</div>
 
-						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-							<select class="form-control" class="custom-select wd90" id="payreqYn"
+						<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+							<select class="form-control custom-select wd110" id="payreqYn"
 									name="payreqYn">
 								<option value="">빠른지급대상</option>
 								<option value="Y" selected="selected">Y</option>

@@ -44,18 +44,18 @@
 	                  	</select>
 	                </div> 
 	                
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-					    <select class="form-control" class="custom-select" style="width: 100%" id="carContractCode" name="carContractCode"></select>
+					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+					    <select class="form-control custom-select" style="width: 100%" id="carContractCode" name="carContractCode"></select>
 	                </div>
 	                
-	                <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-					    <select class="form-control" class="custom-select wd90" id="carTypeName" name="carTypeName">
+	                <div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+					    <select class="form-control custom-select wd120" id="carTypeName" name="carTypeName">
 					    	<option value="" selected="selected">차종</option>					    	
 					    </select>
 	                </div>
 	                
-	                <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-					    <select class="form-control" class="custom-select wd90" id="itemCode" name="itemCode"></select>
+	                <div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+					    <select class="form-control custom-select wd110" id="itemCode" name="itemCode"></select>
 	                </div>
 	                
 	                <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
@@ -67,8 +67,8 @@
 					    </select>
 	                </div>
 	                
-	                <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-					    <select id="arrivalTimeCode" name="arrivalTimeCode" class="form-control" class="custom-select" style="width: 100%">
+	                <div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+					    <select id="arrivalTimeCode" name="arrivalTimeCode" class="form-control custom-select" style="width: 100%">
 					    	<option value="" selected="selected">운송소요시간</option>
 					    	<option value="01">당착</option>
 					    	<option value="02">익착</option>

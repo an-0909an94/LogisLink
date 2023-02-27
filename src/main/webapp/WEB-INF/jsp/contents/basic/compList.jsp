@@ -122,7 +122,7 @@
 								<strong>업태</strong>
 								    <input type="text" id="bizCond">
 								</div>
-								<div class="input-group input-group-sm middle-name wd90 mr10">
+								<div class="input-group input-group-sm middle-name wd100 mr10">
 								<strong class="required">분류</strong>
 								    <select id="custTypeCode" required></select> 
 	                                <div class="help-block with-errors"></div>

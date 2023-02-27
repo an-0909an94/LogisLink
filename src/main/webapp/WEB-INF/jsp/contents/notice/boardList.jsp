@@ -17,12 +17,12 @@
 		<div id="group-list" class="cont-wrapper-page-grid">
 			<form id="fSearch" class="date-bnt" onSubmit="return false;">
 				<div class="form-group row mt0" style="justify-content: space-between">
-					<div>
+					<div class="row">
 						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 							<select class="custom-select wd90" id="searchColumn" name="searchColumn">
-								<option value="USER_NAME">--등록자--</option>
-								<option value="TITLE">--제목--</option>
-								<option value="CONTENT">--내용--</option>
+								<option value="USER_NAME">등록자</option>
+								<option value="TITLE">제목</option>
+								<option value="CONTENT">내용</option>
 							</select>
 						</div>
 						<div class="input-group input-group-sm wd290 media290 middle-name div-min-col-1">

@@ -22,7 +22,7 @@
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <select class="form-control" class="custom-select wd90" id="s_dept"
                                     name="deptId">
-                                <option>--부서명--</option>
+                                <option>부서명</option>
                             </select>
                         </div>
                         <div class="input-group input-group-sm wd290 media290 middle-name">
@@ -76,7 +76,7 @@
 			custId : '${custId}',
 			deptId : '${sessionScope.userInfo.deptId}',
 			useYn : 'Y'
-		}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서명--");
+		}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "부서명");
 
 		searchCustName = MultiColumnComboBox.setCustName("s");
 		searchCustName.bind("select", changeSearchCust);

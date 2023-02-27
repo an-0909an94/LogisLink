@@ -171,7 +171,7 @@ tfoot th {
     text-align: left;
     align-items: center;
     font-size: 12px;
-    font-weight: 400;
+    font-weight: bold;
     font-family: 'Noto Sans KR';
     text-transform: uppercase;
 }
@@ -537,10 +537,9 @@ div#layer1 {
 
 .textBox-in-icon > i {
     position: absolute;
-    top: 50.5%;
+    top: 50%;
     transform: translateY(-50%);
-    right: -3%;
-    margin-right: 0.5em;
+    right: 0px;
 }
 
 .textBox-in-icon > i > img{

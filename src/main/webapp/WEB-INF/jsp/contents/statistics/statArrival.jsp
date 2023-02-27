@@ -21,14 +21,14 @@
 							<option value="AT">기간지정</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd290 media290 middle-name">
+					<div class="input-group input-group-sm wd90 middle-name">
 						<input style="padding: 0;" type="text" id="fromDate" name="fromDate"
-							   class="wd290 media290" disabled="disabled">
+							   class="wd90" disabled="disabled">
 					</div>
 					<span>~</span>
-					<div class="input-group input-group-sm wd290 media290 middle-name">
+					<div class="input-group input-group-sm wd90 middle-name">
 						<input style="padding: 0;" type="text" id="toDate" name="toDate"
-							   class="wd290 media290" disabled="disabled">
+							   class="wd90" disabled="disabled">
 					</div>
 				</div>
 				<div class="form-group row" style="justify-content: space-between">

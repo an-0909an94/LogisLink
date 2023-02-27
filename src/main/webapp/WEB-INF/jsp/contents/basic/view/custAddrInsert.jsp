@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<div class="editor_wrap pop-layer" id="layer1">
+<div class="editor_wrap pop-layer custAddInsert" id="layer1">
     <div class="insertClose">
         <a class="insertCloseButton k-icon k-i-close" onclick="init_popup_close();"></a>
     </div>
@@ -33,7 +33,7 @@
                             </div>
 
 
-                            <div class="row pt10 pb10 pl8 mt77 gray_box">
+                            <div class="row pt10 pb10 pl8 mt100 gray_box">
                                 <div class="row mb10">
                                     <label class="col-form-label modal-big-name">주소</label>
                                     <div class="input-group input-group-sm wd290 middle-name">
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="form-group row mb10">
                                     <label class="col-form-label"></label>
-                                    <div class="input-group input-group-sm wd285 middle-name">
+                                    <div class="input-group input-group-sm wd290 middle-name">
                                         <strong class="required">주소(검색)</strong>
                                         <div class="textBox-in-icon">
                                             <input onClick="popSearchPost();" type="text"
@@ -53,20 +53,20 @@
                                                    readonly="readonly" required>
                                             <div class="help-block with-errors"></div>
                                             <i><img onclick="popSearchPost();"
-                                                    src="/images/icon/search.png"></i>
+                                                    src="/images/icon/icon_search.png"></i>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb10">
                                     <label class="col-form-label"></label>
-                                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                                    <div class="input-group input-group-sm wd140 middle-name div-min-col-1">
                                         <strong>시도</strong>
                                         <input type="text" class="form-control form-control-sm"
                                                style="width: 100%"
                                                id="sido" readonly>
                                     </div>
-                                    <div class="input-group input-group-sm wd90 middle-name">
+                                    <div class="input-group input-group-sm wd140 middle-name">
                                         <strong>군구</strong>
                                         <input type="text" class="form-control form-control-sm"
                                                style="width: 100%"

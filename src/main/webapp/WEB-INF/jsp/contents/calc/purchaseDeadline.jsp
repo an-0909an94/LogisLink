@@ -260,26 +260,26 @@
 						</label>
 					</div>
 
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="form-control" class="custom-select wd90" id="sAllocState"
+					<div class="input-group input-group-sm wd120 middle-name div-min-col-1">
+						<select class="form-control custom-select wd120" id="sAllocState"
 								name="sAllocState">
-							<option value="">--배차상태--</option>
+							<option value="">배차상태</option>
 						</select>
 					</div>
 
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select wd90" id="sDeptId"
 								name="sDeptId">
-							<option value="">--배차부서명--</option>
+							<option value="">배차부서명</option>
 						</select>
 					</div>
 
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="form-control" class="custom-select wd90" id="userId"
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select class="form-control custom-select wd100" id="userId"
 								name="userId"></select>
 					</div>
 
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select" style="width:100%"
 								id="sellFinishYn" name="sellFinishYn">
 							<option value="">매출마감여부</option>
@@ -288,7 +288,7 @@
 						</select>
 					</div>
 
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select" style="width:100%"
 								id="buyFinishYn" name="buyFinishYn">
 							<option value="">매입마감여부</option>
@@ -297,7 +297,7 @@
 						</select>
 					</div>
 
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+					<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select" style="width:100%"
 								id="reqPayYn" name="reqPayYn">
 							<option value="">빠른지급여부</option>
@@ -310,8 +310,8 @@
 				<!-- 검색 2라인 -->
 				<div class="form-group row" style="justify-content: space-between">
 					<div class="row">
-						<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-							<select class="form-control" class="custom-select wd90"
+						<div class="input-group input-group-sm wd110 middle-name div-min-col-1">
+							<select class="form-control custom-select wd110"
 									id="carContractCode" name="carContractCode"></select>
 						</div>
 
@@ -490,13 +490,13 @@ $(document).ready(function(){
 		height: "100%",
         panes: [{resizable:true}, {resizable:true}]
  	});
-    Util.setCmmCode("select", "listSSido", "SIDO", "", "--상차지--");
-    Util.setCmmCode("select", "listESido", "SIDO", "", "--하차지--");
-    Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "--오더상태--");
-    Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "05", "--배차상태--");
-    Util.setCmmCode("select", "carContractCode", "CAR_CONTRACT_CD", "03", "--차주계약유형--");
-	Util.setCmmCode("select", "sCarMngCode", "CAR_MNG_CD", "", "--차주등급--");
-	Util.setCmmCode("select", "sCustMngCode", "CAR_MNG_CD", "", "--거래처등급--");
+    Util.setCmmCode("select", "listSSido", "SIDO", "", "상차지");
+    Util.setCmmCode("select", "listESido", "SIDO", "", "하차지");
+    Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "오더상태");
+    Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "05", "배차상태");
+    Util.setCmmCode("select", "carContractCode", "CAR_CONTRACT_CD", "03", "차주계약유형");
+	Util.setCmmCode("select", "sCarMngCode", "CAR_MNG_CD", "", "차주등급");
+	Util.setCmmCode("select", "sCustMngCode", "CAR_MNG_CD", "", "거래처등급");
 
 	var toDay = new Date();
 	var year = toDay.getFullYear();
@@ -514,7 +514,7 @@ $(document).ready(function(){
 		Util.setSelectBox("/contents/basic/data/userNameList.do", "userId", {deptId:$(this).val()}, "userId", "userName", "", "전체");
 	});
 
-	Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "", "--부서명--");
+	Util.setSelectBox("/contents/basic/data/compDeptList.do", "sDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn :'Y'}, "deptId", "deptName", "", "부서명");
 
 	var $options2 = $("#sCarMngCode > option").clone();
 	$('#carMngCode').append($options2);

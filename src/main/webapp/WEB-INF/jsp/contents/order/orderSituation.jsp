@@ -12,14 +12,14 @@
 			<form id="fSearch" class="date-bnt">
 			<input type="hidden" id="hoverText">
 			<div class="tool_form row mt0" style="justify-content: space-between">
-				<div>
+				<div class="row">
 					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select wd90" id="deptId" name="deptId">
-							<option>--부서명--</option>
+							<option>부서명</option>
 						</select>
 					</div>
-					<div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-						<select class="form-control" class="custom-select wd90" id="userId" name="userId">
+					<div class="input-group input-group-sm wd100 middle-name div-min-col-1">
+						<select class="form-control custom-select wd100" id="userId" name="userId">
 						</select>
 					</div>
 					<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">

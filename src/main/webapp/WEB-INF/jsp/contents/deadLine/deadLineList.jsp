@@ -14,7 +14,7 @@
         <div id="group-list" class="cont-wrapper-page-grid">
             <form id="fSearch" class="date-bnt">
                 <div class="form-group row mt0" style="justify-content: space-between">
-                    <div>
+                    <div class="row">
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                             <select class="custom-select wd90" name="searchDate" id="searchDate">
                                 <option value="sDate" selected>상차일자</option>
