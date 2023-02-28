@@ -599,7 +599,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><strong>변경</strong></b></button>
+		        <button type="submit"  class="btn_b k-pager-refresh k-button"><b><strong>변경</strong></b></button>
 		        <a id="closeBtn" onclick="reqModalClose();" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>

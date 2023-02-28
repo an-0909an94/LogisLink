@@ -12,25 +12,21 @@
 			<input type="hidden" id="custId" name="custId" value="${param.custId}" readonly />
 			<input type="hidden" id="deptId" name="deptId" value="${param.deptId}" readonly />
 			<input type="hidden" id="sellBuySctn" name="sellBuySctn" value="${param.sellBuySctn}" readonly />
-			<div class="form-group row">
+			<div class="form-group row" style="width:14%;float: left">
 				<div class="input-group input-group-sm col-2 middle-name">
-				<strong>　</strong>
-				    <input type="text" value="${param.custName}" class="form-control form-control-sm" readonly>
+				    <input type="text" value="${param.custName}" class="form-control form-control-sm" style="width: auto;" readonly>
 				</div>
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-				<strong>&nbsp;</strong>
-				    <select class="form-control" class="custom-select col-12" id="sSido" name="sSido">
-				    	<option>--상차지--</option>
-				    </select>
-				</div>
-				
-				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:90px;min-width:90px;">
-				<strong>　</strong>
-				    <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
-				</div>
-				
-				<div style="padding: 1em;" class="input-group input-group-sm col-1"></div>				
 			</div>
+				<div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="margin: 5px 0 0 0;float: left"">
+					<select class="form-control" class="custom-select col-12" id="sSido" name="sSido">
+						<option>상차지</option>
+					</select>
+				</div>
+				<div class="row" style="display: flex;justify-content: flex-end;">
+					<div class="btn_58 input-group-sm middle-name mr7">
+						<button onclick="goList()" type="button" class="btn_58 btn_b">검색</button>
+					</div>
+				</div>
 			</form>
 				<!--  -->
 			<div class="cont-body">
@@ -42,14 +38,13 @@
 							<div class="tool_form col">
 								<div class="btn-row">
 									<div class="tool_group">
-										<div class="padding">									
+										<div class="padding">
 											<c:if test="${menuAuth.printYn eq 'Y'}">
-											<a class="k-pager-refresh k-button" onClick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
+												<a href="#" class="k-pager-refresh k-button" onclick="goExcel();"><b class="btn-x">엑셀출력</b></a>
 											</c:if>
-											<%-- 계약단가는 거래처 수정 권한이 있어야 등록 가능  --%>
-											<c:if test="${menuAuth.editYn eq 'Y'}">
-											<a class="k-pager-refresh k-button" onclick="viewBundle()"><b class="btn-h"><i class="k-icon k-i-plus"></i>신규등록</b></a>
-											</c:if>			
+											<c:if test="${menuAuth.writeYn eq 'Y'}">
+												<a href="#" class="k-pager-refresh k-button" onclick="viewBundle()"><b class="btn-h">신규등록</b></a>
+											</c:if>
 										</div>	
 									</div>
 								</div>

@@ -1491,7 +1491,7 @@ input::placeholder{
  */
 .k-window {
 	border-radius:30px;
-	height: calc(100% - 361px) !important;
+	/*height: calc(100% - 361px) !important;*/
 }
 .k-window-titlebar {
 	display: flex;

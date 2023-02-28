@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link rel="stylesheet" type="text/css" href="/css/style_V2.css">
 <div class="pop-layer">
     <div class="editor_wrap pop-layer" id="layer1">
         <!-- wrap -->
-        <div class="k-tabstrip-wrapper">
+        <div class="k-popup-wrapper">
             <div id="editor_tabs" class="tabs_wrap k-widget k-tabstrip k-floatwrap k-tabstrip-top" data-role="tabstrip"
                 tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
                 <!-- content -->
@@ -24,7 +25,7 @@
                                  <input type="text" class="form-control form-control-sm searchInputBox searchValue" id="sValue" name="sValue" maxlength="13">
                             </div>
                             <div class="padding">
-                                <a onclick="goList();" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-zoom"></i>검색</b></a>
+                                <a onclick="goList();" class="btn_b k-pager-refresh k-button">검색</b></a>
                             </div>
                         </div>
                     </fieldset>
