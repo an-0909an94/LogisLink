@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <style>
-	#grid .k-grid-content {max-height:calc(100vh - 471px)}
+	#grid .k-grid-content {max-height:calc(100vh - 260px)}
 </style>
 <body>
 <div class="header">
@@ -92,8 +92,8 @@
 									</div>
 								</div>
 							</div><!-- /toolbar -->
-							<div style="min-width: 500px; max-width: 1593px;">
-								<div style="height:calc(100vh - 344px)" id="grid"></div>
+							<div style="min-width: 500px;">
+								<div style="height:calc(100vh - 260px)" id="grid"></div>
 								<!-- /table -->
 							</div>
 						</div>

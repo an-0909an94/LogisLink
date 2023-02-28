@@ -81,10 +81,10 @@
 								<form id="f" name="f" method="post">
 									<input type="hidden" id="gridData" name="gridData">
 									<div>
-										<div class="splitter" style="float:left; min-height:660px; float:left; width:20%; border: 0;">
+										<div class="splitter" style="float:left; min-height:calc(100vh - 180px); float:left; width:20%; border: 0;">
 											<div id="grid"></div>
 										</div>
-										<div class="splitter" style="float:right; min-height:660px; float:right; width:80%; border: 0;">
+										<div class="splitter" style="float:right; min-height:calc(100vh - 180px); float:right; width:80%; border: 0;">
 											<div id="subGrid"></div>
 										</div>
 									</div>

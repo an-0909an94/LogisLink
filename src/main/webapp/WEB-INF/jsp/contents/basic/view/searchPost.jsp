@@ -31,7 +31,7 @@
 	                                 <input type="text" class="form-control form-control-sm searchInputBox" id="searchAddress">
 	                             </div>
 	                            <div class="padding">
-	                                <a onclick="goList();" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-zoom"></i>검색</b></a>
+	                                <a onclick="goList();" class="k-pager-refresh k-button"><b class="btn-b"><i></i>검색</b></a>
 	                            </div>
 	                        </div>
 	                    </fieldset>

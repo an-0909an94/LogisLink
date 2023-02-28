@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <style>
-	#talkList .k-grid-content {max-height:calc(100vh)}
+	#talkList .k-grid-content {max-height:calc(100vh - 260px)}
 </style>
 <div id="talkModal" class="editor-warp p-0">
 	<div class="modalEditor" id="addTalk">
@@ -171,7 +171,7 @@
 							</div>
 						</div><!-- /toolbar -->
 						<div style="min-width: 500px;">
-							<div style="height:calc(100vh - 344px)" id="talkList"></div>
+							<div style="height:calc(100vh - 260px)" id="talkList"></div>
 							<!-- /table -->
 						</div>
 					</div>

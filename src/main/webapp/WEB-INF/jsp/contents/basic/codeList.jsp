@@ -207,7 +207,7 @@
 								<form id="f" name="f" method="post">
 									<input type="hidden" id="gridData" name="gridData">
 									<div id="splitter"
-										 style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 280px);">
+										 style="min-width: 500px; max-width: 100vw; min-height:calc(100vh - 180px);">
 										<div class="top-pane">
 											<div style="height: 100%;" id="grid"></div>
 										</div>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <style>
-	#pushList .k-grid-content {max-height:calc(100vh)}
+	#pushList .k-grid-content {max-height:calc(100vh - 260px)}
 </style>
 <div id="pushModal" class="editor-warp p-0">
 	<div class="modalEditor modal-block" id="addPush">
@@ -144,7 +144,7 @@
 							</div>
 						</div><!-- /toolbar -->
 						<div style="min-width: 500px;">
-							<div style="height:calc(100vh - 344px)" id="pushList"></div>
+							<div style="height:calc(100vh - 260px)" id="pushList"></div>
 							<!-- /table -->
 						</div>
 					</div>

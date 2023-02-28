@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
 <style>
-	#grid .k-grid-content {max-height:calc(100vh)}
+	#grid .k-grid-content {max-height:calc(100vh - 260px)}
 </style>
 <div class="insert_pop">
 	<jsp:include page="./view/boardInsert.jsp" />
@@ -62,7 +62,7 @@
 								</div>
 							</div>
 						</div><!-- /toolbar -->
-						<div style="height:calc(100vh - 344px)" id="grid"></div>
+						<div style="height:calc(100vh - 260px)" id="grid"></div>
 					</div>
 				</div>
 			</div>

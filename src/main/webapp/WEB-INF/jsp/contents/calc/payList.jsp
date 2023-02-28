@@ -7,7 +7,7 @@
 
 <!--출금 요청-->
 <div id="outreqModal" class="editor-warp p-0">
-	<form class="modalEditor" id="fOutreqModal">
+	<form class="modalEditor" id="fOutreqModal" style="display: block">
 		<div class="modalHeader">
 	        <div class="form-group row">
 	            <label class="col-form-label big-name">출금방법</label>
@@ -19,9 +19,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="editor_btns">
+		<div class="editor_btns" style="text-align: center">
 			<div class="padding">
-		        <a onclick="outreqModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">출금요청</b></a>
+		        <a onclick="outreqModalSubmit()" class="k-pager-refresh k-button btn_b"><b class="btn-b">출금요청</b></a>
 		        <a onclick="outreqModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
@@ -41,7 +41,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="payReturnModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">반려요청</b></a>
+		        <a onclick="payReturnModalSubmit()" class="k-pager-refresh k-button btn_b"><b class="btn-b">반려요청</b></a>
 		        <a onclick="payReturnModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
@@ -66,7 +66,7 @@
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" id="fWithdrawalFinishSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>확인</strong></b></button>
+                <button type="submit" id="fWithdrawalFinishSubmitBtn" class="k-pager-refresh k-button btn_b"><b class="btn-b"><strong>확인</strong></b></button>
                 <a onclick="withdrawalFinishModalClose()" class="k-pager-refresh k-button"><b class="btn-g">취소</b></a>
             </div>
         </div>
@@ -92,7 +92,7 @@
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" id="fChangeWithdrawalDueDateSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>확인</strong></b></button>
+                <button type="submit" id="fChangeWithdrawalDueDateSubmitBtn" class="k-pager-refresh k-button btn_b"><b class="btn-b"><strong>확인</strong></b></button>
                 <a onclick="changeWithdrawalDueDateModalClose()" class="k-pager-refresh k-button"><b class="btn-g">취소</b></a>
             </div>
         </div>

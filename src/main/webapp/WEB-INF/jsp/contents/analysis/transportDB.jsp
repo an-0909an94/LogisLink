@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <!-- /toolbar -->
-                        <div id="grid" style="height: calc(100vh - 346px);"></div>
+                        <div id="grid" style="height: calc(100vh - 250px);"></div>
                     </div>
                 </div>
             </div>

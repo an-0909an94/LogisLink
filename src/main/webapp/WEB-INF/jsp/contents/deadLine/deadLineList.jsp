@@ -2,7 +2,7 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 
-    #grid .k-grid-content {max-height:100vh}
+    #grid .k-grid-content {max-height:calc(100vh - 260px)}
 </style>
 <div class="header">
     <div style="justify-content: space-between; display: flex;" class="summary p30">
@@ -108,8 +108,8 @@
                         --%>
                         <%--<button onclick="goExcel()"  type="button" class="form-control form-control-sm middle-button">엑셀출력</button> --%>
                         <%--<a href="#" class="k-pager-refresh k-button" onclick="goExcel();"><b class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>--%>
-                        <div style="width: 100%">
-                            <div style="height:calc(100vh - 235px);" id="grid"></div>
+                        <div style="min-width: 500px;">
+                            <div style="height:calc(100vh - 260px);" id="grid"></div>
                         </div>
                     </div>
                 </div>

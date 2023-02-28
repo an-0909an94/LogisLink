@@ -67,7 +67,7 @@
 							<!--
 							<div style="height:calc(100vh - 741px)" id="grid"></div>
 							-->
-							<div style="height:246px" id="grid"></div>
+							<div style="height:calc(100vh - 641px)" id="grid"></div>
 							<!-- /table -->
 						</div>
 					</div>

@@ -38,7 +38,7 @@
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" id="fCalcFinishSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>확인</strong></b></button>
+                <button type="submit" id="fCalcFinishSubmitBtn" class="k-pager-refresh k-button btn_b"><b class="btn-b"><strong>확인</strong></b></button>
                 <a onclick="calcFinishModalClose()" class="k-pager-refresh k-button"><b class="btn-g">취소</b></a>
             </div>
         </div>
@@ -1592,7 +1592,7 @@
     taxinvModal = $("#divTaxInvoice");
     taxinvModal.kendoDialog({
 		width: "1200px",
-		height: "900px",
+		height: "800px",
 		visible: false,
 		title: "매입계산서",
 		closable: true,

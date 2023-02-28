@@ -151,7 +151,7 @@
 				        </thead>
 				    </table>
 				</div>
-				<div id="grid" style="height:calc(100vh - 350px)"></div>
+				<div id="grid" style="height:calc(100vh - 250px)"></div>
 			</form>
 		</div>
 	</div>

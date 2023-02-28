@@ -216,7 +216,7 @@
 						</div>
 					</form>
 				</div>
-				<div id="splitter" style="min-height:660px; float:right; width:60%; border: 0;">
+				<div id="splitter" style="min-height:calc(100vh - 180px); float:right; width:60%; border: 0;">
 					<div id="grid"></div>
 				</div>
 			</div>

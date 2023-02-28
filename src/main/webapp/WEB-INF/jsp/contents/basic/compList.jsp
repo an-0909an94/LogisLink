@@ -3,7 +3,7 @@
 <!-- modal -->
 <div id="divAddDept" class="editor-warp p-0">
 	<div class="modalEditor" id="addDept">
-		<div id="popGrid"></div>
+		<div id="popGridAdd"></div>
 		<div class="modalHeader50">
 			<div class="form-group row">
                 <label class="col-form-label modal-big-name">부서명</label>
@@ -22,8 +22,8 @@
 </div>
 
 <div id="divDetailDept" class="editor-warp p-0">
-	<div class="modalEditor" id="addDept">
-		<div id="popGrid"></div>
+	<div class="modalEditor" id="detailDept">
+		<div id="popGridDetail"></div>
 		<div class="modalHeader50">
 			<input type="hidden" id="modalCustId" name="modalCustId">
 			<input type="hidden" id="modalDeptId" name="modalDeptId">
@@ -46,7 +46,7 @@
 		<div class="editor_btns">
 			<div class="padding">
 		        <a onclick="detailModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">저장</b></a>
-		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
+		        <a id="detailCloseBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</div>
@@ -65,8 +65,8 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="copyApiKey();" class="k-pager-refresh k-button"><b class="btn-b">복사</b></a>
-		        <a id="closeBtn" onclick="apiModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
+		        <a onclick="copyApiKey();" class="k-pager-refresh k-button btn_b"><b class="btn-b">복사</b></a>
+		        <a id="apiCloseBtn" onclick="apiModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
 	</div>
@@ -162,7 +162,7 @@
 								<div class="input-group input-group-sm middle-name wd190 mr10">
 								<strong>우편번호(검색)</strong>
 								    <div class="textBox-in-icon">
-	                                	<input style="border-radius: 0px 8px 8px 0px;" onClick="popSearchPost('');" type="text" class="form-control form-control-sm wd190" id="bizPost">
+	                                	<input style="border-radius: 0px 0px 0px 0px;" onClick="popSearchPost('');" type="text" class="form-control form-control-sm wd190" id="bizPost">
 										<i><img onclick="popSearchPost('');" src="/images/icon/icon_search.png"></i>
 									</div>
 								</div>

@@ -8,8 +8,8 @@
 
 <!-- Export 명세서 Modal -->
 <div id="divExportRecipt" class="editor_wrap p-0">
-    <form id="fExportRecipt" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
-        <div class="modalHeader">
+    <form id="fExportRecipt" class="modalEditor" data-toggle="validator" role="form" autocomplete="off" style="display: block" >
+        <div class="modalHeader" >
             <div class="form-group row">
                 <div id="exportMessage" style="text-align: center; padding: 0px; font-size: 17px; width:100%">
                 </div>
@@ -27,9 +27,9 @@
                 </div>
             </div>
         </div>
-        <div class="editor_btns">
+        <div class="editor_btns" style="text-align: center">
             <div class="padding">
-                <button type="submit" id="fExportReceiptBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>확인</strong></b></button>
+                <button type="submit" id="fExportReceiptBtn" class="k-pager-refresh k-button btn_b"><b class="btn-b"><strong>확인</strong></b></button>
                 <a onclick="exportReceiptClose();" class="k-pager-refresh k-button"><b class="btn-g">취소</b></a>
             </div>
         </div>
