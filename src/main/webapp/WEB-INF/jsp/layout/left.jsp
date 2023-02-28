@@ -295,7 +295,7 @@
 						</div>
 						<div class="row">
 							<div class="input-group input-group-sm middle-name wd140 mr10 mt0 chgPasswd"
-								 style="text-align: left;">
+								 style="text-align: left; display: none; position: relative; top: 21px;">
 								<strong style="height: 18px"></strong>
 								<button style="width: 100%; padding: 0;" class="form-control a-text-center"
 										id="_btnChgPasswd">비밀번호 변경
