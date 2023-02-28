@@ -87,7 +87,7 @@
 		<div class="modalHeader">
             <div class="form-group row gray_box" style="margin-bottom: 0.225rem">
                 <label class="col-form-label modal-big-name">운송사</label>
-                <div class="input-group input-group-sm wd90 mr10 mt0 middle-name form-group" style="text-align: left;">
+                <div class="input-group input-group-sm wd190 mr10 mt0 middle-name form-group" style="text-align: left;">
                 <strong>거래처명</strong>
                     <input style="width: 100%;" name="defaultReqCustName" id="defaultReqCustName" type="text">
                 </div>
@@ -95,7 +95,7 @@
                 <strong>담당자</strong>
                     <input style="width: 100%;" name="defaultReqStaff" id="defaultReqStaff" type="text">
                 </div>
-                <div class="input-group input-group-sm wd190 mt0 middle-name form-group" style="text-align: left;">
+                <div class="input-group input-group-sm wd90 mt0 middle-name form-group" style="text-align: left;">
                 <strong>요청사항</strong>
                     <input style="width: 100%;" name="defaultReqStaff2" id="defaultReqStaff2" type="text">
                 </div>

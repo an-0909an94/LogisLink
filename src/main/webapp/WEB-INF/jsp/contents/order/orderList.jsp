@@ -278,7 +278,7 @@
 </div>
 <!-- 화주변경 Modal -->
 <div id="divChangeReq" class="editor-warp p-0">
-    <form class="modalEditor" id="fChangeReq" data-toggle="validator" role="form" autocomplete="off">
+    <form class="modalEditor" id="fChangeReq" data-toggle="validator" role="form" autocomplete="off" style="display: block">
         <input type="hidden" name="modalCustId" id="modalCustId" class="hiddenValue">
         <input type="hidden" name="modalDeptId" id="modalDeptId" class="hiddenValue">
         <input type="hidden" name="modalManager" id="modalManager"  class="hiddenValue">
@@ -290,20 +290,20 @@
         <input type="hidden" name="modalOrderMemo" id="modalOrderMemo"  class="hiddenValue">
         <div class="modalHeader">
             <div class="form-group row">
-                <label class="col-form-label modal-big-name">화주</label>
-                <div class="input-group input-group-sm col-6 middle-name form-group">
+                <label class="col-form-label big-name" style="font-size: 16px">화주</label>
+                <div class="input-group input-group-sm wd190 middle-name form-group div-min-col-1">
                     <input type="text" id="sModalCustName" name="modalCustName" style="width:100%;" required>
                     <div class="help-block with-errors" ></div>
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group">
+                <div class="input-group input-group-sm wd90 middle-name form-group">
                     <input type="text" id="sModalDeptName" name="modalDeptName" class="form-control form-control-sm" readonly>
                 </div>
             </div>
         </div>
-        <div class="editor_btns">
+        <div class="editor_btns" style="text-align: center;">
             <div class="padding">
-                <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong>변경</strong></b></button>
-                <a id="closeBtn" onclick="reqChangeModalClose();" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+                <button type="submit"  class="k-pager-refresh k-button btn_b"><b><strong>변경</strong></b></button>
+                <a id="closeBtn" onclick="reqChangeModalClose();" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
             </div>
         </div>
     </form>
@@ -983,8 +983,8 @@
 
     reqChangeModal = $("#divChangeReq");
     reqChangeModal.kendoDialog({
-        width: "500px",
-        height: "240px",
+        width: "490px",
+        height: "210px",
         visible: false,
         title: "화주변경",
         closable: true,

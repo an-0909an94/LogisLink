@@ -185,8 +185,7 @@
 							<div class="input-group input-group-sm col middle-name form-group">
 								<strong class="required">연락처</strong>
 								<input type="text" name="supplierMemTel" id="supplierMemTel"
-									   class="form-control form-control-sm wd200 maxlength=" 13"
-								required>
+									   class="form-control form-control-sm wd200" maxlength="13" required>
 								<div style="float: right;" class="help-block with-errors"></div>
 							</div>
 						</div>
