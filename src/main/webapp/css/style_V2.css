@@ -1527,10 +1527,6 @@ input::placeholder{
 
 }
 
-.k-multiselect-wrap li .k-button .k-i-close::before {
-	content: "\e11b" !important;
-}
-
 .k-multiselect-wrap li.k-button {
 	padding-right: 24px;
 }

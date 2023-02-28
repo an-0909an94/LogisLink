@@ -2,6 +2,23 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link rel="stylesheet" type="text/css" href="/css/style_V2.css">
+<style>
+    .k-i-close::before{
+        content: "\e11b" !important;
+        background: none;
+        display: block;
+    }
+    .k-multiselect-wrap li.k-button {
+        padding-right: 24px;
+        background: #0a8dff;
+        color: #fff;
+    }
+    .k-multiselect-wrap li.k-button:hover {
+        padding-right: 24px;
+        background: #ff0000;
+        color: #fff;
+    }
+</style>
 
 
 <div id="priceView" class="editor-warp p-0">
@@ -63,12 +80,12 @@
                                     </div>
                                     <div class="input-group input-group-sm col middle-name">
                                     	<div>&nbsp;</div>
-								        <a onclick="sendLink()" class="btn_b k-button btn-s form-control-sm"><b style="display: flex;flex-direction: row;letter-spacing: -0.45px;color: #fff;padding: 0px;">
+								        <a onclick="sendLink()" class="btn_b k-button form-control-sm" style="width:100%;"><b style="display: flex;flex-direction: row;letter-spacing: -0.45px;color: #fff;padding: 0px;">
                                             <strong id="btn_add">정보망 오더 전송</strong></b></a>
                                     </div>
                                     <div class="input-group input-group-sm col middle-name">
                                     	<div>&nbsp;</div>
-								        <a onclick="settleLink()" class="btn_b k-button btn-s"><b style="display: flex;flex-direction: row;letter-spacing: -0.45px;color: #fff;padding: 0px;">
+								        <a onclick="settleLink()" class="btn_b k-button" style="width:100%;"><b style="display: flex;flex-direction: row;letter-spacing: -0.45px;color: #fff;padding: 0px;">
                                             <strong id="btn_add">정보망 오더 확정</strong></b></a>
                                     </div>
                                 </div>
@@ -156,8 +173,8 @@ var columns = [
   
 $(document).ready(function(){
 	//$("#divChargeTypeCode").hide();
-	Util.setCmmCode("select", "linkType", "LINK_CD", "", "선택하세요");
-	Util.setCmmCode("select", "chargeTypeCode", "CHARGE_TYPE_CD", "", "선택하세요");
+	Util.setCmmCode("select", "linkType", "LINK_CD", "", "");
+	Util.setCmmCode("select", "chargeTypeCode", "CHARGE_TYPE_CD", "", "");
 	$("#chargeTypeCode option[value!='01']").remove();
 	
 	var optional = $("#linkType").kendoMultiSelect({

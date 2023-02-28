@@ -147,6 +147,7 @@ tfoot th {
 .contents input, .contents select, .contents option {
     height: 40px;
     width: 100%;
+    padding: 0 0.5vw;
 }
 
 .box {
