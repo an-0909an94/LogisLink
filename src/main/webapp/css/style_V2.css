@@ -856,7 +856,7 @@
 }
 
 .middle-name strong{
-	display: block;
+	/*display: block;*/
 	margin: 0 0 4px 0;
 }
 
@@ -1489,10 +1489,6 @@ input::placeholder{
 /**
 팝업 모달
  */
-.k-window {
-	border-radius:30px;
-	/*height: calc(100% - 361px) !important;*/
-}
 .k-window-titlebar {
 	display: flex;
 	flex-direction: column;

@@ -80,7 +80,7 @@
                                 </div>
                             </fieldset>
                         </form>
-                       	<div id="gridPop" style="min-width:711px;" ></div>
+                       	<div id="gridPop" style="min-width:758px;" ></div>
                     </div>
                     <!-- editor -->
                 </div>
