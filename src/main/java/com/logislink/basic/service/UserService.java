@@ -9,7 +9,7 @@ import com.logislink.basic.vo.UserVO;
 
 public interface UserService {
 
-	public UserVO getUserOne(Map<String, Object>map);
+	public UserVO getUserOne(Map<String , Object>map);
 
 	public List<UserVO> getUserList(Map<String, Object> map);
 	

@@ -50,7 +50,7 @@ public class UserController {
 
 		UserVO userOne = userService.getUserOne(param);
 
-		map.put("result", Boolean.TRUE);
+		map.put("result", Boolean.TRUE );
 		map.put("data", userOne);
 		map.put("total", 1);
 		map.put("msg", "");

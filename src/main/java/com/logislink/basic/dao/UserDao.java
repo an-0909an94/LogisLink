@@ -16,7 +16,7 @@ public class UserDao extends EgovAbstractMapper{
 
 
 	public UserVO selectUserOne(Map<String, Object>map){
-		UserVO userOne = selectOne("userDataNS.selectUserOne",map);
+		UserVO userOne = selectOne("userDataNS.selectUserOne", map);
 
 		return userOne;
 	}
