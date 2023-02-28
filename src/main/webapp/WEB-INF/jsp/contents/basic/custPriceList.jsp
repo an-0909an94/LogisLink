@@ -12,7 +12,7 @@
 			<input type="hidden" id="custId" name="custId" value="${param.custId}" readonly />
 			<input type="hidden" id="deptId" name="deptId" value="${param.deptId}" readonly />
 			<input type="hidden" id="sellBuySctn" name="sellBuySctn" value="${param.sellBuySctn}" readonly />
-			<div class="form-group row" style="width:14%;float: left">
+			<div class="form-group row" style="width: auto;float: left;margin-right: 0.2vw;"">
 				<div class="input-group input-group-sm col-2 middle-name">
 				    <input type="text" value="${param.custName}" class="form-control form-control-sm" style="width: auto;" readonly>
 				</div>
@@ -22,7 +22,7 @@
 						<option>상차지</option>
 					</select>
 				</div>
-				<div class="row" style="display: flex;justify-content: flex-end;">
+				<div class="row" style="display: flex;justify-content: flex-end;position: relative;top: 5px;">
 					<div class="btn_58 input-group-sm middle-name mr7">
 						<button onclick="goList()" type="button" class="btn_58 btn_b">검색</button>
 					</div>

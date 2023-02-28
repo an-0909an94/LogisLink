@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" type="text/css" href="/css/style_V2.css">
 <div class="text-center" id="loading" style="display:none;">
   <div class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
@@ -20,8 +21,8 @@
 							<input style="width: 65%;" class="upload-name" value="파일을 선택해 주세요." disabled="disabled"> 
 							<label for="uploadFile">파일등록</label> 
 							<input type="file" id="uploadFile" name="uploadFile" class="upload-hidden"> 
-							<button onclick="fileUpload();" type="button" class="k-pager-refresh k-button btn-s">업로드</button>
-							<button onclick="sampleDownload();" type="button" class="k-pager-refresh k-button btn-s">양식 다운로드</button>
+							<button onclick="fileUpload();" type="button" class="btn_b k-pager-refresh" style="font-size: 12px;">업로드</button>
+							<button onclick="sampleDownload();" type="button" class="btn_gr k-pager-refresh" style="font-size: 12px;background: #0cb175;color: #fff;padding: 4px 13px;">양식 다운로드</button>
 						</div>
 					</div>
 				</div>
