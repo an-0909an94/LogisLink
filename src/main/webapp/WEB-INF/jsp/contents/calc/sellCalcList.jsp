@@ -71,7 +71,7 @@
 
 <!-- 거래명세서 발행 Modal -->
 <div id="divTranReceipt" class="editor_wrap p-0">
-    <form id="fTranReceipt" class="modalEditor" data-toggle="validator" role="form" autocomplete="off">
+    <form id="fTranReceipt" class="modalEditor" data-toggle="validator" role="form" autocomplete="off" style="display: block">
         <!-- 청구구분 = D: 기사발행, R: 인수증 -->
         <input type="hidden" id="tranMode" name="tranMode" class="hiddenValue">
         <input type="hidden" id="tranCustId" name="tranCustId" class="hiddenValue">
@@ -110,7 +110,7 @@
         <input type="hidden" id="tranBuyerAddr" name="tranBuyerAddr" class="hiddenValue">
         <input type="hidden" id="tranBuyerAddrDetail" name="tranBuyerAddrDetail" class="hiddenValue">
         <div class="modalHeader col">
-            <div class="row">
+            <div class="form-group row">
                 <div style="width: 49%; float: left;" class="form-group row div-min-col-1">
                     <!-- 발행 구분 -->
                     <div class="row gray_box_s" style="width:100%">
@@ -127,7 +127,7 @@
                 <div style="width: 49%; float: right;" class="form-group row">
                     <!-- 세금계산서 -->
                     <div class="row gray_box_s" style="width:100%">
-                        <label class="col-form-label modal-big-name">세금계산서</label>
+                        <label class="col-form-label big-name">세금계산서</label>
                         <div class="input-group input-group-sm wd240 middle-name">
                             <select name="taxYn" id="taxYn" style="width:100%" class="custom-select">
                                 <option value="N" selected="selected">미발행</option>
@@ -287,7 +287,7 @@
                         <input type="text" name="tranBuyerPostalPost" id="tranBuyerPostalPost"
                                class="form-control form-control-sm" style="width: 100%" readonly="readonly">
                     </div>
-                    <div style="text-align: left" class="input-group input-group-sm wd415 middle-name div-min-col-1">
+                    <div style="text-align: left" class="input-group input-group-sm wd405 middle-name div-min-col-1">
                         <strong>우편물 주소</strong>
                         <input type="text" name="tranBuyerPostalAddr" id="tranBuyerPostalAddr"
                                class="form-control form-control-sm" style="width: 100%" readonly="readonly">
@@ -301,9 +301,9 @@
                 </div>
             </div>
         </div>
-        <div class="editor_btns">
+        <div class="editor_btns" style="text-align: center;">
             <div class="padding">
-                <button type="submit" id="fTranReceiptSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>발행</strong></b></button>
+                <button type="submit" id="fTranReceiptSubmitBtn" class="k-pager-refresh k-button btn_b"><b class="btn-b"><strong>발행</strong></b></button>
                 <a onclick="pubTranReceiptClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
             </div>
         </div>
