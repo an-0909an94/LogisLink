@@ -108,9 +108,9 @@
 							</label>
 						</div>
 
-						<div class="middle-name" style="width: 0px; padding: 0em 0em 0em 0.3em;">
+						<!--<div class="middle-name" style="width: 0px; padding: 0em 0em 0em 0.3em;">
 							<strong>조회조건</strong>
-						</div>
+						</div>-->
 						<div class="input-group input-group-sm wd90 radio-or-checkBox div-min-col-1">
 							<input type="checkbox" name="our" id="our" value="Y" checked/>
 							<label for="our" class="label-margin">
