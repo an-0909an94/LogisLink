@@ -62,7 +62,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="modalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">저장</b></a>
+		        <a onclick="modalSubmit()" class="k-pager-refresh k-button btn_b"><b>저장</b></a>
 		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
@@ -88,7 +88,7 @@
 									-->
 
 									<button onclick="viewGuide();" type="button"
-											class="form-control-sm middle-button btn_75 btn_black div-min-col-1">
+											class="form-control-sm middle-button btn_75 btn_b div-min-col-1">
 										<strong>도움말관리</strong>
 									</button>
 								</c:if>
@@ -99,7 +99,7 @@
 									-->
 
 									<button onclick="fSubmit('N');" type="button"
-											class="form-control-sm middle-button btn_75 btn_black div-min-col-1">
+											class="form-control-sm middle-button btn_75 btn_b div-min-col-1">
 										<strong>추가</strong>
 									</button>
 
@@ -112,7 +112,7 @@
 									-->
 
 									<button onclick="fSubmit('E');" type="button"
-											class="form-control-sm middle-button btn_75 btn_black div-min-col-1">
+											class="form-control-sm middle-button btn_75 btn_b div-min-col-1">
 										<strong>수정</strong>
 									</button>
 								</c:if>
@@ -145,7 +145,7 @@
 									<a class="k-button k-i-file-excel" onClick="goExcel();"><b
 									class="btn-x"><i class="k-icon k-i-file-excel"></i>엑셀출력</b></a>
 									-->
-									<button onclick="goExcel();" type="button" class="form-control-sm middle-button btn_75 btn_g">엑셀출력</button>
+									<button onclick="goExcel();" type="button" class="form-control-sm middle-button btn_75 btn_green">엑셀출력</button>
 								</c:if>
 							</div>
 						</div>
@@ -271,7 +271,7 @@ $(document).ready(function(){
 
 	GuideModal.kendoDialog({
 		width: "680px",
-		height: "370px",
+		height: "350px",
 		visible: false,
 		title: "도움말관리",
 		closable: true,

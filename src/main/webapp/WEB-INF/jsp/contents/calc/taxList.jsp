@@ -49,10 +49,12 @@
 	            <input id="statusReason" name="statusReason" class="form-control form-control-sm wd240" type="text">
             </div>
         </div>
-      	<div class="padding" style="text-align: center;">
-         	<a style="height: 30px;" id="btnChgStatus" class="k-button btn-r">확인</a>
-            <a style="height: 30px;" href="javascript:taxCancelModalClose();" class="k-button btn-s">닫기</a>
-        </div>
+		<div class="editor_btns" style="text-align: center">
+			<div class="padding">
+				<a style="height: 30px;" id="btnChgStatus" class="k-pager-refresh k-button btn_b">확인</a>
+				<a style="height: 30px;" href="javascript:taxCancelModalClose();" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
+			</div>
+		</div>
     </div>
 </div>
 
@@ -913,7 +915,7 @@ taxCancelModal = $("#divTaxCancel")
 
 taxCancelModal.kendoDialog({
 	width: "500px",
-	height: "250px",
+	height: "190px",
 	visible: false,
 	title: "발행취소",
 	closable: true,

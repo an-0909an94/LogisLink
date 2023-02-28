@@ -240,7 +240,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><strong>변경</strong></b></button>
+		        <button type="submit"  class="k-pager-refresh k-button btn_b"><b><strong>변경</strong></b></button>
 		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
@@ -277,7 +277,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit" id="fCalcSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>저장</strong></b></button>
+		        <button type="submit" id="fCalcSubmitBtn" class="k-pager-refresh k-button btn_b"><b><strong>저장</strong></b></button>
 		        <a onclick="calcModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
@@ -328,7 +328,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="button" onclick="detailCalcUpdate()" class="k-pager-refresh k-button"><b class="btn-b"><strong>저장</strong></b></button>
+		        <button type="button" onclick="detailCalcUpdate()" class="k-pager-refresh k-button btn_b"><b"><strong>저장</strong></b></button>
 		        <a onclick="calcDetailClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
@@ -338,7 +338,7 @@
 <!-- 거래명세서 -->
 <div id="divTranReceipt" class="editor_wrap p-0">
 	<form class="modalEditor" id="fTranReceipt" data-toggle="validator" role="form"
-		  autocomplete="off">
+		  autocomplete="off" style="display: block">
 		<input type="hidden" name="tranMode" id="tranMode" class="hiddenValue">
 		<input type="hidden" name="tranCustId" id="tranCustId" class="hiddenValue">
 		<input type="hidden" name="tranDeptId" id="tranDeptId" class="hiddenValue">
@@ -550,7 +550,7 @@
 						<input type="text" name="tranBuyerPostalPost" id="tranBuyerPostalPost"
 							   class="form-control form-control-sm" style="width: 100%" readonly="readonly">
 					</div>
-					<div style="text-align: left" class="input-group input-group-sm wd415 middle-name div-min-col-1">
+					<div style="text-align: left" class="input-group input-group-sm wd405 middle-name div-min-col-1">
 						<strong>우편물 주소</strong>
 						<input type="text" name="tranBuyerPostalAddr" id="tranBuyerPostalAddr"
 							   class="form-control form-control-sm" style="width: 100%" readonly="readonly">
@@ -564,10 +564,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="editor_btns">
+		<div class="editor_btns" style="text-align: center">
 			<div class="padding">
-				<button type="submit" id="fTranReceiptSubmitBtn" class="k-pager-refresh k-button"><b
-						class="btn-b"><strong>발행</strong></b></button>
+				<button type="submit" id="fTranReceiptSubmitBtn" class="k-pager-refresh k-button btn_b"><b><strong>발행</strong></b></button>
 				<a onclick="tranReceiptcalcModalClose()" class="k-pager-refresh k-button"><b
 						class="btn-g">닫기</b></a>
 			</div>
@@ -1564,7 +1563,7 @@ modalButton.click(function() {
 
 modal.kendoDialog({
 	width: "450px",
-	height: "200px",
+	height: "190px",
 	visible: false,
 	closable: false,
 	title: "운송비 변경",

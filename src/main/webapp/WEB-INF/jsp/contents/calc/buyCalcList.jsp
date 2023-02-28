@@ -470,14 +470,20 @@
                         </div>
                         -->
                         <div class="input-group input-group-sm wd100 mr10 middle-name div-min-col-1">
+                            <!-- 2023-02-28 ID 수정 : junghwan.hwang
                             <select id="sFastPayYn" name="fastPayYn" class="custom-select wd100">
+                            -->
+                            <select id="fastPayYn" name="fastPayYn" class="custom-select wd100">
                                 <option value="" selected>빠른지급여부</option>
                                 <option value="Y">Y</option>
                                 <option value="N">N</option>
                             </select>
                         </div>
                         <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
+                            <!-- 2023-02-28 ID 수정 : junghwan.hwang
                             <select id="sDeleteYn" name="deleteYn" class="custom-select">
+                            -->
+                            <select id="deleteYn" name="deleteYn" class="custom-select">
                                 <option value="">삭제여부</option>
                                 <option value="Y">Y</option>
                                 <option value="N" selected>N</option>

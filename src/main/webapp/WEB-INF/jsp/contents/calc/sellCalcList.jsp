@@ -36,7 +36,7 @@
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" id="fCalcFinishSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>확인</strong></b></button>
+                <button type="submit" id="fCalcFinishSubmitBtn" class="k-pager-refresh k-button btn_b"><b><strong>확인</strong></b></button>
                 <a onclick="calcFinishModalClose()" class="k-pager-refresh k-button"><b class="btn-g">취소</b></a>
             </div>
         </div>
@@ -61,7 +61,7 @@
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" id="fCalcPayFinishSubmitBtn" class="k-pager-refresh k-button"><b class="btn-b"><strong>확인</strong></b></button>
+                <button type="submit" id="fCalcPayFinishSubmitBtn" class="k-pager-refresh k-button btn_b"><b><strong>확인</strong></b></button>
                 <a onclick="calcPayFinishModalClose()" class="k-pager-refresh k-button"><b class="btn-g">취소</b></a>
             </div>
         </div>
@@ -337,7 +337,7 @@
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit"  class="k-pager-refresh k-button"><b class="btn-b"><strong>변경</strong></b></button>
+                <button type="submit"  class="k-pager-refresh k-button btn_b"><b><strong>변경</strong></b></button>
                 <a id="closeBtn" onclick="reqChangeModalClose();" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
             </div>
         </div>
@@ -377,7 +377,7 @@
                 <div class="form-group row mt0">
                     <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sFinishYn" name="finishYn" class="custom-select col-12">
-                            <option value="">전체</option>
+                            <option value="">정산마감여부</option>
                             <option value="Y">Y</option>
                             <option value="N" selected>N</option>
                         </select>
@@ -391,7 +391,7 @@
                         </select>
                     </div>
                     <div id="searchCustName" class="input-group input-group-sm wd190 media190 mr10 middle-name">
-                        <input type="text" id="sCustName" name="custName" style="width: 100%;">
+                        <input type="text" id="sCustName" name="custName" class="p-input" style="width: 100%;" placeholder="ex> 화주명, 오더ID(거래처검색)">
                     </div>
                     <div id="searchOrderId" class="input-group input-group-sm wd90 middle-name" style="display: none;">
                         <input type="text" id="sOrderId" name="orderId" class="form-control form-control-sm" onkeydown="searchOrderIdKeyDown(this)">
@@ -407,7 +407,7 @@
                         </select>
                     </div>
                     <div class="input-group input-group-sm wd190 media190 mr10 middle-name">
-                        <input type="text" id="sBizName" name="bizName" style="width: 100%;">
+                        <input type="text" id="sBizName" name="bizName" class="p-input" style="width: 100%;" placeholder="ex>사업자 상호, 번호 검색">
                     </div>
                     <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sBizDeptName" name="bizDeptName" class="custom-select"></select>
@@ -415,19 +415,19 @@
 
                     <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
                         <select id="sChargeType" name="chargeType" class="form-control custom-select col-12">
-                            <option>전체</option>
+                            <option value="">청구구분</option>
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm wd110 middle-name div-min-col-1">
                         <select id="sDeptId" name="deptId" class="form-control custom-select wd110">
-                            <option>전체</option>
+                            <option value="">담당부서명</option>
                         </select>
                     </div>
 
                     <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
                         <select id="sUserId" name="userId" class="form-control custom-select wd100">
-                            <option>전체</option>
+                            <option value="">배차담당자</option>
                         </select>
                     </div>
                 </div>
@@ -475,24 +475,33 @@
 	                    </div>
 	
 	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-	                        <select id="sDepositYn" name="depositYn" class="custom-select col-12">
-	                            <option value="">전체</option>
+                            <!-- 2023-02-28 ID 수정 : junghwan.hwang
+                            <select id="sDepositYn" name="depositYn" class="custom-select col-12">
+                            -->
+	                        <select id="depositYn" name="depositYn" class="custom-select col-12">
+	                            <option value="">입금확인여부</option>
 	                            <option value="Y">Y</option>
 	                            <option value="N" selected>N</option>
 	                        </select>
 	                    </div>
 	
 	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-	                        <select id="sPostYn" name="postYn" class="custom-select col-12">
-	                            <option value="" selected>전체</option>
+	                        <!-- 2023-02-28 ID 수정 : junghwan.hwang
+                            <select id="sPostYn" name="postYn" class="custom-select col-12">
+                            -->
+                            <select id="postYn" name="postYn" class="custom-select col-12">
+	                            <option value="" selected>우편발송여부</option>
 	                            <option value="Y">Y</option>
 	                            <option value="N">N</option>
 	                        </select>
 	                    </div>
 	                    
 	                    <div class="input-group input-group-sm wd90 middle-name div-min-col-1">
-	                        <select id="sDeleteYn" name="deleteYn" class="custom-select col-12">
-	                            <option value="">전체</option>
+                            <!-- 2023-02-28 ID 수정 : junghwan.hwang
+                            <select id="sDeleteYn" name="deleteYn" class="custom-select col-12">
+                            -->
+	                        <select id="deleteYn" name="deleteYn" class="custom-select col-12">
+	                            <option value="">삭제여부</option>
 	                            <option value="Y">Y</option>
 	                            <option value="N" selected>N</option>
 	                        </select>
@@ -1456,7 +1465,7 @@
   	
  	// 청구운송비 변경
  	function changeSellCharge() {
- 		if (editedList.length > 0) {
+        if (editedList.length > 0) {
  			var message = "항목이 변경된  (" + editedList.length + ")건에 대한 운송비 변경을 하시겠습니까?";
  			if (confirm(message)) {
  				

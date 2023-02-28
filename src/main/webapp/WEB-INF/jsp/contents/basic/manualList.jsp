@@ -13,7 +13,7 @@
 }
 </style>
 
-<div id="divManualGroupModal" class="editor_wrap p-0 menuList">
+<div id="divManualGroupModal" class="editor_wrap p-0">
 	<form id="groupModal" name="groupModal" action="post" data-toggle="validator">
 	<input type="hidden" id="hiddenGroupManualMode" name="groupManualMode">
 	<div class="modalEditor">
@@ -48,7 +48,7 @@
 	            <label class="col-form-label modal-big-name required">사용여부</label>
 	            <div class="input-group input-group-sm wd190 middle-name">
 	                <select class="custom-select wd190" id="groupManualUseYn" name="groupManualUseYn" required>
-	             	<option value="Y" selected="selected" >Y</option>
+	             	<option value="Y" selected="selected">Y</option>
 	             	<option value="N">N</option>
 	             </select>
 	             <div class="help-block with-errors wd190" style="width: 100%"></div>
@@ -57,7 +57,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit" class="k-pager-refresh k-button"><strong><b id="groupBtnSave" class="btn-b">저장</b></strong></button>
+		        <button type="submit" class="k-pager-refresh k-button btn_b"><strong><b id="groupBtnSave">저장</b></strong></button>
 		        <a id="groupcloseBtn" onclick="groupModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
@@ -156,7 +156,7 @@
 		
 		<div class="editor_btns">
 			<div class="padding">
-		        <button type="submit" class="btn_b k-pager-refresh k-button btn-b"><strong><b id="manualBtnSave">저장</b></strong></button>
+		        <button type="submit" class="k-pager-refresh k-button btn_b"><strong><b id="manualBtnSave">저장</b></strong></button>
 		        <a id="manualCloseBtn" onclick="manualModalClose()" class="k-pager-refresh k-button"><b>닫기</b></a>
 	        </div>
 	    </div>
@@ -206,8 +206,8 @@
 										<div class="tool_group">
 											<div class="padding" style="margin-top: 20px">
 
-												<button type="button" id="insertManualGroup_btn" class="form-control-sm middle-button btn_100 btn_black_13"><strong>매뉴얼그룹생성</strong></button>
-												<button type="button" id="insertManual_btn" class="form-control-sm middle-button btn_100 btn_black_13"><strong>매뉴얼생성</strong></button>
+												<button type="button" id="insertManualGroup_btn" class="form-control-sm middle-button btn_100 btn_b"><strong>매뉴얼그룹생성</strong></button>
+												<button type="button" id="insertManual_btn" class="form-control-sm middle-button btn_100 btn_b"><strong>매뉴얼생성</strong></button>
 												<!--
 												<button type="button" id="insertManualGroup_btn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i><strong>매뉴얼그룹생성</strong></b></button>
 												<button type="button" id="insertManual_btn" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-copy"></i><strong>매뉴얼생성</strong></b></button>

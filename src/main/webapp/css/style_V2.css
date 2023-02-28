@@ -345,6 +345,14 @@
 	padding: 4px 0px;
 }
 
+.btn_green{
+	background-color: #fff !important;
+	border: 1px solid #0cb175 !important;
+	color: #0cb175 !important;
+	font-weight: bold;
+	padding: 4px 0px;
+}
+
 /*버튼 Gray 테두리 설정*/
 .btn_gra_tax{
 	background-color: #fff !important;
