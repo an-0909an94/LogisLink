@@ -35,10 +35,10 @@
 <%--	<link rel="stylesheet" type="text/css" href="<c:url value='/css/common.css?v=2'/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style.css?v=7'/>">--%>
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/common_dev.css?v=2'/>">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style_dev.css?v=7'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style_dev.css?v=8'/>">
 <%--	<link rel="stylesheet" type="text/css" href="<c:url value='/css/left.css?v=2'/>">--%>
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/left_dev.css?v=2'/>">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/css/style_V2.css'/>">
+	<link rel="stylesheet" type="text/css" href="/css/style_V2.css">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/css/jquery-ui.css'/>">

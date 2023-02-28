@@ -291,13 +291,13 @@
 						<label class="col-form-label modal-big-name"></label>
 						<div class="input-group input-group-sm wd140 mr10 mt0 middle-name form-group" style="text-align: left;">
 							<strong class="required">아이디</strong>
-							<input class="form-group form-group-sm" type="text" style="width: 100%; font-size: 14px" id="_userId" name="userId" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g,'');" required>
+							<input class="form-control form-control-sm" type="text" style="background-color: #E9ECEF; width: 100%; font-size: 14px" id="_userId" name="userId" onkeyup="this.value=this.value.replace(/[^a-zA-Z-_0-9]/g,'');" required>
 						</div>
 						<div class="row">
 							<div class="input-group input-group-sm middle-name wd140 mr10 mt0 chgPasswd"
 								 style="text-align: left;">
 								<strong style="height: 18px"></strong>
-								<button style="width: 100%" class="form-control a-text-center"
+								<button style="width: 100%; padding: 0;" class="form-control a-text-center"
 										id="_btnChgPasswd">비밀번호 변경
 								</button>
 							</div>

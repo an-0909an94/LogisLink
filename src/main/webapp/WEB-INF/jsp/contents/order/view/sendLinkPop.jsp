@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<link rel="stylesheet" type="text/css" href="/css/style_V2.css">
 
 <div id="priceView" class="editor-warp p-0">
 	<div class="modalEditor" id="addCust">
-		<div style="padding-left: 30px; padding-right: 30px; padding-top: 20px; text-align: left;">
+		<div style="padding-left: 30px; padding-right: 30px; text-align: left; overflow: hidden;">
 			<div>최저가 : <span id="minFare"></span>원</div>
 			<div>최고가 : <span id="maxFare"></span>원</div>
 			<div>평균가 : <span id="avgFare"></span>원</div>
@@ -12,16 +13,16 @@
 	</div>
 </div>
 
-<div class="pop-layer">
-    <div class="editor_wrap pop-layer" id="layer1">
+<div class="pop-window">
+    <div class="editor_wrap pop-window" id="layer">
         <!-- wrap -->
-        <div class="k-tabstrip-wrapper">
+        <div class="k-pop-window">
             <div id="editor_tabs" class="tabs_wrap k-widget k-tabstrip k-floatwrap k-tabstrip-top" data-role="tabstrip"
                 tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
                 <!-- content -->
                 <div class="tab-content k-content k-state-active" id="editor_tabs-1" role="tabpanel"
                     aria-expanded="true" style="display: block;">
-                    <div class="editor">
+                    <div class="editor" style="display: flex;flex-direction: column;align-items: center;">
                         <form id="fLink" name="fLink" method="post">
                         	<input type="hidden" id="orderId" name="orderId" value="${param.orderId}">
                         	<input type="hidden" id="allocId" name="allocId" value="${fn:replace(param.allocId, 'null', '')}">
@@ -36,14 +37,14 @@
                                 <div class="form-group row">
                                     <div class="input-group input-group-sm col middle-name">
                                     	<strong>정보망 선택</strong>
-                                        <select class="col-12" multiple="multiple" id="linkType" name="linkType">
+                                        <select class="" multiple="multiple" id="linkType" name="linkType">
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="form-group row" style="display:flex; align-items:center;">
                                     <div class="input-group input-group-sm col middle-name">
-                                    <strong>운임</strong>
-                                    	<a id="priceDetail" class="k-pager-refresh k-button" style="margin-top: -5px;height: 19px;width: 19px;">　?　</a>
+                                    <strong style="float: left;padding-right: 5px;">운임</strong>
+                                    	<a id="priceDetail" class="k-pager-refresh k-button" style="margin-top: -5px;height: 19px;width: 19px;background: #0a8dff;font-weight: bold;color: #fff;border: 1px solid #0a8dff;border-radius: 100%;">　?　</a>
                                         <input type="text" id="fare" name="fare" class="form-control form-control-sm" value="${allocCharge}">
                                     </div>
                                     <%--<div class="input-group input-group-sm col middle-name">
@@ -61,11 +62,13 @@
                                     </div>
                                     <div class="input-group input-group-sm col middle-name">
                                     	<div>&nbsp;</div>
-								        <a onclick="sendLink()" class="k-button btn-s form-control-sm"><b class="btn-b"><i class="k-icon k-i-upload"></i><strong id="btn_add">정보망 오더 전송</strong></b></a>
+								        <a onclick="sendLink()" class="btn_b k-button btn-s form-control-sm"><b style="display: flex;flex-direction: row;letter-spacing: -0.45px;color: #fff;padding: 0px;">
+                                            <strong id="btn_add">정보망 오더 전송</strong></b></a>
                                     </div>
                                     <div class="input-group input-group-sm col middle-name">
                                     	<div>&nbsp;</div>
-								        <a onclick="settleLink()" class="k-button btn-s"><b class="btn-b"><i class="k-icon k-i-calendar"></i><strong id="btn_add">정보망 오더 확정</strong></b></a>
+								        <a onclick="settleLink()" class="btn_b k-button btn-s"><b style="display: flex;flex-direction: row;letter-spacing: -0.45px;color: #fff;padding: 0px;">
+                                            <strong id="btn_add">정보망 오더 확정</strong></b></a>
                                     </div>
                                 </div>
                                 <div class="form-group row pb30" >
@@ -76,7 +79,7 @@
                                 </div>
                             </fieldset>
                         </form>
-                       	<div id="gridPop" style="min-width:808px;" ></div>
+                       	<div id="gridPop" style="min-width:711px;" ></div>
                     </div>
                     <!-- editor -->
                 </div>

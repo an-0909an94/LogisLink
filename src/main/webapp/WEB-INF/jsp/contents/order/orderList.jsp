@@ -13,6 +13,7 @@
 
     }
 </style>
+
 <div class="insert_pop" style="display: none;">
     <%@ include file="./view/orderInsert.jsp" %>
 </div>

@@ -1485,3 +1485,58 @@ input::placeholder{
 	bottom: -1px;
 }
 /* 앱푸시전송 E */
+
+/**
+팝업 모달
+ */
+.k-window {
+	border-radius:30px;
+	height: calc(100% - 361px) !important;
+}
+.k-window-titlebar {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background: #fff;
+	border: 0;
+	padding-top: 21px;
+}
+.k-window-title {
+}
+
+.k-multiselect-wrap li .k-button {
+	float: left;
+	width: auto;
+	padding-right: 22px;
+	font-size: 14px;
+	font-weight: 800;
+	padding: 3px 23px 3px 5px;
+}
+
+.k-floatwrap {
+	width:100%;
+}
+
+#btn_add {
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	font-weight: bold;
+}
+.k-numerictextbox .k-state-hover {
+	border: 0;
+}
+.k-multiselect {
+
+}
+
+.k-multiselect-wrap li .k-button .k-i-close::before {
+	content: "\e11b" !important;
+}
+
+.k-multiselect-wrap li.k-button {
+	padding-right: 24px;
+}
+
+

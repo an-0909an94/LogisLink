@@ -47,7 +47,7 @@
 <!-- 매입마감처리 Modal End -->
 
 <!-- 매입처 변경 Modal -->
-<div id="divChangeRes" class="editor-warp p-0">
+<div id="divChangeRes" class="editor-warp p-0" style="overflow: hidden;">
     <form id="fChangeRes" class="modalEditor" role="form" autocomplete="off" data-toggle="validator">
         <input type="hidden" id="changeResModalOrderList" name="changeResModalOrderList" class="hiddenValue">
         <input type="hidden" id="changeResModalAllocList" name="changeResModalAllocList" class="hiddenValue">
@@ -113,7 +113,7 @@
             
         <div class="editor_btns">
             <div class="padding">
-                <button type="submit" class="k-pager-refresh k-button wd53"><b class="btn-b"><strong>변경</strong></b></button>
+                <button type="submit" class="btn_b k-pager-refresh k-button wd53"><b><strong>변경</strong></b></button>
                 <button onclick="changeResModalClose();" class="k-pager-refresh k-button wd53"><b class="btn-g">닫기</b></button>
                 <!--
                 <a id="closeBtn" onclick="changeResModalClose();" class="k-pager-refresh k-button wd53"><b class="btn-g">닫기</b></a>

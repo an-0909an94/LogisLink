@@ -14,7 +14,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="modalSubmit()" class="k-pager-refresh k-button btn_b"><b>저장</b></a>
+		        <a onclick="modalSubmit()" class="btn_b k-pager-refresh k-button"><b>저장</b></a>
 		        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b>닫기</b></a>
 	        </div>
 	    </div>
@@ -45,7 +45,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="detailModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b">저장</b></a>
+		        <a onclick="detailModalSubmit()" class="btn_b k-pager-refresh k-button"><b>저장</b></a>
 		        <a id="detailCloseBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
@@ -65,7 +65,7 @@
 		</div>
 		<div class="editor_btns">
 			<div class="padding">
-		        <a onclick="copyApiKey();" class="k-pager-refresh k-button btn_b"><b class="btn-b">복사</b></a>
+		        <a onclick="copyApiKey();" class="btn_b k-pager-refresh k-button btn_b"><b>복사</b></a>
 		        <a id="apiCloseBtn" onclick="apiModalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
 	        </div>
 	    </div>
