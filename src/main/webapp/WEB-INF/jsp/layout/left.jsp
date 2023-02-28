@@ -438,7 +438,7 @@
 					<div class="input-group input-group-sm wd290 mr10 mt0 middle-name"
 						 style="text-align: left;">
 						<strong>메모</strong>
-						<textarea rows="4" style="width: 100%" class="form-control textarea"
+						<textarea rows="4" style="width: 100% " class="form-control textarea"
 								  id="_memo" name="memo"></textarea>
 					</div>
 				</div>
