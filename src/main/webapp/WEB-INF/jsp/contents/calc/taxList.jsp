@@ -33,9 +33,9 @@
 			</div>
 			<div class="padding" style="text-align: center;">
 				<a style="height: 30px;" href="javascript:taxResend();"
-				   class="k-button btn-s">재전송</a>
+				   class="k-button btn_b">재전송</a>
 				<a style="height: 30px;" href="javascript:taxResendModalClose();"
-				   class="k-button btn-s">닫기</a>
+				   class="k-button btn_black">닫기</a>
 			</div>
 		</form>
 	</div>
@@ -395,24 +395,23 @@
 			<div class="d-flex justify-content-end py-1 mb-3">
 				<div class="btn_wrap ml-1">
 					<div class="padding" id="btnSave">
-						<button style="height: 30px;" class="k-button btn-s" type="submit"
+						<button style="height: 30px;" class="k-button btn_b" type="submit"
 								onclick="readonlyValidator();">발행
 						</button>
-						<button style="height: 30px;" class="k-button btn-s" type="button"
+						<button style="height: 30px;" class="k-button btn_b" type="button"
 								onClick="addInGrid();">항목추가
 						</button>
-						<button style="height: 30px;" class="k-button btn-s" type="button"
+						<button style="height: 30px;" class="k-button btn_black" type="button"
 								onClick="removeInGrid();">항목삭제
 						</button>
 					</div>
 
 					<div class="padding" id="btnPrint" style="display:none;">
 						<button type="button" class="k-pager-refresh k-button" id="btnTaxResend">
-							<strong><b class="btn-b"><i
-									class="k-icon k-i-reload"></i>재전송</b></strong></button>
+							<strong><b class="btn-b">재전송</b></strong></button>
 						<button type="button" class="k-pager-refresh k-button" id="btnTaxCancel"
 								onClick="viewTaxStatusModal('CANCELALL', '발행취소')"><strong><b
-								class="btn-r"><i class="k-icon k-i-delete"></i>발행취소</b></strong>
+								class="btn-r">발행취소</b></strong>
 						</button>
 						<button type="button" class="k-pager-refresh k-button" id="btnTaxAccept"
 								onClick="taxStatus('APPROVE', '수신승인')"><strong><b class="btn-x"><i
@@ -422,10 +421,9 @@
 								class="btn-x"><i
 								class="k-icon k-i-cancel-outline"></i>수신거부</b></strong></button>
 						<button type="button" class="k-pager-refresh k-button" onClick="goPdf();">
-							<strong><b class="btn-b"><i
-									class="k-icon k-i-file-pdf"></i>출력</b></strong></button>
+							<strong><b class="btn-b">출력</b></strong></button>
 						<button type="submit" class="k-pager-refresh k-button"><strong><b
-								class="btn-b"><i class="k-icon k-i-check"></i>수정</b></strong>
+								class="btn-b">수정</b></strong>
 						</button>
 					</div>
 				</div>
@@ -898,7 +896,7 @@ taxModal = $("#divTaxInvoice");
 
 taxModal.kendoDialog({
 	width: "1200px",
-	height: "785px",
+	height: "900px",
 	visible: false,
 	title: "세금계산서",
 	closable: true,
@@ -929,7 +927,7 @@ taxResendModal = $("#divTaxResend")
 
 taxResendModal.kendoDialog({
 	width: "500px",
-	height: "300px",
+	height: "230px",
 	visible: false,
 	title: "재전송",
 	closable: true,
@@ -995,7 +993,7 @@ function viewTaxStatusModal(statusSignal, statusName) {
 });
  */
 $("#btnTaxInvoice").click(function() {
-	$("#divTaxInvoice").parents("div").css("height", '785px');
+	$("#divTaxInvoice").parents("div").css("height", '880px');
 	$("#divTaxInvoice").css("height", '740px');
 	$("#taxDtlTbl tr:not(:first)").remove();
 	$('#fTaxInvoice')[0].reset();
@@ -1584,8 +1582,8 @@ function taxInvoiceDetail(data){
 	$("#fTaxInvoice input[name=pubForm]:input[value=" + data.pubform + "]").prop("checked", true);
 	$("input[name='pubForm']").attr('disabled',true);
 	if(data.billKind == 01){
-		$("#divTaxInvoice").parents("div").css("height", '533px');
-		$("#divTaxInvoice").css("height", '488px');
+		$("#divTaxInvoice").parents("div").css("height", '800px');
+		$("#divTaxInvoice").css("height", '800px');
 		taxModal.data("kendoDialog").open();
 		$("#divTaxInvoice").parents("div").find(".k-window-title").html("일반세금계산서");
 		$("#brokerInfoDiv").hide();
@@ -1597,8 +1595,8 @@ function taxInvoiceDetail(data){
 		$("#brokerInfoDiv").hide();*/
 	}else if(data.billKind == 03){
 		$("#brokerInfoDiv").show();
-		$("#divTaxInvoice").parents("div").css("height", '625px');
-		$("#divTaxInvoice").css("height", '580px');
+		$("#divTaxInvoice").parents("div").css("height", '800px');
+		$("#divTaxInvoice").css("height", '800px');
 		taxModal.data("kendoDialog").open();
 		$("#divTaxInvoice").parents("div").find(".k-window-title").html("위수탁세금계산서");
 		var str = "수탁자 주소 : ("+data.brokerAddr+"), 수탁자 업태 : ("+data.brokerBizType+"), 수탁자 업종 : ("+data.brokerBizClass+")"
