@@ -732,6 +732,7 @@ public class OrderBundleController {
 		Map<String, String> paramMap = new HashMap<String, String>();
 		paramMap.put("query", addr);
 		
+		//Map<String, String> res = null;//= apiHelper.getLatLon(paramMap);
 		Map<String, String> res = apiHelper.getLatLon(paramMap);
 
 		if (res == null) {

@@ -1,6 +1,9 @@
 package com.logislink.basic.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +11,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.logislink.login.controller.LoginController;
+import com.logislink.login.vo.LoginVO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -16,6 +21,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -155,4 +162,30 @@ public class MenuController {
 		
 		return "jsonView";
 	}
+
+	@PostMapping (value="/contents/basic/eventLogWrite.do")
+	public void eventLogWrite( HttpSession session, @RequestParam Map<String, Object> param) {
+
+		Map<String, Object> infoParam = new HashMap<>();
+
+		String menuUrl = param.get("menuUrl").toString();
+		String menuName = param.get("menuName").toString();
+		String userId = ((LoginVO) session.getAttribute("userInfo")).getUserId();
+		String ip = "";
+		try {
+			ip = LoginController.getUserIp();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+		infoParam.put("MENU_URL",menuUrl);
+		infoParam.put("MENU_NAME",menuName);
+		infoParam.put("USER_ID",userId);
+		infoParam.put("IP",ip);
+
+		menuService.insertEventLog(infoParam);
+		//System.out.println(ip);
+
+	}
+
 }

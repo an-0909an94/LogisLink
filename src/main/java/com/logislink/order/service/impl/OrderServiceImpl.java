@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 
 import javax.annotation.Resource;
 
+import com.logislink.order.vo.RpaVO;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.jasperreports.JasperReportsUtils;
@@ -241,5 +242,22 @@ public class OrderServiceImpl implements OrderService {
 	public Map<String, Object> getBasicFare(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return orderDao.getBasicFare(map);
+	}
+
+	@Override
+	public void insertRpaInfo(Map<String, Object> listMapInsert) {
+		// TODO Auto-generated method stub
+		orderDao.insertRpaInfo(listMapInsert);
+	}
+	public List<Map<String, Object>> getLinkRpaJob(Map<String, Object> map) {
+		return orderDao.getLinkRpaJob(map);
+	}
+	@Override
+	public List<RpaVO> getRpaList(Map<String, Object> param) {
+		return orderDao.getRpaList(param);
+	}
+	@Override
+	public Map<String, Object> getRpaCnt(Map<String, Object> param) {
+		return orderDao.getRpaCnt(param);
 	}
 }

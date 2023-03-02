@@ -48,5 +48,7 @@
 
 		<typeAlias  alias="addrVO"  type="com.logislink.basic.vo.AddrVO" />
 
+		<typeAlias	alias="rpaVO"		type="com.logislink.order.vo.RpaVO" />
+
 	</typeAliases>
 </configuration>

@@ -1,6 +1,9 @@
 package com.logislink.order.controller;
 
+import java.io.*;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
 import javax.annotation.Resource;
@@ -8,7 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.logislink.basic.service.UserService;
+import com.logislink.basic.vo.UserVO;
+import com.logislink.order.vo.RpaVO;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -43,6 +53,8 @@ public class OrderController {
 	private String situationCode = "B2410";
 	private String freightControCode = "B2510";
 
+	private String rpaCode = "B2610";
+
 	@Value("#{globalProperties['Globals.mainCustId']}")
 	private String mainCustId;
 
@@ -61,6 +73,9 @@ public class OrderController {
 	@Resource(name="cmmService")
 	private CmmService cmmService;
 
+	@Resource(name="userService")
+	private UserService userService;
+
 	@Autowired
 	private RestService restService;
 
@@ -71,7 +86,6 @@ public class OrderController {
 		model.addAttribute("deptId", param.get("deptId"));
 		return "contents/order/view/orderStopDetail";
 	}
-
 	@GetMapping(value="/contents/order/orderList.do")
 	public String getOrderList(HttpServletRequest request, HttpSession session, ModelMap model) {
 
@@ -80,6 +94,16 @@ public class OrderController {
 		LoginMenuVO addrMenu = EtcUtil.checkAuth(request, addrCode);
 		model.put("addrAuth", addrMenu);
 		model.put("mainCustId", mainCustId);
+
+		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+
+		Map<String, Object> userParam = new HashMap<>();
+		userParam.put("USER_ID",login.getUserId());
+		UserVO userVo = userService.getUserLinkInfo(userParam);
+
+		model.put("userLink", userVo);
+
+
 		return "contents/order/orderList";
 	}
 
@@ -296,6 +320,10 @@ public class OrderController {
 			custService.insertCustAddr(param1);
 		}
 
+		if(!param.get("chargeType").toString().equals("03")){
+			rpaApiPost(param,session);
+		}
+		//rpaApiPost(param);
 
 		resMsg = (String) param.get("retMsg");
 
@@ -306,6 +334,7 @@ public class OrderController {
 		return "jsonView";
 
 	}
+
 
 	@PostMapping(value="/contents/order/data/orderList.do")
 	public String orderList(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
@@ -329,6 +358,7 @@ public class OrderController {
 
 		List<OrderVO> list = orderService.getOrderList(param);
 		Map<String,Object> count = orderService.getCnt(param);
+
 
 		map.put("data", list);
 		map.put("total", count.get("retCnt"));
@@ -494,6 +524,9 @@ public class OrderController {
 		param.put("regid", ((LoginVO) session.getAttribute("userInfo")).getUserId());
 		orderService.updateOrderState(param);
 
+		//if(param.get("orderState").toString().equals("09")){
+		rpaApiPost(param,session);
+		//}
 		if(!"00".equals(param.get("retCode"))) {
 			map.put("result", Boolean.FALSE);
 			map.put("msg", param.get("retMsg"));
@@ -901,6 +934,387 @@ public class OrderController {
 		}
 //
 
+		return "jsonView";
+	}
+
+	private void rpaApiPost(Map<String, Object> param , HttpSession session) {
+
+		Map<String, Object> ParamMap = new HashMap<>();
+		List<Map<String, Object>> listMapInsert = new ArrayList<>();
+		List<Map<String,Object>> data = new ArrayList<>();
+		List<Map<String,Object>> rpadata = new ArrayList<>();
+		JSONArray rpaApiArray = new JSONArray();
+		String body_contents1 = "body_text";
+		String result_txt = "";
+		String rpaType = "I";
+		String OrderId = "";
+		String id24 ="";
+		String idMan ="";
+		String idOne ="";
+		String id24Type ="";
+		String idManType ="";
+		String idOneType ="";
+		String jobStat ="W";
+		try {
+
+/*
+
+			if (param.get("retId") != null) {
+				OrderId = param.get("retId").toString();
+			} else {
+				OrderId = param.get("orderId").toString();
+			}
+
+			Map<String, Object> rpaParamData = new HashMap<>();
+			//rpaParamID.put("JOB_STAT",rpaType);
+			rpaParamData.put("ORDER_ID",OrderId);
+			rpadata = orderService.getLinkRpaJob(rpaParamData);
+
+*/
+
+
+
+
+			/*if("E".equals(param.get("mode")) || param.get("orderState").toString().equals("00")) {
+				rpaType = "U";
+			}*/
+/*			if(param.get("orderState").toString().equals("09")){
+				//rpaType = "D";
+				OrderId = param.get("orderId").toString();
+			}*/
+
+			if (param.get("retId") != null) {
+				OrderId = param.get("retId").toString();
+			} else {
+				OrderId = param.get("orderId").toString();
+			}
+
+			//if(rpaType.equals("D") || rpaType.equals("U")){
+				Map<String, Object> rpaParamID = new HashMap<>();
+				//rpaParamID.put("JOB_STAT",rpaType);
+				rpaParamID.put("ORDER_ID",OrderId);
+				//rpaParamID.put("rpaType",rpaType);
+				data = orderService.getLinkRpaJob(rpaParamID);
+			//}
+
+			for(Map<String, Object> map : data){
+				if(map.get("LINK_CD").equals("03")){
+					if(map.get("LINK_ID")!= null){
+						id24 = map.get("LINK_ID").toString();
+					}
+
+					if((!param.get("orderState").toString().equals("09") && map.get("ALLOC_CHARGE")!= null) &&
+							((map.get("JOB_STAT").toString().equals("E") && map.get("LINK_STAT").toString().equals("I"))||
+							(map.get("JOB_STAT").toString().equals("W") && map.get("LINK_STAT").toString().equals("D"))||
+							(map.get("JOB_STAT").toString().equals("F") && map.get("LINK_STAT").toString().equals("D"))))
+					{
+						id24Type ="I";
+
+					}else if(param.get("orderState").toString().equals("09")){
+						id24Type ="D";
+						if((map.get("JOB_STAT").toString().equals("F") && map.get("LINK_STAT").toString().equals("D"))||
+								(map.get("JOB_STAT").toString().equals("W") && map.get("LINK_STAT").toString().equals("D"))){
+							jobStat ="C";
+						}
+					}else{
+						id24Type ="U";
+						rpaParamID = new HashMap<>();
+						rpaParamID.put("link_cd","03");
+						rpaParamID.put("ORDER_ID",OrderId);
+						rpaParamID.put("rpaType","W");
+						rpaParamID.put("link_type",id24Type);
+						List<Map<String,Object>> uData = orderService.getLinkRpaJob(rpaParamID);
+
+						if(uData.size()>0){
+ 							jobStat ="C";
+						}
+					}
+
+				}else if(map.get("LINK_CD").equals("21")){
+					if(map.get("LINK_ID")!= null) {
+						idMan = map.get("LINK_ID").toString();
+					}
+					if((!param.get("orderState").toString().equals("09")&& map.get("ALLOC_CHARGE")!= null) &&
+							((map.get("JOB_STAT").toString().equals("E") && map.get("LINK_STAT").toString().equals("I"))||
+							(map.get("JOB_STAT").toString().equals("W") && map.get("LINK_STAT").toString().equals("D"))||
+							(map.get("JOB_STAT").toString().equals("F") && map.get("LINK_STAT").toString().equals("D"))))
+					{
+
+						idManType ="I";
+					}else if(param.get("orderState").toString().equals("09")){
+						idManType ="D";
+						if((!map.get("JOB_STAT").toString().equals("F") && !map.get("LINK_STAT").toString().equals("D"))||
+								(!map.get("JOB_STAT").toString().equals("W") && !map.get("LINK_STAT").toString().equals("D"))){
+							jobStat ="C";
+						}
+					}else{
+						idManType ="U";
+						rpaParamID = new HashMap<>();
+						rpaParamID.put("link_cd","21");
+						rpaParamID.put("ORDER_ID",OrderId);
+						rpaParamID.put("rpaType","W");
+						rpaParamID.put("link_type",idManType);
+						List<Map<String,Object>> uData = orderService.getLinkRpaJob(rpaParamID);
+
+						if(uData.size()>0){
+							jobStat ="C";
+						}
+					}
+				}else if(map.get("LINK_CD").equals("18")){
+					if(map.get("LINK_ID")!= null) {
+						idOne = map.get("LINK_ID").toString();
+					}
+					if((!param.get("orderState").toString().equals("09")&& map.get("ALLOC_CHARGE")!= null) &&
+							((map.get("JOB_STAT").toString().equals("E") && map.get("LINK_STAT").toString().equals("I"))||
+							(map.get("JOB_STAT").toString().equals("W") && map.get("LINK_STAT").toString().equals("D"))||
+							(map.get("JOB_STAT").toString().equals("F") && map.get("LINK_STAT").toString().equals("D"))))
+					{
+						idOneType ="I";
+					}else if(param.get("orderState").toString().equals("09")){
+						idOneType ="D";
+						if((!map.get("JOB_STAT").toString().equals("F") && !map.get("LINK_STAT").toString().equals("D"))||
+								(!map.get("JOB_STAT").toString().equals("W") && !map.get("LINK_STAT").toString().equals("D"))){
+							jobStat ="C";
+						}
+					}else{
+						idOneType ="U";
+						rpaParamID = new HashMap<>();
+						rpaParamID.put("link_cd","18");
+						rpaParamID.put("ORDER_ID",OrderId);
+						rpaParamID.put("rpaType","W");
+						rpaParamID.put("link_type",idOneType);
+						List<Map<String,Object>> uData = orderService.getLinkRpaJob(rpaParamID);
+
+						if(uData.size()>0){
+							jobStat ="C";
+						}
+/*						if((map.get("JOB_STAT").toString().equals("W") && map.get("LINK_STAT").toString().equals("U"))){
+							jobStat ="C";
+						}*/
+					}
+				}
+
+			}
+
+			Map<String, Object> userParam = new HashMap<>();
+			LoginVO login = (LoginVO) session.getAttribute("userInfo");
+			userParam.put("USER_ID",login.getUserId());
+			UserVO userVo = userService.getUserLinkInfo(userParam);
+
+			if(param.get("24Cargo") !=null && param.get("24Cargo").equals("Y")){
+				if(id24Type.equals("")){
+					id24Type = "I";
+				}
+				if(id24Type.equals("I") || !id24.equals("")) {
+					rpaApiArray.add(rpaJsonData(param, "100341", id24Type,id24,jobStat,userVo.getLink24Id()));
+				}
+			}
+			if(param.get("manCargo") !=null && param.get("manCargo").equals("Y")){
+				if(idManType.equals("")){
+					idManType = "I";
+				}
+				if(idManType.equals("I") || !idMan.equals("")) {
+					rpaApiArray.add(rpaJsonData(param, "100342", idManType,idMan,jobStat,userVo.getMan24Id()));
+				}
+			}
+			if(param.get("oneCargo") !=null && param.get("oneCargo").equals("Y")){
+				if(idOneType.equals("")){
+					idOneType = "I";
+				}
+				if(idOneType.equals("I") || !idOne.equals("")) {
+					rpaApiArray.add(rpaJsonData(param, "100343", idOneType,idOne,jobStat,userVo.getOne24Id()));
+				}
+			}
+
+
+
+			if(rpaApiArray.size() >0) {
+
+				URL url = new URL("http://175.197.164.228:8089/api/process/List"); // 호출할 외부 API 를 입력한다.
+
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection(); // header에 데이터 통신 방법을 지정한다.
+
+				conn.setRequestMethod("POST");
+				conn.setRequestProperty("Content-Type", "application/json");
+				conn.setRequestProperty("charset", "utf-8");
+
+				conn.setDoInput(true);
+				conn.setDoOutput(true);
+
+				// Request body message에 전송
+				OutputStreamWriter os = new OutputStreamWriter(conn.getOutputStream());
+
+				os.write(rpaApiArray.toString());
+				os.flush();
+
+				// 응답
+				BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+				JSONObject jsonObj = (JSONObject) JSONValue.parse(in.readLine());
+
+				in.close();
+				conn.disconnect();
+
+				JSONParser parser = new JSONParser();
+				JSONObject obj = (JSONObject) parser.parse(jsonObj.toString());
+				JSONArray jsonArray = (JSONArray) obj.get("RESULT_DATA");
+				String LINK_ID = "";
+				for (int i = 0; i < jsonArray.size(); i++) {
+
+					JSONObject jsonObjResultData = (JSONObject) jsonArray.get(i);
+					JSONObject jsonObjResultInfo = (JSONObject) jsonObjResultData.get("RESULT_INFO");
+
+					ParamMap = new HashMap<>();
+
+
+					ParamMap.put("JOB_STAT", jsonObjResultData.get("JOB_STAT"));
+					ParamMap.put("REGID", jsonObjResultData.get("USER_ID"));
+					ParamMap.put("PROC_ID", jsonObjResultInfo.get("PROC_ID"));
+					ParamMap.put("ORDER_ID", OrderId);
+
+
+					if (jsonObjResultData.get("JOB_CD").toString().equals("100341")) {
+						ParamMap.put("LINK_STAT", id24Type);
+						ParamMap.put("ALLOC_CHARGE", param.get("24Charge"));
+						ParamMap.put("LINK_CD", "03");
+						if (!id24Type.equals("I")) {
+							ParamMap.put("LINK_ID",id24);
+							LINK_ID = "Y";
+						}
+					} else if (jsonObjResultData.get("JOB_CD").toString().equals("100342")) {
+						ParamMap.put("LINK_STAT", idManType);
+						ParamMap.put("ALLOC_CHARGE", param.get("manCharge"));
+						ParamMap.put("LINK_CD", "21");
+						if (!idManType.equals("I")) {
+							ParamMap.put("LINK_ID",idMan);
+							LINK_ID = "Y";
+						}
+					} else {
+						ParamMap.put("LINK_STAT", idOneType);
+						ParamMap.put("ALLOC_CHARGE", param.get("oneCharge"));
+						ParamMap.put("LINK_CD", "18");
+						if (!idOneType.equals("I")) {
+							ParamMap.put("LINK_ID",idOne);
+							LINK_ID = "Y";
+						}
+					}
+
+					listMapInsert.add(ParamMap);
+				}
+				Map<String, Object> rpaParam = new HashMap<>();
+				rpaParam.put("rapList", listMapInsert);
+				rpaParam.put("LINK_ID", LINK_ID);
+				if(param.get("alloc_charge_YN") != null){
+					rpaParam.put("ALLOC_CHARGE_YN", param.get("alloc_charge_YN"));
+				}
+ 				orderService.insertRpaInfo(rpaParam);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private JSONObject rpaJsonData(Map<String, Object> param, String jabCd, String rpaType, String linkID, String jobStat,String linkId) {
+		JSONObject resultObj = new JSONObject();
+		JSONObject ParamObj = new JSONObject();
+		JSONArray rpaJsonArray = new JSONArray();
+
+		resultObj.put("ROBOT_LIC_NO","");
+		resultObj.put("JOB_CD",jabCd);
+		resultObj.put("JOB_STAT",jobStat);
+		resultObj.put("USER_ID",param.get("regId"));
+
+		ParamObj.put("PARAM_SEQ", 1);
+		ParamObj.put("PARAM_VAL", param.get("retId"));
+		rpaJsonArray.add(ParamObj);
+
+		ParamObj = new JSONObject();
+		ParamObj.put("PARAM_SEQ", 2);
+		if(rpaType.equals("U")||rpaType.equals("D")){
+			ParamObj.put("PARAM_VAL",linkID);
+		}else{
+			ParamObj.put("PARAM_VAL","");
+		}
+		//ParamObj.put("PARAM_VAL","");
+		rpaJsonArray.add(ParamObj);
+
+		ParamObj = new JSONObject();
+		ParamObj.put("PARAM_SEQ", 3);
+		ParamObj.put("PARAM_VAL",rpaType+"/"+linkId);
+		rpaJsonArray.add(ParamObj);
+
+		resultObj.put("PARAMS",rpaJsonArray);
+
+		return resultObj;
+	}
+
+	@GetMapping(value="/contents/order/rpaList.do")
+	public String getRpaList(HttpServletRequest request, HttpSession session, ModelMap model) {
+
+		LoginMenuVO loginMenu = EtcUtil.checkAuth(request, rpaCode);
+		model.put("menuAuth", loginMenu);
+
+		return "contents/order/rpaList";
+	}
+	@PostMapping(value="/contents/order/data/rpaList.do")
+	public String rpaList(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
+							@RequestParam Map<String, Object> param) throws Exception {
+		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+		String custId = login.getCustId();
+
+		param.put("custId", custId);
+		param.put("deptId", param.get("sDeptId"));
+
+		List<RpaVO> list = orderService.getRpaList(param);
+		Map<String,Object> count = orderService.getRpaCnt(param);
+
+
+		map.put("data", list);
+		map.put("total", count.get("retCnt"));
+		//map.put("summary", count);
+
+		return "jsonView";
+	}
+
+
+	@PostMapping(value="/contents/order/cancelLink.do")
+	public String cancelLink(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
+								   @RequestParam Map<String, Object> param) throws Exception {
+
+		param.put("regId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+		if(param.get("link_id").toString().equals("24Cargo")){
+			param.put("24Cargo","Y");
+			param.put("24Charge",param.get("link_charge"));
+		}else if(param.get("link_id").toString().equals("manCargo")){
+			param.put("manCargo","Y");
+			param.put("manCharge",param.get("link_charge"));
+		}else{
+			param.put("oneCargo","Y");
+			param.put("oneCharge",param.get("link_charge"));
+		}
+		rpaApiPost(param, session);
+		map.put("result", Boolean.TRUE);
+		map.put("msg", "취소되었습니다.");
+		return "jsonView";
+	}
+
+	@PostMapping(value="/contents/order/modLink.do")
+	public String modLink(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
+							 @RequestParam Map<String, Object> param) throws Exception {
+
+		param.put("regId", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+
+		if(param.get("link_id").toString().equals("24Cargo")){
+			param.put("24Cargo","Y");
+			param.put("24Charge",param.get("linkCharge"));
+		}else if(param.get("link_id").toString().equals("manCargo")){
+			param.put("manCargo","Y");
+			param.put("manCharge",param.get("linkCharge"));
+		}else{
+			param.put("oneCargo","Y");
+			param.put("oneCharge",param.get("linkCharge"));
+		}
+		rpaApiPost(param,session);
+		map.put("result", Boolean.TRUE);
+		map.put("msg", "수정되었습니다.");
 		return "jsonView";
 	}
 }

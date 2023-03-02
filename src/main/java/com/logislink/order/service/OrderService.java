@@ -8,6 +8,7 @@ import java.util.Map;
 import com.logislink.basic.vo.DrvLocVO;
 import com.logislink.order.vo.OrderStopVO;
 import com.logislink.order.vo.OrderVO;
+import com.logislink.order.vo.RpaVO;
 
 public interface OrderService {
 
@@ -82,4 +83,12 @@ public interface OrderService {
 	public int getFreightControlCnt(Map<String, Object> map);
 
 	public Map<String, Object> getBasicFare(Map<String, Object> map);
+
+	public void insertRpaInfo(Map<String, Object> listMapInsert);
+
+	public List<Map<String, Object>> getLinkRpaJob(Map<String, Object> param);
+
+	public List<RpaVO> getRpaList(Map<String, Object> param);
+
+	public Map<String, Object> getRpaCnt(Map<String, Object> param);
 }

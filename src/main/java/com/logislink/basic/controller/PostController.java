@@ -72,6 +72,12 @@ public class PostController {
 		return "contents/basic/view/searchBizinfo";
 	}
 
+	@GetMapping(value="/contents/basic/view/privInfo.do")
+	public String privateInform(HttpServletRequest request, Model model, HttpSession httpSession, ModelMap map,
+		@RequestParam Map<String, Object> param) throws Exception{
+
+		return "contents/basic/view/privInfo";
+	}
 
 	//public String LoopNiceinfo(HttpServletRequest request, Model model, HttpSession httpSession, ModelMap map, @RequestParam Map<String, Object> param) throws Exception {
 	public List<Map<String, Object>> LoopNiceinfo(int page, Map<String, Object> param) throws Exception {

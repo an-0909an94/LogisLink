@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.logislink.basic.service.MenuService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,9 @@ public class LoginController {
 	
 	@Resource(name="loginService")
 	private LoginService loginService;
+
+	@Resource(name="menuService")
+	private MenuService menuService;
 	
 	@PostMapping(value="/login.do")
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model,
@@ -52,7 +56,7 @@ public class LoginController {
 			
 			//메뉴 정보를 가져와 json 형태로 파싱한다.
 			ObjectMapper mapper = new ObjectMapper();
-			String menuJson = mapper.writeValueAsString(menuList(login.getAuthSeq())); 
+			String menuJson = mapper.writeValueAsString(menuList(login.getAuthSeq(), login.getUserId()));
 
 			//마지막 로그인 날짜를 저장한다.
 			loginService.updateLastLogin(param);
@@ -81,19 +85,40 @@ public class LoginController {
 
 	/**
 	 * 사용자 별 메뉴 정보
+	 *
 	 * @param adminSeq
 	 * @param serviceSeq
+	 * @param userId
 	 * @return
 	 */
-	private Map<String, Object> menuList(int authSeq){
+	private Map<String, Object> menuList(int authSeq, String userId){
 		Map<String, Object> param = new HashMap<>();
 		
 		param.put("authSeq", authSeq);
 		Map<String, Object> result = new HashMap<>();
 		List<LoginMenuVO> menuList = new ArrayList();
+		List<Map<String,Object>> menuException = new ArrayList<>();
+		List<Map<String,Object>> menuExceptionCode = new ArrayList<>();
+		Map<String, Object> userParam = new HashMap<>();
+		Map<String, Object> ParamMap = new HashMap<>();
+
+
+		List<Map<String, Object>> menuExceptionParam = new ArrayList<>();
+
 		try {
+			userParam.put("userId",userId);
+			menuException = menuService.getMenuException(userParam);
+			if(menuException.size() > 0) {
+				for (Map<String, Object> map : menuException) {
+					ParamMap.put("MENU_CD", map.get("MENU_CD"));
+					menuExceptionCode.add(ParamMap);
+				}
+				param.put("menuExceptionCode", menuExceptionCode);
+				param.put("menuExceptionFlag", "Y");
+			}
 			menuList = loginService.getLoginMenu(param);
 			result.put("menu", menuList);
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

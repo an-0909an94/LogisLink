@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
+import com.logislink.order.vo.RpaVO;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.session.SqlSession;
@@ -202,5 +203,19 @@ public class OrderDao extends EgovAbstractMapper {
 	public Map<String, Object> getBasicFare(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return selectOne("orderDataNS.getBasicFare", map);
+	}
+
+	public void insertRpaInfo(Map<String, Object> listMapInsert) {
+		insert("orderDataNS.insertRpaInfo", listMapInsert);
+	}
+	public List<Map<String, Object>> getLinkRpaJob(Map<String, Object> map) {
+		return selectList("orderDataNS.getLinkRpaJob", map);
+	}
+
+	public List<RpaVO> getRpaList(Map<String, Object> param) {
+		return selectList("orderDataNS.selectRpaList", param);
+	}
+	public Map<String, Object> getRpaCnt(Map<String, Object> param) {
+		return selectOne("orderDataNS.selectRpaCnt", param);
 	}
 }

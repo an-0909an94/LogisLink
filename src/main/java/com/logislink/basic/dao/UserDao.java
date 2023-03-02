@@ -15,8 +15,8 @@ import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
 public class UserDao extends EgovAbstractMapper{
 
 
-	public UserVO selectUserOne(Map<String, Object>map){
-		UserVO userOne = selectOne("userDataNS.selectUserOne", map);
+	public UserVO selectUserOne(Map<String, Object> map){
+		UserVO userOne = selectOne("userDataNS.selectUserOne",map);
 
 		return userOne;
 	}
@@ -78,5 +78,9 @@ public class UserDao extends EgovAbstractMapper{
 	}
 	public void insertUserCargoAccount(Map<String, Object> map) {
 		update("userDataNS.insertUserCargoAccount", map);
+	}
+
+	public UserVO getUserLinkInfo(Map<String, Object> userParam) {
+		return selectOne("userDataNS.selectUserLink", userParam);
 	}
 }

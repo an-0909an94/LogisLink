@@ -73,10 +73,22 @@
 				WHERE
 						AUTH_SEQ = #{authSeq}
 			) A
-			INNER JOIN
-			T_AUTH_MENU B ON A.AUTH_SEQ = B.AUTH_SEQ AND B.READ_YN = 'Y'
-			INNER JOIN
-			T_MENU C ON B.MENU_SEQ = C.MENU_SEQ AND C.USE_YN = 'Y'
+		INNER JOIN
+		T_AUTH_MENU B ON A.AUTH_SEQ = B.AUTH_SEQ AND B.READ_YN = 'Y'
+		INNER JOIN
+		T_MENU C ON B.MENU_SEQ = C.MENU_SEQ
+		<choose>
+			<when test="menuExceptionFlag != null and menuExceptionFlag != ''">
+				AND (C.USE_YN = 'Y' OR C.MENU_SEQ in
+				<foreach collection="menuExceptionCode" item="item" index="index" separator="," open="(" close=")">
+					#{item.MENU_CD}
+				</foreach>
+				)
+			</when>
+			<otherwise>
+				AND C.USE_YN = 'Y'
+			</otherwise>
+		</choose>
 		ORDER BY
 			C.ASORT ASC		
 	</select>

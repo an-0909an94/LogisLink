@@ -209,6 +209,13 @@ public class OrderVO {
 	   private String modId;
 	   private String modDate;
 	   private String externalInformation;
+
+	   private String linkCharge03;
+	   private String linkCharge21;
+	   private String linkCharge18;
+	   private String linkStat03;
+	   private String linkStat21;
+	   private String linkStat18;
 	   
 	public String getOrderId() {
 		return orderId;
@@ -1384,5 +1391,53 @@ public class OrderVO {
 
 	public void setExternalInformation(String externalInformation) {
 		this.externalInformation = externalInformation;
+	}
+
+	public String getLinkCharge03() {
+		return linkCharge03;
+	}
+
+	public void setLinkCharge03(String linkCharge03) {
+		this.linkCharge03 = linkCharge03;
+	}
+
+	public String getLinkCharge21() {
+		return linkCharge21;
+	}
+
+	public void setLinkCharge21(String linkCharge21) {
+		this.linkCharge21 = linkCharge21;
+	}
+
+	public String getLinkCharge18() {
+		return linkCharge18;
+	}
+
+	public void setLinkCharge18(String linkCharge18) {
+		this.linkCharge18 = linkCharge18;
+	}
+
+	public String getLinkStat03() {
+		return linkStat03;
+	}
+
+	public void setLinkStat03(String linkStat03) {
+		this.linkStat03 = linkStat03;
+	}
+
+	public String getLinkStat21() {
+		return linkStat21;
+	}
+
+	public void setLinkStat21(String linkStat21) {
+		this.linkStat21 = linkStat21;
+	}
+
+	public String getLinkStat18() {
+		return linkStat18;
+	}
+
+	public void setLinkStat18(String linkStat18) {
+		this.linkStat18 = linkStat18;
 	}
 }

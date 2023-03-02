@@ -739,8 +739,8 @@ function setLeftmenu() {
 	var tutorial2Type;
 	var tutorial2Url;
 	var tutorial3Type;
-	var tutorial3Url;	
-	
+	var tutorial3Url;
+
 	for(var item, i=0; item=menuList.menu[i]; i++) {
 		if(item.depth.toString() == "1"){
 			s += "<div class=\"side-nav-ul\">";

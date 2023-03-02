@@ -14,4 +14,8 @@ public interface MenuService {
 	public void updateSort(Map<String, Object> map);
 	
 	public void updateMenuGuide(Map<String, Object> map);
+
+	public void insertEventLog(Map<String, Object> param);
+
+	public List<Map<String, Object>> getMenuException(Map<String, Object> map);
 }

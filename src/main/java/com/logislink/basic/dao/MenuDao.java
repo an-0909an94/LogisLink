@@ -27,4 +27,11 @@ public class MenuDao extends EgovAbstractMapper{
 	public void updateMenuGuide(Map<String, Object> map) {
 		update("menuDataNS.updateMenuGuide", map);
 	}
+	public void insertEventLog(Map<String, Object> map) {
+		insert("menuDataNS.insertEventLog", map);
+	}
+
+	public List<Map<String, Object>> getMenuException(Map<String, Object> map) {
+		return selectList("menuDataNS.getMenuException", map);
+	}
 }

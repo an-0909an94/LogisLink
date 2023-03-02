@@ -136,4 +136,28 @@
 				MENU_SEQ = #{menuSeq}	  
 	</update>
 
+	<insert id="insertEventLog" parameterType="java.util.HashMap">
+		INSERT INTO
+			T_EVENT_LOG
+		(
+			MENU_URL, MENU_NAME, USER_ID, IP, REGDATE
+		)
+		VALUES
+			(
+			#{MENU_URL, jdbcType=NVARCHAR}
+			, #{MENU_NAME, jdbcType=NVARCHAR}
+			, #{USER_ID, jdbcType=NVARCHAR}
+			, #{IP, jdbcType=NVARCHAR}
+			, GETDATE()
+
+			)
+	</insert>
+	<select id="getMenuException" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+		    MENU_CD
+
+		FROM T_TEMP_MENU_AUTH
+		WHERE
+			USER_ID = #{userId}
+	</select>
 </mapper>

@@ -88,4 +88,8 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		userDao.insertUserCargoAccount(map);
 	}
+
+	public UserVO getUserLinkInfo(Map<String, Object> userParam) {
+		return userDao.getUserLinkInfo(userParam);
+	}
 }

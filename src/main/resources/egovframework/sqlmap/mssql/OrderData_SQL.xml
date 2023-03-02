@@ -194,7 +194,7 @@
 					   T_ORDER_ALLOC_ADD R ON D.ORDER_ID = R.ORDER_ID AND D.ALLOC_ID = R.ALLOC_ID AND R.CALC_TYPE_CODE = '0294'
 					   LEFT OUTER JOIN
 					   T_USER S ON D.REGID = S.USER_ID
-					   INNER JOIN
+	   				   LEFT OUTER JOIN
 					   T_USER T ON B.REGID = T.USER_ID
 
 					WHERE
@@ -206,11 +206,11 @@
 						<if test='reqDeptId != null and !"".equals(reqDeptId)'>
 		  			 		AND B.REQ_DEPT_ID = #{reqDeptId}
 						</if>
-						<if test='listSSido != null and !"".equals(listSSido)'>
-		  			 		AND B.S_SIDO = #{listSSido}
-						</if>
+					   	<if test='listSSido != null and !"".equals(listSSido)'>
+						    AND (B.S_SIDO LIKE '%' + #{listSSido} + '%' OR B.S_GUNGU LIKE '%' + #{listSSido} + '%' OR B.S_ADDR LIKE '%' + #{listSSido} + '%')
+					   	</if>
 						<if test='listESido != null and !"".equals(listESido)'>
-		  			 		AND B.E_SIDO = #{listESido}
+							AND (B.E_SIDO LIKE '%' + #{listESido} + '%' OR B.E_GUNGU LIKE '%' + #{listESido} + '%' OR B.E_ADDR LIKE '%' + #{listESido} + '%')
 						</if>
 					    <if test="sCarMngCode != null and sCarMngCode != ''">
 							AND H.CAR_MNG_CODE = #{sCarMngCode}
@@ -265,6 +265,12 @@
 					    <if test="searchChargeType != null and searchChargeType != ''">
 					    	AND B.CHARGE_TYPE = #{searchChargeType}
 				   		</if>
+					   <if test="sCarTon != null and sCarTon != ''">
+						   AND ISNULL(B.CAR_TON_CODE, '00') = #{sCarTon}
+					   </if>
+					   <if test="sCarType != null and sCarType != ''">
+						   AND ISNULL(B.CAR_TYPE_CODE, '00') = #{sCarType}
+					   </if>
 					    <if test = "fromDate != null and fromDate != ''">
 				   			<choose>
 				   				<when test='searchDate == "regdate".toString()'>
@@ -385,12 +391,12 @@
 			<if test='reqDeptId != null and !"".equals(reqDeptId)'>
 			 		AND B.REQ_DEPT_ID = #{reqDeptId}
 			</if>
-			<if test='listSSido != null and !"".equals(listSSido)'>
-			 		AND B.S_SIDO = #{listSSido}
-			</if>
-			<if test='listESido != null and !"".equals(listESido)'>
-			 		AND B.E_SIDO = #{listESido}
-			</if>
+		    <if test='listSSido != null and !"".equals(listSSido)'>
+			   		AND (B.S_SIDO LIKE '%' + #{listSSido} + '%' OR B.S_GUNGU LIKE '%' + #{listSSido} + '%' OR B.S_ADDR LIKE '%' + #{listSSido} + '%')
+		    </if>
+		    <if test='listESido != null and !"".equals(listESido)'>
+			    	AND (B.E_SIDO LIKE '%' + #{listESido} + '%' OR B.E_GUNGU LIKE '%' + #{listESido} + '%' OR B.E_ADDR LIKE '%' + #{listESido} + '%')
+		    </if>
 			<if test="sCustMngCode != null and sCustMngCode != ''">
 				AND C.CUST_MNG_CODE = #{sCustMngCode}
 			</if>
@@ -425,6 +431,12 @@
 			<if test="searchChargeType != null and searchChargeType != ''">
 				AND B.CHARGE_TYPE = #{searchChargeType}
 			</if>
+		   <if test="sCarTon != null and sCarTon != ''">
+			   AND ISNULL(B.CAR_TON_CODE, '00') = #{sCarTon}
+		   </if>
+		   <if test="sCarType != null and sCarType != ''">
+			   AND ISNULL(B.CAR_TYPE_CODE, '00') = #{sCarType}
+		   </if>
 		   	<if test = "fromDate != null and fromDate != ''">
 		   		<choose>
 	   				<when test='searchDate == "regdate".toString()'>
@@ -600,6 +612,12 @@
 			 , (SELECT ISNULL(FINISH_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseFinish
 			 , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseTaxinv
 			 , B.EXTERNAL_INFOMATION externalInformation
+			 ,ISNULL(LINK_CHARGE_03, '') linkCharge03
+			 ,ISNULL(LINK_CHARGE_21, '') linkCharge21
+			 ,ISNULL(LINK_CHARGE_18, '') linkCharge18
+			 ,ISNULL(LINK_STAT_03, '') linkStat03
+			 ,ISNULL(LINK_STAT_21, '') linkStat21
+			 ,ISNULL(LINK_STAT_18, '') linkStat18
 			     FROM
 		   (
 		      SELECT 
@@ -669,9 +687,27 @@
 		   (SELECT ALLOC_ID, ADD_CHARGE, MEMO  
 		   FROM T_ORDER_ALLOC_ADD 
 		   WHERE ORDER_ID = #{orderId} AND ALLOC_ID = #{sellAllocId} AND CALC_TYPE_CODE = '0294') R ON A.ALLOC_ID = R.ALLOC_ID
-		   INNER JOIN 
+		   LEFT OUTER JOIN
 		   (SELECT CUST_ID, BIZ_NUM, BIZ_NAME, CEO, BIZ_ADDR
 		   FROM T_CUST_MST) S ON A.SELL_CUST_ID = S.CUST_ID
+			LEFT OUTER JOIN (
+			SELECT dd.order_id
+			, MAX(CASE WHEN dd.LINK_CD = '03' THEN dd.ALLOC_CHARGE ELSE '' END) "LINK_CHARGE_03" --24시
+			, MAX(CASE WHEN dd.LINK_CD = '21' THEN dd.ALLOC_CHARGE  ELSE '' END) "LINK_CHARGE_21"
+			, MAX(CASE WHEN dd.LINK_CD = '18' THEN dd.ALLOC_CHARGE ELSE '' END) "LINK_CHARGE_18"
+			, MAX(CASE WHEN dd.LINK_CD = '03' THEN dd.LINK_STAT ELSE '' END) "LINK_STAT_03" --24시콜
+			, MAX(CASE WHEN dd.LINK_CD = '21' THEN dd.LINK_STAT  ELSE '' END) "LINK_STAT_21"
+			, MAX(CASE WHEN dd.LINK_CD = '18' THEN dd.LINK_STAT ELSE '' END) "LINK_STAT_18"
+			FROM T_LINK_RPAJOB dd
+			INNER JOIN (
+			select order_id, LINK_CD, MAX(PROC_ID) AS PROC_ID
+			from T_LINK_RPAJOB
+			GROUP BY ORDER_id,LINK_CD
+			) e
+			ON dd.PROC_ID = e.proc_id
+			GROUP BY dd.ORDER_id
+
+			) bb ON bb.order_id = b.order_id
    </select>
    
    <select id="selectOrderStop" parameterType="java.util.HashMap" resultType="orderStopVO">
@@ -719,7 +755,7 @@
 					WHERE ORDER_ID = #{orderId}
 				) A
 				INNER JOIN
-				T_ORDER_ALLOC B ON A.ORDER_ID = B.ORDER_ID AND B.ALLOC_STATE IN ('04', '05', '11', '12')
+				T_ORDER_ALLOC B ON A.ORDER_ID = B.ORDER_ID AND B.ALLOC_STATE IN ('01','04', '05', '11', '12')
 				INNER JOIN
 				T_DRIVER_LOC_HISTORY C ON B.ALLOC_ID = C.ALLOC_ID AND B.DRIVER_ID = C.DRIVER_ID
 			ORDER BY
@@ -2022,5 +2058,302 @@
 				B.ALLOC_CHARGE != 0
 
 		ORDER BY B.REGDATE DESC, B.ALLOC_ID DESC
+	</select>
+
+	<insert id="insertRpaInfo" parameterType="java.util.HashMap">
+		INSERT INTO
+		T_LINK_RPAJOB
+		(
+		PROC_ID, ORDER_ID, LINK_CD, JOB_STAT, REGID, REGDATE, ALLOC_CHARGE, LINK_STAT
+		<if test="LINK_ID != null and LINK_ID != ''">
+			,LINK_ID
+		</if>
+		<if test="ALLOC_CHARGE_YN != null and ALLOC_CHARGE_YN != ''">
+			,ALLOC_CHARGE_YN
+		</if>
+		)
+		VALUES
+		<foreach collection="rapList" item="item" index="index" separator=",">
+			(
+			#{item.PROC_ID, jdbcType=NVARCHAR}
+			, #{item.ORDER_ID, jdbcType=NVARCHAR}
+			, #{item.LINK_CD, jdbcType=NVARCHAR}
+			, #{item.JOB_STAT, jdbcType=NVARCHAR}
+			, #{item.REGID, jdbcType=NVARCHAR}
+			, GETDATE()
+			, #{item.ALLOC_CHARGE, jdbcType=NVARCHAR}
+			, #{item.LINK_STAT, jdbcType=NVARCHAR}
+			<if test="LINK_ID != null and LINK_ID != ''">
+				, #{item.LINK_ID, jdbcType=NVARCHAR}
+			</if>
+			<if test="ALLOC_CHARGE_YN != null and ALLOC_CHARGE_YN != ''">
+				, #{ALLOC_CHARGE_YN, jdbcType=NVARCHAR}
+			</if>
+			)
+		</foreach>
+	</insert>
+
+	<select id="getLinkRpaJob" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+		ISNULL(A.JOB_STAT,'') as JOB_STAT,
+		ISNULL(A.LINK_CD,'') as LINK_CD,
+		ISNULL(A.LINK_ID,'') as LINK_ID,
+		ISNULL(A.LINK_STAT,'') as LINK_STAT,
+		ISNULL(A.ALLOC_CHARGE,'') as ALLOC_CHARGE
+
+		FROM
+			T_LINK_RPAJOB A,
+			(
+				SELECT
+				    ORDER_ID,
+				    LINK_CD,
+				    MAX(PROC_ID) AS PROC_ID
+				FROM
+					T_LINK_RPAJOB
+				WHERE
+					1=1
+					<if test="ORDER_ID != null and ORDER_ID != ''">
+						AND ORDER_ID = #{ORDER_ID}
+					</if>
+					<if test="rpaType != null and rpaType != ''">
+						AND JOB_STAT = #{rpaType}
+					</if>
+					<if test="link_cd != null and link_cd != ''">
+						AND LINK_CD = #{link_cd}
+					</if>
+					<if test="link_type != null and link_type != ''">
+						AND LINK_STAT = #{link_type}
+					</if>
+
+					GROUP BY order_id, link_cd
+			)B
+		WHERE 1 = 1
+		AND A.PROC_ID = B.PROC_ID
+	</select>
+
+	<select id="selectRpaList" parameterType="java.util.HashMap" resultType="rpaVO" fetchSize="1000">
+		SELECT TT.*
+		FROM (
+			SELECT
+			ROW_NUMBER() OVER(ORDER BY
+			CASE WHEN orderState ='00' THEN 1
+			WHEN regdate NOT IN('00','09') THEN 2
+			ELSE 3 END,
+			regdate DESC
+			) number
+			,order_id
+			,orderStateName
+			,sDateDay
+			,sDateTime
+			,eDateDay
+			,eDateTime
+			,chargeType
+			,orderCarName
+			,orderCarTonName
+			,link_charge_03
+			,link_charge_21
+			,link_charge_18
+			,link_stat_03
+			,link_stat_21
+			,link_stat_18
+			,driverName
+			,driverTel
+			,carNum
+			,goodsName
+			,goodsWeight
+			,custName
+			,regdate
+			,job_stat_03
+			,job_stat_21
+			,job_stat_18
+			,link_id_03
+			,link_id_21
+			,link_id_18
+			,rpa_msg_03
+			,rpa_msg_21
+			,rpa_msg_18
+			FROM(
+			SELECT
+			a.order_id order_id
+			, a.ORDER_STATE orderState
+			, (SELECT CNAME FROM T_CODE WHERE GCODE = 'ORDER_STATE_CD' AND CODE = a.ORDER_STATE) orderStateName
+			, CONVERT(CHAR(10),a.S_DATE, 23) sDateDay
+			, CONVERT(CHAR(10),a.S_DATE, 24) sDateTime
+			, CONVERT(CHAR(10),a.E_DATE, 23) eDateDay
+			, CONVERT(CHAR(10),a.E_DATE, 24) eDateTime
+			, (SELECT CNAME FROM T_CODE WHERE GCODE = 'CHARGE_TYPE_CD' AND CODE = a.CHARGE_TYPE) chargeType
+
+			, (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_TYPE_CD' AND CODE = a.CAR_TYPE_CODE) orderCarName
+			, (SELECT CNAME FROM T_CODE WHERE GCODE = 'CAR_TON_CD' AND CODE = a.CAR_TON_CODE) orderCarTonName
+			,b.LINK_CHARGE_03 link_charge_03
+			,b.LINK_CHARGE_21 link_charge_21
+			,b.LINK_CHARGE_18 link_charge_18
+			,b.LINK_STAT_03 link_stat_03
+			,b.LINK_STAT_21 link_stat_21
+			,b.LINK_STAT_18 link_stat_18
+			,b.JOB_STAT_03 job_stat_03
+			,b.JOB_STAT_21 job_stat_21
+			,b.JOB_STAT_18 job_stat_18
+			,b.LINK_ID_03 link_id_03
+			,b.LINK_ID_21 link_id_21
+			,b.LINK_ID_18 link_id_18
+			,b.RPA_MSG_03 rpa_msg_03
+			,b.RPA_MSG_21 rpa_msg_21
+			,b.RPA_MSG_18 rpa_msg_18
+			, F.DRIVER_NAME driverName
+			, F.DRIVER_TEL driverTel
+			, F.CAR_NUM carNum
+			, a.GOODS_NAME goodsName
+			, CONVERT(FLOAT,a.GOODS_WEIGHT)/1000 goodsWeight
+			, (SELECT BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = a.REQ_CUST_ID) custName
+			, CONVERT(CHAR(19), a.REGDATE, 20) regdate
+			FROM T_ORDER AS a
+			INNER JOIN (
+			SELECT d.order_id
+			, MAX(CASE WHEN d.LINK_CD = '03' THEN d.ALLOC_CHARGE ELSE '' END) "LINK_CHARGE_03" --24시콜
+			, MAX(CASE WHEN d.LINK_CD = '21' THEN d.ALLOC_CHARGE ELSE '' END) "LINK_CHARGE_21"
+			, MAX(CASE WHEN d.LINK_CD = '18' THEN d.ALLOC_CHARGE ELSE '' END) "LINK_CHARGE_18"
+			, MAX(CASE WHEN d.LINK_CD = '03' THEN d.LINK_STAT ELSE '' END) "LINK_STAT_03" --24시콜
+			, MAX(CASE WHEN d.LINK_CD = '21' THEN d.LINK_STAT ELSE '' END) "LINK_STAT_21"
+			, MAX(CASE WHEN d.LINK_CD = '18' THEN d.LINK_STAT ELSE '' END) "LINK_STAT_18"
+			, MAX(CASE WHEN d.LINK_CD = '03' THEN d.JOB_STAT ELSE '' END) "JOB_STAT_03" --24시콜
+			, MAX(CASE WHEN d.LINK_CD = '21' THEN d.JOB_STAT ELSE '' END) "JOB_STAT_21"
+			, MAX(CASE WHEN d.LINK_CD = '18' THEN d.JOB_STAT ELSE '' END) "JOB_STAT_18"
+			, MAX(CASE WHEN d.LINK_CD = '03' THEN d.LINK_ID ELSE '' END) "LINK_ID_03" --24시콜
+			, MAX(CASE WHEN d.LINK_CD = '21' THEN d.LINK_ID ELSE '' END) "LINK_ID_21"
+			, MAX(CASE WHEN d.LINK_CD = '18' THEN d.LINK_ID ELSE '' END) "LINK_ID_18"
+			, MAX(CASE WHEN d.LINK_CD = '03' THEN d.RPA_MSG ELSE '' END) "RPA_MSG_03"
+			, MAX(CASE WHEN d.LINK_CD = '21' THEN d.RPA_MSG ELSE '' END) "RPA_MSG_21"
+			, MAX(CASE WHEN d.LINK_CD = '18' THEN d.RPA_MSG ELSE '' END) "RPA_MSG_18"
+			FROM T_LINK_RPAJOB d
+			INNER JOIN (
+			select order_id, LINK_CD, MAX(PROC_ID) AS PROC_ID
+			from T_LINK_RPAJOB
+			GROUP BY ORDER_id,LINK_CD
+			) e
+			ON d.PROC_ID = e.proc_id
+			GROUP BY d.ORDER_id
+
+			) b ON a.order_id = b.order_id
+			INNER JOIN (
+			SELECT
+			h.ORDER_ID , h.ALLOC_ID , h.SELL_CUST_ID , h.SELL_DEPT_ID , h.SELL_STAFF_ID
+			, h.BUY_CUST_ID , h.BUY_DEPT_ID , h.BUY_STAFF_ID , h.ALLOC_CHARGE , h.ALLOC_FEE
+			, h.SELL_STAFF_TEL , h.LINK_YN , h.SELL_WEIGHT
+			FROM
+			T_ORDER_ALLOC h
+			WHERE
+			h.BUY_CUST_ID = #{custId}
+			<if test='deptId != null and !"".equals(deptId)'>AND BUY_DEPT_ID = #{deptId}</if>
+			<if test='userId != null and !"".equals(userId)'>AND BUY_STAFF_ID = #{userId}</if>
+			) C ON B.ORDER_ID = C.ORDER_ID
+
+			LEFT OUTER JOIN
+			T_ORDER_ALLOC F
+			ON A.ORDER_ID = F.ORDER_ID AND ISNULL(F.DRIVER_ID, '') != '' AND ISNULL(F.VEHIC_ID, '') != ''
+			LEFT OUTER JOIN
+			T_ORDER_ALLOC G
+			ON C.ORDER_ID = G.ORDER_ID AND C.BUY_CUST_ID = G.SELL_CUST_ID AND C.BUY_DEPT_ID = G.SELL_DEPT_ID
+
+			) T
+			WHERE 1=1
+			<if test="searchValue != null and searchValue != ''">
+				<choose>
+					<when test='searchColumn == "sellCustName".toString()'>
+						AND custName LIKE '%' + #{searchValue} + '%'
+					</when>
+					<when test='searchColumn == "orderId".toString()'>
+						AND order_id = #{searchValue}
+					</when>
+				</choose>
+			</if>
+			<if test="fromDate != null and fromDate != ''">
+				<choose>
+					<when test='searchDate == "regdate".toString()'>
+						AND regdate BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+					</when>
+					<when test='searchDate == "sDate".toString()'>
+						AND sDateDay BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+					</when>
+				</choose>
+			</if>
+
+		) TT
+		WHERE number BETWEEN #{start} AND #{end}
+		ORDER BY number ASC
+	</select>
+
+
+	<select id="selectRpaCnt" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT
+			COUNT(*) retCnt
+		FROM(
+			SELECT
+				--COUNT(*) retCnt
+				a.order_id                															order_id
+				, CONVERT(CHAR(10),a.S_DATE, 23)    													sDateDay
+				, (SELECT  BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = a.REQ_CUST_ID) 					custName
+				, CONVERT(CHAR(19), a.REGDATE, 20)														regdate
+			FROM T_ORDER AS a
+					 INNER JOIN (
+				SELECT d.order_id
+					 , MAX(CASE WHEN d.LINK_CD = '03' THEN d.ALLOC_CHARGE ELSE '' END) "LINK_CHARGE_03" --24시
+					 , MAX(CASE WHEN d.LINK_CD = '21' THEN d.ALLOC_CHARGE  ELSE '' END) "LINK_CHARGE_21"
+					 , MAX(CASE WHEN d.LINK_CD = '18' THEN d.ALLOC_CHARGE ELSE '' END) "LINK_CHARGE_18"
+					 , MAX(CASE WHEN d.LINK_CD = '03' THEN d.LINK_STAT ELSE '' END) "LINK_STAT_03" --24시콜
+					 , MAX(CASE WHEN d.LINK_CD = '21' THEN d.LINK_STAT  ELSE '' END) "LINK_STAT_21"
+					 , MAX(CASE WHEN d.LINK_CD = '18' THEN d.LINK_STAT ELSE '' END) "LINK_STAT_18"
+				FROM T_LINK_RPAJOB d
+						 INNER JOIN (
+					select order_id, LINK_CD, MAX(PROC_ID) AS PROC_ID
+					from T_LINK_RPAJOB
+					GROUP BY ORDER_id,LINK_CD
+				) e
+									ON d.PROC_ID = e.proc_id
+				GROUP BY d.ORDER_id
+
+			) b  ON a.order_id = b.order_id
+					 INNER JOIN (
+				SELECT
+					h.ORDER_ID     , h.ALLOC_ID      , h.SELL_CUST_ID   , h.SELL_DEPT_ID   , h.SELL_STAFF_ID
+					 , h.BUY_CUST_ID  , h.BUY_DEPT_ID   , h.BUY_STAFF_ID   , h.ALLOC_CHARGE   , h.ALLOC_FEE
+					 , h.SELL_STAFF_TEL , h.LINK_YN     , h.SELL_WEIGHT
+				FROM
+					T_ORDER_ALLOC h
+				WHERE
+					BUY_CUST_ID = #{custId}
+					<if test = 'deptId != null and !"".equals(deptId)'>AND BUY_DEPT_ID = #{deptId}</if>
+					<if test = 'userId != null and !"".equals(userId)'>AND BUY_STAFF_ID = #{userId}</if>
+			) C ON B.ORDER_ID = C.ORDER_ID
+
+
+					 LEFT OUTER JOIN
+				 T_ORDER_ALLOC F
+				 ON A.ORDER_ID = F.ORDER_ID AND ISNULL(F.DRIVER_ID, '') != '' AND ISNULL(F.VEHIC_ID, '') != ''
+				 LEFT OUTER JOIN
+						 T_ORDER_ALLOC G
+			ON C.ORDER_ID = G.ORDER_ID AND C.BUY_CUST_ID = G.SELL_CUST_ID AND C.BUY_DEPT_ID = G.SELL_DEPT_ID
+		) T
+		WHERE 1=1
+		<if test="searchValue != null and searchValue != ''">
+			<choose>
+				<when test='searchColumn == "sellCustName".toString()'>
+					AND custName LIKE '%' + #{searchValue} + '%'
+				</when>
+				<when test='searchColumn == "orderId".toString()'>
+					AND order_id = #{searchValue}
+				</when>
+			</choose>
+		</if>
+		<if test = "fromDate != null and fromDate != ''">
+			<choose>
+				<when test='searchDate == "regdate".toString()'>
+					AND regdate BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+				</when>
+				<when test='searchDate == "sDate".toString()'>
+					AND sDateDay BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
+				</when>
+			</choose>
+		</if>
 	</select>
 </mapper>

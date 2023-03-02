@@ -50,14 +50,13 @@ public class UserController {
 
 		UserVO userOne = userService.getUserOne(param);
 
-		map.put("result", Boolean.TRUE );
+		map.put("result", Boolean.TRUE);
 		map.put("data", userOne);
 		map.put("total", 1);
 		map.put("msg", "");
 
 		return "jsonView";
 	}
-
 	@GetMapping(value="/contents/basic/userList.do")
 	public String getUserList(HttpServletRequest request, HttpSession session, ModelMap model) {
 		LoginVO loginUserInfo = ((LoginVO) session.getAttribute("userInfo"));
@@ -133,6 +132,8 @@ public class UserController {
 		return "jsonView";
 		
 	}
+
+
 	
 	@PostMapping(value="/contents/basic/data/checkUserId.do")
 	public String checkUserId(HttpServletRequest request, Model model, ModelMap map, HttpSession session,

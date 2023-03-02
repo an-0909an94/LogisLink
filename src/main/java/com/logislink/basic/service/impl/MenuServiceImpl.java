@@ -40,5 +40,13 @@ public class MenuServiceImpl implements MenuService {
 		// TODO Auto-generated method stub
 		menuDao.updateMenuGuide(map);
 	}
+	@Override
+	public void insertEventLog(Map<String, Object> param){
+		// TODO Auto-generated method stub
+		menuDao.insertEventLog(param);
+	}
+	public List<Map<String, Object>> getMenuException(Map<String, Object> map) {
+		return menuDao.getMenuException(map);
+	}
 
 }
