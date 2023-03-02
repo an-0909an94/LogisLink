@@ -863,6 +863,47 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="gray_box">
+                                    <div class="form-group row mt5">
+                                        <div class="form-group row">
+                                            <label class="col-form-label big-name">정보망</label>
+                                            <div class="col input-group middle-name form-group">
+                                                <div class="input-group input-group-sm row radio-or-checkBox ">
+                                                    <input id="24Cargo" name="24Cargo" type="checkbox" onclick="rpaBtnChk(this)" value="N">
+                                                    <label for="24Cargo" class="label-margin" style="margin-right:43px">
+                                                        <span>24시콜</span>
+                                                    </label>
+                                                </div>
+                                                <div class="input-group input-group-sm row radio-or-checkBox ">
+                                                    <input id="manCargo" name="manCargo" type="checkbox" onclick="rpaBtnChk(this)" value="N">
+                                                    <label for="manCargo" class="label-margin" style="margin-right: 45px">
+                                                        <span>화물맨</span>
+                                                    </label>
+                                                </div>
+                                                <div class="input-group input-group-sm row radio-or-checkBox ">
+                                                    <input id="oneCargo" name="oneCargo" type="checkbox" onclick="rpaBtnChk(this)" value="N">
+                                                    <label for="oneCargo" class="label-margin" style="margin-right: 45px">
+                                                        <span>원콜</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-form-label"></label>
+                                            <div class="input-group input-group-sm col middle-name form-group">
+                                                <input id="24Charge" name="24Charge" type="text" class="form-control form-control-sm" readonly>
+                                            </div>
+                                            <div class="input-group input-group-sm col middle-name form-group">
+                                                <input id="manCharge" name="manCharge" type="text" class="form-control form-control-sm" readonly>
+                                            </div>
+                                            <div class="input-group input-group-sm col middle-name form-group">
+                                                <input id="oneCharge" name="oneCharge" type="text" class="form-control form-control-sm" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="gray_box">
                                     <div class="form-group row mr0">
                                         <div class="col-form-label wd90 big-name-div">
