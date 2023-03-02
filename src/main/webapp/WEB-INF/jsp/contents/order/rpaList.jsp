@@ -18,6 +18,9 @@
         align-items: center;
         flex-wrap: wrap;
     }
+    .form-control {
+        border: 0px solid #bbbbbb;
+    }
 </style>
 
 <div class="header">
@@ -104,12 +107,12 @@
                 <!-- f-wrap -->
                 <div class="k-wrap content">
                     <div class="toolbar row">
-                        <div class="tool_form col">
+                        <div class="tool_form col" style="margin-bottom:15px;">
                             <div class="btn-row" style="float:left;margin-top:12px;">
                                 <div class="tool_group" style ="font-size: 13px">
                                     자동새로고침
                                     <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
-                                    <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;margin-top:8px;">
+                                    <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;">
                                         <span class="marble"></span>
                                         <span class="on">on</span>
                                         <span class="off" >off</span>
