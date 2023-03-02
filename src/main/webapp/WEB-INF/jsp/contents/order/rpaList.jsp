@@ -10,7 +10,13 @@
     .width6_5{
         width: 6.5%;
         align-self: center;
-
+    }
+    .modalEditor {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
     }
 </style>
 
