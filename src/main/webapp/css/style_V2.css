@@ -1532,3 +1532,12 @@ input::placeholder{
 }
 
 
+.pop-layer .label_button input[type="checkbox"] + label:before {
+	top:2px !important;
+}
+
+.pop-layer .label_button input[type="checkbox"] + label:after {
+	top:2px !important;
+}
+
+

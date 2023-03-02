@@ -533,7 +533,7 @@ $(document).ready(function(){
 	});
 	
 	setLeftmenu();
-	
+
 	$(".nav-li").on('click',function(){
 		
 		$(".sub-li-wrap").slideUp(100);		
@@ -740,6 +740,7 @@ function setLeftmenu() {
 	var tutorial2Url;
 	var tutorial3Type;
 	var tutorial3Url;
+
 
 	for(var item, i=0; item=menuList.menu[i]; i++) {
 		if(item.depth.toString() == "1"){

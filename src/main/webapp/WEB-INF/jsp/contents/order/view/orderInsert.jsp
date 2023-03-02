@@ -865,25 +865,25 @@
                                 </div>
 
                                 <div class="gray_box">
-                                    <div class="form-group row mt5">
+                                    <div class="form-group row mr0">
                                         <div class="form-group row">
-                                            <label class="col-form-label big-name">정보망</label>
-                                            <div class="col input-group middle-name form-group">
-                                                <div class="input-group input-group-sm row radio-or-checkBox ">
+                                            <label class="col-form-label middle-name">정보망</label>
+                                            <div class="form-group input-group middle-name col" style="display: flex;flex-direction: row;width: 290px;margin: 0;justify-content: space-around;">
+                                                <div class="label_button input-group input-group-sm col radio-or-checkBox">
                                                     <input id="24Cargo" name="24Cargo" type="checkbox" onclick="rpaBtnChk(this)" value="N">
-                                                    <label for="24Cargo" class="label-margin" style="margin-right:43px">
+                                                    <label for="24Cargo" class="label-margin" style="">
                                                         <span>24시콜</span>
                                                     </label>
                                                 </div>
-                                                <div class="input-group input-group-sm row radio-or-checkBox ">
+                                                <div class="label_button input-group input-group-sm row radio-or-checkBox">
                                                     <input id="manCargo" name="manCargo" type="checkbox" onclick="rpaBtnChk(this)" value="N">
-                                                    <label for="manCargo" class="label-margin" style="margin-right: 45px">
+                                                    <label for="manCargo" class="label-margin" style="">
                                                         <span>화물맨</span>
                                                     </label>
                                                 </div>
-                                                <div class="input-group input-group-sm row radio-or-checkBox ">
+                                                <div class="label_button input-group input-group-sm row radio-or-checkBox">
                                                     <input id="oneCargo" name="oneCargo" type="checkbox" onclick="rpaBtnChk(this)" value="N">
-                                                    <label for="oneCargo" class="label-margin" style="margin-right: 45px">
+                                                    <label for="oneCargo" class="label-margin" style="">
                                                         <span>원콜</span>
                                                     </label>
                                                 </div>

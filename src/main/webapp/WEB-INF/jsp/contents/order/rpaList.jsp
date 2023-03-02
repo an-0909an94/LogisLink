@@ -23,21 +23,20 @@
     <div class="contents">
         <div id="group-list" class="cont-wrapper-page-grid">
             <form id="fSearch" class="date-bnt">
-                <div class="form-group row">
+                <div class="form-group row" style ="margin-bottom: 20px;justify-content: space-between;">
+                    <div class="row" style="display: block">
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>등록일자</strong>
+<%--                        <strong>등록일자</strong>--%>
                         <select class="custom-select col-12" name="searchDate" id="searchDate">
                             <option value="sDate" selected>상차일자</option>
                             <option value="regdate">등록일자</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>　</strong>
                         <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
                     </div>
                     <span style="margin-top: 31px;">~</span>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>　</strong>
                         <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
                     </div>
 
@@ -66,33 +65,30 @@
                         </label>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>담당부서명</strong>
                         <select class="form-control" class="custom-select col-12" id="sDeptId" name="sDeptId">
                             <option>--부서명--</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>배차담당자</strong>
                         <select class="form-control" class="custom-select col-12" id="userId" name="userId"></select>
                     </div>
                     <div class="input-group input-group-sm width6_5 middle-name div-min-col-1">
-                        <strong>검색조건</strong>
                         <select class="custom-select col-12" id="searchColumn" name="searchColumn">
                             <option value="sellCustName">거래처명</option>
                             <option value="orderId">오더ID</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        <strong>　</strong>
                         <input type="text" id="searchValue" name="searchValue" class="form-control form-control-sm searchValue">
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:70px;min-width:70px;">
-                        <strong>　</strong>
-                        <button onclick="goList()" type="button" style="border-radius:4px" class="form-control form-control-sm middle-button-dark"><i class="k-icon k-i-search"></i>검색</button>
+                </div>
+                    <div class="row" style="display: block">
+                    <div class="btn_58 input-group-sm middle-name mr7" style="">
+                        <button onclick="goList()" type="button" style="" class="btn_58 btn_b">검색</button>
                     </div>
-                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="max-width:80px;min-width:80px;">
-                        <strong>　</strong>
-                        <button onclick="searchReset()"  type="button" class="form-control form-control-sm middle-button"><i class="k-icon k-i-reset-sm"></i>초기화</button>
+                    <div class="btn_58 input-group input-group-sm middle-name mr0" style="">
+                        <button onclick="searchReset()"  type="button" class="btn_58 btn_black">초기화</button>
+                    </div>
                     </div>
                 </div>
 
@@ -101,25 +97,12 @@
             <div class="cont-body">
                 <!-- f-wrap -->
                 <div class="k-wrap content">
-                    <div class="toolbar row">
-                        <div class="tool_form col">
-                            <div class="btn-row" style="float:left;margin-top:12px;">
-                                <div class="tool_group" style ="font-size: 13px">
-                                    자동새로고침
-                                    <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
-                                    <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;margin-top:8px;">
-                                        <span class="marble"></span>
-                                        <span class="on">on</span>
-                                        <span class="off" >off</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- /toolbar -->
                     <div class="lookup_table">
                         <!-- table -->
                         <div style="width: 100%">
                             <div style="height:calc(100vh - 235px);" id="grid"></div>
+
+
                         </div>
                     </div>
                 </div>
@@ -167,8 +150,8 @@
         <input type="hidden" name="alloc_charge_YN" id="alloc_charge_YN">
 
         <div class="modalHeader">
-            <div class="form-group row">
-                <label class="col-form-label big-name"></label>
+            <div class="form-group row" style="display: block;">
+               <%--<label class="col-form-label big-name"></label>--%>
                 <div class="input-group input-group-sm" >
                     <table border="1">
                         <tr>
@@ -186,8 +169,8 @@
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <a onclick="outreqModalSubmit()" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i>수정</b></a>
-                <a onclick="outreqModalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
+                <a onclick="outreqModalSubmit()" class="btn_b k-pager-refresh k-button" style="color: #fff">저장</a>
+                <a onclick="outreqModalClose()" class="btn_gray k-pager-refresh k-button" style="color: #fff">닫기</a>
             </div>
         </div>
     </form>
@@ -203,7 +186,7 @@
         </div>
         <div class="editor_btns">
             <div class="padding">
-                <a onclick="outreqModalAlertClose()" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i>확인</b></a>
+                <a onclick="outreqModalAlertClose()" class="k-pager-refresh k-button"><b class="btn-b">확인</b></a>
             </div>
         </div>
     </form>
@@ -242,41 +225,6 @@
         });
 
         goList();
-
-
-        var rCookie = $.cookie("autoRefreshLink");
-        if(rCookie == null) {
-            $.cookie("autoRefreshLink", 30000, {expires:10000,path:"/"});
-            rCookie = $.cookie("autoRefreshLink");
-        }
-
-        if(rCookie != "0") {
-            startInterval();
-            $("#autoRefresh").prop("checked", true);
-        } else {
-            $("#autoRefresh").prop("checked", false);
-        }
-
-        //자동 새로고침 기능 on/off
-        $("#autoRefresh").on("click", function(){
-            if($(this).is(":checked")) {
-                $.cookie("autoRefreshLink", 30000, {expires:9999,path:"/"});
-                startInterval();
-            } else {
-                $.cookie("autoRefreshLink", 0, {expires:9999,path:"/"});
-                stopInterval();
-            }
-        });
-
-        $('#linkCharge').on("input", function() {
-            var linkCharge = /^\d*$/;
-            if(!linkCharge.test($("#linkCharge").val().trim().replace(/,/g, ""))){
-                alert("숫자만 입력하시기 바랍니다.");
-                $("#linkCharge").val("")
-                return;
-            }
-            $("#linkCharge").val(Util.formatNumberInput($("#linkCharge").val().trim()));
-        });
 
     });
 
@@ -324,7 +272,6 @@
                             return " <a class='k-grid-decreaseIndent k-button' style='background-color:#006633; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"00\",\"24Cargo\",\"Y\")' ><span>수정</span></a>" +
                                 " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"09\",\"24Cargo\")' ><span>취소</span></a>";
                         }else{
-
                             return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"00\",\"24Cargo\",\"N\")' ><span>등록</span></a>";
                         }
                     }
