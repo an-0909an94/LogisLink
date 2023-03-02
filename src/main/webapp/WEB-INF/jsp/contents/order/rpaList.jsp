@@ -23,7 +23,7 @@
     <div class="contents">
         <div id="group-list" class="cont-wrapper-page-grid">
             <form id="fSearch" class="date-bnt">
-                <div class="form-group row" style ="margin-bottom: 20px">
+                <div class="form-group row">
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
                         <strong>등록일자</strong>
                         <select class="custom-select col-12" name="searchDate" id="searchDate">
@@ -101,12 +101,25 @@
             <div class="cont-body">
                 <!-- f-wrap -->
                 <div class="k-wrap content">
+                    <div class="toolbar row">
+                        <div class="tool_form col">
+                            <div class="btn-row" style="float:left;margin-top:12px;">
+                                <div class="tool_group" style ="font-size: 13px">
+                                    자동새로고침
+                                    <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
+                                    <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;margin-top:8px;">
+                                        <span class="marble"></span>
+                                        <span class="on">on</span>
+                                        <span class="off" >off</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /toolbar -->
                     <div class="lookup_table">
                         <!-- table -->
                         <div style="width: 100%">
                             <div style="height:calc(100vh - 235px);" id="grid"></div>
-
-
                         </div>
                     </div>
                 </div>
@@ -230,30 +243,70 @@
 
         goList();
 
+
+        var rCookie = $.cookie("autoRefreshLink");
+        if(rCookie == null) {
+            $.cookie("autoRefreshLink", 30000, {expires:10000,path:"/"});
+            rCookie = $.cookie("autoRefreshLink");
+        }
+
+        if(rCookie != "0") {
+            startInterval();
+            $("#autoRefresh").prop("checked", true);
+        } else {
+            $("#autoRefresh").prop("checked", false);
+        }
+
+        //자동 새로고침 기능 on/off
+        $("#autoRefresh").on("click", function(){
+            if($(this).is(":checked")) {
+                $.cookie("autoRefreshLink", 30000, {expires:9999,path:"/"});
+                startInterval();
+            } else {
+                $.cookie("autoRefreshLink", 0, {expires:9999,path:"/"});
+                stopInterval();
+            }
+        });
+
+        $('#linkCharge').on("input", function() {
+            var linkCharge = /^\d*$/;
+            if(!linkCharge.test($("#linkCharge").val().trim().replace(/,/g, ""))){
+                alert("숫자만 입력하시기 바랍니다.");
+                $("#linkCharge").val("")
+                return;
+            }
+            $("#linkCharge").val(Util.formatNumberInput($("#linkCharge").val().trim()));
+        });
+
     });
 
     // 22.07.18 이건욱 그리드 개인화 설정 -> 숫자 형태의 컬럼 타입을 Number로 바꿔 정렬 시 올바르게 정렬 되도록 추가
     var columns = [
-        { field: "number", title: "No", width: 50 },
-        { field: "custName", title: "거래처명", width: 100,
+        { field: "number", title: "No", width: 20 },
+        { field: "custName", title: "거래처명", width: 60,
             attributes: {
                 style: "text-align: left"
             }
         },
-        { field: "sDateDay", title: "상차일자", width: 80 },
-        { field: "orderCarName", title: "요청차종", width: 80 },
-        { field: "orderCarTonName", title: "요청톤수", width:60},
+        { field: "sDateDay", title: "상차일자", width: 40 },
+        { field: "orderCarName", title: "요청차종", width: 40 },
+        { field: "orderCarTonName", title: "요청톤수", width:30},
         {
             title: "24시콜",
             columns: [
-                { field: "", width: 80,
+                { field: "", width: 40, title: "운임",
                     template: function(dataItem) {
                         var msg = statMsg(dataItem.link_stat_03, dataItem.job_stat_03);
                         if(dataItem.link_charge_03 !=="" && dataItem.link_charge_03 !=null){
                             if(msg ==""){
                                 return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_03+"\")' style='color: #0033FF; text-decoration-line: underline'><strong>"+Util.formatNumber(dataItem.link_charge_03) + "<br/>" + msg+"</strong></a>";
                             }else{
-                                return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_03+"\")'>"+Util.formatNumber(dataItem.link_charge_03) + "<br/>" + msg+"</a>";                      }
+                                if(dataItem.link_stat_03 =="D"  && dataItem.job_stat_03 =="F"){
+                                    return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_03+"\")' style='color: #A2A2A2;'><strike>"+Util.formatNumber(dataItem.link_charge_03) + "<br/></strike></a>";
+                                }else{
+                                    return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_03+"\")'>"+Util.formatNumber(dataItem.link_charge_03) + "<br/>" + msg+"</a>";
+                                }
+                            }
                         }else{
                             if(msg ==""){
                                 return "";
@@ -263,7 +316,7 @@
                         }
                     }
                 },
-                { field: "", width: 120,
+                { field: "", width: 55, title: "기능",
                     template: function(dataItem) {
                         if((dataItem.link_charge_03 !=="" && dataItem.link_charge_03 !=null) && (dataItem.link_stat_03!="D" && dataItem.job_stat_03 !="F") && (dataItem.link_stat_03!="I" && dataItem.job_stat_03 !="E")
                             || (dataItem.link_stat_03=="D" && dataItem.job_stat_03 =="E")|| (dataItem.link_stat_03=="I" && dataItem.job_stat_03 =="W")
@@ -271,6 +324,7 @@
                             return " <a class='k-grid-decreaseIndent k-button' style='background-color:#006633; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"00\",\"24Cargo\",\"Y\")' ><span>수정</span></a>" +
                                 " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"09\",\"24Cargo\")' ><span>취소</span></a>";
                         }else{
+
                             return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"00\",\"24Cargo\",\"N\")' ><span>등록</span></a>";
                         }
                     }
@@ -280,14 +334,19 @@
         {
             title: "화물맨",
             columns: [
-                { field: "", width: 80,
+                { field: "", width: 40,  title: "운임",
                     template: function(dataItem) {
                         var msg = statMsg(dataItem.link_stat_21, dataItem.job_stat_21);
                         if(dataItem.link_charge_21 !=="" && dataItem.link_charge_21 !=null){
                             if(msg ==""){
                                 return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_21+"\")' style='color: #0033FF; text-decoration-line: underline' ><strong>"+Util.formatNumber(dataItem.link_charge_21) + "<br/>" + msg+"</strong></a>";
                             }else{
-                                return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_21+"\")'>"+Util.formatNumber(dataItem.link_charge_21) + "<br/>" + msg+"</a>";                      }
+                                if(dataItem.link_stat_21 =="D"  && dataItem.job_stat_21 =="F"){
+                                    return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_21+"\")' style='color: #A2A2A2;'><strike>"+Util.formatNumber(dataItem.link_charge_21) + "<br/></strike></a>";
+                                }else{
+                                    return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_21+"\")'>"+Util.formatNumber(dataItem.link_charge_21) + "<br/>" + msg+"</a>";
+                                }
+                            }
                         }else{
                             if(msg ==""){
                                 return "";
@@ -297,7 +356,7 @@
                         }
                     }
                 },
-                { field: "", width: 120,
+                { field: "", width: 55, title: "기능",
                     template: function(dataItem) {
                         if((dataItem.link_charge_21 !=="" && dataItem.link_charge_21 !=null) && (dataItem.link_stat_21!="D" && dataItem.job_stat_21 !="F") && (dataItem.link_stat_21!="I" && dataItem.job_stat_21 !="E")
                             || (dataItem.link_stat_21=="D" && dataItem.job_stat_21 =="E")|| (dataItem.link_stat_21=="I" && dataItem.job_stat_21 =="W")
@@ -314,14 +373,18 @@
         {
             title: "원콜",
             columns: [
-                { field: "", width: 80,
+                { field: "", width: 40, title: "운임",
                     template: function(dataItem) {
                         var msg = statMsg(dataItem.link_stat_18, dataItem.job_stat_18);
                         if(dataItem.link_charge_18 !=="" && dataItem.link_charge_18 !=null){
                             if(msg ==""){
                                 return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_18+"\")' style='color: #0033FF; text-decoration-line: underline'><strong>"+Util.formatNumber(dataItem.link_charge_18) + "<br/>" + msg+"</strong></a>";
                             }else{
-                                return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_18+"\")'>"+Util.formatNumber(dataItem.link_charge_18) + "<br/>" + msg+"</a>";                      }
+                                if(dataItem.link_stat_18 =="D"  && dataItem.job_stat_18 =="F"){
+                                    return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_18+"\")' style='color: #A2A2A2;'><strike>"+Util.formatNumber(dataItem.link_charge_18) + "<br/></strike></a>";
+                                }else{
+                                    return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_18+"\")'>"+Util.formatNumber(dataItem.link_charge_18) + "<br/>" + msg+"</a>";
+                                }}
                         }else{
                             if(msg ==""){
                                 return "";
@@ -331,7 +394,7 @@
                         }
                     }
                 },
-                { field: "", width: 120,
+                { field: "", width: 55, title: "기능",
                     template: function(dataItem) {
                         if((dataItem.link_charge_18 !=="" && dataItem.link_charge_18 !=null) && (dataItem.link_stat_18!="D" && dataItem.job_stat_18 !="F") && (dataItem.link_stat_18!="I" && dataItem.job_stat_18 !="E")
                             || (dataItem.link_stat_18=="D" && dataItem.job_stat_18 =="E")|| (dataItem.link_stat_18=="I" && dataItem.job_stat_18 =="W")
@@ -345,14 +408,18 @@
                 },
             ]
         },
-        { field: "order_id", title: "오더ID", width: 140},
-        { field: "orderStateName", title: "상태", width: 60 },
+        { field: "order_id", title: "오더ID", width: 65},
+        { field: "orderStateName", title: "상태", width: 30 },
 
-        { field: "eDateDay", title: "하차일자", width: 80 },
-        { field: "chargeType", title: "운임구분", width: 70 },
+        { field: "eDateDay", title: "하차일자", width: 40 },
+        { field: "chargeType", title: "운임구분", width: 40 },
 
-        { field: "goodsWeight", title: "중량", width:60},
-        { field: "goodsName", title: "화물정보", width:90},
+        { field: "goodsWeight", title: "중량", width:20},
+        { field: "goodsName", title: "화물정보", width:90,
+            attributes: {
+                style: "text-align: left"
+            }
+        }
 
     ];
 
@@ -464,7 +531,7 @@
         $("#fOutreqModal")[0].reset();
         $("#afterLinkCharge").empty();
 
-        $("#afterLinkCharge").append(link_charge);
+        $("#afterLinkCharge").append(Util.formatNumber(link_charge));
         $("#orderId").val(order_id);
         $("#orderState").val(orderState);
         $("#link_id").val(link_id);
@@ -494,6 +561,13 @@
     });
 
     function outreqModalSubmit() {
+
+        if($("#linkCharge").val() ==""){
+            alert("금액을 입력해 주세요.");
+            return;
+        }
+
+        $("#linkCharge").val($("#linkCharge").val().replace(/,/g, ""));
 
         $.ajax({
             url: "/contents/order/modLink.do",
@@ -577,5 +651,22 @@
     function outreqModalAlertClose() {
         outreqModalAlert.data("kendoDialog").close();
         $("#fOutreqModalAlert")[0].reset();
+    }
+
+
+    function startInterval() {
+
+        refresh_timer = 31;
+        autoRefresh = setInterval(function(){
+            refresh_timer --;
+            if(refresh_timer < 2) {
+                refresh_timer = 31;
+                goList();
+            }
+        }, 1000);
+    }
+
+    function stopInterval() {
+        clearInterval(autoRefresh);
     }
 </script>

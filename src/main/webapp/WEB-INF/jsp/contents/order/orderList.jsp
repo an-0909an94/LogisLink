@@ -114,6 +114,22 @@
                         <select class="form-control custom-select wd100" id="userId" name="userId"></select>
                     </div>
 
+                    <div class="input-group-sm col-1 middle-name div-min-col-1">
+
+                        <select class="custom-select mr10" id="searchChargeType" name="searchChargeType">
+                            <option value="">운임정보</option>
+                            <option value="01">인수증</option>
+                            <option value="02">선/착불</option>
+                            <option value="03">기사발행</option>
+                        </select>
+
+                        <!--  <input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
+                        <label for="myOrder" class="label-margin">
+                            <span>내거래 보기</span>
+                        </label>-->
+
+                    </div>
+
                     <div class="input-group input-group-sm col radio-or-checkBox ">
                         <input id="notCancel" name="notCancel" type="checkbox" onclick="btnChk(this)" value="N">
                         <label for="notCancel" class="label-margin">
@@ -150,7 +166,6 @@
 	                    </div>
 	
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
-	                        
 	                        <select class="form-control" class="wd90 custom-select col-12" id="listSSido" name="listSSido">
 	                            <option>상차지</option>
 	                        </select>
@@ -162,6 +177,19 @@
 	                            <option>하차지</option>
 	                        </select>
 	                    </div>
+
+                        <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                            <select class="form-control" class="custom-select col-12" id="sCarTon" name="sCarTon">
+                                <option>요청톤수</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+                            <select class="form-control" class="custom-select col-12" id="sCarType" name="sCarType">
+                                <option>요청차종</option>
+                            </select>
+                        </div>
+
 	
 	                    <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
 	                        
@@ -180,6 +208,7 @@
 	                            <option value="N">미확정</option>
 	                        </select>
 	                    </div>
+                        <!--
 	                    <div class="input-group-sm col-1 middle-name div-min-col-1">
 	                        
 	                        <select class="custom-select mr10" id="searchChargeType" name="searchChargeType">
@@ -188,13 +217,14 @@
 	                            <option value="02">선/착불</option>
 	                            <option value="03">기사발행</option>
 	                        </select>
-	                        
+	                        -->
 	                        <!--  <input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
 	                        <label for="myOrder" class="label-margin">
 	                            <span>내거래 보기</span>
 	                        </label>-->
-	                        
+                        <!--
 	                    </div>
+	                    -->
 	                 	<div class="input-group input-group-sm col radio-or-checkBox ">
 	                        <input id="myOrder" name="myOrder" type="checkbox" onclick="btnChk(this)" value="N">
 	                        <label for="myOrder" class="label-margin">
@@ -341,6 +371,9 @@
         Util.setCmmCode("select", "listESido", "SIDO", "", "하차지");
         Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "오더상태");
         Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "배차상태");
+        Util.setCmmCode("select", "sCarTon", "CAR_TON_CD", "", "요청톤수");
+        Util.setCmmCode("select", "sCarType", "CAR_TYPE_CD", "", "요청차종");
+        //Util.getComCode("CAR_TYPE_CD");
 
         $("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
         $("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
@@ -568,7 +601,7 @@
         { field: "linkSettleYn", title: "정보망확정여부", width: 120,
             template: "#if(linkSettleYn == 'Y') {# 확정 #} else {# 미확정 #} #"
         },
-        { field: "deptName", title: " ", width: 160 },
+        { field: "deptName", title: "담당부서", width: 160 },
         { field: "staffName", title: "배차원", width: 80 },
         { field: "regname", title: "최초등록자", width: 110 },
         { field: "orderId", title: "오더ID", width: 160 },
@@ -729,7 +762,7 @@
         // 22.07.15 이건욱 그리드 개인화 설정 -> 그리드 옵션 활성화 여부 처리
         // 추가로 페이지에서 적용되는 이벤트가 있는 경우
         // 그 이벤트 앞에 아래 함수 호출 부분이 적용되어야 함
-        //setOptionActive("B2110", "grid", userId);
+        setOptionActive("B2110", "grid", userId);
 
         var grid = $("#grid").data("kendoGrid");
         grid.bind("change", onChange);
@@ -794,6 +827,37 @@
 
     function form_popup(mode, data) {
         /*20220819 popDiv 수정*/
+
+
+        var id24 = "${userLink.link24Id}";
+        var idOne = "${userLink.one24Id}";
+        var idMan = "${userLink.man24Id}";
+        if(id24 ==""){
+            $("#24Cargo").attr("disabled",true);
+            $("#24Cargo").val("N");
+        }
+        if(idOne ==""){
+            $("#oneCargo").attr("disabled",true);
+            $("#24Cargo").val("N");
+        }
+        if(idMan ==""){
+            $("#manCargo").attr("disabled",true);
+            $("#24Cargo").val("N");
+        }
+
+        $("#24Charge").attr("readonly",true);
+        $("#24Charge").val("");
+        $("input:checkbox[id='24Cargo']").prop("checked", false);
+        $("#24Cargo").val("N");
+        $("#manCharge").attr("readonly",true);
+        $("#manCharge").val("");
+        $("input:checkbox[id='manCargo']").prop("checked", false);
+        $("#manCargo").val("N");
+        $("#oneCharge").attr("readonly",true);
+        $("#oneCharge").val("");
+        $("input:checkbox[id='oneCargo']").prop("checked", false);
+        $("#oneCargo").val("N");
+
 
         if ($('.insert_pop').css('display') == 'none') {
             $('.insert_pop').css('display', 'block');
@@ -861,6 +925,7 @@
             $("#allocC").html("배차추가열기");
             $("#other").html("기타추가열기");
             init();
+
             //09-21 사용자 talk 사용여부 정보 추가
             //userTalkYn();
         }

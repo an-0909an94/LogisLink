@@ -954,7 +954,9 @@ public class OrderController {
 		String id24Type ="";
 		String idManType ="";
 		String idOneType ="";
-		String jobStat ="W";
+		String jobStat24 ="W";
+		String jobStatMan ="W";
+		String jobStatOne ="W";
 		try {
 
 /*
@@ -988,7 +990,7 @@ public class OrderController {
 			} else {
 				OrderId = param.get("orderId").toString();
 			}
-
+			param.put("param_orderID",OrderId);
 			//if(rpaType.equals("D") || rpaType.equals("U")){
 				Map<String, Object> rpaParamID = new HashMap<>();
 				//rpaParamID.put("JOB_STAT",rpaType);
@@ -1014,7 +1016,7 @@ public class OrderController {
 						id24Type ="D";
 						if((map.get("JOB_STAT").toString().equals("F") && map.get("LINK_STAT").toString().equals("D"))||
 								(map.get("JOB_STAT").toString().equals("W") && map.get("LINK_STAT").toString().equals("D"))){
-							jobStat ="C";
+							jobStat24 ="C";
 						}
 					}else{
 						id24Type ="U";
@@ -1026,7 +1028,7 @@ public class OrderController {
 						List<Map<String,Object>> uData = orderService.getLinkRpaJob(rpaParamID);
 
 						if(uData.size()>0){
- 							jobStat ="C";
+							jobStat24 ="C";
 						}
 					}
 
@@ -1043,9 +1045,9 @@ public class OrderController {
 						idManType ="I";
 					}else if(param.get("orderState").toString().equals("09")){
 						idManType ="D";
-						if((!map.get("JOB_STAT").toString().equals("F") && !map.get("LINK_STAT").toString().equals("D"))||
-								(!map.get("JOB_STAT").toString().equals("W") && !map.get("LINK_STAT").toString().equals("D"))){
-							jobStat ="C";
+						if((map.get("JOB_STAT").toString().equals("F") && map.get("LINK_STAT").toString().equals("D"))||
+								(map.get("JOB_STAT").toString().equals("W") && map.get("LINK_STAT").toString().equals("D"))){
+							jobStatMan ="C";
 						}
 					}else{
 						idManType ="U";
@@ -1057,7 +1059,7 @@ public class OrderController {
 						List<Map<String,Object>> uData = orderService.getLinkRpaJob(rpaParamID);
 
 						if(uData.size()>0){
-							jobStat ="C";
+							jobStatMan ="C";
 						}
 					}
 				}else if(map.get("LINK_CD").equals("18")){
@@ -1072,9 +1074,9 @@ public class OrderController {
 						idOneType ="I";
 					}else if(param.get("orderState").toString().equals("09")){
 						idOneType ="D";
-						if((!map.get("JOB_STAT").toString().equals("F") && !map.get("LINK_STAT").toString().equals("D"))||
-								(!map.get("JOB_STAT").toString().equals("W") && !map.get("LINK_STAT").toString().equals("D"))){
-							jobStat ="C";
+						if((map.get("JOB_STAT").toString().equals("F") && map.get("LINK_STAT").toString().equals("D"))||
+								(map.get("JOB_STAT").toString().equals("W") && map.get("LINK_STAT").toString().equals("D"))){
+							jobStatOne ="C";
 						}
 					}else{
 						idOneType ="U";
@@ -1086,7 +1088,7 @@ public class OrderController {
 						List<Map<String,Object>> uData = orderService.getLinkRpaJob(rpaParamID);
 
 						if(uData.size()>0){
-							jobStat ="C";
+							jobStatOne ="C";
 						}
 /*						if((map.get("JOB_STAT").toString().equals("W") && map.get("LINK_STAT").toString().equals("U"))){
 							jobStat ="C";
@@ -1106,7 +1108,7 @@ public class OrderController {
 					id24Type = "I";
 				}
 				if(id24Type.equals("I") || !id24.equals("")) {
-					rpaApiArray.add(rpaJsonData(param, "100341", id24Type,id24,jobStat,userVo.getLink24Id()));
+					rpaApiArray.add(rpaJsonData(param, "100341", id24Type,id24,jobStat24,userVo.getLink24Id()));
 				}
 			}
 			if(param.get("manCargo") !=null && param.get("manCargo").equals("Y")){
@@ -1114,7 +1116,7 @@ public class OrderController {
 					idManType = "I";
 				}
 				if(idManType.equals("I") || !idMan.equals("")) {
-					rpaApiArray.add(rpaJsonData(param, "100342", idManType,idMan,jobStat,userVo.getMan24Id()));
+					rpaApiArray.add(rpaJsonData(param, "100342", idManType,idMan,jobStatMan,userVo.getMan24Id()));
 				}
 			}
 			if(param.get("oneCargo") !=null && param.get("oneCargo").equals("Y")){
@@ -1122,7 +1124,7 @@ public class OrderController {
 					idOneType = "I";
 				}
 				if(idOneType.equals("I") || !idOne.equals("")) {
-					rpaApiArray.add(rpaJsonData(param, "100343", idOneType,idOne,jobStat,userVo.getOne24Id()));
+					rpaApiArray.add(rpaJsonData(param, "100343", idOneType,idOne,jobStatOne,userVo.getOne24Id()));
 				}
 			}
 
@@ -1198,7 +1200,7 @@ public class OrderController {
 						}
 					}
 
-					listMapInsert.add(ParamMap);
+ 					listMapInsert.add(ParamMap);
 				}
 				Map<String, Object> rpaParam = new HashMap<>();
 				rpaParam.put("rapList", listMapInsert);
@@ -1223,7 +1225,7 @@ public class OrderController {
 		resultObj.put("USER_ID",param.get("regId"));
 
 		ParamObj.put("PARAM_SEQ", 1);
-		ParamObj.put("PARAM_VAL", param.get("retId"));
+		ParamObj.put("PARAM_VAL", param.get("param_orderID"));
 		rpaJsonArray.add(ParamObj);
 
 		ParamObj = new JSONObject();

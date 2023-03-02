@@ -1240,6 +1240,7 @@
     <div id="driverProposalView"></div>
     <div id="linkDriverView"></div>
 </div>
+
 <script type="text/javascript">
     var chkUID =true;
     var chkTEST =true;
@@ -1318,6 +1319,7 @@
 
 
     $(document).ready(function(){
+
         Util.setCmmCode("select", "inOutSctn", "IN_OUT_SCTN", "01", "선택하세요");
         Util.setCmmCode("select", "qtyUnitCode", "QTY_UNIT_CD", "", "선택하세요");
         Util.setCmmCode("select", "sWayCode", "WAY_TYPE_CD", "지", "선택하세요");
@@ -1771,11 +1773,14 @@
             buyCarNum.bind("select", changeBuyCarNum);
             buyCarNum.bind("change", searchCarNumSelectTrigger);
         });
+
+        if(!$("#sub-li2610").length > 0) {
+            $("#infomation_net").hide();
+        }
     });
 
     function gridDataSet(data) {
         //init();
-
 
 /*        finishCnt = data.finishCnt;
         taxCnt  = data.taxCnt;*/
@@ -2161,6 +2166,48 @@
         $("#salesTaxinv").val(data.salesTaxinv);
         $("#purchaseFinish").val(data.purchaseFinish);
         $("#purchaseTaxinv").val(data.purchaseTaxinv);*/
+
+/*        if(data.linkStat03 !=''){
+            $("input:checkbox[id='24Cargo']").prop("checked", true);
+            $("#24Cargo").val("Y");
+            $("#24Charge").attr("readonly",false);
+        }
+        if(data.linkStat18 !=''){
+            $("input:checkbox[id='oneCargo']").prop("checked", true);
+            $("#oneCargo").val("Y");
+            $("#oneCharge").attr("readonly",false);
+        }
+        if(data.linkStat21 !=''){
+            $("input:checkbox[id='manCargo']").prop("checked", true);
+            $("#manCargo").val("Y");
+            $("#manCharge").attr("readonly",false);
+        }*/
+        if(data.linkCharge03 ==""){
+            $("#24Charge").val(data.linkCharge03);
+        }else{
+            if(data.linkStat03 =="I"||data.linkStat03 =="U"){
+                $("#24Charge").val(Util.formatNumber(data.linkCharge03));
+            }
+           // $("#24Charge").val(Util.formatNumber(data.linkCharge03));
+            //return Util.formatNumber(dataItem.sellFee)+"";
+        }
+        if(data.linkCharge18 ==""){
+            $("#oneCharge").val(data.linkCharge18);
+        }else{
+            if(data.linkStat18 =="I"||data.linkStat18 =="U"){
+                $("#oneCharge").val(Util.formatNumber(data.linkCharge18));
+            }
+        }
+        if(data.linkCharge21 ==""){
+            $("#manCharge").val(data.linkCharge21);
+        }else{
+            if(data.linkStat21 =="I"||data.linkStat21 =="U"){
+                $("#manCharge").val(Util.formatNumber(data.linkCharge21));
+            }
+           // $("#manCharge").val(Util.formatNumber(data.linkCharge21));
+        }
+
+
     }
 
     //이전거래
@@ -2245,6 +2292,8 @@
         $("#reqAddr").attr("disabled", false);
         $("#reqAddr").next("i").children('img').attr("onclick", "popSearchPost('reqAddr')");
         $("#reqAddrDetail").attr("disabled", false);
+
+
 
 /*        $("select[name=carTypeCode]").removeAttr("onFocus");
         $("select[name=carTypeCode]").removeAttr("onChange");
@@ -2535,6 +2584,11 @@
                 alert("유효한 주소가 아닙니다");
                 return;
             }
+            $("#24Charge").val($("#24Charge").val().replace(/,/g, ""));
+            $("#manCharge").val($("#manCharge").val().replace(/,/g, ""));
+            $("#oneCharge").val($("#oneCharge").val().replace(/,/g, ""));
+
+
             //매입추가비용
             $("#wayPointCharge").val($("#wayPointCharge").val().replace(/,/g, ""));
             $("#stayCharge").val($("#stayCharge").val().replace(/,/g, ""));
@@ -2642,12 +2696,18 @@
                 return false;
             }
 
+            if($('input[name="chargeType"]:checked').val() == "03"){
+                if(!confirm('기사발행의 경우 정보망 등록이 불가능합니다. \n오더를 등록하시겠습니까?')){
+                    return false;
+                }
+            }
             if($("#allocState").val() == "11" && $("#buyCarNum").val()){
                 var orderId = $("#orderId").val();
                 var allocId = $("#allocId").val();
                 if(!confirm('정보망에 접수되어있는 오더입니다. \n정보망 취소를 원하시면 "확인" 버튼을 클릭해주세요.')){
                     return false;
                 }
+
                 // 이벤트 초기화 (submit 동작 중단)
                 e.preventDefault();
                 $.ajax({
@@ -2824,11 +2884,20 @@
     function updateOrderState(state) {
         var orderId = $("#orderId").val();
 
-        $.ajax({
+
+        $("#24Charge").val($("#24Charge").val().replace(/,/g, ""));
+        $("#manCharge").val($("#manCharge").val().replace(/,/g, ""));
+        $("#oneCharge").val($("#oneCharge").val().replace(/,/g, ""));
+
+
+    $.ajax({
             url: "/contents/order/data/orderState.do",
             type: "POST",
             dataType: "json",
-            data: "orderId=" + $("#orderId").val() + "&orderState=" + state,
+            data: "orderId=" + $("#orderId").val() + "&orderState=" + state
+                    + "&24Cargo=" + $("#24Cargo").val() + "&24Charge=" + $("#24Charge").val()
+                    + "&manCargo=" + $("#manCargo").val() + "&manCharge=" + $("#manCharge").val()
+                    + "&oneCargo=" + $("#oneCargo").val() + "&oneCharge=" + $("#oneCharge").val(),
             beforeSend: function () {
                 FunLoadingBarStart();      	//로딩바 생성
             }
@@ -3645,4 +3714,84 @@
         $('#back, #loadingBar').hide();
         $('#back, #loadingBar').remove();
     }
+
+    function rpaBtnChk(id){
+
+        let rpaId = id.id.replace('Cargo', 'Charge');
+        if(id.checked == true){
+            $(id).val("Y");
+            $("#"+rpaId).removeAttr("readonly");
+
+        }else{
+            $(id).val("N");
+            $("#"+rpaId).attr("readonly",true);
+        }
+    }
+
+    $('#24Charge').on("input", function() {
+        var ChargeLink = /^\d*$/;
+        if(!ChargeLink.test($("#24Charge").val().trim().replace(/,/g, ""))){
+            alert("숫자만 입력하시기 바랍니다.");
+            $("#24Charge").val("")
+            return;
+        }
+
+        if($('input[name="allLinkCharge"]:checked').val() == "Y"){
+
+            $("#24Charge").val(Util.formatNumberInput($("#24Charge").val().trim()));
+
+            if($('input[name="manCargo"]:checked').val() == "Y") {
+                $("#manCharge").val(Util.formatNumberInput($("#24Charge").val().trim()));
+            }
+            if($('input[name="oneCargo"]:checked').val() == "Y") {
+                $("#oneCharge").val(Util.formatNumberInput($("#24Charge").val().trim()));
+            }
+
+        }else{
+            $("#24Charge").val(Util.formatNumberInput($("#24Charge").val().trim()));
+        }
+    });
+    $('#manCharge').on("input", function() {
+        var ChargeLink = /^\d*$/;
+        if(!ChargeLink.test($("#manCharge").val().trim().replace(/,/g, ""))){
+            alert("숫자만 입력하시기 바랍니다.");
+            $("#manCharge").val("")
+            return;
+        }
+        if($('input[name="allLinkCharge"]:checked').val() == "Y"){
+
+            $("#manCharge").val(Util.formatNumberInput($("#manCharge").val().trim()));
+
+            if($('input[name="24Cargo"]:checked').val() == "Y") {
+                $("#24Charge").val(Util.formatNumberInput($("#manCharge").val().trim()));
+            }
+            if($('input[name="oneCargo"]:checked').val() == "Y") {
+                $("#oneCharge").val(Util.formatNumberInput($("#manCharge").val().trim()));
+            }
+
+        }else{
+            $("#manCharge").val(Util.formatNumberInput($("#manCharge").val().trim()));
+        }
+    });
+    $('#oneCharge').on("input", function() {
+        var ChargeLink = /^\d*$/;
+        if(!ChargeLink.test($("#oneCharge").val().trim().replace(/,/g, ""))){
+            alert("숫자만 입력하시기 바랍니다.");
+            $("#oneCharge").val("")
+            return;
+        }
+        if($('input[name="allLinkCharge"]:checked').val() == "Y"){
+
+            $("#oneCharge").val(Util.formatNumberInput($("#oneCharge").val().trim()));
+
+            if($('input[name="24Cargo"]:checked').val() == "Y") {
+                $("#24Charge").val(Util.formatNumberInput($("#oneCharge").val().trim()));
+            }
+            if($('input[name="manCargo"]:checked').val() == "Y") {
+                $("#manCharge").val(Util.formatNumberInput($("#oneCharge").val().trim()));
+            }
+        }else{
+            $("#oneCharge").val(Util.formatNumberInput($("#oneCharge").val().trim()));
+        }
+    });
 </script>
