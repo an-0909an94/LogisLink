@@ -103,12 +103,25 @@
             <div class="cont-body">
                 <!-- f-wrap -->
                 <div class="k-wrap content">
+                    <div class="toolbar row">
+                        <div class="tool_form col">
+                            <div class="btn-row" style="float:left;margin-top:12px;">
+                                <div class="tool_group" style ="font-size: 13px">
+                                    자동새로고침
+                                    <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
+                                    <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;margin-top:8px;">
+                                        <span class="marble"></span>
+                                        <span class="on">on</span>
+                                        <span class="off" >off</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /toolbar -->
                     <div class="lookup_table">
                         <!-- table -->
                         <div style="width: 100%">
                             <div style="height:calc(100vh - 235px);" id="grid"></div>
-
-
                         </div>
                     </div>
                 </div>
@@ -232,6 +245,41 @@
 
         goList();
 
+
+        var rCookie = $.cookie("autoRefreshLink");
+        if(rCookie == null) {
+            $.cookie("autoRefreshLink", 30000, {expires:10000,path:"/"});
+            rCookie = $.cookie("autoRefreshLink");
+        }
+
+        if(rCookie != "0") {
+            startInterval();
+            $("#autoRefresh").prop("checked", true);
+        } else {
+            $("#autoRefresh").prop("checked", false);
+        }
+
+        //자동 새로고침 기능 on/off
+        $("#autoRefresh").on("click", function(){
+            if($(this).is(":checked")) {
+                $.cookie("autoRefreshLink", 30000, {expires:9999,path:"/"});
+                startInterval();
+            } else {
+                $.cookie("autoRefreshLink", 0, {expires:9999,path:"/"});
+                stopInterval();
+            }
+        });
+
+        $('#linkCharge').on("input", function() {
+            var linkCharge = /^\d*$/;
+            if(!linkCharge.test($("#linkCharge").val().trim().replace(/,/g, ""))){
+                alert("숫자만 입력하시기 바랍니다.");
+                $("#linkCharge").val("")
+                return;
+            }
+            $("#linkCharge").val(Util.formatNumberInput($("#linkCharge").val().trim()));
+        });
+
     });
 
     // 22.07.18 이건욱 그리드 개인화 설정 -> 숫자 형태의 컬럼 타입을 Number로 바꿔 정렬 시 올바르게 정렬 되도록 추가
@@ -278,6 +326,7 @@
                             return " <a class='k-grid-decreaseIndent k-button' style='background-color:#006633; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"00\",\"24Cargo\",\"Y\")' ><span>수정</span></a>" +
                                 " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"09\",\"24Cargo\")' ><span>취소</span></a>";
                         }else{
+
                             return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"00\",\"24Cargo\",\"N\")' ><span>등록</span></a>";
                         }
                     }
