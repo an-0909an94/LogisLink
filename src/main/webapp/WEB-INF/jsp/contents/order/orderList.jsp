@@ -10,7 +10,6 @@
     .width6_5{
         width: 6.5%;
         align-self: center;
-
     }
 </style>
 
@@ -138,7 +137,7 @@
                     </div>
                 </div>
                 <div class="form-group row" style="justify-content: space-between;">
-	                <div class="row" style="width: 83%;">
+	                <div class="row" style="width: 90%;">
 	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd110">
 	                        
 	                        <select class="custom-select wd110" id="searchColumn" name="searchColumn">
@@ -164,15 +163,15 @@
 	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd190 media190">
 	                        <input type="text" id="driverValue" name="driverValue" class="form-control form-control-sm searchValue" style="width: 100%">
 	                    </div>
-	
+
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-	                        <input type="text" class="form-control form-control-sm searchValue" list="listSSido1" id="listSSido" name="listSSido"/>
+	                        <input type="text" placeholder="상차지" class="form-control form-control-sm searchValue" list="listSSido1" id="listSSido" name="listSSido"/>
 	                        <datalist  id="listSSido1" name="listSSido1" >
 	                        </datalist>
 	                    </div>
 	
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-	                        <input type="text" class="form-control form-control-sm searchValue" list="listESido1" id="listESido" name="listESido"/>
+	                        <input type="text" placeholder="하차지" class="form-control form-control-sm searchValue" list="listESido1" id="listESido" name="listESido"/>
 	                        <datalist   id="listESido1" name="listESido1">
 	                        </datalist>
 	                    </div>
@@ -339,6 +338,7 @@
 </div>
 <!-- 화주변경 Modal End -->
 <script type="text/javascript">
+
     var viewLocation = null;
 
     // 22.07.15 이건욱 그리드 개인화 설정 -> 접속 사용자 아이디 세션 get
@@ -366,8 +366,8 @@
         });
 
 
-        Util.setCmmCode("select", "listSSido1", "SIDO", "", "--상차지--");
-        Util.setCmmCode("select", "listESido1", "SIDO", "", "--하차지--");
+        Util.setCmmCode("datalist", "listSSido1", "SIDO", "", "상차지");
+        Util.setCmmCode("datalist", "listESido1", "SIDO", "", "하차지");
         Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "오더상태");
         Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "배차상태");
         Util.setCmmCode("select", "sCarTon", "CAR_TON_CD", "", "요청톤수");

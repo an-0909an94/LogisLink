@@ -1152,7 +1152,8 @@
 }
 
 .compList .contents{
-	max-width: 1202px;
+	/*max-width: 1202px;*/
+	max-width:100%;
 	margin: unset;
 }
 
