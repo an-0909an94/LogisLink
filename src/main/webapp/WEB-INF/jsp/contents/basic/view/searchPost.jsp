@@ -8,7 +8,7 @@
                 tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
                 <!-- content -->
                 <div class="tab-content k-content k-state-active" id="editor_tabs-1" role="tabpanel"
-                    aria-expanded="true" style="display: block;">
+                    aria-expanded="true" style="display: block;padding-top:6%;">
 	                <form id="fSearch">
 	                    <fieldset>
 	                        <legend style="text-align: center;">주소검색</legend>
@@ -37,8 +37,8 @@
 	                        </div>
 	                    </fieldset>
 	                </form>
-	                <div id="splitter" style="min-height:544px; border: 0;">
-	               		<div id="address_grid" style="min-width:680px; "></div>
+					<div id="splitter" style="border: 0; min-height: calc(50vw - 150px);display: flex;justify-content: center;">
+	               		<div id="address_grid" style="max-width: calc(100vw - 30px); height: auto"></div>
 	               	</div>
                     <!-- editor -->
                 </div>

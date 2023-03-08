@@ -916,7 +916,7 @@
 }
 
 .pop-layer .radio-or-checkBox input[type="checkbox"] + label:before{
-	top: 4px;	
+	top: 4px;
 }
 
 .pop-layer .radio-or-checkBox input[type="checkbox"]:checked + label:after{
@@ -947,6 +947,9 @@
 
 .pop-layer .btn_b,
 .pop-layer .btn_black{
+	color: #fff;
+}
+.pop-layer .btn_b:hover{
 	color: #fff;
 }
 
@@ -1161,7 +1164,8 @@
 }
 
 .compList .contents{
-	max-width: 1202px;
+	/*max-width: 1202px;*/
+	max-width:100%;
 	margin: unset;
 }
 
@@ -1628,18 +1632,6 @@ legend{
 } 
 
 .omsCustAddrList_top{
-	position: fixed;
-	width: 480px;
-	z-index:999;
-	background-color: #fff;
-	padding: 20px 0 17px 0;
-	border-bottom: 1px solid #dcdcdc;
-	display: flex;
-	justify-content: space-between;
-}
-
-/* 운송사 상세 */
-.omsCustList_top{
 	position: fixed;
 	width: 480px;
 	z-index:999;
