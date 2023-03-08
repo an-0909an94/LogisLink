@@ -868,7 +868,7 @@ function getPopup(){
 						s+= "	</div>"
 						s+= "</div>"
 						s+= "<div class=\"form-group row\">";
-						s+= "	<label class=\"col-form-label modal-big-name\">내용</label>"
+						s+= "	<label class=\"col-form-label modal-big-name\" style=\"width: 48px !important; \">내용</label>"
 						s+= "	<div class=\"input-group input-group-sm col middle-name form-group\">"
 						s+= "		<textarea rows=\"16\" class=\"form-control form-control-sm textarea\" style=\"width: 100% !important; \">";
 						s+= item.content;
