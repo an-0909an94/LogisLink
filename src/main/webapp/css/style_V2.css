@@ -83,6 +83,10 @@
 	width: 240px !important;
 }
 
+.wd250{
+	width: 250px !important;
+}
+
 .wd260{
 	width: 260px !important;
 }
@@ -1624,6 +1628,18 @@ legend{
 } 
 
 .omsCustAddrList_top{
+	position: fixed;
+	width: 480px;
+	z-index:999;
+	background-color: #fff;
+	padding: 20px 0 17px 0;
+	border-bottom: 1px solid #dcdcdc;
+	display: flex;
+	justify-content: space-between;
+}
+
+/* 운송사 상세 */
+.omsCustList_top{
 	position: fixed;
 	width: 480px;
 	z-index:999;

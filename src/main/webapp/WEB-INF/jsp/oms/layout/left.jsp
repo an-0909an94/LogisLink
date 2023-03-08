@@ -167,130 +167,133 @@
 	    <input type="hidden" name="defaultSLat" id="defaultSLat">
 	    <input type="hidden" name="defaultSLon" id="defaultSLon">
 		<div class="modalHeader">
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name" style="align-self: flex-end;">운송사</label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
+            <div class="form-group row gray_box" style="margin-bottom: 0.225rem">
+                <label class="col-form-label modal-big-name">운송사</label>
+                <div class="input-group input-group-sm wd190 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
                 <strong>거래처명</strong>
                     <input style="width: 100%;" name="defaultBuyCustName" id="defaultBuyCustName" type="text">
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
+                <div class="input-group input-group-sm wd90 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
                 <strong>담당자</strong>
                     <input style="width: 100%;" name="defaultBuyStaff" id="defaultBuyStaff" type="text">
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
+                <div class="input-group input-group-sm wd110 middle-name form-group" style="text-align: left; margin-bottom: 0;">
                 	<strong>요청사항</strong>
                     <input type="text" id="defaultReqMemo" name="defaultReqMemo" class="form-control form-control-sm">
                 </div>
             </div>
             
-			<div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name" style="align-self: flex-end;">상차지</label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
+			<div class="form-group row gray_box">
+                <label class="col-form-label modal-big-name">상차지</label>
+                <div class="input-group input-group-sm wd190 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
                 	<strong>상차지명</strong>
                     <input style="width: 100%;" name="defaultSComName" id="defaultSComName" type="text">
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
+                <div class="input-group input-group-sm wd90 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
                 	<strong>담당자</strong>
                     <input type="text" id="defaultSStaff" name="defaultSStaff" class="form-control form-control-sm">
                 </div>
+            	<div class="input-group input-group-sm wd110 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                <strong>연락처</strong>
+	                    <input type="text" id="defaultSTel" name="defaultSTel" class="form-control form-control-sm" maxlength="13">
+                </div>
+				<div class="form-group row mt5">
+	                <label class="col-form-label modal-big-name"></label>
+	                <div class="input-group input-group-sm wd290 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                	<strong>주소</strong>
+						<div class="textBox-in-icon">
+							<input id="defaultSAddr" name="defaultSAddr" type="text" class="form-control form-control-sm" readonly="readonly">
+							<i id="iDefaultSAddr"><img src="/images/icon/icon_search.png"></i>
+						</div> 
+	                </div>
+	                <div class="input-group input-group-sm wd110 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                <strong>상세주소</strong>
+	                    <input type="text" id="defaultSAddrDetail" name="defaultSAddrDetail" class="form-control form-control-sm">
+	                </div>
+	            </div>
+				<div class="form-group row mt5">
+	                <label class="col-form-label modal-big-name"></label>
+	                
+	                <div class="input-group input-group-sm wd290 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                <strong>메모</strong>
+	                    <input type="text" id="defaultSMemo" name="defaultSMemo" class="form-control form-control-sm">
+	                </div>
+	            </div>
             </div>
-			<div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name"></label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                	<strong>주소</strong>
-					<div class="textBox-in-icon">
-						<input id="defaultSAddr" name="defaultSAddr" type="text" class="form-control form-control-sm" readonly="readonly">
-						<i id="iDefaultSAddr" style="right: -2.3%;"><img src="/images/icon/search.png"></i>
-					</div> 
-                </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                <strong>상세주소</strong>
-                    <input type="text" id="defaultSAddrDetail" name="defaultSAddrDetail" class="form-control form-control-sm">
-                </div>
-            </div>
-			<div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name"></label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                <strong>연락처</strong>
-                    <input type="text" id="defaultSTel" name="defaultSTel" class="form-control form-control-sm" maxlength="13">
-                </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                <strong>메모</strong>
-                    <input type="text" id="defaultSMemo" name="defaultSMemo" class="form-control form-control-sm">
-                </div>
-            </div>
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name" style="align-self: flex-end;">화물</label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
+            
+            <div class="form-group row gray_box">
+                <label class="col-form-label modal-big-name">화물</label>
+                <div class="input-group input-group-sm wd210 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
                 	<strong>요청차종</strong>
                     <select class="custom-select col-12" id="defaultCarTypeCode" name="defaultCarTypeCode"></select>
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
+                <div class="input-group input-group-sm wd190 middle-name form-group" style="text-align: left; margin-bottom: 0;">
                 	<strong>요청톤수</strong>
                     <select class="custom-select col-12" id="defaultCarTonCode" name="defaultCarTonCode"></select>
                 </div>
-            </div>
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name"></label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                	<strong>화물정보</strong>
-                    <input type="text" class="form-control form-control-sm" id="defaultGoodsName" name="defaultGoodsName">
-                </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                	<strong>중량(ton)</strong>
-                    <input type="text" class="form-control form-control-sm" id="defaultGoodsWeight" name="defaultGoodsWeight">
-                </div>
-            </div>
             
-            
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name"></label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                	<strong class="required">수출입구분</strong>
-                    <select id="defaultInOutSctn" name="defaultInOutSctn" class="custom-select col-12" required></select>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                	<strong class="required">운송유형</strong>
-                    <select class="custom-select col-12" id="defaultTruckTypeCode" name="defaultTruckTypeCode" required></select>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                	<strong>운송품목</strong>
-                    <select class="custom-select col-12" id="defaultItemCode" name="defaultItemCode"></select>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
+	            <div class="form-group row mt5">
+	                <label class="col-form-label modal-big-name"></label>
+	                <div class="input-group input-group-sm wd210 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                	<strong>화물정보</strong>
+	                    <input type="text" class="form-control form-control-sm" id="defaultGoodsName" name="defaultGoodsName">
+	                </div>
+	                <div class="input-group input-group-sm wd190 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                	<strong>중량(ton)</strong>
+	                    <input type="text" class="form-control form-control-sm" id="defaultGoodsWeight" name="defaultGoodsWeight">
+	                </div>
+	            </div>
+	            
+	            
+	            <div class="form-group row mt5">
+	                <label class="col-form-label modal-big-name"></label>
+	                <div class="input-group input-group-sm wd100 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                	<strong class="required">수출입구분</strong>
+	                    <select id="defaultInOutSctn" name="defaultInOutSctn" class="custom-select col-12" required></select>
+	                    <div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	                <div class="input-group input-group-sm wd100 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                	<strong class="required">운송유형</strong>
+	                    <select class="custom-select col-12" id="defaultTruckTypeCode" name="defaultTruckTypeCode" required></select>
+	                    <div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	
+	                <div class="input-group input-group-sm wd190 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                	<strong>운송품목</strong>
+	                    <select class="custom-select col-12" id="defaultItemCode" name="defaultItemCode"></select>
+	                    <div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	            </div>
+	            
+	            <div class="form-group row mt5">
+	                <label class="col-form-label modal-big-name"></label>
+	                <div class="input-group input-group-sm wd210 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                	<strong class="required">상차방법</strong>
+	                	<select class="custom-select col-12" id="defaultSWayCode"name="defaultSWayCode" required></select>
+	                	<div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	                <div class="input-group input-group-sm wd190 middle-name form-group" style="text-align: left; margin-bottom: 0;">
+	                	<strong class="required">하차방법</strong>
+	                    <select class="custom-select col-12" id="defaultEWayCode"name="defaultEWayCode" required></select>
+	                    <div style="position: absolute;" class="help-block with-errors"></div>
+	                </div>
+	            </div>
             </div>
-            
-            <div class="form-group row" style="margin-bottom: 0.225rem">
-                <label class="col-form-label modal-big-name"></label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                	<strong class="required">상차방법</strong>
-                	<select class="custom-select col-12" id="defaultSWayCode"name="defaultSWayCode" required></select>
-                	<div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
-                	<strong class="required">하차방법</strong>
-                    <select class="custom-select col-12" id="defaultEWayCode"name="defaultEWayCode" required></select>
-                    <div style="position: absolute;" class="help-block with-errors"></div>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-form-label modal-big-name" style="align-self: flex-end;">배차</label>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
+            <div class="form-group row gray_box">
+                <label class="col-form-label modal-big-name">배차</label>
+                <div class="input-group input-group-sm wd210 mr10 middle-name form-group" style="text-align: left; margin-bottom: 0;">
                 	<strong>지불운임</strong>
                     <input type="text" class="form-control form-control-sm" id="defaultBuyCharge" name="defaultBuyCharge">
                 </div>
-                <div class="input-group input-group-sm col middle-name form-group" style="text-align: left; margin-bottom: 0;">
+                <div class="input-group input-group-sm wd190 middle-name form-group" style="text-align: left; margin-bottom: 0;">
                 	<strong>차주확인사항</strong>
                     <input type="text" class="form-control form-control-sm" id="defaultDriverMemo" name="defaultDriverMemo">
                 </div>
             </div>
-			<div class="editor_btns">
+			<div class="editor_btns" style="padding-top: 15px;">
 				<div class="padding">
-			        <button type="submit" class="k-pager-refresh k-button"><strong><b id="codeBtnSave" class="btn-b"><i class="k-icon k-i-check"></i>저장</b></strong></button>
-			        <button type="button" onclick="userOptionModalClose()" class="k-pager-refresh k-button"><strong><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></strong></button>
+			        <button type="submit" class="k-pager-refresh k-button btn_b"><strong><b id="codeBtnSave" class="btn-b">저장</b></strong></button>
+			        <button type="button" onclick="userOptionModalClose()" class="k-pager-refresh k-button"><strong><b class="btn-g">닫기</b></strong></button>
 		        </div>
 	        </div>
 		</div>
@@ -441,8 +444,7 @@ $(document).ready(function(){
 	userOptionModal = $("#divUserOption");
 	
 	userOptionModal.kendoDialog({
-		width: "860px",
-		height: "708px",
+		width: "560px",
 		visible: false,
 		title: "업무 초기값 설정",
 		closable: true,

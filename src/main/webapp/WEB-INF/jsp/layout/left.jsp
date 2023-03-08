@@ -97,7 +97,8 @@
                 </div>
                 <div class="input-group input-group-sm wd90 mt0 middle-name form-group" style="text-align: left;">
                 <strong>요청사항</strong>
-                    <input style="width: 100%;" name="defaultReqStaff2" id="defaultReqStaff2" type="text">
+                    <!--<input style="width: 100%;" name="defaultReqStaff2" id="defaultReqStaff2" type="text">-->
+                    <input type="text" id="defaultReqMemo" name="defaultReqMemo" class="form-control form-control-sm">
                 </div>
             </div>
             
@@ -252,7 +253,7 @@
                     <input type="text" class="wd190 form-control form-control-sm" id="defaultDriverMemo" name="defaultDriverMemo">
                 </div>
             </div>
-			<div class="editor_btns">
+			<div class="editor_btns" style="padding-top: 15px;">
 				<div class="padding">
 			        <button type="submit" class="k-pager-refresh k-button btn_b"><strong><b id="codeBtnSave" class="btn-b">저장</b></strong></button>
 			        <button type="button" onclick="userOptionModalClose()" class="k-pager-refresh k-button"><strong><b class="btn-g">닫기</b></strong></button>
@@ -660,7 +661,7 @@ $(document).ready(function(){
 	userOptionModal = $("#divUserOption");
 	
 	userOptionModal.kendoDialog({
-		width: "600px",
+		width: "548px",
 		//height: "895px",
 		visible: false,
 		title: "업무 초기값 설정",

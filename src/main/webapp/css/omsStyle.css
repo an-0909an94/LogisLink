@@ -431,7 +431,7 @@ fieldset {
 }
 
 div#layer1 {
-    height: 75vh;
+    height: 100vh;
     overflow-y: auto;
 }
 
@@ -842,6 +842,7 @@ a.k-link.k-pager-nav {
     left: calc(100%);
     background: #002b57;
     color: white;
+    display: none;
 }
 
 .insertCloseButton {
@@ -1016,9 +1017,6 @@ a.k-link.k-pager-nav {
 
 .indicatorsGroup .radio-or-checkBox input[type="checkbox"] + label{
 	margin: 0px !important;
-}
-
-.indicatorsGroup .radio-or-checkBox > .label-margin > span{
 }
 
 button.sch-more{
