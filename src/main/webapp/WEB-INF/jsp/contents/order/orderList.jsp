@@ -263,9 +263,9 @@
                                 <div class="btn-row">
                                     <div class="tool_group">
                                         <div class="padding">
-                                            <c:if test="${mainCustId eq sessionScope.userInfo.custId }">
+<%--                                            <c:if test="${mainCustId eq sessionScope.userInfo.custId }">
                                                 <a href="#" class="k-pager-refresh k-button" onclick="openSendLinkPop();"><b class="btn-b">정보망 전송</b></a>
-                                            </c:if>
+                                            </c:if>--%>
                                             <!-- <a href="#" class="k-pager-refresh k-button" onclick="openTalkPop();"><b class="btn-b"><i class="k-icon k-i-email"></i>알림톡 전송</b></a> -->
                                             <a href="#" class="k-pager-refresh k-button" onclick="popOrderViewLocation();"><b class="btn-b">위치관제</b></a>
                                             <a href="#" class="k-pager-refresh k-button" onclick="orderHistory();"><b class="btn-b">수정이력</b></a>
