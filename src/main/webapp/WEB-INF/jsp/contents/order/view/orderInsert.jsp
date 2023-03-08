@@ -448,7 +448,9 @@
                                     <div class="form-group row pt10 pb10 mr0 mt10 bortop">
                                         <input type="hidden" name="orderStopData" id="orderStopData">
                                         <label class="col-form-label big-name">경유지</label>
-                                        
+                                        <div class="col input-group i-name">
+                                            <i style="font-size: large;" id="iStopTxt"></i>
+                                        </div>
                                         <div class="col-3 input-group btn-name">
                                             <a style="margin: 0px" onClick="popOrderStopDetail();" class="k-pager-refresh k-button openCloseBtn">자세히보기</a>
                                         </div>
