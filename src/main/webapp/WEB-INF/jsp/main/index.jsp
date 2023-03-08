@@ -40,6 +40,7 @@ input:focus {outline: none;}
 
 <div class="login_wrap">
 	<div class="login_cont01">
+	
 		<h2>최적의 운송 관리 시스템 로지스링크</h2>
 	</div>
 	

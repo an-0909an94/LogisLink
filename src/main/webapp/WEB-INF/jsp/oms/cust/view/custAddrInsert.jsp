@@ -33,7 +33,7 @@
                             
 	                            <div class="form-group row mr0">
 	                                <label class="col-form-label"></label>
-	                                <div class="input-group input-group-sm wd270 middle-name form-group">
+	                                <div class="input-group input-group-sm wd260 middle-name form-group">
 	                                <strong class="required">주소(검색)</strong>
 	                                    <div class="textBox-in-icon">
 	                                     <input onClick="popSearchPost();" type="text" class="form-control form-control-sm" id="addr" readonly="readonly" required>
