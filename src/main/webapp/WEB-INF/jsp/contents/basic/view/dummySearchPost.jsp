@@ -37,7 +37,7 @@
 	                        </div>
 	                    </fieldset>
 	                </form>
-					<div id="splitter" style="min-height:544px; border: 0;">
+					<div id="splitter" style="min-height:544px; border: 0; display: flex; justify-content: center;">
 						<div id="address_grid" style="max-width: calc(106vw - 120px);"></div>
 	               	</div>
 					<div class="form-group row p30">
