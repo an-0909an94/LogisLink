@@ -64,7 +64,7 @@
 	                                    <input type="text" class="form-control form-control-sm" id="dong" readonly>
 	                                </div>
 	                            </div>
-	                            <div class="form-group row pb30 mt5">
+	                            <div class="form-group row mt5">
 	                                <label class="col-form-label"></label>
 	                                <div class="input-group input-group-sm wd140 middle-name form-group">
 	                                <strong>위도</strong>
