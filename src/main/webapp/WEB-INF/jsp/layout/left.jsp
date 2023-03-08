@@ -487,7 +487,7 @@
 	
 </div>    
 
-<div id="popList"></div>
+<div id="popList" style="width:100% !important;"></div>
 <script type="text/javascript">
 var defaultReqCustName, defaultReqStaff;
 var defaultSComName;
@@ -860,17 +860,17 @@ function getPopup(){
 				for(var item, i=0; item=data.data[i]; i++) {
 					var rCookie = $.cookie("pop" + item.boardSeq);
 					if(rCookie == null) {
-						s+= "<div id=\"pop" + item.boardSeq + "\" style=\"display:scroll;position:absolute;top:0px;left:207px;width:500px;min-height:500px;border:1px solid #333333;background:#ffffff;padding:20px;z-index:1000\">";
+						s+= "<div id=\"pop" + item.boardSeq + "\" style=\"display:scroll;position:absolute;top:16%;left:32%;width:500px;min-height:500px;border:1px solid #333333;background:#ffffff;padding:20px;z-index:1000\">";
 						s+= "<div class=\"form-group row\">";
-						s+= "	<label class=\"col-form-label modal-big-name\">제목</label>"
+						s+= "	<label class=\"col-form-label modal-big-name\" style=\"width: 48px !important; \">제목</label>"
 						s+= "	<div class=\"input-group input-group-sm col middle-name form-group\">"
-						s+= "		<input type=\"text\" class=\"form-control form-control-sm\" value=\"" + item.title + "\">"
+						s+= "		<input type=\"text\" class=\"form-control form-control-sm\" value=\"" + item.title + "\" style=\"width:100%; \">";
 						s+= "	</div>"
 						s+= "</div>"
 						s+= "<div class=\"form-group row\">";
 						s+= "	<label class=\"col-form-label modal-big-name\">내용</label>"
 						s+= "	<div class=\"input-group input-group-sm col middle-name form-group\">"
-						s+= "		<textarea rows=\"16\" class=\"form-control form-control-sm textarea\">"
+						s+= "		<textarea rows=\"16\" class=\"form-control form-control-sm textarea\" style=\"width: 100% !important; \">";
 						s+= item.content;
 						s+= "		</textarea>";
 						s+= "	</div>";
@@ -889,7 +889,7 @@ function getPopup(){
 							}
 						}
 						s+= "<div style=\"width:70px;margin:10px auto;\">"
-						s+= "<button type=\"button\" onClick=\"popClose(" + item.boardSeq + ")\" style=\"border-radius:4px\" class=\"form-control form-control-sm middle-button-dark\"><i class=\"k-icon k-i-check\"></i>읽음</button>"
+						s+= "<button type=\"button\" onClick=\"popClose(" + item.boardSeq + ")\" style=\"border-radius:4px\" class=\"form-control form-control-sm middle-button-dark\">읽음</button>"
 						s+= "</div>"
 						s+= "</div>";
 					}
