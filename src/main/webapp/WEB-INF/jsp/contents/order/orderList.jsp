@@ -138,7 +138,7 @@
                     </div>
                 </div>
                 <div class="form-group row" style="justify-content: space-between;">
-	                <div class="row" style="width: 83%;">
+	                <div class="row" style="width: 90%;">
 	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd110">
 	                        
 	                        <select class="custom-select wd110" id="searchColumn" name="searchColumn">
