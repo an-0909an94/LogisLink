@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="stylesheet" type="text/css" href="/css/style_V2.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
 <div class="pop-layer">
     <div class="editor_wrap pop-layer" id="layer1">
         <!-- wrap -->
-        <div class="k-tabstrip-wrapper">
+        <div class="k-layout-wrapper">
             <div id="editor_tabs" class="tabs_wrap k-widget k-tabstrip k-floatwrap k-tabstrip-top" data-role="tabstrip"
                 tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
                 <!-- content -->
@@ -90,8 +91,8 @@
                         </form>
                         <div class="editor_btns pb30" style="text-align:right;">
                         	<div class="padding">
-						        <a onclick="javascript:addData();" class="k-pager-refresh k-button"><b id="btn_add" class="btn-b"><i class="k-icon k-i-plus"></i>추가</b></a>
-						        <a onclick="javascript:removeData();" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-delete"></i>삭제</b></a>
+						        <a onclick="javascript:addData();" class="btn_b k-pager-refresh k-button"><b id="btn_add" class="btn-b">추가</b></a>
+						        <a onclick="javascript:removeData();" class="k-pager-refresh k-button"><b class="btn-b">삭제</b></a>
 					        </div>
 					    </div>
                        	<div id="gridPop" style="min-width:818px; height: 387px;"></div>
@@ -105,7 +106,7 @@
 
 <script type="text/x-kendo-template" id="template">
 	<div class="toolbar row" >
-		<a class="k-pager-refresh k-button btn-s" onClick="saveData()"><i class="k-icon k-i-check"></i>등록</a>
+		<a class="btn_b k-pager-refresh k-button" onClick="saveData()">등록</a>
 	</div>
 </script>
 
