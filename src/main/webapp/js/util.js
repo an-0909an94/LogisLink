@@ -168,7 +168,7 @@ var Util = {
 				success: function(data){
 					$("#" + id).empty();
 					var s = "";
-					if(type == "select"){
+					if(type == "select" || type == "datalist" ){
 						if(dftTxt != "") {
 							s += "<option value=\"\" >" + dftTxt + "</option>";
 						}

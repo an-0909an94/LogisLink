@@ -12,6 +12,56 @@
         align-self: center;
 
     }
+    fieldset {
+        border: 1px solid blue;
+        width: 360px;
+        border-radius: 5px;
+    }
+
+    legend, label{
+        color: blue;
+        font-size: 24px;
+        font-family: sans-serif;
+    }
+
+    input {
+        font-size: 18px;
+        padding: 5px;
+        height: 35px;
+        width: 350px;
+        border: 1px solid blue;
+        outline: none;
+        border-radius: 5px;
+        color: blue;
+        /*   border-bottom: none; */
+    }
+    datalist {
+        position: relative;
+        background-color: white;
+        border: 1px solid blue;
+        border-radius: 0 0 5px 5px;
+        border-top: none;
+        font-family: sans-serif;
+        width: 350px;
+        padding: 5px;
+        max-height: 10rem;
+        overflow-y: auto
+
+    }
+
+    option {
+        background-color: white;
+        padding: 4px;
+        color: blue;
+        margin-bottom: 1px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    option:hover,  .active{
+        background-color: lightblue;
+    }
+
 </style>
 
 <div class="insert_pop" style="display: none;">
@@ -138,7 +188,7 @@
                     </div>
                 </div>
                 <div class="form-group row" style="justify-content: space-between;">
-	                <div class="row" style="width: 83%;">
+	                <div class="row" style="width: 90%;">
 	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd110">
 	                        
 	                        <select class="custom-select wd110" id="searchColumn" name="searchColumn">
@@ -164,18 +214,17 @@
 	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd190 media190">
 	                        <input type="text" id="driverValue" name="driverValue" class="form-control form-control-sm searchValue" style="width: 100%">
 	                    </div>
-	
-	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
-	                        <select class="form-control" class="wd90 custom-select col-12" id="listSSido" name="listSSido">
-	                            <option>상차지</option>
-	                        </select>
+
+	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                        <input type="text" placeholder="상차지" class="form-control form-control-sm searchValue" list="listSSido1" id="listSSido" name="listSSido"/>
+	                        <datalist id="listSSido1" name="listSSido1" role="listbox">
+	                        </datalist>
 	                    </div>
 	
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-	                        
-	                        <select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
-	                            <option>하차지</option>
-	                        </select>
+	                        <input type="text" placeholder="하차지" class="form-control form-control-sm searchValue" list="listESido1" id="listESido" name="listESido"/>
+	                        <datalist id="listESido1" name="listESido1" role="listbox">
+	                        </datalist>
 	                    </div>
 
                         <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
@@ -340,6 +389,9 @@
 </div>
 <!-- 화주변경 Modal End -->
 <script type="text/javascript">
+
+
+
     var viewLocation = null;
 
     // 22.07.15 이건욱 그리드 개인화 설정 -> 접속 사용자 아이디 세션 get
@@ -366,9 +418,8 @@
             $("#grid").data("kendoGrid").resize();
         });
 
-
-        Util.setCmmCode("select", "listSSido", "SIDO", "", "상차지");
-        Util.setCmmCode("select", "listESido", "SIDO", "", "하차지");
+        Util.setCmmCode("datalist", "listSSido1", "SIDO", "", "--상차지--");
+        Util.setCmmCode("datalist", "listESido1", "SIDO", "", "--하차지--");
         Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "오더상태");
         Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "배차상태");
         Util.setCmmCode("select", "sCarTon", "CAR_TON_CD", "", "요청톤수");

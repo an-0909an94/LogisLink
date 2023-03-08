@@ -1103,7 +1103,7 @@ public class OrderController {
 			userParam.put("USER_ID",login.getUserId());
 			UserVO userVo = userService.getUserLinkInfo(userParam);
 
-			if(param.get("24Cargo") !=null && param.get("24Cargo").equals("Y")){
+			if(param.get("24Cargo") !=null && param.get("24Cargo").equals("Y") && param.get("24Charge") !=null && !param.get("24Charge").toString().equals("")){
 				if(id24Type.equals("")){
 					id24Type = "I";
 				}
@@ -1111,7 +1111,7 @@ public class OrderController {
 					rpaApiArray.add(rpaJsonData(param, "100341", id24Type,id24,jobStat24,userVo.getLink24Id()));
 				}
 			}
-			if(param.get("manCargo") !=null && param.get("manCargo").equals("Y")){
+			if(param.get("manCargo") !=null && param.get("manCargo").equals("Y") && param.get("manCharge") !=null && !param.get("manCharge").toString().equals("")){
 				if(idManType.equals("")){
 					idManType = "I";
 				}
@@ -1119,7 +1119,7 @@ public class OrderController {
 					rpaApiArray.add(rpaJsonData(param, "100342", idManType,idMan,jobStatMan,userVo.getMan24Id()));
 				}
 			}
-			if(param.get("oneCargo") !=null && param.get("oneCargo").equals("Y")){
+			if(param.get("oneCargo") !=null && param.get("oneCargo").equals("Y") && param.get("oneCharge") !=null && !param.get("oneCharge").toString().equals("")){
 				if(idOneType.equals("")){
 					idOneType = "I";
 				}
@@ -1268,6 +1268,11 @@ public class OrderController {
 		List<RpaVO> list = orderService.getRpaList(param);
 		Map<String,Object> count = orderService.getRpaCnt(param);
 
+		Map<String, Object> userParam = new HashMap<>();
+		userParam.put("USER_ID",login.getUserId());
+		UserVO userVo = userService.getUserLinkInfo(userParam);
+
+		map.put("userLink", userVo);
 
 		map.put("data", list);
 		map.put("total", count.get("retCnt"));

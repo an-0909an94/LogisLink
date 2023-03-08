@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link rel="stylesheet" type="text/css" href="/css/style_V2.css">
 <div class="pop-layer">
     <div class="editor_wrap pop-layer" id="layer1">
         <!-- wrap -->
-        <div class="k-tabstrip-wrapper">
+        <div class="k-popup-wrapper">
             <div id="editor_tabs" class="tabs_wrap k-widget k-tabstrip k-floatwrap k-tabstrip-top" data-role="tabstrip"
                 tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
                 <!-- content -->
@@ -31,13 +32,13 @@
 	                                 <input type="text" class="form-control form-control-sm searchInputBox" id="searchAddress">
 	                             </div>
 	                            <div class="padding">
-	                                <a onclick="goList();" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-zoom"></i>검색</b></a>
+	                                <a onclick="goList();" class="btn_b k-pager-refresh k-button"><b>검색</b></a>
 	                            </div>
 	                        </div>
 	                    </fieldset>
 	                </form>
-	                <div id="splitter" style="min-height:544px; border: 0;">
-	               		<div id="address_grid" style="min-width:680px; "></div>
+					<div id="splitter" style="min-height:544px; border: 0; display: flex; justify-content: center;">
+						<div id="address_grid" style="max-width: calc(106vw - 120px);"></div>
 	               	</div>
 					<div class="form-group row p30">
                     	<input type="hidden" name="orderStopData" id="orderStopData">
@@ -70,9 +71,9 @@ var columns = [
 	{field: "zipNo", title: "zipNo", hidden: true},
 	{field: "jibunAddr", title: "jibunAddr", hidden: true},
 	{field: "roadAddr", title: "roadAddr", hidden: true},
-	{ field: "searchResult", 
-		template: "<span style='font-size:16px;color:\\\#fa4256;letter-spacing:0;float:left;'>#=zipNo#</span><div><span style='display: inline-block;float: left;width: 34px;height: 13px;margin-top: 2px;border: 1px solid \\\#d4e2ef;border-radius: 1px;font-size: 11px;line-height: 16px;color: \\\#008bd3;text-align: center;'>도로명</span><span style=''>#=roadAddr#</span></div><div><span style='display: inline-block;float: left;width: 34px;height: 13px;margin-top: 2px;border: 1px solid \\\#d4e2ef;border-radius: 1px;font-size: 11px;line-height: 16px;color: \\\#008bd3;text-align: center;'>지   번</span><span style=''>#=jibunAddr#</span></div>", title: "검색결과", width: 330 },
-	{ template: "<a class='k-pager-refresh k-button' style='width:\\\56px; height:\\\32px; background:\\\#fff; border-radius:\\\4px; box-shadow:\\\0px 0px 2px 0px;' onclick='selectAddr(this)'><b class='btn-b'><i class='k-icon k-i-check'></i>선택</b></a>", title: "선택", width: 62 }
+	{ field: "searchResult",
+		template: "<span style='font-size:16px;position:relative; top:10px; padding:0 10px;color:\\\#fa4256;letter-spacing:0;float:left;'>#=zipNo#</span><div><span style='display: inline-block;float: left;width: 48px;border: 1px solid \\\#d4e2ef;border-radius: 1px;font-size: 11px;line-height: 16px;color: \\\#008bd3;text-align: center;'>도로명</span><span style='display: flex;justify-content: flex-start;padding-left: 12px;'>#=roadAddr#</span></div><div><span style='display: inline-block;float: left;width: 48px; border: 1px solid \\\#d4e2ef;border-radius: 1px;font-size: 11px;line-height: 16px;color: \\\#008bd3;text-align: center;'>지   번</span><span style='display: flex;justify-content: flex-start;padding-left: 12px;'>#=jibunAddr#</span></div>", title: "검색결과", width: 330 },
+	{ template: "<a class='btn_b k-pager-refresh k-button' style='width:\\\56px; height:\\\32px; background:\\\#fff; border-radius:\\\4px; box-shadow:\\\0px 0px 2px 0px;' onclick='selectAddr(this)'><b style='font-size:12px;'>선택</b></a>", title: "선택", width: 62 }
 ];
 
 var oGrid = null;	
