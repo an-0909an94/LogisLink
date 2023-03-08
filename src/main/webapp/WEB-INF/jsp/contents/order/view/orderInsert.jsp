@@ -867,8 +867,8 @@
                                 <div class="gray_box">
                                     <div class="form-group row mr0">
                                         <div class="form-group row">
-                                            <label class="col-form-label middle-name">정보망</label>
-                                            <div class="form-group input-group middle-name col" style="display: flex;flex-direction: row;width: 290px;margin: 0;justify-content: space-around;">
+                                            <label class="col-form-label big-name">정보망</label>
+                                            <div class="form-group input-group middle-name col" style="display: flex;flex-direction: row;width: 250px;margin: 0;justify-content: space-between;">
                                                 <div class="label_button input-group input-group-sm col radio-or-checkBox">
                                                     <input id="24Cargo" name="24Cargo" type="checkbox" onclick="rpaBtnChk(this)" value="N">
                                                     <label for="24Cargo" class="label-margin" style="">
