@@ -2551,7 +2551,6 @@
 
     $('#f').validator().on('submit', function (e) {
 
-        //return;
 /*        alert(finishCnt + "111111111111111");
         alert(taxCnt + "222222222222");*/
 
@@ -2573,11 +2572,6 @@
         if(!chkUID) {
             e.preventDefault();
             chkUID =true;
-            return;
-        }
-        if($("#sAddr").data("kendoMultiColumnComboBox").value() == "" || $("#eAddr").data("kendoMultiColumnComboBox").value() == ""){
-            e.preventDefault();
-            alert("상,하차지 주소를 입력해 주세요");
             return;
         }
 

@@ -212,7 +212,7 @@
 								<button type="button" id="btnAddDept" class="openCloseBtn">부서추가</button>
 							</c:if>
 						</div>
-						<div class="comp-100 k-wrap content">
+						<div class="k-wrap content">
 							<div class="lookup_table">
 								<div class="tool_btn col-auto">
 									<!-- toolbar -->

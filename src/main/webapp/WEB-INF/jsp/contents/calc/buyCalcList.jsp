@@ -1070,7 +1070,7 @@
             }
         }).data("kendoGrid");
     	
-    	//setOptionActive("C3130", "grid", userId);
+    	setOptionActive("C3130", "grid", userId);
     	
     	grid.thead.on("click", "#orderAllCheck", orderAllCheckHandler);
         grid.table.on("click", ".orderCheck", orderCheckHandler);
