@@ -940,6 +940,9 @@
 .pop-layer .btn_black{
 	color: #fff;
 }
+.pop-layer .btn_b:hover{
+	color: #fff !important;
+}
 
 #distance,#timeTxt{
 	background-color: transparent;

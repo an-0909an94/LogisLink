@@ -38,7 +38,7 @@
 	                    </fieldset>
 	                </form>
 	                <div id="splitter" style="min-height:544px; border: 0;">
-	               		<div id="address_grid" style="min-width:680px; "></div>
+	               		<div id="address_grid" style="max-width: calc(106vw - 120px);"></div>
 	               	</div>
                     <!-- editor -->
                 </div>
