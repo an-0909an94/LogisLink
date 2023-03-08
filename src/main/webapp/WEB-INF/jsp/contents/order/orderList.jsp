@@ -165,17 +165,16 @@
 	                        <input type="text" id="driverValue" name="driverValue" class="form-control form-control-sm searchValue" style="width: 100%">
 	                    </div>
 	
-	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
-	                        <select class="form-control" class="wd90 custom-select col-12" id="listSSido" name="listSSido">
-	                            <option>상차지</option>
-	                        </select>
+	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
+	                        <input type="text" class="form-control form-control-sm searchValue" list="listSSido1" id="listSSido" name="listSSido"/>
+	                        <datalist  id="listSSido1" name="listSSido1" >
+	                        </datalist>
 	                    </div>
 	
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-	                        
-	                        <select class="form-control" class="custom-select col-12" id="listESido" name="listESido">
-	                            <option>하차지</option>
-	                        </select>
+	                        <input type="text" class="form-control form-control-sm searchValue" list="listESido1" id="listESido" name="listESido"/>
+	                        <datalist   id="listESido1" name="listESido1">
+	                        </datalist>
 	                    </div>
 
                         <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
@@ -367,8 +366,8 @@
         });
 
 
-        Util.setCmmCode("select", "listSSido", "SIDO", "", "상차지");
-        Util.setCmmCode("select", "listESido", "SIDO", "", "하차지");
+        Util.setCmmCode("select", "listSSido1", "SIDO", "", "--상차지--");
+        Util.setCmmCode("select", "listESido1", "SIDO", "", "--하차지--");
         Util.setCmmCode("select", "sOrderState", "ORDER_STATE_CD", "", "오더상태");
         Util.setCmmCode("select", "sAllocState", "ALLOC_STATE_CD", "", "배차상태");
         Util.setCmmCode("select", "sCarTon", "CAR_TON_CD", "", "요청톤수");
