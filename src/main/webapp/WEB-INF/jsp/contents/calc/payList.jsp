@@ -964,10 +964,10 @@
     			if (data.result) {
     				// 요약정보 표시
     				var groupCount = 
-            			"<i style=\"color: #000000\">전체 : " 		+ 	Util.nvl(Util.formatNumber(data.data.tCount), 			"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건</i> / " +
-            			"<i style=\"color: #e84524\">미지급금 : " 	+ 	Util.nvl(Util.formatNumber(data.data.tPayableAmt), 		"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i> / " +
+            			"<i style=\"color: #000000\">전체 : " 		+ 	Util.nvl(Util.formatNumber(data.data.tCount), 			"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "건 /</i> " +
+            			"<i style=\"color: #e84524\">미지급금 : " 	+ 	Util.nvl(Util.formatNumber(data.data.tPayableAmt), 		"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 </i><i>/</i> " +
             			"<i style=\"color: #3f75c1\">출금액 : " 		+ 	Util.nvl(Util.formatNumber(data.data.tWithdrawalAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 (" +
-            										"펌뱅킹 : " 		+ 	Util.nvl(Util.formatNumber(data.data.fWithdrawalAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 / " +
+            										"펌뱅킹 : " 		+ 	Util.nvl(Util.formatNumber(data.data.fWithdrawalAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원 <i style=\"color:#333\">/</i> " +
             										"인터넷뱅킹 : "	+ 	Util.nvl(Util.formatNumber(data.data.iWithdrawalAmt), 	"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원)</i>";
             			
     				$("#groupCount").html(groupCount);

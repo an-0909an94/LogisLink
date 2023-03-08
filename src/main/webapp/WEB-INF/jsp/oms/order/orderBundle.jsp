@@ -22,7 +22,7 @@
 							<div class="input-group input-group-sm col middle-name form-group">
 			        			<div class="option-area">
 		       						<p>업로드 파일</p>
-		        					<label for="uploadFile" class="uploadFile btn_58">파일등록</label> 
+		        					<label for="uploadFile" class="uploadFile">파일등록</label> 
 									<input class="upload-name" value="파일을 선택해 주세요." disabled="disabled">
 									<input type="file" id="uploadFile" name="uploadFile" class="upload-hidden"> 
 									<div style="float: right;">

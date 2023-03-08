@@ -112,7 +112,7 @@ $(document).ready(function(){
 	monthPicker.min(new Date(2018, 0));
 	monthPicker.max(new Date(2030, 11));
 	
-	Util.setSelectBox("/contents/basic/data/compDeptList.do", "reqDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn:'Y'}, "deptId", "deptName", "", "--부서명--");
+	Util.setSelectBox("/contents/basic/data/compDeptList.do", "reqDeptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn:'Y'}, "deptId", "deptName", "", "부서명");
 	
 	searchCustName = MultiColumnComboBox.setCustName("s", "02", "${sessionScope.userInfo.deptId}");
 	searchCustName.bind("select", selectSearchCust);

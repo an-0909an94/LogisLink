@@ -20,7 +20,7 @@
 			<div class="input-group input-group-sm wd90 mr10 middle-name form-group">
 				<select class="form-control" class="com-sel" id="s_select" name="select">
 					<option value="ADDR_NAME">주소지명</option>
-					<option value="ADDR">--주소--</option>
+					<option value="ADDR">주소</option>
 				</select> 
 			</div>
 			<div class="input-group input-group-sm col-4 middle-name form-group">

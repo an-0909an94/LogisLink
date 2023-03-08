@@ -11,19 +11,19 @@
 	<div class="contents">
 		<form id="fSearch" method="POST" autocomplete="off" onSubmit="return false;">
 			<div style="display: inline; vertical-align: top;" class="hdr-tit">
-			    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd90">
+			    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="wd100">
 				<span>~</span>
-			    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="wd90">
+			    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="wd100">
 		    	<c:if test="${masterYn eq 'Y'}">
 					<div class="input-group input-group-sm wd90 mr10 middle-name div-min-col-1">
 						<select class="form-control" class="custom-select col-12" id="deptId" name="deptId"></select>
 					</div>
 				</c:if>
-			    <button onclick="goList()" type="button" style="display: inherit;" class="form-control form-control-sm wd90 mr10"><i class="k-icon k-i-search"></i>검색</button>
+			    <button onclick="goList()" type="button" style="display: inherit; position: relative; top: 2px;" class="form-control form-control-sm wd90 mr10 btn_58 btn_b">검색</button>
 			</div>
 			<div style="display: inline;" class="hdr-tit autoRefresh">자동새로고침
 	           	<input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
-				<label for="autoRefresh" class="label_on-off" style="position: absolute;margin: 0px 0px 0px 6px;">
+				<label for="autoRefresh" class="label_on-off" style="position: absolute;margin: 1px 0px 0px 6px;">
 				  <span class="marble"></span>
 				  <span class="on">ON</span>
 				  <span class="off">OFF</span>

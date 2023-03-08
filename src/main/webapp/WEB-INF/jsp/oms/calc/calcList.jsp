@@ -51,11 +51,11 @@
 					<div class="input-group input-group-sm wd90 middle-name">
 					    <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
 					</div>
-					<span>&nbsp;&nbsp;~&nbsp;&nbsp;</span>
+					<span>~</span>
 					<div class="input-group input-group-sm wd90 mr10 middle-name">
 					    <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
 					</div>
-					<div class="input-group input-group-sm wd90 mr10 middle-name">
+					<div class="input-group input-group-sm wd110 mr10 middle-name">
 					    <select class="custom-select col-12" id="sellBuySctn" name="sellBuySctn">
 					        <option value="02" selected="selected">운송/주선사명</option>
 					    </select>
@@ -67,7 +67,7 @@
 	                	<input type="text" name="sSubName" id="sSubName" class="form-control form-control-sm" readonly>
 	                </div>
 					
-					<div class="input-group input-group-sm wd90 mr10 middle-name">
+					<div class="input-group input-group-sm wd140 mr10 middle-name">
 					    <input type="hidden" id="inOutSctn" name="inOutSctn" value="02">
 					    <select class="custom-select col-12" id="sCalcTypeCode" name="calcTypeCode"></select>
 					</div>

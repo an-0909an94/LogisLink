@@ -366,7 +366,7 @@
                         if((dataItem.link_charge_21 !=="" && dataItem.link_charge_21 !=null) && (dataItem.link_stat_21!="D" && dataItem.job_stat_21 !="F") && (dataItem.link_stat_21!="I" && dataItem.job_stat_21 !="E")
                             || (dataItem.link_stat_21=="D" && dataItem.job_stat_21 =="E")|| (dataItem.link_stat_21=="I" && dataItem.job_stat_21 =="W")
                             || (dataItem.link_stat_21=="I" && dataItem.job_stat_21 =="F") || dataItem.link_stat_21=="U"){
-                            return " <a class='k-grid-decreaseIndent k-button' style='background-color:#006633; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_21+"\",\"00\",\"manCargo\",\"Y\")' ><span>수정</span></a>" +
+                            return " <a class='k-grid-decreaseIndent k-button' style='color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_21+"\",\"00\",\"manCargo\",\"Y\")' ><span>수정</span></a>" +
                                 " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_21+"\",\"09\",\"manCargo\")' ><span>취소</span></a>";
                         }else{
                             return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_21+"\",\"00\",\"manCargo\",\"N\")' ><span>등록</span></a>";

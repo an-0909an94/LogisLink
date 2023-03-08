@@ -292,11 +292,11 @@ html .k-grid tr.k-alt:hover {
 }
 
 .insert_pop.block {
-    left: 106px;
+    left: 90px;
     position: absolute;
-    top: calc(25vh - 3px);
-    width: 652px;
-    height: calc(75vh - -3px);
+    top: 0;
+    width: 500px;
+    height: 100vh;
     transition-duration: 1s;
     border: 1px solid #d5d5d5;
     z-index: 110;
@@ -420,9 +420,9 @@ fieldset {
 }
 
 .big-name {
-    color: #b2b9c4;
+    color: #1d54c4;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 14px;
     align-self: center;
 }
 
@@ -1024,4 +1024,22 @@ a.k-link.k-pager-nav {
 button.sch-more{
 	background-color: #1c54c4;
 	color: #fff;
+}
+
+/* 주소지 등록 */
+.textBox-in-icon > i{
+	margin-right: 0px;
+	right: 0px;
+}
+
+.omsOrderLocationList .form-control:focus{
+	color: #fff;
+}
+
+.form-control-sm{
+	padding: 0px;
+}
+
+input{
+	text-indent: 5px;
 }
