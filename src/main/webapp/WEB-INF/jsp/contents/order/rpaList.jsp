@@ -215,6 +215,9 @@
 </div>
 
 <script type="text/javascript">
+	var id24 = "";
+	var idOne = "";
+	var idMan = "";
     var viewLocation = null;
 
     var userId = '${sessionScope.userInfo.userId}';
@@ -323,14 +326,18 @@
                 },
                 { field: "", width: 55, title: "기능",
                     template: function(dataItem) {
-                        if((dataItem.link_charge_03 !=="" && dataItem.link_charge_03 !=null) && (dataItem.link_stat_03!="D" && dataItem.job_stat_03 !="F") && (dataItem.link_stat_03!="I" && dataItem.job_stat_03 !="E")
-                            || (dataItem.link_stat_03=="D" && dataItem.job_stat_03 =="E")|| (dataItem.link_stat_03=="I" && dataItem.job_stat_03 =="W")
-                            || (dataItem.link_stat_03=="I" && dataItem.job_stat_03 =="F") || dataItem.link_stat_03=="U"){
-                            return " <a class='k-grid-decreaseIndent k-button' style='background-color:#006633; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"00\",\"24Cargo\",\"Y\")' ><span>수정</span></a>" +
-                                " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"09\",\"24Cargo\")' ><span>취소</span></a>";
-                        }else{
+                    	if(id24 !="") {
+                            if ((dataItem.link_charge_03 !== "" && dataItem.link_charge_03 != null) && (dataItem.link_stat_03 != "D" && dataItem.job_stat_03 != "F") && (dataItem.link_stat_03 != "I" && dataItem.job_stat_03 != "E")
+                                || (dataItem.link_stat_03 == "D" && dataItem.job_stat_03 == "E") || (dataItem.link_stat_03 == "I" && dataItem.job_stat_03 == "W")
+                                || (dataItem.link_stat_03 == "I" && dataItem.job_stat_03 == "F") || dataItem.link_stat_03 == "U") {
+                                return " <a class='k-grid-decreaseIndent k-button' style='background-color:#006633; color: #fff' onclick='modLink(\"" + dataItem.order_id + "\",\"" + dataItem.link_charge_03 + "\",\"00\",\"24Cargo\",\"Y\")' ><span>수정</span></a>" +
+                                    " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\"" + dataItem.order_id + "\",\"" + dataItem.link_charge_03 + "\",\"09\",\"24Cargo\")' ><span>취소</span></a>";
+                            } else {
 
-                            return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_03+"\",\"00\",\"24Cargo\",\"N\")' ><span>등록</span></a>";
+                                return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\"" + dataItem.order_id + "\",\"" + dataItem.link_charge_03 + "\",\"00\",\"24Cargo\",\"N\")' ><span>등록</span></a>";
+                            }
+                        }else{
+                            return "";
                         }
                     }
                 },
@@ -363,13 +370,17 @@
                 },
                 { field: "", width: 55, title: "기능",
                     template: function(dataItem) {
-                        if((dataItem.link_charge_21 !=="" && dataItem.link_charge_21 !=null) && (dataItem.link_stat_21!="D" && dataItem.job_stat_21 !="F") && (dataItem.link_stat_21!="I" && dataItem.job_stat_21 !="E")
-                            || (dataItem.link_stat_21=="D" && dataItem.job_stat_21 =="E")|| (dataItem.link_stat_21=="I" && dataItem.job_stat_21 =="W")
-                            || (dataItem.link_stat_21=="I" && dataItem.job_stat_21 =="F") || dataItem.link_stat_21=="U"){
-                            return " <a class='k-grid-decreaseIndent k-button' style='color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_21+"\",\"00\",\"manCargo\",\"Y\")' ><span>수정</span></a>" +
-                                " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_21+"\",\"09\",\"manCargo\")' ><span>취소</span></a>";
+                    	if(idMan !="") {
+                            if ((dataItem.link_charge_21 !== "" && dataItem.link_charge_21 != null) && (dataItem.link_stat_21 != "D" && dataItem.job_stat_21 != "F") && (dataItem.link_stat_21 != "I" && dataItem.job_stat_21 != "E")
+                                || (dataItem.link_stat_21 == "D" && dataItem.job_stat_21 == "E") || (dataItem.link_stat_21 == "I" && dataItem.job_stat_21 == "W")
+                                || (dataItem.link_stat_21 == "I" && dataItem.job_stat_21 == "F") || dataItem.link_stat_21 == "U") {
+                                return " <a class='k-grid-decreaseIndent k-button' style='background-color:#006633; color: #fff' onclick='modLink(\"" + dataItem.order_id + "\",\"" + dataItem.link_charge_21 + "\",\"00\",\"manCargo\",\"Y\")' ><span>수정</span></a>" +
+                                    " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\"" + dataItem.order_id + "\",\"" + dataItem.link_charge_21 + "\",\"09\",\"manCargo\")' ><span>취소</span></a>";
+                            } else {
+                                return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\"" + dataItem.order_id + "\",\"" + dataItem.link_charge_21 + "\",\"00\",\"manCargo\",\"N\")' ><span>등록</span></a>";
+                            }
                         }else{
-                            return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_21+"\",\"00\",\"manCargo\",\"N\")' ><span>등록</span></a>";
+                            return "";
                         }
                     }
                 },
@@ -401,13 +412,17 @@
                 },
                 { field: "", width: 55, title: "기능",
                     template: function(dataItem) {
-                        if((dataItem.link_charge_18 !=="" && dataItem.link_charge_18 !=null) && (dataItem.link_stat_18!="D" && dataItem.job_stat_18 !="F") && (dataItem.link_stat_18!="I" && dataItem.job_stat_18 !="E")
-                            || (dataItem.link_stat_18=="D" && dataItem.job_stat_18 =="E")|| (dataItem.link_stat_18=="I" && dataItem.job_stat_18 =="W")
-                            || (dataItem.link_stat_18=="I" && dataItem.job_stat_18 =="F") || dataItem.link_stat_18=="U"){
-                            return " <a class='k-grid-decreaseIndent k-button' style='background-color:#006633; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_18+"\",\"00\",\"oneCargo\",\"Y\")' ><span>수정</span></a>" +
-                                " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_18+"\",\"09\",\"oneCargo\")' ><span>취소</span></a>";
+                    	if(idOne !="") {
+                            if ((dataItem.link_charge_18 !== "" && dataItem.link_charge_18 != null) && (dataItem.link_stat_18 != "D" && dataItem.job_stat_18 != "F") && (dataItem.link_stat_18 != "I" && dataItem.job_stat_18 != "E")
+                                || (dataItem.link_stat_18 == "D" && dataItem.job_stat_18 == "E") || (dataItem.link_stat_18 == "I" && dataItem.job_stat_18 == "W")
+                                || (dataItem.link_stat_18 == "I" && dataItem.job_stat_18 == "F") || dataItem.link_stat_18 == "U") {
+                                return " <a class='k-grid-decreaseIndent k-button' style='background-color:#006633; color: #fff' onclick='modLink(\"" + dataItem.order_id + "\",\"" + dataItem.link_charge_18 + "\",\"00\",\"oneCargo\",\"Y\")' ><span>수정</span></a>" +
+                                    " <a class='k-grid-decreaseIndent k-button' style='background-color: #FF0033; color: #fff' onclick='cancelLink(\"" + dataItem.order_id + "\",\"" + dataItem.link_charge_18 + "\",\"09\",\"oneCargo\")' ><span>취소</span></a>";
+                            } else {
+                                return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\"" + dataItem.order_id + "\",\"" + dataItem.link_charge_18 + "\",\"00\",\"oneCargo\",\"N\")' ><span>등록</span></a>";
+                            }
                         }else{
-                            return "<a class='k-grid-decreaseIndent k-button' style='background-color: #0A8DFF; color: #fff' onclick='modLink(\""+dataItem.order_id+"\",\""+dataItem.link_charge_18+"\",\"00\",\"oneCargo\",\"N\")' ><span>등록</span></a>";
+                            return "";
                         }
                     }
                 },
@@ -448,6 +463,11 @@
                 },
                 schema : {
                     data : function(response) {
+                    	if(response.userLink != null) {
+                            id24 = response.userLink.link24Id;
+                            idOne = response.userLink.one24Id;
+                            idMan = response.userLink.man24Id;
+                        }
                         return response.data;
                     },
                     total : function(response) {
