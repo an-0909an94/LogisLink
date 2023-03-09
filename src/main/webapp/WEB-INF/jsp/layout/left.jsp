@@ -860,7 +860,7 @@ function getPopup(){
 				for(var item, i=0; item=data.data[i]; i++) {
 					var rCookie = $.cookie("pop" + item.boardSeq);
 					if(rCookie == null) {
-						s+= "<div id=\"pop" + item.boardSeq + "\" style=\"display:scroll;position:absolute;top:16%;left:32%;width:500px;min-height:500px;border:1px solid #333333;background:#ffffff;padding:20px;z-index:1000\">";
+						s+= "<div id=\"pop" + item.boardSeq + "\" style=\"display:scroll;position:absolute;top:16%;left:32%;width:500px;border:1px solid #333333;background:#ffffff;padding:20px;z-index:1000\">";
 						s+= "<div class=\"form-group row\">";
 						s+= "	<label class=\"col-form-label modal-big-name\" style=\"width: 48px !important; \">제목</label>"
 						s+= "	<div class=\"input-group input-group-sm col middle-name form-group\">"
