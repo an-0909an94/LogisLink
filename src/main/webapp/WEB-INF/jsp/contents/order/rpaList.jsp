@@ -18,8 +18,11 @@
         align-items: center;
         flex-wrap: wrap;
     }
-    .form-control {
+/*    .form-control {
         border: 0px solid #bbbbbb;
+    }*/
+    .custom-select {
+        border: 1px solid #ddd !important;
     }
 </style>
 

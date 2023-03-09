@@ -15,7 +15,7 @@
                     <form id="f" data-toggle="validator" role="form">
                         <fieldset>
                             <div class="userInsert_top">
-                                <legend id="user_legend">주소지 등록</legend>
+                                <legend id="addr_legend">주소지 등록</legend>
                                 <div class="editor_btns order_editor_btns" style="text-align:center;">
                                     <div class="padding">
                                         <!-- <a onclick="submit" class="k-pager-refresh k-button" id="btn_save"><b class="btn-b"><i class="k-icon k-i-check"></i>저장</b></a> -->

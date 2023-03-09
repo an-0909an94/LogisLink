@@ -35,7 +35,7 @@
                             <fieldset>
                                 <div class="userInsert_top">
                                     <input type="hidden" id="custId" name="custId">
-                                    <legend id="user_legend">거래처 등록</legend>
+                                    <legend id="cust_legend">거래처 등록</legend>
                                     <div class="editor_btns order_editor_btns"
                                          style="text-align:center;">
                                         <div class="padding">

@@ -58,7 +58,7 @@ input:focus {outline: none;}
 		      <form id="f" name="f" method="post">
 			      <div class="f-w">
 			            <div class="id pb20">
-			                <label for="" class="pb5" style="display:block;" >아이디</label>
+			                <label for="" class="pb5" style="display:block; ime-mode:disabled;" >아이디</label>
 			                <input type="text" name="userId" id="userId" placeholder="" oninput="handleOnInput(this)" onkeypress="if(event.which==13){goLogin();}" autofocus style="background-color:#ffffff; filter: zoom: 1; alpha(opacity=20);border:1px solid #797979;-webkit-box-shadow: 0 0 0 1000px #ffffff inset; -webkit-text-fill-color: #000000;">
 			            </div>
 			            <div class="pw pb30">

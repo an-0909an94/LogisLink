@@ -29,7 +29,7 @@
                                             <a onclick="init_popup_close();" class="k-pager-refresh k-button btn_58"><b>닫기</b></a>
                                         </div>
                                     </div>
-                                    <legend id="user_legend">차량 등록</legend>
+                                    <legend id="car_legend">차량 등록</legend>
                                 </div>
                                 <div class="form-group row pt10 pb10 pl8 mt77 gray_box">
                                     <label class="col-form-label modal-big-name">담당부서</label>
