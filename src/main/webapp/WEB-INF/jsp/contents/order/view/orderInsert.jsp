@@ -2576,6 +2576,11 @@
             chkUID =true;
             return;
         }
+        if($("#sAddr").data("kendoMultiColumnComboBox").value() == "" || $("#eAddr").data("kendoMultiColumnComboBox").value() == ""){
+            e.preventDefault();
+            alert("상,하차지 주소를 입력해 주세요");
+            return;
+        }
 
         $("input[name$='Addr']").attr('readonly', true);
         if (e.isDefaultPrevented()) {
