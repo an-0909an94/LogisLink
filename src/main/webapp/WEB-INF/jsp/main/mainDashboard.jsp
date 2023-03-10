@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
+<html>
+<head>
+    <title>LOGISLINK DASHBOARD</title>
+</head>
+<body>
+
 <style>
 
     *{margin: 0px; padding: 0px;}
@@ -290,11 +296,6 @@
     }
 </style>
 
-<html>
-<head>
-    <title>LOGISLINK DASHBOARD</title>
-</head>
-<body>
 <div id="wrap">
     <div class="notice_bg"></div>
     <header>
@@ -737,6 +738,7 @@
         $('.notice_bg').hide();
     }
 
+
     /** 공지사항 노출 (제목, 년.월.일) */
     $.ajax({
         url: '/contents/notice/data/boardList.do',
@@ -763,8 +765,7 @@
     });
 
     /** 전국 유가정보 */
-
-    $.ajax({
+/*    $.ajax({
         url: "/contents/basic/data/getOpinet.do",
         type: "POST",
         dataType: "json",
@@ -780,10 +781,37 @@
         }
     }).fail((xhr, status, error) => {
         console.error(error);
+    });*/
+
+    /** 전국 유가정보 에니메이션 버전 */
+    $.ajax({
+        url: "/contents/basic/data/getOpinet.do",
+        type: "POST",
+        dataType: "json",
+    }).done(response => {
+        if (response.result) {
+            const oilPrices = response.oil.OIL.map(({ PRICE }) => PRICE);
+            $('.all_oil_price').each((index, element) => {
+                const price = oilPrices[index];
+                $(element).attr('data-count', price).text(parseFloat('0').toFixed(2));
+                $({ Counter: 0 }).animate({ Counter: price }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function () {
+                        $(element).text(Math.round(this.Counter * 100) / 100);
+                    }
+                });
+            });
+            console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
+        } else {
+            console.error(response.message);
+        }
+    }).fail((xhr, status, error) => {
+        console.error(error);
     });
 
-    /** 시도 유가정보 */
 
+/*    /!** 시도 유가정보 *!/
     $.ajax({
         url: "/contents/basic/data/getOpinetsido.do",
         type: "POST",
@@ -809,6 +837,51 @@
                 });
             $('.sido_oil_price').each((index, element)=>{
                 $(element).text(oilPrices[index].price);
+            });
+            console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
+        } else {
+            console.error(response.message);
+        }
+    }).fail((xhr, status, error) => {
+        console.error(error);
+    });*/
+
+    /** 시도 유가정보 에니메이션 버전 */
+    $.ajax({
+        url: "/contents/basic/data/getOpinetsido.do",
+        type: "POST",
+        dataType: "json",
+        async:false,
+        data: {
+            sido: "01", // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
+        }
+    }).done(response => {
+        if (response.result) {
+            const oilPrices = response.oil.OIL.filter(item => ["B027", "D047", "K015"].includes(item.PRODCD))
+                .map(({ PRODCD, PRICE }) => {
+                    switch(PRODCD){
+                        case "B027":
+                            return {name: "휘발유", price: PRICE};
+                        case "D047":
+                            return {name: "경유", price: PRICE};
+                        case "K015":
+                            return {name: "LPG", price: PRICE};
+                        default:
+                            return {name: "", price: ""};
+                    }
+                });
+
+            $('.sido_oil_price').each((index, element) => {
+                const { price } = oilPrices[index];
+                $(element).attr('data-count', price).text(parseFloat('0').toFixed(2));
+                $({ Counter: 0 }).animate({ Counter: price }, {
+                    duration: 2000,
+                    easing: 'swing',
+                    step: function () {
+                        $(element).text(Math.round(this.Counter * 100) / 100);
+                    }
+                });
+                $(element).attr('data-count', price.toFixed(2)).text(price.toFixed(2));
             });
             console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
         } else {
