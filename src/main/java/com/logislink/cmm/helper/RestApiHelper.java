@@ -16,19 +16,31 @@ import javax.net.ssl.HttpsURLConnection;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Value;
 
 public class RestApiHelper {
 
     public enum HttpMethodType { POST, GET, DELETE }
 
     private static final String KAKAO_API_SERVER_HOST  = "https://dapi.kakao.com";
-    
+
     private static final String LOAD_ADDRESS_API_HOST = "https://www.juso.go.kr";
+
+    /** OPINET HOST, SERVER_PATH, API_KEY */
+    private static final String OPINET_API_SERVER_HOST  = "https://www.opinet.co.kr";
+
+    private static final String OPINET_API_SERVER_PATH = "/api/avgAllPrice.do";
+
+    private static final String OPINET_SIDO_API_SERVER_PATH = "/api/avgSidoPrice.do";
+
+    private static final String OPINET_API_KEY = "F230224052";
+
+    /** OPEN WEATHER HOST, SERVER_PATH, API_KEY */
+    private static final String OPEN_WEATHER_SERVER_HOST  = "https://apis.data.go.kr";
+
+    private static final String OPEN_WEATHER_SERVER_PATH = "/1360000/VilageFcstInfoService_2.0/getVilageFcst";
+
+    private static final String OPEN_WEATHER_API_KEY = "J1adCp+ITzFJlAIMiw++VB24AbsnphCK4abMRq6oVrQEB50wdOFw7O0JgIWPErxACBM5zXI2HxpwslM2XRfAqA==";
 
     private static final String NICE_DNB_SERVER_HOST = "https://gate.nicednb.com";
     
@@ -41,7 +53,7 @@ public class RestApiHelper {
     private static final String SEARCH_ADDRESS_PATH = "/v2/local/search/address.json";
     
     private static final String LOAD_ADDRESS_PATH = "/addrlink/addrLinkApi.do";
-    
+
     private static final String GCEN_ROUTE_PATH = "/route/api/lbs";
 
     //@Value("#{globalProperties['Globals.NiceDnbAppKey']}")
@@ -58,7 +70,6 @@ public class RestApiHelper {
     public void setAdminKey(final String adminKey) {
         this.adminKey = adminKey;
     }
-
     public String getAdminKey(){
         return this.adminKey;
     }
@@ -71,7 +82,27 @@ public class RestApiHelper {
     public Map<String, String> searchAddress(Map<String, String> map) {
         return request(HttpMethodType.POST, LOAD_ADDRESS_API_HOST, LOAD_ADDRESS_PATH, mapToParams(map));
     }
-    
+
+    /** OPINET (전국 유가최저가 INFO - 휘발유, 경유, LPG) */
+    public Map<String, String> getOpinet(Map<String, String> map) {
+        map.put("out", "json");
+        map.put("code", OPINET_API_KEY);
+        return request(HttpMethodType.GET, OPINET_API_SERVER_HOST, OPINET_API_SERVER_PATH, "?" + mapToParams(map));
+    }
+
+    /** OPINET (시도 유가최저가 INFO - 휘발유, 경유, LPG) */
+    public Map<String, String> getOpinetsido(Map<String, String> map) {
+         // sido 값을 paramMap에 추가
+        map.put("code", OPINET_API_KEY);
+        return request(HttpMethodType.GET, OPINET_API_SERVER_HOST, OPINET_SIDO_API_SERVER_PATH, "?" + mapToParams(map));
+    }
+
+    /** OPENWEATHER (기상청 날씨 정보 / 0~5맑음 / 6~8구름많음 / 9~10흐림 */
+    public Map<String, String> getOpenweather(Map<String, String> map){
+        map.put("serviceKey", OPEN_WEATHER_API_KEY);
+        return request(HttpMethodType.GET, OPEN_WEATHER_SERVER_HOST, OPEN_WEATHER_SERVER_PATH, "?" +mapToParams(map));
+    }
+
     // KAKAO key를 바탕으로 값을 가져오는 Lat, Lon 데이터 Method
     public Map<String, String> getLatLon(Map<String, String> map) {
         return request(HttpMethodType.GET, KAKAO_API_SERVER_HOST, SEARCH_ADDRESS_PATH, "?" + mapToParams(map));

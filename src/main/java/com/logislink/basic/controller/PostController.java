@@ -13,6 +13,7 @@ import com.logislink.basic.vo.AddrVO;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.logislink.basic.service.PostService;
 import com.logislink.cmm.helper.RestApiHelper;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class PostController {
@@ -412,7 +414,7 @@ public class PostController {
 		if(param.get("size") != null) {
 			paramMap.put("size", (String) param.get("size"));
 		}
-		
+
 		apiHelper.setAdminKey(kakaoKey);
 		Map<String, String> res = apiHelper.getLatLon(paramMap);
 		apiHelper.setAdminKey("");
@@ -428,6 +430,75 @@ public class PostController {
 		return "jsonView";
 	}
 
+    /** OPINET 전국유가 최저가 정보 */
+	@PostMapping(value="/contents/basic/data/getOpinet.do")
+	public String getOpinet(HttpServletRequest request, ModelMap modelMap, @RequestParam Map<String, Object> param ) throws Exception {
+		Map<String, String> paramMap = new HashMap<>();
+		Map<String, String> result = apiHelper.getOpinet(paramMap);
+
+		if ("200".equals(result.get("resCode"))) {
+			JSONObject obj = (JSONObject) JSONValue.parse(result.get("result").toString());
+			JSONObject obj1 = (JSONObject) obj.get("RESULT");
+			modelMap.put("result", true);
+			modelMap.put("oil", obj1);
+		} else {
+			modelMap.put("result", false);
+			modelMap.put("oil", null);
+		}
+		return "jsonView";
+	}
+
+	/** OPINET 시도유가 최저가 정보 */
+	@PostMapping(value="/contents/basic/data/getOpinetsido.do")
+	public String getOpinetsido(HttpServletRequest request, ModelMap modelMap, @RequestParam Map<String, Object> param ) throws Exception {
+		Map<String, String> paramMap = new HashMap<>();
+
+		paramMap.put("out", "json");
+		paramMap.put("sido", param.get("sido").toString());
+
+		Map<String, String> result = apiHelper.getOpinetsido(paramMap);
+
+		if ("200".equals(result.get("resCode"))) {
+			JSONObject obj = (JSONObject) JSONValue.parse(result.get("result").toString());
+			JSONObject obj1 = (JSONObject) obj.get("RESULT");
+			modelMap.put("result", true);
+			modelMap.put("oil", obj1);
+		} else {
+			modelMap.put("result", false);
+			modelMap.put("oil", null);
+		}
+		return "jsonView";
+	}
+
+	/** OPEN_WEATHER 기상청 단기예보 (https://www.data.go.kr/iim/api/selectAPIAcountView.do */
+	@PostMapping(value="/contents/basic/data/getOpenweather.do")
+	public String getOpenweather(HttpServletRequest request, ModelMap modelMap, @RequestParam Map<String, Object> param ) throws Exception {
+		Map<String, String> paramMap = new HashMap<>();
+
+		paramMap.put("numOfRows", "1500");
+		paramMap.put("dataType", "json");
+		paramMap.put("base_date", param.get("base_date").toString());
+		paramMap.put("base_time", param.get("base_time").toString());
+		paramMap.put("nx", param.get("nx").toString());
+		paramMap.put("ny", param.get("ny").toString());
+
+		Map<String, String> result = apiHelper.getOpenweather(paramMap);
+
+		if ("200".equals(result.get("resCode"))) {
+			JSONObject obj = (JSONObject) JSONValue.parse(result.get("result").toString());
+			JSONObject response = (JSONObject) obj.get("response");
+			JSONObject body = (JSONObject) response.get("body");
+			JSONObject items = (JSONObject) body.get("items");
+			modelMap.put("result", true);
+			modelMap.put("item", items.get("item"));
+		} else {
+			modelMap.put("result", false);
+			modelMap.put("item", null);
+		}
+		return "jsonView";
+	}
+	
+	
 /*	@PostMapping(value="/contents/basic/data/getLatLon1.do")
 	public String getLatLon1(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
 								@RequestParam Map<String, Object> param ) throws Exception {
