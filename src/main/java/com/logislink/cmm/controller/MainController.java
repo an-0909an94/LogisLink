@@ -65,6 +65,11 @@ public class MainController {
 	public String getJoinPage(HttpServletRequest request, HttpSession session, ModelMap model) {
 		return "main/join";
 	}
+
+	@GetMapping(value="/mainDashboard.do")
+	public String getMainDashboardPage(HttpServletRequest request, HttpSession session, ModelMap model) {
+		return "main/mainDashboard";
+	}
 	
 	@GetMapping(value="/left.do")
 	public String getLeft(HttpServletRequest request, HttpSession session, ModelMap model) {
