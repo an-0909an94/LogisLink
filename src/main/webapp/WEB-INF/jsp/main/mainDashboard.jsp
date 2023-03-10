@@ -599,15 +599,43 @@
                             </tr>
                             <tr>
                                 <td class="color_g">전국평균</td>
-                                <td>1557.3</td>
-                                <td>1782.2</td>
-                                <td>1020.0</td>
+                                <c:forEach var="idx" begin="0" end="4">
+                                    <c:set var="oilType" value="${idx}" />
+                                    <c:choose>
+                                        <c:when test="${idx == 1}">
+                                            <c:set var="oilName" value="휘발유"/>
+                                            <td class="all_oil_price"></td>
+                                        </c:when>
+                                        <c:when test="${idx == 2}">
+                                            <c:set var="oilName" value="경유"/>
+                                            <td class="all_oil_price"></td>
+                                        </c:when>
+                                        <c:when test="${idx == 4}">
+                                            <c:set var="oilName" value="가스부탄"/>
+                                            <td class="all_oil_price"></td>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
                             </tr>
                             <tr>
                                 <td class="color_b">서울평균</td>
-                                <td>1557.3</td>
-                                <td>1782.2</td>
-                                <td>1020.0</td>
+                                <c:forEach var="idx" begin="0" end="4">
+                                    <c:set var="oilType" value="${idx}" />
+                                    <c:choose>
+                                        <c:when test="${idx == 1}">
+                                            <c:set var="oilName" value="휘발유"/>
+                                            <td class="sido_oil_price"></td>
+                                        </c:when>
+                                        <c:when test="${idx == 2}">
+                                            <c:set var="oilName" value="경유"/>
+                                            <td class="sido_oil_price"></td>
+                                        </c:when>
+                                        <c:when test="${idx == 4}">
+                                            <c:set var="oilName" value="가스부탄"/>
+                                            <td class="sido_oil_price"></td>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
                             </tr>
                             </tbody>
                         </table>
@@ -726,6 +754,7 @@
             $('.n-content').each((index, element)=>{
                 $(element).text(data[index].content);
             });
+            console.log(response)
         }else {
             console.error(response.message);
         }
@@ -734,22 +763,23 @@
     });
 
     /** 전국 유가정보 */
+
     $.ajax({
         url: "/contents/basic/data/getOpinet.do",
         type: "POST",
         dataType: "json",
-        data: {
-            // 요청 파라미터
-        },
-        success: function(data) {
-            // 성공적으로 서버에서 응답을 받았을 때 처리하는 로직
-            console.log(data);
-            // 서버에서 받아온 데이터를 사용하여 필요한 로직을 수행
-        },
-        error: function(xhr, status, error) {
-            // 서버에서 응답을 받지 못했을 때 처리하는 로직
-            console.error(xhr, status, error);
+    }).done(response => {
+        if (response.result) {
+            const oilPrices = response.oil.OIL.map(({ PRICE }) => PRICE);
+            $('.all_oil_price').each((index, element)=>{
+                $(element).text(oilPrices[index]);
+            });
+            console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
+        } else {
+            console.error(response.message);
         }
+    }).fail((xhr, status, error) => {
+        console.error(error);
     });
 
     /** 시도 유가정보 */
@@ -760,18 +790,34 @@
         dataType: "json",
         async:false,
         data: {
-            sido: ""  // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
-        },
-        success: function (data) {
-            // 성공적으로 서버에서 응답을 받았을 때 처리하는 로직
-            console.log(data);
-            // 서버에서 받아온 데이터를 사용하여 필요한 로직을 수행
-        },
-        error: function (xhr, status, error) {
-            // 서버에서 응답을 받지 못했을 때 처리하는 로직
-            console.error(xhr, status, error);
+            sido: "01", // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
         }
+    }).done(response => {
+        if (response.result) {
+            const oilPrices = response.oil.OIL.filter(item => ["B027", "D047", "K015"].includes(item.PRODCD))
+                .map(({ PRODCD, PRICE }) => {
+                    switch(PRODCD){
+                        case "B027":
+                            return {name: "휘발유", price: PRICE};
+                        case "D047":
+                            return {name: "경유", price: PRICE};
+                        case "K015":
+                            return {name: "LPG", price: PRICE};
+                        default:
+                            return {name: "", price: ""};
+                    }
+                });
+            $('.sido_oil_price').each((index, element)=>{
+                $(element).text(oilPrices[index].price);
+            });
+            console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
+        } else {
+            console.error(response.message);
+        }
+    }).fail((xhr, status, error) => {
+        console.error(error);
     });
+
     /** 시도 기상청 날씨정보 출력 */
     $.ajax({
         url: "/contents/basic/data/getOpenweather.do",
