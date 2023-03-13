@@ -1201,7 +1201,6 @@
                                         </div>
                                         <div id="driverTelDataDiv" class="input-group input-group-sm col middle-name form-group">
                                             <strong>휴대전화</strong>
-                                            <strong>휴대전화</strong>
                                             <input type="text" id="driverTelData" class="form-control form-control-sm" readonly>
                                         </div>
                                     </div>
@@ -2832,6 +2831,7 @@
 
 
         win.center().open();
+        $(".k-window-actions").toggleClass("action");
     }
 
     function modalClose(){

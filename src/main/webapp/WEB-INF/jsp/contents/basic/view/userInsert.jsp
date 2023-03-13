@@ -196,7 +196,7 @@
 											<label class="col-form-label"></label>
 											<div class="col middle-name">
 												<strong>메모</strong>
-												<textarea rows="4" style="width:100%" class="form-control textarea wd290" id="memo"></textarea>
+												<textarea rows="4" style="width:100%; font-size: 12px; font-family: 'Noto Sans KR', sans-serif;" class="form-control textarea wd290" id="memo"></textarea>
 											</div>
 										</div>
 									</div>
