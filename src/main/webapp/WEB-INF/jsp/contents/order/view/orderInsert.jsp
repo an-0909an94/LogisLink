@@ -2831,7 +2831,7 @@
 
 
         win.center().open();
-        $(".k-window-actions").toggleClass("action");
+
     }
 
     function modalClose(){
