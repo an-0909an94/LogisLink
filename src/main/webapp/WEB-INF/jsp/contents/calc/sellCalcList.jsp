@@ -2038,7 +2038,7 @@
     tranReceiptModal = $("#divTranReceipt");
  	tranReceiptModal.kendoDialog({
  		width: "800px",
- 		height: "600px",
+ 		height: "650px", //기본사이즈 수정
  		visible: false,
  		title: "거래명세서",
  		closable: true,
