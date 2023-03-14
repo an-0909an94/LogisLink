@@ -1029,7 +1029,7 @@
             }
         }).data("kendoGrid");
         
-        setOptionActive("C3120", "grid", userId);
+     //   setOptionActive("C3120", "grid", userId);
         
         grid.thead.on("click", "#orderAllCheck", orderAllCheckHandler);
         grid.table.on("click", ".orderCheck", orderCheckHandler);

@@ -2059,7 +2059,11 @@
             $("#divAllocC").show();
             $("#divAllocD").hide();
             $("#allocButtons").show();
-            $("#changeNewRunButtons").show();
+            if(data.externalFlag =='N'){
+            	$("#changeNewRunButtons").show();
+            }else{
+            	$("#changeNewRunButtons").hide();
+            }
            // changeNewRunButtons
             $("#driverProposal").hide();
             $("#allocC").show();
@@ -2159,6 +2163,8 @@
             $("#driverNameDataDiv").hide();
             $("#driverTelDataDiv").hide();
             $("#carModalBtnDiv").show();
+            
+            $("#changeNewRunButtons").hide();
         }
         //수출입 구분, 운송유형, 차종, 톤수 세팅
 

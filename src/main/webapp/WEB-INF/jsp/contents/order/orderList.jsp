@@ -761,7 +761,7 @@
         // 22.07.15 이건욱 그리드 개인화 설정 -> 그리드 옵션 활성화 여부 처리
         // 추가로 페이지에서 적용되는 이벤트가 있는 경우
         // 그 이벤트 앞에 아래 함수 호출 부분이 적용되어야 함
-        setOptionActive("B2110", "grid", userId);
+       // setOptionActive("B2110", "grid", userId);
 
         var grid = $("#grid").data("kendoGrid");
         grid.bind("change", onChange);
