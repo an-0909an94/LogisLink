@@ -130,7 +130,7 @@
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        width: calc(20vw - 29px);
+        /*width: calc(20vw - 29px);*/
         border: 1px solid #ddd;
     }
     .buseList dd {
