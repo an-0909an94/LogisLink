@@ -128,11 +128,18 @@
     .buseList {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
-        width: 20vw;
-        padding: 0.5vw 1vw;
+        width: calc(20vw - 29px);
         border: 1px solid #ddd;
+    }
+    .buseList dd {
+        padding: 0.5vw 0;
+        margin: 0;
+        text-align: center;
+        border-left: 1px solid #ddd;
+        font-size: 12px;
+        line-height: 21px;
     }
     .editor_btns {
         display: flex;
@@ -143,6 +150,25 @@
     .buseList:last-child{
         padding-bottom:3vw ;
     }
+    .chartGraph{
+        background: #f6f6f6;
+        border-top: 2px solid #434343;
+    }
+    .col_a {
+        width: 58px !important;
+        text-align: center;
+    }
+    .col_b {
+        width: 110px !important;
+    }
+    .col_c {
+        width: 73px !important;
+    }
+    .col_d {
+        width: 112px !important;
+    }
+
+
 </style>
 <div id="priceView" class="editor-warp p-0">
     <div class="modalEditor" id="addCust">
@@ -3922,9 +3948,15 @@
 
                  if(data.result) {
                        htmlData+="<div id=\"indexListAjax\" class='buseBetween'>";
+                        htmlData+="<div class='buseList chartGraph'>";
+                            htmlData+="<dd class='col_a'>" + "체크" + "</dd>";
+                            htmlData+="<dd class='col_b'>" + "차량번호" + "</dd>";
+                            htmlData+="<dd class='col_c'>" + "이름" + "</dd>";
+                            htmlData+="<dd class='col_d'>" + "전화번호" + "</dd>";
+                            htmlData+="</div>"
                 	 for(var i = 0; i< data.newRunCar.length; i++) {
-                			 
-						htmlData+="<div id ="+data.newRunCar[i].DRIVER_ID+" class='buseList'>";
+						    htmlData+="<div id ="+data.newRunCar[i].DRIVER_ID+" class='buseList'>";
+                            htmlData+="<dd class='col_a'>";
 							htmlData+="<input type=\"hidden\" id=\"newRunVehicId\" name=\"newRunVehicId\" value ="+data.newRunCar[i].VEHIC_ID +">";
 							htmlData+="<input type=\"hidden\" id=\"newRunDriverId\" name=\"newRunDriverId\" value ="+data.newRunCar[i].DRIVER_ID +">";
 							htmlData+="<input type=\"hidden\" id=\"newRunCarNum\" name=\"newRunCarNum\" value ="+data.newRunCar[i].CAR_NUM +">";
@@ -3937,9 +3969,10 @@
 							htmlData+="<input type=\"hidden\" id=\"basicAllocId\" name=\"basicAllocId\">";
 							
 							htmlData+="<input type=\"radio\" name=\"newRunOrder\" id=\"newRunOrder\" value="+data.newRunCar[i].DRIVER_ID+">";
-							htmlData+= data.newRunCar[i].CAR_NUM +" | ";
-							htmlData+= data.newRunCar[i].DRIVER_NAME +" | ";
-							htmlData+= data.newRunCar[i].MOBILE;
+                            htmlData+="</dd>"
+							htmlData+="<dd class='col_b'>"+data.newRunCar[i].CAR_NUM+"</dd>";
+							htmlData+="<dd class='col_c'>"+data.newRunCar[i].DRIVER_NAME+"</dd>";
+							htmlData+="<dd class='col_d'>"+data.newRunCar[i].MOBILE+"</dd>";
 						htmlData+="</div>"
      					
      				}
