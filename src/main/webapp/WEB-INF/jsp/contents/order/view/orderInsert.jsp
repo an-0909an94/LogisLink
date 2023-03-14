@@ -122,8 +122,9 @@
     .buseBetween {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         padding: 0vw 0vw;
+        height: 249px;
+        overflow: auto;
     }
     .buseList {
         display: flex;
@@ -142,13 +143,12 @@
         line-height: 21px;
     }
     .editor_btns {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 13px 0;
+        padding: 0;
+        position: absolute;
+        bottom: 0px;
     }
     .buseList:last-child{
-        padding-bottom:3vw ;
+        /*padding-bottom:3vw ;*/
     }
     .chartGraph{
         background: #f6f6f6;
@@ -166,6 +166,15 @@
     }
     .col_d {
         width: 112px !important;
+    }
+    .editor_btns{
+        position: absolute;
+        bottom: 0;
+    }
+    .btn_gray {
+        background-color: #333 !important;
+        color: #fff;
+        padding: 4px 13px;
     }
 
 
@@ -251,15 +260,15 @@
                     </div>
                 </div>
             </div>
-            <div class="editor_btns">
-                <div class="padding">
-                    <a onclick="popDriverStateModalSubmit()" class="k-pager-refresh k-button btn_b">
-                        <b class="btn-b"><i class="k-icon k-i-check"></i>저장</b>
-                    </a>
-                    <a id="closeBtn" onclick="popDriverStateModalClose()" class="k-pager-refresh k-button">
-                        <b class="btn-b"><i class="k-icon k-i-cancel"></i>닫기</b>
-                    </a>
-                </div>
+        </div>
+        <div class="editor_btns">
+            <div class="padding">
+                <a onclick="popDriverStateModalSubmit()" class="k-pager-refresh k-button btn_b">
+                    <b class="btn-b"><i class="k-icon k-i-check"></i>저장</b>
+                </a>
+                <a id="closeBtn" onclick="popDriverStateModalClose()" class="k-pager-refresh k-button">
+                    <b class="btn-b"><i class="k-icon k-i-cancel"></i>닫기</b>
+                </a>
             </div>
         </div>
     </div>
@@ -3982,13 +3991,12 @@
 						htmlData+="</div>"
      					
      				}
-                 	htmlData+="<div class=\"editor_btns\">";
-                	htmlData+="<div class=\"padding\">";
-                	htmlData+="<a onclick=\"outreqModalSubmit()\" class=\"btn_b k-pager-refresh k-button\" style=\"color: #fff\">저장</a>";
-                	htmlData+="<a onclick=\"outreqModalClose()\" class=\"btn_gray k-pager-refresh k-button\" style=\"color: #fff\">닫기</a>";
                 	htmlData+="</div>"
                 	htmlData+="</div>"
-                	htmlData+="</div>";
+                     htmlData+="<div class=\"editor_btns\">";
+                     htmlData+="<a onclick=\"outreqModalSubmit()\" class=\"btn_b k-pager-refresh k-button\" style=\"color: #fff\">저장</a>";
+                     htmlData+="<a onclick=\"outreqModalClose()\" class=\"btn_gray k-pager-refresh k-button\" style=\"color: #fff\">닫기</a>";
+                     htmlData+="</div>";
 
 
                 	 $("#fOutreqModal").html(htmlData);
@@ -4001,7 +4009,9 @@
 	    outreqModal = $("#outreqModal");
 	    outreqModal.kendoDialog({
 	        width: "400px",
-	        height: "420px",
+	        height: "371px",
+            maxHeight: "406px",
+            paddingBottom: "36px",
 	        visible: false,
 	        title: "배차변경",
 	        closable: true,
