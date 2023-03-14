@@ -91,4 +91,10 @@ public interface OrderService {
 	public List<RpaVO> getRpaList(Map<String, Object> param);
 
 	public Map<String, Object> getRpaCnt(Map<String, Object> param);
+
+	public List<Map<String, Object>> getNewRunCar(Map<String, Object> param);
+	
+	public void updateNewRunOrderAlloc(Map<String, Object> map);
+	
+	public void updateNewRunCalc(Map<String, Object> map);
 }

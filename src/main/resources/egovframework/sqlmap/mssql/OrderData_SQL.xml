@@ -615,12 +615,15 @@
 			 , (SELECT ISNULL(FINISH_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseFinish
 			 , (SELECT ISNULL(TAXINV_YN, 'N')  FROM T_CALC WHERE ORDER_ID = A.ORDER_ID AND USE_YN = 'Y' and CALC_TYPE_CODE = '0002' and SELL_BUY_SCTN ='02' AND mng_cust_id = b.CUST_ID AND  mng_dept_id = b.DEPT_ID) purchaseTaxinv
 			 , B.EXTERNAL_INFOMATION externalInformation
+			 , B.EXTERNAL_FLAG externalFlag
 			 ,ISNULL(LINK_CHARGE_03, '') linkCharge03
 			 ,ISNULL(LINK_CHARGE_21, '') linkCharge21
 			 ,ISNULL(LINK_CHARGE_18, '') linkCharge18
 			 ,ISNULL(LINK_STAT_03, '') linkStat03
 			 ,ISNULL(LINK_STAT_21, '') linkStat21
 			 ,ISNULL(LINK_STAT_18, '') linkStat18
+			 ,ISNULL(F.SELL_CUST_ID, '')		driverCustId
+			 ,ISNULL(F.SELL_DEPT_ID, '')		driverDeptId
 			     FROM
 		   (
 		      SELECT 
@@ -2357,4 +2360,71 @@
 			</choose>
 		</if>
 	</select>
+	
+	<select id="getNewRun" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		
+		SELECT isnull(G.DRIVER_ID,F.DRIVER_ID) DRIVER_ID,  isnull(G.VEHIC_ID, F.VEHIC_ID) VEHIC_ID ,FORMAT(a.S_DATE, 'yyyy-MM-dd hh') S_date ,C.DRIVER_NAME, D.CAR_NUM, C.MOBILE
+		, D.CAR_TYPE_CODE 
+		, D.CAR_TON_CODE 
+		
+		FROM T_ORDER AS a INNER JOIN 
+		T_ORDER_ALLOC F WITH(NOLOCK) ON A.ORDER_ID = F.ORDER_ID 
+		LEFT OUTER JOIN 
+		T_NEWRUNCAR G WITH(NOLOCK) ON A.ORDER_ID = G.ORDER_ID 		
+		INNER JOIN T_DRIVER C ON C.DRIVER_ID = isnull(G.DRIVER_ID,F.DRIVER_ID)
+		INNER JOIN T_VEHIC_MST D ON D.VEHIC_ID =  isnull(G.VEHIC_ID, F.VEHIC_ID)
+		INNER JOIN T_CUST_VEHIC E ON  E.DRIVER_ID = C.DRIVER_ID
+		
+		AND isnull(G.DRIVER_ID,F.DRIVER_ID) != '' 
+		AND isnull(G.VEHIC_ID, F.VEHIC_ID) != ''
+		AND S_ADDR = #{S_ADDR}
+		AND FORMAT(a.S_DATE, 'yyyy-MM-dd') = FORMAT(convert(datetime, #{S_DATE}, 120), 'yyyy-MM-dd')
+		AND a.EXTERNAL_FLAG = 'N'
+		AND E.CUST_ID = #{CUST_ID}
+		AND E.DEPT_ID = #{DEPT_ID}
+		
+		GROUP BY isnull(G.DRIVER_ID,F.DRIVER_ID),  isnull(G.VEHIC_ID, F.VEHIC_ID), FORMAT(a.S_DATE, 'yyyy-MM-dd hh'),  C.DRIVER_NAME , D.CAR_NUM, C.MOBILE, 
+		D.CAR_TYPE_CODE 
+	   ,D.CAR_TON_CODE 
+
+
+	</select>
+                        
+	<update id="updateNewRunOrderAlloc" parameterType="java.util.HashMap">
+		UPDATE
+			T_ORDER_ALLOC
+		SET
+			VEHIC_ID = #{newRunVehicId}
+			,DRIVER_ID = #{newRunDriverId}
+			,CAR_NUM = #{newRunCarNum}
+			,CAR_TON_CODE = #{newRunCarTonCode}
+			,CAR_TYPE_CODE = #{newRunCarTypeCode}
+			,DRIVER_NAME = #{newRunDriverName}
+			,DRIVER_TEL = #{newRunTel}
+		WHERE
+			ALLOC_ID = #{basicAllocId} 
+		AND
+			ORDER_ID = #{basicOrderId} 
+		AND 
+			ISNULL(DRIVER_ID, '') != '' 
+		AND 
+			ISNULL(VEHIC_ID, '') != ''			
+	</update>
+	<update id="updateNewRunCalc" parameterType="java.util.HashMap">
+		UPDATE
+			T_CALC
+		SET
+			VEHIC_ID = #{newRunVehicId}
+			,DRIVER_ID = #{newRunDriverId}
+		WHERE
+			ALLOC_ID = #{basicAllocId} 
+		AND
+			ORDER_ID = #{basicOrderId} 
+		AND 
+			ISNULL(DRIVER_ID, '') != '' 
+		AND 
+			ISNULL(VEHIC_ID, '') != ''		
+		AND 
+			USE_YN ='Y'	
+	</update>
 </mapper>

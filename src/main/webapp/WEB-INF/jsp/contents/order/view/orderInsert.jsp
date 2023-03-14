@@ -137,7 +137,7 @@
 </div>
 
 <div id="carModal">
-    <form class="pop_modal modalEditor" id="carForm" data-toggle="validator" role="form" autocomplete="off">
+    <form class="modalEditor" id="carForm" data-toggle="validator" role="form" autocomplete="off">
         <input type="hidden" name="driverAllocId" id="driverAllocId">
         <input type="hidden" id="vehicId" name="vehicId">
         <input type="hidden" id="driverId" name="driverId">
@@ -232,6 +232,8 @@
                             <input type="hidden" id="mode" name="mode" value="N">
                             <input type="hidden" id="allocState" name="allocState">
                             <input type="hidden" id="orderState" name="orderState">
+                            <input type="hidden" id="driverCustId" name="driverCustId">
+                            <input type="hidden" id="driverDeptId" name="driverDeptId">
                             <fieldset>
 	                            <div class="orderInsert_top">
 	                                <legend id="order_legend">오더 등록</legend>
@@ -956,6 +958,12 @@
                                         <div class="input-group input-group-sm col" id="allocButtons" style="display: none; align-self: flex-end;">
                                             <a class="k-button" href="javascript:updateAllocState('D', '21')">실행취소</a>
                                         </div>
+                                        
+                                        <div class="input-group input-group-sm col" id="changeNewRunButtons" style="display: none; align-self: flex-end;">
+                                            <a class="k-button" href="javascript:changeNewRunCar()">차량변경</a>
+                                        </div>
+                                        
+                                        
                                         <div class="input-group input-group-sm btn_58" id="driverProposal" style="align-self: flex-end; margin-right: 45px;">
                                             <a id="driverProposalBtn" class="k-button btn_58 p0" style="line-height: 23px;">추천차주</a>
                                         </div>
@@ -1273,6 +1281,11 @@
     <div id="divOrderStop"></div>
     <div id="driverProposalView"></div>
     <div id="linkDriverView"></div>
+</div>
+<div id="outreqModal" class="editor-warp p-0">
+    <form class="modalEditor" id="fOutreqModal">
+
+    </form>
 </div>
 
 <script type="text/javascript">
@@ -1990,6 +2003,8 @@
             $("#divAllocC").show();
             $("#divAllocD").hide();
             $("#allocButtons").show();
+            $("#changeNewRunButtons").show();
+           // changeNewRunButtons
             $("#driverProposal").hide();
             $("#allocC").show();
             $("#allocD").hide();
@@ -2006,6 +2021,7 @@
             $("#divAllocC").hide();
             $("#divAllocD").show();
             $("#allocButtons").hide();
+            $("#changeNewRunButtons").hide();
             $("#driverProposal").show();
             $("#allocC").hide();
             $("#allocD").show();
@@ -2015,10 +2031,12 @@
             $("#divAllocC").hide();
             $("#divAllocD").show();
             $("#allocButtons").hide();
+            $("#changeNewRunButtons").hide();
             $("#driverProposal").hide();
             $("#allocC").hide();
             $("#allocD").show();
         } else if (data.allocState == '09') {	//정보망접수
+        	$("#changeNewRunButtons").hide();
             $("#driverProposal").hide();
         } else {
             if(data.driverKind == 'Y'){			// 차주 지정 상태
@@ -2027,6 +2045,7 @@
                 $("#divAllocD").show();
                 $("#divAllocC").hide();
                 $("#allocButtons").show();
+                $("#changeNewRunButtons").hide();
                 $("#driverProposal").hide();
                 $("#allocD").show();
                 $("#allocC").hide();
@@ -2087,6 +2106,11 @@
         }
         //수출입 구분, 운송유형, 차종, 톤수 세팅
 
+        $("#driverCustId").val(data.driverCustId);
+        $("#driverDeptId").val(data.driverDeptId);
+
+        
+        
         $("#inOutSctn").val(data.inOutSctn);
         setFrtSelect(truckTypeData, "truckTypeCode", data.inOutSctn, data.truckTypeCode);
         setFrtSelect(carTypeData, "carTypeCode", data.truckTypeCode, data.carTypeCode);
@@ -3839,4 +3863,117 @@
             $("#oneCharge").val(Util.formatNumberInput($("#oneCharge").val().trim()));
         }
     });
+    
+    
+    function changeNewRunCar() {
+/*     	alert($("#orderId").val());
+    	alert($("#sAddr").val());
+    	alert($("#sDateDay").val()); */
+    	
+    	
+    	
+    	outreqModal.data("kendoDialog").open();
+    	var htmlData = "";
+    	
+    	$("#fOutreqModal >").remove();
+
+    	 $.ajax({
+             url: "/contents/order/data/newRunCar.do",
+             type: "POST",
+             dataType: "json",
+             data: {
+            	 S_DATE: $("#sDateDay").val(),
+            	 S_ADDR: $("#sAddr").val(),
+            	 ORDER_ID: $("#orderId").val(),
+            	 CUST_ID : $("#driverCustId").val(),
+            	 DEPT_ID : $("#driverDeptId").val()
+             },
+             success: function(data){
+
+                 if(data.result) {
+                	 		htmlData+="<div id=\"indexListAjax\">";
+                	 for(var i = 0; i< data.newRunCar.length; i++) {
+                			 
+						htmlData+="<div id ="+data.newRunCar[i].DRIVER_ID+">";
+							htmlData+="<input type=\"hidden\" id=\"newRunVehicId\" name=\"newRunVehicId\" value ="+data.newRunCar[i].VEHIC_ID +">";
+							htmlData+="<input type=\"hidden\" id=\"newRunDriverId\" name=\"newRunDriverId\" value ="+data.newRunCar[i].DRIVER_ID +">";
+							htmlData+="<input type=\"hidden\" id=\"newRunCarNum\" name=\"newRunCarNum\" value ="+data.newRunCar[i].CAR_NUM +">";
+							htmlData+="<input type=\"hidden\" id=\"newRunCarTonCode\" name=\"newRunCarTonCode\" value ="+data.newRunCar[i].CAR_TON_CODE +">";
+							htmlData+="<input type=\"hidden\" id=\"newRunCarTypeCode\" name=\"newRunCarTypeCode\" value ="+data.newRunCar[i].CAR_TYPE_CODE +">";
+							htmlData+="<input type=\"hidden\" id=\"newRunDriverName\" name=\"newRunDriverName\" value ="+data.newRunCar[i].DRIVER_NAME +">";
+							htmlData+="<input type=\"hidden\" id=\"newRunTel\" name=\"newRunTel\" value ="+data.newRunCar[i].MOBILE +">";
+							//htmlData+="<input type=\"hidden\" id=\"newRunOrderId\" name=\"newRunOrderId\" value ="+data.allocCharge[i].ORDER_ID +">";
+							htmlData+="<input type=\"hidden\" id=\"basicOrderId\" name=\"basicOrderId\">";
+							htmlData+="<input type=\"hidden\" id=\"basicAllocId\" name=\"basicAllocId\">";
+							
+							htmlData+="<input type=\"radio\" name=\"newRunOrder\" id=\"newRunOrder\" value="+data.newRunCar[i].DRIVER_ID+">";
+							htmlData+= data.newRunCar[i].CAR_NUM +" | ";
+							htmlData+= data.newRunCar[i].DRIVER_NAME +" | ";
+							htmlData+= data.newRunCar[i].MOBILE;
+						htmlData+="</div>"
+     					
+     				}
+                 	htmlData+="<div class=\"editor_btns\">";
+                	htmlData+="<div class=\"padding\">";
+                	htmlData+="<a onclick=\"outreqModalSubmit()\" class=\"btn_b k-pager-refresh k-button\" style=\"color: #fff\">저장</a>";
+                	htmlData+="<a onclick=\"outreqModalClose()\" class=\"btn_gray k-pager-refresh k-button\" style=\"color: #fff\">닫기</a>";
+                	htmlData+="</div>"
+                	htmlData+="</div>"
+                	htmlData+="</div>";
+
+                	 
+                	 $("#fOutreqModal").html(htmlData);
+                 }
+             }
+         });
+
+	}
+    
+	    outreqModal = $("#outreqModal");
+	    outreqModal.kendoDialog({
+	        width: "400px",
+	        height: "420px",
+	        visible: false,
+	        title: "배차변경",
+	        closable: true,
+	        modal: true,
+	        close: function() {
+	            $("#fOutreqModal")[0].reset();
+	        }
+	    });
+	    
+	    
+	    function outreqModalSubmit() {
+	    	//alert($("input[name='newRunOrder']:checked").val());
+	    	var newRunOrderId = $("input[name='newRunOrder']:checked").val();
+	    	$("#"+newRunOrderId+", #basicOrderId").val($("#orderId").val());
+	    	$("#"+newRunOrderId+", #basicAllocId").val($("#driverAllocId").val());
+/*  	    	$("#"+newRunOrderId+" input[type='hidden']").each(function(i,item){
+	    		    if(item.value != ""){
+	    				console.log(item.id)
+	    		        console.log(item.value)
+
+	    		  }
+
+	    	});
+ */
+	        $.ajax({
+	            url: "/contents/order/data/newRunChangeDriver.do",
+	            type: "POST",
+	            dataType: "json",
+	            data : $("#"+newRunOrderId+" input[type='hidden']"),
+	            success: function(data) {
+	                alert("수정되었습니다.");
+	                outreqModalClose();
+	                init_popup_close();
+	                goList();
+	            }
+	        });
+	      //  goList();
+	    }
+	    
+	    function outreqModalClose() {
+	        outreqModal.data("kendoDialog").close();
+	        $("#fOutreqModal")[0].reset();
+	    }
 </script>

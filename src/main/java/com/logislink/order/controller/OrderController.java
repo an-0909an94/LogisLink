@@ -1324,4 +1324,51 @@ public class OrderController {
 		map.put("msg", "수정되었습니다.");
 		return "jsonView";
 	}
+	
+	@PostMapping(value="/contents/order/data/newRunCar.do")
+	public String newRunCar(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+							@RequestParam Map<String, Object> param ) throws Exception {
+
+		
+		List<Map<String, Object>> newRunCar = orderService.getNewRunCar(param);
+		//Map<String, Object> data = orderService.getBasicFare(param);
+		if(newRunCar != null){
+			map.put ("newRunCar", newRunCar);
+			map.put("result", Boolean.TRUE);
+		}else{
+			//map.put("allocCharge", newRunCar);
+			map.put("result", Boolean.FALSE);
+		}
+//
+
+		return "jsonView";
+	}
+	
+	@PostMapping(value="/contents/order/data/newRunChangeDriver.do")
+	public String newRunChangeDriver(HttpServletRequest request, Model model, ModelMap map, HttpSession session,
+					@RequestParam Map<String, Object> param ) throws Exception {
+
+		  for (String key: param.keySet()){
+			    System.out.println("{" + key+ " => " + param.get(key) + "}");
+			 }
+		  try {
+			  orderService.updateNewRunOrderAlloc(param);
+		  	  orderService.updateNewRunCalc(param);
+		  }catch (Exception e) {
+			  e.printStackTrace();
+		  }
+		  
+			//public void updateNewRunCalc(Map<String, Object> map);
+		
+		//List<Map<String, Object>> newRunCar = orderService.getNewRunCar(param);
+		//Map<String, Object> data = orderService.getBasicFare(param);
+		/*
+		 * if(newRunCar != null){ map.put ("allocCharge", newRunCar); map.put("result",
+		 * Boolean.TRUE); }else{ //map.put("allocCharge", newRunCar); map.put("result",
+		 * Boolean.FALSE); }
+		 */
+//
+
+		return "jsonView";
+	}
 }

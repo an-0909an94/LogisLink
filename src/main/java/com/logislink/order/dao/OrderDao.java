@@ -218,4 +218,16 @@ public class OrderDao extends EgovAbstractMapper {
 	public Map<String, Object> getRpaCnt(Map<String, Object> param) {
 		return selectOne("orderDataNS.selectRpaCnt", param);
 	}
+	public List<Map<String, Object>> getNewRunCar(Map<String, Object> map) {
+		return selectList("orderDataNS.getNewRun", map);
+	}
+	
+	public void updateNewRunOrderAlloc(Map<String, Object> map) {
+		update("orderDataNS.updateNewRunOrderAlloc", map);
+	}
+	
+	public void updateNewRunCalc(Map<String, Object> map) {
+		update("orderDataNS.updateNewRunCalc", map);
+	}
+
 }

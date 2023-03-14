@@ -217,6 +217,11 @@ public class OrderVO {
 	   private String linkStat21;
 	   private String linkStat18;
 	   
+	   private String externalFlag;
+	   
+	   private String driverCustId;
+	   private String driverDeptId;
+	   
 	public String getOrderId() {
 		return orderId;
 	}
@@ -1440,4 +1445,23 @@ public class OrderVO {
 	public void setLinkStat18(String linkStat18) {
 		this.linkStat18 = linkStat18;
 	}
+	public String getExternalFlag() {
+		return externalFlag;
+	}
+	public void setExternalFlag(String externalFlag) {
+		this.externalFlag = externalFlag;
+	}
+	public String getDriverCustId() {
+		return driverCustId;
+	}
+	public void setDriverCustId(String driverCustId) {
+		this.driverCustId = driverCustId;
+	}
+	public String getDriverDeptId() {
+		return driverDeptId;
+	}
+	public void setDriverDeptId(String driverDeptId) {
+		this.driverDeptId = driverDeptId;
+	}
+	
 }

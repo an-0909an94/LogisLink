@@ -260,4 +260,16 @@ public class OrderServiceImpl implements OrderService {
 	public Map<String, Object> getRpaCnt(Map<String, Object> param) {
 		return orderDao.getRpaCnt(param);
 	}
+	public List<Map<String, Object>> getNewRunCar(Map<String, Object> map) {
+		return orderDao.getNewRunCar(map);
+	}
+	
+	public void updateNewRunOrderAlloc(Map<String, Object> map) {
+		 orderDao.updateNewRunOrderAlloc(map);
+	}
+	
+	public void updateNewRunCalc(Map<String, Object> map) {
+		 orderDao.updateNewRunCalc(map);
+	}
+
 }
