@@ -536,7 +536,7 @@
 
                 <div class="graph_vehicle">
                     <h2>배차 손익추이</h2>
-                    <div></div>
+                    <div><canvas id="myChart"></canvas></div>
                 </div>
 
                 <div class="graph_top">
@@ -544,7 +544,7 @@
                     <div></div>
                 </div>
             </div>
-            <div class="section_right">
+            <div id="temperature" class="section_right">
                 <div class="weather">
                     <h2>날씨 <p>현재위치 : <span>서울</span></p></h2>
                     <div>
@@ -649,31 +649,31 @@
                         <ul>
                             <!-- 공지사항 리스트 -->
                             <c:forEach var="idx" begin="1" end="2">
-                            <c:set var="i" value="${idx+1}" />
-                            <li class="notice_box">
-                                <div class="notice_title">
-                                    <dl onclick="openpopup(${idx})">
-                                        <dt class="n-title"></dt>
-                                        <dd class="n-date"></dd>
-                                    </dl>
-                                </div>
-                                <!-- 공지사항 팝업 -->
-                                <div id="noticeCon${idx}" class="notice_popup">
-                                    <p>공지사항</p>
-                                    <button type="button" class="icon_close" onclick="closepopup(${idx})">닫기</button>
-                                    <div>
-                                        <dl>
+                                <c:set var="i" value="${idx+1}" />
+                                <li class="notice_box">
+                                    <div class="notice_title">
+                                        <dl onclick="openpopup(${idx})">
                                             <dt class="n-title"></dt>
-                                            <dd>등록일 : <span class="n-date"></span></dd>
+                                            <dd class="n-date"></dd>
                                         </dl>
-                                        <div class="contents">
-                                            <span class="n-content"></span>
-                                        </div>
                                     </div>
-                                    <button type="button" class="btn_close" onclick="closepopup(${idx})">닫기</button>
-                                </div>
-                                <!-- 공지사항 팝업 -->
-                            </li>
+                                    <!-- 공지사항 팝업 -->
+                                    <div id="noticeCon${idx}" class="notice_popup">
+                                        <p>공지사항</p>
+                                        <button type="button" class="icon_close" onclick="closepopup(${idx})">닫기</button>
+                                        <div>
+                                            <dl>
+                                                <dt class="n-title"></dt>
+                                                <dd>등록일 : <span class="n-date"></span></dd>
+                                            </dl>
+                                            <div class="contents">
+                                                <span class="n-content"></span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn_close" onclick="closepopup(${idx})">닫기</button>
+                                    </div>
+                                    <!-- 공지사항 팝업 -->
+                                </li>
                             </c:forEach>
                         </ul>
                     </div>
@@ -694,8 +694,12 @@
     </section>
 </div>
 
+<ul id="morningTemperature"></ul>
+<ul id="afternoonTemperature"></ul>
+
 
 <!-- BoardList -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
@@ -765,7 +769,7 @@
     });
 
     /** 전국 유가정보 */
-/*    $.ajax({
+    $.ajax({
         url: "/contents/basic/data/getOpinet.do",
         type: "POST",
         dataType: "json",
@@ -781,37 +785,37 @@
         }
     }).fail((xhr, status, error) => {
         console.error(error);
-    });*/
-
-    /** 전국 유가정보 에니메이션 버전 */
-    $.ajax({
-        url: "/contents/basic/data/getOpinet.do",
-        type: "POST",
-        dataType: "json",
-    }).done(response => {
-        if (response.result) {
-            const oilPrices = response.oil.OIL.map(({ PRICE }) => PRICE);
-            $('.all_oil_price').each((index, element) => {
-                const price = oilPrices[index];
-                $(element).attr('data-count', price).text(parseFloat('0').toFixed(2));
-                $({ Counter: 0 }).animate({ Counter: price }, {
-                    duration: 2000,
-                    easing: 'swing',
-                    step: function () {
-                        $(element).text(Math.round(this.Counter * 100) / 100);
-                    }
-                });
-            });
-            console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
-        } else {
-            console.error(response.message);
-        }
-    }).fail((xhr, status, error) => {
-        console.error(error);
     });
 
+    /*    /!** 전국 유가정보 에니메이션 버전 *!/
+        $.ajax({
+            url: "/contents/basic/data/getOpinet.do",
+            type: "POST",
+            dataType: "json",
+        }).done(response => {
+            if (response.result) {
+                const oilPrices = response.oil.OIL.map(({ PRICE }) => PRICE);
+                $('.all_oil_price').each((index, element) => {
+                    const price = oilPrices[index];
+                    $(element).attr('data-count', price).text(parseFloat('0').toFixed(2));
+                    $({ Counter: 0 }).animate({ Counter: price }, {
+                        duration: 2000,
+                        easing: 'swing',
+                        step: function () {
+                            $(element).text(Math.round(this.Counter * 100) / 100);
+                        }
+                    });
+                });
+                console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
+            } else {
+                console.error(response.message);
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
+        });*/
 
-/*    /!** 시도 유가정보 *!/
+
+    /** 시도 유가정보 */
     $.ajax({
         url: "/contents/basic/data/getOpinetsido.do",
         type: "POST",
@@ -844,105 +848,281 @@
         }
     }).fail((xhr, status, error) => {
         console.error(error);
-    });*/
-
-    /** 시도 유가정보 에니메이션 버전 */
-    $.ajax({
-        url: "/contents/basic/data/getOpinetsido.do",
-        type: "POST",
-        dataType: "json",
-        async:false,
-        data: {
-            sido: "01", // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
-        }
-    }).done(response => {
-        if (response.result) {
-            const oilPrices = response.oil.OIL.filter(item => ["B027", "D047", "K015"].includes(item.PRODCD))
-                .map(({ PRODCD, PRICE }) => {
-                    switch(PRODCD){
-                        case "B027":
-                            return {name: "휘발유", price: PRICE};
-                        case "D047":
-                            return {name: "경유", price: PRICE};
-                        case "K015":
-                            return {name: "LPG", price: PRICE};
-                        default:
-                            return {name: "", price: ""};
-                    }
-                });
-
-            $('.sido_oil_price').each((index, element) => {
-                const { price } = oilPrices[index];
-                $(element).attr('data-count', price).text(parseFloat('0').toFixed(2));
-                $({ Counter: 0 }).animate({ Counter: price }, {
-                    duration: 2000,
-                    easing: 'swing',
-                    step: function () {
-                        $(element).text(Math.round(this.Counter * 100) / 100);
-                    }
-                });
-                $(element).attr('data-count', price.toFixed(2)).text(price.toFixed(2));
-            });
-            console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
-        } else {
-            console.error(response.message);
-        }
-    }).fail((xhr, status, error) => {
-        console.error(error);
     });
+
+    /*    /!** 시도 유가정보 에니메이션 버전 *!/
+        $.ajax({
+            url: "/contents/basic/data/getOpinetsido.do",
+            type: "POST",
+            dataType: "json",
+            async:false,
+            data: {
+                sido: "01", // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
+            }
+        }).done(response => {
+            if (response.result) {
+                const oilPrices = response.oil.OIL.filter(item => ["B027", "D047", "K015"].includes(item.PRODCD))
+                    .map(({ PRODCD, PRICE }) => {
+                        switch(PRODCD){
+                            case "B027":
+                                return {name: "휘발유", price: PRICE};
+                            case "D047":
+                                return {name: "경유", price: PRICE};
+                            case "K015":
+                                return {name: "LPG", price: PRICE};
+                            default:
+                                return {name: "", price: ""};
+                        }
+                    });
+
+                $('.sido_oil_price').each((index, element) => {
+                    const { price } = oilPrices[index];
+                    $(element).attr('data-count', price).text(parseFloat('0').toFixed(2));
+                    $({ Counter: 0 }).animate({ Counter: price }, {
+                        duration: 2000,
+                        easing: 'swing',
+                        step: function () {
+                            $(element).text(Math.round(this.Counter * 100) / 100);
+                        }
+                    });
+                    $(element).attr('data-count', price.toFixed(2)).text(price.toFixed(2));
+                });
+                console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
+            } else {
+                console.error(response.message);
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
+        });*/
 
     /** 시도 기상청 날씨정보 출력 */
-    $.ajax({
-        url: "/contents/basic/data/getOpenweather.do",
-        type: "POST",
-        dataType: "json",
-        async: false,
-        data: {
-            base_date: getBaseDate(),
-            base_time: getBaseTime(),
-            nx: "60",  // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
-            ny: "127"
-        },
-        success: function (data) {
-            // 성공적으로 서버에서 응답을 받았을 때 처리하는 로직
-            console.log(data);
-            // 서버에서 받아온 데이터를 사용하여 필요한 로직을 수행
-        },
-        error: function (xhr, status, error) {
-            // 서버에서 응답을 받지 못했을 때 처리하는 로직
-            console.error(xhr, status, error);
+    function getWeather() {
+        // debugger;
+        $.ajax({
+            url: "/contents/basic/data/getOpenweather.do",
+            type: "POST",
+            dataType: "json",
+            async: true,
+            data: {
+                base_date: getBaseDate(),
+                base_time: getBaseTime(),
+                nx: "59",
+                ny: "127"
+            },
+            success: function(data) {
+                if (data && data.result && data.item) {
+                    console.log(data.item);
+
+                    // 필터링된 기온 데이터에서 오전/오후 기온 추출
+                    var temperatureData = data.item.filter(function(item) {
+                        return item.category === "TMP";
+                    });
+
+                    // 오전 기온 정보 추출
+                    var morningTemperature = [];
+                    for (var i = 6; i <= 12; i++) {
+                        var hour = (i < 10) ? "0" + i + "00" : i + "00";
+                        var temp = temperatureData.find(function(item) {
+                             return item.fcstTime === hour;
+                        });
+                        morningTemperature.push({
+                            hour: hour,
+                            temperature: temp.fcstValue
+                        });
+                    }
+
+                    // 오후 기온 정보 추출
+                    var afternoonTemperature = [];
+                    for (var i = 13; i <= 23; i++) {
+                        var hour = (i < 10) ? "0" + i + "00" : i + "00";
+                        var temp = temperatureData.find(function(item) {
+                            return item.fcstTime === hour;
+                        });
+                        afternoonTemperature.push({
+                            hour: hour,
+                            temperature: temp.fcstValue
+                        });
+                    }
+                    // debugger;
+                    var yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    var currentHour = new Date().getHours();
+                    currentHour = (currentHour).toString().padStart(4,"");
+                    currentHour = currentHour + "00";
+                    console.log("currentHour: ", currentHour);
+                    // debugger;
+
+                    if (currentHour >= morningTemperature[0].hour && currentHour < `1200`) {
+                        // 오전
+                        if (morningTemperature.length > 0) {
+                            $("#morningTemperature").append("<li>" + morningTemperature[0].hour.substring(0, 2) + "시: " + morningTemperature[0].temperature + "도</li>");
+                        }
+                    } else if (currentHour >= `1300` && currentHour < `2300`) {
+                        // 오후
+                        if (afternoonTemperature.length > 0) {
+                            $("#afternoonTemperature").append("<li>" + afternoonTemperature[0].hour.substring(0, 2) + "시: " + afternoonTemperature[0].temperature + "도</li>");
+                        }
+                    }
+                    /*                    // 오전 기온 정보 출력
+                                        $.each(morningTemperature, function(index, temperature) {
+                                            $("#morningTemperature").append("<li>" + temperature.hour.substring(0, 2) + "시: " + temperature.temperature + "도</li>");
+                                        });
+                                        // 오후 기온 정보 출력
+                                        $.each(afternoonTemperature, function(index, temperature) {
+                                            $("#afternoonTemperature").append("<li>" + temperature.hour.substring(0, 2) + "시: " + temperature.temperature + "도</li>");
+                                        });*/
+
+                    console.log("오전 기온: ", morningTemperature);
+                    console.log("오후 기온: ", afternoonTemperature);
+
+                    // 필터링된 날씨 데이터에서 오전/오후 날씨 추출 하늘의 상태확인
+                    var weatherData = data.item.filter(function(item) {
+                        return item.category === "SKY";
+                    });
+                    var morningWeather = weatherData.find(function(item) {
+                        return item.fcstTime === "0600";
+                    });
+                    var afternoonWeather = weatherData.find(function(item) {
+                        return item.fcstTime === "1500";
+                    });
+                    console.log("오늘오전 날씨: " + getWeatherIcon(morningWeather.fcstValue));
+                    console.log("오늘오후 날씨: " + getWeatherIcon(afternoonWeather.fcstValue));
+
+                    //필터링된 날씨 강수량 형태
+                    var rainfallData = data.item.filter(function (item) {
+                        return item.category === "PTY";
+                    });
+                    var morningRainfall = rainfallData.find(function(item) {
+                        return item.fcstTime === "0600";
+                    });
+                    var afternoonRainfall = rainfallData.find(function(item) {
+                        return item.fcstTime === "1500";
+                    });
+                    console.log("오늘강수형태: " + getRaninfallIcon(morningRainfall.fcstValue));
+                    console.log("오늘강수형태: " + getRaninfallIcon(afternoonRainfall.fcstValue));
+
+                } else {
+                    console.error("API response does not contain expected data");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr, status, error);
+            },
+            compact:function (){
+                setInterval(getWeather, 3600000);
+            }
+        });
+
+        function getRaninfallIcon(fcstValue) {
+            var iconUrl = "";
+            switch (fcstValue) {
+                case "0":
+                    iconUrl = "없음";
+                    break;
+                case "1":
+                    iconUrl = "비";
+                    break;
+                case "2":
+                    iconUrl = "비/눈";
+                    break;
+                case "3":
+                    iconUrl = "눈";
+                    break;
+                case "4":
+                    iconUrl = "소나기";
+                    break;
+                default:
+                    iconUrl = "없음";
+            }
+            return iconUrl;
         }
+
+        function getWeatherIcon(fcstValue) {
+            var iconUrl = "";
+            switch (fcstValue) {
+                case "1":
+                    iconUrl = "맑음";
+                    break;
+                case "3":
+                    iconUrl = "구름";
+                    break;
+                case "4":
+                    iconUrl = "흐림";
+                    break;
+                default:
+                    iconUrl = "맑음";
+            }
+            return iconUrl;
+        }
+        /** 기본 날짜는 -1로 해줘야 값을 출력할 수 있음 */
+        function getBaseDate() {
+            var today = new Date();
+            var currentHour = new Date().getHours();
+            if (currentHour >= 6) {
+                today.setDate(today.getDate());
+            } else {
+                today.setDate(today.getDate() - 1);
+            }
+            var year = today.getFullYear();
+            var month = today.getMonth() + 1;
+            var day = today.getDate();
+            return year + "" + (month < 10 ? "0" : "") + month + "" + (day < 10 ? "0" : "") + day;
+        }
+
+        /** 23시까지를 기준으로 잡아야 온도를 측정할 수 있음 */
+        function getBaseTime() {
+            var today = new Date();
+            var hour = today.getHours();
+            if (hour >= 2 && hour < 5) {
+                return "0200";
+            } else if (hour >= 5 && hour < 8) {
+                return "0500";
+            } else if (hour >= 8 && hour < 11) {
+                return "0800";
+            } else if (hour >= 11 && hour < 14) {
+                return "1100";
+            } else if (hour >= 14 && hour < 17) {
+                return "1400";
+            } else if (hour >= 17 && hour < 20) {
+                return "1700";
+            } else if (hour >= 20 && hour < 23) {
+                return "2000";
+            } else {
+                return "2300";
+            }
+        }
+
+    }
+    $(document).ready(function() {
+        // 최초 1회 호출
+        getWeather();
+
+        // 1시간 마다 호출
+        setInterval(getWeather, 3600000);
     });
 
-    function getBaseDate() {
-        var today = new Date();
-        var year = today.getFullYear();
-        var month = today.getMonth() + 1;
-        var day = today.getDate();
-        return year + "" + (month < 10 ? "0" : "") + month + "" + (day < 10 ? "0" : "") + day;
-    }
+    //차트 JS  배차 손익추이
+    const ctx = document.getElementById('myChart');
 
-    function getBaseTime() {
-        var today = new Date();
-        var hour = today.getHours();
-        if (hour >= 2 && hour < 5) {
-            return "0200";
-        } else if (hour >= 5 && hour < 8) {
-            return "0500";
-        } else if (hour >= 8 && hour < 11) {
-            return "0800";
-        } else if (hour >= 11 && hour < 14) {
-            return "1100";
-        } else if (hour >= 14 && hour < 17) {
-            return "1400";
-        } else if (hour >= 17 && hour < 20) {
-            return "1700";
-        } else if (hour >= 20 && hour < 23) {
-            return "2000";
-        } else {
-            return "2300";
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['7월', '8월', '9월', '10월', '11월', '이번달'],
+            datasets: [{
+                label: '매출',
+                data: [5401, 5596, 5760, 5660, 5860, 5260],
+                width: 1,
+                borderWidth: 0
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-    }
+    });
 
 </script>
 
