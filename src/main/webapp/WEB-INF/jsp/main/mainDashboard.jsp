@@ -950,7 +950,7 @@
                     currentHour = (currentHour).toString().padStart(4,"");
                     currentHour = currentHour + "00";
                     console.log("currentHour: ", currentHour);
-                    // debugger;
+                     debugger;
 
                     if (currentHour >= morningTemperature[0].hour && currentHour < `1200`) {
                         // 오전
@@ -958,9 +958,40 @@
                             $("#morningTemperature").append("<li>" + morningTemperature[0].hour.substring(0, 2) + "시: " + morningTemperature[0].temperature + "도</li>");
                         }
                     } else if (currentHour >= `1300` && currentHour < `2300`) {
+                    	
+                    	
+                    	 if (morningTemperature.length > 0) {
+                    		 var c = "";
+                         	 var d = "";
+                         	 morningTemperature.forEach(function(value){
+                       		 var obj_key = Object.keys(value); 
+                       		  
+                       		  	if(value["hour"] == '1200'){
+	                        		  c = value["hour"]; 
+	                        		  d = value["temperature"];
+                       		  	}
+                       		  
+                       		 // console.log(obj_key + " : " + obj_value); //출력
+                       		 });
+                    		 
+                             $("#morningTemperature").append("<li>" + c.substring(0, 2) + "시: " + d + "도</li>");
+                         }
+                    	
+                    	
                         // 오후
                         if (afternoonTemperature.length > 0) {
-                            $("#afternoonTemperature").append("<li>" + afternoonTemperature[0].hour.substring(0, 2) + "시: " + afternoonTemperature[0].temperature + "도</li>");
+                        	var a = "";
+                        	var b = "";
+                        	afternoonTemperature.forEach(function(value){
+                        		  var obj_key = Object.keys(value); 
+                        		  if(value["hour"] == currentHour){
+	                        		  a = value["hour"]; 
+	                        		  b = value["temperature"];
+                        		  }
+                        		  
+                        		 // console.log(obj_key + " : " + obj_value); //출력
+                        	});
+                            $("#afternoonTemperature").append("<li>" + a.substring(0, 2) + "시: " + b + "도</li>");
                         }
                     }
                     /*                    // 오전 기온 정보 출력
