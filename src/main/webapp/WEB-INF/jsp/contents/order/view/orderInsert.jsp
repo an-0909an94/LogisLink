@@ -119,6 +119,30 @@
         align-items: center;
         justify-content: center;
     }
+    .buseBetween {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0vw 0vw;
+    }
+    .buseList {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        width: 20vw;
+        padding: 0.5vw 1vw;
+        border: 1px solid #ddd;
+    }
+    .editor_btns {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 13px 0;
+    }
+    .buseList:last-child{
+        padding-bottom:3vw ;
+    }
 </style>
 <div id="priceView" class="editor-warp p-0">
     <div class="modalEditor" id="addCust">
@@ -942,7 +966,6 @@
                                     <div class="form-group row mr0">
                                         <div class="col-form-label wd90 big-name-div">
                                             <label class="col-form-label big-name">배차</label>
-                                            
                                             <a id="allocC" style="display: none; position:absolute; margin-top:30px;" class="k-pager-refresh k-button openCloseBtn">배차추가열기</a>
                                         </div>
                                         <div class="input-group input-group-sm col radio-or-checkBox">
@@ -970,17 +993,23 @@
                                         <div class="input-group input-group-sm col" id="divHidden" style="align-self: flex-end;">
 
                                         </div>
-                                        <div id="chkTalkYDiv" class="input-group input-group-sm col radio-or-checkBox" style="text-align: right;">
-                                            <input id="chkTalkY" name="chkTalk" type="radio" value="Y" checked="checked">
-                                            <label for="chkTalkY" class="label-margin"> <span>알림</span>
-                                            </label>
-                                        </div>
-                                        <div id="chkTalkNDiv" class="input-group input-group-sm col radio-or-checkBox" style="text-align: right;">
-                                            <input id="chkTalkN" name="chkTalk" type="radio" value="N">
-                                            <label for="chkTalkN" class="label-margin"> <span>미알림</span>
-                                            </label>
-                                        </div>
                                     </div>
+                                    <div class="form-group row mr0" style="padding:5px 0">
+                                    <div class="col-form-label wd90 big-name-div">
+                                        <label class="col-form-label big-name"></label>
+                                    </div>
+                                    <div id="chkTalkYDiv" class="input-group input-group-sm col radio-or-checkBox" style="width:64px; text-align: right;">
+                                        <input id="chkTalkY" name="chkTalk" type="radio" value="Y" checked="checked">
+                                        <label for="chkTalkY" class="label-margin"> <span>알림</span>
+                                        </label>
+                                    </div>
+                                    <div id="chkTalkNDiv" class="input-group input-group-sm col radio-or-checkBox" style="text-align: right;">
+                                        <input id="chkTalkN" name="chkTalk" type="radio" value="N">
+                                        <label for="chkTalkN" class="label-margin"> <span>미알림</span>
+                                        </label>
+                                    </div>
+                                    </div>
+
 
                                     <!-- 운송사지정 열기, 접기부분 미정-->
                                     <div id="divAllocC">
@@ -1640,6 +1669,7 @@
                 $("#allocD").hide();
                 $("#allocDOpenClose").hide();
                 $("#driverOtherOpenClose").hide();
+                //$("#allocC").show();   배차추가 버튼안보임
                 $("#allocC").html("배차추가열기");
                 if(!$("#buyCustId").val()) {
                     buyCustName.enable(true);
@@ -3891,10 +3921,10 @@
              success: function(data){
 
                  if(data.result) {
-                	 		htmlData+="<div id=\"indexListAjax\">";
+                       htmlData+="<div id=\"indexListAjax\" class='buseBetween'>";
                 	 for(var i = 0; i< data.newRunCar.length; i++) {
                 			 
-						htmlData+="<div id ="+data.newRunCar[i].DRIVER_ID+">";
+						htmlData+="<div id ="+data.newRunCar[i].DRIVER_ID+" class='buseList'>";
 							htmlData+="<input type=\"hidden\" id=\"newRunVehicId\" name=\"newRunVehicId\" value ="+data.newRunCar[i].VEHIC_ID +">";
 							htmlData+="<input type=\"hidden\" id=\"newRunDriverId\" name=\"newRunDriverId\" value ="+data.newRunCar[i].DRIVER_ID +">";
 							htmlData+="<input type=\"hidden\" id=\"newRunCarNum\" name=\"newRunCarNum\" value ="+data.newRunCar[i].CAR_NUM +">";
@@ -3921,7 +3951,7 @@
                 	htmlData+="</div>"
                 	htmlData+="</div>";
 
-                	 
+
                 	 $("#fOutreqModal").html(htmlData);
                  }
              }
