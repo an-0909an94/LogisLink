@@ -68,7 +68,7 @@
                                     <div class="help-block with-errors"></div>
                                 </div>
                             
-                            
+
 	                            <div class="form-group row mr0 mt5">
                                 	<a id="startAddr" style="margin-top: 18px;" class="k-pager-refresh k-button openCloseBtn">추가정보열기</a>
 	                                <div class="input-group input-group-sm wd270 middle-name form-group">
@@ -86,7 +86,7 @@
 	                                	<input type="text" id="sAddrDetail" name="sAddrDetail" class="form-control form-control-sm" >
 	                            	</div>
 	                            </div>
-	                            
+
 	                            <!-- 상차지 접기, 열기 부분 -->
 	                            <div id="startAddrOpenClose" class="openCloseDiv">
 		                            <div class="form-group row mt5">
@@ -100,7 +100,7 @@
 		                                	<input type="text" id="sTel" name="sTel" class="form-control form-control-sm" maxlength="13">
 		                                </div>
 		                            </div>
-		                            
+
 		                            <div class="form-group row mt5">
 		                                <label class="col-form-label"></label>
 		                                <div class="input-group input-group-sm wd270 middle-name form-group">
@@ -157,7 +157,7 @@
                                     <div class="help-block with-errors"></div>
                                 </div>
                             
-                            
+
 	                           <div class="form-group row mr0 mt5">
 	                               <a id="endAddr" class="k-pager-refresh k-button openCloseBtn">추가정보열기</a>
 	                               <div class="input-group input-group-sm wd270 middle-name form-group">
@@ -175,7 +175,7 @@
 	                                   <input type="text"  id="eAddrDetail" name="eAddrDetail" class="form-control form-control-sm" >
 	                           	</div>
 	                           </div>
-	                           
+
 	                           <!-- 하차지 접기, 열기 부분 -->
 	                           <div id="endAddrOpenClose" class="openCloseDiv">
 	                            <div class="form-group row">
@@ -222,14 +222,14 @@
                                     <select class="custom-select col-12" id="carTonCode" name="carTonCode" required></select>
                                     <div class="help-block with-errors"></div>
                                 </div>
-                                
+
 	                            <div class="form-group row mr0 mt5">
 									<a id="cargo" class="k-pager-refresh k-button openCloseBtn">추가정보열기</a>
 	                                <div class="input-group input-group-sm col middle-name form-group">
 	                                <strong>화물정보</strong>
 	                                    <input style="width: 237.13px;" type="text" class="form-control form-control-sm" id="goodsName" name="goodsName">
 	                                </div>
-	                                
+
 	                                <div class="col middle-name form-group">
 	                                <strong>중량</strong>
 	                                    <input type="text" class="form-control form-control-sm" id="goodsWeight" name="goodsWeight" pattern="^(\d*)[\.]?(\d{1,3})?$"
@@ -238,11 +238,11 @@
 	                                <div class="input-group input-group-sm col middle-name form-group mr0">
 	                                <strong>　</strong>
 	                                	<!-- <select class="custom-select col-12" id="weightUnitCode" name="weightUnitCode" required></select> -->
-	                                	<input class="form-control form-control-sm" id="weightUnitCode" name="weightUnitCode" value="TON" readonly >                                    	
+	                                	<input class="form-control form-control-sm" id="weightUnitCode" name="weightUnitCode" value="TON" readonly >
 	                                    <div class="help-block with-errors"></div>
 	                                </div>
 	                            </div>
-	                            
+
 	                            <!-- 화물 접기, 열기부분 -->
 	                            <div id="cargoOpenClose" class="openCloseDiv">
 		                            <div class="form-group row mr0 mt5">
@@ -258,14 +258,14 @@
 		                                    <div class="help-block with-errors"></div>
 		                                </div>
 		                            </div>
-		                            
+
 		                            <div class="form-group row mr0 mt5">
 		                                <label class="col-form-label"></label>
 		                                <div class="input-group input-group-sm wd140 middle-name form-group">
 		                                <strong>운송품목</strong>
 		                                	<select class="custom-select col-12" id="itemCode" name="itemCode"></select>
 		                                </div>
-		                                
+
 		                                <div class="input-group input-group-sm wd70 middle-name form-group">
 		                                <strong>수량</strong>
 		                                    <input type="text" class="form-control form-control-sm" id="goodsQty" name="goodsQty">
@@ -275,14 +275,14 @@
 		                                	<select class="custom-select col-12" id="qtyUnitCode" name="qtyUnitCode"></select>
 		                                </div>
 		                            </div>
-		                        	
+
 		                        	<div class="form-group row mr0 mt5">
 		                                <label class="col-form-label"></label>
 		                                <div class="input-group input-group-sm wd140 middle-name form-group">
 		                                <strong class="required">상차방법</strong>
 		                                	<select class="custom-select col-12" id="sWayCode"name="sWayCode" required></select>
 		                                </div>
-		                                
+
 		                                <div class="input-group input-group-sm wd130 middle-name form-group">
 		                                <strong class="required">하차방법</strong>
 		                                    <select class="custom-select col-12" id="eWayCode" name="eWayCode" required></select>
@@ -296,20 +296,20 @@
 		                                	<span>혼적</span>
 		                                	</label>
 		                                </div>
-		                                
+
 		                                <div class="input-group input-group-sm col radio-or-checkBox form-group">
 		                                	<input type="checkbox" id="returnYn" name="returnYn" onclick="btnChk(this)">
 		                                	<label for="returnYn" class="insert-label">
 		                                	<span>왕복</span>
 		                                	</label>
 		                                </div>
-		                                
+
 		                                <div class="input-group input-group-sm wd100 middle-name form-group form-group mr0">
 		                                <strong>혼적크기</strong>
 		                                    <select class="custom-select col-12" id="mixSize" name="mixSize"></select>
 		                             	</div>
 		                            </div>
-			                                
+
 	                                <div class="form-group row mr0">
 	                                    <label class="col-form-label"></label>
 	                                    <div style="display: block;" class="input-group input-group-sm wd70 mr0 radio-or-checkBox form-group">
@@ -318,14 +318,14 @@
 	                                    	<span style="margin-right: 0px">위험물</span>
 	                                    	</label>
 	                                    </div>
-	                                    
+
 	                                    <div style="display: block;" class="input-group input-group-sm wd70 mr0 radio-or-checkBox form-group">
 	                                    	<input type="checkbox" id="chemicalsYn" name="chemicalsYn" onclick="btnChk(this)">
 	                                    	<label for="chemicalsYn" class="insert-label">
 	                                    	<span style="margin-right: 0px">유해물</span>
 	                                    	</label>
 	                                    </div>
-	                                    
+
 	                                    <div style="display: block;" class="input-group input-group-sm wd90 mr0 radio-or-checkBox form-group">
 	                                    	<input type="checkbox" id="foreignLicenseYn" name="foreignLicenseYn" onclick="btnChk(this)">
 	                                    	<label for="foreignLicenseYn" class="insert-label">
@@ -356,7 +356,7 @@
                                     <input style="width: 100%;" type="text" name="buyStaff" id="buyStaff">
                                 </div>
                             
-                            
+
                              <div class="form-group row mt5">
                             	<label class="col-form-label"></label>
                             </div>
@@ -422,7 +422,7 @@
                             </div>
                         	
 						</fieldset>
-						
+
 						</form>
 					</div>
                    <!-- editor -->
