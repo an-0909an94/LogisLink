@@ -169,7 +169,7 @@
                     <div class="row gray_box_s" style="width:100%">
                         <label class="col-form-label big-name">다중표시</label>
                         <div style="text-align: left;" class="input-group input-group-sm wd240 middle-name">
-                            <select name="itemTotalType" id="itemTotalType" style="width: 100%" class="custom-select" disabled="disabled">
+                            <select name="itemTotalType" id="itemTotalType" style="width: 100%" class="custom-select">
                                 <option value="0" selected="selected">단건</option>
                                 <option value="1">다중</option>
                             </select>
@@ -787,7 +787,7 @@
     		if ($(this).is(":checked")) {
     			taxDate.enable(true);
     		} else {
-    			taxDate.enable(false);			
+    			taxDate.enable(false);
     		}
     	});
      	

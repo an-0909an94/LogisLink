@@ -187,7 +187,7 @@
 </div>
 
 <div id="carModal">
-    <form class="modalEditor" id="carForm" data-toggle="validator" role="form" autocomplete="off">
+    <form class="modalEditor" id="carForm" data-toggle="validator" role="form" autocomplete="off" style="flex-direction: column;">
         <input type="hidden" name="driverAllocId" id="driverAllocId">
         <input type="hidden" id="vehicId" name="vehicId">
         <input type="hidden" id="driverId" name="driverId">
@@ -1299,7 +1299,7 @@
                                             <input id="distance" name="distance" type="text" class="wd90 form-control form-control-sm" readonly>
                                             <div class="input-group input-group-sm wd370 middle-name form-group">
                                                     <strong>메모</strong>
-                                                    <textarea rows="4" id="memo" name="memo" class="wd370 form-control form-control-sm textarea"></textarea>
+                                                    <textarea rows="4" id="memo" name="memo" class="wd370 form-control form-control-sm textarea" style="height: 62px !important;"></textarea>
                                                 </div>
                                         </div>
                                         <div class="input-group input-group-sm wd170 mr0 middle-name form-group time">
