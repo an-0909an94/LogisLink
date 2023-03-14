@@ -265,7 +265,7 @@ var Util = {
 		},
 
 		dummyPopSearchPost(mode){
-			window.open("/contents/basic/view/dummySearchPost.do?mode="+mode, "PopupPost", "width=712, height=790");
+			window.open("/contents/basic/view/dummySearchPost.do?mode="+mode, "PopupPost", "width=712, height=500");
 		},
 		
 		popSearchBizinfo: function(mode){

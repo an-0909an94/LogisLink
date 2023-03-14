@@ -1013,15 +1013,21 @@
                                             <label for="carrier" class="label-margin"> <span>운송사지정</span>
                                             </label>
                                         </div>
-                                        <div class="input-group input-group-sm col" id="allocButtons" style="display: none; align-self: flex-end;">
+                                        <div class="input-group input-group-sm col" id="allocButtons" style="display: none; align-self: flex-end;margin-right: 12px;">
                                             <a class="k-button" href="javascript:updateAllocState('D', '21')">실행취소</a>
                                         </div>
-                                        
-                                        <div class="input-group input-group-sm col" id="changeNewRunButtons" style="display: none; align-self: flex-end;">
-                                            <a class="k-button" href="javascript:changeNewRunCar()">차량변경</a>
+                                        <div id="chkTalkYDiv" class="input-group input-group-sm col radio-or-checkBox" style="width:64px; text-align: right;">
+                                            <input id="chkTalkY" name="chkTalk" type="radio" value="Y" checked="checked">
+                                            <label for="chkTalkY" class="label-margin"> <span>알림</span>
+                                            </label>
+                                        </div>
+                                        <div id="chkTalkNDiv" class="input-group input-group-sm col radio-or-checkBox" style="text-align: right;">
+                                            <input id="chkTalkN" name="chkTalk" type="radio" value="N">
+                                            <label for="chkTalkN" class="label-margin"> <span>미알림</span>
+                                            </label>
                                         </div>
                                         
-                                        
+
                                         <div class="input-group input-group-sm btn_58" id="driverProposal" style="align-self: flex-end; margin-right: 45px;">
                                             <a id="driverProposalBtn" class="k-button btn_58 p0" style="line-height: 23px;">추천차주</a>
                                         </div>
@@ -1032,16 +1038,6 @@
                                     <div class="form-group row mr0" style="padding:5px 0">
                                     <div class="col-form-label wd90 big-name-div">
                                         <label class="col-form-label big-name"></label>
-                                    </div>
-                                    <div id="chkTalkYDiv" class="input-group input-group-sm col radio-or-checkBox" style="width:64px; text-align: right;">
-                                        <input id="chkTalkY" name="chkTalk" type="radio" value="Y" checked="checked">
-                                        <label for="chkTalkY" class="label-margin"> <span>알림</span>
-                                        </label>
-                                    </div>
-                                    <div id="chkTalkNDiv" class="input-group input-group-sm col radio-or-checkBox" style="text-align: right;">
-                                        <input id="chkTalkN" name="chkTalk" type="radio" value="N">
-                                        <label for="chkTalkN" class="label-margin"> <span>미알림</span>
-                                        </label>
                                     </div>
                                     </div>
 
@@ -1274,6 +1270,9 @@
                                         <div id="driverTelDataDiv" class="input-group input-group-sm col middle-name form-group">
                                             <strong>휴대전화</strong>
                                             <input type="text" id="driverTelData" class="form-control form-control-sm" readonly>
+                                        </div>
+                                        <div class="input-group input-group-sm col" id="changeNewRunButtons" style="display: none; align-self: flex-end;">
+                                            <a class="k-button" href="javascript:changeNewRunCar()">차량변경</a>
                                         </div>
                                     </div>
 

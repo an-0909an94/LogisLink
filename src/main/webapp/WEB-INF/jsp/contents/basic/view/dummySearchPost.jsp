@@ -8,7 +8,7 @@
                 tabindex="0" role="tablist" aria-activedescendant="editor_tabs_ts_active">
                 <!-- content -->
                 <div class="tab-content k-content k-state-active" id="editor_tabs-1" role="tabpanel"
-                    aria-expanded="true" style="display: block; padding-top:6%;">
+                    aria-expanded="true" style="display: block; padding-top:6%; max-height:500px;height: 491.4px;">
 	                <form id="fSearch">
 	                    <fieldset>
 	                        <legend style="text-align: center;">주소검색</legend>
@@ -40,7 +40,7 @@
 					<div id="splitter" style="border: 0; min-height: calc(50vw - 150px);display: flex;justify-content: center;">
 						<div id="address_grid" style="max-width: calc(100vw - 30px); height: auto"></div>
 	               	</div>
-					<div class="form-group row p30">
+					<%--<div class="form-group row p30">
                     	<input type="hidden" name="orderStopData" id="orderStopData">
                         <label class="col-form-label big-name" style="width: 120px;color: #000000;">주소 불분명 시</label>
                         <div class="input-group input-group-sm col">
@@ -58,7 +58,7 @@
                     </div>
 					<div class="form-group row" style="text-align: center;">
 						<label class="big-name" style="color: #ff0000;font-size: inherit;width: 100%;">※ 주소 불분명 시에는 자동출도착처리가 되지 않습니다. 가능한 주소검색을 이용하세요.</label>
-					</div>
+					</div>--%>
                     <!-- editor -->
                 </div>
             </div><!-- content -->
@@ -104,6 +104,7 @@ function goList(){
 	}; 
 	
 	var grid = $("#address_grid").data("kendoGrid");
+
 	
 	oGrid.setSearchData(param);
 	
