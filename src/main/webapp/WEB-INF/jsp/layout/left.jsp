@@ -754,7 +754,7 @@ function setLeftmenu() {
 			s += "<ul class=\"sub-li-wrap\">";
 			for(var item2, j=0; item2=menuList.menu[j]; j++) {
 				if(item.menuSeq == item2.parentSeq && item2.depth.toString() == "2") {
-					s += "	<li class=\"sub-li\" id=\"sub-li" + item2.menuSeq + "\"><a href=\"" + item2.pageUrl + "\">" + item2.menuName + "</a></li>";
+					s += "	<li class=\"sub-li\" id=\"sub-li" + item2.menuSeq + "\"><a href=\"#\" onclick=menuClick(\"" + item2.pageUrl + "\",\"" + item2.menuName + "\");return false;>" + item2.menuName + "</a></li>";
 					
 					if(currPage.trim() == item2.pageUrl.trim()) {
 						parentMenuSeq = item2.parentSeq;
@@ -1248,6 +1248,23 @@ function setPrivData(json){
 			}
 		}
 	});
+}
+
+
+function menuClick(menuUrl,menuName){
+
+    location.href = menuUrl;
+
+    $.ajax({
+        url: "/contents/basic/eventLogWrite.do",
+        type: "POST",
+        async : false,
+        data: {
+            menuUrl:  menuUrl,
+            menuName: menuName
+        }
+    });
+
 }
 
 </script>

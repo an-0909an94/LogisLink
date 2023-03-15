@@ -1975,9 +1975,10 @@
             buyCustName.select(function(dataItem) {
                 return dataItem.custName === name;
             });
-            buyCustName.value(name); // buyCustName 값이 없으면 다시 값을 전달
-            buyCustName.trigger("change");
-
+            if (data.allocState == '10' ){
+            	buyCustName.value(name); // buyCustName 값이 없으면 다시 값을 전달
+            	buyCustName.trigger("change");
+            }
             //배차담당자 세팅
 
             buyStaff= $("#buyStaff").data("kendoMultiColumnComboBox");
