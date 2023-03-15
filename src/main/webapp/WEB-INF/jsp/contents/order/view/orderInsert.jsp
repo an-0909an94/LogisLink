@@ -294,25 +294,25 @@
                             <input type="hidden" id="driverCustId" name="driverCustId">
                             <input type="hidden" id="driverDeptId" name="driverDeptId">
                             <fieldset>
-	                            <div class="orderInsert_top">
-	                                <legend id="order_legend">오더 등록</legend>
-	                                <div class="editor_btns order_editor_btns" style="text-align: center;">
-		                                <div class="padding">
-		                                    <a id="orderDelete" onclick="updateOrderState('09')" class="k-pager-refresh k-button">
-		                                        <b class="btn-r"><span id="btn_state">오더취소</span></b>
-		                                    </a>
-		                                    <button type="submit" onclick="readonlyValidator();" class="k-pager-refresh k-button btn_58 btn_b" id="btnSubmit">
-		                                        <b class="btn-b"><strong id="btn_save">저장</strong></b>
-		                                    </button>
-		                                    <a id="orderCopy" onclick="orderCopy();" class="k-pager-refresh k-button btn_b">
-		                                        <b class="btn-b">복사</b>
-		                                    </a>
-		                                    <a onclick="form_popup_close();" class="k-pager-refresh k-button btn_58 btn_black">
-		                                        <b class="btn-g">닫기</b>
-		                                    </a>
-		                                </div>
-		                            </div>
-	                            </div>
+                                <div class="orderInsert_top">
+                                    <legend id="order_legend">오더 등록</legend>
+                                    <div class="editor_btns order_editor_btns" style="text-align: center;">
+                                        <div class="padding">
+                                            <a id="orderDelete" onclick="updateOrderState('09')" class="k-pager-refresh k-button">
+                                                <b class="btn-r"><span id="btn_state">오더취소</span></b>
+                                            </a>
+                                            <button type="submit" onclick="readonlyValidator();" class="k-pager-refresh k-button btn_58 btn_b" id="btnSubmit">
+                                                <b class="btn-b"><strong id="btn_save">저장</strong></b>
+                                            </button>
+                                            <a id="orderCopy" onclick="orderCopy();" class="k-pager-refresh k-button btn_b">
+                                                <b class="btn-b">복사</b>
+                                            </a>
+                                            <a onclick="form_popup_close();" class="k-pager-refresh k-button btn_58 btn_black">
+                                                <b class="btn-g">닫기</b>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div>
                                     <div class="form-group row bortop pt10 pb10 pl8 mt77">
                                         <label class="col-form-label big-name">담당부서</label>
@@ -334,7 +334,7 @@
                                             <input name="sellCustName" id="sellCustName" class="wd170" type="text" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
-                                        
+
                                         <!-- 22.07.05 이건욱 거래처명 선택시 부서명 -> 대표자명으로 변경 -->
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
                                             <strong>대표자명</strong>
@@ -343,118 +343,118 @@
                                         <div id="prevDiv" style="display: contents;" class="input-group input-group-sm wd58 middle-name form-group">
                                             <a id="prevOrder" href="javascript:popGridList();" style="line-height: 23px; margin-top: 22px; height: 26px; background: #3b3b3b; border-radius: 4px; color: #fff;" class="k-pager-refresh k-button btn_58 p0">이전거래</a>
                                         </div>
-                                        
+
                                         <!-- 화주 접기, 열기 부분 -->
-	                                    <div>
-	                                        <div id="ownerOpenClose" class="openCloseDiv">
-	                                            <div class="form-group row mr0 mt5">
-	                                                <label class="col-form-label"></label>
-	                                                <div class="input-group input-group-sm wd100 middle-name form-group">
-	                                                    <strong>거래처등급</strong>
-	                                                    <input type="text" name="custMngCodeName" id="custMngCodeName" class="wd100 form-control form-control-sm" readonly>
-	                                                </div>
-	                                                <div class="input-group input-group-sm wd160 mr0 middle-name form-group">
-	                                                    <strong>거래처등급사유</strong>
-	                                                    <input type="text" name="custMngMemo" id="custMngMemo" class="wd160 form-control form-control-sm" readonly>
-	                                                </div>
-	                                            </div>
-	
-	                                            <div class="form-group row mr0 mt5">
-	                                                <label class="col-form-label"></label>
-	                                                <div class="input-group input-group-sm wd270 middle-name form-group">
-	                                                    <strong>주소</strong>
-	                                                    <div class="textBox-in-icon">
-	                                                        <input onclick="popSearchPost('reqAddr');" type="text" name="reqAddr" id="reqAddr" class="wd270 form-control form-control-sm addr-text-box" readonly>
-	                                                        <i><img onclick="popSearchPost('reqAddr');" src="/images/icon/icon_search.png"></i>
-	                                                    </div>
-	                                                </div>
-	
-	
-	                                                <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
-	                                                    <strong>상세주소</strong>
-	                                                    <input type="text" name="reqAddrDetail" id="reqAddrDetail" class="wd90 form-control form-control-sm addr-text-box">
-	                                                </div>
-	                                            </div>
-	
-	                                            <div class="form-group row mr0 mt5">
-	                                                <label class="col-form-label big-name"></label>
-	                                                <div class="input-group input-group-sm wd100 middle-name form-group">
-	                                                    <strong>담당자</strong>
-	                                                    <input type="hidden" name="sellStaffId" id="sellStaffId">
-	                                                    <input style="width: 100%;" type="text" name="sellStaff" id="sellStaff">
-	                                                </div>
-	                                                <div class="input-group input-group-sm wd160 mr0 middle-name form-group">
-	                                                    <strong>연락처</strong>
-	                                                    <input type="text" name="reqTel" id="reqTel" maxlength="13" class="wd160 form-control form-control-sm">
-	                                                    <div class="help-block with-errors"></div>
-	                                                </div>
-	                                            </div>
-	
-	                                            <div class="form-group row mr0 mt5">
-	                                                <label class="col-form-label big-name"></label>
-	                                                <div class="input-group input-group-sm wd100 middle-name form-group">
-	                                                    <strong>사업자번호</strong>
-	                                                    <input type="text" name="reqBizNum" id="reqBizNum" class="wd100 form-control form-control-sm" readonly>
-	                                                </div>
-	                                                <div class="input-group input-group-sm wd160 mr0 middle-name form-group">
-	                                                    <strong>상호</strong>
-	                                                    <input type="text" name="reqBizName" id="reqBizName" class="wd160 form-control form-control-sm" readonly>
-	                                                </div>
-	                                            </div>
-	
-	                                            <div class="form-group row mr0 mt5">
-	                                                <label class="col-form-label big-name"></label>
-	                                                <div class="input-group input-group-sm wd100 middle-name form-group">
-	                                                    <!-- 22.07.05 이건욱 거래처명 선택시 부서명 -> 대표자명으로 변경 -->
-	                                                    <strong>담당부서</strong>
-	                                                    <input type="text" name="sellDeptName" id="sellDeptName" class="wd100 form-control form-control-sm" readonly>
-	                                                </div>
-	                                                <div class="input-group input-group-sm wd260 mr0 middle-name form-group">
-	                                                    <strong>사업자주소</strong>
-	                                                    <input type="text" name="reqBizAddr" id="reqBizAddr" class="wd260 form-control form-control-sm" readonly>
-	                                                </div>
-	                                            </div>
-	
-	                                            <div class="form-group row mr0 mt5">
-	                                                <label class="col-form-label big-name"></label>
-	                                                <div class="input-group input-group-sm wd100 middle-name form-group">
-	                                                    <strong>세금계산서 담당자</strong>
-	                                                    <input type="text" name="reqTaxStaffName" id="reqTaxStaffName" class="wd100 form-control form-control-sm" readonly>
-	                                                </div>
-	                                                <div class="input-group input-group-sm wd160 mr0 middle-name form-group">
-	                                                    <strong>세금계산서 전화번호</strong>
-	                                                    <input type="text" name="reqTaxTelNum" id="reqTaxTelNum" class="wd160 form-control form-control-sm" readonly>
-	                                                </div>
-	                                            </div>
-	
-	                                            <div class="form-group row mr0 mt5">
-	                                                <label class="col-form-label"></label>
-	                                                <div class="input-group input-group-sm wd270 middle-name form-group">
-	                                                    <strong>세금계산서 이메일</strong>
-	                                                    <input type="text" name="reqTaxEmail" id="reqTaxEmail" class="wd270 form-control form-control-sm" readonly>
-	                                                </div>
-	                                            </div>
-	                                            <div class="form-group row mr0 mt5">
-	                                            	<label class="col-form-label"></label>
-	                                                <div class="wd270 input-group middle-name form-group mr0">
-	                                                    <strong>요청사항</strong>
-	                                                    <input type="text" id="reqMemo" name="reqMemo" class="wd270 form-control form-control-sm">
-	                                                </div>
-                                                </div> 
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                                <!-- 화주 접기, 열기 부분 -->
+                                        <div>
+                                            <div id="ownerOpenClose" class="openCloseDiv">
+                                                <div class="form-group row mr0 mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="input-group input-group-sm wd100 middle-name form-group">
+                                                        <strong>거래처등급</strong>
+                                                        <input type="text" name="custMngCodeName" id="custMngCodeName" class="wd100 form-control form-control-sm" readonly>
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd160 mr0 middle-name form-group">
+                                                        <strong>거래처등급사유</strong>
+                                                        <input type="text" name="custMngMemo" id="custMngMemo" class="wd160 form-control form-control-sm" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mr0 mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="input-group input-group-sm wd270 middle-name form-group">
+                                                        <strong>주소</strong>
+                                                        <div class="textBox-in-icon">
+                                                            <input onclick="popSearchPost('reqAddr');" type="text" name="reqAddr" id="reqAddr" class="wd270 form-control form-control-sm addr-text-box" readonly>
+                                                            <i><img onclick="popSearchPost('reqAddr');" src="/images/icon/icon_search.png"></i>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="input-group input-group-sm wd90 mr0 middle-name form-group">
+                                                        <strong>상세주소</strong>
+                                                        <input type="text" name="reqAddrDetail" id="reqAddrDetail" class="wd90 form-control form-control-sm addr-text-box">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mr0 mt5">
+                                                    <label class="col-form-label big-name"></label>
+                                                    <div class="input-group input-group-sm wd100 middle-name form-group">
+                                                        <strong>담당자</strong>
+                                                        <input type="hidden" name="sellStaffId" id="sellStaffId">
+                                                        <input style="width: 100%;" type="text" name="sellStaff" id="sellStaff">
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd160 mr0 middle-name form-group">
+                                                        <strong>연락처</strong>
+                                                        <input type="text" name="reqTel" id="reqTel" maxlength="13" class="wd160 form-control form-control-sm">
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mr0 mt5">
+                                                    <label class="col-form-label big-name"></label>
+                                                    <div class="input-group input-group-sm wd100 middle-name form-group">
+                                                        <strong>사업자번호</strong>
+                                                        <input type="text" name="reqBizNum" id="reqBizNum" class="wd100 form-control form-control-sm" readonly>
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd160 mr0 middle-name form-group">
+                                                        <strong>상호</strong>
+                                                        <input type="text" name="reqBizName" id="reqBizName" class="wd160 form-control form-control-sm" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mr0 mt5">
+                                                    <label class="col-form-label big-name"></label>
+                                                    <div class="input-group input-group-sm wd100 middle-name form-group">
+                                                        <!-- 22.07.05 이건욱 거래처명 선택시 부서명 -> 대표자명으로 변경 -->
+                                                        <strong>담당부서</strong>
+                                                        <input type="text" name="sellDeptName" id="sellDeptName" class="wd100 form-control form-control-sm" readonly>
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd260 mr0 middle-name form-group">
+                                                        <strong>사업자주소</strong>
+                                                        <input type="text" name="reqBizAddr" id="reqBizAddr" class="wd260 form-control form-control-sm" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mr0 mt5">
+                                                    <label class="col-form-label big-name"></label>
+                                                    <div class="input-group input-group-sm wd100 middle-name form-group">
+                                                        <strong>세금계산서 담당자</strong>
+                                                        <input type="text" name="reqTaxStaffName" id="reqTaxStaffName" class="wd100 form-control form-control-sm" readonly>
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd160 mr0 middle-name form-group">
+                                                        <strong>세금계산서 전화번호</strong>
+                                                        <input type="text" name="reqTaxTelNum" id="reqTaxTelNum" class="wd160 form-control form-control-sm" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mr0 mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="input-group input-group-sm wd270 middle-name form-group">
+                                                        <strong>세금계산서 이메일</strong>
+                                                        <input type="text" name="reqTaxEmail" id="reqTaxEmail" class="wd270 form-control form-control-sm" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row mr0 mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="wd270 input-group middle-name form-group mr0">
+                                                        <strong>요청사항</strong>
+                                                        <input type="text" id="reqMemo" name="reqMemo" class="wd270 form-control form-control-sm">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 화주 접기, 열기 부분 -->
                                 </div>
-                                    
-                                    
-                                
-                                
+
+
+
+
                                 <div class="gray_box">
                                     <div class="form-group row mr0">
                                         <div class="col-form-label big-name big-name-div wd90">
                                             <label class="col-form-label big-name wd90">상차</label>
-                                            
+
                                         </div>
                                         <input type="hidden" name="sLat" id="sLat">
                                         <input type="hidden" name="sLon" id="sLon">
@@ -479,12 +479,12 @@
                                     </div>
 
                                     <div class="form-group row mr0 mt5">
-                                        
+
                                         <a id="startAddr" class="k-pager-refresh k-button openCloseBtn">상차추가열기</a>
                                         <div class="wd270 input-group middle-name form-group">
                                             <strong class="required">주소</strong>
                                             <div class="textBox-in-icon">
-                                                <input style="width: 17.5rem;"  id="sAddr" name="sAddr" type="text">
+                                                <input type="text" id="sAddr" name="sAddr" pattern="^[가-힣]+(\s{1,}[가-힣]+)*$" style="width: 17.5rem;" />
                                                 <i><img onclick="dummyPopSearchPost('sAddr');" src="/images/icon/icon_search.png"></i>
                                                 <!-- 											<input style="width:17.5rem;" onclick="popSearchPost('sAddr');" id="sAddr" name="sAddr" type="text" class="form-control form-control-sm addr-text-box" required readonly="readonly"> -->
                                                 <!-- 											<i><img onclick="popSearchPost('sAddr');" src="/images/icon/search.png"></i> -->
@@ -545,7 +545,7 @@
                                     <div class="form-group row pt10 bortop mr0">
                                         <div class="col-form-label wd90 big-name-div">
                                             <label class="col-form-label big-name">하차</label>
-                                            
+
                                         </div>
                                         <input type="hidden" name="eLat" id="eLat">
                                         <input type="hidden" name="eLon" id="eLon">
@@ -554,7 +554,7 @@
                                         <input type="hidden" name="eDong" id="eDong">
                                         <div class="input-group input-group-sm middle-name form-group wd170">
                                             <strong>하차지명</strong>
-                                            <input style="width: 100%;" type="text" id="eComName" name="eComName">
+                                            <input type="text" id="eComName" name="eComName" pattern="^[가-힣]+(\s{1,}[가-힣]+)*$" style="width: 100%;">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="input-group middle-name form-group wd90">
@@ -571,8 +571,8 @@
                                     </div>
 
                                     <div class="form-group row mr0 mt5">
-                                        
-										<a id="endAddr" class="k-pager-refresh k-button openCloseBtn">하차추가열기</a>
+
+                                        <a id="endAddr" class="k-pager-refresh k-button openCloseBtn">하차추가열기</a>
                                         <div class="wd270 input-group middle-name form-group">
                                             <strong class="required">주소</strong>
                                             <div class="textBox-in-icon">
@@ -626,7 +626,7 @@
                                     <div class="form-group row">
                                         <div class="col-form-label wd90 big-name-div">
                                             <label class="col-form-label big-name">화물</label>
-                                            
+
                                         </div>
                                         <div class="input-group input-group-sm wd130 middle-name form-group">
                                             <strong class="required">요청차종</strong>
@@ -724,10 +724,10 @@
                                                     <select class="custom-select col-12 wd110" id="mixSize" name="mixSize"></select>
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group row mr0 mt5 mb10">
-                                            	<label class="col-form-label"></label>
-	                                            <div class="input-group input-group-sm col radio-or-checkBox form-group">
+                                                <label class="col-form-label"></label>
+                                                <div class="input-group input-group-sm col radio-or-checkBox form-group">
                                                     <input type="checkbox" id="dangerGoodsYn" name="dangerGoodsYn" onclick="btnChk(this)">
                                                     <label for="dangerGoodsYn" class="insert-label"> <span>위험물</span>
                                                     </label>
@@ -749,28 +749,28 @@
                                                     <input type="text" class="form-control form-control-sm wd140" id="externalInformation" name="externalInformation">
                                                     <div class="help-block with-errors"></div>
                                                 </div>
-                                           	</div>
+                                            </div>
 
-<%--                                            <div class="form-group row">
-                                                <label class="col-form-label"></label>
-                                                <div style="display: block; text-align: left; margin: 0.3em;" class="input-group input-group-sm col radio-or-checkBox form-group">
-                                                    <input type="checkbox" id="dangerGoodsYn" name="dangerGoodsYn" onclick="btnChk(this)">
-                                                    <label for="dangerGoodsYn" class="insert-label"> <span>위험물</span>
-                                                    </label>
-                                                </div>
+                                            <%--                                            <div class="form-group row">
+                                                                                            <label class="col-form-label"></label>
+                                                                                            <div style="display: block; text-align: left; margin: 0.3em;" class="input-group input-group-sm col radio-or-checkBox form-group">
+                                                                                                <input type="checkbox" id="dangerGoodsYn" name="dangerGoodsYn" onclick="btnChk(this)">
+                                                                                                <label for="dangerGoodsYn" class="insert-label"> <span>위험물</span>
+                                                                                                </label>
+                                                                                            </div>
 
-                                                <div style="display: block; text-align: center; margin: 0.3em;" class="input-group input-group-sm col radio-or-checkBox form-group">
-                                                    <input type="checkbox" id="chemicalsYn" name="chemicalsYn" onclick="btnChk(this)">
-                                                    <label for="chemicalsYn" class="insert-label"> <span>유해물</span>
-                                                    </label>
-                                                </div>
+                                                                                            <div style="display: block; text-align: center; margin: 0.3em;" class="input-group input-group-sm col radio-or-checkBox form-group">
+                                                                                                <input type="checkbox" id="chemicalsYn" name="chemicalsYn" onclick="btnChk(this)">
+                                                                                                <label for="chemicalsYn" class="insert-label"> <span>유해물</span>
+                                                                                                </label>
+                                                                                            </div>
 
-                                                <div style="display: block; text-align: right; margin: 0.3em;" class="input-group input-group-sm col radio-or-checkBox form-group">
-                                                    <input type="checkbox" id="foreignLicenseYn" name="foreignLicenseYn" onclick="btnChk(this)">
-                                                    <label for="foreignLicenseYn" class="insert-label"> <span>보세운송</span>
-                                                    </label>
-                                                </div>
-                                            </div>--%>
+                                                                                            <div style="display: block; text-align: right; margin: 0.3em;" class="input-group input-group-sm col radio-or-checkBox form-group">
+                                                                                                <input type="checkbox" id="foreignLicenseYn" name="foreignLicenseYn" onclick="btnChk(this)">
+                                                                                                <label for="foreignLicenseYn" class="insert-label"> <span>보세운송</span>
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>--%>
                                         </div>
                                     </div>
                                     <!-- 화물 접기, 열기부분 -->
@@ -1026,7 +1026,7 @@
                                             <label for="chkTalkN" class="label-margin"> <span>미알림</span>
                                             </label>
                                         </div>
-                                        
+
 
                                         <div class="input-group input-group-sm btn_58" id="driverProposal" style="align-self: flex-end; margin-right: 45px;">
                                             <a id="driverProposalBtn" class="k-button btn_58 p0" style="line-height: 23px;">추천차주</a>
@@ -1036,9 +1036,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group row mr0" style="padding:5px 0">
-                                    <div class="col-form-label wd90 big-name-div">
-                                        <label class="col-form-label big-name"></label>
-                                    </div>
+                                        <div class="col-form-label wd90 big-name-div">
+                                            <label class="col-form-label big-name"></label>
+                                        </div>
                                     </div>
 
 
@@ -1160,155 +1160,155 @@
                                     <div id="driverOtherOpenClose" class="openCloseDiv">
                                     </div>
                                     <div class="form-group row pt10 mr0 bortop mt5">
-                                    <div class="form-group row mt10 two_icon">
-                                        <a style="height: 23px;" id="otherChargeBtn" class="k-button openCloseBtn" href="javascript:otherChargeOpen()"></a>
-                                        <div class="wd90 input-group middle-name form-group">
-                                            <strong>차주확인사항</strong>
-                                            <input id="driverMemo" name="driverMemo" type="text" class="form-control form-control-sm">
+                                        <div class="form-group row mt10 two_icon">
+                                            <a style="height: 23px;" id="otherChargeBtn" class="k-button openCloseBtn" href="javascript:otherChargeOpen()"></a>
+                                            <div class="wd90 input-group middle-name form-group">
+                                                <strong>차주확인사항</strong>
+                                                <input id="driverMemo" name="driverMemo" type="text" class="form-control form-control-sm">
+                                            </div>
+                                            <div class="input-group input-group-sm wd190 mr0 middle-name form-group ">
+                                                <strong>배차일자</strong>
+                                                <input type="text" style="padding: 0px; width: 100%;" id="allocDate" name="allocDate">
+                                            </div>
                                         </div>
-                                        <div class="input-group input-group-sm wd190 mr0 middle-name form-group ">
-                                            <strong>배차일자</strong>
-                                            <input type="text" style="padding: 0px; width: 100%;" id="allocDate" name="allocDate">
+
+
+                                        <div>
+                                            <div id="otherCharge" style="display: none;">
+                                                <input type="hidden" id="addMemoList" name="addMemoList" value="">
+                                                <input type="hidden" id="addCodeList" name="addCodeList" value="">
+                                                <input type="hidden" id="addChargeList" name="addChargeList" value="">
+                                                <div class="form-group row mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
+                                                        <strong>경유비(지불)</strong>
+                                                        <input id="wayPointCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
+                                                        <strong>경유비 메모</strong>
+                                                        <input id="wayPointMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
+                                                        <strong>대기료(지불)</strong>
+                                                        <input id="stayCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
+                                                        <strong>대기료 메모</strong>
+                                                        <input id="stayMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
+                                                        <strong>수작업비(지불)</strong>
+                                                        <input id="handWorkCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
+                                                        <strong>수작업비 메모</strong>
+                                                        <input id="handWorkMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
+                                                        <strong>회차료(지불)</strong>
+                                                        <input id="roundCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
+                                                        <strong>회차료 메모</strong>
+                                                        <input id="roundMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
+                                                        <strong>기타추가비(지불)</strong>
+                                                        <input id="otherAddCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
+                                                        <div class="help-block with-errors"></div>
+                                                    </div>
+                                                    <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
+                                                        <strong>기타추가비 메모</strong>
+                                                        <input id="otherAddMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group row mt5">
+                                                    <label class="col-form-label"></label>
+                                                    <div class="input-group input-group-sm wd90 middle-name form-group">
+                                                        <strong>지불운임(소계)</strong>
+                                                        <input id="addSumCharge" name="addSumCharge" type="text" class="wd90 form-control form-control-sm noColorReadonly" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="driverKind" class="form-group row" style="display: flex;align-items: center;align-content: center;margin: 12px 0;">
+                                            <label class="col-form-label big-name">차량</label>
+                                            <div id="carModalBtnDiv" class="col input-group" style="display: flex;justify-content: flex-start;">
+                                                <a style="background: #fff; border-radius: 4px; box-shadow: 0px 0px 2px 0px; color: #0A8DFF; font-weight: bolder;" id="carModalBtn" class="k-pager-refresh k-button">운송사 차량 직접 배차</a>
+                                            </div>
+
+                                            <div id="carNumDataDiv" class="input-group input-group-sm col middle-name form-group">
+                                                <strong>차량번호</strong>
+                                                <input type="text" id="carNumData" class="form-control form-control-sm" readonly>
+                                            </div>
+                                            <div id="driverNameDataDiv" class="input-group input-group-sm col middle-name form-group">
+                                                <strong>차주성명</strong>
+                                                <input type="text" id="driverNameData" class="form-control form-control-sm" readonly>
+                                            </div>
+                                            <div id="driverTelDataDiv" class="input-group input-group-sm col middle-name form-group">
+                                                <strong>휴대전화</strong>
+                                                <input type="text" id="driverTelData" class="form-control form-control-sm" readonly>
+                                            </div>
+                                            <div class="input-group input-group-sm col" id="changeNewRunButtons" style="display: none; align-self: flex-end;">
+                                                <a class="k-button" href="javascript:changeNewRunCar()">차량변경</a>
+                                            </div>
+                                        </div>
+
+                                        <div id="driverStateDiv" class="form-group row">
+                                            <div class="input-group input-group-sm col middle-name form-group">
+                                                <strong>차량상태</strong>
+                                                <select id="driverState" name="driverState" class="custom-select col-12"></select>
+                                            </div>
+                                            <div class="input-group input-group-sm col middle-name form-group">
+                                                <strong>입차시간</strong>
+                                                <input id="enterDate" name="enterDate" type="text" class="form-control form-control-sm" readonly>
+                                            </div>
+                                            <div class="input-group input-group-sm col middle-name form-group">
+                                                <strong>출발시간</strong>
+                                                <input id="startDate" name="startDate" type="text" class="form-control form-control-sm" readonly>
+                                            </div>
+                                            <div class="input-group input-group-sm col middle-name form-group">
+                                                <strong>도착시간</strong>
+                                                <input id="finishDate" name="finishDate" type="text" class="form-control form-control-sm" readonly>
+                                            </div>
                                         </div>
                                     </div>
-
-
-                                    <div>
-                                        <div id="otherCharge" style="display: none;">
-                                            <input type="hidden" id="addMemoList" name="addMemoList" value="">
-                                            <input type="hidden" id="addCodeList" name="addCodeList" value="">
-                                            <input type="hidden" id="addChargeList" name="addChargeList" value="">
-                                            <div class="form-group row mt5">
-                                                <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm wd90 middle-name form-group">
-                                                    <strong>경유비(지불)</strong>
-                                                    <input id="wayPointCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
-                                                    <div class="help-block with-errors"></div>
-                                                </div>
-                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
-                                                    <strong>경유비 메모</strong>
-                                                    <input id="wayPointMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row mt5">
-                                                <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm wd90 middle-name form-group">
-                                                    <strong>대기료(지불)</strong>
-                                                    <input id="stayCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
-                                                    <div class="help-block with-errors"></div>
-                                                </div>
-                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
-                                                    <strong>대기료 메모</strong>
-                                                    <input id="stayMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row mt5">
-                                                <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm wd90 middle-name form-group">
-                                                    <strong>수작업비(지불)</strong>
-                                                    <input id="handWorkCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
-                                                    <div class="help-block with-errors"></div>
-                                                </div>
-                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
-                                                    <strong>수작업비 메모</strong>
-                                                    <input id="handWorkMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row mt5">
-                                                <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm wd90 middle-name form-group">
-                                                    <strong>회차료(지불)</strong>
-                                                    <input id="roundCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
-                                                    <div class="help-block with-errors"></div>
-                                                </div>
-                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
-                                                    <strong>회차료 메모</strong>
-                                                    <input id="roundMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row mt5">
-                                                <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm wd90 middle-name form-group">
-                                                    <strong>기타추가비(지불)</strong>
-                                                    <input id="otherAddCharge" name="addCharge" type="text" class="wd90 form-control form-control-sm" pattern="^\d*[\d|,]*\d$" data-pattern-error="숫자만 입력해 주세요." onchange='sumCharge()'>
-                                                    <div class="help-block with-errors"></div>
-                                                </div>
-                                                <div class="input-group input-group-sm wd190 mr0 middle-name form-group">
-                                                    <strong>기타추가비 메모</strong>
-                                                    <input id="otherAddMemo" name="addMemo" type="text" class="wd190 form-control form-control-sm">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row mt5">
-                                                <label class="col-form-label"></label>
-                                                <div class="input-group input-group-sm wd90 middle-name form-group">
-                                                    <strong>지불운임(소계)</strong>
-                                                    <input id="addSumCharge" name="addSumCharge" type="text" class="wd90 form-control form-control-sm noColorReadonly" readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div id="driverKind" class="form-group row" style="display: flex;align-items: center;align-content: center;margin: 12px 0;">
-                                        <label class="col-form-label big-name">차량</label>
-                                        <div id="carModalBtnDiv" class="col input-group" style="display: flex;justify-content: flex-start;">
-                                            <a style="background: #fff; border-radius: 4px; box-shadow: 0px 0px 2px 0px; color: #0A8DFF; font-weight: bolder;" id="carModalBtn" class="k-pager-refresh k-button">운송사 차량 직접 배차</a>
-                                        </div>
-
-                                        <div id="carNumDataDiv" class="input-group input-group-sm col middle-name form-group">
-                                            <strong>차량번호</strong>
-                                            <input type="text" id="carNumData" class="form-control form-control-sm" readonly>
-                                        </div>
-                                        <div id="driverNameDataDiv" class="input-group input-group-sm col middle-name form-group">
-                                            <strong>차주성명</strong>
-                                            <input type="text" id="driverNameData" class="form-control form-control-sm" readonly>
-                                        </div>
-                                        <div id="driverTelDataDiv" class="input-group input-group-sm col middle-name form-group">
-                                            <strong>휴대전화</strong>
-                                            <input type="text" id="driverTelData" class="form-control form-control-sm" readonly>
-                                        </div>
-                                        <div class="input-group input-group-sm col" id="changeNewRunButtons" style="display: none; align-self: flex-end;">
-                                            <a class="k-button" href="javascript:changeNewRunCar()">차량변경</a>
-                                        </div>
-                                    </div>
-
-                                    <div id="driverStateDiv" class="form-group row">
-                                        <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong>차량상태</strong>
-                                            <select id="driverState" name="driverState" class="custom-select col-12"></select>
-                                        </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong>입차시간</strong>
-                                            <input id="enterDate" name="enterDate" type="text" class="form-control form-control-sm" readonly>
-                                        </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong>출발시간</strong>
-                                            <input id="startDate" name="startDate" type="text" class="form-control form-control-sm" readonly>
-                                        </div>
-                                        <div class="input-group input-group-sm col middle-name form-group">
-                                            <strong>도착시간</strong>
-                                            <input id="finishDate" name="finishDate" type="text" class="form-control form-control-sm" readonly>
-                                        </div>
-                                    </div>
-                                </div>
                                     <!-- 배차 기타 정보 열기, 접기부분 -->
 
                                     <div class="form-group row pt10 mr0 bortop mt5">
                                         <div class="col-form-label wd90 big-name-div">
                                             <label class="col-form-label big-name">기타</label>
-                                           <!--  <a id="other" class="k-pager-refresh k-button openCloseBtn" style="position: absolute; margin-top: 30px;">메모열기</a>-->
+                                            <!--  <a id="other" class="k-pager-refresh k-button openCloseBtn" style="position: absolute; margin-top: 30px;">메모열기</a>-->
                                         </div>
                                         <div class="input-group input-group-sm wd170 middle-name form-group km">
                                             <strong style="margin:0px;">거리(km)</strong>
                                             <input id="distance" name="distance" type="text" class="wd90 form-control form-control-sm" readonly>
                                             <div class="input-group input-group-sm wd370 middle-name form-group">
-                                                    <strong>메모</strong>
-                                                    <textarea rows="4" id="memo" name="memo" class="wd370 form-control form-control-sm textarea" style="height: 62px !important;"></textarea>
-                                                </div>
+                                                <strong>메모</strong>
+                                                <textarea rows="4" id="memo" name="memo" class="wd370 form-control form-control-sm textarea" style="height: 62px !important;"></textarea>
+                                            </div>
                                         </div>
                                         <div class="input-group input-group-sm wd170 mr0 middle-name form-group time">
                                             <strong style="margin:0px;">시간</strong>
@@ -1331,7 +1331,7 @@
                                     </div>
                                 </div> -->
                             </fieldset>
-                            
+
                         </form>
                     </div>
                     <!-- editor -->
@@ -1352,6 +1352,7 @@
 </div>
 
 <script type="text/javascript">
+
     var chkUID =true;
     var chkTEST =true;
     var sellCustName, buyCustName;
@@ -1362,8 +1363,8 @@
     var g_mode = "";
     var win = null;
     var lastDeptSeleted;
-/*    var finishCnt;
-    var taxCnt;*/
+    /*    var finishCnt;
+        var taxCnt;*/
 
     var popColumns = [
         { field: "number", title: "No", width: 50 },
@@ -1893,8 +1894,8 @@
     function gridDataSet(data) {
         //init();
 
-/*        finishCnt = data.finishCnt;
-        taxCnt  = data.taxCnt;*/
+        /*        finishCnt = data.finishCnt;
+                taxCnt  = data.taxCnt;*/
 
         buyCarNum.value('');
         sellCustName.enable(false);
@@ -2068,11 +2069,11 @@
             $("#divAllocD").hide();
             $("#allocButtons").show();
             if(data.externalFlag =='N'){
-            	$("#changeNewRunButtons").show();
+                $("#changeNewRunButtons").show();
             }else{
-            	$("#changeNewRunButtons").hide();
+                $("#changeNewRunButtons").hide();
             }
-           // changeNewRunButtons
+            // changeNewRunButtons
             $("#driverProposal").hide();
             $("#allocC").show();
             $("#allocD").hide();
@@ -2104,7 +2105,7 @@
             $("#allocC").hide();
             $("#allocD").show();
         } else if (data.allocState == '09') {	//정보망접수
-        	$("#changeNewRunButtons").hide();
+            $("#changeNewRunButtons").hide();
             $("#driverProposal").hide();
         } else {
             if(data.driverKind == 'Y'){			// 차주 지정 상태
@@ -2171,7 +2172,7 @@
             $("#driverNameDataDiv").hide();
             $("#driverTelDataDiv").hide();
             $("#carModalBtnDiv").show();
-            
+
             $("#changeNewRunButtons").hide();
         }
         //수출입 구분, 운송유형, 차종, 톤수 세팅
@@ -2179,8 +2180,8 @@
         $("#driverCustId").val(data.driverCustId);
         $("#driverDeptId").val(data.driverDeptId);
 
-        
-        
+
+
         $("#inOutSctn").val(data.inOutSctn);
         setFrtSelect(truckTypeData, "truckTypeCode", data.inOutSctn, data.truckTypeCode);
         setFrtSelect(carTypeData, "carTypeCode", data.truckTypeCode, data.carTypeCode);
@@ -2215,41 +2216,41 @@
         driverCodeChk();
 
         if((data.salesFinish !="N"&& data.salesFinish !=null)|| (data.salesTaxinv !="N"&&data.salesTaxinv !=null)){
-           // $('#carTypeCode').attr("readonly", true);
-/*            $("select[name=carTypeCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
-            $("select[name=carTypeCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+            // $('#carTypeCode').attr("readonly", true);
+            /*            $("select[name=carTypeCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("select[name=carTypeCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
 
-            $("select[name=carTonCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
-            $("select[name=carTonCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+                        $("select[name=carTonCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("select[name=carTonCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
 
-            $("select[name=sWayCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
-            $("select[name=sWayCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+                        $("select[name=sWayCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("select[name=sWayCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
 
-            $("select[name=eWayCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
-            $("select[name=eWayCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');*/
+                        $("select[name=eWayCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("select[name=eWayCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');*/
 
-/*            $('#goodsName').attr("readonly", true);
-            $('#goodsWeight').attr("readonly", true);*/
+            /*            $('#goodsName').attr("readonly", true);
+                        $('#goodsWeight').attr("readonly", true);*/
             $('#sellCharge').attr("readonly", true);
             $('#unitCharge').attr("readonly", true);
             $('#latestFare').css('display', 'none');
             //sellCharge
 //화물정보, 청구운임
         }else{
-/*            $("select[name=carTypeCode]").removeAttr("onFocus");
-            $("select[name=carTypeCode]").removeAttr("onChange");
+            /*            $("select[name=carTypeCode]").removeAttr("onFocus");
+                        $("select[name=carTypeCode]").removeAttr("onChange");
 
-            $("select[name=carTonCode]").removeAttr("onFocus");
-            $("select[name=carTonCode]").removeAttr("onChange");
+                        $("select[name=carTonCode]").removeAttr("onFocus");
+                        $("select[name=carTonCode]").removeAttr("onChange");
 
-            $("select[name=sWayCode]").removeAttr("onFocus");
-            $("select[name=sWayCode]").removeAttr("onChange");
+                        $("select[name=sWayCode]").removeAttr("onFocus");
+                        $("select[name=sWayCode]").removeAttr("onChange");
 
-            $("select[name=eWayCode]").removeAttr("onFocus");
-            $("select[name=eWayCode]").removeAttr("onChange");*/
+                        $("select[name=eWayCode]").removeAttr("onFocus");
+                        $("select[name=eWayCode]").removeAttr("onChange");*/
 
-/*            $('#goodsName').attr("readonly", false);
-            $('#goodsWeight').attr("readonly", false);*/
+            /*            $('#goodsName').attr("readonly", false);
+                        $('#goodsWeight').attr("readonly", false);*/
             $('#sellCharge').attr("readonly", false);
             $('#unitCharge').attr("readonly", false);
             $('#latestFare').css('display', '');
@@ -2257,71 +2258,71 @@
 
         if((data.purchaseFinish !="N"&&data.purchaseFinish !=null) || (data.purchaseTaxinv !="N"&&data.purchaseTaxinv !=null)){
 
-/*
-            $("select[name=carSctnCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
-            $("select[name=carSctnCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+            /*
+                        $("select[name=carSctnCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("select[name=carSctnCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
 
-            $("select[name=linkSelect]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
-            $("select[name=linkSelect]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+                        $("select[name=linkSelect]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("select[name=linkSelect]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
 
-            $("select[name=buyCarTypeCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
-            $("select[name=buyCarTypeCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+                        $("select[name=buyCarTypeCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("select[name=buyCarTypeCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
 
-            $("select[name=buyCarTonCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
-            $("select[name=buyCarTonCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+                        $("select[name=buyCarTonCode]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("select[name=buyCarTonCode]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
 
-            $("select[name=payType]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
-            $("select[name=payType]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
-*/
+                        $("select[name=payType]").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("select[name=payType]").attr('onChange', 'this.selectedIndex = this.initialSelect;');
+            */
 
             $('#buyChargeD').attr("readonly", true);
 //배차정보, 지불운임
         }else{
-/*            $("select[name=carSctnCode]").removeAttr("onFocus");
-            $("select[name=carSctnCode]").removeAttr("onChange");
+            /*            $("select[name=carSctnCode]").removeAttr("onFocus");
+                        $("select[name=carSctnCode]").removeAttr("onChange");
 
-            $("select[name=linkSelect]").removeAttr("onFocus");
-            $("select[name=linkSelect]").removeAttr("onChange");
+                        $("select[name=linkSelect]").removeAttr("onFocus");
+                        $("select[name=linkSelect]").removeAttr("onChange");
 
-            $("select[name=buyCarTypeCode]").removeAttr("onFocus");
-            $("select[name=buyCarTypeCode]").removeAttr("onChange");
+                        $("select[name=buyCarTypeCode]").removeAttr("onFocus");
+                        $("select[name=buyCarTypeCode]").removeAttr("onChange");
 
-            $("select[name=buyCarTonCode]").removeAttr("onFocus");
-            $("select[name=buyCarTonCode]").removeAttr("onChange");
+                        $("select[name=buyCarTonCode]").removeAttr("onFocus");
+                        $("select[name=buyCarTonCode]").removeAttr("onChange");
 
-            $("select[name=payType]").removeAttr("onFocus");
-            $("select[name=payType]").removeAttr("onChange");*/
+                        $("select[name=payType]").removeAttr("onFocus");
+                        $("select[name=payType]").removeAttr("onChange");*/
 
             $('#buyChargeD').attr("readonly", false);
         }
         //마감 및 계산서 상태값 저장
-/*        $("#salesFinish").val(data.salesFinish);
-        $("#salesTaxinv").val(data.salesTaxinv);
-        $("#purchaseFinish").val(data.purchaseFinish);
-        $("#purchaseTaxinv").val(data.purchaseTaxinv);*/
+        /*        $("#salesFinish").val(data.salesFinish);
+                $("#salesTaxinv").val(data.salesTaxinv);
+                $("#purchaseFinish").val(data.purchaseFinish);
+                $("#purchaseTaxinv").val(data.purchaseTaxinv);*/
 
-/*        if(data.linkStat03 !=''){
-            $("input:checkbox[id='24Cargo']").prop("checked", true);
-            $("#24Cargo").val("Y");
-            $("#24Charge").attr("readonly",false);
-        }
-        if(data.linkStat18 !=''){
-            $("input:checkbox[id='oneCargo']").prop("checked", true);
-            $("#oneCargo").val("Y");
-            $("#oneCharge").attr("readonly",false);
-        }
-        if(data.linkStat21 !=''){
-            $("input:checkbox[id='manCargo']").prop("checked", true);
-            $("#manCargo").val("Y");
-            $("#manCharge").attr("readonly",false);
-        }*/
+        /*        if(data.linkStat03 !=''){
+                    $("input:checkbox[id='24Cargo']").prop("checked", true);
+                    $("#24Cargo").val("Y");
+                    $("#24Charge").attr("readonly",false);
+                }
+                if(data.linkStat18 !=''){
+                    $("input:checkbox[id='oneCargo']").prop("checked", true);
+                    $("#oneCargo").val("Y");
+                    $("#oneCharge").attr("readonly",false);
+                }
+                if(data.linkStat21 !=''){
+                    $("input:checkbox[id='manCargo']").prop("checked", true);
+                    $("#manCargo").val("Y");
+                    $("#manCharge").attr("readonly",false);
+                }*/
         if(data.linkCharge03 ==""){
             $("#24Charge").val(data.linkCharge03);
         }else{
             if(data.linkStat03 =="I"||data.linkStat03 =="U"){
                 $("#24Charge").val(Util.formatNumber(data.linkCharge03));
             }
-           // $("#24Charge").val(Util.formatNumber(data.linkCharge03));
+            // $("#24Charge").val(Util.formatNumber(data.linkCharge03));
             //return Util.formatNumber(dataItem.sellFee)+"";
         }
         if(data.linkCharge18 ==""){
@@ -2337,7 +2338,7 @@
             if(data.linkStat21 =="I"||data.linkStat21 =="U"){
                 $("#manCharge").val(Util.formatNumber(data.linkCharge21));
             }
-           // $("#manCharge").val(Util.formatNumber(data.linkCharge21));
+            // $("#manCharge").val(Util.formatNumber(data.linkCharge21));
         }
 
 
@@ -2428,38 +2429,38 @@
 
 
 
-/*        $("select[name=carTypeCode]").removeAttr("onFocus");
-        $("select[name=carTypeCode]").removeAttr("onChange");
+        /*        $("select[name=carTypeCode]").removeAttr("onFocus");
+                $("select[name=carTypeCode]").removeAttr("onChange");
 
-        $("select[name=carTonCode]").removeAttr("onFocus");
-        $("select[name=carTonCode]").removeAttr("onChange");
+                $("select[name=carTonCode]").removeAttr("onFocus");
+                $("select[name=carTonCode]").removeAttr("onChange");
 
-        $("select[name=sWayCode]").removeAttr("onFocus");
-        $("select[name=sWayCode]").removeAttr("onChange");
+                $("select[name=sWayCode]").removeAttr("onFocus");
+                $("select[name=sWayCode]").removeAttr("onChange");
 
-        $("select[name=eWayCode]").removeAttr("onFocus");
-        $("select[name=eWayCode]").removeAttr("onChange");*/
+                $("select[name=eWayCode]").removeAttr("onFocus");
+                $("select[name=eWayCode]").removeAttr("onChange");*/
 
-/*        $('#goodsName').attr("readonly", false);
-        $('#goodsWeight').attr("readonly", false);*/
+        /*        $('#goodsName').attr("readonly", false);
+                $('#goodsWeight').attr("readonly", false);*/
         $('#sellCharge').attr("readonly", false);
         $('#unitCharge').attr("readonly", false);
         $('#latestFare').css('display', '');
 
-/*        $("select[name=carSctnCode]").removeAttr("onFocus");
-        $("select[name=carSctnCode]").removeAttr("onChange");
+        /*        $("select[name=carSctnCode]").removeAttr("onFocus");
+                $("select[name=carSctnCode]").removeAttr("onChange");
 
-        $("select[name=linkSelect]").removeAttr("onFocus");
-        $("select[name=linkSelect]").removeAttr("onChange");
+                $("select[name=linkSelect]").removeAttr("onFocus");
+                $("select[name=linkSelect]").removeAttr("onChange");
 
-        $("select[name=buyCarTypeCode]").removeAttr("onFocus");
-        $("select[name=buyCarTypeCode]").removeAttr("onChange");
+                $("select[name=buyCarTypeCode]").removeAttr("onFocus");
+                $("select[name=buyCarTypeCode]").removeAttr("onChange");
 
-        $("select[name=buyCarTonCode]").removeAttr("onFocus");
-        $("select[name=buyCarTonCode]").removeAttr("onChange");
+                $("select[name=buyCarTonCode]").removeAttr("onFocus");
+                $("select[name=buyCarTonCode]").removeAttr("onChange");
 
-        $("select[name=payType]").removeAttr("onFocus");
-        $("select[name=payType]").removeAttr("onChange");*/
+                $("select[name=payType]").removeAttr("onFocus");
+                $("select[name=payType]").removeAttr("onChange");*/
 
         $('#buyChargeD').attr("readonly", false);
 
@@ -2684,18 +2685,18 @@
 
     $('#f').validator().on('submit', function (e) {
 
-/*        alert(finishCnt + "111111111111111");
-        alert(taxCnt + "222222222222");*/
+        /*        alert(finishCnt + "111111111111111");
+                alert(taxCnt + "222222222222");*/
 
-/*        if(taxCnt > 0){
-            alert("이미 정산이 마감된 오더입니다.")
-            return;
-        }
+        /*        if(taxCnt > 0){
+                    alert("이미 정산이 마감된 오더입니다.")
+                    return;
+                }
 
-        if(finishCnt > 0){
-            alert("이미 세금계산서가 발행된 오더입니다.")
-            return;
-        }*/
+                if(finishCnt > 0){
+                    alert("이미 세금계산서가 발행된 오더입니다.")
+                    return;
+                }*/
         if(!chkTEST){
             e.preventDefault();
             alert("등록된 거래처 명이 아닙니다.");
@@ -2884,12 +2885,12 @@
                     type: "POST",
                     dataType: "json",
                     data: $("#f").serialize(),
-                     beforeSend: function () {
+                    beforeSend: function () {
                         FunLoadingBarStart();      	//로딩바 생성
-                     }
+                    }
                     , complete: function () {
                         FunLoadingBarEnd();			//로딩바 제거
-                     },
+                    },
                     success: function(data){
                         if(data.result) {
                             alert(data.msg);
@@ -3029,14 +3030,14 @@
         $("#oneCharge").val($("#oneCharge").val().replace(/,/g, ""));
 
 
-    $.ajax({
+        $.ajax({
             url: "/contents/order/data/orderState.do",
             type: "POST",
             dataType: "json",
             data: "orderId=" + $("#orderId").val() + "&orderState=" + state
-                    + "&24Cargo=" + $("#24Cargo").val() + "&24Charge=" + $("#24Charge").val()
-                    + "&manCargo=" + $("#manCargo").val() + "&manCharge=" + $("#manCharge").val()
-                    + "&oneCargo=" + $("#oneCargo").val() + "&oneCharge=" + $("#oneCharge").val(),
+                + "&24Cargo=" + $("#24Cargo").val() + "&24Charge=" + $("#24Charge").val()
+                + "&manCargo=" + $("#manCargo").val() + "&manCharge=" + $("#manCharge").val()
+                + "&oneCargo=" + $("#oneCargo").val() + "&oneCharge=" + $("#oneCharge").val(),
             beforeSend: function () {
                 FunLoadingBarStart();      	//로딩바 생성
             }
@@ -3404,25 +3405,25 @@
         if($("#sellFee").val() == ""){
             $("#sellFee").val("0");
         }
-           $.ajax({
-                url: "/contents/order/data/orderWrite.do",
-                type: "POST",
-                dataType: "json",
-                data: $("#f").serialize(),
-                beforeSend: function () {
-                    FunLoadingBarStart();      	//로딩바 생성
+        $.ajax({
+            url: "/contents/order/data/orderWrite.do",
+            type: "POST",
+            dataType: "json",
+            data: $("#f").serialize(),
+            beforeSend: function () {
+                FunLoadingBarStart();      	//로딩바 생성
+            }
+            , complete: function () {
+                FunLoadingBarEnd();			//로딩바 제거
+            },
+            success: function (data) {
+                if (data.result) {
+                    alert(data.msg);
+                    init_popup_close();
+                    goList();
                 }
-                , complete: function () {
-                    FunLoadingBarEnd();			//로딩바 제거
-                },
-                success: function (data) {
-                    if (data.result) {
-                        alert(data.msg);
-                        init_popup_close();
-                        goList();
-                    }
-                }
-            })
+            }
+        })
     }
 
     function otherChargeOpen(){
@@ -3599,7 +3600,7 @@
                 $("#payType option[value*='Y']").prop('disabled',false);
                 $("#payType").val('Y').prop("selected", true);
             }else{
-               // $("#payType option[value*='Y']").prop('disabled',true);
+                // $("#payType option[value*='Y']").prop('disabled',true);
                 $("#payType").val('N').prop("selected", true);
             }
             //신규차량 등록시 빠른지급여부 미지급으로
@@ -3608,7 +3609,7 @@
                 $("#payType").val('Y').prop("selected", true);
             }
         }else{
-           // $("#payType option[value*='Y']").prop('disabled',true);
+            // $("#payType option[value*='Y']").prop('disabled',true);
             $("#payType").val('N').prop("selected", true);
         }
     }
@@ -3933,125 +3934,125 @@
             $("#oneCharge").val(Util.formatNumberInput($("#oneCharge").val().trim()));
         }
     });
-    
-    
+
+
     function changeNewRunCar() {
-/*     	alert($("#orderId").val());
-    	alert($("#sAddr").val());
-    	alert($("#sDateDay").val()); */
-    	
-    	
-    	
-    	outreqModal.data("kendoDialog").open();
-    	var htmlData = "";
-    	
-    	$("#fOutreqModal >").remove();
-
-    	 $.ajax({
-             url: "/contents/order/data/newRunCar.do",
-             type: "POST",
-             dataType: "json",
-             data: {
-            	 S_DATE: $("#sDateDay").val(),
-            	 S_ADDR: $("#sAddr").val(),
-            	 ORDER_ID: $("#orderId").val(),
-            	 CUST_ID : $("#driverCustId").val(),
-            	 DEPT_ID : $("#driverDeptId").val()
-             },
-             success: function(data){
-
-                 if(data.result) {
-                       htmlData+="<div id=\"indexListAjax\" class='buseBetween'>";
-                        htmlData+="<div class='buseList chartGraph'>";
-                            htmlData+="<dd class='col_a'>" + "체크" + "</dd>";
-                            htmlData+="<dd class='col_b'>" + "차량번호" + "</dd>";
-                            htmlData+="<dd class='col_c'>" + "이름" + "</dd>";
-                            htmlData+="<dd class='col_d'>" + "전화번호" + "</dd>";
-                            htmlData+="</div>"
-                	 for(var i = 0; i< data.newRunCar.length; i++) {
-						    htmlData+="<div id ="+data.newRunCar[i].DRIVER_ID+" class='buseList'>";
-                            htmlData+="<dd class='col_a'>";
-							htmlData+="<input type=\"hidden\" id=\"newRunVehicId\" name=\"newRunVehicId\" value ="+data.newRunCar[i].VEHIC_ID +">";
-							htmlData+="<input type=\"hidden\" id=\"newRunDriverId\" name=\"newRunDriverId\" value ="+data.newRunCar[i].DRIVER_ID +">";
-							htmlData+="<input type=\"hidden\" id=\"newRunCarNum\" name=\"newRunCarNum\" value ="+data.newRunCar[i].CAR_NUM +">";
-							htmlData+="<input type=\"hidden\" id=\"newRunCarTonCode\" name=\"newRunCarTonCode\" value ="+data.newRunCar[i].CAR_TON_CODE +">";
-							htmlData+="<input type=\"hidden\" id=\"newRunCarTypeCode\" name=\"newRunCarTypeCode\" value ="+data.newRunCar[i].CAR_TYPE_CODE +">";
-							htmlData+="<input type=\"hidden\" id=\"newRunDriverName\" name=\"newRunDriverName\" value ="+data.newRunCar[i].DRIVER_NAME +">";
-							htmlData+="<input type=\"hidden\" id=\"newRunTel\" name=\"newRunTel\" value ="+data.newRunCar[i].MOBILE +">";
-							//htmlData+="<input type=\"hidden\" id=\"newRunOrderId\" name=\"newRunOrderId\" value ="+data.allocCharge[i].ORDER_ID +">";
-							htmlData+="<input type=\"hidden\" id=\"basicOrderId\" name=\"basicOrderId\">";
-							htmlData+="<input type=\"hidden\" id=\"basicAllocId\" name=\"basicAllocId\">";
-							
-							htmlData+="<input type=\"radio\" name=\"newRunOrder\" id=\"newRunOrder\" value="+data.newRunCar[i].DRIVER_ID+">";
-                            htmlData+="</dd>"
-							htmlData+="<dd class='col_b'>"+data.newRunCar[i].CAR_NUM+"</dd>";
-							htmlData+="<dd class='col_c'>"+data.newRunCar[i].DRIVER_NAME+"</dd>";
-							htmlData+="<dd class='col_d'>"+data.newRunCar[i].MOBILE+"</dd>";
-						htmlData+="</div>"
-     					
-     				}
-                	htmlData+="</div>"
-                	htmlData+="</div>"
-                     htmlData+="<div class=\"editor_btns\">";
-                     htmlData+="<a onclick=\"outreqModalSubmit()\" class=\"btn_b k-pager-refresh k-button\" style=\"color: #fff\">저장</a>";
-                     htmlData+="<a onclick=\"outreqModalClose()\" class=\"btn_gray k-pager-refresh k-button\" style=\"color: #fff\">닫기</a>";
-                     htmlData+="</div>";
+        /*     	alert($("#orderId").val());
+                alert($("#sAddr").val());
+                alert($("#sDateDay").val()); */
 
 
-                	 $("#fOutreqModal").html(htmlData);
-                 }
-             }
-         });
 
-	}
-    
-	    outreqModal = $("#outreqModal");
-	    outreqModal.kendoDialog({
-	        width: "400px",
-	        height: "371px",
-            maxHeight: "406px",
-            paddingBottom: "36px",
-	        visible: false,
-	        title: "배차변경",
-	        closable: true,
-	        modal: true,
-	        close: function() {
-	            $("#fOutreqModal")[0].reset();
-	        }
-	    });
-	    
-	    
-	    function outreqModalSubmit() {
-	    	//alert($("input[name='newRunOrder']:checked").val());
-	    	var newRunOrderId = $("input[name='newRunOrder']:checked").val();
-	    	$("#"+newRunOrderId+", #basicOrderId").val($("#orderId").val());
-	    	$("#"+newRunOrderId+", #basicAllocId").val($("#driverAllocId").val());
-/*  	    	$("#"+newRunOrderId+" input[type='hidden']").each(function(i,item){
-	    		    if(item.value != ""){
-	    				console.log(item.id)
-	    		        console.log(item.value)
+        outreqModal.data("kendoDialog").open();
+        var htmlData = "";
 
-	    		  }
+        $("#fOutreqModal >").remove();
 
-	    	});
- */
-	        $.ajax({
-	            url: "/contents/order/data/newRunChangeDriver.do",
-	            type: "POST",
-	            dataType: "json",
-	            data : $("#"+newRunOrderId+" input[type='hidden']"),
-	            success: function(data) {
-	                alert("수정되었습니다.");
-	                outreqModalClose();
-	                init_popup_close();
-	                goList();
-	            }
-	        });
-	      //  goList();
-	    }
-	    
-	    function outreqModalClose() {
-	        outreqModal.data("kendoDialog").close();
-	        $("#fOutreqModal")[0].reset();
-	    }
+        $.ajax({
+            url: "/contents/order/data/newRunCar.do",
+            type: "POST",
+            dataType: "json",
+            data: {
+                S_DATE: $("#sDateDay").val(),
+                S_ADDR: $("#sAddr").val(),
+                ORDER_ID: $("#orderId").val(),
+                CUST_ID : $("#driverCustId").val(),
+                DEPT_ID : $("#driverDeptId").val()
+            },
+            success: function(data){
+
+                if(data.result) {
+                    htmlData+="<div id=\"indexListAjax\" class='buseBetween'>";
+                    htmlData+="<div class='buseList chartGraph'>";
+                    htmlData+="<dd class='col_a'>" + "체크" + "</dd>";
+                    htmlData+="<dd class='col_b'>" + "차량번호" + "</dd>";
+                    htmlData+="<dd class='col_c'>" + "이름" + "</dd>";
+                    htmlData+="<dd class='col_d'>" + "전화번호" + "</dd>";
+                    htmlData+="</div>"
+                    for(var i = 0; i< data.newRunCar.length; i++) {
+                        htmlData+="<div id ="+data.newRunCar[i].DRIVER_ID+" class='buseList'>";
+                        htmlData+="<dd class='col_a'>";
+                        htmlData+="<input type=\"hidden\" id=\"newRunVehicId\" name=\"newRunVehicId\" value ="+data.newRunCar[i].VEHIC_ID +">";
+                        htmlData+="<input type=\"hidden\" id=\"newRunDriverId\" name=\"newRunDriverId\" value ="+data.newRunCar[i].DRIVER_ID +">";
+                        htmlData+="<input type=\"hidden\" id=\"newRunCarNum\" name=\"newRunCarNum\" value ="+data.newRunCar[i].CAR_NUM +">";
+                        htmlData+="<input type=\"hidden\" id=\"newRunCarTonCode\" name=\"newRunCarTonCode\" value ="+data.newRunCar[i].CAR_TON_CODE +">";
+                        htmlData+="<input type=\"hidden\" id=\"newRunCarTypeCode\" name=\"newRunCarTypeCode\" value ="+data.newRunCar[i].CAR_TYPE_CODE +">";
+                        htmlData+="<input type=\"hidden\" id=\"newRunDriverName\" name=\"newRunDriverName\" value ="+data.newRunCar[i].DRIVER_NAME +">";
+                        htmlData+="<input type=\"hidden\" id=\"newRunTel\" name=\"newRunTel\" value ="+data.newRunCar[i].MOBILE +">";
+                        //htmlData+="<input type=\"hidden\" id=\"newRunOrderId\" name=\"newRunOrderId\" value ="+data.allocCharge[i].ORDER_ID +">";
+                        htmlData+="<input type=\"hidden\" id=\"basicOrderId\" name=\"basicOrderId\">";
+                        htmlData+="<input type=\"hidden\" id=\"basicAllocId\" name=\"basicAllocId\">";
+
+                        htmlData+="<input type=\"radio\" name=\"newRunOrder\" id=\"newRunOrder\" value="+data.newRunCar[i].DRIVER_ID+">";
+                        htmlData+="</dd>"
+                        htmlData+="<dd class='col_b'>"+data.newRunCar[i].CAR_NUM+"</dd>";
+                        htmlData+="<dd class='col_c'>"+data.newRunCar[i].DRIVER_NAME+"</dd>";
+                        htmlData+="<dd class='col_d'>"+data.newRunCar[i].MOBILE+"</dd>";
+                        htmlData+="</div>"
+
+                    }
+                    htmlData+="</div>"
+                    htmlData+="</div>"
+                    htmlData+="<div class=\"editor_btns\">";
+                    htmlData+="<a onclick=\"outreqModalSubmit()\" class=\"btn_b k-pager-refresh k-button\" style=\"color: #fff\">저장</a>";
+                    htmlData+="<a onclick=\"outreqModalClose()\" class=\"btn_gray k-pager-refresh k-button\" style=\"color: #fff\">닫기</a>";
+                    htmlData+="</div>";
+
+
+                    $("#fOutreqModal").html(htmlData);
+                }
+            }
+        });
+
+    }
+
+    outreqModal = $("#outreqModal");
+    outreqModal.kendoDialog({
+        width: "400px",
+        height: "371px",
+        maxHeight: "406px",
+        paddingBottom: "36px",
+        visible: false,
+        title: "배차변경",
+        closable: true,
+        modal: true,
+        close: function() {
+            $("#fOutreqModal")[0].reset();
+        }
+    });
+
+
+    function outreqModalSubmit() {
+        //alert($("input[name='newRunOrder']:checked").val());
+        var newRunOrderId = $("input[name='newRunOrder']:checked").val();
+        $("#"+newRunOrderId+", #basicOrderId").val($("#orderId").val());
+        $("#"+newRunOrderId+", #basicAllocId").val($("#driverAllocId").val());
+        /*  	    	$("#"+newRunOrderId+" input[type='hidden']").each(function(i,item){
+                            if(item.value != ""){
+                                console.log(item.id)
+                                console.log(item.value)
+
+                          }
+
+                    });
+         */
+        $.ajax({
+            url: "/contents/order/data/newRunChangeDriver.do",
+            type: "POST",
+            dataType: "json",
+            data : $("#"+newRunOrderId+" input[type='hidden']"),
+            success: function(data) {
+                alert("수정되었습니다.");
+                outreqModalClose();
+                init_popup_close();
+                goList();
+            }
+        });
+        //  goList();
+    }
+
+    function outreqModalClose() {
+        outreqModal.data("kendoDialog").close();
+        $("#fOutreqModal")[0].reset();
+    }
 </script>
