@@ -485,11 +485,43 @@
                                         <div class="wd270 input-group middle-name form-group">
                                             <strong class="required">주소</strong>
                                             <div class="textBox-in-icon">
-                                                <input type="text" id="sAddr" name="sAddr" pattern="^[가-힣]+(\s{1,}[가-힣]+)*$" style="width: 17.5rem;" />
+                                                <input type="text" id="sAddr" name="sAddr" onchange="this.value = removeLeadingAndTrailingSpaces(this.value);" style="width: 17.5rem;" />
                                                 <i><img onclick="dummyPopSearchPost('sAddr');" src="/images/icon/icon_search.png"></i>
                                                 <!-- 											<input style="width:17.5rem;" onclick="popSearchPost('sAddr');" id="sAddr" name="sAddr" type="text" class="form-control form-control-sm addr-text-box" required readonly="readonly"> -->
                                                 <!-- 											<i><img onclick="popSearchPost('sAddr');" src="/images/icon/search.png"></i> -->
                                             </div>
+
+                                            <script>
+                                                function removeLeadingAndTrailingSpaces(inputString) {
+                                                    return inputString.trim();
+                                                }
+
+                                                function hasSpaceBetweenWords(inputString) {
+                                                    var words = inputString.split(/\s+/);
+                                                    return words.length > 1;
+                                                }
+
+                                                $(document).ready(function () {
+                                                    $("#sAddr").kendoComboBox({
+                                                        change: function (e) {
+
+                                                            var combobox = e.sender;
+                                                            var value = combobox.value();
+
+                                                            // 공백 제거 후 값을 설정
+                                                            combobox.value(removeLeadingAndTrailingSpaces(value));
+
+                                                            if (!hasSpaceBetweenWords(value)) {
+                                                                // alert('문자 사이에 공백이 있어야 합니다.');
+                                                                return;
+                                                            }else {
+                                                                console.log('');
+                                                            }
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="wd90 mr0 input-group middle-name form-group">
@@ -2675,9 +2707,20 @@
             $("input:checkbox[id='"+id+"']").prop("checked", true);
         }
     }
+//인풋박스 전체공백
+/*    function noSpaceForm(obj) { // 공백사용못하게
+        var str_space = /\s/;  // 공백체크
+        if(str_space.exec(obj.value)) { //공백 체크
+            //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
+            obj.focus();
+            obj.value = obj.value.replace(/\s| /gi,''); // 공백제거
+            return false;
+        }
+    }*/
 
     function readonlyValidator(){
         $("input[name$='Addr']").removeAttr('readonly');
+
     }
 
 
