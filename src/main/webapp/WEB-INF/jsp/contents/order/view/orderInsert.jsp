@@ -179,7 +179,6 @@
 
 
 </style>
-
 <div id="priceView" class="editor-warp p-0">
     <div class="modalEditor" id="addCust">
         <div style="padding-left: 30px; padding-right: 30px; padding-top: 20px; text-align: left;">
@@ -205,7 +204,7 @@
             <label class="col-form-label big-name">차량번호</label>
             <div class="input-group input-group-sm col middle-name form-group">
                 <%--
-                  <input type="text" class="form-control form-control-sm" id="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required>
+                                <input type="text" class="form-control form-control-sm" id="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required>
                 --%>
                 <input type="text" class="form-control form-control-sm" id="carNum" maxlength="10" required>
 
@@ -485,7 +484,7 @@
                                         <div class="wd270 input-group middle-name form-group">
                                             <strong class="required">주소</strong>
                                             <div class="textBox-in-icon">
-                                                <input type="text" id="sAddr" name="sAddr" pattern="^[가-힣]+(\s{1,}[가-힣]+)*$" style="width: 17.5rem;" />
+                                                <input style="width: 17.5rem;"  id="sAddr" name="sAddr" type="text">
                                                 <i><img onclick="dummyPopSearchPost('sAddr');" src="/images/icon/icon_search.png"></i>
                                                 <!-- 											<input style="width:17.5rem;" onclick="popSearchPost('sAddr');" id="sAddr" name="sAddr" type="text" class="form-control form-control-sm addr-text-box" required readonly="readonly"> -->
                                                 <!-- 											<i><img onclick="popSearchPost('sAddr');" src="/images/icon/search.png"></i> -->
@@ -555,7 +554,7 @@
                                         <input type="hidden" name="eDong" id="eDong">
                                         <div class="input-group input-group-sm middle-name form-group wd170">
                                             <strong>하차지명</strong>
-                                            <input type="text" id="eComName" name="eComName" pattern="^[가-힣]+(\s{1,}[가-힣]+)*$" style="width: 100%;">
+                                            <input style="width: 100%;" type="text" id="eComName" name="eComName">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="input-group middle-name form-group wd90">
@@ -1353,7 +1352,6 @@
 </div>
 
 <script type="text/javascript">
-
     var chkUID =true;
     var chkTEST =true;
     var sellCustName, buyCustName;
