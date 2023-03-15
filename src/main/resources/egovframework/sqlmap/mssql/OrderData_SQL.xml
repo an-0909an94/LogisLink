@@ -176,7 +176,7 @@
 					AND B.S_DATE BETWEEN #{fromDate} AND #{toDate} + ' 23:59:59'
 				</when>
 			</choose>
-		</if>		
+		</if>
 		INNER JOIN
 		(SELECT  CUST_ID , DEPT_ID, CUST_NAME, MNG_DEPT_ID, MOBILE, STAFF_NAME, CUST_MNG_CODE, CUST_MNG_MEMO
 		FROM T_CUST_DTL WITH(NOLOCK)
@@ -738,8 +738,8 @@
 			 , A.STOP_SE			stopSe
 		FROM
 			T_ORDER_STOP A
-					INNER JOIN
-					T_ORDER B ON A.ORDER_ID = B.ORDER_ID
+				INNER JOIN
+			T_ORDER B ON A.ORDER_ID = B.ORDER_ID
 		WHERE
 			A.USE_YN = 'Y'
 		  AND A.ORDER_ID = #{orderId}
@@ -762,7 +762,7 @@
 			) A
 				INNER JOIN
 			T_ORDER_ALLOC B ON A.ORDER_ID = B.ORDER_ID AND B.ALLOC_STATE IN ('01','04', '05', '11', '12')
-			INNER JOIN
+				INNER JOIN
 			T_DRIVER_LOC_HISTORY C ON B.ALLOC_ID = C.ALLOC_ID AND B.DRIVER_ID = C.DRIVER_ID
 		ORDER BY
 			REGDATE ASC
@@ -981,11 +981,11 @@
 	<select id="selectAllocCharge" parameterType="java.util.HashMap" resultType="java.util.HashMap">
 		SELECT A.ALLOC_CHARGE  + ISNULL(B.ADD_CHARGE, 0) AS charge
 		FROM T_ORDER_ALLOC A
-			LEFT OUTER JOIN
-		   (SELECT ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE 
-		    FROM T_ORDER_ALLOC_ADD
-		    WHERE ALLOC_ID = #{allocId}
-			GROUP BY ALLOC_ID) B ON A.ALLOC_ID  = B.ALLOC_ID
+				 LEFT OUTER JOIN
+			 (SELECT ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE
+			  FROM T_ORDER_ALLOC_ADD
+			  WHERE ALLOC_ID = #{allocId}
+			  GROUP BY ALLOC_ID) B ON A.ALLOC_ID  = B.ALLOC_ID
 		WHERE A.ALLOC_ID = #{allocId}
 	</select>
 
@@ -1215,7 +1215,7 @@
 			, #{loginId} 			AS LOGIN_USER
 			, #{sellBuySctn}		AS SELL_BUY_SCTN
 			FROM
-			T_ORDER_ALLOC 
+			T_ORDER_ALLOC
 			WHERE
 			ALLOC_ID = #{allocId}
 		</foreach>
@@ -2360,71 +2360,79 @@
 			</choose>
 		</if>
 	</select>
-	
+
 	<select id="getNewRun" parameterType="java.util.HashMap" resultType="java.util.HashMap">
-		
+
 		SELECT isnull(G.DRIVER_ID,F.DRIVER_ID) DRIVER_ID,  isnull(G.VEHIC_ID, F.VEHIC_ID) VEHIC_ID ,FORMAT(a.S_DATE, 'yyyy-MM-dd hh') S_date ,C.DRIVER_NAME, D.CAR_NUM, C.MOBILE
-		, D.CAR_TYPE_CODE 
-		, D.CAR_TON_CODE 
-		
-		FROM T_ORDER AS a INNER JOIN 
-		T_ORDER_ALLOC F WITH(NOLOCK) ON A.ORDER_ID = F.ORDER_ID 
-		LEFT OUTER JOIN 
-		T_NEWRUNCAR G WITH(NOLOCK) ON A.ORDER_ID = G.ORDER_ID 		
-		INNER JOIN T_DRIVER C ON C.DRIVER_ID = isnull(G.DRIVER_ID,F.DRIVER_ID)
-		INNER JOIN T_VEHIC_MST D ON D.VEHIC_ID =  isnull(G.VEHIC_ID, F.VEHIC_ID)
-		INNER JOIN T_CUST_VEHIC E ON  E.DRIVER_ID = C.DRIVER_ID
-		
-		AND isnull(G.DRIVER_ID,F.DRIVER_ID) != '' 
-		AND isnull(G.VEHIC_ID, F.VEHIC_ID) != ''
-		AND S_ADDR = #{S_ADDR}
-		AND FORMAT(a.S_DATE, 'yyyy-MM-dd') = FORMAT(convert(datetime, #{S_DATE}, 120), 'yyyy-MM-dd')
-		AND a.EXTERNAL_FLAG = 'N'
-		AND E.CUST_ID = #{CUST_ID}
-		AND E.DEPT_ID = #{DEPT_ID}
-		
-		GROUP BY isnull(G.DRIVER_ID,F.DRIVER_ID),  isnull(G.VEHIC_ID, F.VEHIC_ID), FORMAT(a.S_DATE, 'yyyy-MM-dd hh'),  C.DRIVER_NAME , D.CAR_NUM, C.MOBILE, 
-		D.CAR_TYPE_CODE 
-	   ,D.CAR_TON_CODE 
+			 , D.CAR_TYPE_CODE
+			 , D.CAR_TON_CODE
+
+		FROM T_ORDER AS a INNER JOIN
+			 T_ORDER_ALLOC F WITH(NOLOCK) ON A.ORDER_ID = F.ORDER_ID
+			LEFT OUTER JOIN
+			T_NEWRUNCAR G WITH(NOLOCK) ON A.ORDER_ID = G.ORDER_ID
+			INNER JOIN T_DRIVER C ON C.DRIVER_ID = isnull(G.DRIVER_ID,F.DRIVER_ID)
+			INNER JOIN T_VEHIC_MST D ON D.VEHIC_ID =  isnull(G.VEHIC_ID, F.VEHIC_ID)
+			INNER JOIN T_CUST_VEHIC E ON  E.DRIVER_ID = C.DRIVER_ID
+
+			AND isnull(G.DRIVER_ID,F.DRIVER_ID) != ''
+			AND isnull(G.VEHIC_ID, F.VEHIC_ID) != ''
+			AND S_ADDR = #{S_ADDR}
+			AND FORMAT(a.S_DATE, 'yyyy-MM-dd') = FORMAT(convert(datetime, #{S_DATE}, 120), 'yyyy-MM-dd')
+			AND a.EXTERNAL_FLAG = 'N'
+			AND E.CUST_ID = #{CUST_ID}
+			AND E.DEPT_ID = #{DEPT_ID}
+
+		GROUP BY isnull(G.DRIVER_ID,F.DRIVER_ID),  isnull(G.VEHIC_ID, F.VEHIC_ID), FORMAT(a.S_DATE, 'yyyy-MM-dd hh'),  C.DRIVER_NAME , D.CAR_NUM, C.MOBILE,
+			D.CAR_TYPE_CODE
+				,D.CAR_TON_CODE
 
 
 	</select>
-                        
+
 	<update id="updateNewRunOrderAlloc" parameterType="java.util.HashMap">
 		UPDATE
-			T_ORDER_ALLOC
+		T_ORDER_ALLOC
 		SET
-			VEHIC_ID = #{newRunVehicId}
-			,DRIVER_ID = #{newRunDriverId}
-			,CAR_NUM = #{newRunCarNum}
-			,CAR_TON_CODE = #{newRunCarTonCode}
-			,CAR_TYPE_CODE = #{newRunCarTypeCode}
-			,DRIVER_NAME = #{newRunDriverName}
-			,DRIVER_TEL = #{newRunTel}
+		VEHIC_ID = #{newRunVehicId}
+		,DRIVER_ID = #{newRunDriverId}
+		,CAR_NUM = #{newRunCarNum}
+		,CAR_TON_CODE = #{newRunCarTonCode}
+		,CAR_TYPE_CODE = #{newRunCarTypeCode}
+		,DRIVER_NAME = #{newRunDriverName}
+		,DRIVER_TEL = #{newRunTel}
 		WHERE
-			ALLOC_ID = #{basicAllocId} 
+		<if test = "basicAllocId != null and basicAllocId != ''">
+			ALLOC_ID = #{basicAllocId}
+		</if>
+		<if test = "basicOrderId != null and basicOrderId != ''">
+			AND
+			ORDER_ID = #{basicOrderId}
+		</if>
 		AND
-			ORDER_ID = #{basicOrderId} 
-		AND 
-			ISNULL(DRIVER_ID, '') != '' 
-		AND 
-			ISNULL(VEHIC_ID, '') != ''			
+		ISNULL(DRIVER_ID, '') != ''
+		AND
+		ISNULL(VEHIC_ID, '') != ''
 	</update>
 	<update id="updateNewRunCalc" parameterType="java.util.HashMap">
 		UPDATE
-			T_CALC
+		T_CALC
 		SET
-			VEHIC_ID = #{newRunVehicId}
-			,DRIVER_ID = #{newRunDriverId}
+		VEHIC_ID = #{newRunVehicId}
+		,DRIVER_ID = #{newRunDriverId}
 		WHERE
-			ALLOC_ID = #{basicAllocId} 
+		<if test = "basicAllocId != null and basicAllocId != ''">
+			ALLOC_ID = #{basicAllocId}
+		</if>
+		<if test = "basicOrderId != null and basicOrderId != ''">
+			AND
+			ORDER_ID = #{basicOrderId}
+		</if>
 		AND
-			ORDER_ID = #{basicOrderId} 
-		AND 
-			ISNULL(DRIVER_ID, '') != '' 
-		AND 
-			ISNULL(VEHIC_ID, '') != ''		
-		AND 
-			USE_YN ='Y'	
+		ISNULL(DRIVER_ID, '') != ''
+		AND
+		ISNULL(VEHIC_ID, '') != ''
+		AND
+		USE_YN ='Y'
 	</update>
 </mapper>

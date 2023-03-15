@@ -179,6 +179,7 @@
 
 
 </style>
+
 <div id="priceView" class="editor-warp p-0">
     <div class="modalEditor" id="addCust">
         <div style="padding-left: 30px; padding-right: 30px; padding-top: 20px; text-align: left;">
@@ -204,7 +205,7 @@
             <label class="col-form-label big-name">차량번호</label>
             <div class="input-group input-group-sm col middle-name form-group">
                 <%--
-                                <input type="text" class="form-control form-control-sm" id="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required>
+                  <input type="text" class="form-control form-control-sm" id="carNum" pattern="^[가-힣ㄱ-ㅎㅏ-ㅣ\x20]{2}\d{2}[가-힣ㄱ-ㅎㅏ-ㅣ\x20]\d{4}$" data-pattern-error="차량번호를 확인해 주세요." maxlength="10" required>
                 --%>
                 <input type="text" class="form-control form-control-sm" id="carNum" maxlength="10" required>
 
@@ -1974,9 +1975,10 @@
             buyCustName.select(function(dataItem) {
                 return dataItem.custName === name;
             });
-            buyCustName.value(name); // buyCustName 값이 없으면 다시 값을 전달
-            buyCustName.trigger("change");
-
+            if (data.allocState == '10' ){
+                buyCustName.value(name); // buyCustName 값이 없으면 다시 값을 전달
+                buyCustName.trigger("change");
+            }
             //배차담당자 세팅
 
             buyStaff= $("#buyStaff").data("kendoMultiColumnComboBox");
