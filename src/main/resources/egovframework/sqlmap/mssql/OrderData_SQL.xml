@@ -2402,13 +2402,9 @@
 			,DRIVER_NAME = #{newRunDriverName}
 			,DRIVER_TEL = #{newRunTel}
 		WHERE
-		<if test = "basicAllocId != null and basicAllocId != ''">
 			ALLOC_ID = #{basicAllocId} 
-		</if>
-		<if test = "basicOrderId != null and basicOrderId != ''">
 		AND
 			ORDER_ID = #{basicOrderId} 
-		</if>
 		AND 
 			ISNULL(DRIVER_ID, '') != '' 
 		AND 
@@ -2421,13 +2417,9 @@
 			VEHIC_ID = #{newRunVehicId}
 			,DRIVER_ID = #{newRunDriverId}
 		WHERE
-		<if test = "basicAllocId != null and basicAllocId != ''">
 			ALLOC_ID = #{basicAllocId} 
-		</if>
-		<if test = "basicOrderId != null and basicOrderId != ''">
 		AND
 			ORDER_ID = #{basicOrderId} 
-		</if>
 		AND 
 			ISNULL(DRIVER_ID, '') != '' 
 		AND 
