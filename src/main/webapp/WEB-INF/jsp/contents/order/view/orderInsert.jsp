@@ -496,27 +496,15 @@
                                                     return inputString.trim();
                                                 }
 
-                                                function hasSpaceBetweenWords(inputString) {
-                                                    var words = inputString.split(/\s+/);
-                                                    return words.length > 1;
-                                                }
 
                                                 $(document).ready(function () {
                                                     $("#sAddr").kendoComboBox({
                                                         change: function (e) {
-
                                                             var combobox = e.sender;
                                                             var value = combobox.value();
 
                                                             // 공백 제거 후 값을 설정
                                                             combobox.value(removeLeadingAndTrailingSpaces(value));
-
-                                                            if (!hasSpaceBetweenWords(value)) {
-                                                                // alert('문자 사이에 공백이 있어야 합니다.');
-                                                                return;
-                                                            }else {
-                                                                console.log('');
-                                                            }
                                                         }
                                                     });
                                                 });
@@ -2728,6 +2716,24 @@
         chkUID = false;
     });
 
+    function hasSpaceBetweenWords(inputString) {
+        var words = inputString.split(/\s+/);
+        return words.length > 1;
+    }
+
+    $(document).ready(function () {
+        $("#f").validator().on('submit', function (e) {
+            var combobox = $("#sAddr").data("kendoComboBox");
+            var value = combobox.value();
+
+            if (!hasSpaceBetweenWords(value)) {
+                e.preventDefault(); // 기본 제출 동작을 방지합니다.
+                alert('문자 사이에 공백이 있어야 합니다.');
+            }
+        });
+    });
+
+
     $('#f').validator().on('submit', function (e) {
 
         /*        alert(finishCnt + "111111111111111");
@@ -2742,6 +2748,7 @@
                     alert("이미 세금계산서가 발행된 오더입니다.")
                     return;
                 }*/
+
         if(!chkTEST){
             e.preventDefault();
             alert("등록된 거래처 명이 아닙니다.");
