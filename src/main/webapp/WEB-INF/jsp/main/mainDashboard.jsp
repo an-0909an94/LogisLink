@@ -274,7 +274,7 @@
                     <h2>전월 TOP 거래처 현황</h2>
                     <div class="graphT">
                         <div id="custom2">
-                            <ul>
+
                                 <li><span class="t-square1 namelabel"></span><span>매출</span></li>
                                 <li><span class="t-square2 namelabel"></span><span>이익</span></li>
                             </ul>
