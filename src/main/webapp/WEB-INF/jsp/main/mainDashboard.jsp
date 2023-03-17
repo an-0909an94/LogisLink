@@ -141,12 +141,12 @@
     section .section_right .weather ul li ul{display: inline-block;}
     section .section_right .weather ul li div{position: relative; width: 75px;}
     section .section_right .weather ul li div span.weather_txt{font-size: 10px; position: absolute; top: -5px; left: 52px;}
-    section .section_right .weather ul li p.weather_temperatures{font-size: 17px; font-weight: bold; position: absolute; top: 6px; left: 47px;}
+    section .section_right .weather ul li p.weather_temperatures{font-size: 17px; font-weight: bold; position: absolute; top: 6px; left: 40px; width: 39px!important; text-align: center;}
     section .section_right .weather div.weather_afternoon{margin-left: 10px;}
     section .section_right .weather div.weather_afternoon span.weather_txt{left: 45px;}
-    section .section_right .weather div.weather_afternoon p.weather_temperatures{left: 45px;}
+    section .section_right .weather div.weather_afternoon p.weather_temperatures{left: 34px;}
 
-    section .weather span[class ^="weather_icon_"]{font-size: 0px !important; width: 39px; height: 26px; display: block; background: url(../img/icon_weather.png) no-repeat; background-position: 0px 0px;}
+    section .weather span[class ^="weather_icon_"]{font-size: 0px !important; width: 39px; height: 26px; display: block; background: url('/img/icon_weather.png') no-repeat; background-position: 0px 0px;}
 
     /* 날씨아이콘 S */
 
@@ -155,7 +155,7 @@
     /* 맑음 */
     section .weather span.weather_icon_sun{background-position: 0px -140px; height: 30px;}
     /* 소나기 */
-    section .weather span.weather_icon_shower{background-position: 0px -36px; height: 28px;}
+    section .weather span.weather_icon_rainsnow{background-position: 0px -36px; height: 28px;}
     /* 눈 */
     section .weather span.weather_icon_snow{background-position: 0px -68px; height: 33px;}
     /* 비 */
@@ -163,7 +163,7 @@
     /* 안개 */
     section .weather span.weather_icon_fag{background-position: 0px -175px; height: 28px;}
     /* 번개 */
-    section .weather span.weather_icon_lightning{background-position: 0px -106px; height: 28px;}
+    section .weather span.weather_icon_shower{background-position: 0px -106px; height: 28px;}
 
     /* 날씨아이콘 E */
 
@@ -552,12 +552,12 @@
                             <li>
                                 <p class="weather_day">오늘</p>
                                 <div class="weather_morning">
-                                    <span class="weather_icon_fag">안개</span>
+                                    <span id="morning_weather_icon"></span>
                                     <span class="weather_txt">오전</span>
                                     <p id="morningTemperature" class="weather_temperatures"></p>
                                 </div>
                                 <div class="weather_afternoon">
-                                    <span class="weather_icon_sun">맑음</span>
+                                    <span id="afternoon_weather_icon"></span>
                                     <span class="weather_txt">오후</span>
                                     <p id="afternoonTemperature" class="weather_temperatures"></p>
                                 </div>
@@ -903,20 +903,36 @@
     }
 
     function getWeather() {
-        function getTemperatureForPeriod(temperatureData, startHour, endHour) {
+        function getTemperatureForPeriod(data, startHour, endHour) {
             var temperatureArray = [];
             for (var i = startHour; i <= endHour; i++) {
                 var hour = (i < 10) ? "0" + i + "00" : i + "00";
-                var temp = temperatureData.find(function (item) {
-                    return item.fcstTime === hour;
+
+                var temp = data.find(function (item) {
+                    return item.fcstTime === hour && item.category === "TMP";
                 });
+                console.log(temp);
+
+                var sky = data.find(function (item) {
+                    return item.fcstTime === hour && item.category === "SKY";
+                });
+                console.log(sky);
+
+                var pty = data.find(function (item) {
+                    return item.fcstTime === hour && item.category === "PTY";
+                });
+                console.log(pty);
+
                 temperatureArray.push({
                     hour: hour,
-                    temperature: temp.fcstValue
+                    temperature: temp.fcstValue,
+                    sky: sky.fcstValue,
+                    pty: pty.fcstValue
                 });
             }
             return temperatureArray;
         }
+
         function displayTemperature(temperatureArray, targetElement) {
             console.log("displayTemperature called with targetElement:", targetElement);
             var currentHour = new Date().getHours().toString().padStart(2, "0") + "00";
@@ -931,8 +947,10 @@
                 }
 
                 $(targetElement).append("<span>" + targetTemperature.temperature + "</span>");
+                updateWeatherIcon(targetTemperature.sky, targetTemperature.pty);
             }
         }
+
         $.ajax({
             url: "/contents/basic/data/getOpenweather.do",
             type: "POST",
@@ -953,11 +971,21 @@
                     var temperatureData = data.item.filter(function (item) {
                         return item.category === "TMP";
                     });
+                    var weatherData = data.item.filter(function (item) {
+                        return item.category === "SKY" || item.category === "PTY";
+                    });
 
                     // 오전 기온 정보 추출
-                    var morningTemperature = getTemperatureForPeriod(temperatureData, 6, 12);
+                    var morningTemperature = getTemperatureForPeriod(temperatureData, 6, 12, "TMP");
                     // 오후 기온 정보 추출
-                    var afternoonTemperature = getTemperatureForPeriod(temperatureData, 13, 23);
+                    var afternoonTemperature = getTemperatureForPeriod(temperatureData, 13, 23, "TMP");
+
+                    // 오전 날씨 SKY PTY 정보 추출
+                    var morningWeather = getTemperatureForPeriod(weatherData, 6, 12, "Sky","PTY");
+
+                    // 오후 날씨 SKY PTY 정보 추출
+                    var afternoonWeather = getTemperatureForPeriod(weatherData, 13, 23, "Sky","PTY");
+
 
                     var currentHour = new Date().getHours().toString().padStart(4, "") + "00";
                     console.log("currentHour:", currentHour);
@@ -965,12 +993,15 @@
                     // 오전 기온 표시
                     if (parseInt(currentHour) < 1200) { //12시면
                         console.log("Displaying morning temperature");
-                        displayTemperature(morningTemperature, "#morningTemperature");
+                        displayTemperature(morningTemperature, "#morningTemperature", "#morning_weather_icon");
+
                     } else {
                         console.log("Displaying 12 o'clock morning temperature");
                         var targetTemperature = morningTemperature.find(function (value) {
                             return value.hour === "1200";
                         });
+
+
 
                         if (!targetTemperature) {
                             targetTemperature = morningTemperature[morningTemperature.length - 1];
@@ -979,14 +1010,54 @@
                         $("#morningTemperature").append("<span>" + targetTemperature.temperature + "</span>");
                     }
 
+                    // 오전 날씨를 처리하는 로직
+                    if (parseInt(currentHour) < 1200) {
+                        console.log("Displaying morning weather icon");
+
+                        var targetTemperature = morningWeather.find(function (value) {
+                            return value.hour === "1200";
+                        });
+
+                        if (!targetTemperature) {
+                            targetTemperature = morningWeather[morningWeather.length - 1];
+                        }
+
+                        if (targetTemperature.pty >= 0) {
+                            $("#morning_weather_icon").toggleClass(targetTemperature.sky);
+                            console.log('sky' + targetTemperature.sky)
+                        } else {
+                            $("#morning_weather_icon").toggleClass(targetTemperature.pty);
+                            console.log('pty' + targetTemperature.pty)
+                        }
+                    } else {
+                        // 오후 날씨를 처리하는 로직
+                        console.log("Displaying afternoon weather icon");
+
+                        var targetTemperature = afternoonSky.find(function (value) {
+                            return value.hour === "1200";
+                        });
+
+                        if (!targetTemperature) {
+                            targetTemperature = afternoonSky[afternoonSky.length - 1];
+                        }
+
+                        if (targetTemperature.pty > 0) {
+                            $("#afternoon_weather_icon").toggleClass(targetTemperature.sky + "");
+                        } else {
+                            $("#afternoon_weather_icon").toggleClass(targetTemperature.pty + "");
+                        }
+                    }
+
+
                     // 오후 기온 표시
                     if (parseInt(currentHour) >= 1300 && parseInt(currentHour) < 2300) {
                         console.log("Displaying afternoon temperature");
-                        displayTemperature(afternoonTemperature, "#afternoonTemperature");
+                        displayTemperature(afternoonTemperature, "#afternoonTemperature", "#afternoon_weather_icon");
+
                     } else {
                         console.log("Displaying last available temperature");
                         var targetTemperature = afternoonTemperature.find(function (value) {
-                            return value.hour === "2300";
+                            return value.hour === "1300";
                         });
 
                         if (!targetTemperature) {
@@ -999,61 +1070,35 @@
                     console.log("오후 기온: ", afternoonTemperature);
 
 
-                            // Tomorrow 기온 데이터에서 오전/오후 기온 추출
-                            var temperatureData = data.item.filter(function (item) {
-                                return item.category === "TMP";
-                            });
+                    // Tomorrow 기온 데이터에서 오전/오후 기온 추출
+                    var temperatureData = data.item.filter(function (item) {
+                        return item.category === "TMP";
+                    });
 
-                            // 내일의 날짜를 가져옵니다.
-                            var tomorrowDate = getTomorrowBaseDate();
+                    // 내일의 날짜를 가져옵니다.
+                    var tomorrowDate = getTomorrowBaseDate();
 
-                            // 내일 오전 06시 기온 정보 추출
-                            var tomorrowMorningTemperature = temperatureData.find(function (item) {
-                                return item.fcstDate === tomorrowDate && item.fcstTime === "0600";
-                            });
+                    // 내일 오전 06시 기온 정보 추출
+                    var tomorrowMorningTemperature = temperatureData.find(function (item) {
+                        return item.fcstDate === tomorrowDate && item.fcstTime === "0600";
+                    });
 
-                            // 내일 오후 15시 기온 정보 추출
-                            var tomorrowAfternoonTemperature = temperatureData.find(function (item) {
-                                return item.fcstDate === tomorrowDate && item.fcstTime === "1500";
-                            });
+                    // 내일 오후 15시 기온 정보 추출
+                    var tomorrowAfternoonTemperature = temperatureData.find(function (item) {
+                        return item.fcstDate === tomorrowDate && item.fcstTime === "1500";
+                    });
 
-                            // 내일 오전 기온 표시
-                            if (tomorrowMorningTemperature) {
-                                $("#tomorrowMorningTemperature").append("<span>" + tomorrowMorningTemperature.fcstValue + "</span>");
-                            }
+                    // 내일 오전 기온 표시
+                    if (tomorrowMorningTemperature) {
+                        $("#tomorrowMorningTemperature").append("<span>" + tomorrowMorningTemperature.fcstValue + "</span>");
+                    }
 
-                            // 내일 오후 기온 표시
-                            if (tomorrowAfternoonTemperature) {
-                                $("#tomorrowAfternoonTemperature").append("<span>" + tomorrowAfternoonTemperature.fcstValue + "</span>");
-                            }
+                    // 내일 오후 기온 표시
+                    if (tomorrowAfternoonTemperature) {
+                        $("#tomorrowAfternoonTemperature").append("<span>" + tomorrowAfternoonTemperature.fcstValue + "</span>");
+                    }
                     console.log("오전 기온: ", tomorrowMorningTemperature);
                     console.log("오후 기온: ", tomorrowAfternoonTemperature);
-
-                    // 필터링된 날씨 데이터에서 오전/오후 날씨 추출 하늘의 상태확인
-                    var weatherData = data.item.filter(function(item) {
-                        return item.category === "SKY";
-                    });
-                    var morningWeather = weatherData.find(function(item) {
-                        return item.fcstTime === "0600";
-                    });
-                    var afternoonWeather = weatherData.find(function(item) {
-                        return item.fcstTime === "1500";
-                    });
-                    console.log("오늘오전 날씨: " + getWeatherIcon(morningWeather.fcstValue));
-                    console.log("오늘오후 날씨: " + getWeatherIcon(afternoonWeather.fcstValue));
-
-                    //필터링된 날씨 강수량 형태
-                    var rainfallData = data.item.filter(function (item) {
-                        return item.category === "PTY";
-                    });
-                    var morningRainfall = rainfallData.find(function(item) {
-                        return item.fcstTime === "0600";
-                    });
-                    var afternoonRainfall = rainfallData.find(function(item) {
-                        return item.fcstTime === "1500";
-                    });
-                    console.log("오늘강수형태: " + getRaninfallIcon(morningRainfall.fcstValue));
-                    console.log("오늘강수형태: " + getRaninfallIcon(afternoonRainfall.fcstValue));
 
                 } else {
                     console.error("API response does not contain expected data");
@@ -1067,47 +1112,50 @@
             }
         });
 
-        function getRaninfallIcon(fcstValue) {
-            var iconUrl = "";
-            switch (fcstValue) {
-                case "0":
-                    iconUrl = "없음";
-                    break;
-                case "1":
-                    iconUrl = "비";
-                    break;
-                case "2":
-                    iconUrl = "비/눈";
-                    break;
-                case "3":
-                    iconUrl = "눈";
-                    break;
-                case "4":
-                    iconUrl = "소나기";
-                    break;
-                default:
-                    iconUrl = "없음";
+        function updateWeatherIcon(sky, pty) {
+            var weatherIconMorning = "";
+            var weatherIconAfternoon = "";
+
+            if (pty > 0) {
+                switch (pty) {
+                    case 1:
+                        weatherIconMorning = "weather_icon_rain"; //오전
+                        weatherIconAfternoon = "weather_icon_rain"; //오후
+                        break;
+                    case 2:
+                        weatherIconMorning = "weather_icon_rainsnow";
+                        weatherIconAfternoon = "weather_icon_rainsnow";
+                        break;
+                    case 3:
+                        weatherIconMorning = "weather_icon_snow";
+                        weatherIconAfternoon = "weather_icon_snow";
+                        break;
+                    case 4:
+                        weatherIconMorning = "weather_icon_shower";
+                        weatherIconAfternoon = "weather_icon_shower";
+                        break;
+                }
+            } else {
+                switch (sky) {
+                    case 1:
+                        weatherIconMorning = "weather_icon_sun";
+                        weatherIconAfternoon = "weather_icon_sun";
+                        break;
+                    case 3:
+                        weatherIconMorning = "weather_icon_cloud";
+                        weatherIconAfternoon = "weather_icon_cloud";
+                        break;
+                    case 4:
+                        weatherIconMorning = "weather_icon_fog";
+                        weatherIconAfternoon = "weather_icon_fog";
+                        break;
+                }
             }
-            return iconUrl;
+
+            $('#morning_weather_icon').attr('class',weatherIconMorning);
+            $('#afternoon_weather_icon').attr('class',weatherIconAfternoon);
         }
 
-        function getWeatherIcon(fcstValue) {
-            var iconUrl = "";
-            switch (fcstValue) {
-                case "1":
-                    iconUrl = "맑음";
-                    break;
-                case "3":
-                    iconUrl = "구름";
-                    break;
-                case "4":
-                    iconUrl = "흐림";
-                    break;
-                default:
-                    iconUrl = "맑음";
-            }
-            return iconUrl;
-        }
         /** 기본 날짜는 -1로 해줘야 값을 출력할 수 있음 */
         function getBaseDate() {
             var today = new Date();
