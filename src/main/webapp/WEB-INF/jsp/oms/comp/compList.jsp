@@ -1,11 +1,59 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+
+<style>
+	.omsCompList .contents {
+		max-width: 100%!important;
+	}
+	.tool_form .row {
+
+	}
+	.userButton button {
+		width: 76px;
+		background: #2a5dc4 !important;
+		font-size: 10px;
+		margin: 0;
+		padding: 5px 0px !important;
+	}
+	.form-control-sm,.custom-select {
+		width: 135px;
+		margin: 5px 0!important;
+	}
+	.modalEditor {
+		width: 80%;
+		margin: 0 auto;
+	}
+	.userUpload {
+		display: flex;
+		height: 51px;
+		align-items: center;
+	}
+	.help-block {
+		font-size: 9px;
+	}
+	.modalHeader {
+		display: flex;
+		justify-content: space-around;
+		flex-wrap: wrap;
+	}
+	.modal-big-name {
+		font-size: 14px !important;
+		color: #1d54c4 !important;
+		text-align: left !important;
+		padding: 0px !important;
+		display: flex !important;
+		width: 91px !important;
+		margin-left: 14px
+	}
+
+</style>
+
 <!-- modal -->
 <div id="divAddDept" class="editor-warp p-0">
     <form id="modal-form" data-toggle="validator" role="form">
 		<div class="modalEditor" id="addDept">
 			<div class="modalHeader">
-				<div class="form-group row">
+				<div class="form-group row userUpload">
 		            <label class="col-form-label modal-big-name">아이디</label>
 		            <div class="input-group input-group-sm col middle-name form-group">
 		                <input type="text" class="form-control form-control-sm" id="userId" name="userId" required>
@@ -16,7 +64,7 @@
 		                <button type="button" class="form-control form-control-sm a-text-center" id="btn_chkUserId" name="btn_chkUserId">중복확인</button>
 		            </div>
 		        </div>
-				<div class="form-group row" id="passwdDiv">
+				<div class="form-group row userUpload" id="passwdDiv">
 		            <label class="col-form-label modal-big-name">비밀번호</label>
 		            <div class="input-group input-group-sm col middle-name form-group">
 		                <input type="password" class="form-control form-control-sm" id="passwd" name="passwd" required>
@@ -28,13 +76,13 @@
                         <div style="position: absolute;"class="help-block with-errors"></div>
 		            </div>
 		        </div>
-		        <div class="form-group row" id="passwdChangeDiv">
+		        <div class="form-group userUpload row" id="passwdChangeDiv">
 		            <label class="col-form-label modal-big-name">비밀번호</label>
 		            <div class="input-group input-group-sm col middle-name form-group">
 	                    <button type="button" class="form-control form-control-sm" id="btnChgPasswd">비밀번호 변경</button>
 	                </div>
 	           	</div>
-		        <div class="form-group row">
+		        <div class="form-group row userUpload">
 		            <label class="col-form-label modal-big-name">이름</label>
 		            <div class="input-group input-group-sm col middle-name form-group">
 		                <input type="text" class="form-control form-control-sm" id="userName" name="userName">
@@ -44,7 +92,7 @@
 		                <input type="text" class="form-control form-control-sm" id="telNum" name="telNum">
 		            </div>
 		        </div>
-		        <div class="form-group row">
+		        <div class="form-group row userUpload">
 		            <label class="col-form-label modal-big-name">직급</label>
 		            <div class="input-group input-group-sm col middle-name form-group">
 		                <input type="text" class="form-control form-control-sm" id="grade" name="grade">
@@ -58,7 +106,7 @@
                         <div style="position: absolute;"class="help-block with-errors"></div>
 		            </div>
 		        </div>
-		        <div class="form-group row">
+		        <div class="form-group row userUpload">
 		            <label class="col-form-label modal-big-name">휴대전화</label>
 		            <div class="input-group input-group-sm col middle-name form-group">
 		                <input type="text" class="form-control form-control-sm" id="mobile" name="mobile" required>
@@ -72,7 +120,7 @@
 	                    </select>
 		            </div>
 		        </div>
-		        <div class="form-group row">
+		        <div class="form-group row userUpload">
 		            <label class="col-form-label modal-big-name">이메일</label>
 		            <div class="input-group input-group-sm col middle-name form-group">
 		                <input type="text" class="form-control form-control-sm" id="email" name="email">
@@ -82,14 +130,14 @@
 		                <select class="custom-select" id="insertDeptList" name="insertDeptList"></select>
 		            </div>
 		        </div>
-				<div class="editor_btns">
-					<div class="padding">
-						<c:if test="${menuAuth.editYn eq 'Y'}">
-				        	<button type="submit" class="k-pager-refresh k-button"><b class="btn-b"><i class="k-icon k-i-check"></i><strong id="btn_save">저장</strong></b></button>
-				        </c:if>
-				        <a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g"><i class="k-icon k-i-cancel"></i>닫기</b></a>
-			        </div>
-			    </div>
+			</div>
+			<div class="editor_btns">
+				<div class="padding">
+					<c:if test="${menuAuth.editYn eq 'Y'}">
+						<button type="submit" class="btn_b k-pager-refresh k-button"><b class="btn-b"><strong id="btn_save">저장</strong></b></button>
+					</c:if>
+					<a id="closeBtn" onclick="modalClose()" class="k-pager-refresh k-button"><b class="btn-g">닫기</b></a>
+				</div>
 			</div>
 		</div>
 	</form>
@@ -195,20 +243,21 @@
 	                            <span>계좌번호</span>
 	                                <input type="text" id="bankAccount">
 	                            </div>
-							</div>
-						</div>
-						<div class="form-group row" style="display: none;">
-							<div class="input-group input-group-sm col-4 middle-name form-group"></div>
-							<div style="margin-top: -10px; text-align: center;" class="input-group input-group-sm col-4 middle-name form-group">
-								<span class="button add_btn">
-									
+					<div class="form-group row">
+						<div class="input-group input-group-sm col-4 middle-name form-group"></div>
+						<div style="margin-top: -10px; text-align: center;" class="input-group input-group-sm col-4 middle-name form-group">
+								<span class="userButton add_btn">
+
 									<c:if test="${menuAuth.writeYn eq 'Y'}">
 										<button type="button" id="btnAddDept">사용자추가</button>
-									</c:if>									
+									</c:if>
 								</span>
-	                            
+
+						</div>
+					</div>
 							</div>
 						</div>
+
 					</div>
 				</div>
 			<!-- group-list -->
@@ -221,7 +270,7 @@
 		            </div>
 				</div>
 				<div class="row">
-					<div style="height: 193px" id="grid"></div>
+					<div style="height: calc(20vw - 1px);" id="grid" class="l-grid"></div>
 				</div>
 			</div>
 		</div>

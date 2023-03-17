@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="pop-layer userInsert">
     <div class="editor_wrap pop-layer" id="layer1">
 	    <!-- <div class="insertClose">
