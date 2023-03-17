@@ -155,10 +155,20 @@
 					<!--  -->
 						<div class="cont-b-head">
 							<h4>회사정보</h4>
-							<c:if test="${menuAuth.editYn eq 'Y'}">
-								<button type="submit" id="btnUpdateComp" class="btn_b btn_58">정보수정</button>
-							</c:if>
+							<p>
+								<c:if test="${menuAuth.writeYn eq 'Y'}">
+									<button type="button" id="btnAddDept" class="btn_b btn_58" style="width: 69px !important;">사용자추가</button>
+								</c:if>
+								<c:if test="${menuAuth.editYn eq 'Y'}">
+									<button type="submit" id="btnUpdateComp" class="btn_b btn_58">정보수정</button>
+								</c:if>
+							</p>
 						</div>
+
+
+
+
+
 						<div class="gray_box">
 							<div class="form-group row">
 								<label class="big-name col-form-label">기본정보</label>
@@ -243,18 +253,6 @@
 	                            <span>계좌번호</span>
 	                                <input type="text" id="bankAccount">
 	                            </div>
-					<div class="form-group row">
-						<div class="input-group input-group-sm col-4 middle-name form-group"></div>
-						<div style="margin-top: -10px; text-align: center;" class="input-group input-group-sm col-4 middle-name form-group">
-								<span class="userButton add_btn">
-
-									<c:if test="${menuAuth.writeYn eq 'Y'}">
-										<button type="button" id="btnAddDept">사용자추가</button>
-									</c:if>
-								</span>
-
-						</div>
-					</div>
 							</div>
 						</div>
 
