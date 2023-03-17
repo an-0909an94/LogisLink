@@ -903,7 +903,10 @@
     }
 
     function getWeather() {
+
+
         function getTemperatureForPeriod(data, startHour, endHour) {
+
             var temperatureArray = [];
             for (var i = startHour; i <= endHour; i++) {
                 var hour = (i < 10) ? "0" + i + "00" : i + "00";
@@ -926,8 +929,8 @@
                 temperatureArray.push({
                     hour: hour,
                     temperature: temp.fcstValue,
-                    sky: sky.fcstValue,
-                    pty: pty.fcstValue
+                     sky: sky.fcstValue,
+                     pty: pty.fcstValue
                 });
             }
             return temperatureArray;
@@ -966,25 +969,27 @@
                 console.log("AJAX call successful");
                 if (data && data.result && data.item) {
                     console.log(data.item);
-
+                    debugger;
                     // Today 기온 데이터에서 오전/오후 기온 추출
                     var temperatureData = data.item.filter(function (item) {
-                        return item.category === "TMP";
+                        return item.category === "TMP"|| item.category === "SKY" || item.category === "PTY";
                     });
-                    var weatherData = data.item.filter(function (item) {
+/*                    var weatherData = data.item.filter(function (item) {
                         return item.category === "SKY" || item.category === "PTY";
-                    });
-
+                    });*/
+                    debugger;
                     // 오전 기온 정보 추출
                     var morningTemperature = getTemperatureForPeriod(temperatureData, 6, 12, "TMP");
                     // 오후 기온 정보 추출
                     var afternoonTemperature = getTemperatureForPeriod(temperatureData, 13, 23, "TMP");
-
+/*
+                    debugger;
                     // 오전 날씨 SKY PTY 정보 추출
                     var morningWeather = getTemperatureForPeriod(weatherData, 6, 12, "Sky","PTY");
 
                     // 오후 날씨 SKY PTY 정보 추출
                     var afternoonWeather = getTemperatureForPeriod(weatherData, 13, 23, "Sky","PTY");
+*/
 
 
                     var currentHour = new Date().getHours().toString().padStart(4, "") + "00";
@@ -1014,12 +1019,12 @@
                     if (parseInt(currentHour) < 1200) {
                         console.log("Displaying morning weather icon");
 
-                        var targetTemperature = morningWeather.find(function (value) {
+                        var targetTemperature = morningTemperature.find(function (value) {
                             return value.hour === "1200";
                         });
 
                         if (!targetTemperature) {
-                            targetTemperature = morningWeather[morningWeather.length - 1];
+                            targetTemperature = morningTemperature[morningTemperature.length - 1];
                         }
 
                         if (targetTemperature.pty >= 0) {
