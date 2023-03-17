@@ -977,7 +977,7 @@
 /*                    var weatherData = data.item.filter(function (item) {
                         return item.category === "SKY" || item.category === "PTY";
                     });*/
-                    debugger;
+
                     // 오전 기온 정보 추출
                     var morningTemperature = getTemperatureForPeriod(temperatureData, 6, 12, "TMP");
                     // 오후 기온 정보 추출
@@ -1035,7 +1035,7 @@
                             console.log('pty' + targetTemperature.pty)
                         }
                     } else {
-                        // 오후 날씨를 처리하는 로직
+                      /*  // 오후 날씨를 처리하는 로직
                         console.log("Displaying afternoon weather icon");
 
                         var targetTemperature = afternoonSky.find(function (value) {
@@ -1050,7 +1050,7 @@
                             $("#afternoon_weather_icon").toggleClass(targetTemperature.sky + "");
                         } else {
                             $("#afternoon_weather_icon").toggleClass(targetTemperature.pty + "");
-                        }
+                        }*/
                     }
 
 
