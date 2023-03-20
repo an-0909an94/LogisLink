@@ -489,6 +489,25 @@
 
 <div id="popList" style="width:100% !important;"></div>
 <script type="text/javascript">
+    //로그아웃 메인대쉬보드 창닫기
+	function logout(event) {
+		event.preventDefault();
+
+		// 창 닫기
+		var openedWindow = window.open('', 'windowName');
+		if (openedWindow) {
+			openedWindow.close();
+		}
+
+		// 로그아웃 처리
+		window.location.href = "/logout.do";
+	}
+
+	// 로그아웃 버튼 클릭 이벤트
+	document.querySelector('.side-logout-link').addEventListener('click', logout);
+	//로그아웃 메인대쉬보드 창닫기
+
+
 	var defaultReqCustName, defaultReqStaff;
 	var defaultSComName;
 	var defaultCarTypeData = Util.getComCode("CAR_TYPE_CD");
