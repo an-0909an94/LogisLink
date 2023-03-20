@@ -337,19 +337,41 @@
                     position: relative;
                     width: 500px;
                     height: 500px;
-                    overflow: auto;
+                    overflow-y: scroll;
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
                     background: #fff;
                     color: #333;
-                    padding: 11%;
+                    padding: 7%;
                     display: flex;
-
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 0.8px;
+                    border-radius: 43px;
+                }
+                .navContents::-webkit-scrollbar {
+                    display: none;
+                }
+                .navContents h2 {
+                    font-size: 20px;
+                    height: auto;
+                }
+                .navContents p {
+                    font-size: 14px;
+                    height: auto;
                 }
                 .navInfo {
                     display: flex;
                     flex-wrap: nowrap;
+                    width: 400px;
+                    margin: 0 auto;
+                    align-content: space-around;
                     flex-direction: column;
-                    justify-content: flex-start;
                 }
+                .exitBtn {
+                    cursor: pointer;
+                }
+                .navInfo label { margin: 10px 0px;}
                 #morningTemperature span:nth-child(n+2) {
                     display: none;
                 }
@@ -367,7 +389,7 @@
             <!-- 지역 설정 -->
             <div class="nav-layer" id="popupLayer">
                 <div class="navContents">
-                    <h1>지역을 설정해주세요!</h1>
+                    <h2>지역을 설정해주세요!</h2>
                     <p>지역을 설정하면 날씨와 유가정보를 확인할 수 있습니다.</p>
                     <div class="navInfo">
                         <label><input type="radio" class="navList" name="region" value="1" data-sido="01" data-sido-name="서울"><span id="region1">서울</span></label>
