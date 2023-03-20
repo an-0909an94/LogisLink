@@ -1483,13 +1483,13 @@
                     data: [5401, 6000, 4050, 3080, 6800, 5800],
                     type: 'bar',
                     backgroundColor: 'rgba(160, 160, 160)',
-                    borderColor: 'rgba(160, 160, 160, 1)',
+                    borderColor: 'rgba(160, 160, 160)',
                     borderWidth: 1,
                     yAxisID: 'y2',
                     maxBarThickness: 30,
                     datalabels: {
                         display:true,
-                        color: '#fff',
+                        color: '#a0a0a0',
                         anchor: 'end',
                         align: 'top',
                         formatter: function(value, context) {
@@ -1498,7 +1498,7 @@
                             // }else {
                             //     context.dataset.datalabels.color = '#000';
                             // }
-                            return value;
+                            return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         }
                     },
                     order: 2
@@ -1528,7 +1528,9 @@
             },
             plugins: {
                 legend: {
+                    // display: false,
                     labels: {
+                        align:'right',
                         usePointStyle: true,
                         generateLabels: function(chart) {
                             const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
@@ -1537,7 +1539,10 @@
                             return labels;
                         }
                     }
-                }
+                },
+                htmlLegend:{
+                    containerID: 'legend-div',
+                },
             },
             scales: {
                 x: {
@@ -1558,9 +1563,15 @@
                     max: Math.ceil(1000 / 2) * 2, //2의 배수
                     ticks: {
                         stepSize: 200 // 눈금 간격 설정
-                    }
+                    },
+                    grid: {
+                        color: 'rgb(57 57 57)', // y축 그리드 라인 색상
+                        lineWidth: 1, // y축 그리드 라인 두께
+                        drawBorder: true, // y축 경계선 미표시
+                    },
                 },
                 y2: {
+
                     position: 'left',
                     display: true,
                     title: {
@@ -1570,11 +1581,133 @@
                     max: Math.ceil(8000 / 2) * 2,//2의 배수
                     ticks: {
                         stepSize: 2000 // 눈금 간격 설정
-                    }
+                    },
                 }
             }
-        }
+        },
+        // plugins: [htmlLegendPlugin],
     });
+
+    let chartDraw = function () {
+        let context = document.getElementById('topGraph').getContext('2d');
+        let lastDataIndex = chartData.datasets[0].data.length - 1;
+
+        Chart.register(ChartDataLabels);
+
+        window.topGraph = new Chart(context, {
+            type: 'line', // 차트의 형태
+            data: chartData,
+            options: {
+                layout: {},
+                plugins: {
+                    datalabels: {
+                        color: 'black',
+                        anchor: 'end',
+                        clamp: true,
+                        clip: true,
+                        align: '-135',
+                        offset: 1,//거리
+                        formatter: function (value, context){
+                            let result = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                            return result + '원'
+                        },
+                        display: function(context) {
+                            if ( context.dataIndex === lastDataIndex ) { return 1 }
+                            else { return 0 }
+                        }
+                    },
+                    legend: {
+                        display: false,
+                    },
+                    htmlLegend: {
+                        containerID: 'legend-div',
+                    },
+                },
+                interaction: {
+                    intersect: false,
+                },
+                scales: {
+                    y: {
+                        type: 'linear',
+                        position: 'right',
+                        grace: '5%',
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {}
+                    },
+                    x: {
+                        grid: {
+                            display: false,
+                        },
+                        ticks: {
+                            alignment: 'end',
+                            color: function (ctx) {
+                                if ( ctx.index === lastDataIndex ) { return '#426AE6' }
+                                else { return 'black' }
+                            }
+                        }
+                    },
+                }
+            },
+            plugins: [htmlLegendPlugin],
+        });
+    }
+
+    const getOrCreateLegendList = (topGraph, id) => {
+        const legendContainer = document.getElementById(id);
+        let listContainer = legendContainer.querySelector('ul');
+
+        if (!listContainer) {
+            listContainer = document.createElement('ul');
+            legendContainer.appendChild(listContainer);
+        }
+        return listContainer;
+    };
+
+    const htmlLegendPlugin = {
+        id: 'htmlLegend',
+        afterUpdate(chart, args, options) {
+            const ul = getOrCreateLegendList(chart, options.containerID);
+            // Remove old legend items
+            while (ul.firstChild) {
+                ul.firstChild.remove();
+            }
+            // Reuse the built-in legendItems generator
+            const items = chart.options.plugins.legend.labels.generateLabels(chart);
+            items.forEach(item => {
+                let classText = ''
+                if ( item.text === '가격1' ) { classText = 'max'}
+                else{ classText = 'normal'}
+
+                const li = document.createElement('div');
+                li.classList.add('wrap');
+                // Color box
+                const boxSpan = document.createElement('span')
+                boxSpan.classList.add(`box-${classText}`);
+                boxSpan.style.background = item.fillStyle;
+                // Text
+                const textContainer = document.createElement('p');
+                textContainer.classList.add(`value-${classText}`);
+                const text = document.createTextNode(item.text);
+                textContainer.appendChild(text);
+
+                const helpCircle = document.createElement('img');
+                // helpCircle.src = '{% static 'imgs/stockList/includes/phone_list_table/help-circle.svg' %}';
+                helpCircle.onclick = modalOpenClose;
+                helpCircle.classList.add(`modal-${classText}-price`);
+                li.appendChild(boxSpan);
+                li.appendChild(textContainer);
+                li.appendChild(helpCircle);
+                ul.appendChild(li);
+            });
+        }
+    };
+
+
+
+
+
     /** 최근실적 Ranking */
     $.ajax({
         url: "http://localhost:3000/carbetween",
@@ -1588,16 +1721,51 @@
             const carSales = response.map(({ sales }) => sales);
             const carProfit = response.map(({ profit }) => profit);
             const carProfitper = response.map(({ profit }) => profit);
-            const carRanking = response.map(({ ranking }) => ranking);
-            const carPrice = response.map(({ rPrice }) => rPrice);
+            const carRanking = response.map(({ rRanking }) => rRanking);
+            const carAPrice = response.map(({ aPrice }) => aPrice);
+            const carBPrice = response.map(({ bPrice }) => bPrice);
             const carPersint = response.map(({ rPersint }) => rPersint);
             $('.rankname').each((index, element) => {
                 $(element).text(carName[index]);
             });
+            $('.rankdate').each((index, element) => {
+                $(element).text(carDate[index]);
+            });
+            $('.rankbuses').each((index, element) => {
+                $(element).text(carBuses[index]);
+            });
+            $('.rankSales').each((index, element) => {
+                $(element).text(carSales[index]);
+            });
+            $('.rankprofit').each((index, element) => {
+                $(element).text(carProfit[index]);
+            });
+            $('.rankprofitper').each((index, element) => {
+                $(element).text(carProfitper[index]);
+            });
             $('.ranking').each((index, element) => {
                 $(element).text(carRanking[index]);
             });
-            console.log(carName, carPrice, carDate, carRanking, carPersint);
+            $('.rankaprice').each((index, element) => {
+                $(element).text(carAPrice[index]);
+            });
+            $('.rankbprice').each((index, element) => {
+                $(element).text(carBPrice[index]);
+            });
+            $('.rankpersint').each((index, element) => {
+                $(element).text(carPersint[index]);
+            });
+            console.log('랭킹네임', carName);
+            console.log('랭킹데이', carDate);
+            console.log('배차1위' , carBuses);
+            console.log('매출1위', carSales);
+            console.log('이익1위', carProfit);
+            console.log('이익률1위', carProfitper);
+            console.log('배차', carRanking);
+            console.log('매출', carAPrice);
+            console.log('이익', carBPrice);
+            console.log('이익률', carPersint);
+
         } else {
             console.error('Error: response is empty or undefined');
         }
