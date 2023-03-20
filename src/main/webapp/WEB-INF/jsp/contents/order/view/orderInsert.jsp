@@ -1143,7 +1143,7 @@
                                             </div>
                                             <div class="input-group input-group-sm wd110 mr0 middle-name form-group">
                                                 <strong>지불운임</strong>
-                                                <a id="priceDetail" class="k-pager-refresh k-button" style="display:none; margin-top: -5px; height: 19px; width: 19px; position: absolute; top:0px; right:0px;"> ? </a>
+                                                <a id="priceDetail" class="k-pager-refresh k-button" style="padding: 6px;height: 10px;width: 10px;font-size: 8px;"> ? </a>
                                                 <input id="buyChargeD" name="buyCharge" type="text" class="form-control form-control-sm wd110" onchange="sumCharge()">
                                             </div>
                                         </div>
@@ -1640,7 +1640,7 @@
 
         priceModal.kendoDialog({
             width: "200px",
-            height: "150px",
+            height: "200px",
             visible: false,
             closable: true,
             title: "운임비용",

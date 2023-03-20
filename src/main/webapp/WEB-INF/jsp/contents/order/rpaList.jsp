@@ -650,6 +650,16 @@
             }else{
                 msg ="";
             }
+        }else if(job_stat=="R"){
+            if(link_stat=="I"){
+                msg ="(등록중)";
+            }else if(link_stat=="D"){
+                msg ="(취소중)";
+            }else if(link_stat=="U"){
+                msg ="(수정중)";
+            }else{
+                msg ="";
+            }
         }else{
                 msg ="";
         }

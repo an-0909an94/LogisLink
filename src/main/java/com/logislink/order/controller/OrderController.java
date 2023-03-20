@@ -1132,7 +1132,7 @@ public class OrderController {
 
 			if(rpaApiArray.size() >0) {
 
-				URL url = new URL("http://175.197.164.240:8089/api/process/List"); // 호출할 외부 API 를 입력한다.
+				URL url = new URL("http://logislink.tplinkdns.com:8089/api/process/List"); // 호출할 외부 API 를 입력한다.
 
 				HttpURLConnection conn = (HttpURLConnection) url.openConnection(); // header에 데이터 통신 방법을 지정한다.
 
