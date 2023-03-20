@@ -151,7 +151,7 @@
     /* 날씨아이콘 S */
 
     /* 구름 */
-    section .weather span.weather_icon_could{background-position: 0px -204px; height: 28px;}
+    section .weather span.weather_icon_cloud{background-position: 0px -204px; height: 28px;}
     /* 맑음 */
     section .weather span.weather_icon_sun{background-position: 0px -140px; height: 30px;}
     /* 소나기 */
@@ -294,6 +294,7 @@
 
         section .section_right .sns{width: 380px; margin-top: 16px;}
     }
+
 </style>
 
 <div id="wrap">
@@ -318,7 +319,78 @@
                 <li><a href="#">신청</a></li>
             </ul>
             <a href="#" class="btn_gray replay"><span onClick="window.location.reload()">새로고침</span><p>새로고침</p></a>
-            <a href="#" class="btn_gray region"><span>지역설정</span><p>지역설정</p></a>
+            <a href="#" id="navPopup" class="btn_gray region"><span>지역설정</span><p>지역설정</p></a>
+
+            <style>
+                /* 레이어팝업 */
+                #popupLayer{}
+                .nav-layer {
+                    display: none;
+                    position: fixed;
+                    top: 24%;
+                    left: 36%;
+                    width: 500px;
+                    height: 500px;
+                    z-index: 100;
+                }
+                .navContents {
+                    position: relative;
+                    width: 500px;
+                    height: 500px;
+                    overflow: auto;
+                    background: #fff;
+                    color: #333;
+                    padding: 11%;
+                    display: flex;
+
+                }
+                .navInfo {
+                    display: flex;
+                    flex-wrap: nowrap;
+                    flex-direction: column;
+                    justify-content: flex-start;
+                }
+                #morningTemperature span:nth-child(n+2) {
+                    display: none;
+                }
+                #afternoonTemperature span:nth-child(n+2) {
+                    display: none;
+                }
+                #tomorrowMorningTemperature span:nth-child(n+2) {
+                    display: none;
+                }
+                #tomorrowAfternoonTemperature span:nth-child(n+2) {
+                    display: none;
+                }
+            </style>
+
+            <!-- 지역 설정 -->
+            <div class="nav-layer" id="popupLayer">
+                <div class="navContents">
+                    <h1>지역을 설정해주세요!</h1>
+                    <p>지역을 설정하면 날씨와 유가정보를 확인할 수 있습니다.</p>
+                    <div class="navInfo">
+                        <label><input type="radio" class="navList" name="region" value="1" data-sido="01" data-sido-name="서울"><span id="region1">서울</span></label>
+                        <label><input type="radio" class="navList" name="region" value="2" data-sido="02" data-sido-name="경기"><span id="region2">경기</span></label>
+                        <label><input type="radio" class="navList" name="region" value="3" data-sido="03" data-sido-name="강원"><span id="region3">강원</span></label>
+                        <label><input type="radio" class="navList" name="region" value="4" data-sido="04" data-sido-name="충북"><span id="region4">충북</span></label>
+                        <label><input type="radio" class="navList" name="region" value="5" data-sido="05" data-sido-name="충남"><span id="region5">충남</span></label>
+                        <label><input type="radio" class="navList" name="region" value="6" data-sido="06" data-sido-name="전북"><span id="region6">전북</span></label>
+                        <label><input type="radio" class="navList" name="region" value="7" data-sido="07" data-sido-name="전남"><span id="region7">전남</span></label>
+                        <label><input type="radio" class="navList" name="region" value="8" data-sido="08" data-sido-name="경북"><span id="region8">경북</span></label>
+                        <label><input type="radio" class="navList" name="region" value="9" data-sido="09" data-sido-name="경남"><span id="region9">경남</span></label>
+                        <label><input type="radio" class="navList" name="region" value="10" data-sido="10" data-sido-name="부산"><span id="region10">부산</span></label>
+                        <label><input type="radio" class="navList" name="region" value="18" data-sido="18" data-sido-name="울산"><span id="region18">울산</span></label>
+                        <label><input type="radio" class="navList" name="region" value="14" data-sido="14" data-sido-name="대구"><span id="region14">대구</span></label>
+                        <label><input type="radio" class="navList" name="region" value="15" data-sido="15" data-sido-name="인천"><span id="region15">인천</span></label>
+                        <label><input type="radio" class="navList" name="region" value="16" data-sido="16" data-sido-name="광주"><span id="region16">광주</span></label>
+                        <label><input type="radio" class="navList" name="region" value="17" data-sido="17" data-sido-name="대전"><span id="region17">대전</span></label>
+                        <label><input type="radio" class="navList" name="region" value="19" data-sido="19" data-sido-name="세종"><span id="region19">세종</span></label>
+                        <label><input type="radio" class="navList" name="region" value="11" data-sido="11" data-sido-name="제주"><span id="region11">제주</span></label>
+                    </div>
+                    <div id="navClose" class="exitBtn">X</div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -536,28 +608,32 @@
 
                 <div class="graph_vehicle">
                     <h2>배차 손익추이</h2>
-                    <div><canvas id="myChart"></canvas></div>
+                    <div class="graphB">
+                        <canvas id="beGraph"></canvas>
+                    </div>
                 </div>
 
                 <div class="graph_top">
                     <h2>전월 TOP 거래처 현황</h2>
-                    <div></div>
+                    <div class="graphT">
+                        <canvas id="topGraph"></canvas>
+                    </div>
                 </div>
             </div>
             <div id="temperature" class="section_right">
                 <div class="weather">
-                    <h2>날씨 <p>현재위치 : <span>서울</span></p></h2>
+                    <h2>날씨 <p>현재위치 : <span id="selectedRegionWeather">서울</span></p></h2>
                     <div>
                         <ul>
                             <li>
                                 <p class="weather_day">오늘</p>
                                 <div class="weather_morning">
-                                    <span id="morning_weather_icon"></span>
+                                    <span id="morningWeatherIcon"></span>
                                     <span class="weather_txt">오전</span>
                                     <p id="morningTemperature" class="weather_temperatures"></p>
                                 </div>
                                 <div class="weather_afternoon">
-                                    <span id="afternoon_weather_icon"></span>
+                                    <span id="afternoonWeatherIcon"></span>
                                     <span class="weather_txt">오후</span>
                                     <p id="afternoonTemperature" class="weather_temperatures"></p>
                                 </div>
@@ -565,12 +641,12 @@
                             <li>
                                 <p class="weather_day">내일</p>
                                 <div class="weather_morning">
-                                    <span class="weather_icon_could">구름</span>
+                                    <span id="morningIcon"></span>
                                     <span class="weather_txt">오전</span>
                                     <p id="tomorrowMorningTemperature" class="weather_temperatures"></p>
                                 </div>
                                 <div class="weather_afternoon">
-                                    <span class="weather_icon_sun">맑음</span>
+                                    <span id="afternoonIcon"></span>
                                     <span class="weather_txt">오후</span>
                                     <p id="tomorrowAfternoonTemperature" class="weather_temperatures"></p>
                                 </div>
@@ -619,7 +695,7 @@
                                 </c:forEach>
                             </tr>
                             <tr>
-                                <td class="color_b">서울평균</td>
+                                <td id="selectedRegionOil" class="color_b">서울평균</td>
                                 <c:forEach var="idx" begin="0" end="4">
                                     <c:set var="oilType" value="${idx}" />
                                     <c:choose>
@@ -695,10 +771,13 @@
 </div>
 
 <!-- BoardList -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc.1"></script>
 <script>
+
 
     $(function(){
         setInterval(slide,5000);
@@ -809,21 +888,47 @@
             console.error(error);
         });*/
 
+    // 쿠키를 저장해서 지역값을 저장해준다.
+    function setCookie(name, value, days) {
+        var expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function getCookie(name) {
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+    /** 지역설정 팝업 */
 
     /** 시도 유가정보 */
+    function  updateSidoInfo(sidoCode) {
+
     $.ajax({
         url: "/contents/basic/data/getOpinetsido.do",
         type: "POST",
         dataType: "json",
-        async:false,
+        async: true,
         data: {
-            sido: "01", // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
+            sido: encodeURIComponent(sidoCode), // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
         }
     }).done(response => {
+        // debugger;
         if (response.result) {
             const oilPrices = response.oil.OIL.filter(item => ["B027", "D047", "K015"].includes(item.PRODCD))
-                .map(({ PRODCD, PRICE }) => {
-                    switch(PRODCD){
+                .map(({PRODCD, PRICE}) => {
+                    switch (PRODCD) {
                         case "B027":
                             return {name: "휘발유", price: PRICE};
                         case "D047":
@@ -834,16 +939,20 @@
                             return {name: "", price: ""};
                     }
                 });
-            $('.sido_oil_price').each((index, element)=>{
+            $('.sido_oil_price').each((index, element) => {
                 $(element).text(oilPrices[index].price);
             });
             console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
+
         } else {
             console.error(response.message);
         }
     }).fail((xhr, status, error) => {
         console.error(error);
     });
+}
+
+
 
     /*    /!** 시도 유가정보 에니메이션 버전 *!/
         $.ajax({
@@ -890,7 +999,73 @@
             console.error(error);
         });*/
 
+    $(document).ready(function () {
+        //페이지 로드 시 초기 서울 기본값
+        const savedSidoCode = getCookie('sidoCode');
+        const sidoCode = savedSidoCode ? savedSidoCode : "01";
+        const savedSidoName = getCookie('sidoName');
+        const sidoName = savedSidoName ? savedSidoName : '서울';
+
+        //지역정보 업데이트
+        updateSidoInfo(sidoCode);
+        updateSidoWeather(sidoCode, coordinatesObj[sidoCode] || coordinatesObj["01"]);
+        $('#selectedRegionOil').text(sidoName + '평균');
+        $('#selectedRegionWeather').text(sidoName);
+
+        //라디오 버튼 상태를 업데이트
+        $(`.navList[data-sido="${sidoCode}"]`).prop('checked', true);
+
+        //팝업열기
+        $('#navPopup').click(function () {
+            $('#popupLayer').fadeIn();
+        });
+
+        //라디오 버튼 선택 시 지역명 업데이트
+        $('.navList').on('change', function (){
+            const sidoCode = $(this).data('sido');
+            const sidoName = $(this).data('sido-name');
+            const selectedRegionId = 'region' + $(this).val();
+            const selectedRegion = $('#' + selectedRegionId).text();
+
+
+            if (sidoCode !== undefined) {
+                setCookie('sidoCode', sidoCode.toString(), 1);
+                setCookie('sidoName', selectedRegion, 1);
+                // 지역 정보 업데이트
+                updateSidoInfo(sidoCode)
+                updateSidoWeather(sidoCode, coordinatesObj[sidoCode]);
+                console.log('지역 확인', sidoCode, coordinatesObj[sidoCode]);
+            }else  {
+                console.error("지역을 확인 할 수 없습니다.")
+            }
+
+
+
+            $('#selectedRegionOil').text(sidoName + '평균');
+            $('#selectedRegionWeather').text(sidoName);
+
+            // 새로고침
+            // location.reload();
+
+            //팝업 닫기
+            $('#popupLayer').fadeOut();
+        });
+
+        //팝업 닫기 버튼
+        $('#navClose').click(function (){
+            $('#popupLayer').fadeOut();
+        });
+
+        //Esc 키를 누르면 팝업 닫기
+        $(document).keyup(function (e){
+            if(e.key === "Escape") {
+                $('#popupLayer').fadeOut();
+            }
+        });
+    });
+
     /** 시도 기상청 날씨정보 출력 */
+
 
     // 내일 기온 데이터에서 오전/오후 기온 추출
     function getTomorrowBaseDate() {
@@ -901,10 +1076,56 @@
         var dd = tomorrow.getDate().toString().padStart(2, "0");
         return yyyy + mm + dd;
     }
+    function getWeatherIconClass(category, value) {
+        if (category === "PTY") {
+            switch (value) {
+                case "1":
+                    return "weather_icon_rain";
+                case "2":
+                    return "weather_icon_rainsnow";
+                case "3":
+                    return "weather_icon_snow";
+                case "4":
+                    return "weather_icon_shower";
+                default:
+                    return "";
+            }
+        } else if (category === "SKY") {
+            switch (value) {
+                case "1":
+                    return "weather_icon_sun";
+                case "3":
+                    return "weather_icon_cloud";
+                case "4":
+                    return "weather_icon_fag";
+                default:
+                    return "";
+            }
+        }
+    }
+        const coordinatesObj = {
+            "01": {nx: '60', ny: '127'},
+            "02": {nx: '60', ny: '120'},
+            "03": {nx: '73', ny: '134'},
+            "04": {nx: '69', ny: '107'},
+            "05": {nx: '68', ny: '100'},
+            "06": {nx: '63', ny: '89'},
+            "07": {nx: '51', ny: '67'},
+            "08": {nx: '89', ny: '91'},
+            "09": {nx: '91', ny: '77'},
+            "10": {nx: '98', ny: '76'},
+            "11": {nx: '89', ny: '90'},
+            "14": {nx: '55', ny: '124'},
+            "15": {nx: '58', ny: '74'},
+            "16": {nx: '67', ny: '100'},
+            "17": {nx: '102', ny: '84'},
+            "18": {nx: '66', ny: '103'},
+            "19": {nx: '52', ny: '38'},
+            "seoul":{nx: '60', ny: '127'}
+        };
 
+    function updateSidoWeather(sidoCode) {
     function getWeather() {
-
-
         function getTemperatureForPeriod(data, startHour, endHour) {
 
             var temperatureArray = [];
@@ -914,44 +1135,52 @@
                 var temp = data.find(function (item) {
                     return item.fcstTime === hour && item.category === "TMP";
                 });
-                console.log(temp);
 
                 var sky = data.find(function (item) {
                     return item.fcstTime === hour && item.category === "SKY";
                 });
-                console.log(sky);
 
                 var pty = data.find(function (item) {
                     return item.fcstTime === hour && item.category === "PTY";
                 });
-                console.log(pty);
+
+                var weatherIcon = "";
+                if (pty && pty.fcstValue > 0) {
+                    weatherIcon = getWeatherIconClass("PTY", pty.fcstValue);
+                } else {
+                    weatherIcon = getWeatherIconClass("SKY", sky.fcstValue);
+                }
 
                 temperatureArray.push({
                     hour: hour,
                     temperature: temp.fcstValue,
-                     sky: sky.fcstValue,
-                     pty: pty.fcstValue
+                    sky: sky.fcstValue,
+                    pty: pty.fcstValue,
+                    icon: weatherIcon
                 });
             }
             return temperatureArray;
         }
 
-        function displayTemperature(temperatureArray, targetElement) {
-            console.log("displayTemperature called with targetElement:", targetElement);
+        function displayTemperature(temperatureData, temperatureElementId, iconElementId) {
             var currentHour = new Date().getHours().toString().padStart(2, "0") + "00";
+            var targetTemperature = temperatureData.find(function (value) {
+                return value.hour === currentHour;
+            });
 
-            if (temperatureArray.length > 0) {
-                var targetTemperature = temperatureArray.find(function (value) {
-                    return value.hour === currentHour;
-                });
-
-                if (!targetTemperature) {
-                    targetTemperature = temperatureArray[0];
-                }
-
-                $(targetElement).append("<span>" + targetTemperature.temperature + "</span>");
-                updateWeatherIcon(targetTemperature.sky, targetTemperature.pty);
+            if (!targetTemperature) {
+                targetTemperature = temperatureData[temperatureData.length - 1];
             }
+
+            var iconClass = "";
+            if (targetTemperature.pty > 0) {
+                iconClass = getWeatherIconClass("PTY", targetTemperature.pty.toString());
+            } else {
+                iconClass = getWeatherIconClass("SKY", targetTemperature.sky.toString());
+            }
+
+            $(temperatureElementId).html("<span>" + targetTemperature.temperature + "</span>");
+            $(iconElementId).toggleClass(iconClass);
         }
 
         $.ajax({
@@ -962,148 +1191,200 @@
             data: {
                 base_date: getBaseDate(),
                 base_time: getBaseTime(),
-                nx: "59",
-                ny: "127"
+                nx: coordinatesObj[sidoCode].nx,
+                ny: coordinatesObj[sidoCode].ny
             },
             success: function (data) {
                 console.log("AJAX call successful");
                 if (data && data.result && data.item) {
                     console.log(data.item);
-                    debugger;
+                    // debugger;
                     // Today 기온 데이터에서 오전/오후 기온 추출
                     var temperatureData = data.item.filter(function (item) {
                         return item.category === "TMP"|| item.category === "SKY" || item.category === "PTY";
                     });
-/*                    var weatherData = data.item.filter(function (item) {
-                        return item.category === "SKY" || item.category === "PTY";
-                    });*/
 
                     // 오전 기온 정보 추출
-                    var morningTemperature = getTemperatureForPeriod(temperatureData, 6, 12, "TMP");
+                    var morningTemperature = getTemperatureForPeriod(temperatureData, 2, 12);
                     // 오후 기온 정보 추출
-                    var afternoonTemperature = getTemperatureForPeriod(temperatureData, 13, 23, "TMP");
-/*
-                    debugger;
-                    // 오전 날씨 SKY PTY 정보 추출
-                    var morningWeather = getTemperatureForPeriod(weatherData, 6, 12, "Sky","PTY");
-
-                    // 오후 날씨 SKY PTY 정보 추출
-                    var afternoonWeather = getTemperatureForPeriod(weatherData, 13, 23, "Sky","PTY");
-*/
+                    var afternoonTemperature = getTemperatureForPeriod(temperatureData, 13, 23);
 
 
                     var currentHour = new Date().getHours().toString().padStart(4, "") + "00";
                     console.log("currentHour:", currentHour);
 
-                    // 오전 기온 표시
-                    if (parseInt(currentHour) < 1200) { //12시면
+                    // 오전 기온
+                    if (parseInt(currentHour) < 1200) { //12시 이전이면
                         console.log("Displaying morning temperature");
-                        displayTemperature(morningTemperature, "#morningTemperature", "#morning_weather_icon");
-
+                        displayTemperature(morningTemperature, "#morningTemperature", "#morningWeatherIcon");
                     } else {
                         console.log("Displaying 12 o'clock morning temperature");
                         var targetTemperature = morningTemperature.find(function (value) {
                             return value.hour === "1200";
                         });
 
-
-
                         if (!targetTemperature) {
                             targetTemperature = morningTemperature[morningTemperature.length - 1];
                         }
 
                         $("#morningTemperature").append("<span>" + targetTemperature.temperature + "</span>");
-                    }
-
-                    // 오전 날씨를 처리하는 로직
-                    if (parseInt(currentHour) < 1200) {
-                        console.log("Displaying morning weather icon");
-
-                        var targetTemperature = morningTemperature.find(function (value) {
-                            return value.hour === "1200";
-                        });
-
-                        if (!targetTemperature) {
-                            targetTemperature = morningTemperature[morningTemperature.length - 1];
-                        }
-
-                        if (targetTemperature.pty >= 0) {
-                            $("#morning_weather_icon").toggleClass(targetTemperature.sky);
-                            console.log('sky' + targetTemperature.sky)
-                        } else {
-                            $("#morning_weather_icon").toggleClass(targetTemperature.pty);
-                            console.log('pty' + targetTemperature.pty)
-                        }
-                    } else {
-                      /*  // 오후 날씨를 처리하는 로직
-                        console.log("Displaying afternoon weather icon");
-
-                        var targetTemperature = afternoonSky.find(function (value) {
-                            return value.hour === "1200";
-                        });
-
-                        if (!targetTemperature) {
-                            targetTemperature = afternoonSky[afternoonSky.length - 1];
-                        }
-
+                        var iconClass = "";
                         if (targetTemperature.pty > 0) {
-                            $("#afternoon_weather_icon").toggleClass(targetTemperature.sky + "");
+                            iconClass = getWeatherIconClass("PTY", targetTemperature.pty.toString());
                         } else {
-                            $("#afternoon_weather_icon").toggleClass(targetTemperature.pty + "");
-                        }*/
+                            iconClass = getWeatherIconClass("SKY", targetTemperature.sky.toString());
+                        }
+                        $("#morningWeatherIcon").addClass(iconClass);
                     }
 
-
-                    // 오후 기온 표시
-                    if (parseInt(currentHour) >= 1300 && parseInt(currentHour) < 2300) {
+                    // 오후 기온
+                    if (parseInt(currentHour) >= 1300 && parseInt(currentHour) <= 2300) {
                         console.log("Displaying afternoon temperature");
-                        displayTemperature(afternoonTemperature, "#afternoonTemperature", "#afternoon_weather_icon");
-
+                        displayTemperature(afternoonTemperature, "#afternoonTemperature", "#afternoonWeatherIcon");
                     } else {
-                        console.log("Displaying last available temperature");
+                        console.log("Displaying 23 o'clock afternoon temperature");
                         var targetTemperature = afternoonTemperature.find(function (value) {
-                            return value.hour === "1300";
+                            return value.hour === "2300";
                         });
 
                         if (!targetTemperature) {
                             targetTemperature = afternoonTemperature[afternoonTemperature.length - 1];
                         }
-
+                        // debugger;
                         $("#afternoonTemperature").append("<span>" + targetTemperature.temperature + "</span>");
+                        var iconClass = "";
+                        if (targetTemperature.pty > 0) {
+                            iconClass = getWeatherIconClass("PTY", targetTemperature.pty.toString());
+                        } else {
+                            iconClass = getWeatherIconClass("SKY", targetTemperature.sky.toString());
+                        }
+                        $("#afternoonWeatherIcon").addClass(iconClass);
                     }
+
+
                     console.log("오전 기온: ", morningTemperature);
                     console.log("오후 기온: ", afternoonTemperature);
 
 
+
+
+
+
                     // Tomorrow 기온 데이터에서 오전/오후 기온 추출
                     var temperatureData = data.item.filter(function (item) {
-                        return item.category === "TMP";
+                        return item.category === "TMP" || item.category === "SKY" || item.category === "PTY";
                     });
 
-                    // 내일의 날짜를 가져옵니다.
+                    // 내일의 날씨를 가져옵니다.
                     var tomorrowDate = getTomorrowBaseDate();
 
                     // 내일 오전 06시 기온 정보 추출
                     var tomorrowMorningTemperature = temperatureData.find(function (item) {
-                        return item.fcstDate === tomorrowDate && item.fcstTime === "0600";
+                        return item.fcstDate === tomorrowDate && item.fcstTime === "0600" && item.category === "TMP";
+                    });
+                    var tomorrowMorningPty = temperatureData.find(function (item) {
+                        return item.fcstDate === tomorrowDate && item.fcstTime === "0600" && item.category === "PTY";
+                    });
+                    var tomorrowMorningSky = temperatureData.find(function (item) {
+                        return item.fcstDate === tomorrowDate && item.fcstTime === "0600" && item.category === "SKY";
                     });
 
                     // 내일 오후 15시 기온 정보 추출
                     var tomorrowAfternoonTemperature = temperatureData.find(function (item) {
-                        return item.fcstDate === tomorrowDate && item.fcstTime === "1500";
+                        return item.fcstDate === tomorrowDate && item.fcstTime === "1500" && item.category === "TMP";
                     });
+                    var tomorrowAfternoonPty = temperatureData.find(function (item) {
+                        return item.fcstDate === tomorrowDate && item.fcstTime === "1500" && item.category === "PTY";
+                    });
+                    var tomorrowAfternoonSky = temperatureData.find(function (item) {
+                        return item.fcstDate === tomorrowDate && item.fcstTime === "1500" && item.category === "SKY";
+                    });
+
+                    // debugger;
+                    updateWeatherIcon(tomorrowMorningSky, tomorrowMorningPty, tomorrowAfternoonSky, tomorrowAfternoonPty);
 
                     // 내일 오전 기온 표시
                     if (tomorrowMorningTemperature) {
                         $("#tomorrowMorningTemperature").append("<span>" + tomorrowMorningTemperature.fcstValue + "</span>");
                     }
-
                     // 내일 오후 기온 표시
                     if (tomorrowAfternoonTemperature) {
                         $("#tomorrowAfternoonTemperature").append("<span>" + tomorrowAfternoonTemperature.fcstValue + "</span>");
                     }
+
+                    // debugger;
+                    // 날씨는 조건 PTY > 0 (아이콘 CLASS로 상속한다.)
+
+                    function updateWeatherIcon(tomorrowMorningSky, tomorrowMorningPty, tomorrowAfternoonSky, tomorrowAfternoonPty) {
+                        var weatherIconMorning = "";
+                        var weatherIconAfternoon = "";
+
+                        // 내일 WeatherICON PTY, SKY
+                        if (tomorrowMorningPty && tomorrowMorningPty.fcstValue > 0) {
+                            weatherIconMorning = getWeatherIconClass("PTY", tomorrowMorningPty.fcstValue);
+                        } else {
+                            weatherIconMorning = getWeatherIconClass("SKY", tomorrowMorningSky.fcstValue);
+                        }
+                        console.log("Morning icon class", weatherIconMorning); // 여기에 추가
+
+                        if (tomorrowAfternoonPty && tomorrowAfternoonPty.fcstValue > 0) {
+                            weatherIconAfternoon = getWeatherIconClass("PTY", tomorrowAfternoonPty.fcstValue);
+                        } else {
+                            weatherIconAfternoon = getWeatherIconClass("SKY", tomorrowAfternoonSky.fcstValue);
+                        }
+                        console.log("Afternoon icon class", weatherIconAfternoon); // 여기에 추가
+
+                        $("#morningIcon").removeClass().addClass(weatherIconMorning);
+                        $("#afternoonIcon").removeClass().addClass(weatherIconAfternoon);
+
+                    }
+
+                    //weatherIconMore( today, tomorrow )
+                    function getWeatherIconClass(category, value) {
+                        if (category === "PTY") {
+                            switch (value) {
+                                case "1":
+                                    return "weather_icon_rain";
+                                    break;
+                                case "2":
+                                    return "weather_icon_rainsnow";
+                                    break;
+                                case "3":
+                                    return "weather_icon_snow";
+                                    break;
+                                case "4":
+                                    return "weather_icon_shower";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        } else if (category === "SKY") {
+                            switch (value) {
+                                case "1":
+                                    return "weather_icon_sun";
+                                    break;
+                                case "3":
+                                    return "weather_icon_cloud";
+                                    break;
+                                case "4":
+                                    return "weather_icon_fag";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        // // 기본값으로 아무것도 반환하지 않을 때 반환되는 문자열
+                        // return "weather_icon_none";
+                    }
+
+
                     console.log("오전 기온: ", tomorrowMorningTemperature);
+                    console.log("오전 하늘상태: ", tomorrowMorningSky);
+                    console.log("오전 강수형태: ", tomorrowMorningPty);
                     console.log("오후 기온: ", tomorrowAfternoonTemperature);
+                    console.log("오후 하늘상태: ", tomorrowAfternoonSky);
+                    console.log("오후 강수상태: ", tomorrowAfternoonPty);
 
                 } else {
                     console.error("API response does not contain expected data");
@@ -1116,49 +1397,6 @@
                 setInterval(getWeather, 3600000);
             }
         });
-
-        function updateWeatherIcon(sky, pty) {
-            var weatherIconMorning = "";
-            var weatherIconAfternoon = "";
-
-            if (pty > 0) {
-                switch (pty) {
-                    case 1:
-                        weatherIconMorning = "weather_icon_rain"; //오전
-                        weatherIconAfternoon = "weather_icon_rain"; //오후
-                        break;
-                    case 2:
-                        weatherIconMorning = "weather_icon_rainsnow";
-                        weatherIconAfternoon = "weather_icon_rainsnow";
-                        break;
-                    case 3:
-                        weatherIconMorning = "weather_icon_snow";
-                        weatherIconAfternoon = "weather_icon_snow";
-                        break;
-                    case 4:
-                        weatherIconMorning = "weather_icon_shower";
-                        weatherIconAfternoon = "weather_icon_shower";
-                        break;
-                }
-            } else {
-                switch (sky) {
-                    case 1:
-                        weatherIconMorning = "weather_icon_sun";
-                        weatherIconAfternoon = "weather_icon_sun";
-                        break;
-                    case 3:
-                        weatherIconMorning = "weather_icon_cloud";
-                        weatherIconAfternoon = "weather_icon_cloud";
-                        break;
-                    case 4:
-                        weatherIconMorning = "weather_icon_fog";
-                        weatherIconAfternoon = "weather_icon_fog";
-                        break;
-                }
-            }
-
-            $('#morning_weather_icon').attr('class',weatherIconMorning);
-            $('#afternoon_weather_icon').attr('class',weatherIconAfternoon);
         }
 
         /** 기본 날짜는 -1로 해줘야 값을 출력할 수 있음 */
@@ -1199,7 +1437,6 @@
             }
         }
 
-    }
     $(document).ready(function() {
         // 최초 1회 호출
         getWeather();
@@ -1207,25 +1444,111 @@
         // 1시간 마다 호출
         setInterval(getWeather, 3600000);
     });
+    };
+
 
     //차트 JS  배차 손익추이
-    const ctx = document.getElementById('myChart');
+    Chart.register(ChartDataLabels); // 화면에 금액표시하기 위해 필요합니다.
 
-    new Chart(ctx, {
+    const ctx = document.getElementById('beGraph').getContext('2d');
+    const beGraph = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: ['7월', '8월', '9월', '10월', '11월', '이번달'],
-            datasets: [{
-                label: '매출',
-                data: [5401, 5596, 5760, 5660, 5860, 5260],
-                width: 1,
-                borderWidth: 0
-            }]
+            datasets: [
+                {
+                    label: '매출',
+                    data: [5401, 6000, 4050, 3080, 6800, 5800],
+                    type: 'bar',
+                    backgroundColor: 'rgba(160, 160, 160)',
+                    borderColor: 'rgba(160, 160, 160, 1)',
+                    borderWidth: 1,
+                    yAxisID: 'y2',
+                    maxBarThickness: 30,
+                    datalabels: {
+                        display:true,
+                        color: '#fff',
+                        anchor: 'end',
+                        align: 'top',
+                        formatter: function(value, context) {
+                            // if(value >=3000) {
+                            //     context.dataset.datalabels.color = '#fff';
+                            // }else {
+                            //     context.dataset.datalabels.color = '#000';
+                            // }
+                            return value;
+                        }
+                    },
+                    order: 2
+                },
+                {
+                    label: '이익',
+                    data: [350, 210, 120, 250, 300, 100],
+                    type: 'line',
+                    backgroundColor: 'rgba(255, 98, 76)',
+                    borderColor: 'rgba(255, 98, 76)',
+                    borderWidth: 1,
+                    yAxisID: 'y1',
+                    // pointStyle: 'circle',
+                    datalabels: {
+                        display:true,
+                        color: '#fff',
+                        anchor: 'end',
+                        align: 'top',
+                    },
+                    z: 1
+                }
+            ]
         },
         options: {
+            interaction: {
+                mode: 'none'
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        usePointStyle: true,
+                        generateLabels: function(chart) {
+                            const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                            labels[1].pointStyle = 'rect'; // 매출 모양
+                            labels[0].pointStyle = 'circle'; // 이익모양
+                            return labels;
+                        }
+                    }
+                }
+            },
             scales: {
-                y: {
-                    beginAtZero: true
+                x: {
+                    display: true,
+                    title: {
+                        display: true
+                    },
+                    barPercentage: 0.5, // 바의 너비를 조절합니다 (0.0 ~ 1.0)
+                    categoryPercentage: 0.8
+                },
+                y1: {
+                    position: 'right',
+                    display: true,
+                    title: {
+                        display: true
+                    },
+                    beginAtZero: true,
+                    max: Math.ceil(1000 / 2) * 2, //2의 배수
+                    ticks: {
+                        stepSize: 200 // 눈금 간격 설정
+                    }
+                },
+                y2: {
+                    position: 'left',
+                    display: true,
+                    title: {
+                        display: true
+                    },
+                    beginAtZero: true,
+                    max: Math.ceil(8000 / 2) * 2,//2의 배수
+                    ticks: {
+                        stepSize: 2000 // 눈금 간격 설정
+                    }
                 }
             }
         }
