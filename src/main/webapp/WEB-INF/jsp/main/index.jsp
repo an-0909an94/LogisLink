@@ -173,8 +173,8 @@ function goLogin(){
 
 				loginTalk(data.login.userId, data.login.mobile, data.login.userName);
 			}
-			// // 새창으로 maindashboard.do 페이지 열기
-			// window.open('/mainDashboard.do', 'windowName', '_blank');
+			// 새창으로 maindashboard.do 페이지 열기
+			/*window.open('/mainDashboard.do', 'windowName', '_blank');*/
 		},
 		error: function(xhr, status, error) {
 			alert(xhr.responseText);

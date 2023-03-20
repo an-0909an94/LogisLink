@@ -433,15 +433,15 @@
                                 <li class="vehicle">
                                     <p class="ranking_tit">배차 1위</p>
                                     <div>
-                                        <p>최우리</p>
-                                        <b>121</b>
+                                        <p class="rankname"></p>
+                                        <b class="ranking">121</b>
                                         <span>건</span>
                                     </div>
                                 </li>
                                 <li class="sales">
                                     <p class="ranking_tit">매출 1위</p>
                                     <div>
-                                        <p>깁유빈</p>
+                                        <p class="rankname">깁유빈</p>
                                         <b>3,700</b>
                                         <span>만원</span>
                                     </div>
@@ -799,7 +799,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc.1"></script>
 <script>
-
 
     $(function(){
         setInterval(slide,5000);
@@ -1470,7 +1469,6 @@
     });
     };
 
-
     //차트 JS  배차 손익추이
     Chart.register(ChartDataLabels); // 화면에 금액표시하기 위해 필요합니다.
 
@@ -1576,6 +1574,35 @@
                 }
             }
         }
+    });
+    /** 최근실적 Ranking */
+    $.ajax({
+        url: "http://localhost:3000/carbetween",
+        type: "GET",
+        dataType: "json",
+    }).done(response => {
+        if (response) {
+            const carName = response.map(({ carname }) => carname);
+            const carDate = response.map(({ cardate }) => cardate);
+            const carBuses = response.map(({ buses }) => buses);
+            const carSales = response.map(({ sales }) => sales);
+            const carProfit = response.map(({ profit }) => profit);
+            const carProfitper = response.map(({ profit }) => profit);
+            const carRanking = response.map(({ ranking }) => ranking);
+            const carPrice = response.map(({ rPrice }) => rPrice);
+            const carPersint = response.map(({ rPersint }) => rPersint);
+            $('.rankname').each((index, element) => {
+                $(element).text(carName[index]);
+            });
+            $('.ranking').each((index, element) => {
+                $(element).text(carRanking[index]);
+            });
+            console.log(carName, carPrice, carDate, carRanking, carPersint);
+        } else {
+            console.error('Error: response is empty or undefined');
+        }
+    }).fail((xhr, status, error) => {
+        console.error(error);
     });
 
 </script>
