@@ -646,7 +646,7 @@ function setFrtSelect(data, id, filter, dftVal){
 	s+= "<option value=\"\">선택하세요.</option>";
 	for(var i=0, item; item=data[i]; i++) {
 		if(item.filter1.indexOf(filter) >= 0) {
-			s+= "<option value=\"" + item.code + "\""
+			s+= "<option value=\"" + item.code + "\" value2=\"" + item.default_value + "\""
 			if (dftVal == item.code) s+= " selected";
 			s+= ">" + item.cname + "</option>";
 		}

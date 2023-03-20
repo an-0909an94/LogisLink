@@ -8,6 +8,7 @@
 				CODE code
 			  , CNAME
 			  , ISNULL(FILTER1, '') FILTER1
+			  , ISNULL(DEFAULT_VALUE, '') default_value
 		FROM
 				T_CODE
 		WHERE

@@ -430,6 +430,9 @@
 				<when test='searchColumn == "eComName".toString()'>
 					AND B.E_COM_NAME LIKE '%' + #{searchValue} + '%'
 				</when>
+				<when test='searchColumn == "externalInformation".toString()'>
+					AND B.EXTERNAL_INFOMATION LIKE '%' + #{searchValue} + '%'
+				</when>
 			</choose>
 		</if>
 		<if test="sMixYn != null and sMixYn != ''">

@@ -16,6 +16,8 @@ public class CodeVO {
 	private String filter2;
 	private String filter3;
 	private int asort;
+
+	private String default_value;
 	
 	public int getNumber() {
 		return number;
@@ -106,5 +108,13 @@ public class CodeVO {
 	}
 	public void setAsort(int asort) {
 		this.asort = asort;
+	}
+
+	public String getDefault_value() {
+		return default_value;
+	}
+
+	public void setDefault_value(String default_value) {
+		this.default_value = default_value;
 	}
 }

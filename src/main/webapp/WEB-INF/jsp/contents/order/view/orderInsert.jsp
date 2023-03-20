@@ -483,33 +483,13 @@
 
                                         <a id="startAddr" class="k-pager-refresh k-button openCloseBtn">상차추가열기</a>
                                         <div class="wd270 input-group middle-name form-group">
-                                            <strong class="required">주소</strong>
+                                            <strong class="required">주소 <span style="color:#ff0000; font-size: 7px; letter-spacing: -.1em">(동주소 입력시 예: 세종 어진동, 서울 강남구, 강릉시 강동면)</span></strong>
                                             <div class="textBox-in-icon">
                                                 <input type="text" id="sAddr" name="sAddr" onchange="this.value = removeLeadingAndTrailingSpaces(this.value);" style="width: 17.5rem;" />
                                                 <i><img onclick="dummyPopSearchPost('sAddr');" src="/images/icon/icon_search.png"></i>
                                                 <!-- 											<input style="width:17.5rem;" onclick="popSearchPost('sAddr');" id="sAddr" name="sAddr" type="text" class="form-control form-control-sm addr-text-box" required readonly="readonly"> -->
                                                 <!-- 											<i><img onclick="popSearchPost('sAddr');" src="/images/icon/search.png"></i> -->
                                             </div>
-
-                                            <script>
-                                                function removeLeadingAndTrailingSpaces(inputString) {
-                                                    return inputString.trim();
-                                                }
-
-
-                                                $(document).ready(function () {
-                                                    $("#sAddr").kendoComboBox({
-                                                        change: function (e) {
-                                                            var combobox = e.sender;
-                                                            var value = combobox.value();
-
-                                                            // 공백 제거 후 값을 설정
-                                                            combobox.value(removeLeadingAndTrailingSpaces(value));
-                                                        }
-                                                    });
-                                                });
-                                            </script>
-
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="wd90 mr0 input-group middle-name form-group">
@@ -575,7 +555,7 @@
                                         <input type="hidden" name="eDong" id="eDong">
                                         <div class="input-group input-group-sm middle-name form-group wd170">
                                             <strong>하차지명</strong>
-                                            <input type="text" id="eComName" name="eComName" pattern="^[가-힣]+(\s{1,}[가-힣]+)*$" style="width: 100%;">
+                                            <input type="text" id="eComName" name="eComName" class="wd170">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="input-group middle-name form-group wd90">
@@ -595,13 +575,40 @@
 
                                         <a id="endAddr" class="k-pager-refresh k-button openCloseBtn">하차추가열기</a>
                                         <div class="wd270 input-group middle-name form-group">
-                                            <strong class="required">주소</strong>
+                                            <strong class="required">주소 <span style="color:#ff0000; font-size: 7px; letter-spacing: -.1em">(동주소 입력시 예: 세종 어진동, 서울 강남구, 강릉시 강동면)</span></strong>
                                             <div class="textBox-in-icon">
                                                 <input style="width: 17.5rem;"  id="eAddr" name="eAddr" type="text">
                                                 <i><img onclick="dummyPopSearchPost('eAddr');" src="/images/icon/icon_search.png"></i>
                                                 <!-- 											<input style="width:17.5rem;" onClick="" id="eAddr" name="eAddr" type="text" class="form-control form-control-sm addr-text-box" readonly="readonly" required> -->
                                                 <!-- 											<i><img onclick="popSearchPost('eAddr');" src="/images/icon/search.png"></i> -->
                                             </div>
+                                            <script>
+                                                function removeLeadingAndTrailingSpaces(inputString) {
+                                                    return inputString.trim();
+                                                }
+
+                                                $(document).ready(function () {
+                                                    $("#sAddr").kendoComboBox({
+                                                        change: function (e) {
+                                                            var combobox = e.sender;
+                                                            var value = combobox.value();
+
+                                                            // 공백 제거 후 값을 설정
+                                                            combobox.value(removeLeadingAndTrailingSpaces(value));
+                                                        }
+                                                    });
+
+                                                    $("#eAddr").kendoComboBox({
+                                                        change: function (e) {
+                                                            var combobox = e.sender;
+                                                            var value = combobox.value();
+
+                                                            // 공백 제거 후 값을 설정
+                                                            combobox.value(removeLeadingAndTrailingSpaces(value));
+                                                        }
+                                                    });
+                                                });
+                                            </script>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="wd90 mr0 input-group middle-name form-group">
@@ -2695,16 +2702,16 @@
             $("input:checkbox[id='"+id+"']").prop("checked", true);
         }
     }
-//인풋박스 전체공백
-/*    function noSpaceForm(obj) { // 공백사용못하게
-        var str_space = /\s/;  // 공백체크
-        if(str_space.exec(obj.value)) { //공백 체크
-            //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
-            obj.focus();
-            obj.value = obj.value.replace(/\s| /gi,''); // 공백제거
-            return false;
-        }
-    }*/
+    //인풋박스 전체공백
+    /*    function noSpaceForm(obj) { // 공백사용못하게
+            var str_space = /\s/;  // 공백체크
+            if(str_space.exec(obj.value)) { //공백 체크
+                //alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백은 자동적으로 제거 됩니다.");
+                obj.focus();
+                obj.value = obj.value.replace(/\s| /gi,''); // 공백제거
+                return false;
+            }
+        }*/
 
     function readonlyValidator(){
         $("input[name$='Addr']").removeAttr('readonly');
@@ -2721,33 +2728,101 @@
         return words.length > 1;
     }
 
-    $(document).ready(function () {
-        $("#f").validator().on('submit', function (e) {
-            var combobox = $("#sAddr").data("kendoComboBox");
-            var value = combobox.value();
+    /*    $(document).ready(function () {
+            $("#f").validator().on('submit', function (e) {
+                var combobox = $("#sAddr").data("kendoComboBox");
+                var value = combobox.value();
 
-            if (!hasSpaceBetweenWords(value)) {
-                e.preventDefault(); // 기본 제출 동작을 방지합니다.
-                alert('문자 사이에 공백이 있어야 합니다.');
-            }
-        });
-    });
+                if (!hasSpaceBetweenWords(value)) {
+                    e.preventDefault(); // 기본 제출 동작을 방지합니다.
+                    alert('문자 사이에 공백이 있어야 합니다.');
+                }
+            });
+        });*/
 
 
     $('#f').validator().on('submit', function (e) {
 
-        /*        alert(finishCnt + "111111111111111");
-                alert(taxCnt + "222222222222");*/
 
-        /*        if(taxCnt > 0){
-                    alert("이미 정산이 마감된 오더입니다.")
-                    return;
+
+        var sCombobox = $("#sAddr").data("kendoComboBox");
+        var sValue = sCombobox.value();
+
+        if (!hasSpaceBetweenWords(sValue)) {
+            e.preventDefault(); // 기본 제출 동작을 방지합니다.
+            alert('상차지 주소 사이에 공백이 있어야 합니다.');
+            return;
+        }
+
+
+
+        var eCombobox = $("#eAddr").data("kendoComboBox");
+        var eValue = eCombobox.value();
+
+        if (!hasSpaceBetweenWords(eValue)) {
+            e.preventDefault(); // 기본 제출 동작을 방지합니다.
+            alert('하차지 주소 사이에 공백이 있어야 합니다.');
+            return;
+        }
+
+
+        if ($('#24Cargo').prop('checked')|| $('#manCargo').prop('checked') || $('#oneCargo').prop('checked')) {
+            var carTonVal = $("#carTonCode > option:selected").attr("value2");
+
+            if(typeof carTonVal != "undefined" && carTonVal != null && carTonVal != "" ) {
+                if ($("#goodsWeight").val() != "") {
+                    var goodsWeithtVal = $("#goodsWeight").val()*1000;
+                    carTonVal =  Math.floor(carTonVal * 1.1);
+                    if(carTonVal < goodsWeithtVal){
+                        alert("화물망 체크 전송 체크시 \n중량은 요청톤수의 110%를 넘을 수 없습니다.");
+                        return;
+                    }
                 }
+            }
 
-                if(finishCnt > 0){
-                    alert("이미 세금계산서가 발행된 오더입니다.")
-                    return;
-                }*/
+            const sDate = new Date($("#sDateDay").val()+" "+$("#sDateTime").val());
+            const eDate = new Date($("#eDateDay").val()+" "+$("#eDateTime").val());
+            if(sDate > eDate){
+                alert("하차일 정보가 상차일 정보 보다 빠를 수 없습니다.")
+                return;
+            }
+
+
+
+
+        }
+
+        if ($('#24Cargo').prop('checked')) {
+            // 체크박스가 체크되었을 때 실행할 코드
+            if($("#carTonCode").val() =="ETC"){
+                alert("24시콜 체크시 요청톤수에 기타를 선택하실 수 없습니다.");
+                return;
+            }
+            //else if($("#carTonCode").val() =="0.5"){
+            //    if($("#carTypeCode").val() !="15"  && $("#carTypeCode").val() !="23"){
+            //        alert("24시콜 체크시 요청톤수 1톤 미만일 경우 \n요청차종 라보와 다마스만 선택 가능합니다.");
+            //        return;
+            //    }
+            //}
+        }
+        if ($('#manCargo').prop('checked')) {
+            // 체크박스가 체크되었을 때 실행할 코드
+          //  if($("#carTonCode").val() =="0.5"){
+          //          alert("화물맨 체크시 요청톤수에 1톤 미만을 선택하실 수 없습니다.");
+          //          return;
+          //  }
+
+
+        }
+        if ($('#oneCargo').prop('checked')) {
+            // 체크박스가 체크되었을 때 실행할 코드
+            if($("#carTonCode").val() =="ETC"){
+                alert("원콜 체크시 요청톤수에 기타를 선택하실 수 없습니다.");
+                return;
+            }
+
+        }
+
 
         if(!chkTEST){
             e.preventDefault();

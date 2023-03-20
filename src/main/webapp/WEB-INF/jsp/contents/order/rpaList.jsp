@@ -644,6 +644,12 @@
             }else{
                 msg ="";
             }
+        }else if(job_stat=="C"){
+            if(link_stat=="U"){
+                msg ="(수정중)";
+            }else{
+                msg ="";
+            }
         }else{
                 msg ="";
         }

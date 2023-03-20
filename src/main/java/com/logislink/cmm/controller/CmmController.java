@@ -358,9 +358,13 @@ public class CmmController {
 	public String jibunAddrList(HttpServletRequest request, HttpServletResponse response, Model model,
 							  ModelMap map, @RequestParam Map<String, Object> param) throws Exception {
 
-			List<AddrVO> jibunList = cmmService.getJibunAddr(param);
-			int count = cmmService.getAddrCnt(param);
+			if(param !=null && param.get("filter[filters][0][value]") !=null) {
+				param.put("filter[filters][0][value]", param.get("filter[filters][0][value]").toString().replace(" ", "%"));
+			}
 
+			List<AddrVO> jibunList = cmmService.getJibunAddr(param);
+
+			int count = cmmService.getAddrCnt(param);
 			map.put("result", Boolean.TRUE);
 			map.put("data", jibunList);
 			map.put("total", count);
