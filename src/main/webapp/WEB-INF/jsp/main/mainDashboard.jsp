@@ -1043,6 +1043,8 @@
 
             $('#selectedRegionOil').text(sidoName + '평균');
             $('#selectedRegionWeather').text(sidoName);
+            $("#tomorrowMorningTemperature").empty();
+            $("#tomorrowAfternoonTemperature").empty();
 
             // 새로고침
             // location.reload();
