@@ -1277,6 +1277,7 @@
 		$.ajax({
 			url: "/contents/basic/eventLogWrite.do",
 			type: "POST",
+			dataType: "json",
 			data: {
 				menuUrl:  menuUrl,
 				menuName: menuName
