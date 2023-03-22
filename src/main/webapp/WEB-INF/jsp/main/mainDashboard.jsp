@@ -207,6 +207,7 @@
     section .section_right .sns a::before{content: ''; width: 26px; height: 26px; background: url(../img/icon_all.png) no-repeat; margin-right: 10px; display: inline-block; position: relative; top: 8px;}
     section .section_right .sns li.video a::before{background-position: 0px -90px;}
     section .section_right .sns li.blog a::before{background-position: 0px -120px;}
+    .media { width: 100%;}
 
     @media screen and (max-width: 1870px){
         header{width: 95%; min-width: 1280px;}
@@ -293,10 +294,10 @@
         section .section_right .notice{width: 380px; margin-top: 45px;}
 
         section .section_right .sns{width: 380px; margin-top: 16px;}
+
     }
 
 </style>
-
 <div id="wrap">
     <div class="notice_bg"></div>
     <header>
@@ -384,6 +385,55 @@
                 #tomorrowAfternoonTemperature span:nth-child(n+2) {
                     display: none;
                 }
+                .graphB {
+                    position: relative;
+                }
+                #beGraph{
+                    margin: 0 auto;
+                    position: absolute;
+                    top: 3vw;
+                    left: 1vw;
+                    height: 236px!important;
+                    width: 621px!important;
+                }
+
+                #custom {
+                    position: absolute;
+                    display: flex;
+                    justify-content: flex-end;
+                    flex-direction: row;
+                    width: 635px;
+                }
+                #custom ul {
+                    position: relative;
+                    width: 200px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                }
+                #custom ul li {
+                    position: relative;
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    width: 67px;
+                    align-items: center;
+                }
+                .namelabel{}
+                .g-square{
+                    width: 20px;
+                    height: 4px;
+                    background: #a0a0a0;
+                    margin-right: 3px;
+
+                }
+                .g-circle{
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 100px;
+                    background: #ff0000;
+                    margin-right: 3px;
+                }
             </style>
 
             <!-- 지역 설정 -->
@@ -430,72 +480,72 @@
                     <div class="recent_ranking_box">
                         <div>
                             <ul>
-                                <li class="vehicle">
-                                    <p class="ranking_tit">배차 1위</p>
+                                <li class="vehicle vehicletoday">
+                                    <p class="ranking_tit title"></p>
                                     <div>
-                                        <p class="rankname"></p>
-                                        <b class="ranking">121</b>
-                                        <span>건</span>
+                                        <p class="name"></p>
+                                        <b class="rank"></b>
+                                        <span class="Unit"></span>
                                     </div>
                                 </li>
-                                <li class="sales">
-                                    <p class="ranking_tit">매출 1위</p>
+                                <li class="sales salestoday">
+                                    <p class="ranking_tit title"></p>
                                     <div>
-                                        <p class="rankname">깁유빈</p>
-                                        <b>3,700</b>
-                                        <span>만원</span>
+                                        <p class="name"></p>
+                                        <b class="rank"></b>
+                                        <span class="Unit"></span>
                                     </div>
                                 </li>
-                                <li class="profit">
-                                    <p class="ranking_tit">이익 1위</p>
+                                <li class="profit profittoday">
+                                    <p class="ranking_tit title"></p>
                                     <div>
-                                        <p>김하연</p>
-                                        <b>2,300</b>
-                                        <span>만원</span>
+                                        <p class="name"></p>
+                                        <b class="rank"></b>
+                                        <span class="Unit"></span>
                                     </div>
                                 </li>
-                                <li class="profitRate">
-                                    <p class="ranking_tit">이익률 1위</p>
+                                <li class="profitRate profitRatetoday">
+                                    <p class="ranking_tit title"></p>
                                     <div>
-                                        <p>나소라</p>
-                                        <b>14.5</b>
-                                        <span>%</span>
+                                        <p class="name"></p>
+                                        <b class="rank"></b>
+                                        <span class="Unit"></span>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                         <div>
                             <ul>
-                                <li class="vehicle">
-                                    <p class="ranking_tit">배차 1위</p>
+                                <li class="vehicle vehicleyesterday">
+                                    <p class="ranking_tit title"></p>
                                     <div>
-                                        <p>나소라</p>
-                                        <b>121</b>
-                                        <span>건</span>
+                                        <p class="name"></p>
+                                        <b class="rank"></b>
+                                        <span class="Unit"></span>
                                     </div>
                                 </li>
-                                <li class="sales">
-                                    <p class="ranking_tit">매출 1위</p>
+                                <li class="sales salesyesterday">
+                                    <p class="ranking_tit title"></p>
                                     <div>
-                                        <p>김하연</p>
-                                        <b>3,700</b>
-                                        <span>만원</span>
+                                        <p class="name"></p>
+                                        <b class="rank"></b>
+                                        <span class="Unit"></span>
                                     </div>
                                 </li>
-                                <li class="profit">
-                                    <p class="ranking_tit">이익 1위</p>
+                                <li class="profit profityesterday">
+                                    <p class="ranking_tit title"></p>
                                     <div>
-                                        <p>깁유빈</p>
-                                        <b>2,300</b>
-                                        <span>만원</span>
+                                        <p class="name"></p>
+                                        <b class="rank"></b>
+                                        <span class="Unit"></span>
                                     </div>
                                 </li>
-                                <li class="profitRate">
-                                    <p class="ranking_tit">이익률 1위</p>
+                                <li class="profitRate profitRateyesterday">
+                                    <p class="ranking_tit title"></p>
                                     <div>
-                                        <p>최우리</p>
-                                        <b>14.5</b>
-                                        <span>%</span>
+                                        <p class="name"></p>
+                                        <b class="rank"></b>
+                                        <span class="Unit"></span>
                                     </div>
                                 </li>
                             </ul>
@@ -631,6 +681,12 @@
                 <div class="graph_vehicle">
                     <h2>배차 손익추이</h2>
                     <div class="graphB">
+                        <div id="custom">
+                            <ul>
+                                <li><span class="g-square namelabel"></span><span>매출</span></li>
+                                <li><span class="g-circle namelabel"></span><span>이익</span></li>
+                            </ul>
+                        </div>
                         <canvas id="beGraph"></canvas>
                     </div>
                 </div>
@@ -638,6 +694,8 @@
                 <div class="graph_top">
                     <h2>전월 TOP 거래처 현황</h2>
                     <div class="graphT">
+                        <div id="custom-legend">
+                        </div>
                         <canvas id="topGraph"></canvas>
                     </div>
                 </div>
@@ -936,42 +994,42 @@
     /** 시도 유가정보 */
     function  updateSidoInfo(sidoCode) {
 
-    $.ajax({
-        url: "/contents/basic/data/getOpinetsido.do",
-        type: "POST",
-        dataType: "json",
-        async: true,
-        data: {
-            sido: encodeURIComponent(sidoCode), // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
-        }
-    }).done(response => {
-        // debugger;
-        if (response.result) {
-            const oilPrices = response.oil.OIL.filter(item => ["B027", "D047", "K015"].includes(item.PRODCD))
-                .map(({PRODCD, PRICE}) => {
-                    switch (PRODCD) {
-                        case "B027":
-                            return {name: "휘발유", price: PRICE};
-                        case "D047":
-                            return {name: "경유", price: PRICE};
-                        case "K015":
-                            return {name: "LPG", price: PRICE};
-                        default:
-                            return {name: "", price: ""};
-                    }
+        $.ajax({
+            url: "/contents/basic/data/getOpinetsido.do",
+            type: "POST",
+            dataType: "json",
+            async: true,
+            data: {
+                sido: encodeURIComponent(sidoCode), // 시도 값 서울 01, 경기도 02, 강원도 03, 충북 04, 충남 05, 전북 06, 전남 07, 경북 08, 경남 09, 부산 10, 제주 11, 대구 14, 인천 15, 광주 16, 대전 17, 울산 18, 세종 19
+            }
+        }).done(response => {
+            // debugger;
+            if (response.result) {
+                const oilPrices = response.oil.OIL.filter(item => ["B027", "D047", "K015"].includes(item.PRODCD))
+                    .map(({PRODCD, PRICE}) => {
+                        switch (PRODCD) {
+                            case "B027":
+                                return {name: "휘발유", price: PRICE};
+                            case "D047":
+                                return {name: "경유", price: PRICE};
+                            case "K015":
+                                return {name: "LPG", price: PRICE};
+                            default:
+                                return {name: "", price: ""};
+                        }
+                    });
+                $('.sido_oil_price').each((index, element) => {
+                    $(element).text(oilPrices[index].price);
                 });
-            $('.sido_oil_price').each((index, element) => {
-                $(element).text(oilPrices[index].price);
-            });
-            console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
+                console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
 
-        } else {
-            console.error(response.message);
-        }
-    }).fail((xhr, status, error) => {
-        console.error(error);
-    });
-}
+            } else {
+                console.error(response.message);
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
+        });
+    }
 
 
 
@@ -1126,300 +1184,300 @@
             }
         }
     }
-        const coordinatesObj = {
-            "01": {nx: '60', ny: '127'},
-            "02": {nx: '60', ny: '120'},
-            "03": {nx: '73', ny: '134'},
-            "04": {nx: '69', ny: '107'},
-            "05": {nx: '68', ny: '100'},
-            "06": {nx: '63', ny: '89'},
-            "07": {nx: '51', ny: '67'},
-            "08": {nx: '89', ny: '91'},
-            "09": {nx: '91', ny: '77'},
-            "10": {nx: '98', ny: '76'},
-            "11": {nx: '89', ny: '90'},
-            "14": {nx: '55', ny: '124'},
-            "15": {nx: '58', ny: '74'},
-            "16": {nx: '67', ny: '100'},
-            "17": {nx: '102', ny: '84'},
-            "18": {nx: '66', ny: '103'},
-            "19": {nx: '52', ny: '38'},
-            "seoul":{nx: '60', ny: '127'}
-        };
+    const coordinatesObj = {
+        "01": {nx: '60', ny: '127'},
+        "02": {nx: '60', ny: '120'},
+        "03": {nx: '73', ny: '134'},
+        "04": {nx: '69', ny: '107'},
+        "05": {nx: '68', ny: '100'},
+        "06": {nx: '63', ny: '89'},
+        "07": {nx: '51', ny: '67'},
+        "08": {nx: '89', ny: '91'},
+        "09": {nx: '91', ny: '77'},
+        "10": {nx: '98', ny: '76'},
+        "11": {nx: '89', ny: '90'},
+        "14": {nx: '55', ny: '124'},
+        "15": {nx: '58', ny: '74'},
+        "16": {nx: '67', ny: '100'},
+        "17": {nx: '102', ny: '84'},
+        "18": {nx: '66', ny: '103'},
+        "19": {nx: '52', ny: '38'},
+        "seoul":{nx: '60', ny: '127'}
+    };
 
     function updateSidoWeather(sidoCode) {
-    function getWeather() {
-        function getTemperatureForPeriod(data, startHour, endHour) {
+        function getWeather() {
+            function getTemperatureForPeriod(data, startHour, endHour) {
 
-            var temperatureArray = [];
-            for (var i = startHour; i <= endHour; i++) {
-                var hour = (i < 10) ? "0" + i + "00" : i + "00";
+                var temperatureArray = [];
+                for (var i = startHour; i <= endHour; i++) {
+                    var hour = (i < 10) ? "0" + i + "00" : i + "00";
 
-                var temp = data.find(function (item) {
-                    return item.fcstTime === hour && item.category === "TMP";
-                });
-
-                var sky = data.find(function (item) {
-                    return item.fcstTime === hour && item.category === "SKY";
-                });
-
-                var pty = data.find(function (item) {
-                    return item.fcstTime === hour && item.category === "PTY";
-                });
-
-                var weatherIcon = "";
-                if (pty && pty.fcstValue > 0) {
-                    weatherIcon = getWeatherIconClass("PTY", pty.fcstValue);
-                } else {
-                    weatherIcon = getWeatherIconClass("SKY", sky.fcstValue);
-                }
-
-                temperatureArray.push({
-                    hour: hour,
-                    temperature: temp.fcstValue,
-                    sky: sky.fcstValue,
-                    pty: pty.fcstValue,
-                    icon: weatherIcon
-                });
-            }
-            return temperatureArray;
-        }
-
-        function displayTemperature(temperatureData, temperatureElementId, iconElementId) {
-            var currentHour = new Date().getHours().toString().padStart(2, "0") + "00";
-            var targetTemperature = temperatureData.find(function (value) {
-                return value.hour === currentHour;
-            });
-
-            if (!targetTemperature) {
-                targetTemperature = temperatureData[temperatureData.length - 1];
-            }
-
-            var iconClass = "";
-            if (targetTemperature.pty > 0) {
-                iconClass = getWeatherIconClass("PTY", targetTemperature.pty.toString());
-            } else {
-                iconClass = getWeatherIconClass("SKY", targetTemperature.sky.toString());
-            }
-
-            $(temperatureElementId).html("<span>" + targetTemperature.temperature + "</span>");
-            $(iconElementId).toggleClass(iconClass);
-        }
-
-        $.ajax({
-            url: "/contents/basic/data/getOpenweather.do",
-            type: "POST",
-            dataType: "json",
-            async: true,
-            data: {
-                base_date: getBaseDate(),
-                base_time: getBaseTime(),
-                nx: coordinatesObj[sidoCode].nx,
-                ny: coordinatesObj[sidoCode].ny
-            },
-            success: function (data) {
-                console.log("AJAX call successful");
-                if (data && data.result && data.item) {
-                    console.log(data.item);
-                    // debugger;
-                    // Today 기온 데이터에서 오전/오후 기온 추출
-                    var temperatureData = data.item.filter(function (item) {
-                        return item.category === "TMP"|| item.category === "SKY" || item.category === "PTY";
+                    var temp = data.find(function (item) {
+                        return item.fcstTime === hour && item.category === "TMP";
                     });
 
-                    // 오전 기온 정보 추출
-                    var morningTemperature = getTemperatureForPeriod(temperatureData, 2, 12);
-                    // 오후 기온 정보 추출
-                    var afternoonTemperature = getTemperatureForPeriod(temperatureData, 13, 23);
+                    var sky = data.find(function (item) {
+                        return item.fcstTime === hour && item.category === "SKY";
+                    });
 
+                    var pty = data.find(function (item) {
+                        return item.fcstTime === hour && item.category === "PTY";
+                    });
 
-                    var currentHour = new Date().getHours().toString().padStart(4, "") + "00";
-                    console.log("currentHour:", currentHour);
-
-                    // 오전 기온
-                    if (parseInt(currentHour) < 1200) { //12시 이전이면
-                        console.log("Displaying morning temperature");
-                        displayTemperature(morningTemperature, "#morningTemperature", "#morningWeatherIcon");
+                    var weatherIcon = "";
+                    if (pty && pty.fcstValue > 0) {
+                        weatherIcon = getWeatherIconClass("PTY", pty.fcstValue);
                     } else {
-                        console.log("Displaying 12 o'clock morning temperature");
-                        var targetTemperature = morningTemperature.find(function (value) {
-                            return value.hour === "1200";
-                        });
-
-                        if (!targetTemperature) {
-                            targetTemperature = morningTemperature[morningTemperature.length - 1];
-                        }
-
-                        $("#morningTemperature").append("<span>" + targetTemperature.temperature + "</span>");
-                        var iconClass = "";
-                        if (targetTemperature.pty > 0) {
-                            iconClass = getWeatherIconClass("PTY", targetTemperature.pty.toString());
-                        } else {
-                            iconClass = getWeatherIconClass("SKY", targetTemperature.sky.toString());
-                        }
-                        $("#morningWeatherIcon").addClass(iconClass);
+                        weatherIcon = getWeatherIconClass("SKY", sky.fcstValue);
                     }
 
-                    // 오후 기온
-                    if (parseInt(currentHour) >= 1300 && parseInt(currentHour) <= 2300) {
-                        console.log("Displaying afternoon temperature");
-                        displayTemperature(afternoonTemperature, "#afternoonTemperature", "#afternoonWeatherIcon");
-                    } else {
-                        console.log("Displaying 23 o'clock afternoon temperature");
-                        var targetTemperature = afternoonTemperature.find(function (value) {
-                            return value.hour === "2300";
-                        });
+                    temperatureArray.push({
+                        hour: hour,
+                        temperature: temp.fcstValue,
+                        sky: sky.fcstValue,
+                        pty: pty.fcstValue,
+                        icon: weatherIcon
+                    });
+                }
+                return temperatureArray;
+            }
 
-                        if (!targetTemperature) {
-                            targetTemperature = afternoonTemperature[afternoonTemperature.length - 1];
-                        }
+            function displayTemperature(temperatureData, temperatureElementId, iconElementId) {
+                var currentHour = new Date().getHours().toString().padStart(2, "0") + "00";
+                var targetTemperature = temperatureData.find(function (value) {
+                    return value.hour === currentHour;
+                });
+
+                if (!targetTemperature) {
+                    targetTemperature = temperatureData[temperatureData.length - 1];
+                }
+
+                var iconClass = "";
+                if (targetTemperature.pty > 0) {
+                    iconClass = getWeatherIconClass("PTY", targetTemperature.pty.toString());
+                } else {
+                    iconClass = getWeatherIconClass("SKY", targetTemperature.sky.toString());
+                }
+
+                $(temperatureElementId).html("<span>" + targetTemperature.temperature + "</span>");
+                $(iconElementId).toggleClass(iconClass);
+            }
+
+            $.ajax({
+                url: "/contents/basic/data/getOpenweather.do",
+                type: "POST",
+                dataType: "json",
+                async: true,
+                data: {
+                    base_date: getBaseDate(),
+                    base_time: getBaseTime(),
+                    nx: coordinatesObj[sidoCode].nx,
+                    ny: coordinatesObj[sidoCode].ny
+                },
+                success: function (data) {
+                    console.log("AJAX call successful");
+                    if (data && data.result && data.item) {
+                        console.log(data.item);
                         // debugger;
-                        $("#afternoonTemperature").append("<span>" + targetTemperature.temperature + "</span>");
-                        var iconClass = "";
-                        if (targetTemperature.pty > 0) {
-                            iconClass = getWeatherIconClass("PTY", targetTemperature.pty.toString());
+                        // Today 기온 데이터에서 오전/오후 기온 추출
+                        var temperatureData = data.item.filter(function (item) {
+                            return item.category === "TMP"|| item.category === "SKY" || item.category === "PTY";
+                        });
+
+                        // 오전 기온 정보 추출
+                        var morningTemperature = getTemperatureForPeriod(temperatureData, 2, 12);
+                        // 오후 기온 정보 추출
+                        var afternoonTemperature = getTemperatureForPeriod(temperatureData, 13, 23);
+
+
+                        var currentHour = new Date().getHours().toString().padStart(4, "") + "00";
+                        console.log("currentHour:", currentHour);
+
+                        // 오전 기온
+                        if (parseInt(currentHour) < 1200) { //12시 이전이면
+                            console.log("Displaying morning temperature");
+                            displayTemperature(morningTemperature, "#morningTemperature", "#morningWeatherIcon");
                         } else {
-                            iconClass = getWeatherIconClass("SKY", targetTemperature.sky.toString());
-                        }
-                        $("#afternoonWeatherIcon").addClass(iconClass);
-                    }
+                            console.log("Displaying 12 o'clock morning temperature");
+                            var targetTemperature = morningTemperature.find(function (value) {
+                                return value.hour === "1200";
+                            });
 
-
-                    console.log("오전 기온: ", morningTemperature);
-                    console.log("오후 기온: ", afternoonTemperature);
-
-
-
-
-
-
-                    // Tomorrow 기온 데이터에서 오전/오후 기온 추출
-                    var temperatureData = data.item.filter(function (item) {
-                        return item.category === "TMP" || item.category === "SKY" || item.category === "PTY";
-                    });
-
-                    // 내일의 날씨를 가져옵니다.
-                    var tomorrowDate = getTomorrowBaseDate();
-
-                    // 내일 오전 06시 기온 정보 추출
-                    var tomorrowMorningTemperature = temperatureData.find(function (item) {
-                        return item.fcstDate === tomorrowDate && item.fcstTime === "0600" && item.category === "TMP";
-                    });
-                    var tomorrowMorningPty = temperatureData.find(function (item) {
-                        return item.fcstDate === tomorrowDate && item.fcstTime === "0600" && item.category === "PTY";
-                    });
-                    var tomorrowMorningSky = temperatureData.find(function (item) {
-                        return item.fcstDate === tomorrowDate && item.fcstTime === "0600" && item.category === "SKY";
-                    });
-
-                    // 내일 오후 15시 기온 정보 추출
-                    var tomorrowAfternoonTemperature = temperatureData.find(function (item) {
-                        return item.fcstDate === tomorrowDate && item.fcstTime === "1500" && item.category === "TMP";
-                    });
-                    var tomorrowAfternoonPty = temperatureData.find(function (item) {
-                        return item.fcstDate === tomorrowDate && item.fcstTime === "1500" && item.category === "PTY";
-                    });
-                    var tomorrowAfternoonSky = temperatureData.find(function (item) {
-                        return item.fcstDate === tomorrowDate && item.fcstTime === "1500" && item.category === "SKY";
-                    });
-
-                    // debugger;
-                    updateWeatherIcon(tomorrowMorningSky, tomorrowMorningPty, tomorrowAfternoonSky, tomorrowAfternoonPty);
-
-                    // 내일 오전 기온 표시
-                    if (tomorrowMorningTemperature) {
-                        $("#tomorrowMorningTemperature").append("<span>" + tomorrowMorningTemperature.fcstValue + "</span>");
-                    }
-                    // 내일 오후 기온 표시
-                    if (tomorrowAfternoonTemperature) {
-                        $("#tomorrowAfternoonTemperature").append("<span>" + tomorrowAfternoonTemperature.fcstValue + "</span>");
-                    }
-
-                    // debugger;
-                    // 날씨는 조건 PTY > 0 (아이콘 CLASS로 상속한다.)
-
-                    function updateWeatherIcon(tomorrowMorningSky, tomorrowMorningPty, tomorrowAfternoonSky, tomorrowAfternoonPty) {
-                        var weatherIconMorning = "";
-                        var weatherIconAfternoon = "";
-
-                        // 내일 WeatherICON PTY, SKY
-                        if (tomorrowMorningPty && tomorrowMorningPty.fcstValue > 0) {
-                            weatherIconMorning = getWeatherIconClass("PTY", tomorrowMorningPty.fcstValue);
-                        } else {
-                            weatherIconMorning = getWeatherIconClass("SKY", tomorrowMorningSky.fcstValue);
-                        }
-                        console.log("Morning icon class", weatherIconMorning); // 여기에 추가
-
-                        if (tomorrowAfternoonPty && tomorrowAfternoonPty.fcstValue > 0) {
-                            weatherIconAfternoon = getWeatherIconClass("PTY", tomorrowAfternoonPty.fcstValue);
-                        } else {
-                            weatherIconAfternoon = getWeatherIconClass("SKY", tomorrowAfternoonSky.fcstValue);
-                        }
-                        console.log("Afternoon icon class", weatherIconAfternoon); // 여기에 추가
-
-                        $("#morningIcon").removeClass().addClass(weatherIconMorning);
-                        $("#afternoonIcon").removeClass().addClass(weatherIconAfternoon);
-
-                    }
-
-                    //weatherIconMore( today, tomorrow )
-                    function getWeatherIconClass(category, value) {
-                        if (category === "PTY") {
-                            switch (value) {
-                                case "1":
-                                    return "weather_icon_rain";
-                                    break;
-                                case "2":
-                                    return "weather_icon_rainsnow";
-                                    break;
-                                case "3":
-                                    return "weather_icon_snow";
-                                    break;
-                                case "4":
-                                    return "weather_icon_shower";
-                                    break;
-                                default:
-                                    break;
+                            if (!targetTemperature) {
+                                targetTemperature = morningTemperature[morningTemperature.length - 1];
                             }
-                        } else if (category === "SKY") {
-                            switch (value) {
-                                case "1":
-                                    return "weather_icon_sun";
-                                    break;
-                                case "3":
-                                    return "weather_icon_cloud";
-                                    break;
-                                case "4":
-                                    return "weather_icon_fag";
-                                    break;
-                                default:
-                                    break;
+
+                            $("#morningTemperature").append("<span>" + targetTemperature.temperature + "</span>");
+                            var iconClass = "";
+                            if (targetTemperature.pty > 0) {
+                                iconClass = getWeatherIconClass("PTY", targetTemperature.pty.toString());
+                            } else {
+                                iconClass = getWeatherIconClass("SKY", targetTemperature.sky.toString());
                             }
+                            $("#morningWeatherIcon").addClass(iconClass);
                         }
 
-                        // // 기본값으로 아무것도 반환하지 않을 때 반환되는 문자열
-                        // return "weather_icon_none";
+                        // 오후 기온
+                        if (parseInt(currentHour) >= 1300 && parseInt(currentHour) <= 2300) {
+                            console.log("Displaying afternoon temperature");
+                            displayTemperature(afternoonTemperature, "#afternoonTemperature", "#afternoonWeatherIcon");
+                        } else {
+                            console.log("Displaying 23 o'clock afternoon temperature");
+                            var targetTemperature = afternoonTemperature.find(function (value) {
+                                return value.hour === "2300";
+                            });
+
+                            if (!targetTemperature) {
+                                targetTemperature = afternoonTemperature[afternoonTemperature.length - 1];
+                            }
+                            // debugger;
+                            $("#afternoonTemperature").append("<span>" + targetTemperature.temperature + "</span>");
+                            var iconClass = "";
+                            if (targetTemperature.pty > 0) {
+                                iconClass = getWeatherIconClass("PTY", targetTemperature.pty.toString());
+                            } else {
+                                iconClass = getWeatherIconClass("SKY", targetTemperature.sky.toString());
+                            }
+                            $("#afternoonWeatherIcon").addClass(iconClass);
+                        }
+
+
+                        console.log("오전 기온: ", morningTemperature);
+                        console.log("오후 기온: ", afternoonTemperature);
+
+
+
+
+
+
+                        // Tomorrow 기온 데이터에서 오전/오후 기온 추출
+                        var temperatureData = data.item.filter(function (item) {
+                            return item.category === "TMP" || item.category === "SKY" || item.category === "PTY";
+                        });
+
+                        // 내일의 날씨를 가져옵니다.
+                        var tomorrowDate = getTomorrowBaseDate();
+
+                        // 내일 오전 06시 기온 정보 추출
+                        var tomorrowMorningTemperature = temperatureData.find(function (item) {
+                            return item.fcstDate === tomorrowDate && item.fcstTime === "0600" && item.category === "TMP";
+                        });
+                        var tomorrowMorningPty = temperatureData.find(function (item) {
+                            return item.fcstDate === tomorrowDate && item.fcstTime === "0600" && item.category === "PTY";
+                        });
+                        var tomorrowMorningSky = temperatureData.find(function (item) {
+                            return item.fcstDate === tomorrowDate && item.fcstTime === "0600" && item.category === "SKY";
+                        });
+
+                        // 내일 오후 15시 기온 정보 추출
+                        var tomorrowAfternoonTemperature = temperatureData.find(function (item) {
+                            return item.fcstDate === tomorrowDate && item.fcstTime === "1500" && item.category === "TMP";
+                        });
+                        var tomorrowAfternoonPty = temperatureData.find(function (item) {
+                            return item.fcstDate === tomorrowDate && item.fcstTime === "1500" && item.category === "PTY";
+                        });
+                        var tomorrowAfternoonSky = temperatureData.find(function (item) {
+                            return item.fcstDate === tomorrowDate && item.fcstTime === "1500" && item.category === "SKY";
+                        });
+
+                        // debugger;
+                        updateWeatherIcon(tomorrowMorningSky, tomorrowMorningPty, tomorrowAfternoonSky, tomorrowAfternoonPty);
+
+                        // 내일 오전 기온 표시
+                        if (tomorrowMorningTemperature) {
+                            $("#tomorrowMorningTemperature").append("<span>" + tomorrowMorningTemperature.fcstValue + "</span>");
+                        }
+                        // 내일 오후 기온 표시
+                        if (tomorrowAfternoonTemperature) {
+                            $("#tomorrowAfternoonTemperature").append("<span>" + tomorrowAfternoonTemperature.fcstValue + "</span>");
+                        }
+
+                        // debugger;
+                        // 날씨는 조건 PTY > 0 (아이콘 CLASS로 상속한다.)
+
+                        function updateWeatherIcon(tomorrowMorningSky, tomorrowMorningPty, tomorrowAfternoonSky, tomorrowAfternoonPty) {
+                            var weatherIconMorning = "";
+                            var weatherIconAfternoon = "";
+
+                            // 내일 WeatherICON PTY, SKY
+                            if (tomorrowMorningPty && tomorrowMorningPty.fcstValue > 0) {
+                                weatherIconMorning = getWeatherIconClass("PTY", tomorrowMorningPty.fcstValue);
+                            } else {
+                                weatherIconMorning = getWeatherIconClass("SKY", tomorrowMorningSky.fcstValue);
+                            }
+                            console.log("Morning icon class", weatherIconMorning); // 여기에 추가
+
+                            if (tomorrowAfternoonPty && tomorrowAfternoonPty.fcstValue > 0) {
+                                weatherIconAfternoon = getWeatherIconClass("PTY", tomorrowAfternoonPty.fcstValue);
+                            } else {
+                                weatherIconAfternoon = getWeatherIconClass("SKY", tomorrowAfternoonSky.fcstValue);
+                            }
+                            console.log("Afternoon icon class", weatherIconAfternoon); // 여기에 추가
+
+                            $("#morningIcon").removeClass().addClass(weatherIconMorning);
+                            $("#afternoonIcon").removeClass().addClass(weatherIconAfternoon);
+
+                        }
+
+                        //weatherIconMore( today, tomorrow )
+                        function getWeatherIconClass(category, value) {
+                            if (category === "PTY") {
+                                switch (value) {
+                                    case "1":
+                                        return "weather_icon_rain";
+                                        break;
+                                    case "2":
+                                        return "weather_icon_rainsnow";
+                                        break;
+                                    case "3":
+                                        return "weather_icon_snow";
+                                        break;
+                                    case "4":
+                                        return "weather_icon_shower";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            } else if (category === "SKY") {
+                                switch (value) {
+                                    case "1":
+                                        return "weather_icon_sun";
+                                        break;
+                                    case "3":
+                                        return "weather_icon_cloud";
+                                        break;
+                                    case "4":
+                                        return "weather_icon_fag";
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            // // 기본값으로 아무것도 반환하지 않을 때 반환되는 문자열
+                            // return "weather_icon_none";
+                        }
+
+
+                        console.log("오전 기온: ", tomorrowMorningTemperature);
+                        console.log("오전 하늘상태: ", tomorrowMorningSky);
+                        console.log("오전 강수형태: ", tomorrowMorningPty);
+                        console.log("오후 기온: ", tomorrowAfternoonTemperature);
+                        console.log("오후 하늘상태: ", tomorrowAfternoonSky);
+                        console.log("오후 강수상태: ", tomorrowAfternoonPty);
+
+                    } else {
+                        console.error("API response does not contain expected data");
                     }
-
-
-                    console.log("오전 기온: ", tomorrowMorningTemperature);
-                    console.log("오전 하늘상태: ", tomorrowMorningSky);
-                    console.log("오전 강수형태: ", tomorrowMorningPty);
-                    console.log("오후 기온: ", tomorrowAfternoonTemperature);
-                    console.log("오후 하늘상태: ", tomorrowAfternoonSky);
-                    console.log("오후 강수상태: ", tomorrowAfternoonPty);
-
-                } else {
-                    console.error("API response does not contain expected data");
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr, status, error);
+                },
+                compact:function (){
+                    setInterval(getWeather, 3600000);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr, status, error);
-            },
-            compact:function (){
-                setInterval(getWeather, 3600000);
-            }
-        });
+            });
         }
 
         /** 기본 날짜는 -1로 해줘야 값을 출력할 수 있음 */
@@ -1460,16 +1518,33 @@
             }
         }
 
-    $(document).ready(function() {
-        // 최초 1회 호출
-        getWeather();
+        $(document).ready(function() {
+            // 최초 1회 호출
+            getWeather();
 
-        // 1시간 마다 호출
-        setInterval(getWeather, 3600000);
-    });
+            // 1시간 마다 호출
+            setInterval(getWeather, 3600000);
+        });
     };
 
+    let customLegend = function (chart) {
+        let ul = document.createElement('ul');
+        let dataset = chart.data.datasets;
+
+        dataset.forEach(function (ds, index) {
+            let backgroundColor = ds.backgroundColor;
+            let label = ds.label;
+            let listItem = `<li><span style="background-color: ${backgroundColor}; display: inline-block; width: 30px; height: 10px;"></span> ${label}</li>`;
+            ul.innerHTML += listItem;
+        });
+
+        return ul.outerHTML;
+    };
+
+
+
     //차트 JS  배차 손익추이
+
     Chart.register(ChartDataLabels); // 화면에 금액표시하기 위해 필요합니다.
 
     const ctx = document.getElementById('beGraph').getContext('2d');
@@ -1480,7 +1555,7 @@
             datasets: [
                 {
                     label: '매출',
-                    data: [5401, 6000, 4050, 3080, 6800, 5800],
+                    data: [5401, 6000, 4050, 3080, 6800, 5800], //NUM으로 가지고 와야합니다.
                     type: 'bar',
                     backgroundColor: 'rgba(160, 160, 160)',
                     borderColor: 'rgba(160, 160, 160)',
@@ -1492,6 +1567,10 @@
                         color: '#a0a0a0',
                         anchor: 'end',
                         align: 'top',
+                        font: {
+                            size: 14, // 원하는 폰트 크기로 설정하세요.
+                            weight: 'bold' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        },
                         formatter: function(value, context) {
                             // if(value >=3000) {
                             //     context.dataset.datalabels.color = '#fff';
@@ -1505,7 +1584,7 @@
                 },
                 {
                     label: '이익',
-                    data: [350, 210, 120, 250, 300, 100],
+                    data: [350, 210, 120, 250, 300, 100], //NUM으로 가지고 와야합니다.
                     type: 'line',
                     backgroundColor: 'rgba(255, 98, 76)',
                     borderColor: 'rgba(255, 98, 76)',
@@ -1517,6 +1596,10 @@
                         color: '#fff',
                         anchor: 'end',
                         align: 'top',
+                        font: {
+                            size: 14, // 원하는 폰트 크기로 설정하세요.
+                            weight: 'bold' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        },
                     },
                     z: 1
                 }
@@ -1528,21 +1611,26 @@
             },
             plugins: {
                 legend: {
-                    // display: false,
+                    display: false,
                     labels: {
                         align:'right',
+                        // 플러그인 등록
                         usePointStyle: true,
                         generateLabels: function(chart) {
                             const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
-                            labels[1].pointStyle = 'rect'; // 매출 모양
-                            labels[0].pointStyle = 'circle'; // 이익모양
+                            labels[0].pointStyle = 'rect'; // 매출 모양
+                            labels[1].pointStyle = 'circle'; // 이익 모양
+
+                            labels.forEach((label)=>{
+                                label.fontSize = 14;
+                            });
+                            labels[0].bpxWidth = 10; // 매출
+                            labels[1].bpxWidth = 5; // 이익
+
                             return labels;
                         }
                     }
-                },
-                htmlLegend:{
-                    containerID: 'legend-div',
-                },
+                }
             },
             scales: {
                 x: {
@@ -1551,7 +1639,14 @@
                         display: true
                     },
                     barPercentage: 0.5, // 바의 너비를 조절합니다 (0.0 ~ 1.0)
-                    categoryPercentage: 0.8
+                    categoryPercentage: 0.8,
+                    ticks: {
+                        color: '#fff',
+                        font: {
+                            size: 14, // 원하는 폰트 크기로 설정하세요.
+                            weight: 'bold', // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        }
+                    },
                 },
                 y1: {
                     position: 'right',
@@ -1562,6 +1657,11 @@
                     beginAtZero: true,
                     max: Math.ceil(1000 / 2) * 2, //2의 배수
                     ticks: {
+                        color: '#fff',
+                        font: {
+                            size: 14, // 원하는 폰트 크기로 설정하세요.
+                            weight: 400, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        },
                         stepSize: 200 // 눈금 간격 설정
                     },
                     grid: {
@@ -1580,191 +1680,123 @@
                     beginAtZero: true,
                     max: Math.ceil(8000 / 2) * 2,//2의 배수
                     ticks: {
+                        color: '#fff',
+                        font: {
+                            size: 14, // 원하는 폰트 크기로 설정하세요.
+                            weight: 400, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        },
                         stepSize: 2000 // 눈금 간격 설정
                     },
+                    /*grid: {
+                        color: 'rgb(57 57 57)', // y축 그리드 라인 색상
+                        lineWidth: 1, // y축 그리드 라인 두께
+                        drawBorder: true, // y축 경계선 미표시
+                    },*/
                 }
             }
         },
-        // plugins: [htmlLegendPlugin],
     });
+    function formatDate(date) {
+        const yyyy = date.getFullYear();
+        const mm = ('0' + (date.getMonth() + 1)).slice(-2);
+        const dd = ('0' + date.getDate()).slice(-2);
+        return yyyy + mm + dd;
+    }
 
-    let chartDraw = function () {
-        let context = document.getElementById('topGraph').getContext('2d');
-        let lastDataIndex = chartData.datasets[0].data.length - 1;
+    function getTodayAndYesterday() {
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(today.getDate() - 1);
 
-        Chart.register(ChartDataLabels);
+        return {
+            today: formatDate(today),
+            yesterday: formatDate(yesterday),
+        };
+    }
+    // debugger;
+    var custId = '${sessionScope.userInfo.custId}';
+    if (custId) {
+        const { today, yesterday } = getTodayAndYesterday();
 
-        window.topGraph = new Chart(context, {
-            type: 'line', // 차트의 형태
-            data: chartData,
-            options: {
-                layout: {},
-                plugins: {
-                    datalabels: {
-                        color: 'black',
-                        anchor: 'end',
-                        clamp: true,
-                        clip: true,
-                        align: '-135',
-                        offset: 1,//거리
-                        formatter: function (value, context){
-                            let result = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                            return result + '원'
-                        },
-                        display: function(context) {
-                            if ( context.dataIndex === lastDataIndex ) { return 1 }
-                            else { return 0 }
-                        }
-                    },
-                    legend: {
-                        display: false,
-                    },
-                    htmlLegend: {
-                        containerID: 'legend-div',
-                    },
-                },
-                interaction: {
-                    intersect: false,
-                },
-                scales: {
-                    y: {
-                        type: 'linear',
-                        position: 'right',
-                        grace: '5%',
-                        grid: {
-                            display: false,
-                        },
-                        ticks: {}
-                    },
-                    x: {
-                        grid: {
-                            display: false,
-                        },
-                        ticks: {
-                            alignment: 'end',
-                            color: function (ctx) {
-                                if ( ctx.index === lastDataIndex ) { return '#426AE6' }
-                                else { return 'black' }
-                            }
-                        }
-                    },
-                }
+        $.ajax({
+            url: "/dashboard/resultrank.do",
+            type: "POST",
+            dataType: "json",
+            data: {
+                custId: custId,
+                today: today,
+                yesterday: yesterday,
             },
-            plugins: [htmlLegendPlugin],
+        }).done(response => {
+            console.log("최근실적 RANKING : ", response);
+            console.log("yesterday : ", yesterday);
+            console.log("today : ", today);
+            console.log("custId : ", custId);
+
+            // debugger;
+            function updateRanking(className, data, flag) {
+                const filteredData = data.filter(item => item.resultFlag === flag);
+                const filterItem = filteredData[0];
+                if (filterItem) {
+                $('.' + className + ' .title').text(filterItem.resultFlagNm);
+                    console.log('클래스 정보받기', className + ' .title');
+                    console.log('제목', filterItem.resultFlagNm);
+                $('.' + className + ' .name').text(filterItem.userNm);
+                    console.log('클래스 정보받기', className + ' .name');
+                    console.log('이름', filterItem.userNm);
+                $('.' + className + ' .rank').text(filterItem.resultVal);
+                    console.log('클래스 정보받기', className + ' .rank');
+                    console.log('값', filterItem.resultVal);
+                $('.' + className + ' .Unit').text(filterItem.resultUnit);
+                    console.log('클래스 정보받기', className + ' .Unit');
+                    console.log('유닛', filterItem.resultUnit);
+                }
+            }
+
+            if (response.result) {
+                const { data } = response;
+                const todayData = data.filter(item => item.searchDate === today);
+                const yesterdayData = data.filter(item => item.searchDate === yesterday);
+                const categories = {
+                    A: 'vehicle',
+                    B: 'sales',
+                    C: 'profit',
+                    D: 'profitRate',
+                };
+
+                Object.keys(categories).forEach(key => {
+                    const todayItem = todayData.find(item => item.resultFlag === key);
+                    const yesterdayItem = yesterdayData.find(item => item.resultFlag === key);
+                    const className = categories[key];
+
+                    if (todayItem) {
+                        updateRanking(className + 'today', [todayItem], key);
+                    }
+                    if (yesterdayItem) {
+                        updateRanking(className + 'yesterday', [yesterdayItem], key);
+                    }
+                });
+;
+
+            } else {
+                console.error('Error: response is empty or undefined');
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
         });
     }
 
-    const getOrCreateLegendList = (topGraph, id) => {
-        const legendContainer = document.getElementById(id);
-        let listContainer = legendContainer.querySelector('ul');
-
-        if (!listContainer) {
-            listContainer = document.createElement('ul');
-            legendContainer.appendChild(listContainer);
-        }
-        return listContainer;
-    };
-
-    const htmlLegendPlugin = {
-        id: 'htmlLegend',
-        afterUpdate(chart, args, options) {
-            const ul = getOrCreateLegendList(chart, options.containerID);
-            // Remove old legend items
-            while (ul.firstChild) {
-                ul.firstChild.remove();
-            }
-            // Reuse the built-in legendItems generator
-            const items = chart.options.plugins.legend.labels.generateLabels(chart);
-            items.forEach(item => {
-                let classText = ''
-                if ( item.text === '가격1' ) { classText = 'max'}
-                else{ classText = 'normal'}
-
-                const li = document.createElement('div');
-                li.classList.add('wrap');
-                // Color box
-                const boxSpan = document.createElement('span')
-                boxSpan.classList.add(`box-${classText}`);
-                boxSpan.style.background = item.fillStyle;
-                // Text
-                const textContainer = document.createElement('p');
-                textContainer.classList.add(`value-${classText}`);
-                const text = document.createTextNode(item.text);
-                textContainer.appendChild(text);
-
-                const helpCircle = document.createElement('img');
-                // helpCircle.src = '{% static 'imgs/stockList/includes/phone_list_table/help-circle.svg' %}';
-                helpCircle.onclick = modalOpenClose;
-                helpCircle.classList.add(`modal-${classText}-price`);
-                li.appendChild(boxSpan);
-                li.appendChild(textContainer);
-                li.appendChild(helpCircle);
-                ul.appendChild(li);
-            });
-        }
-    };
 
 
-
-
-
-    /** 최근실적 Ranking */
     $.ajax({
-        url: "http://localhost:3000/carbetween",
-        type: "GET",
+        url: "/dashboard/myresult.do",
+        type: "POST",
         dataType: "json",
     }).done(response => {
-        if (response) {
-            const carName = response.map(({ carname }) => carname);
-            const carDate = response.map(({ cardate }) => cardate);
-            const carBuses = response.map(({ buses }) => buses);
-            const carSales = response.map(({ sales }) => sales);
-            const carProfit = response.map(({ profit }) => profit);
-            const carProfitper = response.map(({ profit }) => profit);
-            const carRanking = response.map(({ rRanking }) => rRanking);
-            const carAPrice = response.map(({ aPrice }) => aPrice);
-            const carBPrice = response.map(({ bPrice }) => bPrice);
-            const carPersint = response.map(({ rPersint }) => rPersint);
-            $('.rankname').each((index, element) => {
-                $(element).text(carName[index]);
-            });
-            $('.rankdate').each((index, element) => {
-                $(element).text(carDate[index]);
-            });
-            $('.rankbuses').each((index, element) => {
-                $(element).text(carBuses[index]);
-            });
-            $('.rankSales').each((index, element) => {
-                $(element).text(carSales[index]);
-            });
-            $('.rankprofit').each((index, element) => {
-                $(element).text(carProfit[index]);
-            });
-            $('.rankprofitper').each((index, element) => {
-                $(element).text(carProfitper[index]);
-            });
-            $('.ranking').each((index, element) => {
-                $(element).text(carRanking[index]);
-            });
-            $('.rankaprice').each((index, element) => {
-                $(element).text(carAPrice[index]);
-            });
-            $('.rankbprice').each((index, element) => {
-                $(element).text(carBPrice[index]);
-            });
-            $('.rankpersint').each((index, element) => {
-                $(element).text(carPersint[index]);
-            });
-            console.log('랭킹네임', carName);
-            console.log('랭킹데이', carDate);
-            console.log('배차1위' , carBuses);
-            console.log('매출1위', carSales);
-            console.log('이익1위', carProfit);
-            console.log('이익률1위', carProfitper);
-            console.log('배차', carRanking);
-            console.log('매출', carAPrice);
-            console.log('이익', carBPrice);
-            console.log('이익률', carPersint);
+        console.log("나의 실적 : ", response);
+        // debugger;
+        if (response.result) {
+            const { data } = response;
 
         } else {
             console.error('Error: response is empty or undefined');
@@ -1772,6 +1804,58 @@
     }).fail((xhr, status, error) => {
         console.error(error);
     });
+
+    $.ajax({
+        url: "/dashboard/todaycustresult.do",
+        type: "POST",
+        dataType: "json",
+    }).done(response => {
+        console.log("오늘 하이라이트 : ", response);
+        // debugger;
+        if (response.result) {
+            const { data } = response;
+
+        } else {
+            console.error('Error: response is empty or undefined');
+        }
+    }).fail((xhr, status, error) => {
+        console.error(error);
+    });
+
+    $.ajax({
+        url: "/dashboard/resultvehicle.do",
+        type: "POST",
+        dataType: "json",
+    }).done(response => {
+        console.log("배차손익 : ", response);
+        // debugger;
+        if (response.result) {
+            const { data } = response;
+
+        } else {
+            console.error('Error: response is empty or undefined');
+        }
+    }).fail((xhr, status, error) => {
+        console.error(error);
+    });
+
+    $.ajax({
+        url: "/dashboard//mmtoprank.do",
+        type: "POST",
+        dataType: "json",
+    }).done(response => {
+        console.log("전월TOP : ", response);
+        // debugger;
+        if (response.result) {
+            const { data } = response;
+
+        } else {
+            console.error('Error: response is empty or undefined');
+        }
+    }).fail((xhr, status, error) => {
+        console.error(error);
+    });
+
 
 </script>
 
