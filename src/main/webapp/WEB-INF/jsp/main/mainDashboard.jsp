@@ -391,10 +391,10 @@
                 #beGraph{
                     margin: 0 auto;
                     position: absolute;
-                    top: 3vw;
-                    left: 1vw;
+                    top: 81px;
+                    left: 1px;
                     height: 236px!important;
-                    width: 621px!important;
+                    width: 608px!important;
                 }
 
                 #custom {
@@ -402,7 +402,7 @@
                     display: flex;
                     justify-content: flex-end;
                     flex-direction: row;
-                    width: 635px;
+                    width: 600px;
                 }
                 #custom ul {
                     position: relative;
@@ -410,29 +410,31 @@
                     display: flex;
                     align-items: center;
                     justify-content: flex-end;
+                    top: 31px;
                 }
                 #custom ul li {
                     position: relative;
                     display: flex;
                     flex-direction: row;
                     flex-wrap: nowrap;
-                    width: 67px;
+                    width: 57px;
                     align-items: center;
+                    font-size: 10px;
                 }
-                .namelabel{}
                 .g-square{
-                    width: 20px;
-                    height: 4px;
+                    width: 17px;
+                    height: 3px;
                     background: #a0a0a0;
                     margin-right: 3px;
 
                 }
                 .g-circle{
-                    width: 10px;
-                    height: 10px;
+                    width: 7px;
+                    height: 7px;
                     border-radius: 100px;
                     background: #ff0000;
                     margin-right: 3px;
+                    border: 1px solid #ddd;
                 }
             </style>
 
@@ -562,43 +564,43 @@
                         <label for="my_ranking_thisMonth">이번달</label>
                     </div>
                     <div class="my_ranking_box">
-                        <div>
+                        <div class="DPerformancetoday">
                             <ul>
                                 <li class="vehicle">
                                     <p class="my_ranking_tit">배차건수</p>
-                                    <span><b>121</b> 건</span>
+                                    <span><b class="vehicleStr"></b> 건</span>
                                 </li>
                                 <li class="sales">
                                     <p class="my_ranking_tit">매출액</p>
-                                    <span><b>3,700</b> 만원</span>
+                                    <span><b class="salesStr"></b> 만원</span>
                                 </li>
                                 <li class="profit">
                                     <p class="my_ranking_tit">이익</p>
-                                    <span><b>3,700</b> 만원</span>
+                                    <span><b class="proiftStr"></b> 만원</span>
                                 </li>
                                 <li class="profitRate">
                                     <p class="my_ranking_tit">이익률</p>
-                                    <span><b>14.5</b> %</span>
+                                    <span><b class="proiftRateStr"></b> %</span>
                                 </li>
                             </ul>
                         </div>
-                        <div>
+                        <div class="MPerformancemonth">
                             <ul>
                                 <li class="vehicle">
                                     <p class="my_ranking_tit">배차건수</p>
-                                    <span><b>99</b> 건</span>
+                                    <span><b class="vehicleStr"></b> 건</span>
                                 </li>
                                 <li class="sales">
                                     <p class="my_ranking_tit">매출액</p>
-                                    <span><b>3,400</b> 만원</span>
+                                    <span><b class="salesStr"></b> 만원</span>
                                 </li>
                                 <li class="profit">
                                     <p class="my_ranking_tit">이익</p>
-                                    <span><b>3,100</b> 만원</span>
+                                    <span><b class="proiftStr"></b> 만원</span>
                                 </li>
                                 <li class="profitRate">
                                     <p class="my_ranking_tit">이익률</p>
-                                    <span><b>8.5</b> %</span>
+                                    <span><b class="proiftRateStr"></b> %</span>
                                 </li>
                             </ul>
                         </div>
@@ -610,70 +612,40 @@
                         <br> High-Lights</h2>
                     <div class="highLight_slide">
                         <ul>
+                            <c:forEach var="idx" begin="1" end="3">
                             <li>
                                 <ul class="highLight_slide_cont">
                                     <li>
                                         거래처
-                                        <span>테스트거래처</span>
+                                        <span class="acountCNm"></span>
                                     </li>
                                     <li>
                                         매출액
-                                        <span>1,300,000</span>
+                                        <span class="sales"></span>
                                     </li>
                                     <li>
                                         매입액
-                                        <span>1,000,000</span>
+                                        <span class="purchase"></span>
                                     </li>
                                     <li>
                                         이익
-                                        <span class="color_r">200,000</span>
+                                        <span class="color_r profit"></span>
                                     </li>
                                     <li>
                                         이익률
-                                        <span class="color_r">23.1%</span>
+                                        <span class="color_r profitPersaint"></span>
                                     </li>
                                     <li>
                                         담당부서
-                                        <span>테스트부서</span>
+                                        <span class="acountDNm"></span>
                                     </li>
                                     <li>
                                         담당자
-                                        <span>홍길동</span>
+                                        <span class="acountNm"></span>
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <ul class="highLight_slide_cont">
-                                    <li>
-                                        거래처
-                                        <span>로지스링크</span>
-                                    </li>
-                                    <li>
-                                        매출액
-                                        <span>1,700,000</span>
-                                    </li>
-                                    <li>
-                                        매입액
-                                        <span>1,854,000</span>
-                                    </li>
-                                    <li>
-                                        이익
-                                        <span class="color_r">193,000</span>
-                                    </li>
-                                    <li>
-                                        이익률
-                                        <span class="color_r">17.1%</span>
-                                    </li>
-                                    <li>
-                                        담당부서
-                                        <span>로지스부서</span>
-                                    </li>
-                                    <li>
-                                        담당자
-                                        <span>홍길동</span>
-                                    </li>
-                                </ul>
-                            </li>
+                            </c:forEach>
                         </ul>
                     </div>
                 </div>
@@ -1544,18 +1516,17 @@
 
 
     //차트 JS  배차 손익추이
-
     Chart.register(ChartDataLabels); // 화면에 금액표시하기 위해 필요합니다.
 
     const ctx = document.getElementById('beGraph').getContext('2d');
     const beGraph = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['7월', '8월', '9월', '10월', '11월', '이번달'],
+            labels: [],
             datasets: [
                 {
                     label: '매출',
-                    data: [5401, 6000, 4050, 3080, 6800, 5800], //NUM으로 가지고 와야합니다.
+                    data: [], //NUM으로 가지고 와야합니다.
                     type: 'bar',
                     backgroundColor: 'rgba(160, 160, 160)',
                     borderColor: 'rgba(160, 160, 160)',
@@ -1584,7 +1555,7 @@
                 },
                 {
                     label: '이익',
-                    data: [350, 210, 120, 250, 300, 100], //NUM으로 가지고 와야합니다.
+                    data: [], //NUM으로 가지고 와야합니다.
                     type: 'line',
                     backgroundColor: 'rgba(255, 98, 76)',
                     borderColor: 'rgba(255, 98, 76)',
@@ -1616,24 +1587,12 @@
                         align:'right',
                         // 플러그인 등록
                         usePointStyle: true,
-                        generateLabels: function(chart) {
-                            const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
-                            labels[0].pointStyle = 'rect'; // 매출 모양
-                            labels[1].pointStyle = 'circle'; // 이익 모양
-
-                            labels.forEach((label)=>{
-                                label.fontSize = 14;
-                            });
-                            labels[0].bpxWidth = 10; // 매출
-                            labels[1].bpxWidth = 5; // 이익
-
-                            return labels;
-                        }
                     }
                 }
             },
             scales: {
                 x: {
+                    // min: 0,
                     display: true,
                     title: {
                         display: true
@@ -1696,13 +1655,58 @@
             }
         },
     });
+    var custId = custIdcheck(); //거래처 확인
+    if(custId) {
+        // AJAX 요청을 통해 데이터를 가져옵니다.
+        $.ajax({
+            url: "/dashboard/resultvehicle.do",
+            type: "POST",
+            dataType: "json",
+            data: {
+              custId:custId,
+            },
+        }).done(response => {
+            console.log("배차손익 : ", response);
+            // debugger;
+            if (response.result) {
+                const data = response.data;
+
+                // JSON 배열을 차트 데이터 형식으로 변환합니다.
+                const labels = [];
+                const sales = [];
+                const profits = [];
+
+                data.forEach(item => {
+                    labels.push(item.vehicleMM);
+                    sales.push(item.sales);
+                    profits.push(item.profit);
+                });
+
+                // 가져온 데이터를 차트에 적용합니다.
+                beGraph.data.labels = labels;
+                beGraph.data.datasets[0].data = sales;
+                beGraph.data.datasets[1].data = profits;
+
+                // 차트를 업데이트합니다.
+                beGraph.update();
+
+            } else {
+                console.error('Error: response is empty or undefined');
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
+        });
+
+    }
+
+    // 현재를 기준으로 날짜를 가져온다.
     function formatDate(date) {
         const yyyy = date.getFullYear();
         const mm = ('0' + (date.getMonth() + 1)).slice(-2);
         const dd = ('0' + date.getDate()).slice(-2);
         return yyyy + mm + dd;
     }
-
+    // 오늘&어제
     function getTodayAndYesterday() {
         const today = new Date();
         const yesterday = new Date(today);
@@ -1714,7 +1718,14 @@
         };
     }
     // debugger;
-    var custId = '${sessionScope.userInfo.custId}';
+    // 거래처 아디를 체크해주는 변수값
+    function custIdcheck() {
+        var custId = '${sessionScope.userInfo.custId}';
+        return custId;
+    }
+
+    // 거래처 아디확인
+   var custId = custIdcheck();
     if (custId) {
         const { today, yesterday } = getTodayAndYesterday();
 
@@ -1728,31 +1739,19 @@
                 yesterday: yesterday,
             },
         }).done(response => {
-            console.log("최근실적 RANKING : ", response);
-            console.log("yesterday : ", yesterday);
-            console.log("today : ", today);
-            console.log("custId : ", custId);
 
-            // debugger;
+            //업데이트된 데이터를 Class를 확인해서 각 위치에 출력
             function updateRanking(className, data, flag) {
                 const filteredData = data.filter(item => item.resultFlag === flag);
                 const filterItem = filteredData[0];
                 if (filterItem) {
                 $('.' + className + ' .title').text(filterItem.resultFlagNm);
-                    console.log('클래스 정보받기', className + ' .title');
-                    console.log('제목', filterItem.resultFlagNm);
                 $('.' + className + ' .name').text(filterItem.userNm);
-                    console.log('클래스 정보받기', className + ' .name');
-                    console.log('이름', filterItem.userNm);
                 $('.' + className + ' .rank').text(filterItem.resultVal);
-                    console.log('클래스 정보받기', className + ' .rank');
-                    console.log('값', filterItem.resultVal);
                 $('.' + className + ' .Unit').text(filterItem.resultUnit);
-                    console.log('클래스 정보받기', className + ' .Unit');
-                    console.log('유닛', filterItem.resultUnit);
                 }
             }
-
+            // 카테고리 A:배차1위, B:매출 1위, C:이익 1위, D:이익율 1위
             if (response.result) {
                 const { data } = response;
                 const todayData = data.filter(item => item.searchDate === today);
@@ -1785,76 +1784,122 @@
             console.error(error);
         });
     }
+    function userIdcheck() {
+       var userId = '${sessionScope.userInfo.userId}';
+       return userId;
+    }
 
+    // 나의 실적
+    var userId = userIdcheck();
+    if(userId) {
+        $.ajax({
+            url: "/dashboard/myresult.do",
+            type: "POST",
+            dataType: "json",
+            data: {
+                userId: userId,
+                // resultFlag: resultFlag,
+            },
+        }).done(response => {
+            // 업데이트된 데이터를 Class를 확인해서 각 위치에 출력
+            function updateRanking(className, data, flag) {
+                const filteredData = data.filter(item => item.resultFlag === flag);
+                const filterItem = filteredData[0];
+                if (filterItem) {
+                    $('.' + className + ' .vehicleStr').text(filterItem.allocCnt);
+                    $('.' + className + ' .salesStr').text(filterItem.sales);
+                    $('.' + className + ' .proiftStr').text(filterItem.profit);
+                    $('.' + className + ' .proiftRateStr').text(filterItem.profitPer);
+                }
+            }
+            // 카테고리 D:오늘, M:이번달
+            if (response.result) {
+                const { data } = response;
+                const DData = data.filter(item => item.resultFlag);
+                const MData = data.filter(item => item.resultFlag);
+                const categories = {
+                    D: 'DPerformance',
+                    M: 'MPerformance',
+                };
+                Object.keys(categories).forEach(key => {
+                    const todayItem = DData.find(item => item.resultFlag === key);
+                    const monthItem = MData.find(item => item.resultFlag === key);
+                    const className = categories[key];
 
+                    if (todayItem) {
+                        updateRanking(className + 'today', [todayItem], key);
+                    }
+                    if (monthItem) {
+                        updateRanking(className + 'month', [monthItem], key);
+                    }
+                });
 
-    $.ajax({
-        url: "/dashboard/myresult.do",
-        type: "POST",
-        dataType: "json",
-    }).done(response => {
-        console.log("나의 실적 : ", response);
-        // debugger;
-        if (response.result) {
-            const { data } = response;
+            } else {
+                console.error('Error: response is empty or undefined');
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
+        });
+    }
+    // Today's Hight-Light
+    var custId = custIdcheck();
+    if(custId) {
+        $.ajax({
+            url: "/dashboard/todaycustresult.do",
+            type: "POST",
+            dataType: "json",
+            data:{
+                custId:custId,
+            },
+        }).done(response => {
+            if (response.result) {
+                const { data } = response;
+                $('.highLight_slide_cont .acountCNm').each((index, element)=>{
+                    $(element).text(data[index].acountCNm);
+                });
+                $('.highLight_slide_cont .sales').each((index, element)=>{
+                    $(element).text(data[index].sales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")); //1000단위 콤마
+                });
+                $('.highLight_slide_cont .purchase').each((index, element)=>{
+                    $(element).text(data[index].purchase.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")); //1000단위 콤마
+                });
+                $('.highLight_slide_cont .profit').each((index, element)=>{
+                    $(element).text(data[index].profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")); //1000단위 콤마
+                });
+                $('.highLight_slide_cont .profitPersaint').each((index, element)=>{
+                    $(element).text(data[index].profitPersaint);
+                });
+                $('.highLight_slide_cont .acountDNm').each((index, element)=>{
+                    $(element).text(data[index].acountDNm);
+                });
+                $('.highLight_slide_cont .acountNm').each((index, element)=>{
+                    $(element).text(data[index].acountNm);
+                });
+                console.log(response)
+            }else {
+                console.error(response.message);
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
+        });
+    }
 
-        } else {
-            console.error('Error: response is empty or undefined');
-        }
-    }).fail((xhr, status, error) => {
-        console.error(error);
-    });
+        $.ajax({
+            url: "/dashboard//mmtoprank.do",
+            type: "POST",
+            dataType: "json",
+        }).done(response => {
+            console.log("전월TOP : ", response);
+            // debugger;
+            if (response.result) {
+                const {data} = response;
 
-    $.ajax({
-        url: "/dashboard/todaycustresult.do",
-        type: "POST",
-        dataType: "json",
-    }).done(response => {
-        console.log("오늘 하이라이트 : ", response);
-        // debugger;
-        if (response.result) {
-            const { data } = response;
-
-        } else {
-            console.error('Error: response is empty or undefined');
-        }
-    }).fail((xhr, status, error) => {
-        console.error(error);
-    });
-
-    $.ajax({
-        url: "/dashboard/resultvehicle.do",
-        type: "POST",
-        dataType: "json",
-    }).done(response => {
-        console.log("배차손익 : ", response);
-        // debugger;
-        if (response.result) {
-            const { data } = response;
-
-        } else {
-            console.error('Error: response is empty or undefined');
-        }
-    }).fail((xhr, status, error) => {
-        console.error(error);
-    });
-
-    $.ajax({
-        url: "/dashboard//mmtoprank.do",
-        type: "POST",
-        dataType: "json",
-    }).done(response => {
-        console.log("전월TOP : ", response);
-        // debugger;
-        if (response.result) {
-            const { data } = response;
-
-        } else {
-            console.error('Error: response is empty or undefined');
-        }
-    }).fail((xhr, status, error) => {
-        console.error(error);
-    });
+            } else {
+                console.error('Error: response is empty or undefined');
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
+        });
 
 
 </script>
