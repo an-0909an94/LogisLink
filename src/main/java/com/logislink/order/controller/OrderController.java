@@ -1371,4 +1371,56 @@ public class OrderController {
 
 		return "jsonView";
 	}
+
+
+	@GetMapping(value="/contents/order/orderAuthList.do")
+	public String getOrderAuthList(HttpServletRequest request, HttpSession session, ModelMap model) {
+
+		LoginMenuVO loginMenu = EtcUtil.checkAuth(request, orderCode);
+		model.put("menuAuth", loginMenu);
+		LoginMenuVO addrMenu = EtcUtil.checkAuth(request, addrCode);
+		model.put("addrAuth", addrMenu);
+		model.put("mainCustId", mainCustId);
+
+		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+
+		Map<String, Object> userParam = new HashMap<>();
+		userParam.put("USER_ID",login.getUserId());
+		UserVO userVo = userService.getUserLinkInfo(userParam);
+
+		model.put("userLink", userVo);
+
+
+		return "contents/order/orderAuthList";
+	}
+	@PostMapping(value="/contents/order/data/orderAuthList.do")
+	public String orderAuthList(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
+							@RequestParam Map<String, Object> param) throws Exception {
+		LoginVO login = (LoginVO) session.getAttribute("userInfo");
+		String custId = login.getCustId();
+		//String deptId = login.getDeptId();
+
+		String allocState = String.valueOf(param.get("sAllocState"));
+
+		if (param.get("sAllocState") != null && !"".equals(param.get("sAllocState"))) {
+			if ("01,04,05,12".indexOf(allocState) >= 0) {
+				param.put("driverState", allocState);
+			} else {
+				param.put("allocState", allocState);
+			}
+		}
+
+		param.put("custId", custId);
+		param.put("deptId", param.get("sDeptId"));
+
+		List<OrderVO> list = orderService.getOrderAuthList(param);
+		Map<String,Object> count = orderService.getAuthCnt(param);
+
+
+		map.put("data", list);
+		map.put("total", count.get("retCnt"));
+		map.put("summary", count);
+
+		return "jsonView";
+	}
 }

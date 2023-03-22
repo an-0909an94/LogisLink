@@ -230,4 +230,12 @@ public class OrderDao extends EgovAbstractMapper {
 		update("orderDataNS.updateNewRunCalc", map);
 	}
 
+	public List<OrderVO> getOrderAuthList(Map<String, Object> map){
+		return selectList("orderDataNS.selectOrderAuthArrange", map);
+	}
+
+	public Map<String,Object> getAuthCnt(Map<String, Object> map) {
+		return selectOne("orderDataNS.selectOrderAuthCnt", map);
+	}
+
 }

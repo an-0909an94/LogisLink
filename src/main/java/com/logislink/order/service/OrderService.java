@@ -97,4 +97,8 @@ public interface OrderService {
 	public void updateNewRunOrderAlloc(Map<String, Object> map);
 	
 	public void updateNewRunCalc(Map<String, Object> map);
+
+	public List<OrderVO> getOrderAuthList(Map<String, Object> map);
+
+	public Map<String,Object> getAuthCnt(Map<String, Object> map);
 }

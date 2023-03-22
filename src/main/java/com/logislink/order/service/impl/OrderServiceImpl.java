@@ -271,5 +271,14 @@ public class OrderServiceImpl implements OrderService {
 	public void updateNewRunCalc(Map<String, Object> map) {
 		 orderDao.updateNewRunCalc(map);
 	}
+	@Override
+	public List<OrderVO> getOrderAuthList(Map<String, Object> map) {
+		return orderDao.getOrderAuthList(map);
+	}
+
+	@Override
+	public Map<String,Object> getAuthCnt(Map<String, Object> map) {
+		return orderDao.getAuthCnt(map);
+	}
 
 }
