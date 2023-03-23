@@ -323,36 +323,51 @@
             <a href="#" id="navPopup" class="btn_gray region"><span>지역설정</span><p>지역설정</p></a>
 
             <style>
-                /* 레이어팝업 */
-                #popupLayer{}
-                .nav-layer {
+                /* 지역설정 팝업 */
+                #popupLayer{
+                    width:556px;
+                    height: 488px;
+                    background-color: #2a2a2a;
                     display: none;
                     position: fixed;
-                    top: 24%;
-                    left: 36%;
-                    width: 500px;
-                    height: 500px;
+                    padding: 25px 103px;
+                    box-sizing: border-box;
+                    top: 50%;
+                    left: 50%;
                     z-index: 100;
+                    transform :translateX(-50%) translateY(-50%);
+                    border-radius: 24px;
                 }
+
+                #popupLayer h2{
+                    font-size: 20px;
+                    text-align:center;
+                    margin-bottom: 13px;
+                }
+
+                #popupLayer>p{
+                    font-size: 14px;
+                    text-align:center;
+                    margin-bottom: 20px;
+                }
+
                 .navContents {
+                    width: 100%;
+                    height: 326px;
                     position: relative;
-                    width: 500px;
-                    height: 500px;
                     overflow-y: scroll;
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                    background: #fff;
-                    color: #333;
-                    padding: 7%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 0.8px;
-                    border-radius: 43px;
+                    /*-ms-overflow-style: none;
+                    scrollbar-width: none;*/
+                    background-color: #191a1c;
+                    color: #fff;
+                    padding: 20px 40px;
+                    box-sizing: border-box;
                 }
-                .navContents::-webkit-scrollbar {
+
+                /*.navContents::-webkit-scrollbar {
                     display: none;
                 }
+                */
                 .navContents h2 {
                     font-size: 20px;
                     height: auto;
@@ -364,15 +379,51 @@
                 .navInfo {
                     display: flex;
                     flex-wrap: nowrap;
-                    width: 400px;
-                    margin: 0 auto;
+                    width: 100%;
                     align-content: space-around;
                     flex-direction: column;
                 }
+
+                .navInfo span{
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+
                 .exitBtn {
                     cursor: pointer;
+                    position: absolute;
+                    top: 25px;
+                    right: 25px;
+                    width: 18px;
+                    height: 18px;
+                    background: url(/images/icon/icon_dash_close.png) no-repeat;
+                    font-size: 0px;
                 }
-                .navInfo label { margin: 10px 0px;}
+
+                .icon_dash_close,.icon_dash_check{
+                    width: 170px;
+                    height: 44px;
+                    border-radius: 6px;
+                    background-color: #3b3b3b;
+                    text-align: center;
+                    color: #fff;
+                    font-size: 14px;
+                    cursor: pointer;
+                    border: none;
+                    margin: 20px 5px 0 0;
+                    font-weight: 600;
+                }
+
+                .icon_dash_check{
+                    background-color: #0063d3;
+                    margin-right: 0px;
+                }
+
+                .navInfo label {
+                    margin: 12px 0px;
+                    cursor: pointer;
+                }
+
                 #morningTemperature span:nth-child(n+2) {
                     display: none;
                 }
@@ -523,32 +574,33 @@
 
             <!-- 지역 설정 -->
             <div class="nav-layer" id="popupLayer">
-                <div class="navContents">
                     <h2>지역을 설정해주세요!</h2>
                     <p>지역을 설정하면 날씨와 유가정보를 확인할 수 있습니다.</p>
-                    <div class="navInfo">
-                        <label><input type="radio" class="navList" name="region" value="1" data-sido="01" data-sido-name="서울"><span id="region1">서울</span></label>
-                        <label><input type="radio" class="navList" name="region" value="2" data-sido="02" data-sido-name="경기"><span id="region2">경기</span></label>
-                        <label><input type="radio" class="navList" name="region" value="3" data-sido="03" data-sido-name="강원"><span id="region3">강원</span></label>
-                        <label><input type="radio" class="navList" name="region" value="4" data-sido="04" data-sido-name="충북"><span id="region4">충북</span></label>
-                        <label><input type="radio" class="navList" name="region" value="5" data-sido="05" data-sido-name="충남"><span id="region5">충남</span></label>
-                        <label><input type="radio" class="navList" name="region" value="6" data-sido="06" data-sido-name="전북"><span id="region6">전북</span></label>
-                        <label><input type="radio" class="navList" name="region" value="7" data-sido="07" data-sido-name="전남"><span id="region7">전남</span></label>
-                        <label><input type="radio" class="navList" name="region" value="8" data-sido="08" data-sido-name="경북"><span id="region8">경북</span></label>
-                        <label><input type="radio" class="navList" name="region" value="9" data-sido="09" data-sido-name="경남"><span id="region9">경남</span></label>
-                        <label><input type="radio" class="navList" name="region" value="10" data-sido="10" data-sido-name="부산"><span id="region10">부산</span></label>
-                        <label><input type="radio" class="navList" name="region" value="18" data-sido="18" data-sido-name="울산"><span id="region18">울산</span></label>
-                        <label><input type="radio" class="navList" name="region" value="14" data-sido="14" data-sido-name="대구"><span id="region14">대구</span></label>
-                        <label><input type="radio" class="navList" name="region" value="15" data-sido="15" data-sido-name="인천"><span id="region15">인천</span></label>
-                        <label><input type="radio" class="navList" name="region" value="16" data-sido="16" data-sido-name="광주"><span id="region16">광주</span></label>
-                        <label><input type="radio" class="navList" name="region" value="17" data-sido="17" data-sido-name="대전"><span id="region17">대전</span></label>
-                        <label><input type="radio" class="navList" name="region" value="19" data-sido="19" data-sido-name="세종"><span id="region19">세종</span></label>
-                        <label><input type="radio" class="navList" name="region" value="11" data-sido="11" data-sido-name="제주"><span id="region11">제주</span></label>
+                    <div class="navContents">
+                        <div class="navInfo">
+                        <label><input type="radio" class="navList" name="region" value="1" data-sido="01" data-sido-name="서울시"><span id="region1">서울시</span></label>
+                        <label><input type="radio" class="navList" name="region" value="2" data-sido="02" data-sido-name="경기도"><span id="region2">경기도</span></label>
+                        <label><input type="radio" class="navList" name="region" value="3" data-sido="03" data-sido-name="강원도"><span id="region3">강원도</span></label>
+                        <label><input type="radio" class="navList" name="region" value="4" data-sido="04" data-sido-name="충북북도"><span id="region4">충청북도</span></label>
+                        <label><input type="radio" class="navList" name="region" value="5" data-sido="05" data-sido-name="충청남도"><span id="region5">충청남도</span></label>
+                        <label><input type="radio" class="navList" name="region" value="6" data-sido="06" data-sido-name="전라북도"><span id="region6">전라북도</span></label>
+                        <label><input type="radio" class="navList" name="region" value="7" data-sido="07" data-sido-name="전라남도"><span id="region7">전라남도</span></label>
+                        <label><input type="radio" class="navList" name="region" value="8" data-sido="08" data-sido-name="경상북도"><span id="region8">경상북도</span></label>
+                        <label><input type="radio" class="navList" name="region" value="9" data-sido="09" data-sido-name="경상남도"><span id="region9">경상남도</span></label>
+                        <label><input type="radio" class="navList" name="region" value="10" data-sido="10" data-sido-name="부산시"><span id="region10">부산시</span></label>
+                        <label><input type="radio" class="navList" name="region" value="18" data-sido="18" data-sido-name="울산시"><span id="region18">울산시</span></label>
+                        <label><input type="radio" class="navList" name="region" value="14" data-sido="14" data-sido-name="대구시"><span id="region14">대구시</span></label>
+                        <label><input type="radio" class="navList" name="region" value="15" data-sido="15" data-sido-name="인천시"><span id="region15">인천시</span></label>
+                        <label><input type="radio" class="navList" name="region" value="16" data-sido="16" data-sido-name="광주시"><span id="region16">광주시</span></label>
+                        <label><input type="radio" class="navList" name="region" value="17" data-sido="17" data-sido-name="대전시"><span id="region17">대전시</span></label>
+                        <label><input type="radio" class="navList" name="region" value="19" data-sido="19" data-sido-name="세종시"><span id="region19">세종시</span></label>
+                        <label><input type="radio" class="navList" name="region" value="11" data-sido="11" data-sido-name="제주도"><span id="region11">제주도</span></label>
                     </div>
-                    <div id="navClose" class="exitBtn">X</div>
+                    </div>
+                <div id="navClose1" class="exitBtn btn_dash_close">닫기</div>
+<%--                <button id="navClose2" type="button" class="icon_dash_close btn_dash_close">닫기</button>--%>
                 </div>
             </div>
-        </div>
     </header>
 
     <section>
@@ -1213,7 +1265,10 @@
         });
 
         //팝업 닫기 버튼
-        $('#navClose').click(function (){
+        $('#navClose1').click(function (){
+            $('#popupLayer').fadeOut();
+        });
+        $('#navClose2').click(function (){
             $('#popupLayer').fadeOut();
         });
 
