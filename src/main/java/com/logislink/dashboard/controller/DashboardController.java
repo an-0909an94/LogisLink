@@ -1,6 +1,7 @@
 package com.logislink.dashboard.controller;
 
 import com.logislink.dashboard.service.DashboardService;
+import com.logislink.dashboard.vo.DashboardVO;
 import com.logislink.dashboard.vo.MmtopRankVO;
 import com.logislink.dashboard.vo.ResultRankVO;
 import com.logislink.dashboard.vo.MyResultVO;
@@ -122,6 +123,25 @@ public class DashboardController {
         param.put("custId", custId);
 
         String header = dashboardService.getHeader(param);
+
+        map.put("result", Boolean.TRUE);
+        map.put("data", header);
+
+        return "jsonView";
+    }
+
+    @PostMapping(value = "/dashboard/dashboard.do")
+    public String boardDashboard(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
+
+        //List가 좋은지 Single이 좋은지 확인 후 넣을 것
+        //추후 처리 진행 확인
+
+        //LoginVO login = (LoginVO) session.getAttribute("userInfo");
+        //String custId = login.getCustId();
+
+        //param.put("custId", custId);
+
+        List<DashboardVO> header = dashboardService.getDashboard(param);
 
         map.put("result", Boolean.TRUE);
         map.put("data", header);

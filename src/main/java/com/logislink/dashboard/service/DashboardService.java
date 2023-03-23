@@ -1,5 +1,6 @@
 package com.logislink.dashboard.service;
 
+import com.logislink.dashboard.vo.DashboardVO;
 import com.logislink.dashboard.vo.MmtopRankVO;
 import com.logislink.dashboard.vo.ResultRankVO;
 import com.logislink.dashboard.vo.MyResultVO;
@@ -27,4 +28,6 @@ public interface DashboardService {
 
     // Header 개인 내역
     public String getHeader(Map<String, Object>map);
+
+    public List<DashboardVO> getDashboard(Map<String, Object>map);
 }

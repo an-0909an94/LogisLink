@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dashboardDataNS">
+  <select id="selectDashboardList" parameterType="java.util.HashMap" resultType="dashboardVO">
+    SELECT TU.CUST_ID
+         , MAX(IIF(CNTRANK=1,'배차1위','')) A_resultFlagNm
+         , MAX(IIF(CNTRANK=1,MAIN.REGID,'')) A_userId
+         , MAX(IIF(CNTRANK=1,USER_NAME,'')) A_userNm
+         , MAX(IIF(CNTRANK=1,CNT,0)) A_resultVal
+         , MAX(IIF(CNTRANK=1,'건','')) A_resultUnit
+         , MAX(IIF(PLUSRANK=1,'매출1위','')) B_resultFlagNm
+         , MAX(IIF(PLUSRANK=1,MAIN.REGID,'')) B_userId
+         , MAX(IIF(PLUSRANK=1,USER_NAME,'')) B_userNm
+         , MAX(IIF(PLUSRANK=1,PLUS,0)) B_resultVal
+         , MAX(IIF(PLUSRANK=1,'만원','')) B_resultUnit
+         , MAX(IIF(PROFITRANK=1,'이익1위','')) C_resultFlagNm
+         , MAX(IIF(PROFITRANK=1,MAIN.REGID,'')) C_userId
+         , MAX(IIF(PROFITRANK=1,USER_NAME,'')) C_userNm
+         , MAX(IIF(PROFITRANK=1,PROFIT,0)) C_resultVal
+         , MAX(IIF(PROFITRANK=1,'만원','')) C_resultUnit
+         , MAX(IIF(PROFITPERRANK=1,'이익율1위','')) D_resultFlagNm
+         , MAX(IIF(PROFITPERRANK=1,MAIN.REGID,'')) D_userId
+         , MAX(IIF(PROFITPERRANK=1,USER_NAME,'')) D_userNm
+         , MAX(IIF(PROFITPERRANK=1,PROFITPER,0)) D_resultVal
+         , MAX(IIF(PROFITPERRANK=1,'%','')) D_resultUnit
+    FROM (
+           SELECT REGID
+                , PLUS
+                , MINUS
+                , PROFIT
+                , PROFITPER
+                , CNT
+                , RANK() OVER (ORDER BY PLUS DESC)      PLUSRANK
+     , RANK() OVER (ORDER BY PROFIT DESC, PLUS DESC)    PROFITRANK
+     , RANK() OVER (ORDER BY PROFITPER DESC, PROFIT DESC, PLUS DESC) PROFITPERRANK
+     , RANK() OVER (ORDER BY CNT DESC)       CNTRANK
+           FROM (SELECT A.REGID
+                      , SUM(A.PLUS)                                                         PLUS      --매출
+                      , SUM(A.MINUS)                                                        MINUS     --매출
+                      , SUM(A.PLUS) - SUM(A.MINUS)                                          PROFIT    --손익
+                      , IIF(SUM(A.PLUS)=0,0,ROUND((CONVERT(FLOAT, SUM(A.PLUS) - SUM(A.MINUS)) / SUM(A.PLUS)) * 100,1)) AS PROFITPER --손익율
+                      , COUNT(A.ORDER_ID)                                                   CNT       --배차건수
+                 FROM
+                   (SELECT OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120) S_DATE
+                         , SUM(IIF(OA.BUY_CUST_ID = #{custId},
+                                   IIF(O.CHARGE_TYPE='01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), ISNULL(ALLOC_FEE, 0)), 0)) PLUS  --매출
+                         , SUM(IIF(OA.SELL_CUST_ID = #{custId},
+                                   IIF(O.CHARGE_TYPE='01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), 0), 0)) MINUS --매입
+                         , MAX(IIF(OA.SELL_CUST_ID = #{custId}, OA.REGID, ''))                      REGID
+                    FROM T_ORDER_ALLOC OA
+                           LEFT JOIN T_ORDER O ON OA.ORDER_ID = O.ORDER_ID
+                           LEFT OUTER JOIN (SELECT ORDER_ID, ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE FROM T_ORDER_ALLOC_ADD GROUP BY ORDER_ID, ALLOC_ID) AA
+                                           ON OA.ORDER_ID = AA.ORDER_ID AND OA.ALLOC_ID = AA.ALLOC_ID
+
+                    WHERE 1 = 1
+                      AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
+                      AND O.ORDER_STATE IN ('01', '04', '05', '12')
+                    GROUP BY OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120)) A
+                 WHERE CONVERT(VARCHAR(10), A.S_DATE, 120) = #{searchDate}
+                 GROUP BY A.REGID) A) MAIN
+           LEFT OUTER JOIN T_USER TU ON MAIN.REGID = TU.USER_ID
+    WHERE PLUSRANK = 1 OR PROFITPERRANK = 1 OR PROFITRANK = 1 OR CNTRANK = 1
+    GROUP BY TU.CUST_ID
+
+  </select>
+</mapper>

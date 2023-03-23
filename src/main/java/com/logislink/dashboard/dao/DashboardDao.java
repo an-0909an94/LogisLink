@@ -1,5 +1,6 @@
 package com.logislink.dashboard.dao;
 
+import com.logislink.dashboard.vo.DashboardVO;
 import com.logislink.dashboard.vo.MmtopRankVO;
 import com.logislink.dashboard.vo.ResultRankVO;
 import com.logislink.dashboard.vo.MyResultVO;
@@ -311,5 +312,12 @@ public class DashboardDao extends EgovAbstractMapper {
     public String getHeader(Map<String, Object>map){
         String headerPrivate = selectOne("");
         return headerPrivate;
+    }
+
+    // Dashboard 전체 항목 출력
+    public List<DashboardVO> getDashboard(Map<String, Object>map){
+        // 결과 값은 Single로 나오는데 List가 좋은지는 확인해 볼 것 
+        List<DashboardVO> dashboard = selectList("dashboardDataNS.selectDashboardList");
+        return dashboard;
     }
 }

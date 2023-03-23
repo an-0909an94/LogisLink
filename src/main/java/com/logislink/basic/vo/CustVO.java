@@ -72,6 +72,10 @@ public class CustVO {
   	private String dlineDayCode;
   	private String dlinePoint;
   	private String dlinePointCode;
+
+	// 23.03.23 황정환 (거래처관리)추가
+	private String userNameDtl;
+	private String mobileDtl;
   	
 	public int getNumber() {
 		return number;
@@ -457,4 +461,10 @@ public class CustVO {
 	public void setDlinePointCode(String dlinePointCode) {
 		this.dlinePointCode = dlinePointCode;
 	}
+	public String getUserNameDtl(){return userNameDtl;}
+	public void setUserNameDtl(String userNameDtl){this.userNameDtl = userNameDtl;}
+	public String getMobileDtl(){return mobileDtl;}
+	public void setMobileDtl(String mobileDtl){this.mobileDtl = mobileDtl;}
+
+
 }

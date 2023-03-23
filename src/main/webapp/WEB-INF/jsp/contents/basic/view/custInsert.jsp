@@ -344,8 +344,8 @@
                                     <div class="form-group row">
                                         <label class="col-form-label modal-big-name">거래처 담당자</label>
                                         <div class="input-group input-group-sm wd170 middle-name form-group">
-                                            <strong class="required">담당자명</strong>
-                                            <input type="text" style="width:100%" class="form-control form-control-sm" id="userName" required>
+                                            <strong>담당자명</strong>
+                                            <input type="text" style="width:100%" class="form-control form-control-sm" id="userNameDtl">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="input-group input-group-sm wd110 middle-name form-group">
@@ -357,8 +357,8 @@
                                     <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd110 middle-name form-group">
-                                            <strong class="required">휴대전화</strong>
-                                            <input type="text" style="width:100%" class="form-control form-control-sm" id="mobile" maxlength="13" required>
+                                            <strong>휴대전화</strong>
+                                            <input type="text" style="width:100%" class="form-control form-control-sm" id="mobileDtl" maxlength="13">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="input-group input-group-sm wd170 middle-name form-group">
@@ -370,12 +370,12 @@
                                     <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd110 middle-name form-group">
-                                            <strong>아이디</strong>
+                                            <strong id="userId_head">아이디</strong>
                                             <input type="text" class="form-control form-control-sm wd110" id="userId">
                                             <div class="help-block with-errors"></div>
                                         </div>
                                         <div class="input-group input-group-sm wd170 middle-name form-group">
-                                            <strong>비밀번호</strong>
+                                            <strong id="passwd_head">비밀번호</strong>
                                             <input type="password" class="form-control form-control-sm wd170" id="passwd"  pattern="^(?=.{4,265}$).*"
                                                    data-pattern-error="4자리 이상 입력해 주세요.">
                                         </div>
@@ -384,11 +384,11 @@
                                     <div class="form-group row mt5">
                                         <label class="col-form-label"></label>
                                         <div class="input-group input-group-sm wd190 middle-name form-group">
-                                            <strong>이메일</strong>
+                                            <strong id="email_head">이메일</strong>
                                             <input type="text" style="width:100%" class="form-control form-control-sm" id="email">
                                         </div>
                                         <div class="input-group input-group-sm wd90 middle-name form-group">
-                                            <strong>알림톡 수신여부</strong>
+                                            <strong id="talk_head">알림톡 수신여부</strong>
                                             <input type="checkbox" id="talk" name="talk" class="input_on-off">
                                             <label for="talk" class="label_on-off" style="vertical-align:middle;">
                                                 <span class="marble"></span>
@@ -415,7 +415,7 @@ var g_idx = {};
 var deptList = [];
 $(document).ready(function(){
 	$("#mngDeptId").on("change", function(){
-		Util.setSelectBox("/contents/basic/data/userNameList.do", "manager", {deptId:$(this).val()}, "userId", "userName", "", "선택하세요");
+		Util.setSelectBox("/contents/basic/data/userNameList.do", "manager", {deptId:$(this).val()}, "userId", "userNameDtl", "", "선택하세요");
 	});
 });
 
@@ -433,7 +433,7 @@ function init_pop(mode, data) {
 	$('#custMngCode').append($options2);
 	$("#custMngCode option[value='']").remove();
 	
-	Util.setSelectBox("/contents/basic/data/userNameList.do", "manager", {deptId:"${sessionScope.userInfo.deptId}"}, "userId", "userName", "", "선택하세요");
+	Util.setSelectBox("/contents/basic/data/userNameList.do", "manager", {deptId:"${sessionScope.userInfo.deptId}"}, "userId", "userNameDtl", "", "선택하세요");
 	Util.setCmmCode("select", "custTypeCode", "CUST_TYPE_CD", "", "선택하세요");
     Util.setCmmCode("select", "sellBuySctn", "SELL_BUY_SCTN", "", "선택하세요");
     Util.setCmmCode("select", "bizTypeCode", "BIZ_TYPE_CD", "", "선택하세요");
@@ -473,6 +473,8 @@ function init_pop(mode, data) {
 		$("#searchBizinfo").attr("onClick", "popSearchBizinfo()");
 		
 		if("${menuAuth.writeYn}" != "Y")	$("#btn_saveCust").hide();
+
+        setShowList(["userId","userId_head","passwd","passwd_head"]);
 
 	} else if(mode == "BE") {
 		chkUID = true;
@@ -515,8 +517,14 @@ function init_pop(mode, data) {
 		Util.setDisabledList(["custTypeCode", "sellBuySctn"]);
 		
 		if(data.userId) {
-			Util.setReadOnlyEnable(["userId", "passwd", "userName", "grade", "mobile", "email", "telNum"]); 
-		} 
+			//Util.setReadOnlyEnable(["userId", "passwd", "userNameDtl", "grade", "mobileDtl", "email", "telNum"]);
+            $("#userId").val("");
+            $("#passwd").val("");
+            setHideList(["userId","userId_head","passwd","passwd_head"]);
+		}
+        else{
+            setShowList(["userId","userId_head","passwd","passwd_head"]);
+        }
 		
 		$("#mngDeptId").trigger("change");
 		$("#manager").val(data.manager);
@@ -535,6 +543,19 @@ function init_pop(mode, data) {
 
 	}
 }
+
+function setShowList(ids) {
+  for(var i = 0; i < ids.length; i++) {
+    $("#"+ids[i]).show();
+  }
+}
+
+function setHideList(ids) {
+  for(var i = 0; i < ids.length; i++) {
+    $("#"+ids[i]).hide();
+  }
+}
+
 
 function getCustInfo(bizNum) {
 	if(!bizNum) return;
@@ -570,10 +591,10 @@ function changeBizNumSub(obj){
 		$("#bizNumSub").remove();
 		var s = "<input type=\"text\" class=\"form-control form-control-sm\" id=\"bizNumSub\" onBlur=\"checkOverlapSub(this)\" maxlength=\"4\">";
 		$("#divBizNumSub").append(s);		
-		Util.setReadOnlyDisable(["bizName", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userName", "grade", "mobile", "email", "telNum", "bankCode", "bankCnnm", "bankAccount"]);
+		Util.setReadOnlyDisable(["bizName", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userNameDtl", "grade", "mobileDtl", "email", "telNum", "bankCode", "bankCnnm", "bankAccount"]);
 		Util.setEnabledList(["bankCode", "bizTypeCode"]);
 		$("input:checkbox[id='talk']").prop('checked', false).prop('disabled', false);
-		Util.formReset("", ["#userId", "#passwd", "#userName", "#grade", "#mobile", "#email", "#telNum", "#bizTypeCode" ,"#bankCode", "#bankCnnm", "#bankAccount", "#taxEmail", "taxStaffName", "taxTelNum", "#itemCode", "#fax", "#custMemo", "#orderMemo", "#bizName", "#ceo", "#bizCond", "#bizKind", "#bizPost", "#bizAddr", "#bizAddrDetail","#custName"], {});
+		Util.formReset("", ["#userId", "#passwd", "#userNameDtl", "#grade", "#mobileDtl", "#email", "#telNum", "#bizTypeCode" ,"#bankCode", "#bankCnnm", "#bankAccount", "#taxEmail", "taxStaffName", "taxTelNum", "#itemCode", "#fax", "#custMemo", "#orderMemo", "#bizName", "#ceo", "#bizCond", "#bizKind", "#bizPost", "#bizAddr", "#bizAddrDetail","#custName"], {});
 
         //$("#custName").val(obj.cmpNm);
         setDeptTextBox();
@@ -614,7 +635,7 @@ function checkOverlapSub(obj) {
 		if(cust.bizNumSub == str){
 			setBizNumSub();
 			$("#bizNumSub").val(str).trigger("change");
-			Util.setReadOnlyEnable(["bizName", "bizNum", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userName", "grade", "mobile", "email", "telNum"]);
+			Util.setReadOnlyEnable(["bizName", "bizNum", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userNameDtl", "grade", "mobileDtl", "email", "telNum"]);
 			break;
 			
 		}
@@ -714,9 +735,9 @@ function checkOverlapDeptName(obj) {
 function setUserInfo(deptId) {
 	$('#userId').val('');
 	$('#passwd').val('');
-	$('#userName').val('');
+	$('#userNameDtl').val('');
 	$('#grade').val('');
-	$('#mobile').val('');
+	$('#mobileDtl').val('');
 	$('#email').val('');
 	$('#telNum').val('');
 	$('#taxEmail').val('');
@@ -728,7 +749,7 @@ function setUserInfo(deptId) {
 	$('#orderMemo').val('');
 	if(deptId == "new" ) {
 		setDeptTextBox();
-		Util.setReadOnlyDisable(['userId', 'passwd', 'userName', 'grade', 'mobile', 'email', 'telNum']);
+		Util.setReadOnlyDisable(['userId', 'passwd', 'userNameDtl', 'grade', 'mobileDtl', 'email', 'telNum']);
 		$("input:checkbox[id='talk']").prop('checked', false);
 		$("input:checkbox[id='talk']").prop('disabled', false);
 	} else {
@@ -760,16 +781,16 @@ function setUserInfo(deptId) {
 							$("input:checkbox[id='talk']").prop('checked', false);
 						}
 						$("input:checkbox[id='talk']").prop('disabled', true);
-						Util.setReadOnlyEnable(['userId', 'passwd', 'userName', 'grade', 'mobile', 'email', 'telNum']);
+						Util.setReadOnlyEnable(['userId', 'passwd', 'userNameDtl', 'grade', 'mobileDtl', 'email', 'telNum']);
 					} else {
-						Util.setReadOnlyDisable(['userId', 'passwd', 'userName', 'grade', 'mobile', 'email', 'telNum']);
+						Util.setReadOnlyDisable(['userId', 'passwd', 'userNameDtl', 'grade', 'mobileDtl', 'email', 'telNum']);
 						$("input:checkbox[id='talk']").prop('checked', false);
 						$("input:checkbox[id='talk']").prop('disabled', false);
 						$('#userId').val('');
 						$('#passwd').val('');
-						$('#userName').val('');
+						$('#userNameDtl').val('');
 						$('#grade').val('');
-						$('#mobile').val('');
+						$('#mobileDtl').val('');
 						$('#email').val('');
 						$('#telNum').val('');
 					}
@@ -913,7 +934,7 @@ $('#f').validator().on('submit', function (e) {
         sellBuySctn : $("#sellBuySctn").val(),
         custName : $("#custName").val(),
         telNum: $("#telNum").val().replace(/\-/g, ""),
-        mobile: $("#mobile").val().replace(/\-/g, ""),
+        mobile: $("#mobileDtl").val().replace(/\-/g, ""),
         fax : $("#fax").val(),
         taxEmail : $("#taxEmail").val(),
         taxStaffName : $("#taxStaffName").val(),
@@ -927,7 +948,7 @@ $('#f').validator().on('submit', function (e) {
         deptName: $("#deptName").val(),
         userId : $("#userId").val(),
         passwd : $("#passwd").val(),
-        userName : $("#userName").val(),
+        userName : $("#userNameDtl").val(),
         grade : $("#grade").val(),
         email : $("#email").val(),
         talkYn : $("#talk").val() == 'on' ? "Y" : "N",
@@ -975,7 +996,7 @@ function init() {
 	var str = "<input type=\"text\" class=\"form-control form-control-sm\" id=\"bizNumSub\">";
 	$("#divBizNumSub").append(str);		
 	
-	Util.setReadOnlyDisable(["bizName", "bizNum", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userName", "grade", "mobile", "email", "telNum", "bankCnnm", "bankAccount"]);
+	Util.setReadOnlyDisable(["bizName", "bizNum", "bizNumSub", "ceo", "bizCond", "bizKind", "bizPost", "bizAddr", "bizAddrDetail", "userId", "passwd", "userNameDtl", "grade", "mobileDtl", "email", "telNum", "bankCnnm", "bankAccount"]);
 	Util.setEnabledList(["bizTypeCode", "bizNumSub", "custTypeCode", "sellBuySctn", "bankCode"]);
 	$(".list-unstyled").remove();
 
@@ -1136,7 +1157,7 @@ function setSearchBizInfo(mode,data) {
 function checkUserInfo() {
 	var userIdChk = ($("#userId").val() ? 1 : 0);
 	var passwdChk = ($("#passwd").val() ? 1 : 0);
-	//var userNameChk = ($("#userName").val() ? 1 : 0);
+	//var userNameChk = ($("#userNameDtl").val() ? 1 : 0);
 	
 	var chk = userIdChk + passwdChk;
 	
@@ -1149,7 +1170,7 @@ function checkUserInfo() {
 }
 
 
-$("#mobile, #telNum, #taxTelNum").on("input", function(){
+$("#mobileDtl, #telNum, #taxTelNum").on("input", function(){
 	$(this).val(Util.formatPhone($(this).val()));
 });
 </script>
