@@ -100,7 +100,7 @@ public class LoginController {
 		List<Map<String,Object>> menuException = new ArrayList<>();
 		List<Map<String,Object>> menuExceptionCode = new ArrayList<>();
 		Map<String, Object> userParam = new HashMap<>();
-		Map<String, Object> ParamMap = new HashMap<>();
+		/*Map<String, Object> ParamMap = new HashMap<>();*/
 
 
 		List<Map<String, Object>> menuExceptionParam = new ArrayList<>();
@@ -110,6 +110,7 @@ public class LoginController {
 			menuException = menuService.getMenuException(userParam);
 			if(menuException.size() > 0) {
 				for (Map<String, Object> map : menuException) {
+					Map<String, Object> ParamMap = new HashMap<>();
 					ParamMap.put("MENU_CD", map.get("MENU_CD"));
 					menuExceptionCode.add(ParamMap);
 				}

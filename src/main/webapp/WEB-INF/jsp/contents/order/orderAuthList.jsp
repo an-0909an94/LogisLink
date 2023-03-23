@@ -300,8 +300,8 @@
     { field: "sComName", title: "상차지명", width: 150
       ,filterable: { multi: true}
     },
-    { field: "sSido", title: "상차지(시도)", width: 150 },
-    { field: "sGungu", title: "상차지(군구)", width: 150 },
+    { field: "sSido", title: "상차지주소(시도)", width: 150 },
+    { field: "sGungu", title: "상차지주소(군구)", width: 150 },
     { field: "sAddr", title: "상차지주소", width: 150 },
     { field: "sTel", title: "상차지연락처", width: 120,
       template: function(dataItem) {
@@ -309,8 +309,8 @@
       }
     },
     { field: "eComName", title: "하차지명", width: 150 },
-    { field: "eSido", title: "하차지(시도)", width: 150 },
-    { field: "eGungu", title: "하차지(군구)", width: 150 },
+    { field: "eSido", title: "하차지주소(시도)", width: 150 },
+    { field: "eGungu", title: "하차지주소(군구)", width: 150 },
     { field: "eAddr", title: "하차지주소", width: 150 },
     { field: "eTel", title: "하차지연락처", width: 120,
       template: function(dataItem) {
