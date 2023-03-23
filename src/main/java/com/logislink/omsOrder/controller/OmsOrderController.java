@@ -439,4 +439,20 @@ public class OmsOrderController {
 		
 		return "jsonView";
 	}
+	@PostMapping(value="/oms/order/data/omsOrderState.do")
+	public String omsOrderState(HttpServletRequest request, HttpSession session, Model model, ModelMap map,
+							 @RequestParam Map<String, Object> param ) throws Exception {
+
+		param.put("regid", ((LoginVO) session.getAttribute("userInfo")).getUserId());
+		orderService.updateOrderState(param);
+
+		if(!"00".equals(param.get("retCode"))) {
+			map.put("result", Boolean.FALSE);
+			map.put("msg", param.get("retMsg"));
+		} else {
+			map.put("result", Boolean.TRUE);
+			map.put("msg", param.get("retMsg"));
+		}
+		return "jsonView";
+	}
 }

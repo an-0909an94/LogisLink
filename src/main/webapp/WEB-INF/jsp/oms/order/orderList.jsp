@@ -89,7 +89,7 @@
 </div>
 <script type="text/javascript">
 var viewLocation = null;
-// debugger;
+
 var columns = [
 	{field: "orderStateName", title: "오더상태", width: 100, hidden: true},
 	{field: "buyCharge", title: "지불운임", width: 80, hidden: true},
@@ -105,44 +105,44 @@ var columns = [
 	{field: "regdate", title: "등록일", width: 150, hidden: true},
 	{field: "buyCustName", title: "매출처", width: 150, hidden: true},
 	{field: "buyDeptName", title: "매출부서", width: 150, hidden: true},
-
-
+	
+	
 	{template:'#if (orderStateName == "취소") {# <div style="color:\\\#FF0000;" class="grid-tr-18">#: orderStateName #</div> #} else if (orderStateName != "접수") {# <div style="color:\\\#0369DE;" class="grid-tr-18">#: orderStateName #</div> #} else {# <div class="grid-tr-18">#: orderStateName #</div> #} #'
 						 +'<div class="grid-tr-14">#: orderId #</div>'
 						 +'#if (buyCharge != 0) {# <div style="color:\\\#00152A;" class="grid-tr-18">#: Util.formatNumber(buyCharge) #원</div> #} else {# <div class="grid-tr-18">0원</div> #} #'
 						 +'#if (chargeTypeName == null || chargeTypeName == "") {# <div class="grid-tr-14">인수증</div> #} else {# <div class="grid-tr-14">#: chargeTypeName #</div> #} #'},
-
+			 
     {template:'<div style="color: \\\#00152A; text-align: center;" class="grid-tr-14">#if (carNum == null) {# #=""# #} else {# #=carNum# #} #</div>'
 				  		 +'<div style="color: \\\#00152A; text-align: center;" class="grid-tr-14">#if (driverTel == null) {# #=""# #} else {# #=Util.formatPhone(driverTel)# #} #</div>'
 				  		 +'<div style="padding-bottom: 10px; color: \\\#00152A; text-align: center;" class="grid-tr-14">#if (driverName == null) {# #=""# #} else {# #=driverName# #} #</div>'
 				  		 +'<div style="color: \\\#00152A; text-align: center;" class="grid-tr-14">#if (carNum, driverTel, driverName == null) {# #=""# #} else {# #=carTypeName# #=carTonName# #=returnName# #=mixName# #} #</div>'
-				  		 +'#if (carNum, driverTel, driverName == null) {# <div style="text-align: center;" class="grid-tr-14">#: carTypeName # #: carTonName # #: returnName # #: mixName #</div> #} #'},
-
+				  		 +'#if (carNum, driverTel, driverName == null) {# <div style="text-align: center;" class="grid-tr-14">#: carTypeName # #: carTonName # #: returnName # #: mixName #</div> #} #'},	
+				  		 
     {width: 100, template:'#if (orderStateName == "접수") {# <div style="text-align: center; color: \\\#0369DE;" class="grid-tr-14">접수</div> #} else {# <div style="text-align: center;" class="grid-tr-14">접수</div> #} #'},
-
-    //접수(불투명), 배차, 입차, 출발, 도착
+	  
+    //접수(불투명), 배차, 입차, 출발, 도착 
     {width: 100, template:'#if (orderStateName == "접수") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14"><span style="opacity: 0.3;">▶</span><span style="opacity: 0.6;">▶</span>▶</div> #} else if (orderStateName != "취소") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14">▶▶▶</div> #} #'},
-
+    
     {width: 100, template:'#if (orderStateName == "배차") {# <div style="text-align: center; color:\\\#0369DE;" class="grid-tr-14">배차완료</div> #} else {# <div style="text-align: center;" class="grid-tr-14">배차완료</div> #} #'},
-
+    
     //입차(불투명), 출발, 도착
     {width: 100, template:'#if (orderStateName == "입차") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14"><span style="opacity: 0.3;">▶</span><span style="opacity: 0.6;">▶</span>▶</div> #} else if (orderStateName == "출발") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14">▶▶▶</div> #} else if (orderStateName == "도착") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14">▶▶▶</div> #} #'},
-
+    
     {template:'#if (orderStateName == "출발") {# <div class="grid-tr-18" style="padding-bottom: 10px; text-align: center; color: \\\#0369DE;">#: sComName #(출발)</div> #} else {# <div class="grid-tr-18" style="padding-bottom: 10px; text-align: center;">#: sComName #(출발)</div> #} #'
     		 +'#if (orderStateName == "출발") {# <div class="grid-tr-14" style="text-align: center; color: \\\#0369DE;">#: sAddr #</div> #} else {# <div class="grid-tr-14" style="text-align: center;">#: sAddr #</div> #} #'
     		 +'#if (orderStateName == "출발") {# <div class="grid-tr-14" style="text-align: center; color: \\\#0369DE;">#: sDateDay #(상차)</div> #} else {# <div class="grid-tr-14" style="text-align: center;">#: sDateDay #(상차)</div> #} #'},
-
+	
    	//출발(불투명), 도착
     {width: 80, template:'#if (orderStateName == "출발") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14"><span style="opacity: 0.3;">▶</span><span style="opacity: 0.6;">▶</span>▶</div> #} else if (orderStateName == "도착") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14">▶▶▶</div> #} #'},
-
+    
     {template:'#if (orderStateName == "도착") {# <div class="grid-tr-18" style="padding-bottom: 10px; text-align: center; color: \\\#0369DE;">#: eComName #(도착)</div> #} else {# <div class="grid-tr-18" style="padding-bottom: 10px;text-align: center;">#: eComName #(도착)</div> #} #'
 		  	 +'#if (orderStateName == "도착") {# <div class="grid-tr-14" style="text-align: center; color: \\\#0369DE;">#: eAddr #</div> #} else {# <div class="grid-tr-14" style="text-align: center;">#: eAddr #</div> #} #'
 		  	 +'#if (orderStateName == "도착") {# <div class="grid-tr-14" style="text-align: center; color: \\\#0369DE;">#: eDateDay #(하차)</div> #} else {# <div class="grid-tr-14" style="text-align: center;">#: eDateDay #(하차)</div> #} #'},
-
+		  	 
 ];
-// debugger;
+
 var headerTitle = ($("#headerTitle").text());
-var oGrid = null;
+var oGrid = null;	
 oGrid = new gridData("grid");
 oGrid.initGrid();
 oGrid.setSendUrl("/oms/order/data/omsOrderList.do");
@@ -159,8 +159,8 @@ $(document).ready(function(){
 	Util.setSearchDateForm();
 	
 	goList();
-
-	$(".k-grid-header th:not(:first)").css({ "display": "none", "width": "0px" });
+    
+	$(".k-grid-header").css("display","none");
 	
 	var exportFlag = false;
 	$("#grid").data("kendoGrid").bind("excelExport", function (e) {
@@ -200,8 +200,7 @@ function goList() {
 		grid.tbody.delegate('tr', 'dblclick', function(){
 			var dataItem = grid.dataItem($(this));
 			form_popup("E", dataItem);
-		});
-
+		});	
 	} else {
 		grid.setDataSource(oGrid.gridOption.dataSource);
 	}
@@ -250,9 +249,22 @@ function form_popup(mode, data) {
 		$("#sAreaSave").parent(".radio-or-checkBox").css("display", "none");
 		$("#eAreaSave").parent(".radio-or-checkBox").css("display", "none");
 		if($("#vehicId").val() != '', $("#driverId").val() != '', $("#carNum").val() != ''
-		 , $("#driverName").val() != '', $("#driverTel").val() != '', data.orderStateName != '접수'){
+		 , $("#driverName").val() != '', $("#driverTel").val() != '', (data.orderStateName != '접수' && data.orderStateName != '취소')){
 			$("#driverKind").show();
 			$("#driverStateDiv").show();
+		}else{
+			$("#driverKind").hide();
+			$("#driverStateDiv").hide();
+		}
+
+		if(data.orderStateName != '취소'){
+			$("#btnSubmit").show();
+			$("#orderCopy").show();
+			$("#orderDelete").show();
+		}else{
+			$("#btnSubmit").hide();
+			$("#orderCopy").hide();
+			$("#orderDelete").hide();
 		}
 		$(".openCloseDiv").hide();
 		$(".openCloseBtn").html("추가정보열기");
@@ -267,6 +279,7 @@ function form_popup(mode, data) {
 		$("#eAreaSave").parent(".radio-or-checkBox").css("display", "contents");
 		$(".openCloseDiv").hide();
 		$(".openCloseBtn").html("추가정보열기");
+		$("#orderDelete").hide();
 		init();
 	}
 }

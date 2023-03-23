@@ -18,7 +18,7 @@
 <div class="header orderList">
   <div class="summary">
     <div class="hdr-tit" style ="font-weight:bold;">
-      <P id="headerTitle">배차관리</P>
+      <P id="headerTitle">배차일보</P>
     </div>
     <div id="orderSimpleData">
       <span style="font-size: 16px; font-weight:bold; margin-right: 6px;">배차진행건수 </span>
@@ -223,9 +223,11 @@
    // $("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
 
 
-      $('#fromDate').kendoDatePicker({
+/*
+     $('#fromDate').kendoDatePicker({
         format: 'yyyy-MM-dd'
       });
+*/
 
       $('#toDate').kendoDatePicker({
         format: 'yyyy-MM-dd',
@@ -235,6 +237,7 @@
 
       const endDate =  new Date($("#fromDate").val());
       endDate.setDate(endDate.getDate()+3)
+
 
       $('#toDate').kendoDatePicker('min', $("#fromDate").val());
       $('#toDate').kendoDatePicker('max', endDate);
@@ -292,9 +295,13 @@
     { field: "number", title: "No", width: 50 },
     { field: "allocStateName", title: "상태", width: 120},
     { field: "sellCustName", title: "거래처명", width: 150
-      ,filterable: { multi: true, search: true}
+      ,filterable: { multi: true, search: true}  // 추가시 멀티 select 필터 추가
     },
-    { field: "sComName", title: "상차지명", width: 150 },
+    { field: "sComName", title: "상차지명", width: 150
+      ,filterable: { multi: true}
+    },
+    { field: "sSido", title: "상차지(시도)", width: 150 },
+    { field: "sGungu", title: "상차지(군구)", width: 150 },
     { field: "sAddr", title: "상차지주소", width: 150 },
     { field: "sTel", title: "상차지연락처", width: 120,
       template: function(dataItem) {
@@ -302,6 +309,8 @@
       }
     },
     { field: "eComName", title: "하차지명", width: 150 },
+    { field: "eSido", title: "하차지(시도)", width: 150 },
+    { field: "eGungu", title: "하차지(군구)", width: 150 },
     { field: "eAddr", title: "하차지주소", width: 150 },
     { field: "eTel", title: "하차지연락처", width: 120,
       template: function(dataItem) {
@@ -565,7 +574,7 @@
         },
         schema : {
           data : function(response) {
-            if(response.summary != null){
+           if(response.summary != null){
               var	groupCount = ""
               groupCount = "<i class=\"btn_b\">접수 " + response.summary.registerOrderCount + "건</i> " +
                       "<i class=\"btn_g\">배차 " + response.summary.dispatchOrderCount + "건</i>" +
@@ -576,10 +585,10 @@
               $("#groupCount").html(groupCount);
             }
             return response.data;
-          },
-          total : function(response) {
-            return response.total;
           }
+/*          total : function(response) {
+            return response.total;
+          }*/
         },
        // pageSize : 50,
         serverPaging : false,
@@ -602,7 +611,10 @@
       },
       navigatable: true,
       selectable: true,
-      sortable : true,
+     // sortable : true,
+      sortable : {
+        mode: 'multiple'
+      },
       pageable : false,
       resizable: true,
       scrollable: true,
@@ -678,6 +690,15 @@
 
   function searchReset(){
     $("#fSearch")[0].reset();
+    $("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
+
+
+    const endDate =  new Date($("#fromDate").val());
+    endDate.setDate(endDate.getDate()+3)
+
+    $('#toDate').kendoDatePicker('min', $("#fromDate").val());
+    $('#toDate').kendoDatePicker('max', endDate);
+    $('#toDate').kendoDatePicker('value',  $("#fromDate").val());
   }
 
   function startInterval() {

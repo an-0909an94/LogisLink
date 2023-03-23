@@ -20916,6 +20916,7 @@ kendo-scheduler .k-event.k-event-inverse {
     -ms-touch-action: manipulation;
     touch-action: manipulation
 }
+/*
 
 .k-checkbox {
     margin: 0;
@@ -21292,6 +21293,7 @@ kendo-scheduler .k-event.k-event-inverse {
     border-color: #ff6358;
     box-shadow: 0 0 0 2px rgba(255, 99, 88, .3)
 }
+*/
 
 .k-radio {
     margin: 0;

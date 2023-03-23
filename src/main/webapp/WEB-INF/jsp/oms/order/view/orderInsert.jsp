@@ -29,8 +29,10 @@
 		                      	<legend id="order_legend">오더등록</legend>
 		                      	<div class="editor_btns" style="text-align:center;">
 									<div class="padding">
+
 										<button type="submit" onclick="readonlyValidator();" class="k-pager-refresh k-button btn_58 btn_b" id="btnSubmit"><strong id="btn_save">저장</strong></button>
 										<a id="orderCopy" onclick="orderCopy();" class="k-pager-refresh k-button"><b class="btn-b">복사</b></a>
+										<a id="orderDelete" onclick="updateOrderState('09')" class="k-pager-refresh k-button"><b class="btn-r">오더취소</b></a>
 										<a onclick="init_popup_close();" class="k-pager-refresh k-button btn_black btn_58"><b>닫기</b></a>
 									</div>
 								</div>
@@ -1141,4 +1143,33 @@ $("#buyCharge").on("input", function(){
 $("#sTel, #eTel").on("input", function(){
 	$(this).val(Util.formatPhone($(this).val()));
 });
+
+
+
+function updateOrderState(state) {
+	var orderId = $("#orderId").val();
+
+	$.ajax({
+		url: "/contents/order/data/orderState.do",
+		type: "POST",
+		dataType: "json",
+		data: "orderId=" + $("#orderId").val() + "&orderState=" + state,
+/*		beforeSend: function () {
+			FunLoadingBarStart();      	//로딩바 생성
+		}
+		, complete: function () {
+			FunLoadingBarEnd();			//로딩바 제거
+		},*/
+		success: function(data){
+			if(data.result) {
+				alert(data.msg);
+				init_popup_close();
+				goList();
+			} else {
+				alert(data.msg);
+			}
+		}
+	});
+}
+
 </script>

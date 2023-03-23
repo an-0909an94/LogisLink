@@ -142,7 +142,7 @@
     <div id="divOrderHistory"></div>
 </div>
 
-<div id="divChangeReq" class="editor-warp p-0">
+<%--<div id="divChangeReq" class="editor-warp p-0">
     <form class="modalEditor" id="fChangeReq" data-toggle="validator" role="form" autocomplete="off">
         <input type="hidden" name="modalCustId" id="modalCustId" class="hiddenValue">
         <input type="hidden" name="modalDeptId" id="modalDeptId" class="hiddenValue">
@@ -166,7 +166,7 @@
             </div>
         </div>
     </form>
-</div>
+</div>--%>
 <div id="outreqModal" class="editor-warp p-0">
     <form class="modalEditor" id="fOutreqModal">
         <input type="hidden" name="orderId" id="orderId">
