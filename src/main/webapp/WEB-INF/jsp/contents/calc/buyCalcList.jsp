@@ -1047,6 +1047,7 @@
                 if($("#loading").length > 0) $("#loading").hide();
             },
             navigatable: true,
+            resizable: true, // CELL 사이즈 마우스 드래그블
 			selectable: "cell",
 			persistSelection: true,
             editable: true,

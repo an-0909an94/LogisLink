@@ -1001,6 +1001,7 @@
                 if($("#loading").length > 0) $("#loading").hide();
             },
             navigatable: true,
+            resizable: true, // CELL 사이즈 마우스 드래그블
             // 멀티셀렉트 제거?
 //             selectable: "multiple row",
 			selectable: "cell",
