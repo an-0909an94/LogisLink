@@ -385,34 +385,39 @@
                 #tomorrowAfternoonTemperature span:nth-child(n+2) {
                     display: none;
                 }
-                .graphB {
+                .graphB, .graphT {
                     position: relative;
                 }
                 #beGraph{
                     margin: 0 auto;
                     position: absolute;
-                    top: 81px;
-                    left: 1px;
-                    height: 236px!important;
-                    width: 608px!important;
+                    top: 85px;
+                    left: 26px;
+                }
+                #mmGraph {
+                    margin: 0 auto;
+                    position: absolute;
+                    top: 85px;
+                    left: 26px;
                 }
 
-                #custom {
+                #custom1, #custom2 {
                     position: absolute;
                     display: flex;
                     justify-content: flex-end;
                     flex-direction: row;
                     width: 600px;
                 }
-                #custom ul {
+                #custom1 ul, #custom2 ul {
                     position: relative;
                     width: 200px;
                     display: flex;
                     align-items: center;
                     justify-content: flex-end;
-                    top: 31px;
+                    top: 44px;
+                    left: 12px;
                 }
-                #custom ul li {
+                #custom1 ul li, #custom2 ul li {
                     position: relative;
                     display: flex;
                     flex-direction: row;
@@ -428,13 +433,91 @@
                     margin-right: 3px;
 
                 }
+                .t-square1{
+                    width: 17px;
+                    height: 3px;
+                    background: #a0a0a0;
+                    margin-right: 3px;
+
+                }
+                .t-square2{
+                    width: 17px;
+                    height: 3px;
+                    background: #ff624c;
+                    margin-right: 3px;
+
+                }
                 .g-circle{
-                    width: 7px;
-                    height: 7px;
+                    width: 5px;
+                    height: 5px;
                     border-radius: 100px;
                     background: #ff0000;
                     margin-right: 3px;
                     border: 1px solid #ddd;
+                }
+
+                .graph_vehicle_percentage, .graph_top_percentage{
+                    margin-left: 25px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    position: absolute;
+                    bottom: 47px;}
+                .graph_vehicle_percentage::after,section .graph_vehicle .graph_vehicle_percentage ul::after, .graph_top_percentage::after,section .graph_top .graph_top_percentage ul::after{
+                    content: '';
+                    clear: both;
+                    display: block;
+                }
+                .graph_vehicle_percentage p,.graph_top_percentage p{
+                    float: left;
+                    color: #00ffba;
+                    font-size: 12px;
+                    line-height: 30px;
+                }
+                .graph_vehicle_percentage ul{
+                    width: 452px;
+                    background-color: #3b3b3b;
+                    border-radius: 50px;
+                    padding: 3px 0px;
+                    box-sizing: border-box;
+                    float: left;
+                    margin-left: 15px;
+                    display: flex;
+                    justify-content: center;
+                }
+                .graph_top_percentage ul{
+                    width: 514px;
+                    background-color: #3b3b3b;
+                    border-radius: 50px;
+                    padding: 3px 0px;
+                    box-sizing: border-box;
+                    float: left;
+                    margin-left: 15px;
+                    display: flex;
+                    justify-content: center;
+                }
+                .graph_vehicle_percentage ul li{
+                    float: left;
+                    text-align: center;
+                    color: #00ffba;
+                    font-weight: bold;
+                    font-size: 12px;
+                    width: 17%;
+                }
+                .graph_top_percentage ul li{
+                    float: left;
+                    text-align: center;
+                    color: #00ffba;
+                    font-weight: bold;
+                    font-size: 12px;
+                    width: 21%;
+                }
+                .graph_vehicle_percentage ul li:first-of-type, .graph_top_percentage ul li:first-of-type{
+                    display: flex;
+                    justify-content: center;
+                }
+                .graph_vehicle_percentage ul li:last-of-type, .graph_top_percentage ul li:last-of-type{
+                    padding-right: 0px;
                 }
             </style>
 
@@ -653,22 +736,47 @@
                 <div class="graph_vehicle">
                     <h2>배차 손익추이</h2>
                     <div class="graphB">
-                        <div id="custom">
+                        <div id="custom1">
                             <ul>
                                 <li><span class="g-square namelabel"></span><span>매출</span></li>
                                 <li><span class="g-circle namelabel"></span><span>이익</span></li>
                             </ul>
                         </div>
-                        <canvas id="beGraph"></canvas>
+                        <canvas id="beGraph" width="567" height="209"></canvas>
+                        <div class="graph_vehicle_percentage">
+                        <p>손이익률</p>
+                        <ul class="profitLosslist1">
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                        </div>
                     </div>
                 </div>
 
                 <div class="graph_top">
                     <h2>전월 TOP 거래처 현황</h2>
                     <div class="graphT">
-                        <div id="custom-legend">
+                        <div id="custom2">
+                            <ul>
+                                <li><span class="t-square1 namelabel"></span><span>매출</span></li>
+                                <li><span class="t-square2 namelabel"></span><span>이익</span></li>
+                            </ul>
                         </div>
-                        <canvas id="topGraph"></canvas>
+                        <canvas id="mmGraph" width="567" height="209"></canvas>
+                        <div class="graph_top_percentage">
+                            <p>손이익률</p>
+                            <ul class="profitLosslist2">
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1499,62 +1607,36 @@
         });
     };
 
-    let customLegend = function (chart) {
-        let ul = document.createElement('ul');
-        let dataset = chart.data.datasets;
-
-        dataset.forEach(function (ds, index) {
-            let backgroundColor = ds.backgroundColor;
-            let label = ds.label;
-            let listItem = `<li><span style="background-color: ${backgroundColor}; display: inline-block; width: 30px; height: 10px;"></span> ${label}</li>`;
-            ul.innerHTML += listItem;
-        });
-
-        return ul.outerHTML;
-    };
-
-
-
     //차트 JS  배차 손익추이
-    Chart.register(ChartDataLabels); // 화면에 금액표시하기 위해 필요합니다.
-
-    const ctx = document.getElementById('beGraph').getContext('2d');
-    const beGraph = new Chart(ctx, {
-        type: 'bar',
-        data: {
+    const data1 = {
             labels: [],
             datasets: [
                 {
-                    label: '매출',
+                    // label: '매출',
                     data: [], //NUM으로 가지고 와야합니다.
                     type: 'bar',
                     backgroundColor: 'rgba(160, 160, 160)',
                     borderColor: 'rgba(160, 160, 160)',
                     borderWidth: 1,
                     yAxisID: 'y2',
-                    maxBarThickness: 30,
+                    maxBarThickness: 22,
                     datalabels: {
                         display:true,
                         color: '#a0a0a0',
                         anchor: 'end',
                         align: 'top',
                         font: {
-                            size: 14, // 원하는 폰트 크기로 설정하세요.
-                            weight: 'bold' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                            size: 12, // 원하는 폰트 크기로 설정하세요.
+                            weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                         },
                         formatter: function(value, context) {
-                            // if(value >=3000) {
-                            //     context.dataset.datalabels.color = '#fff';
-                            // }else {
-                            //     context.dataset.datalabels.color = '#000';
-                            // }
                             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                         }
                     },
                     order: 2
                 },
                 {
-                    label: '이익',
+                    // label: '이익',
                     data: [], //NUM으로 가지고 와야합니다.
                     type: 'line',
                     backgroundColor: 'rgba(255, 98, 76)',
@@ -1568,28 +1650,32 @@
                         anchor: 'end',
                         align: 'top',
                         font: {
-                            size: 14, // 원하는 폰트 크기로 설정하세요.
-                            weight: 'bold' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                            size: 12, // 원하는 폰트 크기로 설정하세요.
+                            weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                         },
                     },
                     z: 1
                 }
             ]
-        },
+        };
+    Chart.register(ChartDataLabels); // 화면에 금액표시하기 위해 필요합니다.
+    const ctx1 = document.getElementById('beGraph').getContext('2d');
+    const beGraph = new Chart(ctx1, {
+        type: 'bar',
+        data: data1,
         options: {
             interaction: {
                 mode: 'none'
             },
+            animation: {
+                duration: 0,
+            },
             plugins: {
                 legend: {
                     display: false,
-                    labels: {
-                        align:'right',
-                        // 플러그인 등록
-                        usePointStyle: true,
-                    }
-                }
+                },
             },
+            responsive: false,
             scales: {
                 x: {
                     // min: 0,
@@ -1597,13 +1683,13 @@
                     title: {
                         display: true
                     },
-                    barPercentage: 0.5, // 바의 너비를 조절합니다 (0.0 ~ 1.0)
-                    categoryPercentage: 0.8,
+                    barPercentage: 0.0, // 바의 너비를 조절합니다 (0.0 ~ 1.0)
+                    categoryPercentage: 0.1,
                     ticks: {
                         color: '#fff',
                         font: {
-                            size: 14, // 원하는 폰트 크기로 설정하세요.
-                            weight: 'bold', // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                            size: 10, // 원하는 폰트 크기로 설정하세요.
+                            weight: '500', // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                         }
                     },
                 },
@@ -1618,8 +1704,8 @@
                     ticks: {
                         color: '#fff',
                         font: {
-                            size: 14, // 원하는 폰트 크기로 설정하세요.
-                            weight: 400, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                            size: 10, // 원하는 폰트 크기로 설정하세요.
+                            weight: 500, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                         },
                         stepSize: 200 // 눈금 간격 설정
                     },
@@ -1641,21 +1727,145 @@
                     ticks: {
                         color: '#fff',
                         font: {
-                            size: 14, // 원하는 폰트 크기로 설정하세요.
-                            weight: 400, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                            size: 10, // 원하는 폰트 크기로 설정하세요.
+                            weight: 500, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                         },
                         stepSize: 2000 // 눈금 간격 설정
                     },
-                    /*grid: {
+                }
+            },
+        }
+    });
+
+    const data2 = {
+        labels: [],
+        datasets: [
+            {
+                // label: '매출',
+                data: [], //NUM으로 가지고 와야합니다.
+                type: 'bar',
+                backgroundColor: 'rgba(160, 160, 160)',
+                borderColor: 'rgba(160, 160, 160)',
+                borderWidth: 1,
+                yAxisID: 'y1',
+                maxBarThickness: 22,
+                datalabels: {
+                    display:true,
+                    color: '#a0a0a0',
+                    anchor: 'end',
+                    align: 'top',
+                    font: {
+                        size: 12, // 원하는 폰트 크기로 설정하세요.
+                        weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                    },
+                    formatter: function(value, context) {
+                        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                    }
+                },
+            },
+            {
+                // label: '이익',
+                data: [], //NUM으로 가지고 와야합니다.
+                type: 'bar',
+                backgroundColor: 'rgba(255, 98, 76)',
+                borderColor: 'rgba(255, 98, 76)',
+                borderWidth: 1,
+                yAxisID: 'y2',
+                maxBarThickness: 22,
+                datalabels: {
+                    display:true,
+                    color: '#ff624c',
+                    anchor: 'end',
+                    align: 'top',
+                    font: {
+                        size: 12, // 원하는 폰트 크기로 설정하세요.
+                        weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                    },
+                },
+            }
+        ]
+    };
+    Chart.register(ChartDataLabels); // 화면에 금액표시하기 위해 필요합니다.
+    const ctx2 = document.getElementById('mmGraph').getContext('2d');
+    const mmGraph = new Chart(ctx2, {
+        type: 'bar',
+        data: data2,
+        options: {
+            interaction: {
+                mode: 'none'
+            },
+            animation: {
+                duration: 0,
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
+            responsive: false,
+            scales: {
+                x: {
+                    // min: 0,
+                    display: true,
+                    title: {
+                        display: true
+                    },
+                    barPercentage: 0.0, // 바의 너비를 조절합니다 (0.0 ~ 1.0)
+                    categoryPercentage: 0.1,
+                    ticks: {
+                        color: '#fff',
+                        font: {
+                            size: 10, // 원하는 폰트 크기로 설정하세요.
+                            weight: '500', // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        }
+                    },
+                },
+                y1: {
+                    position: 'left',
+                    display: true,
+                    title: {
+                        display: true
+                    },
+                    beginAtZero: true,
+                    max: 500,
+                    ticks: {
+                        color: '#fff',
+                        font: {
+                            size: 10, // 원하는 폰트 크기로 설정하세요.
+                            weight: 500, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        },
+                        stepSize:100,
+                    },
+                    grid: {
                         color: 'rgb(57 57 57)', // y축 그리드 라인 색상
                         lineWidth: 1, // y축 그리드 라인 두께
                         drawBorder: true, // y축 경계선 미표시
-                    },*/
+                    },
+                },
+                y2: {
+
+                    position: 'right',
+                    display: false,
+                    title: {
+                        display: false
+                    },
+                    beginAtZero: true,
+                    ticks: {
+                        color: '#fff',
+                        font: {
+                            size: 10, // 원하는 폰트 크기로 설정하세요.
+                            weight: 500, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        },
+                        stepSize: 2000 // 눈금 간격 설정
+                    },
                 }
-            }
-        },
+            },
+        }
     });
-    var custId = custIdcheck(); //거래처 확인
+
+
+
+    /*var custId = custIdcheck(); //거래처 확인
     if(custId) {
         // AJAX 요청을 통해 데이터를 가져옵니다.
         $.ajax({
@@ -1663,7 +1873,7 @@
             type: "POST",
             dataType: "json",
             data: {
-              custId:custId,
+                custId:custId,
             },
         }).done(response => {
             console.log("배차손익 : ", response);
@@ -1681,6 +1891,12 @@
                     sales.push(item.sales);
                     profits.push(item.profit);
                 });
+                // 손익은 따로 출력한다
+                const profitLossList1 = $(".profitLosslist1 li");
+                data.forEach((item, index) => {
+                    const profitLoss = item.profitLoss;
+                    $(profitLossList1[index]).text(profitLoss);
+                });
 
                 // 가져온 데이터를 차트에 적용합니다.
                 beGraph.data.labels = labels;
@@ -1696,8 +1912,238 @@
         }).fail((xhr, status, error) => {
             console.error(error);
         });
+    }*/
 
+
+
+ /*   var custId = custIdcheck(); //거래처 확인
+    if(custId) {
+        // AJAX 요청을 통해 데이터를 가져옵니다.
+        $.ajax({
+            url: "/dashboard//mmtoprank.do",
+            type: "POST",
+            dataType: "json",
+            data: {
+                custId:custId,
+            },
+        }).done(response => {
+            console.log("전월TOP 거래처 현황 : ", response);
+            // debugger;
+            if (response.result) {
+                const data = response.data;
+
+                // JSON 배열을 차트 데이터 형식으로 변환합니다.
+                const labels = [];
+                const sales = [];
+                const profits = [];
+
+                data.forEach(item => {
+                    labels.push(item.acountNm);
+                    sales.push(item.sales);
+                    profits.push(item.profit);
+                });
+                // 손익은 따로 출력한다
+                const profitLossList2 = $(".profitLosslist2 li");
+                data.forEach((item, index) => {
+                    const profitLoss = item.profitLoss;
+                    $(profitLossList2[index]).text(profitLoss);
+                });
+
+                // 가져온 데이터를 차트에 적용합니다.
+                mmGraph.data.labels = labels;
+                mmGraph.data.datasets[0].data = sales;
+                mmGraph.data.datasets[1].data = profits;
+
+                // 차트를 업데이트합니다.
+                beGraph.update();
+
+            } else {
+                console.error('Error: response is empty or undefined');
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
+        });
+    }*/
+
+    // 첫 번째 차트에 대한 AJAX 요청
+    function bbGraphData() {
+        return $.ajax({
+            url: "/dashboard/resultvehicle.do",
+            type: "POST",
+            dataType: "json",
+            data: {
+                custId: custId,
+            },
+        });
     }
+
+    // 두 번째 차트에 대한 AJAX 요청
+    function mmGraphData() {
+        return $.ajax({
+            url: "/dashboard//mmtoprank.do",
+            type: "POST",
+            dataType: "json",
+            data: {
+                custId: custId,
+            },
+        });
+    }
+
+    var custId = custIdcheck(); // 거래처 확인
+
+    if (custId) {
+        // 두 차트에 대한 데이터를 동시에 가져옵니다.
+        $.when(bbGraphData(), mmGraphData())
+            .done((response1, response2) => {
+                // 첫 번째 차트 데이터 처리
+                if (response1[0].result) {
+                    processDataForChart(beGraph, response1[0].data);
+                    // // 손익은 따로 출력한다
+                    // const profitLossList1 = $(".profitLosslist1 li");
+                    // data.forEach((item, index) => {
+                    //     const profitLoss = item.profitLoss;
+                    //     $(profitLossList1[index]).text(profitLoss);
+                    // });
+                } else {
+                    console.error("Error: response1 is empty or undefined");
+                }
+
+                // 두 번째 차트 데이터 처리
+                if (response2[0].result) {
+                    processDataForChart(mmGraph, response2[0].data);
+                    // // 손익은 따로 출력한다
+                    // const profitLossList2 = $(".profitLosslist2 li");
+                    // data.forEach((item, index) => {
+                    //     const profitLoss = item.profitLoss;
+                    //     $(profitLossList2[index]).text(profitLoss);
+                    // });
+                } else {
+                    console.error("Error: response2 is empty or undefined");
+                }
+            })
+            .fail((xhr, status, error) => {
+                console.error(error);
+            });
+    }
+
+
+    function extractFunc(item) {
+        return item.label;
+    }
+
+    // 차트 데이터 처리 함수
+    function processDataForChart(chart, data, x) {
+        const labels = [];
+        const sales = [];
+        const profits = [];
+
+        data.forEach((item) => {
+            labels.push(x (item));
+            sales.push(item.sales);
+            profits.push(item.profit);
+        });
+
+        // 가져온 데이터를 차트에 적용합니다.
+        chart.data.labels = labels;
+        chart.data.datasets[0].data = sales;
+        chart.data.datasets[1].data = profits;
+
+        // 차트를 업데이트합니다.
+        chart.update();
+    }
+
+    function updateProfitLossList(profitLossListSelector, data) {
+        const profitLossList = $(profitLossListSelector + " li");
+        data.forEach((item, index) => {
+            const profitLoss = item.profitLoss;
+            $(profitLossList[index]).text(profitLoss);
+        });
+    }
+
+    // 두 차트에 대한 데이터를 동시에 가져옵니다.
+    $.when(bbGraphData(), mmGraphData())
+        .done((response1, response2) => {
+            // 첫 번째 차트 데이터 처리
+            if (response1[0].result) {
+                processDataForChart(beGraph, response1[0].data, (item) => item.vehicleMM);
+                updateProfitLossList(".profitLosslist1", response1[0].data);
+            } else {
+                console.error("Error: response1 is empty or undefined");
+            }
+
+            // 두 번째 차트 데이터 처리
+            if (response2[0].result) {
+                processDataForChart(mmGraph, response2[0].data, (item) => item.acountNm);
+                updateProfitLossList(".profitLosslist2", response2[0].data);
+            } else {
+                console.error("Error: response2 is empty or undefined");
+            }
+        })
+        .fail((xhr, status, error) => {
+            console.error(error);
+        });
+
+
+
+
+
+
+    /*async function fetchData(custId) {
+        try {
+            const response = await $.ajax({
+                url: "/dashboard/resultvehicle.do",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    custId: custId,
+                },
+            });
+
+            return response;
+        } catch (error) {
+            console.error("데이터를 불러오는데 실패했습니다:", error);
+            throw error;
+        }
+    }
+
+    async function loadChartData(custId) {
+        try {
+            const response = await fetchData(custId);
+
+            console.log("배차손익 : ", response);
+
+            if (response.result) {
+                const data = response.data;
+
+                const labels = [];
+                const sales = [];
+                const profits = [];
+
+                data.forEach(item => {
+                    labels.push(item.vehicleMM);
+                    sales.push(item.sales);
+                    profits.push(item.profit);
+                });
+
+                beGraph.data.labels = labels;
+                beGraph.data.datasets[0].data = sales;
+                beGraph.data.datasets[1].data = profits;
+
+                beGraph.update();
+            } else {
+                console.error('Error: response is empty or undefined');
+            }
+        } catch (error) {
+            console.error("차트 데이터 로드에 실패했습니다.:", error);
+        }
+    }
+
+    const customerId = custIdcheck(); // 거래처 확인
+    if (customerId) {
+        loadChartData(customerId);
+    }*/
+
+
 
     // 현재를 기준으로 날짜를 가져온다.
     function formatDate(date) {
@@ -1883,24 +2329,6 @@
             console.error(error);
         });
     }
-
-        $.ajax({
-            url: "/dashboard//mmtoprank.do",
-            type: "POST",
-            dataType: "json",
-        }).done(response => {
-            console.log("전월TOP : ", response);
-            // debugger;
-            if (response.result) {
-                const {data} = response;
-
-            } else {
-                console.error('Error: response is empty or undefined');
-            }
-        }).fail((xhr, status, error) => {
-            console.error(error);
-        });
-
 
 </script>
 
