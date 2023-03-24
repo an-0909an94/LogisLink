@@ -255,7 +255,7 @@
                                 <li><span class="g-circle namelabel"></span><span>이익</span></li>
                             </ul>
                         </div>
-                        <canvas id="beGraph" width="567" height="209"></canvas>
+                        <canvas id="beGraph" width="600" height="209"></canvas>
                         <div class="graph_vehicle_percentage">
                         <p>손이익률</p>
                         <ul class="profitLosslist1">
