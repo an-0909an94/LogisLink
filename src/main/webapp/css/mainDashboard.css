@@ -1,0 +1,307 @@
+*{margin: 0px; padding: 0px;}
+a{text-decoration: none; color: #333}
+li{list-style-type: none;}
+.color_b{color: #00d8ff;}
+.color_g{color: #00ffba;}
+.color_r{color: #ff624c;}
+
+body{background-color: #2a2a2a; color: white; letter-spacing: -0.05em; font-family: 'Noto Sans KR', sans-serif;}
+#wrap{width: 100%; margin: auto;}
+header{width: 1840px; height: 74px; padding: 12px 30px 14px 30px; box-sizing: border-box; margin: 24px auto 0; border-radius: 20px;; background-color: #191919; display: flex; justify-content: space-between;}
+header div{display: flex; justify-content: space-between;}
+header h1{font-size: 0px; width: 124px; height: 46px; background: url(/img/logo.png) no-repeat; margin-right: 34px;}
+header .header_left b{font-size: 30px; font-weight: 900; margin-top: 4px;}
+header .header_left b span{font-size: 16px; font-weight: 400; margin-left: 15px;;}
+header .header_right ul::after{content: ''; clear: both; display: block;}
+header .header_right ul{background-color: #0a0a0a; border-radius: 21px; padding: 10px 18px 10px 25px; box-sizing: border-box; margin: 0 10px 0 0; line-height: 26px;;}
+header .header_right ul li{float: left; font-size: 16px; position: relative; margin-right: 40px;}
+header .header_right ul:last-of-type li:nth-of-type(2), header .header_right ul li:last-of-type{margin-right: 0px;}
+header .header_right ul li[class ^= "color_"]{font-weight: bold;}
+header .header_right ul li[class ^= "color_"]::before{content: ''; width: 1px; height: 24px; background-color: white; position: absolute; top: 50%; transform: translateY(-50%); left: -20px;}
+header .header_right ul:nth-of-type(2) li:last-child::after{content: ''; width: 25px; height: 25px; background: url(/img/icon_all.png) no-repeat; background-position: 0px 0px; display: inline-block; position: absolute; top: 50%; right: -40px; transform: translateY(-50%);}
+header .header_right ul:nth-of-type(2) li:last-of-type{margin-right: 40px;}
+header .header_right ul:last-of-type a{background-color: #ff624c; border: none; border-radius: 14px; width: 64px; height: 28px; margin-left: 14px; font-weight: bold; letter-spacing: -0.02em; display: inline-block; text-align: center;}
+header .header_right ul:last-of-type li:nth-of-type(2){margin-top: 0;}
+header a.replay span{display: block; width: 26px; height: 25px; background: url(/img/icon_all.png) no-repeat; background-position: 1px -28px; font-size: 0; margin: 7px auto 0;}
+header a.region span{display: block; width: 25px; height: 25px; background: url(/img/icon_all.png) no-repeat; background-position: 0px -60px; font-size: 0; margin:  7px auto 0;}
+header a.btn_gray {width: 42px; height: 42px; background-color: #3b3b3b; border-radius: 14px;}
+header a.btn_gray:hover {width: 42px; height: 42px; box-shadow: inset 6px 4px 9px rgb(118 118 118 / 66%);}
+header a.btn_gray.replay{margin-right: 10px;}
+header a.btn_gray.region,header a.btn_gray.replay{position: relative;}
+header a.btn_gray.region p,header a.btn_gray.replay p{font-size: 0;}
+header a.btn_gray.region:hover p,header a.btn_gray.replay:hover p{width: 90px; height: 37px; font-size: 14px; color: black; position: absolute; top: 56px; right: 0px; background-color: white;  text-align: center; line-height: 37px; box-shadow: 18px 18px 9px rgba(0, 0, 0, 0.3); border-radius: 10px; }
+header a.btn_gray.region:hover p::before,header a.btn_gray.replay:hover p::before{content: ''; display: block; position: absolute; top: -12px; left: 62px; width: 0; height: 0; border-bottom: 10px solid white; border-top: 3px solid transparent; border-left: 5px solid transparent; border-right: 5px solid transparent;}
+
+/* section */
+section{max-width: 1920px; margin: auto;}
+section .layout{display: flex; justify-content: space-between; padding: 40px 80px 0 90px; box-sizing: border-box;}
+
+/* section_left */
+section .section_left{min-width: 1280px;}
+section .section_left::after{content: ''; clear: both; display: block;}
+section .recent_ranking{width: 620px; float: left;}
+section .recent_ranking::after{content: ''; clear: both; display: block;}
+section .section_left h2{float: left;}
+section .section_left input{display: none;}
+section .section_left .ranking_label{width: 112px; height: 30px; background-color: #151515; border-radius: 15px; border: 1px solid #434343; box-sizing: border-box; display: flex; float: right; margin-bottom: 14px;}
+section .section_left label{cursor: pointer; width: 50%; transition: 0.2s; color: #898989; text-align: center; line-height: 26px; font-size: 12px;}
+section .recent_ranking input:first-of-type:checked ~ .ranking_label label:first-of-type,
+section .recent_ranking input:last-of-type:checked ~ .ranking_label label:last-of-type{background-color: #434343; border-radius: 15px; color: white; font-weight: 700;}
+section .recent_ranking_box{clear: both; margin-top: 14px;}
+section .recent_ranking_box div{display: none;}
+section .recent_ranking_box ul{display: flex;}
+section .recent_ranking_box ul::after{content: ''; clear: both; display: block;}
+section .recent_ranking input:first-of-type:checked ~ .recent_ranking_box div:first-of-type,
+section .recent_ranking input:last-of-type:checked ~ .recent_ranking_box div:last-of-type{display: block;}
+section .recent_ranking_box ul li{width: 143px; height: 148px; padding: 18px; background-color: #191919; margin-right: 16px; float: left; border-radius: 20px; border: 3px solid #006dff; box-sizing: border-box;}
+section .recent_ranking_box ul li:last-of-type{margin-right: 0px;}
+section .recent_ranking_box ul li.sales{border: 3px solid #00d8ff;}
+section .recent_ranking_box ul li.profit{border: 3px solid #07c28f;}
+section .recent_ranking_box ul li.profitRate{border: 3px solid #ff624c;}
+section .recent_ranking_box ul li p.ranking_tit{width: 78px; height: 26px; border-radius: 7px; text-align: center; font-size: 14px; font-weight: 500; line-height: 26px;}
+section .recent_ranking_box ul li.vehicle .ranking_tit{background-color: #0c438c;}
+section .recent_ranking_box ul li.sales .ranking_tit{background-color: #0c798c;}
+section .recent_ranking_box ul li.profit .ranking_tit{background-color: #0c8c6a;}
+section .recent_ranking_box ul li.profitRate .ranking_tit{background-color: #8c3e33;}
+section .recent_ranking_box ul li>div{margin-top: 29px;}
+section .recent_ranking_box ul li>div p{font-size: 14px; color: #898989;}
+section .recent_ranking_box ul li>div b{font-size: 24px; color: white;}
+section .recent_ranking_box ul li>div span{font-size: 14px; color: white;}
+section .my_ranking{width: 620px; float: right;}
+section .my_ranking::after{content: ''; clear: both; display: block;}
+section .my_ranking input:first-of-type:checked ~ .ranking_label label:first-of-type,
+section .my_ranking input:last-of-type:checked ~ .ranking_label label:last-of-type{background-color: #434343; border-radius: 15px; color: white; font-weight: 700;}
+section .my_ranking input:first-of-type:checked ~ .my_ranking_box div:first-of-type,
+section .my_ranking input:last-of-type:checked ~ .my_ranking_box div:last-of-type{display: block;}
+section .my_ranking_box{background-color: #1d1d1d; border-radius: 20px; clear: both; display: block; width: 100%; height: 148px; padding: 15px 45px; box-sizing: border-box;}
+section .my_ranking_box div{display: none;}
+section .my_ranking_box ul::after{content: ''; clear: both; display: block;}
+section .my_ranking_box li{float: left; width: 50%; margin-bottom: 13px;}
+section .my_ranking_box li:nth-of-type(3),section .my_ranking_box li:last-of-type{margin-bottom: 0;}
+section .my_ranking_box .my_ranking_tit{background-color: #0e0e0e; display: inline-block; width: 104px; height: 40px; font-size: 18px; letter-spacing: -0.03em; border-radius: 10px; text-align: center; line-height: 36px;}
+section .my_ranking_box li.vehicle{color: #006dff;}
+section .my_ranking_box li.sales{color: #00d8ff;}
+section .my_ranking_box li.profit{color: #05d79d;}
+section .my_ranking_box li.profitRate{color: #ff624c;}
+section .my_ranking_box span{font-size: 20px; margin-left: 17px; position: relative; top: 4px;}
+section .my_ranking_box span b{font-size: 30px;}
+
+/* highLight */
+section .highLight{width: 100%; padding: 55px 0 0 0; clear: both;}
+section .highLight::after{content: ''; clear: both; display: block;}
+section .highLight h2{margin-top: 6px;}
+section .highLight h2 span{color: #898989; font-size: 14px; margin-left: 10px;}
+section .highLight_slide{width: 1114px; float: right; overflow: hidden; height: 80px; border-radius: 40px; border: 3px solid transparent; background-image: linear-gradient(#fff, #fff), linear-gradient(to right, #646464 45%, #b5b5b4  50%,  #646464 65%); background-origin: border-box; background-clip: content-box, border-box; box-sizing: border-box;}
+section .highLight_slide>ul{height: 80px;;}
+section .highLight_slide>ul>li{background-color: #434343; padding: 15px 50px; box-sizing: border-box; height: 80px;}
+section .highLight_slide ul.highLight_slide_cont{display: flex; justify-content: space-between;}
+section .highLight_slide ul.highLight_slide_cont li{font-size: 12px;}
+section .highLight_slide ul.highLight_slide_cont span{display: block; font-size: 19px; font-weight: bold;}
+section .graph_vehicle{margin-top: 50px; float: left; width: 620px;}
+section .graph_top{margin-top: 50px; float: right; width: 620px;}
+section div[class ^= "graph_"] h2{display: block; float: none; margin-bottom: 18px;}
+section div[class ^= "graph_"]>div{width: 620px; height: 360px; background-color: #1d1d1d; border-radius: 20px;;}
+
+/* section_right */
+section .section_right{width: 400px;}
+section .section_right .weather h2 p{font-size: 14px; color: #898989; display: inline-block;}
+section .section_right .weather>div{width: 100%; background-color: #1d1d1d; margin-top: 9px; border-radius: 20px;}
+section .section_right .weather>div>ul{padding: 0 15px; box-sizing: border-box;}
+section .section_right .weather>div li{border-bottom: 1px solid #535353; display: flex; padding: 22px 52px; box-sizing: border-box;}
+section .section_right .weather>div li:last-of-type{border-bottom: none;}
+section .section_right .weather .weather_day{display: inline-block; font-size: 20px; width: 89px;}
+section .section_right .weather ul li ul{display: inline-block;}
+section .section_right .weather ul li div{position: relative; width: 75px;}
+section .section_right .weather ul li div span.weather_txt{font-size: 10px; position: absolute; top: -5px; left: 52px;}
+section .section_right .weather ul li p.weather_temperatures{font-size: 17px; font-weight: bold; position: absolute; top: 6px; left: 40px; width: 39px!important; text-align: center;}
+section .section_right .weather div.weather_afternoon{margin-left: 10px;}
+section .section_right .weather div.weather_afternoon span.weather_txt{left: 45px;}
+section .section_right .weather div.weather_afternoon p.weather_temperatures{left: 34px;}
+section .weather span[class ^="weather_icon_"]{font-size: 0px !important; width: 39px; height: 26px; display: block; background: url('/img/icon_weather.png') no-repeat; background-position: 0px 0px;}
+
+/* 날씨아이콘 S */
+
+/* 구름 */
+section .weather span.weather_icon_cloud{background-position: 0px -204px; height: 28px;}
+/* 맑음 */
+section .weather span.weather_icon_sun{background-position: 0px -140px; height: 30px;}
+/* 소나기 */
+section .weather span.weather_icon_rainsnow{background-position: 0px -36px; height: 28px;}
+/* 눈 */
+section .weather span.weather_icon_snow{background-position: 0px -68px; height: 33px;}
+/* 비 */
+section .weather span.weather_icon_rain{background-position: 0px -4px; height: 28px;}
+/* 안개 */
+section .weather span.weather_icon_fag{background-position: 0px -175px; height: 28px;}
+/* 번개 */
+section .weather span.weather_icon_shower{background-position: 0px -106px; height: 28px;}
+/* 날씨아이콘 E */
+
+/* oilMoney */
+section .section_right .oilMoney{width: 100%; margin-top: 50px;}
+section .section_right .oilMoney>div{margin-top: 9px; background-color: #1d1d1d;  border-radius: 20px; overflow: hidden;}
+section .section_right .oilMoney table{width: 100%; border-radius: 20px; border-collapse: collapse; text-align: center;}
+section .section_right .oilMoney table tr:first-of-type{background-color: #3b3b3b;}
+section .section_right .oilMoney table th{font-size: 16px; font-weight: 400; padding: 12px 0 10px 0;}
+section .section_right .oilMoney table td{padding: 14px 0; font-size: 20px;}
+section .section_right .oilMoney table tr:nth-of-type(2){border-bottom: 1px solid #626262;}
+section .section_right .oilMoney .color_b, section .section_right .oilMoney .color_g{font-size: 16px;}
+/* notice */
+.notice_bg{display: none; width: 100%; height: 100vh; background-color: rgba(0, 0, 0, 0.5); position: fixed; top: 0px; left: 0px; z-index: 1;}
+section .section_right .notice{width: 100%; margin-top: 50px;}
+section .section_right .notice ul{ width: 100%;}
+section .section_right .notice ul li{background-color: #1d1d1d; margin-top: 10px; border-radius: 20px; font-size: 14px; word-spacing: 1px; line-height: 27px;}
+section .section_right .notice .notice_title{cursor: pointer;}
+.notice_box:hover{ box-shadow: inset 6px 4px 9px rgb(118 118 118 / 66%); }
+section .section_right .notice div.notice_title dt{width: 100%; height: 25px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+section .section_right .notice div.notice_title dl{padding: 13.5px 30px;}
+section .section_right .notice div.notice_popup dd{font-family: 'Noto Sans KR', sans-serif; font-size: 14px; color: #898989; border-bottom: 1px solid #898989; padding: 0 0 15px 0;}
+section .section_right .notice_popup{display: none; position: fixed; top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%); width: 556px; min-height: 520px; background-color: #2a2a2a; z-index: 9; border-radius: 20px; padding: 23px 20px 0 23px; box-sizing: border-box;}
+section .section_right .notice_popup p{font-size: 20px; font-weight: bold; text-align: center;}
+section .section_right .notice_popup>div{width: 100%; height: 360px; max-height: 360px; overflow-y: auto; background-color: #1d1d1d; margin-top: 23px; padding: 10px 15px; box-sizing: border-box;}
+section .section_right .notice_popup dt{font-size: 16px; font-weight: bold; width: 100%; height: 25px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+section .section_right .icon_close{width: 26px; height: 25px; background: url(../img/icon_all.png) no-repeat; background-position: -1px -145px;  border: none; position: absolute; top: 26px; right: 15px; font-size: 0; cursor: pointer;}
+section .section_right .notice_popup div.contents{padding: 0px; margin-top: 15px;}
+section .section_right .btn_close{width: 170px; height: 44px; background-color: #3b3b3b; border-radius: 6px; color: white; border: none; margin: 22px auto; display: block; cursor: pointer; font-size: 14px; font-weight: 500; font-family: 'Noto Sans KR', sans-serif;}
+
+
+/* sns */
+section .section_right .sns{width: 100%; height: 72px; background-color: #3b3b3b; margin-top: 20px; border-radius: 20px;}
+section .section_right .sns ul{display: flex; padding: 14px 20px; box-sizing: border-box;}
+section .section_right .sns li{width: 50%; height: 44px; margin-right: 10px; background-color: #2f2f2f; border-radius: 8px; padding: 0 30px; box-sizing: border-box;}
+section .section_right .sns li:last-of-type{margin-right: 0px;}
+section .section_right .sns a{color: white; font-size: 12px; display: block;}
+section .section_right .sns a::before{content: ''; width: 26px; height: 26px; background: url(../img/icon_all.png) no-repeat; margin-right: 10px; display: inline-block; position: relative; top: 8px;}
+section .section_right .sns li.video a::before{background-position: 0px -90px;}
+section .section_right .sns li.blog a::before{background-position: 0px -120px;}
+.media { width: 100%;}
+
+/* Width Size 1870 */
+@media screen and (max-width: 1870px){
+    header{width: 95%; min-width: 1280px;}
+    header h1{width: 90px; background-size: contain;}
+    header .header_left b{font-size: 24px;}
+    header .header_right ul{padding: 10px 15px;}
+    header .header_right ul li{font-size: 14px;}
+
+    /* section */
+    section .layout{width: 90%; min-width: 1280px; margin: 40px auto; display: block; padding: 0;}
+
+    /* recent_ranking */
+    section .recent_ranking{width: 48%; min-width: 584px;}
+    section .recent_ranking_box ul li{width: 100%; min-width: 134px; height: 148px;}
+    section .my_ranking{width: 48%;}
+    section .my_ranking_box{padding: 15px 30px;}
+    section .highLight_slide{width: 85%;}
+    section .graph_vehicle, section .graph_top{width: 48%; min-width: 584px;}
+    section div[class ^= "graph_"]>div{width: 100%;}
+
+    /* section_right */
+    section .section_right{width: 100%; min-width: 1280px; display: flex; justify-content: space-between;}
+
+    section .section_right .weather{width: 100%; margin-top: 45px; margin-right: 30px;}
+    section .section_right .weather>div{height: 160px;}
+    section .section_right .weather>div li{justify-content: space-evenly;}
+
+    section .section_right .oilMoney{width: 100%; margin-top: 45px; margin-right: 30px;}
+    section .section_right .oilMoney>div{width: 100%;}
+    section .section_right .oilMoney table td{font-size: 17px;}
+
+    section .section_right .notice{width: 100%; margin-top: 45px;}
+
+    section .section_right .sns{width: 100%; margin-top: 16px;}
+
+    section .section_right .notice ul li:last-of-type{display: none;}
+
+
+}
+
+/* Width Size 1300 */
+@media screen and (max-width: 1300px){
+    /* header */
+    header{min-width: 1230px; padding: 12px 20px;}
+    header h1{width: 90px; background-size: contain; margin-right: 25px;}
+
+    header .header_left b{font-size: 23px;}
+    header .header_left b span{margin-left: 5px; font-size: 14px;}
+    header .header_right ul{padding: 10px 15px;}
+    header .header_right ul li{font-size: 14px;}
+
+    /* section */
+    section .layout{width: 1200px; min-width: 1200px; margin: 40px auto; display: block; padding: 0;}
+    section .section_left h2{font-size: 24px;}
+    section .section_left{width: 100%; min-width: 1200px;}
+
+    /* recent_ranking */
+    section .recent_ranking{width: 48%; min-width: 584px;}
+    section .recent_ranking_box ul li{width: 100%; min-width: 134px; height: 148px;}
+
+    section .my_ranking{width: 48%;}
+    section .my_ranking_box{padding: 15px 30px;}
+
+    /* highLight */
+    section .highLight{display: flex; justify-content: space-between;}
+    section .highLight_slide{max-width: 1034px; }
+    section .highLight::after{display: none;}
+
+    section .graph_vehicle, section .graph_top{width: 48%; min-width: 584px;}
+    section div[class^="graph_"] > div{width: 100%;}
+
+    /* section .section_right */
+    section .section_right{width: 100%; min-width: 1200px; display: flex; justify-content: space-between;}
+    section .section_right>div{float: left;}
+    section .section_right .weather{width: 380px; margin-top: 45px; margin-right: 30px;}
+    section .section_right .weather>div{height: 160px;}
+
+    section .section_right .oilMoney{width: 380px; margin-top: 45px; margin-right: 30px;}
+    section .section_right .oilMoney>div{width: 100%;}
+    section .section_right .oilMoney table td{font-size: 20px;}
+
+    section .section_right .notice{width: 380px; margin-top: 45px;}
+
+    section .section_right .sns{width: 380px; margin-top: 16px;}
+
+}
+
+
+/* 지역설정 팝업 */
+#popupLayer{ width:556px; height: 488px; background-color: #2a2a2a; display: none; position: fixed; padding: 25px 103px; box-sizing: border-box; top: 50%; left: 50%; z-index: 100; transform :translateX(-50%) translateY(-50%); border-radius: 24px;}
+#popupLayer h2{ font-size: 20px; text-align:center; margin-bottom: 13px;}
+#popupLayer>p{ font-size: 14px; text-align:center; margin-bottom: 20px; }
+.navContents { width: 100%; height: 326px; position: relative; overflow-y: scroll; /*-ms-overflow-style: none; scrollbar-width: none;*/ background-color: #191a1c;color: #fff;padding: 20px 40px;box-sizing: border-box;}
+/* .navContents::-webkit-scrollbar { display: none;} */
+.navContents h2 { font-size: 20px; height: auto; }
+.navContents p { font-size: 14px; height: auto; }
+.navInfo { display: flex; flex-wrap: nowrap; width: 100%; align-content: space-around; flex-direction: column; }
+.navInfo span{ font-size: 14px; font-weight: 600; }
+.exitBtn { cursor: pointer; position: absolute; top: 25px; right: 25px; width: 18px; height: 18px; background: url(/images/icon/icon_dash_close.png) no-repeat;font-size: 0px;}
+.icon_dash_close,.icon_dash_check{ width: 170px;height: 44px;border-radius: 6px;background-color: #3b3b3b;text-align: center;color: #fff;font-size: 14px;cursor: pointer;border: none;margin: 20px 5px 0 0;font-weight: 600;}
+.icon_dash_check{ background-color: #0063d3;margin-right: 0px;}
+.navInfo label { margin: 12px 0px; cursor: pointer;}
+
+/* Chart.js CSS (배차순이익, 전월TOP) */
+.graphB, .graphT { position: relative; }
+#morningTemperature span:nth-child(n+2) {display: none;}
+#afternoonTemperature span:nth-child(n+2) {display: none;}
+#tomorrowMorningTemperature span:nth-child(n+2) {display: none;}
+#tomorrowAfternoonTemperature span:nth-child(n+2) {display: none;}
+#beGraph{ margin: 0 auto;position: absolute;top: 85px;left: 26px;}
+#mmGraph { margin: 0 auto;position: absolute;top: 85px;left: 26px;}
+#custom1, #custom2 { position: absolute;display: flex;justify-content: flex-end;flex-direction: row;width: 600px;}
+#custom1 ul, #custom2 ul {position: relative;width: 200px;display: flex;align-items: center;justify-content: flex-end;top: 44px;left: 12px;}
+#custom1 ul li, #custom2 ul li { position: relative;display: flex;flex-direction: row;flex-wrap: nowrap;width: 57px; align-items: center;font-size: 10px;}
+
+.g-square{width: 17px; height: 3px; background: #a0a0a0; margin-right: 3px;}
+.t-square1{width: 17px; height: 3px; background: #a0a0a0; margin-right: 3px;}
+.t-square2{width: 17px; height: 3px; background: #ff624c; margin-right: 3px;}
+.g-circle{width: 5px; height: 5px; border-radius: 100px; background: #ff0000; margin-right: 3px; border: 1px solid #ddd;}
+
+.graph_vehicle_percentage, .graph_top_percentage{margin-left: 25px;display: flex;align-items: center;justify-content: center;position: absolute;bottom: 47px;}
+.graph_vehicle_percentage::after,section .graph_vehicle .graph_vehicle_percentage ul::after, .graph_top_percentage::after,section .graph_top .graph_top_percentage ul::after{content: '';clear: both;display: block;}
+.graph_vehicle_percentage p,.graph_top_percentage p{float: left;color: #00ffba;font-size: 12px;line-height: 30px;}
+.graph_vehicle_percentage ul{width: 452px;background-color: #3b3b3b;border-radius: 50px;padding: 3px 0px;box-sizing: border-box;float: left;margin-left: 15px;display: flex;justify-content: center;}
+.graph_top_percentage ul{width: 514px;background-color: #3b3b3b;border-radius: 50px;padding: 3px 0px;box-sizing: border-box;float: left;margin-left: 15px;display: flex;justify-content: center;}
+.graph_vehicle_percentage ul li{float: left;text-align: center;color: #00ffba;font-weight: bold;font-size: 12px;width: 17%;}
+.graph_top_percentage ul li{float: left;text-align: center;color: #00ffba;font-weight: bold;font-size: 12px;width: 21%;}
+.graph_vehicle_percentage ul li:first-of-type, .graph_top_percentage ul li:first-of-type{display: flex;justify-content: center;}
+.graph_vehicle_percentage ul li:last-of-type, .graph_top_percentage ul li:last-of-type{padding-right: 0px;}

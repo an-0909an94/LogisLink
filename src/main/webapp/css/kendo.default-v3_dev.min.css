@@ -20916,16 +20916,15 @@ kendo-scheduler .k-event.k-event-inverse {
     -ms-touch-action: manipulation;
     touch-action: manipulation
 }
-/*
 
 .k-checkbox {
     margin: 0;
     padding: 0;
     clip: rect(0, 0, 0, 0);
-    overflow: hidden;
-    position: absolute;
-    opacity: 0;
-    -webkit-appearance: none;
+    /*overflow: hidden;*/
+    /*position: absolute;*/
+    /*opacity: 0;*/
+    /*-webkit-appearance: none;*/
     pointer-events: none
 }
 
@@ -20941,7 +20940,7 @@ kendo-scheduler .k-event.k-event-inverse {
 
 .k-checkbox-label {
     margin: 0;
-    padding-left: 20px;
+    /*padding-left: 20px;*/
     min-height: 16px;
     line-height: 17px;
     vertical-align: text-top;
@@ -20992,7 +20991,7 @@ kendo-scheduler .k-event.k-event-inverse {
     padding-right: 20px
 }
 
-.k-checkbox-label::after,
+/*.k-checkbox-label::after,
 .k-checkbox-label::before {
     font-size: 16px;
     font-family: WebComponentsIcons, monospace;
@@ -21055,7 +21054,7 @@ kendo-scheduler .k-event.k-event-inverse {
     height: 8px;
     top: 4px;
     left: 4px
-}
+}*/
 
 .k-form .k-checkbox-label,
 .k-form-inline .k-checkbox-label {
@@ -21293,7 +21292,6 @@ kendo-scheduler .k-event.k-event-inverse {
     border-color: #ff6358;
     box-shadow: 0 0 0 2px rgba(255, 99, 88, .3)
 }
-*/
 
 .k-radio {
     margin: 0;
