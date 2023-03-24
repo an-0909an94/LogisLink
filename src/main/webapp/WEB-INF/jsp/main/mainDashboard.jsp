@@ -348,6 +348,7 @@
                                 <th>LPG</th>
                             </tr>
                             <tr>
+
                                 <td class="color_g">전국평균</td>
                                 <c:forEach var="idx" begin="0" end="4">
                                     <c:set var="oilType" value="${idx}" />
