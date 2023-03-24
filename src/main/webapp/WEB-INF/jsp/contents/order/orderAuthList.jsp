@@ -6,14 +6,71 @@
   .myOrder {background: #fdf3cf}
   .isMemo {background: #f08080}
 
-  #grid .k-grid-content {max-height:100vh}
-  .width6_5{
-    width: 6.5%;
-    align-self: center;
+  #grid .k-grid-content {max-height:100vh;}
+  .width6_5 { width: 6.5%; align-self: center;}
 
+  .k-i-filter::before {
+    content: "";
+    background-image: url(/img/fillterIcon2.png);
+    background-size: cover;
+    position: relative;
+    width: 20px !important;
+    height: 20px !important;
+    display: block;
+    background-position: center;
+    top: 2px;
   }
-</style>
+  .k-icon::before {
+    vertical-align: baseline;
+  }
+  .k-grid-header .k-grid-filter:hover, .k-grid-header .k-header-column-menu:hover, .k-grid-header .k-hierarchy-cell .k-icon:hover {
+    color: #656565;
+    background-color:transparent;
+  }
+  .k-i-close::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background-image: url(/img/close.png);
+    display: block;
+    background-size: cover;
+  }
+  .k-button {
+    background-color: #f5f5f5;
+    /*margin: 0;*/
+    /*padding: 0;*/
+  }
+  .k-button.k-state-hover, .k-button:hover {
+    color: transparent;
+    border-color: #f5f5f5;
+    background-color: #f5f5f5;
+    /*margin: 0;*/
+    /*padding: 0;*/
+  }
+  .k-button, .k-button:hover {
+    border: 0;
+  }
+  .k-button,
+  .k-button:hover,
+  .k-button.k-state-hover,
+  .k-button.k-state-focused,
+  .k-button:focus,
+  .k-button:focus:not(.k-state-disabled):not([disabled]),
+  .k-button:focus:active:not(.k-state-disabled):not([disabled]) {
+    box-shadow: none;
+  }
+  /* 배차일보 */
+  .k-filter-menu-container .k-input { position: relative; height: 27px; width: 96%; border-radius: 40px; padding: 0px 30px 0px 12px; margin: 8px 0;}
+  .k-searchbox { position: relative;}
+  .k-input-prefix{ display: none;}
+  .k-searchbox { position: relative;}
+  .k-input-prefix { position: relative;}
+  .k-input-suffix{ position: absolute; right: 9px; top:1px;}
+  .k-checkbox-label span { font-size:12px; }
 
+
+
+</style>
 
 <div class="header orderList">
   <div class="summary">
@@ -210,7 +267,6 @@
 
       $("#grid").data("kendoGrid").resize();
     });
-
 
     Util.setCmmCode("datalist", "listSSido1", "SIDO", "", "--상차지--");
     Util.setCmmCode("datalist", "listESido1", "SIDO", "", "--하차지--");
@@ -716,6 +772,5 @@
   function stopInterval() {
     clearInterval(autoRefresh);
   }
-
 
 </script>
