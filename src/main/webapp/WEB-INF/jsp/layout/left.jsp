@@ -474,12 +474,13 @@
 			<div class="manager-name">${sessionScope.userInfo.userName} </div>
 			<div class="manager-role">${sessionScope.userInfo.grade}</div>
 			<div class="carrier-name">${sessionScope.userInfo.bizName}</div>
-			<div class="side-logout" style="">
-				<a href="/logout.do" class="side-logout-link">로그아웃</a>
-			</div>
-			<div class="mem-setting"><i id="userOption" class="k-icon k-i-gear" style="cursor: pointer;" title="업무초기값 설정"></i></div>
-			<div class="mem-setpage"><a href="javascript:setMainPage();" style="color:#ffffff;">현재페이지를 시작페이지로</a></div>
-
+				<div class="mem-info-box">
+					<div class="side-logout col-width50" style="">
+						<a href="/logout.do" class="side-logout-link">로그아웃</a>
+					</div>
+					<div id="userOption" class="mem-setting col-width50"><i id="userOption" class="k-icon k-i-gear" title="업무초기값 설정"></i><span class="setting-text">설정초기화</span></div>
+					<div class="mem-setpage col-width50"><a href="javascript:setMainPage();" style="color:#ffffff;"><i class="k-icon k-i-gear" title="업무초기값 설정"></i><span class="setpage-text">현재페이지를 시작페이지로</span></a></div>
+				</div>
 		</div>
 	</div>
 	<!-- mem-info-wrapper -->

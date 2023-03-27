@@ -251,11 +251,11 @@
                     <div class="graphB">
                         <div id="custom1">
                             <ul>
-                                <li><span class="g-square namelabel"></span><span>매출</span></li>
-                                <li><span class="g-circle namelabel"></span><span>이익</span></li>
+                                <li><span class="g-square namelabel"></span><span>매출</span><span class="bunit">(만원)</span></li>
+                                <li><span class="g-circle namelabel"></span><span>이익</span><span class="bunit">(만원)</span></li>
                             </ul>
                         </div>
-                        <canvas id="beGraph" width="567" height="209"></canvas>
+                        <canvas id="beGraph" width="600" height="209"></canvas>
                         <div class="graph_vehicle_percentage">
                         <p>손이익률</p>
                         <ul class="profitLosslist1">
@@ -275,8 +275,8 @@
                     <div class="graphT">
                         <div id="custom2">
                             <ul>
-                                <li><span class="t-square1 namelabel"></span><span>매출</span></li>
-                                <li><span class="t-square2 namelabel"></span><span>이익</span></li>
+                                <li><span class="t-square1 namelabel"></span><span>매출</span><span class="bunit">(만원)</span></li>
+                                <li><span class="t-square2 namelabel"></span><span>이익</span><span class="bunit">(만원)</span></li>
                             </ul>
                         </div>
                         <canvas id="mmGraph" width="567" height="209"></canvas>

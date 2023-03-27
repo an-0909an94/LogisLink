@@ -193,7 +193,7 @@
     font-weight: bold;
 }
 
-.mem-info > .carrier-name {
+.mem-info >  .carrier-name {
     display: inline;
     margin: 22px 0 0 10px;
     position: absolute;
@@ -205,29 +205,70 @@
     font-weight: 400;
 }
 
-.mem-info > .mem-setpage {
-    width:140px;
+.mem-info > .mem-info-box > .mem-setpage {
+    width:auto;
     font-size:12px;
     margin: 5px 0 0 0px;
     display: inline-block;
 }
 
-.mem-info > .mem-setting i::before{
-	content: '';
-	position: absolute;
-	margin: 3px 0 0 0px;
-	width: 18px;
-	height: 18px;
-	background: url(/images/icon/icon_left_dev.png) no-repeat;
-	background-position: -3px -136px;
-	
+.mem-info > .mem-info-box > .mem-setpage i::before{
+    content: '';
+    position: absolute;
+    margin: -1px 0 0 0px;
+    width: 18px;
+    height: 18px;
+    background: url(/images/icon/icon_left_dev.png) no-repeat;
+    background-position: -3px -136px;
+
 }
 
-.mem-info > .mem-setting {
+
+.mem-info > .mem-info-box > .mem-setting i::before{
+    content: '';
+    position: absolute;
+    margin: 0px 0 0 -3px;
     width: 18px;
-    display: inline-block;
-    position: relative;
+    height: 18px;
+    background: url(/images/icon/icon_left_dev.png) no-repeat;
+    background-position-y: -288px;
+    background-size: auto;
+}
+
+.mem-info > .mem-info-box > .mem-setting {
+    width: auto;
+    display: flex;
+    position: absolute;
     top: -3px;
+    cursor: pointer;
+    right: 0;
+    align-items: center;
+}
+
+.setting-text {
+    margin-left: 4px;
+    font-size: 12px;
+    position: relative;
+    top: -1px;
+}
+.setting-text:hover {
+    text-decoration-line: underline;
+}
+.setpage-text {
+    margin-left: 4px;
+    font-size: 12px;
+    position: relative;
+    top: -1px;
+}
+
+.mem-info-box {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+.mem-info-box > .col-width50 {
+    position: relative;
+    width:50%;
 }
 
 .nav-li.backColor{

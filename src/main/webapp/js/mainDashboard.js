@@ -71,7 +71,7 @@ $.ajax({
     if (response.result) {
         const oilPrices = response.oil.OIL.map(({ PRICE }) => PRICE);
         $('.all_oil_price').each((index, element)=>{
-            $(element).text(oilPrices[index]);
+            $(element).text(Math.round(oilPrices[index]).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원");
         });
         console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
     } else {
@@ -160,7 +160,7 @@ function  updateSidoInfo(sidoCode) {
                     }
                 });
             $('.sido_oil_price').each((index, element) => {
-                $(element).text(oilPrices[index].price);
+                $(element).text(Math.round(oilPrices[index].price).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원");
             });
             console.log(oilPrices); // oilPrices 배열에 PRICE 값만 추출하여 출력
 
@@ -238,6 +238,7 @@ $(document).ready(function () {
     //팝업열기
     $('#navPopup').click(function () {
         $('#popupLayer').fadeIn();
+        $('.notice_bg').fadeIn();
     });
 
     //라디오 버튼 선택 시 지역명 업데이트
@@ -271,20 +272,28 @@ $(document).ready(function () {
 
         //팝업 닫기
         $('#popupLayer').fadeOut();
+        $('.notice_bg').fadeOut();
     });
 
     //팝업 닫기 버튼
     $('#navClose1').click(function (){
         $('#popupLayer').fadeOut();
+        $('.notice_bg').fadeOut();
     });
     $('#navClose2').click(function (){
         $('#popupLayer').fadeOut();
+        $('#noticeCon1').fadeOut();
+        $('#noticeCon2').fadeOut();
+        $('.notice_bg').fadeOut();
     });
 
     //Esc 키를 누르면 팝업 닫기
     $(document).keyup(function (e){
         if(e.key === "Escape") {
             $('#popupLayer').fadeOut();
+            $('.notice_bg').fadeOut();
+	        $('#noticeCon1').fadeOut();
+	        $('#noticeCon2').fadeOut();
         }
     });
 });
