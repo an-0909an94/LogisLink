@@ -2,7 +2,6 @@ package com.logislink.dashboard.service.Impl;
 
 import com.logislink.dashboard.dao.DashboardDao;
 import com.logislink.dashboard.service.DashboardService;
-import com.logislink.dashboard.vo.DashboardVO;
 import com.logislink.dashboard.vo.MmtopRankVO;
 import com.logislink.dashboard.vo.ResultRankVO;
 import com.logislink.dashboard.vo.MyResultVO;
@@ -49,8 +48,4 @@ public class DashboardImpl implements DashboardService {
         return dashboardDao.getHeader(map);
     }
 
-    @Override
-    public List<DashboardVO> getDashboard(Map<String, Object> map) {
-        return dashboardDao.getDashboard(map);
-    }
 }

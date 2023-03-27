@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="dashboardDataNS">
-  <select id="selectDashboardList" parameterType="java.util.HashMap" resultType="dashboardVO">
+  <select id="selectResultRank" parameterType="java.util.HashMap" resultType="resultRankVO">
     SELECT TU.CUST_ID
          , MAX(IIF(CNTRANK=1,'배차1위','')) A_resultFlagNm
          , MAX(IIF(CNTRANK=1,MAIN.REGID,'')) A_userId
@@ -25,43 +25,219 @@
          , MAX(IIF(PROFITPERRANK=1,PROFITPER,0)) D_resultVal
          , MAX(IIF(PROFITPERRANK=1,'%','')) D_resultUnit
     FROM (
-           SELECT REGID
-                , PLUS
-                , MINUS
-                , PROFIT
-                , PROFITPER
-                , CNT
-                , RANK() OVER (ORDER BY PLUS DESC)      PLUSRANK
-     , RANK() OVER (ORDER BY PROFIT DESC, PLUS DESC)    PROFITRANK
-     , RANK() OVER (ORDER BY PROFITPER DESC, PROFIT DESC, PLUS DESC) PROFITPERRANK
-     , RANK() OVER (ORDER BY CNT DESC)       CNTRANK
-           FROM (SELECT A.REGID
-                      , SUM(A.PLUS)                                                         PLUS      --매출
-                      , SUM(A.MINUS)                                                        MINUS     --매출
-                      , SUM(A.PLUS) - SUM(A.MINUS)                                          PROFIT    --손익
-                      , IIF(SUM(A.PLUS)=0,0,ROUND((CONVERT(FLOAT, SUM(A.PLUS) - SUM(A.MINUS)) / SUM(A.PLUS)) * 100,1)) AS PROFITPER --손익율
-                      , COUNT(A.ORDER_ID)                                                   CNT       --배차건수
-                 FROM
-                   (SELECT OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120) S_DATE
-                         , SUM(IIF(OA.BUY_CUST_ID = #{custId},
-                                   IIF(O.CHARGE_TYPE='01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), ISNULL(ALLOC_FEE, 0)), 0)) PLUS  --매출
-                         , SUM(IIF(OA.SELL_CUST_ID = #{custId},
-                                   IIF(O.CHARGE_TYPE='01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), 0), 0)) MINUS --매입
-                         , MAX(IIF(OA.SELL_CUST_ID = #{custId}, OA.REGID, ''))                      REGID
-                    FROM T_ORDER_ALLOC OA
-                           LEFT JOIN T_ORDER O ON OA.ORDER_ID = O.ORDER_ID
-                           LEFT OUTER JOIN (SELECT ORDER_ID, ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE FROM T_ORDER_ALLOC_ADD GROUP BY ORDER_ID, ALLOC_ID) AA
-                                           ON OA.ORDER_ID = AA.ORDER_ID AND OA.ALLOC_ID = AA.ALLOC_ID
-
-                    WHERE 1 = 1
-                      AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
-                      AND O.ORDER_STATE IN ('01', '04', '05', '12')
-                    GROUP BY OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120)) A
-                 WHERE CONVERT(VARCHAR(10), A.S_DATE, 120) = #{searchDate}
-                 GROUP BY A.REGID) A) MAIN
-           LEFT OUTER JOIN T_USER TU ON MAIN.REGID = TU.USER_ID
+          SELECT REGID
+               , PLUS
+               , MINUS
+               , PROFIT
+               , PROFITPER
+               , CNT
+               , RANK() OVER (ORDER BY PLUS DESC) PLUSRANK
+               , RANK() OVER (ORDER BY PROFIT DESC, PLUS DESC) PROFITRANK
+               , RANK() OVER (ORDER BY PROFITPER DESC, PROFIT DESC, PLUS DESC) PROFITPERRANK
+               , RANK() OVER (ORDER BY CNT DESC) CNTRANK
+          FROM (SELECT A.REGID
+                     , SUM(A.PLUS) PLUS      --매출
+                     , SUM(A.MINUS) MINUS     --매출
+                     , SUM(A.PLUS) - SUM(A.MINUS) PROFIT    --손익
+                     , IIF(SUM(A.PLUS)=0,0,ROUND((CONVERT(FLOAT, SUM(A.PLUS) - SUM(A.MINUS)) / SUM(A.PLUS)) * 100,1)) AS PROFITPER --손익율
+                     , COUNT(A.ORDER_ID)  CNT       --배차건수
+                FROM
+                        (SELECT OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120) S_DATE
+                               , SUM(IIF(OA.BUY_CUST_ID = #{custId}
+                               , IIF(O.CHARGE_TYPE='01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), ISNULL(ALLOC_FEE, 0)), 0)) PLUS  --매출
+                               , SUM(IIF(OA.SELL_CUST_ID = #{custId}
+                               , IIF(O.CHARGE_TYPE='01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), 0), 0)) MINUS --매입
+                               , MAX(IIF(OA.SELL_CUST_ID = #{custId}, OA.REGID, '')) REGID
+                        FROM T_ORDER_ALLOC OA
+                                LEFT JOIN T_ORDER O ON OA.ORDER_ID = O.ORDER_ID
+                                LEFT OUTER JOIN (SELECT ORDER_ID, ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE FROM T_ORDER_ALLOC_ADD GROUP BY ORDER_ID, ALLOC_ID) AA
+                                                ON OA.ORDER_ID = AA.ORDER_ID AND OA.ALLOC_ID = AA.ALLOC_ID
+                        WHERE 1 = 1
+                               AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
+                               AND O.ORDER_STATE IN ('01', '04', '05', '12')
+                        GROUP BY OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120)) A
+                WHERE CONVERT(VARCHAR(10), A.S_DATE, 120) = #{searchDate}
+                GROUP BY A.REGID) A) MAIN
+          LEFT OUTER JOIN T_USER TU ON MAIN.REGID = TU.USER_ID
     WHERE PLUSRANK = 1 OR PROFITPERRANK = 1 OR PROFITRANK = 1 OR CNTRANK = 1
     GROUP BY TU.CUST_ID
+  </select>
 
+  <select id="selectMyResult" parameterType="java.util.HashMap" resultType="myResultVO">
+    SELECT A.REGID                                                                                                userId
+         , 'D'                                                                                                    resultFlag
+         , COUNT(A.ORDER_ID)                                                                                      allocCnt  --배차건수
+         , SUM(A.PLUS) / 10000                                                                                    sales     --매출(단위 : 만원)
+         , (SUM(A.PLUS) - SUM(A.MINUS)) / 10000                                                                   profit    --손익(단위 : 만원)
+         , IIF(SUM(A.PLUS) = 0, 0, ROUND((CONVERT(FLOAT, SUM(A.PLUS) - SUM(A.MINUS)) / SUM(A.PLUS)) * 100,
+                                         1)) AS                                                                   profitPer --손익율
+    FROM (SELECT OA.ORDER_ID
+               , CONVERT(VARCHAR(10), O.S_DATE, 120)                                                        S_DATE
+               , SUM(IIF(OA.BUY_CUST_ID = #{custId},
+                         IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), ISNULL(ALLOC_FEE, 0)),
+                         0))                                                                                PLUS  --매출
+               , SUM(IIF(OA.SELL_CUST_ID = #{custId},
+                         IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), 0), 0)) MINUS --매입
+               , MAX(IIF(OA.SELL_CUST_ID = #{custId}, OA.REGID, ''))                             REGID
+          FROM T_ORDER_ALLOC OA
+                 LEFT JOIN (SELECT ORDER_ID, CHARGE_TYPE, S_DATE, ORDER_STATE FROM T_ORDER WHERE CONVERT(VARCHAR(10), S_DATE, 120) = CONVERT(VARCHAR(10), GETDATE(), 120)) O ON OA.ORDER_ID = O.ORDER_ID
+                 LEFT OUTER JOIN (SELECT ORDER_ID, ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE
+                                  FROM T_ORDER_ALLOC_ADD OAA
+                                  GROUP BY ORDER_ID, ALLOC_ID) AA
+                                 ON OA.ORDER_ID = AA.ORDER_ID AND OA.ALLOC_ID = AA.ALLOC_ID
+
+          WHERE 1 = 1
+            AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
+            AND O.ORDER_STATE IN ('01', '04', '05', '12')
+          GROUP BY OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120)) A
+    WHERE CONVERT(VARCHAR(10), A.S_DATE, 120) = CONVERT(VARCHAR(10), GETDATE(), 120)
+      AND REGID = #{userId}
+    GROUP BY A.REGID
+    UNION ALL
+    SELECT A.REGID                              userId
+         , 'M'                                  resultFlag
+         , COUNT(A.ORDER_ID)                    allocCnt  --배차건수
+         , SUM(A.PLUS) / 10000                  sales     --매출(단위 : 만원)
+         , (SUM(A.PLUS) - SUM(A.MINUS)) / 10000 profit    --손익(단위 : 만원)
+         , IIF(SUM(A.PLUS) = 0, 0, ROUND((CONVERT(FLOAT, SUM(A.PLUS) - SUM(A.MINUS)) / SUM(A.PLUS)) * 100,
+                                         1)) AS profitPer --손익율
+    FROM (SELECT OA.ORDER_ID
+               , CONVERT(VARCHAR(10), O.S_DATE, 120)                                                        S_DATE
+               , SUM(IIF(OA.BUY_CUST_ID = #{custId},
+                         IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), ISNULL(ALLOC_FEE, 0)),
+                         0))                                                                                PLUS  --매출
+               , SUM(IIF(OA.SELL_CUST_ID = #{custId},
+                         IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), 0), 0)) MINUS --매입
+               , MAX(IIF(OA.SELL_CUST_ID = #{custId}, OA.REGID, ''))                             REGID
+          FROM T_ORDER_ALLOC OA
+                 LEFT JOIN T_ORDER O ON OA.ORDER_ID = O.ORDER_ID
+                 LEFT OUTER JOIN (SELECT ORDER_ID, ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE
+                                  FROM T_ORDER_ALLOC_ADD OAA
+                                  GROUP BY ORDER_ID, ALLOC_ID) AA
+                                 ON OA.ORDER_ID = AA.ORDER_ID AND OA.ALLOC_ID = AA.ALLOC_ID
+
+          WHERE 1 = 1
+            AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
+            AND O.ORDER_STATE IN ('01', '04', '05', '12')
+          GROUP BY OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120)) A
+    WHERE 1 = 1
+      AND LEFT(A.S_DATE, 7) = LEFT(CONVERT(VARCHAR(10), GETDATE(), 120), 7)
+      AND REGID = #{userId}
+    GROUP BY A.REGID
+  </select>
+
+  <select id="selectTodayCustResult" parameterType="java.util.HashMap" resultType="todayCustResultVO">
+    SELECT TOP 3
+    #{custId} custId
+    , (SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = acountId) acountCNm
+    , (SELECT DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.DEPT_ID = U.DEPT_ID) deptNm
+    , U.USER_ID userId
+    , U.USER_NAME userNm
+    , sales
+    , profit
+    , profitPer
+    FROM (
+    SELECT MAIN.ORDER_ID
+    , acountId
+    , MAIN.REGID
+    , PLUS                                                          sales
+    , (PLUS - MINUS)                                                profit
+    , IIF(PLUS = 0, 0, ROUND(CONVERT(FLOAT, PLUS - MINUS) / PLUS * 100, 1)) profitPer
+    , RANK() OVER (PARTITION BY MAIN.acountId ORDER BY PLUS DESC, MINUS ASC)                           PLUSRANK
+    FROM (SELECT OA.ORDER_ID
+    , MAX(IIF(OA.BUY_CUST_ID = #{custId}, OA.SELL_CUST_ID, '')) acountId --매출
+    , SUM(IIF(OA.BUY_CUST_ID = #{custId},
+    IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0),
+    ISNULL(ALLOC_FEE, 0)), 0))                               PLUS     --매출
+    , SUM(IIF(OA.SELL_CUST_ID = #{custId},
+    IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), 0),
+    0))                                                          MINUS    --매입
+    , MAX(IIF(OA.SELL_CUST_ID = #{custId}, OA.REGID, ''))       REGID
+    FROM T_ORDER_ALLOC OA
+    LEFT JOIN (SELECT ORDER_ID, CHARGE_TYPE, S_DATE, ORDER_STATE
+    FROM T_ORDER
+    WHERE CONVERT(VARCHAR(10), S_DATE, 120) = CONVERT(VARCHAR(10), GETDATE(), 120)) O
+    ON OA.ORDER_ID = O.ORDER_ID
+    LEFT OUTER JOIN (SELECT ORDER_ID, ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE
+    FROM T_ORDER_ALLOC_ADD OAA
+    GROUP BY ORDER_ID, ALLOC_ID) AA
+    ON OA.ORDER_ID = AA.ORDER_ID AND OA.ALLOC_ID = AA.ALLOC_ID
+    WHERE 1 = 1
+    AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
+    AND O.ORDER_STATE IN ('01', '04', '05', '12')
+    GROUP BY OA.ORDER_ID) MAIN
+    WHERE MINUS > 0) A
+    LEFT OUTER JOIN T_USER U ON A.REGID = U.USER_ID
+    WHERE PLUSRANK = 1
+    ORDER BY sales DESC
+  </select>
+
+  <select id="selectResultVehicle" parameterType="java.util.HashMap" resultType="resultVehicleVO">
+    SELECT YYYYMM
+         , #{custId} custId
+         , IIF(YYYY = LEFT(CONVERT(VARCHAR(10), GETDATE(), 112),4),'',YYYY) YYYY
+         , IIF(MM = SUBSTRING(CONVERT(VARCHAR(10), GETDATE(), 112),5, 2), '이번달', MM) MM
+         , FORMAT(PLUS/10000,'###,###,###') sales
+         , FORMAT((PLUS-MINUS)/10000,'###,###,###') profit
+         , IIF(PLUS = 0, 0, ROUND(CONVERT(FLOAT, PLUS - MINUS) / PLUS * 100, 1)) profitPer
+    FROM (
+           SELECT LEFT(CONVERT(VARCHAR(10), S_DATE, 112),6) YYYYMM
+             , LEFT(CONVERT(VARCHAR(10), S_DATE, 112),4) YYYY
+             , SUBSTRING(CONVERT(VARCHAR(10), S_DATE, 112),5, 2) MM
+             , SUM(cast(IIF(OA.BUY_CUST_ID = #{custId},
+             IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0),
+             ISNULL(ALLOC_FEE, 0)), 0) as bigint))                               PLUS     --매출
+             , SUM(cast(IIF(OA.SELL_CUST_ID = #{custId},
+             IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), 0),
+             0) as bigint))                                                          MINUS    --매입
+           FROM (SELECT ORDER_ID, CHARGE_TYPE, S_DATE, ORDER_STATE
+             FROM T_ORDER
+             WHERE LEFT(CONVERT(VARCHAR(10), S_DATE, 120),7) BETWEEN LEFT(CONVERT(VARCHAR(10),DATEADD(MONTH , -5, GETDATE()),120),7) AND LEFT(CONVERT(VARCHAR(10), GETDATE(), 120),7)
+             ) O
+             LEFT JOIN T_ORDER_ALLOC OA ON OA.ORDER_ID = O.ORDER_ID
+             LEFT OUTER JOIN (SELECT ORDER_ID, ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE
+             FROM T_ORDER_ALLOC_ADD OAA
+             GROUP BY ORDER_ID, ALLOC_ID) AA
+             ON OA.ORDER_ID = AA.ORDER_ID AND OA.ALLOC_ID = AA.ALLOC_ID
+           WHERE 1 = 1
+             AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
+             AND O.ORDER_STATE IN ('01', '04', '05', '12')
+           GROUP BY LEFT(CONVERT(VARCHAR(10), S_DATE, 112),6),LEFT(CONVERT(VARCHAR(10), S_DATE, 112),4), SUBSTRING(CONVERT(VARCHAR(10), S_DATE, 112),5, 2)
+         ) MAIN
+    ORDER BY 1
+  </select>
+
+  <select id="selectMmtopRank" parameterType="java.util.HashMap" resultType="mmtopRankVO">
+    SELECT TOP 6 #{custId} custId, acountId
+         , (SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = acountId) acountCNm
+         , SUM(PLUS)                                                          sales
+         , SUM(PLUS) - SUM(MINUS)                                                profit
+         , IIF(SUM(PLUS) = 0, 0, ROUND(CONVERT(FLOAT, SUM(PLUS) - SUM(MINUS)) / SUM(PLUS) * 100, 1)) profitPer
+         , RANK() OVER (ORDER BY SUM(PLUS) DESC, (SUM(PLUS)-SUM(MINUS)) DESC)                           PLUSRANK
+    FROM (SELECT MAX(IIF(OA.BUY_CUST_ID = #{custId}, OA.SELL_CUST_ID, '')) acountId --매출
+               , SUM(CAST(IIF(OA.BUY_CUST_ID = #{custId},
+                              IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0),
+                                  ISNULL(ALLOC_FEE, 0)), 0) AS BIGINT))               PLUS     --매출
+               , SUM(CAST(IIF(OA.SELL_CUST_ID = #{custId},
+                              IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), 0),
+                              0) AS BIGINT))                                          MINUS    --매입
+          FROM T_ORDER_ALLOC OA
+                 LEFT JOIN (SELECT ORDER_ID, CHARGE_TYPE, S_DATE, ORDER_STATE
+                            FROM T_ORDER
+                            WHERE LEFT(CONVERT(VARCHAR(10), S_DATE, 120), 7) BETWEEN LEFT(
+                              CONVERT(VARCHAR(10), DATEADD(MONTH, -1, GETDATE()), 120),
+                              7) AND LEFT(CONVERT(VARCHAR(10), GETDATE(), 120), 7)) O
+                           ON OA.ORDER_ID = O.ORDER_ID
+                 LEFT OUTER JOIN (SELECT ORDER_ID, ALLOC_ID, SUM(ADD_CHARGE) ADD_CHARGE
+                                  FROM T_ORDER_ALLOC_ADD OAA
+                                  GROUP BY ORDER_ID, ALLOC_ID) AA
+                                 ON OA.ORDER_ID = AA.ORDER_ID AND OA.ALLOC_ID = AA.ALLOC_ID
+          WHERE 1 = 1
+            AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
+            AND O.ORDER_STATE IN ('01', '04', '05', '12')
+          GROUP BY O.ORDER_ID, O.S_DATE
+         ) MAIN
+    GROUP BY acountId
+    ORDER BY sales DESC, profit DESC
   </select>
 </mapper>

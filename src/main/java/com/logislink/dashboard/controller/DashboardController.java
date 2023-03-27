@@ -1,7 +1,6 @@
 package com.logislink.dashboard.controller;
 
 import com.logislink.dashboard.service.DashboardService;
-import com.logislink.dashboard.vo.DashboardVO;
 import com.logislink.dashboard.vo.MmtopRankVO;
 import com.logislink.dashboard.vo.ResultRankVO;
 import com.logislink.dashboard.vo.MyResultVO;
@@ -29,13 +28,12 @@ public class DashboardController {
     @PostMapping(value = "/dashboard/resultrank.do")
     public String boardResultRank(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
 
-        // 1개만 전달해야 하는지 아님 전체 List를 줘야 하는지에 대한 내용 확인
-        //
-
         LoginVO login = (LoginVO) session.getAttribute("userInfo");
         String custId = login.getCustId();
 
         param.put("custId", custId);
+        //param.put("searchDate",param.get("yesterday"));
+        //param.put("searchDate","2023-01-01");
 
         List<ResultRankVO> resultRank = dashboardService.getResultRank(param);
 
@@ -50,8 +48,11 @@ public class DashboardController {
     public String boardMyResult(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
 
         LoginVO login = (LoginVO) session.getAttribute("userInfo");
+
+        String userId = login.getUserId();
         String custId = login.getCustId();
 
+        param.put("userId", userId);
         param.put("custId", custId);
 
         List<MyResultVO> myResult = dashboardService.getMyResult(param);
@@ -123,25 +124,6 @@ public class DashboardController {
         param.put("custId", custId);
 
         String header = dashboardService.getHeader(param);
-
-        map.put("result", Boolean.TRUE);
-        map.put("data", header);
-
-        return "jsonView";
-    }
-
-    @PostMapping(value = "/dashboard/dashboard.do")
-    public String boardDashboard(HttpServletRequest request, Model model, ModelMap map, HttpSession session, @RequestParam Map<String, Object> param) throws Exception {
-
-        //List가 좋은지 Single이 좋은지 확인 후 넣을 것
-        //추후 처리 진행 확인
-
-        //LoginVO login = (LoginVO) session.getAttribute("userInfo");
-        //String custId = login.getCustId();
-
-        //param.put("custId", custId);
-
-        List<DashboardVO> header = dashboardService.getDashboard(param);
 
         map.put("result", Boolean.TRUE);
         map.put("data", header);

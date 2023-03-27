@@ -50,11 +50,10 @@
 
 		<typeAlias	alias="rpaVO"		type="com.logislink.order.vo.RpaVO" />
 
-		<typeAlias alias="dashboardVO" type="com.logislink.dashboard.vo.DashboardVO"/>
 		<typeAlias alias="resultRankVO" type="com.logislink.dashboard.vo.ResultRankVO"/>
 		<typeAlias alias="myResultVO" type="com.logislink.dashboard.vo.MyResultVO"/>
 		<typeAlias alias="todayCustResultVO" type="com.logislink.dashboard.vo.TodayCustResultVO"/>
-		<typeAlias alias="resultVehicleVO" type="com.logislink.dashboard.vo.ResultRankVO"/>
+		<typeAlias alias="resultVehicleVO" type="com.logislink.dashboard.vo.ResultVehicleVO"/>
 		<typeAlias alias="mmtopRankVO" type="com.logislink.dashboard.vo.MmtopRankVO"/>
 	</typeAliases>
 </configuration>
