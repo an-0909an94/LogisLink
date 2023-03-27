@@ -1,7 +1,5 @@
 package com.logislink.dashboard.vo;
 
-import org.apache.ibatis.mapping.ResultFlag;
-
 public class ResultRank {
 
     String resultFlag;
