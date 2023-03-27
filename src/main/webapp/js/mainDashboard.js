@@ -1247,18 +1247,19 @@ function custIdcheck() {
 var custId = custIdcheck();
 if (custId) {
     const { today, yesterday } = getTodayAndYesterday();
-
+    debugger;
     $.ajax({
         url: "/dashboard/resultrank.do",
         type: "POST",
         dataType: "json",
         data: {
             custId: custId,
+            // searchDate: [today, yesterday],
             today: today,
             yesterday: yesterday,
         },
     }).done(response => {
-
+        console.log('최근실적',response);
         //업데이트된 데이터를 Class를 확인해서 각 위치에 출력
         function updateRanking(className, data, flag) {
             const filteredData = data.filter(item => item.resultFlag === flag);
@@ -1294,7 +1295,6 @@ if (custId) {
                     updateRanking(className + 'yesterday', [yesterdayItem], key);
                 }
             });
-            ;
 
         } else {
             console.error('Error: response is empty or undefined');
@@ -1320,6 +1320,7 @@ if(userId) {
             // resultFlag: resultFlag,
         },
     }).done(response => {
+        console.log('나의실적', response);
         // 업데이트된 데이터를 Class를 확인해서 각 위치에 출력
         function updateRanking(className, data, flag) {
             const filteredData = data.filter(item => item.resultFlag === flag);
@@ -1371,6 +1372,7 @@ if(custId) {
             custId:custId,
         },
     }).done(response => {
+        console.log('투데이', response);
         if (response.result) {
             const { data } = response;
             $('.highLight_slide_cont .acountCNm').each((index, element)=>{
@@ -1394,7 +1396,6 @@ if(custId) {
             $('.highLight_slide_cont .acountNm').each((index, element)=>{
                 $(element).text(data[index].acountNm);
             });
-            console.log(response)
         }else {
             console.error(response.message);
         }
