@@ -2,11 +2,13 @@ package com.logislink.dashboard.controller;
 
 import com.logislink.dashboard.service.DashboardService;
 import com.logislink.dashboard.vo.MmtopRankVO;
+import com.logislink.dashboard.vo.ResultRank;
 import com.logislink.dashboard.vo.ResultRankVO;
 import com.logislink.dashboard.vo.MyResultVO;
 import com.logislink.dashboard.vo.ResultVehicleVO;
 import com.logislink.dashboard.vo.TodayCustResultVO;
 import com.logislink.login.vo.LoginVO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -32,13 +34,49 @@ public class DashboardController {
         String custId = login.getCustId();
 
         param.put("custId", custId);
-        //param.put("searchDate",param.get("yesterday"));
-        //param.put("searchDate","2023-01-01");
 
-        List<ResultRankVO> resultRank = dashboardService.getResultRank(param);
+        ResultRankVO resultRank = dashboardService.getResultRank(param);
+
+        List<ResultRank> list = new ArrayList<ResultRank>();
+
+        ResultRank Amode = new ResultRank();
+        Amode.setResultFlag("A");
+        Amode.setResultFlagNm(resultRank.getA_resultFlagNm());
+        Amode.setUserId(resultRank.getA_userId());
+        Amode.setUserNm(resultRank.getA_userNm());
+        Amode.setResultUnit(resultRank.getA_resultUnit());
+        Amode.setResultVal(resultRank.getA_resultVal());
+        list.add(Amode);
+
+        ResultRank Bmode = new ResultRank();
+        Bmode.setResultFlag("B");
+        Bmode.setResultFlagNm(resultRank.getB_resultFlagNm());
+        Bmode.setUserId(resultRank.getB_userId());
+        Bmode.setUserNm(resultRank.getB_userNm());
+        Bmode.setResultUnit(resultRank.getB_resultUnit());
+        Bmode.setResultVal(resultRank.getB_resultVal());
+        list.add(Bmode);
+
+        ResultRank Cmode = new ResultRank();
+        Cmode.setResultFlag("C");
+        Cmode.setResultFlagNm(resultRank.getC_resultFlagNm());
+        Cmode.setUserId(resultRank.getC_userId());
+        Cmode.setUserNm(resultRank.getC_userNm());
+        Cmode.setResultUnit(resultRank.getC_resultUnit());
+        Cmode.setResultVal(resultRank.getC_resultVal());
+        list.add(Cmode);
+
+        ResultRank Dmode = new ResultRank();
+        Dmode.setResultFlag("D");
+        Dmode.setResultFlagNm(resultRank.getD_resultFlagNm());
+        Dmode.setUserId(resultRank.getD_userId());
+        Dmode.setUserNm(resultRank.getD_userNm());
+        Dmode.setResultUnit(resultRank.getD_resultUnit());
+        Dmode.setResultVal(resultRank.getD_resultVal());
+        list.add(Dmode);
 
         map.put("result", Boolean.TRUE);
-        map.put("data", resultRank);
+        map.put("data", list);
 
         return "jsonView";
     }
@@ -55,7 +93,7 @@ public class DashboardController {
         param.put("userId", userId);
         param.put("custId", custId);
 
-        List<MyResultVO> myResult = dashboardService.getMyResult(param);
+        List<MyResultVO> myResult =  dashboardService.getMyResult(param);
 
         map.put("result", Boolean.TRUE);
         map.put("data", myResult);

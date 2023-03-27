@@ -11,7 +11,7 @@ import java.util.Map;
 public interface DashboardService {
 
     //최근 실적
-    public List<ResultRankVO> getResultRank(Map<String, Object>map);
+    public ResultRankVO getResultRank(Map<String, Object>map);
 
     //나의 실적
     public List<MyResultVO> getMyResult(Map<String, Object>map);

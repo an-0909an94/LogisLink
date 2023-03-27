@@ -17,8 +17,8 @@ import java.util.Map;
 public class DashboardDao extends EgovAbstractMapper {
 
     // 최근 실적 랭킹
-    public List<ResultRankVO> getResultRank(Map<String, Object> map){
-        List<ResultRankVO> rank = selectList("dashboardDataNS.selectResultRank",map);
+    public ResultRankVO getResultRank(Map<String, Object> map){
+        ResultRankVO rank = selectOne("dashboardDataNS.selectResultRank",map);
         return rank;
     }
 

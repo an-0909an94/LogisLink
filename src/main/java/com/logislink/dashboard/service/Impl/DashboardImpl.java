@@ -19,7 +19,7 @@ public class DashboardImpl implements DashboardService {
     private DashboardDao dashboardDao;
 
     @Override
-    public List<ResultRankVO> getResultRank(Map<String, Object> map) {
+    public ResultRankVO getResultRank(Map<String, Object> map) {
         return dashboardDao.getResultRank(map);
     }
 

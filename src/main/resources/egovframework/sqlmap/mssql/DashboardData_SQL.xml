@@ -56,7 +56,7 @@
                                AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
                                AND O.ORDER_STATE IN ('01', '04', '05', '12')
                         GROUP BY OA.ORDER_ID, CONVERT(VARCHAR(8), O.S_DATE, 112)) A
-                WHERE CONVERT(VARCHAR(8), A.S_DATE, 112) BETWEEN #{yesterday} AND #{today}
+                WHERE CONVERT(VARCHAR(8), A.S_DATE, 112) = #{searchDate}
                 GROUP BY A.REGID) A) MAIN
           LEFT OUTER JOIN T_USER TU ON MAIN.REGID = TU.USER_ID
     WHERE PLUSRANK = 1 OR PROFITPERRANK = 1 OR PROFITRANK = 1 OR CNTRANK = 1
@@ -64,6 +64,7 @@
   </select>
 
   <select id="selectMyResult" parameterType="java.util.HashMap" resultType="myResultVO">
+    /*나의 실적*/
     SELECT A.REGID                                                                                                userId
          , 'D'                                                                                                    resultFlag
          , COUNT(A.ORDER_ID)                                                                                      allocCnt  --배차건수
@@ -143,7 +144,7 @@
     , PLUS                                                          sales
     , (PLUS - MINUS)                                                profit
     , IIF(PLUS = 0, 0, ROUND(CONVERT(FLOAT, PLUS - MINUS) / PLUS * 100, 1)) profitPer
-    , RANK() OVER (PARTITION BY MAIN.acountId ORDER BY PLUS DESC, MINUS ASC)                           PLUSRANK
+    , RANK() OVER (PARTITION BY MAIN.acountId ORDER BY PLUS DESC, MINUS ASC) PLUSRANK
     FROM (SELECT OA.ORDER_ID
     , MAX(IIF(OA.BUY_CUST_ID = #{custId}, OA.SELL_CUST_ID, '')) acountId --매출
     , SUM(IIF(OA.BUY_CUST_ID = #{custId},
@@ -210,8 +211,8 @@
   <select id="selectMmtopRank" parameterType="java.util.HashMap" resultType="mmtopRankVO">
     SELECT TOP 6 #{custId} custId, acountId
          , (SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = acountId) acountCNm
-         , SUM(PLUS)                                                          sales
-         , SUM(PLUS) - SUM(MINUS)                                                profit
+         , SUM(PLUS) / 10000                                                          sales
+         , (SUM(PLUS) - SUM(MINUS)) / 10000                                                profit
          , IIF(SUM(PLUS) = 0, 0, ROUND(CONVERT(FLOAT, SUM(PLUS) - SUM(MINUS)) / SUM(PLUS) * 100, 1)) profitPer
          , RANK() OVER (ORDER BY SUM(PLUS) DESC, (SUM(PLUS)-SUM(MINUS)) DESC)                           PLUSRANK
     FROM (SELECT MAX(IIF(OA.BUY_CUST_ID = #{custId}, OA.SELL_CUST_ID, '')) acountId --매출
