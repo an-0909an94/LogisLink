@@ -321,6 +321,15 @@ a.dropBtn {
 	background-position: 0px -95px;
 }
 
+#leftMenu div.side-nav-ul:nth-of-type(7) span.side-nav-img{
+    background-position-y: -332px;
+}
+
+#leftMenu div.side-nav-ul:nth-of-type(8) span.side-nav-img{
+    background-position-y: -308px;
+}
+
+
 .side-logout {
     position: relative;
     top: -5px;
