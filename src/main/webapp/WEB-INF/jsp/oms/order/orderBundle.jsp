@@ -288,6 +288,10 @@ function fileUpload() {
 		dataType: "json",
 		success: function(data) {
 			getExcelData(data.uploadFile);
+		},
+		// 22.07.09 이건욱 파일 업로드시 최초 등록된 파일이 외부에서 변경됐을 경우 ERR_UPLOAD_FILE_CHANGED 에러에 대한 처리
+		error : function(e) {
+			alert("화주 엑셀파일을 업로드 할 수 없습니다.\n등록된 파일이 외부에서 변경 되었을 수 있습니다.\n해당 페이지를 새로고침 (F5)하고 다시 시도해주세요.");
 		}
 	});
 	

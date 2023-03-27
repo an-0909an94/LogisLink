@@ -60,37 +60,37 @@ var columns = [
 						 +'<div class="grid-tr-14">#: orderId #</div>'
 						 +'#if (buyCharge != 0) {# <div style="color:\\\#00152A;" class="grid-tr-18">#: Util.formatNumber(buyCharge) #원</div> #} else {# <div class="grid-tr-18">0원</div> #} #'
 						 +'#if (chargeTypeName == null || chargeTypeName == "") {# <div class="grid-tr-14">인수증</div> #} else {# <div class="grid-tr-14">#: chargeTypeName #</div> #} #'},
-			 
+
     {width: 160, template:'<div style="color: \\\#00152A; text-align: center;" class="grid-tr-14">#if (carNum == null) {# #=""# #} else {# #=carNum# #} #</div>'
 				  		 +'<div style="color: \\\#00152A; text-align: center;" class="grid-tr-14">#if (driverTel == null) {# #=""# #} else {# #=Util.formatPhone(driverTel)# #} #</div>'
 				  		 +'<div style="padding-bottom: 10px; color: \\\#00152A; text-align: center;" class="grid-tr-14">#if (driverName == null) {# #=""# #} else {# #=driverName# #} #</div>'
 				  		 +'<div style="color: \\\#00152A; text-align: center;" class="grid-tr-14">#if (carNum, driverTel, driverName == null) {# #=""# #} else {# #=carTypeName# #=carTonName# #=returnName# #=mixName# #} #</div>'
-				  		 +'#if (carNum, driverTel, driverName == null) {# <div style="text-align: center;" class="grid-tr-14">#: carTypeName # #: carTonName # #: returnName # #: mixName #</div> #} #'},	
-				  		 
+				  		 +'#if (carNum, driverTel, driverName == null) {# <div style="text-align: center;" class="grid-tr-14">#: carTypeName # #: carTonName # #: returnName # #: mixName #</div> #} #'},
+
     {width: 70, template:'#if (orderStateName == "접수") {# <div style="text-align: center; color: \\\#0369DE;" class="grid-tr-14">접수</div> #} else {# <div style="text-align: center;" class="grid-tr-14">접수</div> #} #'},
-	  
-    //접수(불투명), 배차, 입차, 출발, 도착 
+
+    //접수(불투명), 배차, 입차, 출발, 도착
     {width: 70, template:'#if (orderStateName == "접수") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14"><span style="opacity: 0.3;">▶</span><span style="opacity: 0.6;">▶</span>▶</div> #} else if (orderStateName != "취소") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14">▶▶▶</div> #} #'},
-    
+
     {width: 80, template:'#if (orderStateName == "배차") {# <div style="text-align: center; color:\\\#0369DE;" class="grid-tr-14">배차완료</div> #} else {# <div style="text-align: center;" class="grid-tr-14">배차완료</div> #} #'},
-    
+
     //입차(불투명), 출발, 도착
     {width: 70, template:'#if (orderStateName == "입차") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14"><span style="opacity: 0.3;">▶</span><span style="opacity: 0.6;">▶</span>▶</div> #} else if (orderStateName == "출발") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14">▶▶▶</div> #} else if (orderStateName == "도착") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14">▶▶▶</div> #} #'},
-    
+
     {template:'#if (orderStateName == "출발") {# <div class="grid-tr-18" style="padding-bottom: 10px; text-align: center; color: \\\#0369DE;">#: sComName #(출발)</div> #} else {# <div class="grid-tr-18" style="padding-bottom: 10px; text-align: center;">#: sComName #(출발)</div> #} #'
     		 +'#if (orderStateName == "출발") {# <div class="grid-tr-14" style="text-align: center; color: \\\#0369DE;">#: sAddr #</div> #} else {# <div class="grid-tr-14" style="text-align: center;">#: sAddr #</div> #} #'
     		 +'#if (orderStateName == "출발") {# <div class="grid-tr-14" style="text-align: center; color: \\\#0369DE;">#: sDateDay #(상차)</div> #} else {# <div class="grid-tr-14" style="text-align: center;">#: sDateDay #(상차)</div> #} #'},
-	
+
    	//출발(불투명), 도착
     {width: 70, template:'#if (orderStateName == "출발") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14"><span style="opacity: 0.3;">▶</span><span style="opacity: 0.6;">▶</span>▶</div> #} else if (orderStateName == "도착") {# <div style="text-align: center; color: \\\#00152A;" class="grid-tr-14">▶▶▶</div> #} #'},
-    
+
     {template:'#if (orderStateName == "도착") {# <div class="grid-tr-18" style="padding-bottom: 10px; text-align: center; color: \\\#0369DE;">#: eComName #(도착)</div> #} else {# <div class="grid-tr-18" style="padding-bottom: 10px;text-align: center;">#: eComName #(도착)</div> #} #'
 		  	 +'#if (orderStateName == "도착") {# <div class="grid-tr-14" style="text-align: center; color: \\\#0369DE;">#: eAddr #</div> #} else {# <div class="grid-tr-14" style="text-align: center;">#: eAddr #</div> #} #'
 		  	 +'#if (orderStateName == "도착") {# <div class="grid-tr-14" style="text-align: center; color: \\\#0369DE;">#: eDateDay #(하차)</div> #} else {# <div class="grid-tr-14" style="text-align: center;">#: eDateDay #(하차)</div> #} #'},
 ];
 
 var headerTitle = ($("#headerTitle").text());
-var oGrid = null;	
+var oGrid = null;
 oGrid = new gridData("grid");
 oGrid.initGrid();
 oGrid.setSendUrl("/oms/order/data/omsOrderLocationList.do");
@@ -104,21 +104,21 @@ $(document).ready(function(){
 	if("${masterYn}" == "Y"){
 		Util.setSelectBox("/contents/basic/data/compDeptList.do", "deptId", {custId:'${custId}', deptId:'${sessionScope.userInfo.deptId}', useYn:'Y'}, "deptId", "deptName", "${sessionScope.userInfo.deptId}", "--부서명--");
 	}
-	
+
  	var date = new Date();
 
- 	var year = date.getFullYear(); 
- 	var month = date.getMonth();   
- 	var day = date.getDate();  
-    
+ 	var year = date.getFullYear();
+ 	var month = date.getMonth();
+ 	var day = date.getDate();
+
  	$("#fromDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(year, month, day - 1), dateInput: true});
-	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true}); 
-	
+	$("#toDate").kendoDatePicker({format:"yyyy-MM-dd", value : new Date(), dateInput: true});
+
 	$("#fFromDate").val($("#fromDate").val());
 	$("#fToDate").val($("#toDate").val());
-	
+
 	goList();
-	
+
 	$(".k-grid-header").css("display","none");
 
 	var options = {
@@ -128,22 +128,22 @@ $(document).ready(function(){
 			mapTypeControl: true,
 			panControl: true,
 			mapTypeId: daum.maps.MapTypeId.ROADMAP
-	};	
+	};
 	map = new kakao.maps.Map(document.getElementById('map'), options);
-	
+
  	var rCookie = $.cookie("autoRefresh");
 	if(rCookie == null) {
 		$.cookie("autoRefresh", 30000, {expires:10000,path:"/"});
 		rCookie = $.cookie("autoRefresh");
 	}
-	
+
 	if(rCookie != "0") {
 		startInterval();
 		$("#autoRefresh").prop("checked", true);
 	} else {
 		$("#autoRefresh").prop("checked", false);
 	}
-	
+
 	$("#autoRefresh").on("click", function(){
 		if($(this).is(":checked")) {
 			$.cookie("autoRefresh", 30000, {expires:9999,path:"/"});
@@ -157,9 +157,9 @@ $(document).ready(function(){
 
 function goList() {
 	simpleOrderData();
-	
+
 	var grid = $("#grid").data("kendoGrid");
-	
+
 	oGrid.setSearchData($("#fSearch").serializeObject());
 	if(grid == null) {
 		oGrid.setGrid(columns);
@@ -191,7 +191,7 @@ function onChange(e){
 		return
 	}
 	setData(data);
-	getLocData();
+	getLocData(data.orderId);
 }
 
 function setData(data) {
@@ -200,7 +200,7 @@ function setData(data) {
 	var sLon = $("#locationSLon").val();
 	var eLat = $("#locationELat").val();
 	var eLon = $("#locationELon").val();
-	
+
 	var markerImage = new daum.maps.MarkerImage("/images/icon/marker_s.png", new daum.maps.Size(24,40), null);
 	var latlng = new kakao.maps.LatLng(sLat, sLon);
 	bounds.extend(latlng);
@@ -212,31 +212,34 @@ function setData(data) {
 	createMarker_RT(latlng, "(하차지)"+data.eAddr+" "+data.eAddrDetail, markerImage);
 }
 
-function getLocData(){
+function getLocData(orderId){
+
+alert(coordinates.length);
+
 	coordinates = [];
 	$.ajax({
 		url: "/contents/order/data/orderLbsList.do",
 		type: "POST",
 		dataType: "json",
-		data: "orderId=" + $("#orderId").val(),
+		data: "orderId=" + orderId,
 		success: function(data) {
 			if(data.result) {
 				var data = data.data;
 				var path = [];
-				
+
 				for(var i=0, item; item=data[i]; i++) {
 					var latlng = new kakao.maps.LatLng(item.lat, item.lon);
 					path[i] = latlng;
 					coordinates.push(latlng);
-					bounds.extend(latlng);	
+					bounds.extend(latlng);
 				}
 
 				var markerImage = new daum.maps.MarkerImage("/images/icon/marker_q.png", new daum.maps.Size(36,36), null);
-				
+
 				createMarker_RT(latlng, "현재위치", markerImage);
 				createPolyline(path);
 			} else {
-				
+
 			}
 			// 검색 결과(마커출력)에 따라 지도의 center와 zoom 자동 설정
 			map.setBounds(bounds);
@@ -245,6 +248,9 @@ function getLocData(){
 }
 
 function createPolyline(latlng) {
+
+
+
 	var polyline = new daum.maps.Polyline({	//폴리라인
 		path: latlng,
 		//strokeColor: polylineColor,
@@ -253,8 +259,9 @@ function createPolyline(latlng) {
 		strokeStyle:'solid',
 		endArrow:true
 	});
-	//polyArr[loopNum] = polyline; 
+	//polyArr[loopNum] = polyline;
 	//pathArr.push(latlng);	//폴리라인 path
+
 	polyline.setMap(map);
 }
 
@@ -265,15 +272,16 @@ function createMarker_RT(latlng, title, markerImage){
 		image : markerImage,	// 19,32  12,20
 		title : title
 	});
-	
+
 	markersArray.push(marker);
 }
 
 function deleteMarkers() {
     for (var i = 0; i < markersArray.length; i++) {
     	markersArray[i].setMap(null);
-    }            
+    }
 }
+
 
 function simpleOrderData(){
 	$.ajax({
@@ -289,7 +297,7 @@ function simpleOrderData(){
 			var	groupCount = ""
 			groupCount = "<i class=\"btn_b\">접수 " + data.data.registerOrderCount + "건</i> " +
 						 "<i class=\"btn_g\">배차 " + data.data.dispatchOrderCount + "건</i> " +
-						 "<i class=\"btn_gray\">취소 " + data.data.cancelOrderCount + "건</i>" + 
+						 "<i class=\"btn_gray\">취소 " + data.data.cancelOrderCount + "건</i>" +
 						 "<i style=\"color: #000000; display: inline; margin-left: 7px;\">입차 " + data.data.entranceOrderCount + "건</i>, " +
 						 "<i style=\"color: #000000; display: inline;\">이동 " + data.data.moveOrderCount + "건</i>, " +
 						 "<i style=\"color: #000000; display: inline;\">도착 " + data.data.arrivallOrderCount + "건</i>, " +
@@ -328,14 +336,14 @@ function stopInterval() {
     text-overflow: ellipsis;
     overflow: hidden;
 }
-  	
+
 .grid-tr-18 {
   	font-size: 18px;
   	color: #73777E;
   	text-overflow: ellipsis;
   	overflow: hidden;
 }
-  	
+
 .k-grid-content table td{
   	text-align: left;
   	border-left: none;
