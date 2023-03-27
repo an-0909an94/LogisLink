@@ -42,7 +42,7 @@
                      , IIF(SUM(A.PLUS)=0,0,ROUND((CONVERT(FLOAT, SUM(A.PLUS) - SUM(A.MINUS)) / SUM(A.PLUS)) * 100,1)) AS PROFITPER --손익율
                      , COUNT(A.ORDER_ID)  CNT       --배차건수
                 FROM
-                        (SELECT OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120) S_DATE
+                        (SELECT OA.ORDER_ID, CONVERT(VARCHAR(8), O.S_DATE, 112) S_DATE
                                , SUM(IIF(OA.BUY_CUST_ID = #{custId}
                                , IIF(O.CHARGE_TYPE='01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0), ISNULL(ALLOC_FEE, 0)), 0)) PLUS  --매출
                                , SUM(IIF(OA.SELL_CUST_ID = #{custId}
@@ -55,8 +55,8 @@
                         WHERE 1 = 1
                                AND (OA.SELL_CUST_ID = #{custId} OR OA.BUY_CUST_ID = #{custId})
                                AND O.ORDER_STATE IN ('01', '04', '05', '12')
-                        GROUP BY OA.ORDER_ID, CONVERT(VARCHAR(10), O.S_DATE, 120)) A
-                WHERE CONVERT(VARCHAR(10), A.S_DATE, 120) = #{searchDate}
+                        GROUP BY OA.ORDER_ID, CONVERT(VARCHAR(8), O.S_DATE, 112)) A
+                WHERE CONVERT(VARCHAR(8), A.S_DATE, 112) BETWEEN #{yesterday} AND #{today}
                 GROUP BY A.REGID) A) MAIN
           LEFT OUTER JOIN T_USER TU ON MAIN.REGID = TU.USER_ID
     WHERE PLUSRANK = 1 OR PROFITPERRANK = 1 OR PROFITRANK = 1 OR CNTRANK = 1
