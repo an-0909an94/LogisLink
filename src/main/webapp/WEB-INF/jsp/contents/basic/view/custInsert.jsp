@@ -515,11 +515,14 @@ function init_pop(mode, data) {
 		$("input:checkbox[id='talk']").prop('disabled', true);
 		Util.setReadOnlyEnable(["bizNum","deptName"]);
 		Util.setDisabledList(["custTypeCode", "sellBuySctn"]);
-		
+
+        //debugger;
+
 		if(data.userId) {
 			//Util.setReadOnlyEnable(["userId", "passwd", "userNameDtl", "grade", "mobileDtl", "email", "telNum"]);
-            $("#userId").val("");
-            $("#passwd").val("");
+            //Util.setReadOnlyEnable(["userId", "passwd", "email"]);
+            //$("#userId").val("");
+            //$("#passwd").val("");
             setHideList(["userId","userId_head","passwd","passwd_head"]);
 		}
         else{
