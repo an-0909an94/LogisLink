@@ -1247,16 +1247,16 @@ function custIdcheck() {
 var custId = custIdcheck();
 if (custId) {
     const { today, yesterday } = getTodayAndYesterday();
-
+    debugger;
     $.ajax({
         url: "/dashboard/resultrank.do",
         type: "POST",
         dataType: "json",
         data: {
             custId: custId,
-            searchDate : today,
-            //today: today,
-            //yesterday: yesterday,
+            // searchDate: [today, yesterday],
+            today: today,
+            yesterday: yesterday,
         },
     }).done(response => {
         console.log('최근실적',response);
