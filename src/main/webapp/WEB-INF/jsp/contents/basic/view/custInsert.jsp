@@ -415,7 +415,7 @@ var g_idx = {};
 var deptList = [];
 $(document).ready(function(){
 	$("#mngDeptId").on("change", function(){
-		Util.setSelectBox("/contents/basic/data/userNameList.do", "manager", {deptId:$(this).val()}, "userId", "userNameDtl", "", "선택하세요");
+		Util.setSelectBox("/contents/basic/data/userNameList.do", "manager", {deptId:$(this).val()}, "userId", "userName", "", "선택하세요");
 	});
 });
 
@@ -433,7 +433,7 @@ function init_pop(mode, data) {
 	$('#custMngCode').append($options2);
 	$("#custMngCode option[value='']").remove();
 	
-	Util.setSelectBox("/contents/basic/data/userNameList.do", "manager", {deptId:"${sessionScope.userInfo.deptId}"}, "userId", "userNameDtl", "", "선택하세요");
+	Util.setSelectBox("/contents/basic/data/userNameList.do", "manager", {deptId:"${sessionScope.userInfo.deptId}"}, "userId", "userName", "", "선택하세요");
 	Util.setCmmCode("select", "custTypeCode", "CUST_TYPE_CD", "", "선택하세요");
     Util.setCmmCode("select", "sellBuySctn", "SELL_BUY_SCTN", "", "선택하세요");
     Util.setCmmCode("select", "bizTypeCode", "BIZ_TYPE_CD", "", "선택하세요");
