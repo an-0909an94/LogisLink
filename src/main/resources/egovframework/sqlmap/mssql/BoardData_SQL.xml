@@ -30,7 +30,9 @@
 				WHERE USE_YN = 'Y'
 				<if test='custTypeCode != null and !"".equals(custTypeCode)'>
 					AND BOARD_TARGET LIKE '%' + #{custTypeCode} + '%'
-					AND GETDATE() BETWEEN POP_SDATE AND POP_EDATE + ' 23:59:59'
+					<if test='boardType == null or "".equals(boardType)'>
+						AND GETDATE() BETWEEN POP_SDATE AND POP_EDATE + ' 23:59:59'
+					</if>
 				</if>
 				<if test='select != null and !"".equals(select) and value != null and !"".equals(value)'>
 					AND ${select} LIKE '%'+ #{value} +'%'
@@ -47,7 +49,9 @@
 		WHERE USE_YN = 'Y'
 		<if test='custTypeCode != null and !"".equals(custTypeCode)'>
 			AND BOARD_TARGET LIKE '%' + #{custTypeCode} + '%'
-			AND GETDATE() BETWEEN POP_SDATE AND POP_EDATE + ' 23:59:59'
+			<if test='boardType == null or "".equals(boardType)'>
+				AND GETDATE() BETWEEN POP_SDATE AND POP_EDATE + ' 23:59:59'
+			</if>
 		</if>
 		<if test='select != null and !"".equals(select) and value != null and !"".equals(value)'>
 			AND ${select} LIKE '%'+ #{value} +'%'

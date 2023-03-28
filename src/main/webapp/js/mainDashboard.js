@@ -41,7 +41,10 @@ function closepopup(idx){
 $.ajax({
     url: '/contents/notice/data/boardList.do',
     type: 'POST',
-    dataType: 'json'
+    dataType: 'json',
+    data: {
+        boardType: "dashboard",
+    }
 }).done(response => {
     if (response.result) {
         const { data } = response;
