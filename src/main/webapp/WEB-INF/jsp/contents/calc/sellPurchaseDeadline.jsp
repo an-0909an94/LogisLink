@@ -943,6 +943,8 @@ function goPurchaseDivision(type) {
 		});
 		
 		grid.setDataSource(dataSource);
+		grid.thead.on("click", "#orderAllCheck", orderAllCheckHandler);
+		grid.table.on("click", ".orderCheck", orderCheckHandler);
 		
 	}else{		///매입액계산
 		for(var i=0, item; item = data[i]; i++) {
@@ -976,8 +978,76 @@ function saveAll(type){
 		alert("\"배부액\"을 확인해 주세요.");
 		return;
 	}
-	
-	$("input[name=chkOrderId]").each(function(){
+
+
+	var ordersArray = [];
+	var grid = $("#selPurDead").data("kendoGrid");
+
+	var rows = grid.select();
+
+	if(rows.length < 1){
+		alert("하나이상 오더를 선택해 주세요.");
+		return false;
+	}else{
+		rows.each(function (index, row) {
+			gridData = grid.dataItem(this);
+			if(typeof gridData.divisionCharge != "undefined" && gridData.divisionCharge != null
+					&& gridData.divisionCharge != "" && gridData.divisionCharge.toString() != "0") {
+				if(type == 'buy'){
+					order = {};
+					order.orderId = gridData.orderId;
+					order.divisionCharge = gridData.divisionCharge.toString().replace(/,/g, "");
+					order.allocId = gridData.allocId;
+					order.addCharge = gridData.otherAddCharge;
+					ordersArray.push(order);
+				}else{
+					order = {};
+					order.orderId = gridData.orderId;
+					order.divisionCharge = gridData.divisionCharge.toString().replace(/,/g, "");
+					order.allocId = gridData.sellAllocId;
+					order.addCharge = gridData.otherAddCharge;
+					ordersArray.push(order);
+						//ordersArray.push(order);
+				}
+			}
+		});
+	}
+	if(ordersArray.length >0){
+		$.ajax({
+			url: "/contents/calc/data/updateCharge.do",
+			type: "POST",
+			dataType: "json",
+			data: "orderData=" + JSON.stringify(ordersArray),
+			beforeSend: function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("AJAX", "true");
+				$("#loading").show();
+			},
+			success: function(data) {
+				if(data.result) {
+					alert(data.msg);
+					goList();
+				} else {
+					alert(data.msg);
+				}
+			},
+			complete: function() {
+				$("#loading").hide();
+			}
+		});
+	}else{
+		alert("하나이상 오더를 선택해 주세요.");
+		return false;
+	}
+
+
+
+
+
+
+
+
+
+	/*$("input[name=chkOrderId]").each(function(){
 		if($(this).is(":checked")) {
 			editOrderId.push($(this).val());
 		}
@@ -1028,7 +1098,7 @@ function saveAll(type){
 	}else{
 		alert("하나이상 오더를 선택해 주세요.");
 		return false;
-	}
+	}*/
 }
 
 function onChange(e){

@@ -1073,9 +1073,8 @@ $('#taxView, #receiptView').click(function(){
 });
 
 function saveAll(){
-	var editOrderId = [];
-	var order = {};
-	var ordersArray = [];
+
+
 
 	if(!confirm("배부액(조정)은 마감 건을 제외하고 저장됩니다. 이미 마감된 건은 기존 금액이 그대로 유지됩니다.")) {
 		return;
@@ -1086,6 +1085,73 @@ function saveAll(){
 		return;
 	}
 
+	var ordersArray = [];
+	var grid = $("#purchDead").data("kendoGrid");
+
+	var rows = grid.select();
+
+	if(rows.length < 1){
+		alert("하나이상 오더를 선택해 주세요.");
+		return false;
+	}else{
+		rows.each(function (index, row) {
+			gridData = grid.dataItem(this);
+			if(typeof gridData.divisionCharge != "undefined" && gridData.divisionCharge != null
+					&& gridData.divisionCharge != "" && gridData.divisionCharge.toString() != "0") {
+				debugger;
+				order = {};
+				order.orderId = gridData.orderId;
+				order.divisionCharge = gridData.divisionCharge.toString().replace(/,/g, "");
+				order.allocId = gridData.allocId;
+				order.addCharge = gridData.otherAddCharge;
+				ordersArray.push(order);
+			}
+		});
+	}
+	if(ordersArray.length >0){
+		$.ajax({
+			url: "/contents/calc/data/updateCharge.do",
+			type: "POST",
+			dataType: "json",
+			data: "orderData=" + JSON.stringify(ordersArray),
+			beforeSend: function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("AJAX", "true");
+				$("#loading").show();
+			},
+			success: function(data) {
+				if(data.result) {
+					alert(data.msg);
+					goList();
+				} else {
+					alert(data.msg);
+				}
+			},
+			complete: function() {
+				$("#loading").hide();
+			}
+		});
+	}else{
+		alert("\"배부액\"을 확인해 주세요.");
+		return;
+	}
+
+
+//	return;
+
+/*
+	var editOrderId = [];
+	var order = {};
+	//var ordersArray = [];
+/!*
+	if(!confirm("배부액(조정)은 마감 건을 제외하고 저장됩니다. 이미 마감된 건은 기존 금액이 그대로 유지됩니다.")) {
+		return;
+	}
+
+	if(!submitChk){
+		alert("\"배부액\"을 확인해 주세요.");
+		return;
+	}*!/
+
 	$("input[name=chkOrderId]").each(function(){
 		if($(this).is(":checked")) {
 			editOrderId.push($(this).val());
@@ -1093,6 +1159,7 @@ function saveAll(){
 	});
 
 	if(editOrderId.length > 0){
+
 		for (var l=0; l<editOrderId.length; l++) {
 			order = {};
 			order.orderId = editOrderId[l];
@@ -1126,7 +1193,7 @@ function saveAll(){
 	}else{
 		alert("하나이상 오더를 선택해 주세요.");
 		return false;
-	}
+	}*/
 }
 
 function viewReceipt(receiptYn, orderId) {

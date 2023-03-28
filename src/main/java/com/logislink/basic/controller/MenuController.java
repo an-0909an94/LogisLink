@@ -1,8 +1,5 @@
 package com.logislink.basic.controller;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +18,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -164,7 +159,7 @@ public class MenuController {
 	}
 
 	@PostMapping (value="/contents/basic/eventLogWrite.do")
-	public void eventLogWrite( HttpSession session, @RequestParam Map<String, Object> param) {
+	public String eventLogWrite(HttpSession session, @RequestParam Map<String, Object> param, ModelMap map) {
 
 		Map<String, Object> infoParam = new HashMap<>();
 
@@ -186,6 +181,9 @@ public class MenuController {
 		menuService.insertEventLog(infoParam);
 		//System.out.println(ip);
 
+		map.put("msg", "");
+
+		return "jsonView";
 	}
 
 }

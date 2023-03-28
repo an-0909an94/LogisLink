@@ -24,6 +24,24 @@
     .custom-select {
         border: 1px solid #ddd !important;
     }
+
+
+    #back{
+        position: absolute;
+        z-index: 9998;
+        background-color: #000000;
+        display:none;
+        left:0;
+        top:0;
+    }
+
+    #loadingBar{
+        position:absolute;
+        left:50%;
+        top: 40%;
+        display:none;
+        z-index:9999;
+    }
 </style>
 
 <div class="header">
@@ -547,6 +565,12 @@
                 ,orderState: orderState
                 ,link_id: link_id
             },
+            beforeSend: function () {
+                FunLoadingBarStart();      	//로딩바 생성
+            }
+            , complete: function () {
+                FunLoadingBarEnd();			//로딩바 제거
+            },
             success: function(data) {
                 alert("취소요청처리 되었습니다.");
                 goList();
@@ -602,6 +626,12 @@
             type: "POST",
             dataType: "json",
             data : $("#fOutreqModal").serializeObject(),
+            beforeSend: function () {
+                FunLoadingBarStart();      	//로딩바 생성
+            }
+            , complete: function () {
+                FunLoadingBarEnd();			//로딩바 제거
+            },
             success: function(data) {
                 alert("전송요청처리 되었습니다");
                 outreqModalClose();
@@ -651,15 +681,7 @@
                 msg ="";
             }
         }else if(job_stat=="R"){
-            if(link_stat=="I"){
-                msg ="(등록중)";
-            }else if(link_stat=="D"){
-                msg ="(취소중)";
-            }else if(link_stat=="U"){
-                msg ="(수정중)";
-            }else{
-                msg ="";
-            }
+                msg ="(화망처리중)";
         }else{
                 msg ="";
         }
@@ -712,5 +734,28 @@
 
     function stopInterval() {
         clearInterval(autoRefresh);
+    }
+
+    function FunLoadingBarStart() {
+        var backHeight = $(document).height();               	//뒷 배경의 상하 폭
+        var backWidth = window.document.body.clientWidth;		//뒷 배경의 좌우 폭
+
+        var backGroundCover = "<div id='back'></div>";			//뒷 배경을 감쌀 커버
+        var loadingBarImage = '';								//가운데 띄워 줄 이미지
+
+        loadingBarImage += "<div id='loadingBar'>";
+        loadingBarImage += "<img src='/images/ajax-loader.gif'/>"; //로딩 바 이미지
+        loadingBarImage += "</div>";
+
+        $('body').append(backGroundCover).append(loadingBarImage);
+
+        $('#back').css({ 'width': backWidth, 'height': backHeight, 'opacity': '0.3' });
+        $('#back').show();
+        $('#loadingBar').show();
+    }
+
+    function FunLoadingBarEnd() {
+        $('#back, #loadingBar').hide();
+        $('#back, #loadingBar').remove();
     }
 </script>

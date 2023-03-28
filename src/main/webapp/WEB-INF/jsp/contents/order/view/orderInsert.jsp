@@ -2748,16 +2748,23 @@
         var sCombobox = $("#sAddr").data("kendoComboBox");
         var sValue = sCombobox.value();
 
+
         if (!hasSpaceBetweenWords(sValue)) {
             e.preventDefault(); // 기본 제출 동작을 방지합니다.
             alert('상차지 주소 사이에 공백이 있어야 합니다.');
             return;
         }
 
-
+        if(sValue.replace(" ","") =="세종세종시"){
+            e.preventDefault();
+            alert('상차지 주소가 잘못 되었습니다. 올바른 주소로 다시 입력해 주세요.');
+            return;
+        }
 
         var eCombobox = $("#eAddr").data("kendoComboBox");
         var eValue = eCombobox.value();
+
+
 
         if (!hasSpaceBetweenWords(eValue)) {
             e.preventDefault(); // 기본 제출 동작을 방지합니다.
@@ -2765,6 +2772,11 @@
             return;
         }
 
+        if(eValue.replace(" ","") =="세종세종시"){
+            e.preventDefault();
+            alert('하차지 주소가 잘못 되었습니다. 올바른 주소로 다시 입력해 주세요.');
+            return;
+        }
 
         if ($('#24Cargo').prop('checked')|| $('#manCargo').prop('checked') || $('#oneCargo').prop('checked')) {
             var carTonVal = $("#carTonCode > option:selected").attr("value2");
@@ -2774,6 +2786,7 @@
                     var goodsWeithtVal = $("#goodsWeight").val()*1000;
                     carTonVal =  Math.floor(carTonVal * 1.1);
                     if(carTonVal < goodsWeithtVal){
+                        e.preventDefault();
                         alert("화물망 체크 전송 체크시 \n중량은 요청톤수의 110%를 넘을 수 없습니다.");
                         return;
                     }
@@ -2783,6 +2796,7 @@
             const sDate = new Date($("#sDateDay").val()+" "+$("#sDateTime").val());
             const eDate = new Date($("#eDateDay").val()+" "+$("#eDateTime").val());
             if(sDate > eDate){
+                e.preventDefault();
                 alert("하차일 정보가 상차일 정보 보다 빠를 수 없습니다.")
                 return;
             }
@@ -2795,6 +2809,7 @@
         if ($('#24Cargo').prop('checked')) {
             // 체크박스가 체크되었을 때 실행할 코드
             if($("#carTonCode").val() =="ETC"){
+                e.preventDefault();
                 alert("24시콜 체크시 요청톤수에 기타를 선택하실 수 없습니다.");
                 return;
             }
@@ -2817,6 +2832,7 @@
         if ($('#oneCargo').prop('checked')) {
             // 체크박스가 체크되었을 때 실행할 코드
             if($("#carTonCode").val() =="ETC"){
+                e.preventDefault();
                 alert("원콜 체크시 요청톤수에 기타를 선택하실 수 없습니다.");
                 return;
             }

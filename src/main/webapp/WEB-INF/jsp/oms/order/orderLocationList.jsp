@@ -214,7 +214,7 @@ function setData(data) {
 
 function getLocData(orderId){
 
-alert(coordinates.length);
+	deletePathArr();
 
 	coordinates = [];
 	$.ajax({
@@ -260,7 +260,7 @@ function createPolyline(latlng) {
 		endArrow:true
 	});
 	//polyArr[loopNum] = polyline;
-	//pathArr.push(latlng);	//폴리라인 path
+	pathArr.push(polyline);	//폴리라인 path
 
 	polyline.setMap(map);
 }
@@ -282,6 +282,11 @@ function deleteMarkers() {
     }
 }
 
+function deletePathArr() {
+	for (var i = 0; i < pathArr.length; i++) {
+		pathArr[i].setMap(null);
+	}
+}
 
 function simpleOrderData(){
 	$.ajax({
