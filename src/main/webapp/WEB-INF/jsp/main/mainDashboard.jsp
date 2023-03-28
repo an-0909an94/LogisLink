@@ -82,7 +82,7 @@
                                     <p class="ranking_tit title"></p>
                                     <div>
                                         <p class="name"></p>
-                                        <b class="rank"></b>
+                                        <b class="rank">0</b>
                                         <span class="Unit"></span>
                                     </div>
                                 </li>
@@ -90,7 +90,7 @@
                                     <p class="ranking_tit title"></p>
                                     <div>
                                         <p class="name"></p>
-                                        <b class="rank"></b>
+                                        <b class="rank">0</b>
                                         <span class="Unit"></span>
                                     </div>
                                 </li>
@@ -98,7 +98,7 @@
                                     <p class="ranking_tit title"></p>
                                     <div>
                                         <p class="name"></p>
-                                        <b class="rank"></b>
+                                        <b class="rank">0</b>
                                         <span class="Unit"></span>
                                     </div>
                                 </li>
@@ -106,7 +106,7 @@
                                     <p class="ranking_tit title"></p>
                                     <div>
                                         <p class="name"></p>
-                                        <b class="rank"></b>
+                                        <b class="rank">0</b>
                                         <span class="Unit"></span>
                                     </div>
                                 </li>
@@ -118,7 +118,7 @@
                                     <p class="ranking_tit title"></p>
                                     <div>
                                         <p class="name"></p>
-                                        <b class="rank"></b>
+                                        <b class="rank">0</b>
                                         <span class="Unit"></span>
                                     </div>
                                 </li>
@@ -126,7 +126,7 @@
                                     <p class="ranking_tit title"></p>
                                     <div>
                                         <p class="name"></p>
-                                        <b class="rank"></b>
+                                        <b class="rank">0</b>
                                         <span class="Unit"></span>
                                     </div>
                                 </li>
@@ -134,7 +134,7 @@
                                     <p class="ranking_tit title"></p>
                                     <div>
                                         <p class="name"></p>
-                                        <b class="rank"></b>
+                                        <b class="rank">0</b>
                                         <span class="Unit"></span>
                                     </div>
                                 </li>
@@ -142,7 +142,7 @@
                                     <p class="ranking_tit title"></p>
                                     <div>
                                         <p class="name"></p>
-                                        <b class="rank"></b>
+                                        <b class="rank">0</b>
                                         <span class="Unit"></span>
                                     </div>
                                 </li>
@@ -164,19 +164,19 @@
                             <ul>
                                 <li class="vehicle">
                                     <p class="my_ranking_tit">배차건수</p>
-                                    <span><b class="vehicleStr"></b> 건</span>
+                                    <span><b class="vehicleStr">0</b> 건</span>
                                 </li>
                                 <li class="sales">
                                     <p class="my_ranking_tit">매출액</p>
-                                    <span><b class="salesStr"></b> 만원</span>
+                                    <span><b class="salesStr">0</b> 만원</span>
                                 </li>
                                 <li class="profit">
                                     <p class="my_ranking_tit">이익</p>
-                                    <span><b class="proiftStr"></b> 만원</span>
+                                    <span><b class="proiftStr">0</b> 만원</span>
                                 </li>
                                 <li class="profitRate">
                                     <p class="my_ranking_tit">이익률</p>
-                                    <span><b class="proiftRateStr"></b> %</span>
+                                    <span><b class="proiftRateStr">0</b> %</span>
                                 </li>
                             </ul>
                         </div>
@@ -184,19 +184,19 @@
                             <ul>
                                 <li class="vehicle">
                                     <p class="my_ranking_tit">배차건수</p>
-                                    <span><b class="vehicleStr"></b> 건</span>
+                                    <span><b class="vehicleStr">0</b> 건</span>
                                 </li>
                                 <li class="sales">
                                     <p class="my_ranking_tit">매출액</p>
-                                    <span><b class="salesStr"></b> 만원</span>
+                                    <span><b class="salesStr">0</b> 만원</span>
                                 </li>
                                 <li class="profit">
                                     <p class="my_ranking_tit">이익</p>
-                                    <span><b class="proiftStr"></b> 만원</span>
+                                    <span><b class="proiftStr">0</b> 만원</span>
                                 </li>
                                 <li class="profitRate">
                                     <p class="my_ranking_tit">이익률</p>
-                                    <span><b class="proiftRateStr"></b> %</span>
+                                    <span><b class="proiftRateStr">0</b> %</span>
                                 </li>
                             </ul>
                         </div>
@@ -213,33 +213,33 @@
                                 <ul class="highLight_slide_cont">
                                     <li>
                                         거래처
-                                        <span class="acountCNm"></span>
+                                        <span class="acountCNm">0</span>
                                     </li>
                                     <li>
                                         매출액
-                                        <span class="sales"></span>
+                                        <span class="sales">0</span>
                                     </li>
                                     <li>
                                         매입액
-                                        <span class="purchase"></span>
+                                        <span class="purchase">0</span>
                                     </li>
                                     <li>
                                         이익
-                                        <span class="color_r profit"></span>
+                                        <span class="color_r profit">0</span>
                                     </li>
                                     <li>
                                         이익률
                                         <div class="color_r" style="display: flex;">
-                                            <span class="profitPersaint" style="display: flex;justify-content: center;"></span><span>%</span>
+                                            <span class="profitPersaint" style="display: flex;justify-content: center;">0</span><span>%</span>
                                         </div>
                                     </li>
                                     <li>
                                         담당부서
-                                        <span class="acountDNm"></span>
+                                        <span class="acountDNm">0</span>
                                     </li>
                                     <li>
                                         담당자
-                                        <span class="acountNm"></span>
+                                        <span class="acountNm">0</span>
                                     </li>
                                 </ul>
                             </li>

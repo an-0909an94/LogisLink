@@ -726,6 +726,9 @@ const data1 = {
                     size: 12, // 원하는 폰트 크기로 설정하세요.
                     weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                 },
+                formatter: function(value, context) {
+                    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
             },
             z: 1
         }
@@ -854,6 +857,9 @@ const data2 = {
                     size: 12, // 원하는 폰트 크기로 설정하세요.
                     weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                 },
+                formatter: function(value, context) {
+                    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
             },
         }
     ]
@@ -900,7 +906,7 @@ const mmGraph = new Chart(ctx2, {
                     display: true
                 },
                 beginAtZero: true,
-                max: 10000,
+                max: 1000000,
                 ticks: {
                     color: '#fff',
                     font: {
@@ -1014,7 +1020,7 @@ function processDataForChart(chart, data, mm) {
 
     data.forEach((item) => {
         // labels.push(item.vehicleMM);
-        labels.push(item.vehicleMM);
+        labels.push(mm(item));
         sales.push(item.sales);
         profits.push(item.profit);
     });
@@ -1032,7 +1038,7 @@ function updateProfitLossList(profitLossListSelector, data) {
     const profitLossList = $(profitLossListSelector + " li");
     data.forEach((item, index) => {
         const profitLoss = item.profitLoss;
-        $(profitLossList[index]).text(profitLoss + "%") ;
+        $(profitLossList[index]).text(profitLoss + "%");
     });
 }
 
@@ -1058,67 +1064,6 @@ $.when(bbGraphData(), mmGraphData())
     .fail((xhr, status, error) => {
         console.error(error);
     });
-
-
-
-
-
-
-/*async function fetchData(custId) {
-    try {
-        const response = await $.ajax({
-            url: "/dashboard/resultvehicle.do",
-            type: "POST",
-            dataType: "json",
-            data: {
-                custId: custId,
-            },
-        });
-
-        return response;
-    } catch (error) {
-        console.error("데이터를 불러오는데 실패했습니다:", error);
-        throw error;
-    }
-}
-
-async function loadChartData(custId) {
-    try {
-        const response = await fetchData(custId);
-
-        console.log("배차손익 : ", response);
-
-        if (response.result) {
-            const data = response.data;
-
-            const labels = [];
-            const sales = [];
-            const profits = [];
-
-            data.forEach(item => {
-                labels.push(item.vehicleMM);
-                sales.push(item.sales);
-                profits.push(item.profit);
-            });
-
-            beGraph.data.labels = labels;
-            beGraph.data.datasets[0].data = sales;
-            beGraph.data.datasets[1].data = profits;
-
-            beGraph.update();
-        } else {
-            console.error('Error: response is empty or undefined');
-        }
-    } catch (error) {
-        console.error("차트 데이터 로드에 실패했습니다.:", error);
-    }
-}
-
-const customerId = custIdcheck(); // 거래처 확인
-if (customerId) {
-    loadChartData(customerId);
-}*/
-
 
 
 // 현재를 기준으로 날짜를 가져온다.
