@@ -131,9 +131,9 @@
     SELECT TOP 3
     #{custId} custId
     , (SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = acountId) acountCNm
-    , (SELECT DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.DEPT_ID = U.DEPT_ID) deptNm
+    , (SELECT DEPT_NAME FROM T_CUST_DEPT CD WHERE CD.DEPT_ID = U.DEPT_ID) acountDNm
     , U.USER_ID userId
-    , U.USER_NAME userNm
+    , U.USER_NAME acountNm
     , sales
     , purchase
     , profit
