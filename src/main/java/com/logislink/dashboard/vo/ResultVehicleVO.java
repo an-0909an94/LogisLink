@@ -2,35 +2,35 @@ package com.logislink.dashboard.vo;
 
 // 배차손익추이
 public class ResultVehicleVO {
-    String YYYYMM; // 날짜
+    String yyyymm; // 날짜
     String custId;  // 거래처
-    String YYYY;   // 년도
-    String MM;   // 월
-    String sales;     // 매출
-    String profit;     // 이익
-    String profitPer;  // 손익이익률
+    String yyyy;   // 년도
+    String mm;   // 월
+    int sales;     // 매출
+    int profit;     // 이익
+    String profitLoss;  // 손익이익률
 
-    public String getYYYYMM(){return YYYYMM;}
+    public String getYyyymm(){return yyyymm;}
 
-    public void setYYYYMM(String YYYYMM) {
-        this.YYYYMM = YYYYMM;
+    public void setYyyymm(String yyyymm) {
+        this.yyyymm = yyyymm;
     }
 
     public String getCustId(){return custId;}
     public void setCustId(String custId){this.custId = custId;}
 
-    public String getYYYY(){return YYYY;}
-    public void setYYYY(String YYYY){this.YYYY = YYYY;}
+    public String getYyyy(){return yyyy;}
+    public void setYyyy(String yyyy){this.yyyy = yyyy;}
 
-    public String getMM(){return MM;}
-    public void setMM(String MM){this.MM = MM;}
+    public String getMm(){return mm;}
+    public void setMm(String mm){this.mm = mm;}
 
-    public String getSales(){return sales;}
-    public void setSales(String sales){this.sales = sales;}
+    public int getSales(){return sales;}
+    public void setSales(int sales){this.sales = sales;}
 
-    public String getProfit(){return profit;}
-    public void setProfit(String profit){this.profit = profit;}
+    public int getProfit(){return profit;}
+    public void setProfit(int profit){this.profit = profit;}
 
-    public String getProfitPer(){return profitPer;}
-    public void setProfitPer(String profitPer){this.profitPer = profitPer;}
+    public String getProfitLoss(){return profitLoss;}
+    public void setProfitLoss(String profitLoss){this.profitLoss = profitLoss;}
 }

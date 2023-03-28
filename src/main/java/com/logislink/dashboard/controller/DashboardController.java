@@ -32,7 +32,7 @@ public class DashboardController {
 
         LoginVO login = (LoginVO) session.getAttribute("userInfo");
         String custId = login.getCustId();
-
+        String searchDate = String.valueOf(param.get("searchDate"));
         param.put("custId", custId);
 
         ResultRankVO resultRank = dashboardService.getResultRank(param);
@@ -40,6 +40,8 @@ public class DashboardController {
         List<ResultRank> list = new ArrayList<ResultRank>();
 
         ResultRank Amode = new ResultRank();
+        Amode.setCustId(custId);
+        Amode.setSearchDate(searchDate);
         Amode.setResultFlag("A");
         Amode.setResultFlagNm(resultRank.getA_resultFlagNm());
         Amode.setUserId(resultRank.getA_userId());
@@ -51,6 +53,8 @@ public class DashboardController {
         list.add(Amode);
 
         ResultRank Bmode = new ResultRank();
+        Bmode.setCustId(custId);
+        Bmode.setSearchDate(searchDate);
         Bmode.setResultFlag("B");
         Bmode.setResultFlagNm(resultRank.getB_resultFlagNm());
         Bmode.setUserId(resultRank.getB_userId());
@@ -62,6 +66,8 @@ public class DashboardController {
         list.add(Bmode);
 
         ResultRank Cmode = new ResultRank();
+        Cmode.setCustId(custId);
+        Cmode.setSearchDate(searchDate);
         Cmode.setResultFlag("C");
         Cmode.setResultFlagNm(resultRank.getC_resultFlagNm());
         Cmode.setUserId(resultRank.getC_userId());
@@ -73,6 +79,8 @@ public class DashboardController {
         list.add(Cmode);
 
         ResultRank Dmode = new ResultRank();
+        Dmode.setCustId(custId);
+        Dmode.setSearchDate(searchDate);
         Dmode.setResultFlag("D");
         Dmode.setResultFlagNm(resultRank.getD_resultFlagNm());
         Dmode.setUserId(resultRank.getD_userId());
@@ -95,10 +103,10 @@ public class DashboardController {
 
         LoginVO login = (LoginVO) session.getAttribute("userInfo");
 
-        String userId = login.getUserId();
+        //String userId = login.getUserId();
         String custId = login.getCustId();
 
-        param.put("userId", userId);
+        //param.put("userId", "est0302");
         param.put("custId", custId);
 
         List<MyResultVO> myResult =  dashboardService.getMyResult(param);
