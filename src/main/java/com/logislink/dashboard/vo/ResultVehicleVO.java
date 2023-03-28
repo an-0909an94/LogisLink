@@ -5,7 +5,7 @@ public class ResultVehicleVO {
     String yyyymm; // 날짜
     String custId;  // 거래처
     String yyyy;   // 년도
-    String mm;   // 월
+    String vehicleMM;   // 월
     int sales;     // 매출
     int profit;     // 이익
     String profitLoss;  // 손익이익률
@@ -22,8 +22,8 @@ public class ResultVehicleVO {
     public String getYyyy(){return yyyy;}
     public void setYyyy(String yyyy){this.yyyy = yyyy;}
 
-    public String getMm(){return mm;}
-    public void setMm(String mm){this.mm = mm;}
+    public String getVehicleMM(){return vehicleMM;}
+    public void setVehicleMM(String vehicleMM){this.vehicleMM = vehicleMM;}
 
     public int getSales(){return sales;}
     public void setSales(int sales){this.sales = sales;}

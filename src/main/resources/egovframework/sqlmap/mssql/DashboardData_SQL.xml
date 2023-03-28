@@ -146,7 +146,7 @@
     , MINUS														purchase
     , (PLUS - MINUS)                                                profit
     , IIF(PLUS = 0, 0, ROUND(CONVERT(FLOAT, PLUS - MINUS) / PLUS * 100, 1)) profitPersaint
-    , RANK() OVER (PARTITION BY MAIN.acountId ORDER BY PLUS DESC, MINUS ASC)                           PLUSRANK
+    , RANK() OVER (PARTITION BY MAIN.acountId ORDER BY PLUS DESC, MINUS ASC) PLUSRANK
     FROM (SELECT OA.ORDER_ID
     , MAX(IIF(OA.BUY_CUST_ID = #{custId}, OA.SELL_CUST_ID, '')) acountId --매출
     , SUM(IIF(OA.BUY_CUST_ID = #{custId},
@@ -179,14 +179,14 @@
     SELECT yyyymm
          , #{custId} custId
          , IIF(yyyy = LEFT(CONVERT(VARCHAR(10), GETDATE(), 112),4),'',yyyy) yyyy
-         , IIF(mm = SUBSTRING(CONVERT(VARCHAR(10), GETDATE(), 112),5, 2), '이번달', mm) mm
+         , IIF(vehicleMM = SUBSTRING(CONVERT(VARCHAR(10), GETDATE(), 112),5, 2), '이번달', vehicleMM) vehicleMM
          , PLUS/10000 sales
          , (PLUS-MINUS)/10000 profit
          , IIF(PLUS = 0, 0, ROUND(CONVERT(FLOAT, PLUS - MINUS) / PLUS * 100, 1)) profitLoss
     FROM (
            SELECT LEFT(CONVERT(VARCHAR(10), S_DATE, 112),6) yyyymm
              , LEFT(CONVERT(VARCHAR(10), S_DATE, 112),4) yyyy
-             , SUBSTRING(CONVERT(VARCHAR(10), S_DATE, 112),5, 2) mm
+             , SUBSTRING(CONVERT(VARCHAR(10), S_DATE, 112),5, 2) vehicleMM
              , SUM(cast(IIF(OA.BUY_CUST_ID = #{custId},
              IIF(O.CHARGE_TYPE = '01', ISNULL(ALLOC_CHARGE, 0) + ISNULL(ADD_CHARGE, 0),
              ISNULL(ALLOC_FEE, 0)), 0) as bigint))                               PLUS     --매출
@@ -212,10 +212,10 @@
 
   <select id="selectMmtopRank" parameterType="java.util.HashMap" resultType="mmtopRankVO">
     SELECT TOP 6 #{custId} custId, acountId
-         , (SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = acountId) acountCNm
-         , SUM(PLUS) / 10000                                                          sales
-         , (SUM(PLUS) - SUM(MINUS)) / 10000                                                profit
-         , IIF(SUM(PLUS) = 0, 0, ROUND(CONVERT(FLOAT, SUM(PLUS) - SUM(MINUS)) / SUM(PLUS) * 100, 1)) profitPer
+         , (SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = acountId) acountNm
+         , SUM(PLUS) / 10000                                                         sales
+         , (SUM(PLUS) - SUM(MINUS)) / 10000                                          profit
+         , IIF(SUM(PLUS) = 0, 0, ROUND(CONVERT(FLOAT, SUM(PLUS) - SUM(MINUS)) / SUM(PLUS) * 100, 1)) profitLoss
          , RANK() OVER (ORDER BY SUM(PLUS) DESC, (SUM(PLUS)-SUM(MINUS)) DESC)                           PLUSRANK
     FROM (SELECT MAX(IIF(OA.BUY_CUST_ID = #{custId}, OA.SELL_CUST_ID, '')) acountId --매출
                , SUM(CAST(IIF(OA.BUY_CUST_ID = #{custId},
