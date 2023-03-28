@@ -229,7 +229,9 @@
                                     </li>
                                     <li>
                                         이익률
-                                        <span class="color_r profitPersaint"></span>
+                                        <div class="color_r" style="display: flex;">
+                                            <span class="profitPersaint" style="display: flex;justify-content: center;"></span><span>%</span>
+                                        </div>
                                     </li>
                                     <li>
                                         담당부서

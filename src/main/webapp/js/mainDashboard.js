@@ -773,7 +773,7 @@ const beGraph = new Chart(ctx1, {
                     display: true
                 },
                 beginAtZero: true,
-                max: Math.ceil(10000 / 2) * 2, //2의 배수
+                max: Math.ceil(1000000 / 2) * 2, //2의 배수
                 ticks: {
                     color: '#fff',
                     font: {
@@ -796,7 +796,7 @@ const beGraph = new Chart(ctx1, {
                     display: true
                 },
                 beginAtZero: true,
-                max: Math.ceil(10000 / 2) * 2,//2의 배수
+                max: Math.ceil(600000 / 2) * 2, //2의 배수
                 ticks: {
                     color: '#fff',
                     font: {
@@ -1007,13 +1007,14 @@ function extractFunc(item) {
 }
 
 // 차트 데이터 처리 함수
-function processDataForChart(chart, data, x) {
+function processDataForChart(chart, data, mm) {
     const labels = [];
     const sales = [];
     const profits = [];
-    // debugger;
+
     data.forEach((item) => {
-        labels.push(item[x]);
+        // labels.push(item.vehicleMM);
+        labels.push(item.vehicleMM);
         sales.push(item.sales);
         profits.push(item.profit);
     });
@@ -1031,7 +1032,7 @@ function updateProfitLossList(profitLossListSelector, data) {
     const profitLossList = $(profitLossListSelector + " li");
     data.forEach((item, index) => {
         const profitLoss = item.profitLoss;
-        $(profitLossList[index]).text(profitLoss);
+        $(profitLossList[index]).text(profitLoss + "%") ;
     });
 }
 
@@ -1276,7 +1277,7 @@ if(userId) {
     });
 }
 // Today's Hight-Light
-/*var custId = custIdcheck();
+var custId = custIdcheck();
 if(custId) {
     $.ajax({
         url: "/dashboard/todaycustresult.do",
@@ -1316,4 +1317,4 @@ if(custId) {
     }).fail((xhr, status, error) => {
         console.error(error);
     });
-}*/
+}
