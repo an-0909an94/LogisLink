@@ -478,8 +478,8 @@
 					<div class="side-logout col-width50" style="">
 						<a href="/logout.do" class="side-logout-link">로그아웃</a>
 					</div>
-					<div id="userOption" class="mem-setting col-width50"><i id="userOption" class="k-icon k-i-gear" title="업무초기값 설정"></i><span class="setting-text">설정초기화</span></div>
-					<div class="mem-setpage col-width50"><a href="javascript:setMainPage();" style="color:#ffffff;"><i class="k-icon k-i-gear" title="업무초기값 설정"></i><span class="setpage-text">현재페이지를 시작페이지로</span></a></div>
+					<div id="userOption" class="mem-setting col-width50"><i class="mem-setting-icon"></i><span class="setting-text">설정초기화</span></div>
+					<div class="mem-setpage col-width50"><a href="javascript:setMainPage();" style="color:#ffffff;"><i class="mem-setpage-icon"></i><span class="setpage-text">현재페이지를 시작페이지로</span></a></div>
 				</div>
 		</div>
 	</div>

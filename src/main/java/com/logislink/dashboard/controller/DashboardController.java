@@ -46,6 +46,8 @@ public class DashboardController {
         Amode.setUserNm(resultRank.getA_userNm());
         Amode.setResultUnit(resultRank.getA_resultUnit());
         Amode.setResultVal(resultRank.getA_resultVal());
+        Amode.setCustId(custId);
+        Amode.setSearchDate(param.get("searchDate").toString());
         list.add(Amode);
 
         ResultRank Bmode = new ResultRank();
@@ -55,6 +57,8 @@ public class DashboardController {
         Bmode.setUserNm(resultRank.getB_userNm());
         Bmode.setResultUnit(resultRank.getB_resultUnit());
         Bmode.setResultVal(resultRank.getB_resultVal());
+        Bmode.setCustId(custId);
+        Bmode.setSearchDate(param.get("searchDate").toString());
         list.add(Bmode);
 
         ResultRank Cmode = new ResultRank();
@@ -64,6 +68,8 @@ public class DashboardController {
         Cmode.setUserNm(resultRank.getC_userNm());
         Cmode.setResultUnit(resultRank.getC_resultUnit());
         Cmode.setResultVal(resultRank.getC_resultVal());
+        Cmode.setCustId(custId);
+        Cmode.setSearchDate(param.get("searchDate").toString());
         list.add(Cmode);
 
         ResultRank Dmode = new ResultRank();
@@ -73,6 +79,8 @@ public class DashboardController {
         Dmode.setUserNm(resultRank.getD_userNm());
         Dmode.setResultUnit(resultRank.getD_resultUnit());
         Dmode.setResultVal(resultRank.getD_resultVal());
+        Dmode.setCustId(custId);
+        Dmode.setSearchDate(param.get("searchDate").toString());
         list.add(Dmode);
 
         map.put("result", Boolean.TRUE);

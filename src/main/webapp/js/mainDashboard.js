@@ -773,7 +773,7 @@ const beGraph = new Chart(ctx1, {
                     display: true
                 },
                 beginAtZero: true,
-                max: Math.ceil(1000 / 2) * 2, //2의 배수
+                max: Math.ceil(10000 / 2) * 2, //2의 배수
                 ticks: {
                     color: '#fff',
                     font: {
@@ -796,7 +796,7 @@ const beGraph = new Chart(ctx1, {
                     display: true
                 },
                 beginAtZero: true,
-                max: Math.ceil(8000 / 2) * 2,//2의 배수
+                max: Math.ceil(10000 / 2) * 2,//2의 배수
                 ticks: {
                     color: '#fff',
                     font: {
@@ -900,7 +900,7 @@ const mmGraph = new Chart(ctx2, {
                     display: true
                 },
                 beginAtZero: true,
-                max: 500,
+                max: 10000,
                 ticks: {
                     color: '#fff',
                     font: {
@@ -938,106 +938,6 @@ const mmGraph = new Chart(ctx2, {
 
 
 
-/*var custId = custIdcheck(); //거래처 확인
-if(custId) {
-    // AJAX 요청을 통해 데이터를 가져옵니다.
-    $.ajax({
-        url: "/dashboard/resultvehicle.do",
-        type: "POST",
-        dataType: "json",
-        data: {
-            custId:custId,
-        },
-    }).done(response => {
-        console.log("배차손익 : ", response);
-        // debugger;
-        if (response.result) {
-            const data = response.data;
-
-            // JSON 배열을 차트 데이터 형식으로 변환합니다.
-            const labels = [];
-            const sales = [];
-            const profits = [];
-
-            data.forEach(item => {
-                labels.push(item.vehicleMM);
-                sales.push(item.sales);
-                profits.push(item.profit);
-            });
-            // 손익은 따로 출력한다
-            const profitLossList1 = $(".profitLosslist1 li");
-            data.forEach((item, index) => {
-                const profitLoss = item.profitLoss;
-                $(profitLossList1[index]).text(profitLoss);
-            });
-
-            // 가져온 데이터를 차트에 적용합니다.
-            beGraph.data.labels = labels;
-            beGraph.data.datasets[0].data = sales;
-            beGraph.data.datasets[1].data = profits;
-
-            // 차트를 업데이트합니다.
-            beGraph.update();
-
-        } else {
-            console.error('Error: response is empty or undefined');
-        }
-    }).fail((xhr, status, error) => {
-        console.error(error);
-    });
-}*/
-
-
-
-/*   var custId = custIdcheck(); //거래처 확인
-   if(custId) {
-       // AJAX 요청을 통해 데이터를 가져옵니다.
-       $.ajax({
-           url: "/dashboard//mmtoprank.do",
-           type: "POST",
-           dataType: "json",
-           data: {
-               custId:custId,
-           },
-       }).done(response => {
-           console.log("전월TOP 거래처 현황 : ", response);
-           // debugger;
-           if (response.result) {
-               const data = response.data;
-
-               // JSON 배열을 차트 데이터 형식으로 변환합니다.
-               const labels = [];
-               const sales = [];
-               const profits = [];
-
-               data.forEach(item => {
-                   labels.push(item.acountNm);
-                   sales.push(item.sales);
-                   profits.push(item.profit);
-               });
-               // 손익은 따로 출력한다
-               const profitLossList2 = $(".profitLosslist2 li");
-               data.forEach((item, index) => {
-                   const profitLoss = item.profitLoss;
-                   $(profitLossList2[index]).text(profitLoss);
-               });
-
-               // 가져온 데이터를 차트에 적용합니다.
-               mmGraph.data.labels = labels;
-               mmGraph.data.datasets[0].data = sales;
-               mmGraph.data.datasets[1].data = profits;
-
-               // 차트를 업데이트합니다.
-               beGraph.update();
-
-           } else {
-               console.error('Error: response is empty or undefined');
-           }
-       }).fail((xhr, status, error) => {
-           console.error(error);
-       });
-   }*/
-
 // 첫 번째 차트에 대한 AJAX 요청
 function bbGraphData() {
     return $.ajax({
@@ -1069,6 +969,8 @@ if (custId) {
     $.when(bbGraphData(), mmGraphData())
         .done((response1, response2) => {
             // 첫 번째 차트 데이터 처리
+            console.log('차트1번', response1);
+            console.log('차트2번', response2);
             if (response1[0].result) {
                 processDataForChart(beGraph, response1[0].data);
                 // // 손익은 따로 출력한다
@@ -1109,9 +1011,9 @@ function processDataForChart(chart, data, x) {
     const labels = [];
     const sales = [];
     const profits = [];
-
+    // debugger;
     data.forEach((item) => {
-        labels.push(x (item));
+        labels.push(item[x]);
         sales.push(item.sales);
         profits.push(item.profit);
     });
@@ -1120,7 +1022,7 @@ function processDataForChart(chart, data, x) {
     chart.data.labels = labels;
     chart.data.datasets[0].data = sales;
     chart.data.datasets[1].data = profits;
-
+    // debugger;
     // 차트를 업데이트합니다.
     chart.update();
 }
@@ -1236,7 +1138,6 @@ function getTodayAndYesterday() {
         yesterday: formatDate(yesterday),
     };
 }
-// debugger;
 // 거래처 아디를 체크해주는 변수값
 function custIdcheck() {
     var custId = '${sessionScope.userInfo.custId}';
@@ -1248,61 +1149,74 @@ var custId = custIdcheck();
 if (custId) {
     const { today, yesterday } = getTodayAndYesterday();
 
-    $.ajax({
-        url: "/dashboard/resultrank.do",
-        type: "POST",
-        dataType: "json",
-        data: {
-            custId: custId,
-            searchDate : today,
-            //today: today,
-            //yesterday: yesterday,
-        },
-    }).done(response => {
-        console.log('최근실적',response);
-        //업데이트된 데이터를 Class를 확인해서 각 위치에 출력
-        function updateRanking(className, data, flag) {
-            const filteredData = data.filter(item => item.resultFlag === flag);
-            const filterItem = filteredData[0];
-            if (filterItem) {
-                $('.' + className + ' .title').text(filterItem.resultFlagNm);
-                $('.' + className + ' .name').text(filterItem.userNm);
-                $('.' + className + ' .rank').text(filterItem.resultVal);
-                $('.' + className + ' .Unit').text(filterItem.resultUnit);
+    // 라디오버튼 이벤트
+    $('input[name="recent_ranking"]').on('change', function () {
+        const selectedDate = this.value === 'today' ? today : yesterday;
+
+        $.ajax({
+            url: "/dashboard/resultrank.do",
+            type: "POST",
+            dataType: "json",
+            data: {
+                custId: custId,
+                searchDate: selectedDate,
+            },
+        }).done(response => {
+            console.log('최근실적', response);
+
+            //업데이트된 데이터를 Class를 확인해서 각 위치에 출력
+
+            // debugger;
+            function updateRanking(className, data, flag) {
+                const filteredData = data.filter(item => item.resultFlag === flag);
+                const filterItem = filteredData[0];
+                if (filterItem) {
+                    $('.' + className + ' .title').text(filterItem.resultFlagNm);
+                    $('.' + className + ' .name').text(filterItem.userNm);
+                    $('.' + className + ' .rank').text(filterItem.resultVal);
+                    $('.' + className + ' .Unit').text(filterItem.resultUnit);
+                }
             }
-        }
-        // 카테고리 A:배차1위, B:매출 1위, C:이익 1위, D:이익율 1위
-        if (response.result) {
-            const { data } = response;
-            const todayData = data.filter(item => item.searchDate === today);
-            const yesterdayData = data.filter(item => item.searchDate === yesterday);
-            const categories = {
-                A: 'vehicle',
-                B: 'sales',
-                C: 'profit',
-                D: 'profitRate',
-            };
 
-            Object.keys(categories).forEach(key => {
-                const todayItem = todayData.find(item => item.resultFlag === key);
-                const yesterdayItem = yesterdayData.find(item => item.resultFlag === key);
-                const className = categories[key];
+            // 카테고리 A:배차1위, B:매출 1위, C:이익 1위, D:이익율 1위
+            if (response.result) {
+                const {data} = response;
+                const todayData = data.filter(item => item.searchDate === today);
+                const yesterdayData = data.filter(item => item.searchDate === yesterday);
+                const categories = {
+                    A: 'vehicle',
+                    B: 'sales',
+                    C: 'profit',
+                    D: 'profitRate',
+                };
 
-                if (todayItem) {
-                    updateRanking(className + 'today', [todayItem], key);
-                }
-                if (yesterdayItem) {
-                    updateRanking(className + 'yesterday', [yesterdayItem], key);
-                }
-            });
+                Object.keys(categories).forEach(key => {
+                    const todayItem = todayData.find(item => item.resultFlag === key);
+                    const yesterdayItem = yesterdayData.find(item => item.resultFlag === key);
+                    const className = categories[key];
 
-        } else {
-            console.error('Error: response is empty or undefined');
-        }
-    }).fail((xhr, status, error) => {
-        console.error(error);
+                    if (todayItem) {
+                        updateRanking(className + 'today', [todayItem], key);
+                    }
+                    if (yesterdayItem) {
+                        updateRanking(className + 'yesterday', [yesterdayItem], key);
+                    }
+                });
+
+            } else {
+                console.error('Error: response is empty or undefined');
+            }
+        }).fail((xhr, status, error) => {
+            console.error(error);
+        });
     });
+    // 페이지 로드 시 라디오 버튼의 change 이벤트를 트리거
+    $('input[name="recent_ranking"]:checked').trigger('change');
 }
+
+
+
+// 유저 아이디 확인
 function userIdcheck() {
     var userId = '${sessionScope.userInfo.userId}';
     return userId;
@@ -1362,7 +1276,7 @@ if(userId) {
     });
 }
 // Today's Hight-Light
-var custId = custIdcheck();
+/*var custId = custIdcheck();
 if(custId) {
     $.ajax({
         url: "/dashboard/todaycustresult.do",
@@ -1402,4 +1316,4 @@ if(custId) {
     }).fail((xhr, status, error) => {
         console.error(error);
     });
-}
+}*/

@@ -69,8 +69,8 @@
             <div class="section_left">
                 <div class="recent_ranking">
                     <h2>최근실적 Ranking</h2>
-                    <input type="radio" id="ranking_today" name="recent_ranking" checked>
-                    <input type="radio" id="ranking_yesterday" name="recent_ranking">
+                    <input type="radio" id="ranking_today" name="recent_ranking" value="today" checked>
+                    <input type="radio" id="ranking_yesterday" name="recent_ranking" value="yesterday">
                     <div class="ranking_label">
                         <label for="ranking_today">오늘</label>
                         <label for="ranking_yesterday">어제</label>
