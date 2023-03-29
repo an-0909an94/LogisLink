@@ -227,7 +227,7 @@
 .mem-info > .mem-info-box > .mem-setting i::before{
     content: '';
     position: absolute;
-    margin: 0px 0 0 -3px;
+    margin: -8px 0 0 -19px;
     width: 18px;
     height: 18px;
     background: url(/images/icon/icon_left_dev.png) no-repeat;
@@ -258,7 +258,8 @@
     margin-left: 4px;
     font-size: 12px;
     position: relative;
-    top: -1px;
+    top: -4px;
+    left: 19px;
 }
 
 .mem-info-box {

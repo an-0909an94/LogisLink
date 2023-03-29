@@ -72,7 +72,13 @@ $.ajax({
     dataType: "json",
 }).done(response => {
     if (response.result) {
-        const oilPrices = response.oil.OIL.map(({ PRICE }) => PRICE);
+        const oilIndexes = [1, 2, 4];
+        const oilPrices = [];
+
+        oilIndexes.forEach(index => {
+            oilPrices.push(response.oil.OIL[index].PRICE);
+        });
+
         $('.all_oil_price').each((index, element)=>{
             $(element).text(Math.round(oilPrices[index]).toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",") + " 원");
         });
@@ -696,14 +702,16 @@ const data1 = {
             borderWidth: 1,
             yAxisID: 'y2',
             maxBarThickness: 22,
+            barPercentage: 1.0,
+            categoryPercentage: 1.0,
             datalabels: {
                 display:true,
-                color: '#a0a0a0',
+                color: '#fff',
                 anchor: 'end',
                 align: 'top',
                 font: {
                     size: 12, // 원하는 폰트 크기로 설정하세요.
-                    weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                    weight: '800' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                 },
                 formatter: function(value, context) {
                     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -722,12 +730,12 @@ const data1 = {
             // pointStyle: 'circle',
             datalabels: {
                 display:true,
-                color: '#fff',
+                color: '#ff624c',
                 anchor: 'end',
                 align: 'top',
                 font: {
                     size: 12, // 원하는 폰트 크기로 설정하세요.
-                    weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                    weight: '800' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                 },
                 formatter: function(value, context) {
                     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -743,6 +751,14 @@ const beGraph = new Chart(ctx1, {
     type: 'bar',
     data: data1,
     options: {
+        layout: {
+            padding: {
+                left: 80, //차트의 넓이를 지정할 수 있다.
+                right: 80,
+                top: 0,
+                bottom: 0
+            }
+        },
         interaction: {
             mode: 'none'
         },
@@ -751,10 +767,11 @@ const beGraph = new Chart(ctx1, {
         },
         plugins: {
             legend: {
+                padding: 1,
                 display: false,
             },
         },
-        responsive: false,
+        responsive: true,
         scales: {
             x: {
                 // min: 0,
@@ -762,31 +779,31 @@ const beGraph = new Chart(ctx1, {
                 title: {
                     display: true
                 },
-                barPercentage: 0.0, // 바의 너비를 조절합니다 (0.0 ~ 1.0)
-                categoryPercentage: 0.1,
                 ticks: {
                     color: '#fff',
                     font: {
-                        size: 10, // 원하는 폰트 크기로 설정하세요.
-                        weight: '500', // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        size: 13,
+                        weight: 'bold',
                     }
                 },
             },
             y1: {
                 position: 'right',
-                display: true,
+                display: false,
                 title: {
-                    display: true
+                    display: false
                 },
                 beginAtZero: true,
-                max: Math.ceil(1000000 / 2) * 2, //2의 배수
+                min: 0,
+                max: Math.ceil(300000 / 2) * 2, //2의 배수
                 ticks: {
+                    beginAtZero : true,
+                    stepSize:1,
                     color: '#fff',
                     font: {
-                        size: 10, // 원하는 폰트 크기로 설정하세요.
-                        weight: 500, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        size: 13, // 원하는 폰트 크기로 설정하세요.
+                        weight: '800', // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                     },
-                    stepSize: 200 // 눈금 간격 설정
                 },
                 grid: {
                     color: 'rgb(57 57 57)', // y축 그리드 라인 색상
@@ -797,19 +814,21 @@ const beGraph = new Chart(ctx1, {
             y2: {
 
                 position: 'left',
-                display: true,
+                display: false,
                 title: {
                     display: true
                 },
                 beginAtZero: true,
-                max: Math.ceil(600000 / 2) * 2, //2의 배수
+                min: 0,
+                max: Math.ceil(400000 / 2) * 2,
                 ticks: {
+                    beginAtZero : true,
+                    stepSize:1,
                     color: '#fff',
                     font: {
-                        size: 10, // 원하는 폰트 크기로 설정하세요.
-                        weight: 500, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        size: 13, // 원하는 폰트 크기로 설정하세요.
+                        weight: '800', // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                     },
-                    stepSize: 2000 // 눈금 간격 설정
                 },
             }
         },
@@ -828,14 +847,17 @@ const data2 = {
             borderWidth: 1,
             yAxisID: 'y1',
             maxBarThickness: 22,
+            // barPercentage: 1.0,
+            // categoryPercentage: 0.1,
             datalabels: {
                 display:true,
-                color: '#a0a0a0',
+                color: '#fff',
                 anchor: 'end',
                 align: 'top',
                 font: {
-                    size: 12, // 원하는 폰트 크기로 설정하세요.
-                    weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                    family: 'Noto Sans KR',
+                    size: 13, // 원하는 폰트 크기로 설정하세요.
+                    weight: '800' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                 },
                 formatter: function(value, context) {
                     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -852,13 +874,15 @@ const data2 = {
             yAxisID: 'y2',
             maxBarThickness: 22,
             datalabels: {
+                family: 'Noto Sans KR',
                 display:true,
                 color: '#ff624c',
                 anchor: 'end',
                 align: 'top',
                 font: {
-                    size: 12, // 원하는 폰트 크기로 설정하세요.
-                    weight: '500' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                    size: 13, // 원하는 폰트 크기로 설정하세요.
+                    weight: '800' // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+
                 },
                 formatter: function(value, context) {
                     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -873,6 +897,14 @@ const mmGraph = new Chart(ctx2, {
     type: 'bar',
     data: data2,
     options: {
+        layout: {
+            padding: {
+                left: 30,
+                right: 10,
+                top: 0,
+                bottom: 0
+            }
+        },
         interaction: {
             mode: 'none'
         },
@@ -884,7 +916,7 @@ const mmGraph = new Chart(ctx2, {
                 display: false,
             },
         },
-        responsive: false,
+        responsive: true,
         scales: {
             x: {
                 // min: 0,
@@ -892,8 +924,6 @@ const mmGraph = new Chart(ctx2, {
                 title: {
                     display: true
                 },
-                barPercentage: 0.0, // 바의 너비를 조절합니다 (0.0 ~ 1.0)
-                categoryPercentage: 0.1,
                 ticks: {
                     color: '#fff',
                     font: {
@@ -904,19 +934,21 @@ const mmGraph = new Chart(ctx2, {
             },
             y1: {
                 position: 'left',
-                display: true,
+                display: false,
                 title: {
                     display: true
                 },
-                beginAtZero: true,
-                max: 1000000,
+                min: -800,
+                max: 200000,
                 ticks: {
+                    beginAtZero : true,
+                    stepSize:1,
                     color: '#fff',
                     font: {
-                        size: 10, // 원하는 폰트 크기로 설정하세요.
-                        weight: 500, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        size: 13, // 원하는 폰트 크기로 설정하세요.
+                        weight: 'bold', // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                     },
-                    stepSize:100,
+
                 },
                 grid: {
                     color: 'rgb(57 57 57)', // y축 그리드 라인 색상
@@ -931,14 +963,16 @@ const mmGraph = new Chart(ctx2, {
                 title: {
                     display: false
                 },
-                beginAtZero: true,
+                min: -800,
+                max: 200000,
                 ticks: {
+                    beginAtZero : true,
+                    stepSize:1,
                     color: '#fff',
                     font: {
-                        size: 10, // 원하는 폰트 크기로 설정하세요.
-                        weight: 500, // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
+                        size: 13, // 원하는 폰트 크기로 설정하세요.
+                        weight: 'bold', // 원하는 폰트 두께로 설정하세요. ('normal', 'bold', 또는 숫자)
                     },
-                    stepSize: 2000 // 눈금 간격 설정
                 },
             }
         },

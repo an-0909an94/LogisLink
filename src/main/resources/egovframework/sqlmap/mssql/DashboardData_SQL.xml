@@ -179,7 +179,7 @@
     SELECT yyyymm
          , #{custId} custId
          , IIF(yyyy = LEFT(CONVERT(VARCHAR(10), GETDATE(), 112),4),'',yyyy) yyyy
-         , IIF(vehicleMM = SUBSTRING(CONVERT(VARCHAR(10), GETDATE(), 112),5, 2), '이번달', vehicleMM) vehicleMM
+         , IIF(vehicleMM = SUBSTRING(CONVERT(VARCHAR(10), GETDATE(), 112),5, 2), '이번달',CONCAT(vehicleMM, '월')) vehicleMM
          , PLUS/10000 sales
          , (PLUS-MINUS)/10000 profit
          , IIF(PLUS = 0, 0, ROUND(CONVERT(FLOAT, PLUS - MINUS) / PLUS * 100, 1)) profitLoss

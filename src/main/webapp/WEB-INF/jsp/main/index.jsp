@@ -29,15 +29,31 @@
 <body>
 
 <style>
-	input:focus {
-		color: black !important;
-	}
-.video-wrap {position:relative; padding-bottom:56.25%; padding-top:0px; height:0; overflow:hidden; pointer-events: none; }
-.video-wrap iframe,
-.video-wrap object,
-.video-wrap embed {position:absolute; top:0; left:0; width:100%; height:100%;}
+	input:focus {color: black !important;}
+	.k-i-close:before { content: "";}
+	.k-window-titlebar {border: 0;}
+	.video-wrap {position:relative; padding-bottom:56.25%; padding-top:0px; height:0; overflow:hidden; pointer-events: none; }
+	.video-wrap iframe,
+	.video-wrap object,
+	.video-wrap embed {position:absolute; top:0; left:0; width:100%; height:100%;}
 
 input:focus {outline: none;}
+	#divFindUserInfo {
+		overflow: hidden;
+	}
+	.k-dialog {
+		border-radius: 50px;
+	}
+	.k-dialog-title {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		top: 30px;
+	}
+	.k-window .k-window-actions {
+		top: 29px !important;
+		right: 31px;
+	}
 </style>
 
 
@@ -174,7 +190,7 @@ function goLogin(){
 				loginTalk(data.login.userId, data.login.mobile, data.login.userName);
 			}
 			// 새창으로 maindashboard.do 페이지 열기
-			/*window.open('/mainDashboard.do', 'windowName', '_blank');*/
+			window.open('/mainDashboard.do','MainDashBoard', 'height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
 		},
 		error: function(xhr, status, error) {
 			alert(xhr.responseText);
@@ -203,12 +219,34 @@ function AgreeCheckLogin(userName){
 	});
 }
 
-function popFindUserInfo(){
+function popFindUserInfo() {
+	var findUserInfoDialog = $("#divFindUserInfo").data("kendoDialog");
+
+	if (findUserInfoDialog == null) {
+		var iframeContent = $('<iframe id="findUserInfoIframe" frameborder="0" scrolling="auto" style="width: 100%; height: 100%;"></iframe>');
+		iframeContent.attr('src', '/findUserInfo.do');
+
+		findUserInfoDialog = $("#divFindUserInfo").kendoDialog({
+			width: 550,
+			height: 491,
+			content: iframeContent,
+			visible: false, // 'visible' 속성을 다시 'false'로 설정
+			title: "아이디/비밀번호 찾기",
+		}).data("kendoDialog");
+	} else {
+		$('#findUserInfoIframe').attr('src', '/findUserInfo.do');
+	}
+
+	findUserInfoDialog.center(); // 'center()' 메서드를 'open()' 메서드 호출 전에 호출
+	findUserInfoDialog.open();
+}
+
+/*function popFindUserInfo(){
 	viewLocation = $("#divFindUserInfo").data("kendoWindow");
 	if(viewLocation == null) {
 		viewLocation = $("#divFindUserInfo").kendoWindow({
 			width: 550,
-			height: 623,
+			height: 491,
 			content: {
 				url: "/findUserInfo.do"
 			},
@@ -219,7 +257,7 @@ function popFindUserInfo(){
 		viewLocation.refresh({url: "/findUserInfo.do"});
 	}
 	viewLocation.center().open();
-}
+}*/
 
 
 function loginTalk(userId,mobile,userName){
