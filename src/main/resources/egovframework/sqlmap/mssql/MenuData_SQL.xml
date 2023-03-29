@@ -158,6 +158,7 @@
 
 		FROM T_TEMP_MENU_AUTH
 		WHERE
-			USER_ID = #{userId}
+			USER_ID = #{userId} OR cust_id = #{custId}
+		GROUP BY MENU_CD
 	</select>
 </mapper>

@@ -56,7 +56,7 @@ public class LoginController {
 			
 			//메뉴 정보를 가져와 json 형태로 파싱한다.
 			ObjectMapper mapper = new ObjectMapper();
-			String menuJson = mapper.writeValueAsString(menuList(login.getAuthSeq(), login.getUserId()));
+			String menuJson = mapper.writeValueAsString(menuList(login.getAuthSeq(), login.getUserId(), login.getCustId()));
 
 			//마지막 로그인 날짜를 저장한다.
 			loginService.updateLastLogin(param);
@@ -91,7 +91,7 @@ public class LoginController {
 	 * @param userId
 	 * @return
 	 */
-	private Map<String, Object> menuList(int authSeq, String userId){
+	private Map<String, Object> menuList(int authSeq, String userId, String custId){
 		Map<String, Object> param = new HashMap<>();
 		
 		param.put("authSeq", authSeq);
@@ -107,7 +107,9 @@ public class LoginController {
 
 		try {
 			userParam.put("userId",userId);
+			userParam.put("custId",custId);
 			menuException = menuService.getMenuException(userParam);
+
 			if(menuException.size() > 0) {
 				for (Map<String, Object> map : menuException) {
 					Map<String, Object> ParamMap = new HashMap<>();
