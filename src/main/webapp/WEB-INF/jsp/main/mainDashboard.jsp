@@ -269,13 +269,13 @@
                             <ul>
                                 <li><span class="g-square namelabel"></span><span>매출</span><span class="bunit">(만원)</span></li>
                                 <li><span class="g-circle namelabel"></span><span>이익</span><span class="bunit">(만원)</span></li>
+                                <li><span class="g-square2 namelabel"></span><span>이익율</span><span class="bunit">(%)</span></li>
                             </ul>
                         </div>
                         <div class="chart-wrap" style="width:900px; height:350px;">
                         <canvas id="beGraph"></canvas>
                         </div>
                         <div class="graph_vehicle_percentage">
-                        <p>이익률</p>
                         <ul class="profitLosslist1">
                             <li></li>
                             <li></li>
@@ -295,13 +295,13 @@
                             <ul>
                                 <li><span class="t-square1 namelabel"></span><span>매출</span><span class="bunit">(만원)</span></li>
                                 <li><span class="t-square2 namelabel"></span><span>이익</span><span class="bunit">(만원)</span></li>
+                                <li><span class="g-square2 namelabel"></span><span>이익율</span><span class="bunit">(%)</span></li>
                             </ul>
                         </div>
                         <div class="chart-wrap" style="width:900px; height:350px;">
                         <canvas id="mmGraph"></canvas>
                         </div>
                         <div class="graph_top_percentage">
-                            <p>이익률</p>
                             <ul class="profitLosslist2">
                                 <li></li>
                                 <li></li>
