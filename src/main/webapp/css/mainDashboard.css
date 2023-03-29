@@ -95,7 +95,7 @@ section .highLight_slide{width: 1114px; float: right; overflow: hidden; height: 
 section .highLight_slide>ul{height: 80px;;}
 section .highLight_slide>ul>li{background-color: #434343; padding: 15px 50px; box-sizing: border-box; height: 80px;}
 section .highLight_slide ul.highLight_slide_cont{display: flex; justify-content: space-between;}
-section .highLight_slide ul.highLight_slide_cont li{font-size: 12px;}
+section .highLight_slide ul.highLight_slide_cont li{font-size: 12px; text-align: center;}
 section .highLight_slide ul.highLight_slide_cont span{display: block; font-size: 19px; font-weight: bold; letter-spacing: 0.5px;}
 section .graph_vehicle{margin-top: 50px; float: left; width: 620px;}
 section .graph_top{margin-top: 50px; float: right; width: 620px;}

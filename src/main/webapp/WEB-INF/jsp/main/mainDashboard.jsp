@@ -81,7 +81,7 @@
                                 <li class="vehicle vehicletoday">
                                     <p class="ranking_tit title">배차1위</p>
                                     <div>
-                                        <p class="name">-</p>
+                                        <p class="name"></p>
                                         <b class="rank">0</b>
                                         <span class="Unit">건</span>
                                     </div>
@@ -89,7 +89,7 @@
                                 <li class="sales salestoday">
                                     <p class="ranking_tit title">매춯1위</p>
                                     <div>
-                                        <p class="name">-</p>
+                                        <p class="name"></p>
                                         <b class="rank">0</b>
                                         <span class="Unit">만원</span>
                                     </div>
@@ -97,7 +97,7 @@
                                 <li class="profit profittoday">
                                     <p class="ranking_tit title">이익1위</p>
                                     <div>
-                                        <p class="name">-</p>
+                                        <p class="name"></p>
                                         <b class="rank">0</b>
                                         <span class="Unit">만원</span>
                                     </div>
@@ -105,7 +105,7 @@
                                 <li class="profitRate profitRatetoday">
                                     <p class="ranking_tit title">이익율1위</p>
                                     <div>
-                                        <p class="name">-</p>
+                                        <p class="name"></p>
                                         <b class="rank">0</b>
                                         <span class="Unit">%</span>
                                     </div>
@@ -117,7 +117,7 @@
                                 <li class="vehicle vehicleyesterday">
                                     <p class="ranking_tit title">배차1위</p>
                                     <div>
-                                        <p class="name">-</p>
+                                        <p class="name"></p>
                                         <b class="rank">0</b>
                                         <span class="Unit">건</span>
                                     </div>
@@ -125,7 +125,7 @@
                                 <li class="sales salesyesterday">
                                     <p class="ranking_tit title">매출1위</p>
                                     <div>
-                                        <p class="name">-</p>
+                                        <p class="name"></p>
                                         <b class="rank">0</b>
                                         <span class="Unit">만원</span>
                                     </div>
@@ -133,7 +133,7 @@
                                 <li class="profit profityesterday">
                                     <p class="ranking_tit title">이익1위</p>
                                     <div>
-                                        <p class="name">-</p>
+                                        <p class="name"></p>
                                         <b class="rank">0</b>
                                         <span class="Unit">만원</span>
                                     </div>
@@ -141,7 +141,7 @@
                                 <li class="profitRate profitRateyesterday">
                                     <p class="ranking_tit title">이익율1위</p>
                                     <div>
-                                        <p class="name">-</p>
+                                        <p class="name"></p>
                                         <b class="rank">0</b>
                                         <span class="Unit">%</span>
                                     </div>
