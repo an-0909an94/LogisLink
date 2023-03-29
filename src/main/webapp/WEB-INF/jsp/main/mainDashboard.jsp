@@ -1,6 +1,17 @@
+<%@ page import="com.logislink.login.vo.LoginVO" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%
+    String aaaa = request.getParameter("custId");
+    if(aaaa !=null) {
+        LoginVO login = (LoginVO) session.getAttribute("userInfo");
+        login.setCustId(request.getParameter("custId").toString());
+        login.setUserId(request.getParameter("userid").toString());
+        login.setUserName(request.getParameter("userNm").toString());
+        session.setAttribute("userInfo", login);
+    }
+%>
 <html>
 <head>
     <title>LOGISLINK DASHBOARD</title>
@@ -28,6 +39,9 @@
                 <li class="color_r">신세계 상품권</li>
                 <li><a href="#">신청</a></li>
             </ul>--%>
+                <a href="#"><span onClick="location.replace('/mainDashboard.do?userid=est0302&custId=C20210802130835001&userNm=김영철')">김영철</span></a>
+                <a href="#"><span onClick="location.replace('/mainDashboard.do?userid=input13&custId=C20230203133001001&userNm=김옥순')">김옥순</span></a>
+
             <a href="#" class="btn_gray replay"><span onClick="window.location.reload()">새로고침</span><p>새로고침</p></a>
             <a href="#" id="navPopup" class="btn_gray region"><span>지역설정</span><p>지역설정</p></a>
 
