@@ -257,7 +257,9 @@
                                 <li><span class="g-circle namelabel"></span><span>이익</span><span class="bunit">(만원)</span></li>
                             </ul>
                         </div>
-                        <canvas id="beGraph" width="650" height="209"></canvas>
+                        <div class="chart-wrap" style="width:900px; height:350px;">
+                        <canvas id="beGraph"></canvas>
+                        </div>
                         <div class="graph_vehicle_percentage">
                         <p>이익률</p>
                         <ul class="profitLosslist1">
@@ -281,7 +283,9 @@
                                 <li><span class="t-square2 namelabel"></span><span>이익</span><span class="bunit">(만원)</span></li>
                             </ul>
                         </div>
-                        <canvas id="mmGraph" width="650" height="209"></canvas>
+                        <div class="chart-wrap" style="width:900px; height:350px;">
+                        <canvas id="mmGraph"></canvas>
+                        </div>
                         <div class="graph_top_percentage">
                             <p>이익률</p>
                             <ul class="profitLosslist2">
@@ -1217,7 +1221,7 @@
                     left: 10, //차트의 넓이를 지정할 수 있다.
                     right: 40,
                     top: 50,
-                    bottom: 0
+                    bottom: 80
                 }
             },
             interaction: {
@@ -1359,10 +1363,10 @@
         options: {
             layout: {
                 padding: {
-                    left: 10,
-                    right: 20,
+                    left: 20,
+                    right: 30,
                     top: 50,
-                    bottom: 0
+                    bottom: 80
                 }
             },
             interaction: {
@@ -1517,13 +1521,24 @@
         const profits = [];
 
         data.forEach((item) => {
-
-            // labels.push(item.vehicleMM);
             labels.push(mm(item));
             sales.push(item.sales); // 매출
             profits.push(item.profit); // 이익
-
         });
+
+        // debugger;
+
+        // sales와 profit에서 최소값과 최대값 찾기
+        const salesMin = Math.min(...sales);
+        const salesMax = Math.max(...sales);
+        const profitMin = Math.min(...profits);
+        const profitMax = Math.max(...profits);
+
+        // 전체 최소값과 최대값 찾기
+        const minValue1 = chart.options.scales.y1.min || Math.min(salesMin, profitMin);
+        const maxValue1 = chart.options.scales.y1.max || Math.max(salesMax, profitMax);
+        const minValue2 = chart.options.scales.y2.min || Math.min(salesMin, profitMin);
+        const maxValue2 = chart.options.scales.y2.max || Math.max(salesMax, profitMax);
 
         // 가져온 데이터를 차트에 적용합니다.
         chart.data.labels = labels;
@@ -1532,6 +1547,10 @@
 
         // debugger;
         // 차트를 업데이트합니다.
+        chart.options.scales.y1.min = minValue1;
+        chart.options.scales.y1.max = maxValue1;
+        chart.options.scales.y2.min = minValue2;
+        chart.options.scales.y2.max = maxValue2;
         chart.update();
     }
 
