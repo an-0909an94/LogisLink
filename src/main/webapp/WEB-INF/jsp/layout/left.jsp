@@ -398,6 +398,9 @@
 		<div id="leftMenu"></div>
 		<!-- member -->
 	</div>
+	<div class="DashBoard">
+			<div class="lDashBoard"></div>
+	</div>
 	<div class="mem-info-wrapper">
 		<div class="mem-info">
 			<div class="manager-profile" onclick="PrivateOpen();">${fn:substring(sessionScope.userInfo.userName, 0, 1)} </div>
@@ -517,6 +520,8 @@
 			$('.nav .side-nav-ul span').toggleClass('side-nav-img-atv');
 			$('.sub-li-wrap').toggleClass('sub-li-wrap-atv');
 			$('.mem-info-wrapper').toggleClass('mem-info-wrapper-atv');
+			$('.lDashBoard').toggleClass('lDashBoard-atv');
+			$('.lDashBoard-atv').removeClass('lDashBoard');
 			$('.manager-name').toggleClass('none-atv');
 			$('.manager-role').toggleClass('none-atv');
 			$('.carrier-name').toggleClass('none-atv');

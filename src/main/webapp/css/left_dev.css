@@ -346,4 +346,26 @@ a.dropBtn {
 	color:#fff;
 }
 
+.DashBoard {
+    position: relative;
+    width: auto;
+    height: auto;
+    margin: 7px 11px;
+}
+.lDashBoard, .lDashBoard-act {
+    position: relative;
+    background-position: center;
+    background-size: cover;
+}
+.lDashBoard {
+    background-image:url('/img/btn_dash_v2.png');
+    width: 186px;
+    height: 62px;
+}
+.lDashBoard-atv {
+    background-image:url('/img/btn_dash_v2_off.png');
+    width: 186px;
+    height: 62px;
+}
+
 
