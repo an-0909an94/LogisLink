@@ -192,7 +192,6 @@ function goLogin(){
 			// 새창으로 maindashboard.do 페이지 열기
 			window.open('/mainDashboard.do','MainDashBoard', 'height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
 		},
-
 		error: function(xhr, status, error) {
 			alert(xhr.responseText);
 			alert(error);
