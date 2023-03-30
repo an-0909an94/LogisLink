@@ -399,7 +399,7 @@
 		<!-- member -->
 	</div>
 	<div class="DashBoard">
-			<a href="/mainDashboard.do" target="_blank"><div class="lDashBoard"></div></a>
+			<a href="/mainDashboard.do" onclick="window.open('/mainDashboard.do','MainDashBoard', 'height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes'); return false;"><div class="lDashBoard"></div></a>
 	</div>
 	<div class="mem-info-wrapper">
 		<div class="mem-info">
