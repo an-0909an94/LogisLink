@@ -172,7 +172,7 @@
     WHERE MINUS != 0) A
     LEFT OUTER JOIN T_USER U ON A.REGID = U.USER_ID
     WHERE PLUSRANK = 1
-    ORDER BY sales DESC
+    ORDER BY profit, profitPersaint DESC
   </select>
 
   <select id="selectResultVehicle" parameterType="java.util.HashMap" resultType="resultVehicleVO">
@@ -213,8 +213,8 @@
   <select id="selectMmtopRank" parameterType="java.util.HashMap" resultType="mmtopRankVO">
     SELECT TOP 6 #{custId} custId, acountId
          , (SELECT BIZ_NAME FROM T_CUST_MST CM WHERE CM.CUST_ID = acountId) acountNm
-         , SUM(PLUS) / 10000                                                         sales
-         , (SUM(PLUS) - SUM(MINUS)) / 10000                                          profit
+         , SUM(PLUS) / 1000000                                                         sales
+         , (SUM(PLUS) - SUM(MINUS)) / 1000000                                          profit
          , IIF(SUM(PLUS) = 0, 0, ROUND(CONVERT(FLOAT, SUM(PLUS) - SUM(MINUS)) / SUM(PLUS) * 100, 1)) profitLoss
          , RANK() OVER (ORDER BY SUM(PLUS) DESC, (SUM(PLUS)-SUM(MINUS)) DESC)                           PLUSRANK
     FROM (SELECT MAX(IIF(OA.BUY_CUST_ID = #{custId}, OA.SELL_CUST_ID, '')) acountId --매출
