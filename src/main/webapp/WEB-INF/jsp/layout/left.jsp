@@ -399,7 +399,7 @@
 		<!-- member -->
 	</div>
 	<div class="DashBoard">
-			<div class="lDashBoard"></div>
+			<a href="/mainDashboard.do" target="_blank"><div class="lDashBoard"></div></a>
 	</div>
 	<div class="mem-info-wrapper">
 		<div class="mem-info">
@@ -522,6 +522,7 @@
 			$('.mem-info-wrapper').toggleClass('mem-info-wrapper-atv');
 			$('.lDashBoard').toggleClass('lDashBoard-atv');
 			$('.lDashBoard-atv').removeClass('lDashBoard');
+			$('.lDashBoard-atv').addClass('lDashBoard');
 			$('.manager-name').toggleClass('none-atv');
 			$('.manager-role').toggleClass('none-atv');
 			$('.carrier-name').toggleClass('none-atv');
