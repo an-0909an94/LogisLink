@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%
+<%--<%
     String aaaa = request.getParameter("custId");
     if(aaaa !=null) {
         LoginVO login = (LoginVO) session.getAttribute("userInfo");
@@ -11,7 +11,7 @@
         login.setUserName(request.getParameter("userNm").toString());
         session.setAttribute("userInfo", login);
     }
-%>
+%>--%>
 <html>
 <head>
     <title>LOGISLINK DASHBOARD</title>
@@ -26,6 +26,16 @@
             <b>${sessionScope.userInfo.userName} 님<span>${sessionScope.userInfo.bizName.replace('주식회사', '㈜')}</span></b>
         </div>
         <div class="header_right">
+            <%--<div class="btn-row" style="float:left;">
+                <div class="tool_group" style ="font-size: 12px;">자동새로고침
+                    <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
+                    <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;display: flex;flex-direction: row;align-content: center;align-items: center;">
+                        <span class="marble"></span>
+                        <span class="on">ON</span>
+                        <span class="off" >OFF</span>
+                    </label>
+                </div>
+            </div>--%>
             <%--<ul>
                 <li>배차 CREDIT</li>
                 <li class="color_b">56,850 Point</li>
@@ -39,8 +49,8 @@
                 <li class="color_r">신세계 상품권</li>
                 <li><a href="#">신청</a></li>
             </ul>--%>
-                <a href="#"><span onClick="location.replace('/mainDashboard.do?userid=est0302&custId=C20210802130835001&userNm=김영철')">김영철</span></a>
-                <a href="#"><span onClick="location.replace('/mainDashboard.do?userid=input13&custId=C20230203133001001&userNm=김옥순')">김옥순</span></a>
+                <%--<a href="#"><span onClick="location.replace('/mainDashboard.do?userid=est0302&custId=C20210802130835001&userNm=김영철')">김영철</span></a>
+                <a href="#"><span onClick="location.replace('/mainDashboard.do?userid=input13&custId=C20230203133001001&userNm=김옥순')">김옥순</span></a>--%>
 
             <a href="#" class="btn_gray replay"><span onClick="window.location.reload()">새로고침</span><p>새로고침</p></a>
             <a href="#" id="navPopup" class="btn_gray region"><span>지역설정</span><p>지역설정</p></a>
@@ -267,8 +277,8 @@
                     <div class="graphB">
                         <div id="custom1">
                             <ul>
-                                <li><span class="g-square namelabel"></span><span>매출</span><span class="bunit">(만원)</span></li>
-                                <li><span class="g-circle namelabel"></span><span>이익</span><span class="bunit">(만원)</span></li>
+                                <li><span class="g-square namelabel"></span><span>매출</span><span class="bunit">(백만원)</span></li>
+                                <li><span class="g-circle namelabel"></span><span>이익</span><span class="bunit">(백만원)</span></li>
                                 <li><span class="g-square2 namelabel"></span><span>이익율</span><span class="bunit">(%)</span></li>
                             </ul>
                         </div>
@@ -277,12 +287,12 @@
                         </div>
                         <div class="graph_vehicle_percentage">
                         <ul class="profitLosslist1">
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
+                            <li>0%</li>
+                            <li>0%</li>
+                            <li>0%</li>
+                            <li>0%</li>
+                            <li>0%</li>
+                            <li>0%</li>
                         </ul>
                         </div>
                     </div>
@@ -293,8 +303,8 @@
                     <div class="graphT">
                         <div id="custom2">
                             <ul>
-                                <li><span class="t-square1 namelabel"></span><span>매출</span><span class="bunit">(만원)</span></li>
-                                <li><span class="t-square2 namelabel"></span><span>이익</span><span class="bunit">(만원)</span></li>
+                                <li><span class="t-square1 namelabel"></span><span>매출</span><span class="bunit">(백만원)</span></li>
+                                <li><span class="t-square2 namelabel"></span><span>이익</span><span class="bunit">(백만원)</span></li>
                                 <li><span class="g-square2 namelabel"></span><span>이익율</span><span class="bunit">(%)</span></li>
                             </ul>
                         </div>
@@ -303,13 +313,14 @@
                         </div>
                         <div class="graph_top_percentage">
                             <ul class="profitLosslist2">
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
-                                <li></li>
+                                <li>0%</li>
+                                <li>0%</li>
+                                <li>0%</li>
+                                <li>0%</li>
+                                <li>0%</li>
+                                <li>0%</li>
                             </ul>
+
                         </div>
                     </div>
                 </div>
@@ -371,7 +382,6 @@
                             <tr>
 
                                 <td class="color_g">전국평균</td>
-                                <%--<c:forEach var="idx" begin="0" end="4">--%>
                                 <c:forEach var="idx" items="${[1, 2, 4]}">
                                     <c:set var="oilType" value="${idx}" />
                                     <c:choose>
@@ -473,7 +483,50 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0-rc.1"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script>
+        //자동 새로고침 기본 10초
+        var rCookie = $.cookie("autoRefresh");
+        if (rCookie == null) {
+            $.cookie("autoRefresh", 3000, {expires: 10000, path: "/"});
+            rCookie = $.cookie("autoRefresh");
+        }
+
+        if (rCookie != "0") {
+            startInterval();
+            $("#autoRefresh").prop("checked", true);
+        } else {
+            $("#autoRefresh").prop("checked", false);
+        }
+
+        //자동 새로고침 기능 on/off
+        $("#autoRefresh").on("click", function () {
+            if ($(this).is(":checked")) {
+                $.cookie("autoRefresh", 3000, {expires: 9999, path: "/"});
+                startInterval();
+            } else {
+                $.cookie("autoRefresh", 0, {expires: 9999, path: "/"});
+                stopInterval();
+            }
+        })
+
+        function startInterval() {
+
+            refresh_timer = 31;
+            autoRefresh = setInterval(function(){
+                refresh_timer --;
+                if(refresh_timer < 2) {
+                    refresh_timer = 31;
+                    goList();
+                }
+            }, 1000);
+        }
+
+        function stopInterval() {
+            clearInterval(autoRefresh);
+        }
+
+
 
     $(function(){
         setInterval(slide,5000);
@@ -1458,8 +1511,6 @@
         }
     });
 
-
-
     // 첫 번째 차트에 대한 AJAX 요청
     function bbGraphData() {
         return $.ajax({
@@ -1495,12 +1546,6 @@
                 console.log('차트2번', response2);
                 if (response1[0].result) {
                     processDataForChart(beGraph, response1[0].data);
-                    // // 손익은 따로 출력한다
-                    // const profitLossList1 = $(".profitLosslist1 li");
-                    // data.forEach((item, index) => {
-                    //     const profitLoss = item.profitLoss;
-                    //     $(profitLossList1[index]).text(profitLoss);
-                    // });
                 } else {
                     console.error("Error: response1 is empty or undefined");
                 }
@@ -1508,12 +1553,6 @@
                 // 두 번째 차트 데이터 처리
                 if (response2[0].result) {
                     processDataForChart(mmGraph, response2[0].data);
-                    // // 손익은 따로 출력한다
-                    // const profitLossList2 = $(".profitLosslist2 li");
-                    // data.forEach((item, index) => {
-                    //     const profitLoss = item.profitLoss;
-                    //     $(profitLossList2[index]).text(profitLoss);
-                    // });
                 } else {
                     console.error("Error: response2 is empty or undefined");
                 }
@@ -1523,9 +1562,8 @@
             });
     }
 
-
     function extractFunc(item) {
-        return item.label;
+        return item.vehicleMM;
     }
 
     // 차트 데이터 처리 함수
@@ -1540,8 +1578,6 @@
             profits.push(item.profit); // 이익
         });
 
-        // debugger;
-
         // sales와 profit에서 최소값과 최대값 찾기
         const salesMin = Math.min(...sales);
         const salesMax = Math.max(...sales);
@@ -1553,6 +1589,14 @@
         const maxValue1 = chart.options.scales.y1.max || Math.max(salesMax, profitMax);
         const minValue2 = chart.options.scales.y2.min || Math.min(salesMin, profitMin);
         const maxValue2 = chart.options.scales.y2.max || Math.max(salesMax, profitMax);
+
+        // y1 및 y2 객체 생성
+        if (!chart.options.scales.y1) {
+            chart.options.scales.y1 = {};
+        }
+        if (!chart.options.scales.y2) {
+            chart.options.scales.y2 = {};
+        }
 
         // 가져온 데이터를 차트에 적용합니다.
         chart.data.labels = labels;
@@ -1580,6 +1624,7 @@
     $.when(bbGraphData(), mmGraphData())
         .done((response1, response2) => {
             // 첫 번째 차트 데이터 처리
+            // debugger;
             if (response1[0].result) {
                 processDataForChart(beGraph, response1[0].data, (item) => item.vehicleMM);
                 updateProfitLossList(".profitLosslist1", response1[0].data);
@@ -1589,7 +1634,7 @@
 
             // 두 번째 차트 데이터 처리
             if (response2[0].result) {
-                processDataForChart(mmGraph, response2[0].data, (item) => item.acountNm);
+                processDataForChart(mmGraph, response2[0].data, (item) => item.acountNm.slice(0, 5) + '...');
                 updateProfitLossList(".profitLosslist2", response2[0].data);
             } else {
                 console.error("Error: response2 is empty or undefined");
