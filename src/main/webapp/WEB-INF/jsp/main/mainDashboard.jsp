@@ -27,7 +27,7 @@
         </div>
         <div class="header_right">
             <%--<div class="btn-row" style="float:left;">
-                <div class="tool_group" style ="font-size: 12px;">자동새로고침
+                <div class="tool_group" style="font-size: 12px;position: relative;top: 10px;margin-right: 10px;">
                     <input type="checkbox" id="autoRefresh" name="autoRefresh" class="input_on-off">
                     <label for="autoRefresh" class="label_on-off"  style="vertical-align:middle;display: flex;flex-direction: row;align-content: center;align-items: center;">
                         <span class="marble"></span>
@@ -83,7 +83,6 @@
                     </div>
                     </div>
                 <div id="navClose1" class="exitBtn btn_dash_close">닫기</div>
-<%--                <button id="navClose2" type="button" class="icon_dash_close btn_dash_close">닫기</button>--%>
                 </div>
             </div>
     </header>
@@ -517,7 +516,6 @@
                 refresh_timer --;
                 if(refresh_timer < 2) {
                     refresh_timer = 31;
-                    goList();
                 }
             }, 1000);
         }
@@ -1263,7 +1261,7 @@
                     display:true,
                     color: '#ff624c',
                     anchor: 'end',
-                    align: 'top',
+                    align: 'left',
                     font: {
                         family: 'Noto Sans KR',
                         size: 14,
@@ -1566,14 +1564,29 @@
         return item.vehicleMM;
     }
 
+        function searchText(date) {
+            const yyyy = date.getFullYear();
+            const mm = ('0' + (date.getMonth() + 1)).slice(-2);
+            return yyyy + mm;
+        }
+
+        const today = new Date();
+        const months = [];
+
+        for (let i = 0; i < 6; i++) {
+            const month = new Date(today.getFullYear(), today.getMonth() - i, 1);
+            months.push(searchText(month));
+        }
+        console.log('날짜를 만들어',months);
+
     // 차트 데이터 처리 함수
-    function processDataForChart(chart, data, mm) {
+    function processDataForChart(chart, data, serchText) {
         const labels = [];
         const sales = [];
         const profits = [];
 
         data.forEach((item) => {
-            labels.push(mm(item));
+            labels.push(serchText(item));
             sales.push(item.sales); // 매출
             profits.push(item.profit); // 이익
         });
@@ -1765,7 +1778,7 @@
                 const filteredData = data.filter(item => item.resultFlag === flag);
                 const filterItem = filteredData[0];
                 if (filterItem) {
-                    $('.' + className + ' .vehicleStr').text(filterItem.allocCnt);
+                    $('.' + className + ' .vehicleStr').text(filterItem.allocCnt.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     $('.' + className + ' .salesStr').text(filterItem.sales.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     $('.' + className + ' .proiftStr').text(filterItem.profit.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
                     $('.' + className + ' .proiftRateStr').text(filterItem.profitPer);
