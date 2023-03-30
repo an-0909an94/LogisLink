@@ -2,7 +2,7 @@ package com.logislink.dashboard.vo;
 
 // 배차손익추이
 public class ResultVehicleVO {
-    String yyyymm; // 날짜
+    String searchMonth; // 날짜
     String custId;  // 거래처
     String yyyy;   // 년도
     String vehicleMM;   // 월
@@ -10,10 +10,10 @@ public class ResultVehicleVO {
     int profit;     // 이익
     String profitLoss;  // 손익이익률
 
-    public String getYyyymm(){return yyyymm;}
+    public String getSearchMonth(){return searchMonth;}
 
-    public void setYyyymm(String yyyymm) {
-        this.yyyymm = yyyymm;
+    public void setSearchMonth(String searchMonth) {
+        this.searchMonth = searchMonth;
     }
 
     public String getCustId(){return custId;}

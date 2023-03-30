@@ -176,12 +176,12 @@
   </select>
 
   <select id="selectResultVehicle" parameterType="java.util.HashMap" resultType="resultVehicleVO">
-    SELECT yyyymm
+    SELECT yyyymm searchMonth
          , #{custId} custId
          , IIF(yyyy = LEFT(CONVERT(VARCHAR(10), GETDATE(), 112),4),'',yyyy) yyyy
          , IIF(vehicleMM = SUBSTRING(CONVERT(VARCHAR(10), GETDATE(), 112),5, 2), '이번달',CONCAT(vehicleMM, '월')) vehicleMM
-         , PLUS/10000 sales
-         , (PLUS-MINUS)/10000 profit
+         , PLUS/1000000 sales
+         , (PLUS-MINUS)/1000000 profit
          , IIF(PLUS = 0, 0, ROUND(CONVERT(FLOAT, PLUS - MINUS) / PLUS * 100, 1)) profitLoss
     FROM (
            SELECT LEFT(CONVERT(VARCHAR(10), S_DATE, 112),6) yyyymm
