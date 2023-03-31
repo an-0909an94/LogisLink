@@ -525,7 +525,7 @@ public class OrderController {
 		orderService.updateOrderState(param);
 
 		//if(param.get("orderState").toString().equals("09")){
-		rpaApiPost(param,session);
+	//	rpaApiPost(param,session);
 		//}
 		if(!"00".equals(param.get("retCode"))) {
 			map.put("result", Boolean.FALSE);
