@@ -1820,9 +1820,9 @@ legend{
 	background-color: #fff;
 }
 
-.k-grid tbody tr.k-state-hover, .k-grid tbody tr:hover, .k-grid tr.k-state-selected>td,.k-grid tbody tr:hover,.k-grid td.k-state-selected, .k-grid tr.k-state-selected>td{
-	background-color: #fdf3cf;
-}
+/*.k-grid tbody tr.k-state-hover, .k-grid tbody tr:hover, .k-grid tr.k-state-selected>td,.k-grid tbody tr:hover,.k-grid td.k-state-selected, .k-grid tr.k-state-selected>td{
+	background-color: #00a570;
+}*/
 
 /* 조직정보 */
 
