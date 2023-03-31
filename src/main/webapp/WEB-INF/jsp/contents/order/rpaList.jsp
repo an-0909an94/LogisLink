@@ -303,12 +303,15 @@
             }
         });
 
+        // 숫자 입력 시 정규식을 벗어나면 경고창
         $('#linkCharge').on("input", function() {
-            var linkCharge = /^\d*$/;
+            const linkCharge = /^\d*$/;
             if(!linkCharge.test($("#linkCharge").val().trim().replace(/,/g, ""))){
                 alert("숫자만 입력하시기 바랍니다.");
                 $("#linkCharge").val("")
                 return;
+            }else {
+                console.error("error")
             }
             $("#linkCharge").val(Util.formatNumberInput($("#linkCharge").val().trim()));
         });
@@ -360,7 +363,9 @@
                                 return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_03+"\")'>" + msg+"</a>";
                             }
                         }
-                    }
+                    },
+                    // 배경색을 지정하는 CSS 스타일
+                    style: "background: #333 !important;"
                 },
                 { field: "", width: 100, title: "기능",
                     template: function(dataItem) {
@@ -377,7 +382,7 @@
                         }else{
                             return "";
                         }
-                    }
+                    },
                 },
             ]
         },
