@@ -321,7 +321,7 @@ public class OrderController {
 		}
 
 		if(!param.get("chargeType").toString().equals("03")){
-			rpaApiPost(param,session);
+		//	rpaApiPost(param,session);
 		}
 		//rpaApiPost(param);
 
@@ -1028,7 +1028,7 @@ public class OrderController {
 						List<Map<String,Object>> uData = orderService.getLinkRpaJob(rpaParamID);
 
 						if(uData.size()>0){
-							jobStat24 ="C";
+							jobStat24 = "C";
 						}
 					}
 
@@ -1297,7 +1297,7 @@ public class OrderController {
 			param.put("oneCargo","Y");
 			param.put("oneCharge",param.get("link_charge"));
 		}
-		rpaApiPost(param, session);
+	//	rpaApiPost(param, session);
 		map.put("result", Boolean.TRUE);
 		map.put("msg", "취소되었습니다.");
 		return "jsonView";
@@ -1319,7 +1319,7 @@ public class OrderController {
 			param.put("oneCargo","Y");
 			param.put("oneCharge",param.get("linkCharge"));
 		}
-		rpaApiPost(param,session);
+	//	rpaApiPost(param,session);
 		map.put("result", Boolean.TRUE);
 		map.put("msg", "수정되었습니다.");
 		return "jsonView";

@@ -42,6 +42,12 @@
         display:none;
         z-index:9999;
     }
+    .k-dialog {
+        z-index :9996 !important;
+    }
+    .k-overlay{
+        z-index :9995 !important;
+    }
 </style>
 
 <div class="header">
@@ -311,17 +317,26 @@
 
     // 22.07.18 이건욱 그리드 개인화 설정 -> 숫자 형태의 컬럼 타입을 Number로 바꿔 정렬 시 올바르게 정렬 되도록 추가
     var columns = [
-        { field: "number", title: "No", width: 80},
-        { field: "orderCarTonName", title: "요청톤수", width: 80},
-        { field: "sAddr", title: "상차지주소", width: 300},
-        { field: "eAddr", title: "하차지주소", width: 300},
-        { field: "custName", title: "거래처명", width: 200,
+        { field: "number", title: "No", width: 30},
+        { field: "custName", title: "거래처명", width: 90,
             attributes: {
                 style: "text-align: left"
             }
         },
-        { field: "sDateDay", title: "상차일자", width: 100},
-        { field: "orderCarName", title: "요청차종", width: 100},
+        { field: "sDateDay", title: "상차일자", width: 80},
+        { field: "orderCarName", title: "요청차종", width: 90},
+        { field: "orderCarTonName", title: "요청톤수", width: 70},
+        {
+            field: "sAddr", title: "상차지주소", width: 140,
+            attributes: {
+                style: "text-align: left"
+            }
+        },
+        { field: "eAddr", title: "하차지주소", width: 140,
+            attributes: {
+                style: "text-align: left"
+            }
+        },
         {
             title: "24시콜",
             columns: [
@@ -454,14 +469,14 @@
         { field: "orderStateName", title: "상태", width: 80},
 
         { field: "eDateDay", title: "하차일자", width: 100},
-        { field: "chargeType", title: "운임구분", width: 100},
+        { field: "chargeType", title: "운임구분", width: 80},
         { field: "goodsWeight", title: "중량", width: 40},
-        { field: "goodsName", title: "화물정보", width: 200,
+        { field: "goodsName", title: "화물정보", width: 150,
             attributes: {
                 style: "text-align: left"
             }
         },
-        { field: "order_id", title: "오더ID", width: 75}
+        { field: "order_id", title: "오더ID", width: 150}
 
     ];
 
