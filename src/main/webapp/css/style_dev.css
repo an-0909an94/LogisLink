@@ -290,7 +290,7 @@ html.k-webkit.k-webkit90 {
 
 /* grid selected 색상 변경 */
 .k-grid td.k-state-selected, .k-grid tr.k-state-selected>td {
-    background-color: #cffdef;
+    background-color: #cffdef !important;
 }
 
 .k-grid td.k-state-focused {
