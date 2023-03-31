@@ -272,12 +272,19 @@
 
         $(window).bind("resize", function() {
             $("#grid").css("height", "calc(100vh - 275px)");
-
             $("#grid").data("kendoGrid").resize();
         });
 
         goList();
 
+        // 특정 열의 색을 지정한다.
+        const targetColumnIndexes1 = [7, 8, 9, 16, 17, 18, 19, 20, 21];
+        const headerCells = $('th');
+        headerCells.each(function(index) {
+            if (targetColumnIndexes1.includes(index)) {
+                $(this).css('background-color', '#cffdef');
+            }
+        });
 
         var rCookie = $.cookie("autoRefreshLink");
         if(rCookie == null) {
@@ -364,8 +371,9 @@
                             }
                         }
                     },
-                    // 배경색을 지정하는 CSS 스타일
-                    style: "background: #333 !important;"
+                    attributes: {
+                        style: "background-color: rgb(207 253 239)"
+                    }
                 },
                 { field: "", width: 100, title: "기능",
                     template: function(dataItem) {
@@ -383,6 +391,9 @@
                             return "";
                         }
                     },
+                    attributes: {
+                        style: "background-color: rgb(207 253 239)"
+                    }
                 },
             ]
         },
@@ -409,6 +420,9 @@
                                 return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_21+"\")'>" + msg+"</a>";
                             }
                         }
+                    },
+                    attributes: {
+                        style: "background-color: rgb(207 253 239)"
                     }
                 },
                 { field: "", width: 100, title: "기능",
@@ -425,6 +439,9 @@
                         }else{
                             return "";
                         }
+                    },
+                    attributes: {
+                        style: "background-color: rgb(207 253 239)"
                     }
                 },
             ]
@@ -451,6 +468,9 @@
                                 return "<a href=\"#\" onclick='getMsg(\""+dataItem.rpa_msg_18+"\")'>" + msg+"</a>";
                             }
                         }
+                    },
+                    attributes: {
+                        style: "background-color: rgb(207 253 239)"
                     }
                 },
                 { field: "", width: 100, title: "기능",
@@ -467,6 +487,9 @@
                         }else{
                             return "";
                         }
+                    },
+                    attributes: {
+                        style: "background-color: rgb(207 253 239)"
                     }
                 },
             ]
