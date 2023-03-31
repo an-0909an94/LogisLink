@@ -448,10 +448,10 @@ button:focus,
 	background-image: none !important;
 }
 
-.k-grid td.k-state-selected:hover, .k-grid tr.k-state-selected:hover{
-	border-color: #00a570 !important;
-	background-color: #00a570 !important;
-}
+/*.k-grid td.k-state-selected:hover, .k-grid tr.k-state-selected:hover{*/
+/*	border-color: #00a570 !important;*/
+/*	background-color: #00a570 !important;*/
+/*}*/
 
 
 /* 공통 E */
@@ -911,9 +911,9 @@ button:focus,
 	margin-bottom: 15px;
 }
 
-.k-grid-header .k-header>.k-link, .k-header, .k-treemap-title{
-	background-color: #f6f6f6;
-}
+/*.k-grid-header .k-header>.k-link, .k-header, .k-treemap-title{*/
+/*	background-color: #f6f6f6;*/
+/*}*/
 
 .k-i-arrow-end-left::before,
 .k-i-arrow-60-left::before,
@@ -1274,7 +1274,7 @@ button:focus,
 
 /* 그리드 S */
 .accept{
-	color: #333 !important;
+	color: #2a5dc4 !important;
 }
 
 .k-pager-numbers .k-link{
@@ -1816,9 +1816,9 @@ legend{
 }
 
 /* 그리드 */
-.k-grid tr.k-alt{
+/*.k-grid tr.k-alt{
 	background-color: #fff;
-}
+}*/
 
 /*.k-grid tbody tr.k-state-hover, .k-grid tbody tr:hover, .k-grid tr.k-state-selected>td,.k-grid tbody tr:hover,.k-grid td.k-state-selected, .k-grid tr.k-state-selected>td{
 	background-color: #00a570;

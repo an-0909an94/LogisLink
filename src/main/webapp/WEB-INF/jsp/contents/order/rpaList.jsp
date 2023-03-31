@@ -265,7 +265,7 @@
         $("#deptId option[value='']").remove();
 
         $(window).bind("resize", function() {
-            $("#grid").css("height", "calc(100vh - 235px)");
+            $("#grid").css("height", "calc(100vh - 275px)");
 
             $("#grid").data("kendoGrid").resize();
         });
@@ -311,21 +311,21 @@
 
     // 22.07.18 이건욱 그리드 개인화 설정 -> 숫자 형태의 컬럼 타입을 Number로 바꿔 정렬 시 올바르게 정렬 되도록 추가
     var columns = [
-        { field: "number", title: "No", width: 20 },
-        { field: "orderCarTonName", title: "요청톤수", width:30},
-        { field: "sAddr", title: "상차지주소", width:150},
-        { field: "eAddr", title: "하차지주소", width:150},
-        { field: "custName", title: "거래처명", width: 60,
+        { field: "number", title: "No", width: 80},
+        { field: "orderCarTonName", title: "요청톤수", width: 80},
+        { field: "sAddr", title: "상차지주소", width: 300},
+        { field: "eAddr", title: "하차지주소", width: 300},
+        { field: "custName", title: "거래처명", width: 200,
             attributes: {
                 style: "text-align: left"
             }
         },
-        { field: "sDateDay", title: "상차일자", width: 40 },
-        { field: "orderCarName", title: "요청차종", width: 40 },
+        { field: "sDateDay", title: "상차일자", width: 100},
+        { field: "orderCarName", title: "요청차종", width: 100},
         {
             title: "24시콜",
             columns: [
-                { field: "", width: 40, title: "운임",
+                { field: "", width: 80, title: "운임",
                     template: function(dataItem) {
                         var msg = statMsg(dataItem.link_stat_03, dataItem.job_stat_03);
                         if(dataItem.link_charge_03 !=="" && dataItem.link_charge_03 !=null){
@@ -347,7 +347,7 @@
                         }
                     }
                 },
-                { field: "", width: 55, title: "기능",
+                { field: "", width: 100, title: "기능",
                     template: function(dataItem) {
                     	if(id24 !="") {
                             if ((dataItem.link_charge_03 !== "" && dataItem.link_charge_03 != null) && (dataItem.link_stat_03 != "D" && dataItem.job_stat_03 != "F") && (dataItem.link_stat_03 != "I" && dataItem.job_stat_03 != "E")
@@ -369,7 +369,7 @@
         {
             title: "화물맨",
             columns: [
-                { field: "", width: 40,  title: "운임",
+                { field: "", width: 80,  title: "운임",
                     template: function(dataItem) {
                         var msg = statMsg(dataItem.link_stat_21, dataItem.job_stat_21);
                         if(dataItem.link_charge_21 !=="" && dataItem.link_charge_21 !=null){
@@ -391,7 +391,7 @@
                         }
                     }
                 },
-                { field: "", width: 55, title: "기능",
+                { field: "", width: 100, title: "기능",
                     template: function(dataItem) {
                     	if(idMan !="") {
                             if ((dataItem.link_charge_21 !== "" && dataItem.link_charge_21 != null) && (dataItem.link_stat_21 != "D" && dataItem.job_stat_21 != "F") && (dataItem.link_stat_21 != "I" && dataItem.job_stat_21 != "E")
@@ -412,7 +412,7 @@
         {
             title: "원콜",
             columns: [
-                { field: "", width: 40, title: "운임",
+                { field: "", width: 80, title: "운임",
                     template: function(dataItem) {
                         var msg = statMsg(dataItem.link_stat_18, dataItem.job_stat_18);
                         if(dataItem.link_charge_18 !=="" && dataItem.link_charge_18 !=null){
@@ -433,7 +433,7 @@
                         }
                     }
                 },
-                { field: "", width: 55, title: "기능",
+                { field: "", width: 100, title: "기능",
                     template: function(dataItem) {
                     	if(idOne !="") {
                             if ((dataItem.link_charge_18 !== "" && dataItem.link_charge_18 != null) && (dataItem.link_stat_18 != "D" && dataItem.job_stat_18 != "F") && (dataItem.link_stat_18 != "I" && dataItem.job_stat_18 != "E")
@@ -451,12 +451,12 @@
                 },
             ]
         },
-        { field: "orderStateName", title: "상태", width: 30 },
+        { field: "orderStateName", title: "상태", width: 80},
 
-        { field: "eDateDay", title: "하차일자", width: 40 },
-        { field: "chargeType", title: "운임구분", width: 40 },
-        { field: "goodsWeight", title: "중량", width:20},
-        { field: "goodsName", title: "화물정보", width:80,
+        { field: "eDateDay", title: "하차일자", width: 100},
+        { field: "chargeType", title: "운임구분", width: 100},
+        { field: "goodsWeight", title: "중량", width: 40},
+        { field: "goodsName", title: "화물정보", width: 200,
             attributes: {
                 style: "text-align: left"
             }
