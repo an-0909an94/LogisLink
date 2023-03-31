@@ -980,7 +980,7 @@
                                     </div>
                                 </div>
 
-                                <div class="gray_box">
+                                <div class="gray_box gbox_blue" style="background: #dff1ff">
                                     <div class="form-group row mr0">
                                         <div class="form-group row">
                                             <label class="col-form-label big-name">정보망</label>

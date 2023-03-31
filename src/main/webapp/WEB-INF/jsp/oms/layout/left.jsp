@@ -5,6 +5,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <style>
+	.side-logout a {
+		font-size: 0;
+	}
+	.side-logout {
+		display: block;
+		position: relative;
+	}
     .side-nav {
         width: 90px;
         display: inline-block;
