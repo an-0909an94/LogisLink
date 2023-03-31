@@ -312,6 +312,9 @@
     // 22.07.18 이건욱 그리드 개인화 설정 -> 숫자 형태의 컬럼 타입을 Number로 바꿔 정렬 시 올바르게 정렬 되도록 추가
     var columns = [
         { field: "number", title: "No", width: 20 },
+        { field: "orderCarTonName", title: "요청톤수", width:30},
+        { field: "sAddr", title: "상차지주소", width:150},
+        { field: "eAddr", title: "하차지주소", width:150},
         { field: "custName", title: "거래처명", width: 60,
             attributes: {
                 style: "text-align: left"
@@ -319,7 +322,6 @@
         },
         { field: "sDateDay", title: "상차일자", width: 40 },
         { field: "orderCarName", title: "요청차종", width: 40 },
-        { field: "orderCarTonName", title: "요청톤수", width:30},
         {
             title: "24시콜",
             columns: [
@@ -449,18 +451,17 @@
                 },
             ]
         },
-        { field: "order_id", title: "오더ID", width: 65},
         { field: "orderStateName", title: "상태", width: 30 },
 
         { field: "eDateDay", title: "하차일자", width: 40 },
         { field: "chargeType", title: "운임구분", width: 40 },
-
         { field: "goodsWeight", title: "중량", width:20},
-        { field: "goodsName", title: "화물정보", width:90,
+        { field: "goodsName", title: "화물정보", width:80,
             attributes: {
                 style: "text-align: left"
             }
-        }
+        },
+        { field: "order_id", title: "오더ID", width: 75}
 
     ];
 

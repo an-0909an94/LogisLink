@@ -48,19 +48,19 @@
                 <input type="hidden" name="locationEAddrDetail" id="locationEAddrDetail">
                 <div class="form-group row mt0">
                     <div class="input-group input-group-sm wd110 middle-name div-min-col-1">
-                        
+
                         <select class="custom-select wd110" name="searchDate" id="searchDate">
                             <option value="sDate" selected>상차일자</option>
                             <option value="regdate">등록일자</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1" style="margin-right: 0px;">
-                        
+
                         <input style="padding: 0;" type="text" id="fromDate" name="fromDate" class="col-12">
                     </div>
                     <span style="margin-top: 4px;">~</span>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        
+
                         <input style="padding: 0;" type="text" id="toDate" name="toDate" class="col-12">
                     </div>
 
@@ -90,7 +90,7 @@
                     </div>
 
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        
+
                         <select class="form-control" class="custom-select col-12" id="sMixYn" name="sMixYn">
                             <option value="">독차/혼적</option>
                             <option value="N">독차</option>
@@ -98,19 +98,19 @@
                         </select>
                     </div>
                     <div class="input-group input-group-sm wd120 middle-name div-min-col-1">
-                        
+
                         <select class="form-control wd120 custom-select col-12" id="sAllocState" name="sAllocState">
                             <option>배차상태</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
-                        
+
                         <select class="form-control" class="custom-select col-12" id="sDeptId" name="sDeptId">
                             <option>-부서명</option>
                         </select>
                     </div>
                     <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
-                        
+
                         <select class="form-control custom-select wd100" id="userId" name="userId"></select>
                     </div>
 
@@ -140,7 +140,7 @@
                 <div class="form-group row" style="justify-content: space-between;">
 	                <div class="row" style="width: 90%;">
 	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd110">
-	                        
+
 	                        <select class="custom-select wd110" id="searchColumn" name="searchColumn">
 	                            <option value="sellCustName">거래처명</option>
 	                            <option value="buyCustName">주선/운송사명</option>
@@ -151,11 +151,11 @@
 	                        </select>
 	                    </div>
 	                    <div class="input-group input-group-sm middle-name wd190 div-min-col-1 media190">
-	                        
+
 	                        <input type="text" id="searchValue" name="searchValue" class="form-control form-control-sm searchValue" style="width: 100%">
 	                    </div>
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1 wd90">
-	                        
+
 	                        <select class="custom-select col-12 wd90" id="searchDriver" name="searchDriver">
 	                            <option value="carNum">차량번호</option>
 	                            <option value="driverName">차주명</option>
@@ -164,13 +164,13 @@
 	                    <div class="input-group input-group-sm middle-name div-min-col-1 wd190 media190">
 	                        <input type="text" id="driverValue" name="driverValue" class="form-control form-control-sm searchValue" style="width: 100%">
 	                    </div>
-	
+
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 	                        <input type="text" placeholder="상차지" class="form-control form-control-sm searchValue" list="listSSido1" id="listSSido" name="listSSido"/>
 	                        <datalist  id="listSSido1" name="listSSido1">
 	                        </datalist>
 	                    </div>
-	
+
 	                    <div class="input-group input-group-sm col-1 middle-name div-min-col-1">
 	                        <input type="text" placeholder="하차지" class="form-control form-control-sm searchValue" list="listESido1" id="listESido" name="listESido"/>
 	                        <datalist   id="listESido1" name="listESido1">
@@ -189,18 +189,18 @@
                             </select>
                         </div>
 
-	
+
 	                    <div class="input-group input-group-sm wd100 middle-name div-min-col-1">
-	                        
+
 	                        <select class="custom-select wd100" id="orderStopYn" name="orderStopYn">
 	                            <option value="">경유지 여부</option>
 	                            <option value="Y">있음</option>
 	                            <option value="N">없음</option>
 	                        </select>
 	                    </div>
-	
+
 	                    <div class="input-group input-group-sm wd120 middle-name div-min-col-1">
-	                        
+
 	                        <select class="custom-select wd120" id="sLinkSettleYn" name="sLinkSettleYn">
 	                            <option value="">정보망 확정여부</option>
 	                            <option value="Y">확정</option>
@@ -209,7 +209,7 @@
 	                    </div>
                         <!--
 	                    <div class="input-group-sm col-1 middle-name div-min-col-1">
-	                        
+
 	                        <select class="custom-select mr10" id="searchChargeType" name="searchChargeType">
 	                            <option value="">운임정보</option>
 	                            <option value="01">인수증</option>
@@ -229,7 +229,7 @@
 	                        <label for="myOrder" class="label-margin">
 	                            <span>내거래 보기</span>
 	                        </label>
-	                    </div> 
+	                    </div>
                     </div>
 					<div class="row">
 	                    <div class="btn_58 input-group-sm middle-name mr7">
@@ -712,7 +712,7 @@
                             groupCount = "<i class=\"btn_b\">접수 " + response.summary.registerOrderCount + "건</i> " +
                                 "<i class=\"btn_g\">배차 " + response.summary.dispatchOrderCount + "건</i>" +
                                 "<i class=\"btn_gray\">취소 " + response.summary.cancelOrderCount + "건</i> " +
-                                "<i class=\"sumSellCharge\">매출" +  Util.nvl(Util.formatNumber(response.summary.sumSellCharge),"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>")  + "원,</i>" + 
+                                "<i class=\"sumSellCharge\">매출" +  Util.nvl(Util.formatNumber(response.summary.sumSellCharge),"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>")  + "원,</i>" +
                                 "<i class=\"sumBuyCharge\">매입 " + Util.nvl(Util.formatNumber(response.summary.sumBuyCharge), "<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i>, " +
                                 "<i class=\"profitAndLoss\">손익 " + Util.nvl(Util.formatNumber(response.summary.profitAndLoss),"<span style=\"color: #dc3545; font-weight: bold; font-style: initial; font-size: 14px; \">0</span>") + "원</i>";
                             $("#groupCount").html(groupCount);

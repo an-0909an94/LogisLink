@@ -2178,6 +2178,8 @@
 		,rpa_msg_03
 		,rpa_msg_21
 		,rpa_msg_18
+		,sAddr
+		,eAddr
 		FROM(
 		SELECT
 		a.order_id order_id
@@ -2213,6 +2215,8 @@
 		, CONVERT(FLOAT,a.GOODS_WEIGHT)/1000 goodsWeight
 		, (SELECT BIZ_NAME FROM T_CUST_MST WHERE CUST_ID = a.REQ_CUST_ID) custName
 		, b.REGDATE regdate
+		,a.S_ADDR sAddr
+		,a.E_ADDR eAddr
 		FROM T_ORDER AS a
 		INNER JOIN (
 		SELECT d.order_id
@@ -2564,7 +2568,6 @@
 		, T.USER_NAME						regname
 		, (SELECT CNAME FROM T_CODE WITH(NOLOCK) WHERE GCODE = 'CARGO_TRAN_CAR_SCTN_CD' AND CODE = H.CAR_SCTN_CODE) carSctnName
 		, ISNULL(REPLACE(CONVERT(CHAR(5),  B.RECEIPT_DATE, 10), '-' ,'.'), 'N') + '/' + ISNULL(REPLACE(CONVERT(CHAR(5),  B.PAPER_RECEIPT_DATE, 10), '-' ,'.'), 'N') receiptYn
-
 		FROM
 		T_ORDER B WITH(NOLOCK)
 		INNER JOIN

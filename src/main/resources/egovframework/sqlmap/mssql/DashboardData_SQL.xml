@@ -172,7 +172,7 @@
     WHERE MINUS != 0) A
     LEFT OUTER JOIN T_USER U ON A.REGID = U.USER_ID
     WHERE PLUSRANK = 1
-    ORDER BY profit , profitPersaint DESC
+    ORDER BY profit DESC, profitPersaint DESC
   </select>
 
   <select id="selectResultVehicle" parameterType="java.util.HashMap" resultType="resultVehicleVO">

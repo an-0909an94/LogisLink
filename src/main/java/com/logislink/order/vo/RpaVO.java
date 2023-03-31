@@ -35,7 +35,8 @@ public class RpaVO {
     private String rpa_msg_21;
     private String rpa_msg_18;
 
-
+    private String sAddr;
+    private String eAddr;
     public String getOrder_id() {
         return order_id;
     }
@@ -290,5 +291,21 @@ public class RpaVO {
 
     public void setRpa_msg_18(String rpa_msg_18) {
         this.rpa_msg_18 = rpa_msg_18;
+    }
+
+    public String getsAddr() {
+        return sAddr;
+    }
+
+    public void setsAddr(String sAddr) {
+        this.sAddr = sAddr;
+    }
+
+    public String geteAddr() {
+        return eAddr;
+    }
+
+    public void seteAddr(String eAddr) {
+        this.eAddr = eAddr;
     }
 }
