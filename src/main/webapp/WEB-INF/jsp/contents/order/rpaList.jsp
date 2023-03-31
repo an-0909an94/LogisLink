@@ -277,15 +277,6 @@
 
         goList();
 
-        // 특정 열의 색을 지정한다.
-        const targetColumnIndexes1 = [7, 8, 9, 16, 17, 18, 19, 20, 21];
-        const headerCells = $('th');
-        headerCells.each(function(index) {
-            if (targetColumnIndexes1.includes(index)) {
-                $(this).css('background-color', '#cffdef');
-            }
-        });
-
         var rCookie = $.cookie("autoRefreshLink");
         if(rCookie == null) {
             $.cookie("autoRefreshLink", 30000, {expires:10000,path:"/"});
@@ -372,7 +363,7 @@
                         }
                     },
                     attributes: {
-                        style: "background-color: rgb(207 253 239)"
+                        style: "background-color: rgb(223 241 255)"
                     }
                 },
                 { field: "", width: 100, title: "기능",
@@ -392,7 +383,7 @@
                         }
                     },
                     attributes: {
-                        style: "background-color: rgb(207 253 239)"
+                        style: "background-color: rgb(223 241 255)"
                     }
                 },
             ]
@@ -422,7 +413,7 @@
                         }
                     },
                     attributes: {
-                        style: "background-color: rgb(207 253 239)"
+                        style: "background-color: rgb(223 241 255)"
                     }
                 },
                 { field: "", width: 100, title: "기능",
@@ -441,7 +432,7 @@
                         }
                     },
                     attributes: {
-                        style: "background-color: rgb(207 253 239)"
+                        style: "background-color: rgb(223 241 255)"
                     }
                 },
             ]
@@ -470,7 +461,7 @@
                         }
                     },
                     attributes: {
-                        style: "background-color: rgb(207 253 239)"
+                        style: "background-color: rgb(223 241 255)"
                     }
                 },
                 { field: "", width: 100, title: "기능",
@@ -489,7 +480,7 @@
                         }
                     },
                     attributes: {
-                        style: "background-color: rgb(207 253 239)"
+                        style: "background-color: rgb(223 241 255)"
                     }
                 },
             ]
@@ -576,6 +567,14 @@
             columnResize: onResizeEnd, // 컬럼 사이즈 변경 이벤트
         });
 
+        // 특정 열의 색을 지정한다.
+        const targetColumnIndexes1 = [7, 8, 9, 16, 17, 18, 19, 20, 21];
+        const headerCells = $('th');
+        headerCells.each(function(index) {
+            if (targetColumnIndexes1.includes(index)) {
+                $(this).css('background-color', '#75c3ff');
+            }
+        });
 
     }
 
